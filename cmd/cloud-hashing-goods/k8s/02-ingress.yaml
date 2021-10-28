@@ -1,20 +1,20 @@
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: service-example-npool-top-ingress
+  name: cloud-hashing-goods-npool-top-ingress
   namespace: kube-system
   annotations:
-    k8s.kuboard.cn/displayName: service-example
-    k8s.kuboard.cn/workload: service-example
+    k8s.kuboard.cn/displayName: cloud-hashing-goods
+    k8s.kuboard.cn/workload: cloud-hashing-goods
     kubernetes.io/ingress.class: "traefik-internet"
 spec:
   rules:
   - host: api.npool.top
     http:
       paths:
-      - path: /service-example
+      - path: /cloud-hashing-goods
         backend:
-          serviceName: service-example
+          serviceName: cloud-hashing-goods
           servicePort: http
 
 ---
@@ -22,18 +22,18 @@ spec:
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: service-example-xpool-top-ingress
+  name: cloud-hashing-goods-xpool-top-ingress
   namespace: kube-system
   annotations:
-    k8s.kuboard.cn/displayName: service-example
-    k8s.kuboard.cn/workload: service-example
+    k8s.kuboard.cn/displayName: cloud-hashing-goods
+    k8s.kuboard.cn/workload: cloud-hashing-goods
     kubernetes.io/ingress.class: "traefik-internet"
 spec:
   rules:
   - host: api.xpool.top
     http:
       paths:
-      - path: /service-example
+      - path: /cloud-hashing-goods
         backend:
-          serviceName: service-example
+          serviceName: cloud-hashing-goods
           servicePort: http

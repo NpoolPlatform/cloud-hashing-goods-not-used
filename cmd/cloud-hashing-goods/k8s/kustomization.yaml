@@ -1,0 +1,6 @@
+commonLabels:
+  # app: cloud-hashing-goods
+
+resources:
+- 01-cloud-hashing-goods.yaml
+- 02-ingress.yaml
