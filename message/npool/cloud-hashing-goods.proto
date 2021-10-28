@@ -5,16 +5,17 @@ package cloud.hashing.goods.v1;
 option go_package = "github.com/NpoolPlatform/cloud-hashing-goods/message/npool";
 
 import "google/api/annotations.proto";
+import "google/protobuf/empty.proto";
 
 service CloudHashingGoods {
-    rpc Echo (StringMessage) returns (StringMessage){
+    rpc Version (google.protobuf.Empty) returns (VersionResponse){
         option (google.api.http) = {
-            post: "/v1/echo"
+            post: "/version"
             body: "*"
         };
     }
 }
 
-message StringMessage {
-    string value = 100;
+message VersionResponse {
+    string Info = 100;
 }

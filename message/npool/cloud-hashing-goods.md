@@ -4,7 +4,7 @@
 ## Table of Contents
 
 - [npool/cloud-hashing-goods.proto](#npool/cloud-hashing-goods.proto)
-    - [StringMessage](#cloud.hashing.goods.v1.StringMessage)
+    - [VersionResponse](#cloud.hashing.goods.v1.VersionResponse)
   
     - [CloudHashingGoods](#cloud.hashing.goods.v1.CloudHashingGoods)
   
@@ -19,15 +19,15 @@
 
 
 
-<a name="cloud.hashing.goods.v1.StringMessage"></a>
+<a name="cloud.hashing.goods.v1.VersionResponse"></a>
 
-### StringMessage
+### VersionResponse
 
 
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| value | [string](#string) |  |  |
+| Info | [string](#string) |  |  |
 
 
 
@@ -47,7 +47,7 @@
 
 | Method Name | Request Type | Response Type | Description |
 | ----------- | ------------ | ------------- | ------------|
-| Echo | [StringMessage](#cloud.hashing.goods.v1.StringMessage) | [StringMessage](#cloud.hashing.goods.v1.StringMessage) |  |
+| Version | [.google.protobuf.Empty](#google.protobuf.Empty) | [VersionResponse](#cloud.hashing.goods.v1.VersionResponse) |  |
 
  
 

@@ -7,6 +7,7 @@ import (
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
+	emptypb "google.golang.org/protobuf/types/known/emptypb"
 )
 
 // This is a compile-time assertion to ensure that this generated file
@@ -18,7 +19,7 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type CloudHashingGoodsClient interface {
-	Echo(ctx context.Context, in *StringMessage, opts ...grpc.CallOption) (*StringMessage, error)
+	Version(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*VersionResponse, error)
 }
 
 type cloudHashingGoodsClient struct {
@@ -29,9 +30,9 @@ func NewCloudHashingGoodsClient(cc grpc.ClientConnInterface) CloudHashingGoodsCl
 	return &cloudHashingGoodsClient{cc}
 }
 
-func (c *cloudHashingGoodsClient) Echo(ctx context.Context, in *StringMessage, opts ...grpc.CallOption) (*StringMessage, error) {
-	out := new(StringMessage)
-	err := c.cc.Invoke(ctx, "/cloud.hashing.goods.v1.CloudHashingGoods/Echo", in, out, opts...)
+func (c *cloudHashingGoodsClient) Version(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*VersionResponse, error) {
+	out := new(VersionResponse)
+	err := c.cc.Invoke(ctx, "/cloud.hashing.goods.v1.CloudHashingGoods/Version", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -42,7 +43,7 @@ func (c *cloudHashingGoodsClient) Echo(ctx context.Context, in *StringMessage, o
 // All implementations must embed UnimplementedCloudHashingGoodsServer
 // for forward compatibility
 type CloudHashingGoodsServer interface {
-	Echo(context.Context, *StringMessage) (*StringMessage, error)
+	Version(context.Context, *emptypb.Empty) (*VersionResponse, error)
 	mustEmbedUnimplementedCloudHashingGoodsServer()
 }
 
@@ -50,8 +51,8 @@ type CloudHashingGoodsServer interface {
 type UnimplementedCloudHashingGoodsServer struct {
 }
 
-func (UnimplementedCloudHashingGoodsServer) Echo(context.Context, *StringMessage) (*StringMessage, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Echo not implemented")
+func (UnimplementedCloudHashingGoodsServer) Version(context.Context, *emptypb.Empty) (*VersionResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Version not implemented")
 }
 func (UnimplementedCloudHashingGoodsServer) mustEmbedUnimplementedCloudHashingGoodsServer() {}
 
@@ -66,20 +67,20 @@ func RegisterCloudHashingGoodsServer(s grpc.ServiceRegistrar, srv CloudHashingGo
 	s.RegisterService(&CloudHashingGoods_ServiceDesc, srv)
 }
 
-func _CloudHashingGoods_Echo_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(StringMessage)
+func _CloudHashingGoods_Version_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(emptypb.Empty)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(CloudHashingGoodsServer).Echo(ctx, in)
+		return srv.(CloudHashingGoodsServer).Version(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/cloud.hashing.goods.v1.CloudHashingGoods/Echo",
+		FullMethod: "/cloud.hashing.goods.v1.CloudHashingGoods/Version",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(CloudHashingGoodsServer).Echo(ctx, req.(*StringMessage))
+		return srv.(CloudHashingGoodsServer).Version(ctx, req.(*emptypb.Empty))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -92,8 +93,8 @@ var CloudHashingGoods_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*CloudHashingGoodsServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "Echo",
-			Handler:    _CloudHashingGoods_Echo_Handler,
+			MethodName: "Version",
+			Handler:    _CloudHashingGoods_Version_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
