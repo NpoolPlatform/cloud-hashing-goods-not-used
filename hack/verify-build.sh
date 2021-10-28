@@ -35,7 +35,7 @@ for PLATFORM in "${PLATFORMS[@]}"; do
     service_name=$1
 
     echo "Building project for $PLATFORM -- $version $compile_date $git_revision"
-    GOOS=${OS} GOARCH=${ARCH} go build -a -v -ldflags "-s -w \
+    GOOS=${OS} GOARCH=${ARCH} go build -x -v -ldflags "-s -w \
         -X $pkg.buildDate=${compile_date} \
         -X $pkg.gitCommit=${git_revision} \
         -X $pkg.gitVersion=${version}     \
