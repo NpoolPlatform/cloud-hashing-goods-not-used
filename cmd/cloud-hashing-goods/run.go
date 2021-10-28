@@ -3,11 +3,11 @@ package main
 import (
 	"time"
 
-	"github.com/NpoolPlatform/go-service-app-template/api"
-	msgcli "github.com/NpoolPlatform/go-service-app-template/pkg/message/client"
-	msglistener "github.com/NpoolPlatform/go-service-app-template/pkg/message/listener"
-	msg "github.com/NpoolPlatform/go-service-app-template/pkg/message/message"
-	msgsrv "github.com/NpoolPlatform/go-service-app-template/pkg/message/server"
+	"github.com/NpoolPlatform/cloud-hashing-goods/api"
+	msgcli "github.com/NpoolPlatform/cloud-hashing-goods/pkg/message/client"
+	msglistener "github.com/NpoolPlatform/cloud-hashing-goods/pkg/message/listener"
+	msg "github.com/NpoolPlatform/cloud-hashing-goods/pkg/message/message"
+	msgsrv "github.com/NpoolPlatform/cloud-hashing-goods/pkg/message/server"
 
 	grpc2 "github.com/NpoolPlatform/go-service-framework/pkg/grpc"
 	"github.com/NpoolPlatform/go-service-framework/pkg/logger"

@@ -14,7 +14,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/NpoolPlatform/go-service-app-template/message/npool"
+	"github.com/NpoolPlatform/cloud-hashing-goods/message/npool"
 	grpc_middleware "github.com/grpc-ecosystem/go-grpc-middleware"
 	grpc_opentracing "github.com/grpc-ecosystem/go-grpc-middleware/tracing/opentracing"
 	grpc_prometheus "github.com/grpc-ecosystem/go-grpc-prometheus"
@@ -43,7 +43,7 @@ func run(wg *sync.WaitGroup) {
 	)
 
 	go func() {
-		npool.RegisterServiceExampleServer(server, &Server{})
+		npool.RegisterCloudHashingGoodsServer(server, &Server{})
 		grpc_prometheus.EnableHandlingTimeHistogram()
 		grpc_prometheus.Register(server)
 		go func() {
@@ -65,7 +65,7 @@ func run(wg *sync.WaitGroup) {
 		}
 		server.GracefulStop()
 	}()
-	if err := npool.RegisterServiceExampleHandlerFromEndpoint(context.Background(), mux, "127.0.0.1:9090", []grpc.DialOption{grpc.WithInsecure()}); err != nil {
+	if err := npool.RegisterCloudHashingGoodsHandlerFromEndpoint(context.Background(), mux, "127.0.0.1:9090", []grpc.DialOption{grpc.WithInsecure()}); err != nil {
 		log.Panic(err)
 	}
 	if err := mux.HandlePath(http.MethodGet, "/healthz", func(w http.ResponseWriter, r *http.Request, pathParams map[string]string) {
@@ -104,7 +104,7 @@ loop:
 			cancel()
 			continue
 		}
-		client := npool.NewServiceExampleClient(conn)
+		client := npool.NewCloudHashingGoodsClient(conn)
 		out, err := client.Echo(ctx, &npool.StringMessage{Value: "hello world"})
 		if err != nil {
 			cancel()

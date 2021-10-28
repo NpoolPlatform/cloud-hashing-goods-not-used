@@ -3,23 +3,23 @@
 
 ## Table of Contents
 
-- [npool/service-sample.proto](#npool/service-sample.proto)
-    - [StringMessage](#service.sample.v1.StringMessage)
+- [npool/cloud-hashing-goods.proto](#npool/cloud-hashing-goods.proto)
+    - [StringMessage](#cloud.hashing.goods.v1.StringMessage)
   
-    - [ServiceExample](#service.sample.v1.ServiceExample)
+    - [CloudHashingGoods](#cloud.hashing.goods.v1.CloudHashingGoods)
   
 - [Scalar Value Types](#scalar-value-types)
 
 
 
-<a name="npool/service-sample.proto"></a>
+<a name="npool/cloud-hashing-goods.proto"></a>
 <p align="right"><a href="#top">Top</a></p>
 
-## npool/service-sample.proto
+## npool/cloud-hashing-goods.proto
 
 
 
-<a name="service.sample.v1.StringMessage"></a>
+<a name="cloud.hashing.goods.v1.StringMessage"></a>
 
 ### StringMessage
 
@@ -40,14 +40,14 @@
  
 
 
-<a name="service.sample.v1.ServiceExample"></a>
+<a name="cloud.hashing.goods.v1.CloudHashingGoods"></a>
 
-### ServiceExample
+### CloudHashingGoods
 
 
 | Method Name | Request Type | Response Type | Description |
 | ----------- | ------------ | ------------- | ------------|
-| Echo | [StringMessage](#service.sample.v1.StringMessage) | [StringMessage](#service.sample.v1.StringMessage) |  |
+| Echo | [StringMessage](#cloud.hashing.goods.v1.StringMessage) | [StringMessage](#cloud.hashing.goods.v1.StringMessage) |  |
 
  
 
