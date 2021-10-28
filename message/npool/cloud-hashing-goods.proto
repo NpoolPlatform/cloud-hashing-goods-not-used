@@ -10,8 +10,25 @@ import "google/protobuf/empty.proto";
 service CloudHashingGoods {
     rpc Version (google.protobuf.Empty) returns (VersionResponse){
         option (google.api.http) = {
-            post: "/version"
+            get: "/version"
+        };
+    }
+
+    rpc CreateVendorLocation(CreateVendorLocationRequest) returns (CreateVendorLocationResponse) {
+        option (google.api.http) = {
+            post: "/v1/vendor-location"
             body: "*"
+        };
+    }
+    rpc UpdateVendorLocation(UpdateVendorLocationRequest) returns (UpdateVendorLocationResponse) {
+        option (google.api.http) = {
+            patch: "/v1/vendor-location"
+            body: "*"
+        };
+    }
+    rpc GetVendorLocations(google.protobuf.Empty) returns (GetVendorLocationsResponse) {
+        option (google.api.http) = {
+            get: "/v1/vendor-locations"
         };
     }
 }
@@ -19,3 +36,33 @@ service CloudHashingGoods {
 message VersionResponse {
     string Info = 100;
 }
+
+message VendorLocationInfo {
+    string ID = 200;
+    string Country = 201;
+    string Province = 202;
+    string City = 203;
+    string Address = 204;
+}
+
+message CreateVendorLocationRequest {
+    VendorLocationInfo Info = 300;
+}
+
+message CreateVendorLocationResponse {
+    VendorLocationInfo Info = 400;
+}
+
+message UpdateVendorLocationRequest {
+    VendorLocationInfo Info = 500;
+}
+
+message UpdateVendorLocationResponse {
+    VendorLocationInfo Info = 600;
+}
+
+message GetVendorLocationsResponse {
+    repeated VendorLocationInfo Infos = 700;
+}
+
+

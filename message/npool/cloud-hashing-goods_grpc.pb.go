@@ -20,6 +20,9 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type CloudHashingGoodsClient interface {
 	Version(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*VersionResponse, error)
+	CreateVendorLocation(ctx context.Context, in *CreateVendorLocationRequest, opts ...grpc.CallOption) (*CreateVendorLocationResponse, error)
+	UpdateVendorLocation(ctx context.Context, in *UpdateVendorLocationRequest, opts ...grpc.CallOption) (*UpdateVendorLocationResponse, error)
+	GetVendorLocations(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*GetVendorLocationsResponse, error)
 }
 
 type cloudHashingGoodsClient struct {
@@ -39,11 +42,41 @@ func (c *cloudHashingGoodsClient) Version(ctx context.Context, in *emptypb.Empty
 	return out, nil
 }
 
+func (c *cloudHashingGoodsClient) CreateVendorLocation(ctx context.Context, in *CreateVendorLocationRequest, opts ...grpc.CallOption) (*CreateVendorLocationResponse, error) {
+	out := new(CreateVendorLocationResponse)
+	err := c.cc.Invoke(ctx, "/cloud.hashing.goods.v1.CloudHashingGoods/CreateVendorLocation", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *cloudHashingGoodsClient) UpdateVendorLocation(ctx context.Context, in *UpdateVendorLocationRequest, opts ...grpc.CallOption) (*UpdateVendorLocationResponse, error) {
+	out := new(UpdateVendorLocationResponse)
+	err := c.cc.Invoke(ctx, "/cloud.hashing.goods.v1.CloudHashingGoods/UpdateVendorLocation", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *cloudHashingGoodsClient) GetVendorLocations(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*GetVendorLocationsResponse, error) {
+	out := new(GetVendorLocationsResponse)
+	err := c.cc.Invoke(ctx, "/cloud.hashing.goods.v1.CloudHashingGoods/GetVendorLocations", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // CloudHashingGoodsServer is the server API for CloudHashingGoods service.
 // All implementations must embed UnimplementedCloudHashingGoodsServer
 // for forward compatibility
 type CloudHashingGoodsServer interface {
 	Version(context.Context, *emptypb.Empty) (*VersionResponse, error)
+	CreateVendorLocation(context.Context, *CreateVendorLocationRequest) (*CreateVendorLocationResponse, error)
+	UpdateVendorLocation(context.Context, *UpdateVendorLocationRequest) (*UpdateVendorLocationResponse, error)
+	GetVendorLocations(context.Context, *emptypb.Empty) (*GetVendorLocationsResponse, error)
 	mustEmbedUnimplementedCloudHashingGoodsServer()
 }
 
@@ -53,6 +86,15 @@ type UnimplementedCloudHashingGoodsServer struct {
 
 func (UnimplementedCloudHashingGoodsServer) Version(context.Context, *emptypb.Empty) (*VersionResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Version not implemented")
+}
+func (UnimplementedCloudHashingGoodsServer) CreateVendorLocation(context.Context, *CreateVendorLocationRequest) (*CreateVendorLocationResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateVendorLocation not implemented")
+}
+func (UnimplementedCloudHashingGoodsServer) UpdateVendorLocation(context.Context, *UpdateVendorLocationRequest) (*UpdateVendorLocationResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateVendorLocation not implemented")
+}
+func (UnimplementedCloudHashingGoodsServer) GetVendorLocations(context.Context, *emptypb.Empty) (*GetVendorLocationsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetVendorLocations not implemented")
 }
 func (UnimplementedCloudHashingGoodsServer) mustEmbedUnimplementedCloudHashingGoodsServer() {}
 
@@ -85,6 +127,60 @@ func _CloudHashingGoods_Version_Handler(srv interface{}, ctx context.Context, de
 	return interceptor(ctx, in, info, handler)
 }
 
+func _CloudHashingGoods_CreateVendorLocation_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateVendorLocationRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CloudHashingGoodsServer).CreateVendorLocation(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cloud.hashing.goods.v1.CloudHashingGoods/CreateVendorLocation",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CloudHashingGoodsServer).CreateVendorLocation(ctx, req.(*CreateVendorLocationRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _CloudHashingGoods_UpdateVendorLocation_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateVendorLocationRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CloudHashingGoodsServer).UpdateVendorLocation(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cloud.hashing.goods.v1.CloudHashingGoods/UpdateVendorLocation",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CloudHashingGoodsServer).UpdateVendorLocation(ctx, req.(*UpdateVendorLocationRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _CloudHashingGoods_GetVendorLocations_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(emptypb.Empty)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CloudHashingGoodsServer).GetVendorLocations(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cloud.hashing.goods.v1.CloudHashingGoods/GetVendorLocations",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CloudHashingGoodsServer).GetVendorLocations(ctx, req.(*emptypb.Empty))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // CloudHashingGoods_ServiceDesc is the grpc.ServiceDesc for CloudHashingGoods service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -95,6 +191,18 @@ var CloudHashingGoods_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Version",
 			Handler:    _CloudHashingGoods_Version_Handler,
+		},
+		{
+			MethodName: "CreateVendorLocation",
+			Handler:    _CloudHashingGoods_CreateVendorLocation_Handler,
+		},
+		{
+			MethodName: "UpdateVendorLocation",
+			Handler:    _CloudHashingGoods_UpdateVendorLocation_Handler,
+		},
+		{
+			MethodName: "GetVendorLocations",
+			Handler:    _CloudHashingGoods_GetVendorLocations_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

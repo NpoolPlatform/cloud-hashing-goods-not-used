@@ -4,6 +4,12 @@
 ## Table of Contents
 
 - [npool/cloud-hashing-goods.proto](#npool/cloud-hashing-goods.proto)
+    - [CreateVendorLocationRequest](#cloud.hashing.goods.v1.CreateVendorLocationRequest)
+    - [CreateVendorLocationResponse](#cloud.hashing.goods.v1.CreateVendorLocationResponse)
+    - [GetVendorLocationsResponse](#cloud.hashing.goods.v1.GetVendorLocationsResponse)
+    - [UpdateVendorLocationRequest](#cloud.hashing.goods.v1.UpdateVendorLocationRequest)
+    - [UpdateVendorLocationResponse](#cloud.hashing.goods.v1.UpdateVendorLocationResponse)
+    - [VendorLocationInfo](#cloud.hashing.goods.v1.VendorLocationInfo)
     - [VersionResponse](#cloud.hashing.goods.v1.VersionResponse)
   
     - [CloudHashingGoods](#cloud.hashing.goods.v1.CloudHashingGoods)
@@ -16,6 +22,100 @@
 <p align="right"><a href="#top">Top</a></p>
 
 ## npool/cloud-hashing-goods.proto
+
+
+
+<a name="cloud.hashing.goods.v1.CreateVendorLocationRequest"></a>
+
+### CreateVendorLocationRequest
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| Info | [VendorLocationInfo](#cloud.hashing.goods.v1.VendorLocationInfo) |  |  |
+
+
+
+
+
+
+<a name="cloud.hashing.goods.v1.CreateVendorLocationResponse"></a>
+
+### CreateVendorLocationResponse
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| Info | [VendorLocationInfo](#cloud.hashing.goods.v1.VendorLocationInfo) |  |  |
+
+
+
+
+
+
+<a name="cloud.hashing.goods.v1.GetVendorLocationsResponse"></a>
+
+### GetVendorLocationsResponse
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| Infos | [VendorLocationInfo](#cloud.hashing.goods.v1.VendorLocationInfo) | repeated |  |
+
+
+
+
+
+
+<a name="cloud.hashing.goods.v1.UpdateVendorLocationRequest"></a>
+
+### UpdateVendorLocationRequest
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| Info | [VendorLocationInfo](#cloud.hashing.goods.v1.VendorLocationInfo) |  |  |
+
+
+
+
+
+
+<a name="cloud.hashing.goods.v1.UpdateVendorLocationResponse"></a>
+
+### UpdateVendorLocationResponse
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| Info | [VendorLocationInfo](#cloud.hashing.goods.v1.VendorLocationInfo) |  |  |
+
+
+
+
+
+
+<a name="cloud.hashing.goods.v1.VendorLocationInfo"></a>
+
+### VendorLocationInfo
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| ID | [string](#string) |  |  |
+| Country | [string](#string) |  |  |
+| Province | [string](#string) |  |  |
+| City | [string](#string) |  |  |
+| Address | [string](#string) |  |  |
+
+
+
 
 
 
@@ -48,6 +148,9 @@
 | Method Name | Request Type | Response Type | Description |
 | ----------- | ------------ | ------------- | ------------|
 | Version | [.google.protobuf.Empty](#google.protobuf.Empty) | [VersionResponse](#cloud.hashing.goods.v1.VersionResponse) |  |
+| CreateVendorLocation | [CreateVendorLocationRequest](#cloud.hashing.goods.v1.CreateVendorLocationRequest) | [CreateVendorLocationResponse](#cloud.hashing.goods.v1.CreateVendorLocationResponse) |  |
+| UpdateVendorLocation | [UpdateVendorLocationRequest](#cloud.hashing.goods.v1.UpdateVendorLocationRequest) | [UpdateVendorLocationResponse](#cloud.hashing.goods.v1.UpdateVendorLocationResponse) |  |
+| GetVendorLocations | [.google.protobuf.Empty](#google.protobuf.Empty) | [GetVendorLocationsResponse](#cloud.hashing.goods.v1.GetVendorLocationsResponse) |  |
 
  
 
