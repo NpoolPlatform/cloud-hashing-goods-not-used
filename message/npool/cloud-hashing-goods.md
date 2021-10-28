@@ -122,7 +122,7 @@
 <a name="cloud.hashing.goods.v1.VersionResponse"></a>
 
 ### VersionResponse
-
+Request body and response
 
 
 | Field | Type | Label | Description |
@@ -143,11 +143,11 @@
 <a name="cloud.hashing.goods.v1.CloudHashingGoods"></a>
 
 ### CloudHashingGoods
-
+Cloud Hashing Goods
 
 | Method Name | Request Type | Response Type | Description |
 | ----------- | ------------ | ------------- | ------------|
-| Version | [.google.protobuf.Empty](#google.protobuf.Empty) | [VersionResponse](#cloud.hashing.goods.v1.VersionResponse) |  |
+| Version | [.google.protobuf.Empty](#google.protobuf.Empty) | [VersionResponse](#cloud.hashing.goods.v1.VersionResponse) | Method Version |
 | CreateVendorLocation | [CreateVendorLocationRequest](#cloud.hashing.goods.v1.CreateVendorLocationRequest) | [CreateVendorLocationResponse](#cloud.hashing.goods.v1.CreateVendorLocationResponse) |  |
 | UpdateVendorLocation | [UpdateVendorLocationRequest](#cloud.hashing.goods.v1.UpdateVendorLocationRequest) | [UpdateVendorLocationResponse](#cloud.hashing.goods.v1.UpdateVendorLocationResponse) |  |
 | GetVendorLocations | [.google.protobuf.Empty](#google.protobuf.Empty) | [GetVendorLocationsResponse](#cloud.hashing.goods.v1.GetVendorLocationsResponse) |  |

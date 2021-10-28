@@ -7,7 +7,9 @@ option go_package = "github.com/NpoolPlatform/cloud-hashing-goods/message/npool"
 import "google/api/annotations.proto";
 import "google/protobuf/empty.proto";
 
+// Cloud Hashing Goods
 service CloudHashingGoods {
+    // Method Version
     rpc Version (google.protobuf.Empty) returns (VersionResponse){
         option (google.api.http) = {
             get: "/version"
@@ -33,6 +35,7 @@ service CloudHashingGoods {
     }
 }
 
+// Request body and response
 message VersionResponse {
     string Info = 100;
 }
