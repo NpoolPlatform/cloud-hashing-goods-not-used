@@ -53,8 +53,10 @@ pipeline {
         sh (returnStdout: false, script: '''
           devboxpod=`kubectl get pods -A | grep development-box | awk '{print $2}'`
           servicename="cloud-hashing-goods"
+          kubectl exec --namespace kube-system $devboxpod -- make -C /tmp/$servicename after-test || true
+          kubectl exec --namespace kube-system $devboxpod -- rm -rf /tmp/$servicename || true
           kubectl cp ./ kube-system/$devboxpod:/tmp/$servicename
-          kubectl exec --namespace kube-system $devboxpod -- make -C /tmp/$servicename deps test
+          kubectl exec --namespace kube-system $devboxpod -- make -C /tmp/$servicename deps before-test test after-test
           kubectl exec --namespace kube-system $devboxpod -- rm -rf /tmp/$servicename
         '''.stripIndent())
       }
