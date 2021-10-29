@@ -51,6 +51,24 @@ service CloudHashingGoods {
             get: "/v1/target-areas"
         };
     }
+
+    rpc CreateDeviceInfo(CreateDeviceInfoRequest) returns (CreateDeviceInfoResponse) {
+        option (google.api.http) = {
+            post: "/v1/device"
+            body: "*"
+        };
+    }
+    rpc UpdateDeviceInfo(UpdateDeviceInfoRequest) returns (UpdateDeviceInfoResponse) {
+        option (google.api.http) = {
+            patch: "/v1/device"
+            body: "*"
+        };
+    }
+    rpc GetDeviceInfos(google.protobuf.Empty) returns (GetDeviceInfosResponse) {
+        option (google.api.http) = {
+            get: "/v1/device"
+        };
+    }
 }
 
 // Request body and response
@@ -110,4 +128,32 @@ message UpdateTargetAreaResponse {
 
 message GetTargetAreasResponse {
     repeated TargetAreaInfo Infos = 1100;
+}
+
+message DeviceInfo {
+    string ID = 1200;
+    string Type = 1201;
+    string Manufacturer = 1202;
+    float PowerComsuption = 1203;
+    int64 ShipmentTimestamp = 1204;
+}
+
+message CreateDeviceInfoRequest {
+    DeviceInfo Info = 1300;
+}
+
+message CreateDeviceInfoResponse {
+    DeviceInfo Info = 1400;
+}
+
+message UpdateDeviceInfoRequest {
+    DeviceInfo Info = 1500;
+}
+
+message UpdateDeviceInfoResponse {
+    DeviceInfo Info = 1600;
+}
+
+message GetDeviceInfosResponse {
+    repeated DeviceInfo Infos = 1700;
 }

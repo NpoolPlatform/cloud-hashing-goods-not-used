@@ -4,13 +4,19 @@
 ## Table of Contents
 
 - [npool/cloud-hashing-goods.proto](#npool/cloud-hashing-goods.proto)
+    - [CreateDeviceInfoRequest](#cloud.hashing.goods.v1.CreateDeviceInfoRequest)
+    - [CreateDeviceInfoResponse](#cloud.hashing.goods.v1.CreateDeviceInfoResponse)
     - [CreateTargetAreaRequest](#cloud.hashing.goods.v1.CreateTargetAreaRequest)
     - [CreateTargetAreaResponse](#cloud.hashing.goods.v1.CreateTargetAreaResponse)
     - [CreateVendorLocationRequest](#cloud.hashing.goods.v1.CreateVendorLocationRequest)
     - [CreateVendorLocationResponse](#cloud.hashing.goods.v1.CreateVendorLocationResponse)
+    - [DeviceInfo](#cloud.hashing.goods.v1.DeviceInfo)
+    - [GetDeviceInfosResponse](#cloud.hashing.goods.v1.GetDeviceInfosResponse)
     - [GetTargetAreasResponse](#cloud.hashing.goods.v1.GetTargetAreasResponse)
     - [GetVendorLocationsResponse](#cloud.hashing.goods.v1.GetVendorLocationsResponse)
     - [TargetAreaInfo](#cloud.hashing.goods.v1.TargetAreaInfo)
+    - [UpdateDeviceInfoRequest](#cloud.hashing.goods.v1.UpdateDeviceInfoRequest)
+    - [UpdateDeviceInfoResponse](#cloud.hashing.goods.v1.UpdateDeviceInfoResponse)
     - [UpdateTargetAreaRequest](#cloud.hashing.goods.v1.UpdateTargetAreaRequest)
     - [UpdateTargetAreaResponse](#cloud.hashing.goods.v1.UpdateTargetAreaResponse)
     - [UpdateVendorLocationRequest](#cloud.hashing.goods.v1.UpdateVendorLocationRequest)
@@ -28,6 +34,36 @@
 <p align="right"><a href="#top">Top</a></p>
 
 ## npool/cloud-hashing-goods.proto
+
+
+
+<a name="cloud.hashing.goods.v1.CreateDeviceInfoRequest"></a>
+
+### CreateDeviceInfoRequest
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| Info | [DeviceInfo](#cloud.hashing.goods.v1.DeviceInfo) |  |  |
+
+
+
+
+
+
+<a name="cloud.hashing.goods.v1.CreateDeviceInfoResponse"></a>
+
+### CreateDeviceInfoResponse
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| Info | [DeviceInfo](#cloud.hashing.goods.v1.DeviceInfo) |  |  |
+
+
+
 
 
 
@@ -91,6 +127,40 @@
 
 
 
+<a name="cloud.hashing.goods.v1.DeviceInfo"></a>
+
+### DeviceInfo
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| ID | [string](#string) |  |  |
+| Type | [string](#string) |  |  |
+| Manufacturer | [string](#string) |  |  |
+| PowerComsuption | [float](#float) |  |  |
+| ShipmentTimestamp | [int64](#int64) |  |  |
+
+
+
+
+
+
+<a name="cloud.hashing.goods.v1.GetDeviceInfosResponse"></a>
+
+### GetDeviceInfosResponse
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| Infos | [DeviceInfo](#cloud.hashing.goods.v1.DeviceInfo) | repeated |  |
+
+
+
+
+
+
 <a name="cloud.hashing.goods.v1.GetTargetAreasResponse"></a>
 
 ### GetTargetAreasResponse
@@ -132,6 +202,36 @@
 | ID | [string](#string) |  |  |
 | Continent | [string](#string) |  |  |
 | Country | [string](#string) |  |  |
+
+
+
+
+
+
+<a name="cloud.hashing.goods.v1.UpdateDeviceInfoRequest"></a>
+
+### UpdateDeviceInfoRequest
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| Info | [DeviceInfo](#cloud.hashing.goods.v1.DeviceInfo) |  |  |
+
+
+
+
+
+
+<a name="cloud.hashing.goods.v1.UpdateDeviceInfoResponse"></a>
+
+### UpdateDeviceInfoResponse
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| Info | [DeviceInfo](#cloud.hashing.goods.v1.DeviceInfo) |  |  |
 
 
 
@@ -252,6 +352,9 @@ Cloud Hashing Goods
 | CreateTargetArea | [CreateTargetAreaRequest](#cloud.hashing.goods.v1.CreateTargetAreaRequest) | [CreateTargetAreaResponse](#cloud.hashing.goods.v1.CreateTargetAreaResponse) |  |
 | UpdateTargetArea | [UpdateTargetAreaRequest](#cloud.hashing.goods.v1.UpdateTargetAreaRequest) | [UpdateTargetAreaResponse](#cloud.hashing.goods.v1.UpdateTargetAreaResponse) |  |
 | GetTargetAreas | [.google.protobuf.Empty](#google.protobuf.Empty) | [GetTargetAreasResponse](#cloud.hashing.goods.v1.GetTargetAreasResponse) |  |
+| CreateDeviceInfo | [CreateDeviceInfoRequest](#cloud.hashing.goods.v1.CreateDeviceInfoRequest) | [CreateDeviceInfoResponse](#cloud.hashing.goods.v1.CreateDeviceInfoResponse) |  |
+| UpdateDeviceInfo | [UpdateDeviceInfoRequest](#cloud.hashing.goods.v1.UpdateDeviceInfoRequest) | [UpdateDeviceInfoResponse](#cloud.hashing.goods.v1.UpdateDeviceInfoResponse) |  |
+| GetDeviceInfos | [.google.protobuf.Empty](#google.protobuf.Empty) | [GetDeviceInfosResponse](#cloud.hashing.goods.v1.GetDeviceInfosResponse) |  |
 
  
 
