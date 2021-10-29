@@ -42,6 +42,9 @@ type CloudHashingGoodsClient interface {
 	UnauthorizeAppTargetArea(ctx context.Context, in *UnauthorizeAppTargetAreaRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	AuthorizeAppGoodTargetArea(ctx context.Context, in *AuthorizeAppGoodTargetAreaRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	UnauthorizeAppGoodTargetArea(ctx context.Context, in *UnauthorizeAppGoodTargetAreaRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	CreateGoodComment(ctx context.Context, in *CreateGoodCommentRequest, opts ...grpc.CallOption) (*CreateGoodCommentResponse, error)
+	UpdateGoodComment(ctx context.Context, in *UpdateGoodCommentRequest, opts ...grpc.CallOption) (*UpdateGoodCommentResponse, error)
+	GetGoodComments(ctx context.Context, in *GetGoodCommentsRequest, opts ...grpc.CallOption) (*GetGoodCommentsResponse, error)
 }
 
 type cloudHashingGoodsClient struct {
@@ -241,6 +244,33 @@ func (c *cloudHashingGoodsClient) UnauthorizeAppGoodTargetArea(ctx context.Conte
 	return out, nil
 }
 
+func (c *cloudHashingGoodsClient) CreateGoodComment(ctx context.Context, in *CreateGoodCommentRequest, opts ...grpc.CallOption) (*CreateGoodCommentResponse, error) {
+	out := new(CreateGoodCommentResponse)
+	err := c.cc.Invoke(ctx, "/cloud.hashing.goods.v1.CloudHashingGoods/CreateGoodComment", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *cloudHashingGoodsClient) UpdateGoodComment(ctx context.Context, in *UpdateGoodCommentRequest, opts ...grpc.CallOption) (*UpdateGoodCommentResponse, error) {
+	out := new(UpdateGoodCommentResponse)
+	err := c.cc.Invoke(ctx, "/cloud.hashing.goods.v1.CloudHashingGoods/UpdateGoodComment", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *cloudHashingGoodsClient) GetGoodComments(ctx context.Context, in *GetGoodCommentsRequest, opts ...grpc.CallOption) (*GetGoodCommentsResponse, error) {
+	out := new(GetGoodCommentsResponse)
+	err := c.cc.Invoke(ctx, "/cloud.hashing.goods.v1.CloudHashingGoods/GetGoodComments", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // CloudHashingGoodsServer is the server API for CloudHashingGoods service.
 // All implementations must embed UnimplementedCloudHashingGoodsServer
 // for forward compatibility
@@ -268,6 +298,9 @@ type CloudHashingGoodsServer interface {
 	UnauthorizeAppTargetArea(context.Context, *UnauthorizeAppTargetAreaRequest) (*emptypb.Empty, error)
 	AuthorizeAppGoodTargetArea(context.Context, *AuthorizeAppGoodTargetAreaRequest) (*emptypb.Empty, error)
 	UnauthorizeAppGoodTargetArea(context.Context, *UnauthorizeAppGoodTargetAreaRequest) (*emptypb.Empty, error)
+	CreateGoodComment(context.Context, *CreateGoodCommentRequest) (*CreateGoodCommentResponse, error)
+	UpdateGoodComment(context.Context, *UpdateGoodCommentRequest) (*UpdateGoodCommentResponse, error)
+	GetGoodComments(context.Context, *GetGoodCommentsRequest) (*GetGoodCommentsResponse, error)
 	mustEmbedUnimplementedCloudHashingGoodsServer()
 }
 
@@ -337,6 +370,15 @@ func (UnimplementedCloudHashingGoodsServer) AuthorizeAppGoodTargetArea(context.C
 }
 func (UnimplementedCloudHashingGoodsServer) UnauthorizeAppGoodTargetArea(context.Context, *UnauthorizeAppGoodTargetAreaRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UnauthorizeAppGoodTargetArea not implemented")
+}
+func (UnimplementedCloudHashingGoodsServer) CreateGoodComment(context.Context, *CreateGoodCommentRequest) (*CreateGoodCommentResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateGoodComment not implemented")
+}
+func (UnimplementedCloudHashingGoodsServer) UpdateGoodComment(context.Context, *UpdateGoodCommentRequest) (*UpdateGoodCommentResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateGoodComment not implemented")
+}
+func (UnimplementedCloudHashingGoodsServer) GetGoodComments(context.Context, *GetGoodCommentsRequest) (*GetGoodCommentsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetGoodComments not implemented")
 }
 func (UnimplementedCloudHashingGoodsServer) mustEmbedUnimplementedCloudHashingGoodsServer() {}
 
@@ -729,6 +771,60 @@ func _CloudHashingGoods_UnauthorizeAppGoodTargetArea_Handler(srv interface{}, ct
 	return interceptor(ctx, in, info, handler)
 }
 
+func _CloudHashingGoods_CreateGoodComment_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateGoodCommentRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CloudHashingGoodsServer).CreateGoodComment(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cloud.hashing.goods.v1.CloudHashingGoods/CreateGoodComment",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CloudHashingGoodsServer).CreateGoodComment(ctx, req.(*CreateGoodCommentRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _CloudHashingGoods_UpdateGoodComment_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateGoodCommentRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CloudHashingGoodsServer).UpdateGoodComment(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cloud.hashing.goods.v1.CloudHashingGoods/UpdateGoodComment",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CloudHashingGoodsServer).UpdateGoodComment(ctx, req.(*UpdateGoodCommentRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _CloudHashingGoods_GetGoodComments_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetGoodCommentsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CloudHashingGoodsServer).GetGoodComments(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cloud.hashing.goods.v1.CloudHashingGoods/GetGoodComments",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CloudHashingGoodsServer).GetGoodComments(ctx, req.(*GetGoodCommentsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // CloudHashingGoods_ServiceDesc is the grpc.ServiceDesc for CloudHashingGoods service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -819,6 +915,18 @@ var CloudHashingGoods_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "UnauthorizeAppGoodTargetArea",
 			Handler:    _CloudHashingGoods_UnauthorizeAppGoodTargetArea_Handler,
+		},
+		{
+			MethodName: "CreateGoodComment",
+			Handler:    _CloudHashingGoods_CreateGoodComment_Handler,
+		},
+		{
+			MethodName: "UpdateGoodComment",
+			Handler:    _CloudHashingGoods_UpdateGoodComment_Handler,
+		},
+		{
+			MethodName: "GetGoodComments",
+			Handler:    _CloudHashingGoods_GetGoodComments_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

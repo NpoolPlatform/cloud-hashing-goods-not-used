@@ -139,6 +139,25 @@ service CloudHashingGoods {
             body: "*"
         };
     }
+
+    rpc CreateGoodComment(CreateGoodCommentRequest) returns (CreateGoodCommentResponse) {
+        option (google.api.http) = {
+            post: "/v1/create/good/comment"
+            body: "*"
+        };
+    }
+    rpc UpdateGoodComment(UpdateGoodCommentRequest) returns (UpdateGoodCommentResponse) {
+        option (google.api.http) = {
+            post: "/v1/update/good/comment"
+            body: "*"
+        };
+    }
+    rpc GetGoodComments(GetGoodCommentsRequest) returns (GetGoodCommentsResponse) {
+        option (google.api.http) = {
+            post: "/v1/get/good/comments"
+            body: "*"
+        };
+    }
 }
 
 message PageInfo {
@@ -362,4 +381,40 @@ message UnauthorizeAppGoodTargetAreaRequest {
     string AppID = 4300;
     string GoodID = 4301;
     string TargetAreaID = 4302;
+}
+
+message GoodComment {
+    string ID = 4400;
+    string AppID = 4401;
+    string UserID = 4402;
+    string ReplyTo = 4403;
+    string GoodID = 4404;
+    string OrderID = 4405;
+    string Content = 4406;
+}
+
+message CreateGoodCommentRequest {
+    GoodComment Comment = 4500;
+}
+
+message CreateGoodCommentResponse {
+    GoodComment Comment = 4600;
+}
+
+message UpdateGoodCommentRequest {
+    GoodComment Comment = 4700;
+}
+
+message UpdateGoodCommentResponse {
+    GoodComment Comment = 4800;
+}
+
+message GetGoodCommentsRequest {
+    PageInfo PageInfo = 4900;
+    string GoodID = 4901;
+}
+
+message GetGoodCommentsResponse {
+    repeated GoodComment Comments = 5000;
+    int32 Total = 5001;
 }

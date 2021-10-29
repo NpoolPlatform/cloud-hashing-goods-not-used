@@ -10,6 +10,8 @@
     - [AuthorizeAppTargetAreaRequest](#cloud.hashing.goods.v1.AuthorizeAppTargetAreaRequest)
     - [CreateDeviceInfoRequest](#cloud.hashing.goods.v1.CreateDeviceInfoRequest)
     - [CreateDeviceInfoResponse](#cloud.hashing.goods.v1.CreateDeviceInfoResponse)
+    - [CreateGoodCommentRequest](#cloud.hashing.goods.v1.CreateGoodCommentRequest)
+    - [CreateGoodCommentResponse](#cloud.hashing.goods.v1.CreateGoodCommentResponse)
     - [CreateGoodRequest](#cloud.hashing.goods.v1.CreateGoodRequest)
     - [CreateGoodResponse](#cloud.hashing.goods.v1.CreateGoodResponse)
     - [CreateTargetAreaRequest](#cloud.hashing.goods.v1.CreateTargetAreaRequest)
@@ -21,6 +23,8 @@
     - [GetAllGoodsResponse](#cloud.hashing.goods.v1.GetAllGoodsResponse)
     - [GetDeviceInfosRequest](#cloud.hashing.goods.v1.GetDeviceInfosRequest)
     - [GetDeviceInfosResponse](#cloud.hashing.goods.v1.GetDeviceInfosResponse)
+    - [GetGoodCommentsRequest](#cloud.hashing.goods.v1.GetGoodCommentsRequest)
+    - [GetGoodCommentsResponse](#cloud.hashing.goods.v1.GetGoodCommentsResponse)
     - [GetGoodsRequest](#cloud.hashing.goods.v1.GetGoodsRequest)
     - [GetGoodsResponse](#cloud.hashing.goods.v1.GetGoodsResponse)
     - [GetTargetAreasRequest](#cloud.hashing.goods.v1.GetTargetAreasRequest)
@@ -28,6 +32,7 @@
     - [GetVendorLocationsRequest](#cloud.hashing.goods.v1.GetVendorLocationsRequest)
     - [GetVendorLocationsResponse](#cloud.hashing.goods.v1.GetVendorLocationsResponse)
     - [GoodAuthInfo](#cloud.hashing.goods.v1.GoodAuthInfo)
+    - [GoodComment](#cloud.hashing.goods.v1.GoodComment)
     - [GoodInfo](#cloud.hashing.goods.v1.GoodInfo)
     - [GoodPrice](#cloud.hashing.goods.v1.GoodPrice)
     - [PageInfo](#cloud.hashing.goods.v1.PageInfo)
@@ -40,6 +45,8 @@
     - [UnauthorizeAppTargetAreaRequest](#cloud.hashing.goods.v1.UnauthorizeAppTargetAreaRequest)
     - [UpdateDeviceInfoRequest](#cloud.hashing.goods.v1.UpdateDeviceInfoRequest)
     - [UpdateDeviceInfoResponse](#cloud.hashing.goods.v1.UpdateDeviceInfoResponse)
+    - [UpdateGoodCommentRequest](#cloud.hashing.goods.v1.UpdateGoodCommentRequest)
+    - [UpdateGoodCommentResponse](#cloud.hashing.goods.v1.UpdateGoodCommentResponse)
     - [UpdateGoodRequest](#cloud.hashing.goods.v1.UpdateGoodRequest)
     - [UpdateGoodResponse](#cloud.hashing.goods.v1.UpdateGoodResponse)
     - [UpdateTargetAreaRequest](#cloud.hashing.goods.v1.UpdateTargetAreaRequest)
@@ -151,6 +158,36 @@
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
 | Info | [DeviceInfo](#cloud.hashing.goods.v1.DeviceInfo) |  |  |
+
+
+
+
+
+
+<a name="cloud.hashing.goods.v1.CreateGoodCommentRequest"></a>
+
+### CreateGoodCommentRequest
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| Comment | [GoodComment](#cloud.hashing.goods.v1.GoodComment) |  |  |
+
+
+
+
+
+
+<a name="cloud.hashing.goods.v1.CreateGoodCommentResponse"></a>
+
+### CreateGoodCommentResponse
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| Comment | [GoodComment](#cloud.hashing.goods.v1.GoodComment) |  |  |
 
 
 
@@ -329,6 +366,38 @@
 
 
 
+<a name="cloud.hashing.goods.v1.GetGoodCommentsRequest"></a>
+
+### GetGoodCommentsRequest
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| PageInfo | [PageInfo](#cloud.hashing.goods.v1.PageInfo) |  |  |
+| GoodID | [string](#string) |  |  |
+
+
+
+
+
+
+<a name="cloud.hashing.goods.v1.GetGoodCommentsResponse"></a>
+
+### GetGoodCommentsResponse
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| Comments | [GoodComment](#cloud.hashing.goods.v1.GoodComment) | repeated |  |
+| Total | [int32](#int32) |  |  |
+
+
+
+
+
+
 <a name="cloud.hashing.goods.v1.GetGoodsRequest"></a>
 
 ### GetGoodsRequest
@@ -433,6 +502,27 @@
 | ----- | ---- | ----- | ----------- |
 | Info | [GoodInfo](#cloud.hashing.goods.v1.GoodInfo) |  |  |
 | AppAuthorized | [bool](#bool) |  |  |
+
+
+
+
+
+
+<a name="cloud.hashing.goods.v1.GoodComment"></a>
+
+### GoodComment
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| ID | [string](#string) |  |  |
+| AppID | [string](#string) |  |  |
+| UserID | [string](#string) |  |  |
+| ReplyTo | [string](#string) |  |  |
+| GoodID | [string](#string) |  |  |
+| OrderID | [string](#string) |  |  |
+| Content | [string](#string) |  |  |
 
 
 
@@ -644,6 +734,36 @@
 
 
 
+<a name="cloud.hashing.goods.v1.UpdateGoodCommentRequest"></a>
+
+### UpdateGoodCommentRequest
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| Comment | [GoodComment](#cloud.hashing.goods.v1.GoodComment) |  |  |
+
+
+
+
+
+
+<a name="cloud.hashing.goods.v1.UpdateGoodCommentResponse"></a>
+
+### UpdateGoodCommentResponse
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| Comment | [GoodComment](#cloud.hashing.goods.v1.GoodComment) |  |  |
+
+
+
+
+
+
 <a name="cloud.hashing.goods.v1.UpdateGoodRequest"></a>
 
 ### UpdateGoodRequest
@@ -802,6 +922,9 @@ Cloud Hashing Goods
 | UnauthorizeAppTargetArea | [UnauthorizeAppTargetAreaRequest](#cloud.hashing.goods.v1.UnauthorizeAppTargetAreaRequest) | [.google.protobuf.Empty](#google.protobuf.Empty) |  |
 | AuthorizeAppGoodTargetArea | [AuthorizeAppGoodTargetAreaRequest](#cloud.hashing.goods.v1.AuthorizeAppGoodTargetAreaRequest) | [.google.protobuf.Empty](#google.protobuf.Empty) |  |
 | UnauthorizeAppGoodTargetArea | [UnauthorizeAppGoodTargetAreaRequest](#cloud.hashing.goods.v1.UnauthorizeAppGoodTargetAreaRequest) | [.google.protobuf.Empty](#google.protobuf.Empty) |  |
+| CreateGoodComment | [CreateGoodCommentRequest](#cloud.hashing.goods.v1.CreateGoodCommentRequest) | [CreateGoodCommentResponse](#cloud.hashing.goods.v1.CreateGoodCommentResponse) |  |
+| UpdateGoodComment | [UpdateGoodCommentRequest](#cloud.hashing.goods.v1.UpdateGoodCommentRequest) | [UpdateGoodCommentResponse](#cloud.hashing.goods.v1.UpdateGoodCommentResponse) |  |
+| GetGoodComments | [GetGoodCommentsRequest](#cloud.hashing.goods.v1.GetGoodCommentsRequest) | [GetGoodCommentsResponse](#cloud.hashing.goods.v1.GetGoodCommentsResponse) |  |
 
  
 
