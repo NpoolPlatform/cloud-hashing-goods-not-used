@@ -29,7 +29,8 @@ service CloudHashingGoods {
     }
     rpc GetVendorLocations(GetVendorLocationsRequest) returns (GetVendorLocationsResponse) {
         option (google.api.http) = {
-            get: "/v1/get/vendor-locations"
+            post: "/v1/get/vendor-locations"
+            body: "*"
         };
     }
 
