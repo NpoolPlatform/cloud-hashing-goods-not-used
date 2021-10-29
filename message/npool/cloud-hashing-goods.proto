@@ -17,223 +17,243 @@ service CloudHashingGoods {
 
     rpc CreateVendorLocation(CreateVendorLocationRequest) returns (CreateVendorLocationResponse) {
         option (google.api.http) = {
-            post: "/v1/vendor-location"
+            post: "/v1/create/vendor-location"
             body: "*"
         };
     }
     rpc UpdateVendorLocation(UpdateVendorLocationRequest) returns (UpdateVendorLocationResponse) {
         option (google.api.http) = {
-            patch: "/v1/vendor-location"
+            post: "/v1/update/vendor-location"
             body: "*"
         };
     }
-    rpc GetVendorLocations(google.protobuf.Empty) returns (GetVendorLocationsResponse) {
+    rpc GetVendorLocations(GetVendorLocationsRequest) returns (GetVendorLocationsResponse) {
         option (google.api.http) = {
-            get: "/v1/vendor-locations"
+            get: "/v1/get/vendor-locations"
         };
     }
 
     rpc CreateTargetArea(CreateTargetAreaRequest) returns (CreateTargetAreaResponse) {
         option (google.api.http) = {
-            post: "/v1/target-area"
+            post: "/v1/create/target-area"
             body: "*"
         };
     }
     rpc UpdateTargetArea(UpdateTargetAreaRequest) returns (UpdateTargetAreaResponse) {
         option (google.api.http) = {
-            patch: "/v1/target-area"
+            post: "/v1/update/target-area"
             body: "*"
         };
     }
-    rpc GetTargetAreas(google.protobuf.Empty) returns (GetTargetAreasResponse) {
+    rpc GetTargetAreas(GetTargetAreasRequest) returns (GetTargetAreasResponse) {
         option (google.api.http) = {
-            get: "/v1/target-areas"
+            get: "/v1/get/target-areas"
         };
     }
 
     rpc CreateDeviceInfo(CreateDeviceInfoRequest) returns (CreateDeviceInfoResponse) {
         option (google.api.http) = {
-            post: "/v1/device"
+            post: "/v1/create/device"
             body: "*"
         };
     }
     rpc UpdateDeviceInfo(UpdateDeviceInfoRequest) returns (UpdateDeviceInfoResponse) {
         option (google.api.http) = {
-            patch: "/v1/device"
+            post: "/v1/update/device"
             body: "*"
         };
     }
-    rpc GetDeviceInfos(google.protobuf.Empty) returns (GetDeviceInfosResponse) {
+    rpc GetDeviceInfos(GetDeviceInfosRequest) returns (GetDeviceInfosResponse) {
         option (google.api.http) = {
-            get: "/v1/device"
+            get: "/v1/get/devices"
         };
     }
 
     rpc CreateGood(CreateGoodRequest) returns (CreateGoodResponse) {
         option (google.api.http) = {
-            post: "/v1/good"
+            post: "/v1/create/good"
             body: "*"
         };
     }
     rpc UpdateGood(UpdateGoodRequest) returns (UpdateGoodResponse) {
         option (google.api.http) = {
-            patch: "/v1/good"
+            post: "/v1/update/good"
             body: "*"
         };
     }
     // Can only accessed by APP administrator and platform administrator
     rpc GetAllGoods(GetAllGoodsRequest) returns (GetAllGoodsResponse) {
         option (google.api.http) = {
-            get: "/v1/all-goods"
+            get: "/v1/get/all-goods"
         };
     }
     // Accessed by APP user
     rpc GetGoods(GetGoodsRequest) returns (GetGoodsResponse) {
         option (google.api.http) = {
-            get: "/v1/goods"
+            get: "/v1/get/goods"
         };
     }
 }
 
+message PageInfo {
+    int32 PageIndex = 100;
+    int32 PageCount = 101;
+    int32 Total = 102;
+}
+
 // Request body and response
 message VersionResponse {
-    string Info = 100;
+    string Info = 200;
 }
 
 message VendorLocationInfo {
-    string ID = 200;
-    string Country = 201;
-    string Province = 202;
-    string City = 203;
-    string Address = 204;
+    string ID = 300;
+    string Country = 301;
+    string Province = 302;
+    string City = 303;
+    string Address = 304;
 }
 
 message CreateVendorLocationRequest {
-    VendorLocationInfo Info = 300;
-}
-
-message CreateVendorLocationResponse {
     VendorLocationInfo Info = 400;
 }
 
-message UpdateVendorLocationRequest {
+message CreateVendorLocationResponse {
     VendorLocationInfo Info = 500;
 }
 
-message UpdateVendorLocationResponse {
+message UpdateVendorLocationRequest {
     VendorLocationInfo Info = 600;
 }
 
+message UpdateVendorLocationResponse {
+    VendorLocationInfo Info = 700;
+}
+
+message GetVendorLocationsRequest {
+    PageInfo PageInfo = 800;
+}
+
 message GetVendorLocationsResponse {
-    repeated VendorLocationInfo Infos = 700;
+    repeated VendorLocationInfo Infos = 900;
 }
 
 message TargetAreaInfo {
-    string ID = 800;
-    string Continent = 801;
-    string Country = 802;
+    string ID = 1000;
+    string Continent = 1001;
+    string Country = 1002;
 }
 
 message CreateTargetAreaRequest {
-    TargetAreaInfo Info = 900;
+    TargetAreaInfo Info = 1100;
 }
 
 message CreateTargetAreaResponse {
-    TargetAreaInfo Info = 1000;
+    TargetAreaInfo Info = 1200;
 }
 
 message UpdateTargetAreaRequest {
-    TargetAreaInfo Info = 900;
+    TargetAreaInfo Info = 1300;
 }
 
 message UpdateTargetAreaResponse {
-    TargetAreaInfo Info = 1000;
+    TargetAreaInfo Info = 1400;
+}
+
+message GetTargetAreasRequest {
+    PageInfo PageInfo = 1500;
 }
 
 message GetTargetAreasResponse {
-    repeated TargetAreaInfo Infos = 1100;
+    repeated TargetAreaInfo Infos = 1600;
 }
 
 message DeviceInfo {
-    string ID = 1200;
-    string Type = 1201;
-    string Manufacturer = 1202;
-    float PowerComsuption = 1203;
-    int64 ShipmentTimestamp = 1204;
+    string ID = 1700;
+    string Type = 1701;
+    string Manufacturer = 1702;
+    float PowerComsuption = 1703;
+    int64 ShipmentTimestamp = 1704;
 }
 
 message CreateDeviceInfoRequest {
-    DeviceInfo Info = 1300;
+    DeviceInfo Info = 1800;
 }
 
 message CreateDeviceInfoResponse {
-    DeviceInfo Info = 1400;
+    DeviceInfo Info = 1900;
 }
 
 message UpdateDeviceInfoRequest {
-    DeviceInfo Info = 1500;
+    DeviceInfo Info = 2000;
 }
 
 message UpdateDeviceInfoResponse {
-    DeviceInfo Info = 1600;
+    DeviceInfo Info = 2100;
+}
+
+message GetDeviceInfosRequest {
+    PageInfo PageInfo = 2200;
 }
 
 message GetDeviceInfosResponse {
-    repeated DeviceInfo Infos = 1700;
+    repeated DeviceInfo Infos = 2300;
 }
 
 message GoodInfo {
-    string ID = 1800;
-    string DeviceInfoID = 1801;
-    float GasPrice = 1802;
-    bool SeparateGasFee = 1803;
-    float UnitPower = 1804;
-    int32 DurationDays = 1805;
-    string CoinInfoID = 1806;
-    bool Actuals = 1807;
-    int64 DeliveryTimestamp = 1808;
-    string InheritFromGoodID = 1809;
-    string VendorLocationID = 1810;
-    float Price = 1811;
-    string BenefitType = 1812;
-    bool Classic = 1813;
-    repeated string SupportCoinTypeIDs = 1814;
-    int32 Total = 1815;
+    string ID = 2400;
+    string DeviceInfoID = 2401;
+    float GasPrice = 2402;
+    bool SeparateGasFee = 2403;
+    float UnitPower = 2404;
+    int32 DurationDays = 2405;
+    string CoinInfoID = 2406;
+    bool Actuals = 2407;
+    int64 DeliveryTimestamp = 2408;
+    string InheritFromGoodID = 2409;
+    string VendorLocationID = 2410;
+    float Price = 2411;
+    string BenefitType = 2412;
+    bool Classic = 2413;
+    repeated string SupportCoinTypeIDs = 2414;
+    int32 Total = 2415;
 }
 
 message CreateGoodRequest {
-    GoodInfo Info = 1900;
+    GoodInfo Info = 2500;
 }
 
 message CreateGoodResponse {
-    GoodInfo Info = 2000;
+    GoodInfo Info = 2600;
 }
 
 message UpdateGoodRequest {
-    GoodInfo Info = 2100;
+    GoodInfo Info = 2700;
 }
 
 message UpdateGoodResponse {
-    GoodInfo Info = 2200;
+    GoodInfo Info = 2800;
 }
 
 message GetAllGoodsRequest {
-    string AppID = 2300;
+    string AppID = 2900;
+    PageInfo PageInfo = 2901;
 }
 
 message GoodAuthInfo {
-    GoodInfo Info = 2400;
-    bool AppAuthorized = 2401;
+    GoodInfo Info = 3000;
+    bool AppAuthorized = 3001;
 }
 
 message GetAllGoodsResponse {
-    repeated GoodAuthInfo Infos = 2500;
+    repeated GoodAuthInfo Infos = 3100;
 }
 
 message GetGoodsRequest {
-    string AppID = 2600;
+    string AppID = 3200;
+    PageInfo PageInfo = 3201;
 }
 
 message GetGoodsResponse {
-    repeated GoodInfo Infos = 2700;
+    repeated GoodInfo Infos = 3300;
 }

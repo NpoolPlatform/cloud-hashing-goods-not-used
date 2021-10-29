@@ -15,13 +15,17 @@
     - [DeviceInfo](#cloud.hashing.goods.v1.DeviceInfo)
     - [GetAllGoodsRequest](#cloud.hashing.goods.v1.GetAllGoodsRequest)
     - [GetAllGoodsResponse](#cloud.hashing.goods.v1.GetAllGoodsResponse)
+    - [GetDeviceInfosRequest](#cloud.hashing.goods.v1.GetDeviceInfosRequest)
     - [GetDeviceInfosResponse](#cloud.hashing.goods.v1.GetDeviceInfosResponse)
     - [GetGoodsRequest](#cloud.hashing.goods.v1.GetGoodsRequest)
     - [GetGoodsResponse](#cloud.hashing.goods.v1.GetGoodsResponse)
+    - [GetTargetAreasRequest](#cloud.hashing.goods.v1.GetTargetAreasRequest)
     - [GetTargetAreasResponse](#cloud.hashing.goods.v1.GetTargetAreasResponse)
+    - [GetVendorLocationsRequest](#cloud.hashing.goods.v1.GetVendorLocationsRequest)
     - [GetVendorLocationsResponse](#cloud.hashing.goods.v1.GetVendorLocationsResponse)
     - [GoodAuthInfo](#cloud.hashing.goods.v1.GoodAuthInfo)
     - [GoodInfo](#cloud.hashing.goods.v1.GoodInfo)
+    - [PageInfo](#cloud.hashing.goods.v1.PageInfo)
     - [TargetAreaInfo](#cloud.hashing.goods.v1.TargetAreaInfo)
     - [UpdateDeviceInfoRequest](#cloud.hashing.goods.v1.UpdateDeviceInfoRequest)
     - [UpdateDeviceInfoResponse](#cloud.hashing.goods.v1.UpdateDeviceInfoResponse)
@@ -195,6 +199,7 @@
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
 | AppID | [string](#string) |  |  |
+| PageInfo | [PageInfo](#cloud.hashing.goods.v1.PageInfo) |  |  |
 
 
 
@@ -210,6 +215,21 @@
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
 | Infos | [GoodAuthInfo](#cloud.hashing.goods.v1.GoodAuthInfo) | repeated |  |
+
+
+
+
+
+
+<a name="cloud.hashing.goods.v1.GetDeviceInfosRequest"></a>
+
+### GetDeviceInfosRequest
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| PageInfo | [PageInfo](#cloud.hashing.goods.v1.PageInfo) |  |  |
 
 
 
@@ -240,6 +260,7 @@
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
 | AppID | [string](#string) |  |  |
+| PageInfo | [PageInfo](#cloud.hashing.goods.v1.PageInfo) |  |  |
 
 
 
@@ -261,6 +282,21 @@
 
 
 
+<a name="cloud.hashing.goods.v1.GetTargetAreasRequest"></a>
+
+### GetTargetAreasRequest
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| PageInfo | [PageInfo](#cloud.hashing.goods.v1.PageInfo) |  |  |
+
+
+
+
+
+
 <a name="cloud.hashing.goods.v1.GetTargetAreasResponse"></a>
 
 ### GetTargetAreasResponse
@@ -270,6 +306,21 @@
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
 | Infos | [TargetAreaInfo](#cloud.hashing.goods.v1.TargetAreaInfo) | repeated |  |
+
+
+
+
+
+
+<a name="cloud.hashing.goods.v1.GetVendorLocationsRequest"></a>
+
+### GetVendorLocationsRequest
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| PageInfo | [PageInfo](#cloud.hashing.goods.v1.PageInfo) |  |  |
 
 
 
@@ -330,6 +381,23 @@
 | BenefitType | [string](#string) |  |  |
 | Classic | [bool](#bool) |  |  |
 | SupportCoinTypeIDs | [string](#string) | repeated |  |
+| Total | [int32](#int32) |  |  |
+
+
+
+
+
+
+<a name="cloud.hashing.goods.v1.PageInfo"></a>
+
+### PageInfo
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| PageIndex | [int32](#int32) |  |  |
+| PageCount | [int32](#int32) |  |  |
 | Total | [int32](#int32) |  |  |
 
 
@@ -524,13 +592,13 @@ Cloud Hashing Goods
 | Version | [.google.protobuf.Empty](#google.protobuf.Empty) | [VersionResponse](#cloud.hashing.goods.v1.VersionResponse) |  |
 | CreateVendorLocation | [CreateVendorLocationRequest](#cloud.hashing.goods.v1.CreateVendorLocationRequest) | [CreateVendorLocationResponse](#cloud.hashing.goods.v1.CreateVendorLocationResponse) |  |
 | UpdateVendorLocation | [UpdateVendorLocationRequest](#cloud.hashing.goods.v1.UpdateVendorLocationRequest) | [UpdateVendorLocationResponse](#cloud.hashing.goods.v1.UpdateVendorLocationResponse) |  |
-| GetVendorLocations | [.google.protobuf.Empty](#google.protobuf.Empty) | [GetVendorLocationsResponse](#cloud.hashing.goods.v1.GetVendorLocationsResponse) |  |
+| GetVendorLocations | [GetVendorLocationsRequest](#cloud.hashing.goods.v1.GetVendorLocationsRequest) | [GetVendorLocationsResponse](#cloud.hashing.goods.v1.GetVendorLocationsResponse) |  |
 | CreateTargetArea | [CreateTargetAreaRequest](#cloud.hashing.goods.v1.CreateTargetAreaRequest) | [CreateTargetAreaResponse](#cloud.hashing.goods.v1.CreateTargetAreaResponse) |  |
 | UpdateTargetArea | [UpdateTargetAreaRequest](#cloud.hashing.goods.v1.UpdateTargetAreaRequest) | [UpdateTargetAreaResponse](#cloud.hashing.goods.v1.UpdateTargetAreaResponse) |  |
-| GetTargetAreas | [.google.protobuf.Empty](#google.protobuf.Empty) | [GetTargetAreasResponse](#cloud.hashing.goods.v1.GetTargetAreasResponse) |  |
+| GetTargetAreas | [GetTargetAreasRequest](#cloud.hashing.goods.v1.GetTargetAreasRequest) | [GetTargetAreasResponse](#cloud.hashing.goods.v1.GetTargetAreasResponse) |  |
 | CreateDeviceInfo | [CreateDeviceInfoRequest](#cloud.hashing.goods.v1.CreateDeviceInfoRequest) | [CreateDeviceInfoResponse](#cloud.hashing.goods.v1.CreateDeviceInfoResponse) |  |
 | UpdateDeviceInfo | [UpdateDeviceInfoRequest](#cloud.hashing.goods.v1.UpdateDeviceInfoRequest) | [UpdateDeviceInfoResponse](#cloud.hashing.goods.v1.UpdateDeviceInfoResponse) |  |
-| GetDeviceInfos | [.google.protobuf.Empty](#google.protobuf.Empty) | [GetDeviceInfosResponse](#cloud.hashing.goods.v1.GetDeviceInfosResponse) |  |
+| GetDeviceInfos | [GetDeviceInfosRequest](#cloud.hashing.goods.v1.GetDeviceInfosRequest) | [GetDeviceInfosResponse](#cloud.hashing.goods.v1.GetDeviceInfosResponse) |  |
 | CreateGood | [CreateGoodRequest](#cloud.hashing.goods.v1.CreateGoodRequest) | [CreateGoodResponse](#cloud.hashing.goods.v1.CreateGoodResponse) |  |
 | UpdateGood | [UpdateGoodRequest](#cloud.hashing.goods.v1.UpdateGoodRequest) | [UpdateGoodResponse](#cloud.hashing.goods.v1.UpdateGoodResponse) |  |
 | GetAllGoods | [GetAllGoodsRequest](#cloud.hashing.goods.v1.GetAllGoodsRequest) | [GetAllGoodsResponse](#cloud.hashing.goods.v1.GetAllGoodsResponse) | Can only accessed by APP administrator and platform administrator |

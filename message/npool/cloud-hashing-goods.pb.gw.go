@@ -118,9 +118,20 @@ func local_request_CloudHashingGoods_UpdateVendorLocation_0(ctx context.Context,
 
 }
 
+var (
+	filter_CloudHashingGoods_GetVendorLocations_0 = &utilities.DoubleArray{Encoding: map[string]int{}, Base: []int(nil), Check: []int(nil)}
+)
+
 func request_CloudHashingGoods_GetVendorLocations_0(ctx context.Context, marshaler runtime.Marshaler, client CloudHashingGoodsClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq emptypb.Empty
+	var protoReq GetVendorLocationsRequest
 	var metadata runtime.ServerMetadata
+
+	if err := req.ParseForm(); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_CloudHashingGoods_GetVendorLocations_0); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
 
 	msg, err := client.GetVendorLocations(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
 	return msg, metadata, err
@@ -128,8 +139,15 @@ func request_CloudHashingGoods_GetVendorLocations_0(ctx context.Context, marshal
 }
 
 func local_request_CloudHashingGoods_GetVendorLocations_0(ctx context.Context, marshaler runtime.Marshaler, server CloudHashingGoodsServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq emptypb.Empty
+	var protoReq GetVendorLocationsRequest
 	var metadata runtime.ServerMetadata
+
+	if err := req.ParseForm(); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_CloudHashingGoods_GetVendorLocations_0); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
 
 	msg, err := server.GetVendorLocations(ctx, &protoReq)
 	return msg, metadata, err
@@ -204,9 +222,20 @@ func local_request_CloudHashingGoods_UpdateTargetArea_0(ctx context.Context, mar
 
 }
 
+var (
+	filter_CloudHashingGoods_GetTargetAreas_0 = &utilities.DoubleArray{Encoding: map[string]int{}, Base: []int(nil), Check: []int(nil)}
+)
+
 func request_CloudHashingGoods_GetTargetAreas_0(ctx context.Context, marshaler runtime.Marshaler, client CloudHashingGoodsClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq emptypb.Empty
+	var protoReq GetTargetAreasRequest
 	var metadata runtime.ServerMetadata
+
+	if err := req.ParseForm(); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_CloudHashingGoods_GetTargetAreas_0); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
 
 	msg, err := client.GetTargetAreas(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
 	return msg, metadata, err
@@ -214,8 +243,15 @@ func request_CloudHashingGoods_GetTargetAreas_0(ctx context.Context, marshaler r
 }
 
 func local_request_CloudHashingGoods_GetTargetAreas_0(ctx context.Context, marshaler runtime.Marshaler, server CloudHashingGoodsServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq emptypb.Empty
+	var protoReq GetTargetAreasRequest
 	var metadata runtime.ServerMetadata
+
+	if err := req.ParseForm(); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_CloudHashingGoods_GetTargetAreas_0); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
 
 	msg, err := server.GetTargetAreas(ctx, &protoReq)
 	return msg, metadata, err
@@ -290,9 +326,20 @@ func local_request_CloudHashingGoods_UpdateDeviceInfo_0(ctx context.Context, mar
 
 }
 
+var (
+	filter_CloudHashingGoods_GetDeviceInfos_0 = &utilities.DoubleArray{Encoding: map[string]int{}, Base: []int(nil), Check: []int(nil)}
+)
+
 func request_CloudHashingGoods_GetDeviceInfos_0(ctx context.Context, marshaler runtime.Marshaler, client CloudHashingGoodsClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq emptypb.Empty
+	var protoReq GetDeviceInfosRequest
 	var metadata runtime.ServerMetadata
+
+	if err := req.ParseForm(); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_CloudHashingGoods_GetDeviceInfos_0); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
 
 	msg, err := client.GetDeviceInfos(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
 	return msg, metadata, err
@@ -300,8 +347,15 @@ func request_CloudHashingGoods_GetDeviceInfos_0(ctx context.Context, marshaler r
 }
 
 func local_request_CloudHashingGoods_GetDeviceInfos_0(ctx context.Context, marshaler runtime.Marshaler, server CloudHashingGoodsServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq emptypb.Empty
+	var protoReq GetDeviceInfosRequest
 	var metadata runtime.ServerMetadata
+
+	if err := req.ParseForm(); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_CloudHashingGoods_GetDeviceInfos_0); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
 
 	msg, err := server.GetDeviceInfos(ctx, &protoReq)
 	return msg, metadata, err
@@ -483,7 +537,7 @@ func RegisterCloudHashingGoodsHandlerServer(ctx context.Context, mux *runtime.Se
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/cloud.hashing.goods.v1.CloudHashingGoods/CreateVendorLocation", runtime.WithHTTPPathPattern("/v1/vendor-location"))
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/cloud.hashing.goods.v1.CloudHashingGoods/CreateVendorLocation", runtime.WithHTTPPathPattern("/v1/create/vendor-location"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -500,13 +554,13 @@ func RegisterCloudHashingGoodsHandlerServer(ctx context.Context, mux *runtime.Se
 
 	})
 
-	mux.Handle("PATCH", pattern_CloudHashingGoods_UpdateVendorLocation_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_CloudHashingGoods_UpdateVendorLocation_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/cloud.hashing.goods.v1.CloudHashingGoods/UpdateVendorLocation", runtime.WithHTTPPathPattern("/v1/vendor-location"))
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/cloud.hashing.goods.v1.CloudHashingGoods/UpdateVendorLocation", runtime.WithHTTPPathPattern("/v1/update/vendor-location"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -529,7 +583,7 @@ func RegisterCloudHashingGoodsHandlerServer(ctx context.Context, mux *runtime.Se
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/cloud.hashing.goods.v1.CloudHashingGoods/GetVendorLocations", runtime.WithHTTPPathPattern("/v1/vendor-locations"))
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/cloud.hashing.goods.v1.CloudHashingGoods/GetVendorLocations", runtime.WithHTTPPathPattern("/v1/get/vendor-locations"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -552,7 +606,7 @@ func RegisterCloudHashingGoodsHandlerServer(ctx context.Context, mux *runtime.Se
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/cloud.hashing.goods.v1.CloudHashingGoods/CreateTargetArea", runtime.WithHTTPPathPattern("/v1/target-area"))
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/cloud.hashing.goods.v1.CloudHashingGoods/CreateTargetArea", runtime.WithHTTPPathPattern("/v1/create/target-area"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -569,13 +623,13 @@ func RegisterCloudHashingGoodsHandlerServer(ctx context.Context, mux *runtime.Se
 
 	})
 
-	mux.Handle("PATCH", pattern_CloudHashingGoods_UpdateTargetArea_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_CloudHashingGoods_UpdateTargetArea_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/cloud.hashing.goods.v1.CloudHashingGoods/UpdateTargetArea", runtime.WithHTTPPathPattern("/v1/target-area"))
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/cloud.hashing.goods.v1.CloudHashingGoods/UpdateTargetArea", runtime.WithHTTPPathPattern("/v1/update/target-area"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -598,7 +652,7 @@ func RegisterCloudHashingGoodsHandlerServer(ctx context.Context, mux *runtime.Se
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/cloud.hashing.goods.v1.CloudHashingGoods/GetTargetAreas", runtime.WithHTTPPathPattern("/v1/target-areas"))
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/cloud.hashing.goods.v1.CloudHashingGoods/GetTargetAreas", runtime.WithHTTPPathPattern("/v1/get/target-areas"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -621,7 +675,7 @@ func RegisterCloudHashingGoodsHandlerServer(ctx context.Context, mux *runtime.Se
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/cloud.hashing.goods.v1.CloudHashingGoods/CreateDeviceInfo", runtime.WithHTTPPathPattern("/v1/device"))
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/cloud.hashing.goods.v1.CloudHashingGoods/CreateDeviceInfo", runtime.WithHTTPPathPattern("/v1/create/device"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -638,13 +692,13 @@ func RegisterCloudHashingGoodsHandlerServer(ctx context.Context, mux *runtime.Se
 
 	})
 
-	mux.Handle("PATCH", pattern_CloudHashingGoods_UpdateDeviceInfo_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_CloudHashingGoods_UpdateDeviceInfo_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/cloud.hashing.goods.v1.CloudHashingGoods/UpdateDeviceInfo", runtime.WithHTTPPathPattern("/v1/device"))
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/cloud.hashing.goods.v1.CloudHashingGoods/UpdateDeviceInfo", runtime.WithHTTPPathPattern("/v1/update/device"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -667,7 +721,7 @@ func RegisterCloudHashingGoodsHandlerServer(ctx context.Context, mux *runtime.Se
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/cloud.hashing.goods.v1.CloudHashingGoods/GetDeviceInfos", runtime.WithHTTPPathPattern("/v1/device"))
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/cloud.hashing.goods.v1.CloudHashingGoods/GetDeviceInfos", runtime.WithHTTPPathPattern("/v1/get/devices"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -690,7 +744,7 @@ func RegisterCloudHashingGoodsHandlerServer(ctx context.Context, mux *runtime.Se
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/cloud.hashing.goods.v1.CloudHashingGoods/CreateGood", runtime.WithHTTPPathPattern("/v1/good"))
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/cloud.hashing.goods.v1.CloudHashingGoods/CreateGood", runtime.WithHTTPPathPattern("/v1/create/good"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -707,13 +761,13 @@ func RegisterCloudHashingGoodsHandlerServer(ctx context.Context, mux *runtime.Se
 
 	})
 
-	mux.Handle("PATCH", pattern_CloudHashingGoods_UpdateGood_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_CloudHashingGoods_UpdateGood_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/cloud.hashing.goods.v1.CloudHashingGoods/UpdateGood", runtime.WithHTTPPathPattern("/v1/good"))
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/cloud.hashing.goods.v1.CloudHashingGoods/UpdateGood", runtime.WithHTTPPathPattern("/v1/update/good"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -736,7 +790,7 @@ func RegisterCloudHashingGoodsHandlerServer(ctx context.Context, mux *runtime.Se
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/cloud.hashing.goods.v1.CloudHashingGoods/GetAllGoods", runtime.WithHTTPPathPattern("/v1/all-goods"))
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/cloud.hashing.goods.v1.CloudHashingGoods/GetAllGoods", runtime.WithHTTPPathPattern("/v1/get/all-goods"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -759,7 +813,7 @@ func RegisterCloudHashingGoodsHandlerServer(ctx context.Context, mux *runtime.Se
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/cloud.hashing.goods.v1.CloudHashingGoods/GetGoods", runtime.WithHTTPPathPattern("/v1/goods"))
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/cloud.hashing.goods.v1.CloudHashingGoods/GetGoods", runtime.WithHTTPPathPattern("/v1/get/goods"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -841,7 +895,7 @@ func RegisterCloudHashingGoodsHandlerClient(ctx context.Context, mux *runtime.Se
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/cloud.hashing.goods.v1.CloudHashingGoods/CreateVendorLocation", runtime.WithHTTPPathPattern("/v1/vendor-location"))
+		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/cloud.hashing.goods.v1.CloudHashingGoods/CreateVendorLocation", runtime.WithHTTPPathPattern("/v1/create/vendor-location"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -857,11 +911,11 @@ func RegisterCloudHashingGoodsHandlerClient(ctx context.Context, mux *runtime.Se
 
 	})
 
-	mux.Handle("PATCH", pattern_CloudHashingGoods_UpdateVendorLocation_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_CloudHashingGoods_UpdateVendorLocation_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/cloud.hashing.goods.v1.CloudHashingGoods/UpdateVendorLocation", runtime.WithHTTPPathPattern("/v1/vendor-location"))
+		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/cloud.hashing.goods.v1.CloudHashingGoods/UpdateVendorLocation", runtime.WithHTTPPathPattern("/v1/update/vendor-location"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -881,7 +935,7 @@ func RegisterCloudHashingGoodsHandlerClient(ctx context.Context, mux *runtime.Se
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/cloud.hashing.goods.v1.CloudHashingGoods/GetVendorLocations", runtime.WithHTTPPathPattern("/v1/vendor-locations"))
+		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/cloud.hashing.goods.v1.CloudHashingGoods/GetVendorLocations", runtime.WithHTTPPathPattern("/v1/get/vendor-locations"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -901,7 +955,7 @@ func RegisterCloudHashingGoodsHandlerClient(ctx context.Context, mux *runtime.Se
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/cloud.hashing.goods.v1.CloudHashingGoods/CreateTargetArea", runtime.WithHTTPPathPattern("/v1/target-area"))
+		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/cloud.hashing.goods.v1.CloudHashingGoods/CreateTargetArea", runtime.WithHTTPPathPattern("/v1/create/target-area"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -917,11 +971,11 @@ func RegisterCloudHashingGoodsHandlerClient(ctx context.Context, mux *runtime.Se
 
 	})
 
-	mux.Handle("PATCH", pattern_CloudHashingGoods_UpdateTargetArea_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_CloudHashingGoods_UpdateTargetArea_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/cloud.hashing.goods.v1.CloudHashingGoods/UpdateTargetArea", runtime.WithHTTPPathPattern("/v1/target-area"))
+		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/cloud.hashing.goods.v1.CloudHashingGoods/UpdateTargetArea", runtime.WithHTTPPathPattern("/v1/update/target-area"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -941,7 +995,7 @@ func RegisterCloudHashingGoodsHandlerClient(ctx context.Context, mux *runtime.Se
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/cloud.hashing.goods.v1.CloudHashingGoods/GetTargetAreas", runtime.WithHTTPPathPattern("/v1/target-areas"))
+		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/cloud.hashing.goods.v1.CloudHashingGoods/GetTargetAreas", runtime.WithHTTPPathPattern("/v1/get/target-areas"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -961,7 +1015,7 @@ func RegisterCloudHashingGoodsHandlerClient(ctx context.Context, mux *runtime.Se
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/cloud.hashing.goods.v1.CloudHashingGoods/CreateDeviceInfo", runtime.WithHTTPPathPattern("/v1/device"))
+		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/cloud.hashing.goods.v1.CloudHashingGoods/CreateDeviceInfo", runtime.WithHTTPPathPattern("/v1/create/device"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -977,11 +1031,11 @@ func RegisterCloudHashingGoodsHandlerClient(ctx context.Context, mux *runtime.Se
 
 	})
 
-	mux.Handle("PATCH", pattern_CloudHashingGoods_UpdateDeviceInfo_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_CloudHashingGoods_UpdateDeviceInfo_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/cloud.hashing.goods.v1.CloudHashingGoods/UpdateDeviceInfo", runtime.WithHTTPPathPattern("/v1/device"))
+		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/cloud.hashing.goods.v1.CloudHashingGoods/UpdateDeviceInfo", runtime.WithHTTPPathPattern("/v1/update/device"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -1001,7 +1055,7 @@ func RegisterCloudHashingGoodsHandlerClient(ctx context.Context, mux *runtime.Se
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/cloud.hashing.goods.v1.CloudHashingGoods/GetDeviceInfos", runtime.WithHTTPPathPattern("/v1/device"))
+		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/cloud.hashing.goods.v1.CloudHashingGoods/GetDeviceInfos", runtime.WithHTTPPathPattern("/v1/get/devices"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -1021,7 +1075,7 @@ func RegisterCloudHashingGoodsHandlerClient(ctx context.Context, mux *runtime.Se
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/cloud.hashing.goods.v1.CloudHashingGoods/CreateGood", runtime.WithHTTPPathPattern("/v1/good"))
+		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/cloud.hashing.goods.v1.CloudHashingGoods/CreateGood", runtime.WithHTTPPathPattern("/v1/create/good"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -1037,11 +1091,11 @@ func RegisterCloudHashingGoodsHandlerClient(ctx context.Context, mux *runtime.Se
 
 	})
 
-	mux.Handle("PATCH", pattern_CloudHashingGoods_UpdateGood_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_CloudHashingGoods_UpdateGood_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/cloud.hashing.goods.v1.CloudHashingGoods/UpdateGood", runtime.WithHTTPPathPattern("/v1/good"))
+		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/cloud.hashing.goods.v1.CloudHashingGoods/UpdateGood", runtime.WithHTTPPathPattern("/v1/update/good"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -1061,7 +1115,7 @@ func RegisterCloudHashingGoodsHandlerClient(ctx context.Context, mux *runtime.Se
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/cloud.hashing.goods.v1.CloudHashingGoods/GetAllGoods", runtime.WithHTTPPathPattern("/v1/all-goods"))
+		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/cloud.hashing.goods.v1.CloudHashingGoods/GetAllGoods", runtime.WithHTTPPathPattern("/v1/get/all-goods"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -1081,7 +1135,7 @@ func RegisterCloudHashingGoodsHandlerClient(ctx context.Context, mux *runtime.Se
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/cloud.hashing.goods.v1.CloudHashingGoods/GetGoods", runtime.WithHTTPPathPattern("/v1/goods"))
+		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/cloud.hashing.goods.v1.CloudHashingGoods/GetGoods", runtime.WithHTTPPathPattern("/v1/get/goods"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -1103,31 +1157,31 @@ func RegisterCloudHashingGoodsHandlerClient(ctx context.Context, mux *runtime.Se
 var (
 	pattern_CloudHashingGoods_Version_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0}, []string{"version"}, ""))
 
-	pattern_CloudHashingGoods_CreateVendorLocation_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"v1", "vendor-location"}, ""))
+	pattern_CloudHashingGoods_CreateVendorLocation_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"v1", "create", "vendor-location"}, ""))
 
-	pattern_CloudHashingGoods_UpdateVendorLocation_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"v1", "vendor-location"}, ""))
+	pattern_CloudHashingGoods_UpdateVendorLocation_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"v1", "update", "vendor-location"}, ""))
 
-	pattern_CloudHashingGoods_GetVendorLocations_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"v1", "vendor-locations"}, ""))
+	pattern_CloudHashingGoods_GetVendorLocations_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"v1", "get", "vendor-locations"}, ""))
 
-	pattern_CloudHashingGoods_CreateTargetArea_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"v1", "target-area"}, ""))
+	pattern_CloudHashingGoods_CreateTargetArea_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"v1", "create", "target-area"}, ""))
 
-	pattern_CloudHashingGoods_UpdateTargetArea_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"v1", "target-area"}, ""))
+	pattern_CloudHashingGoods_UpdateTargetArea_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"v1", "update", "target-area"}, ""))
 
-	pattern_CloudHashingGoods_GetTargetAreas_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"v1", "target-areas"}, ""))
+	pattern_CloudHashingGoods_GetTargetAreas_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"v1", "get", "target-areas"}, ""))
 
-	pattern_CloudHashingGoods_CreateDeviceInfo_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"v1", "device"}, ""))
+	pattern_CloudHashingGoods_CreateDeviceInfo_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"v1", "create", "device"}, ""))
 
-	pattern_CloudHashingGoods_UpdateDeviceInfo_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"v1", "device"}, ""))
+	pattern_CloudHashingGoods_UpdateDeviceInfo_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"v1", "update", "device"}, ""))
 
-	pattern_CloudHashingGoods_GetDeviceInfos_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"v1", "device"}, ""))
+	pattern_CloudHashingGoods_GetDeviceInfos_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"v1", "get", "devices"}, ""))
 
-	pattern_CloudHashingGoods_CreateGood_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"v1", "good"}, ""))
+	pattern_CloudHashingGoods_CreateGood_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"v1", "create", "good"}, ""))
 
-	pattern_CloudHashingGoods_UpdateGood_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"v1", "good"}, ""))
+	pattern_CloudHashingGoods_UpdateGood_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"v1", "update", "good"}, ""))
 
-	pattern_CloudHashingGoods_GetAllGoods_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"v1", "all-goods"}, ""))
+	pattern_CloudHashingGoods_GetAllGoods_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"v1", "get", "all-goods"}, ""))
 
-	pattern_CloudHashingGoods_GetGoods_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"v1", "goods"}, ""))
+	pattern_CloudHashingGoods_GetGoods_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"v1", "get", "goods"}, ""))
 )
 
 var (

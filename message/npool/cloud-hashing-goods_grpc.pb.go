@@ -22,13 +22,13 @@ type CloudHashingGoodsClient interface {
 	Version(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*VersionResponse, error)
 	CreateVendorLocation(ctx context.Context, in *CreateVendorLocationRequest, opts ...grpc.CallOption) (*CreateVendorLocationResponse, error)
 	UpdateVendorLocation(ctx context.Context, in *UpdateVendorLocationRequest, opts ...grpc.CallOption) (*UpdateVendorLocationResponse, error)
-	GetVendorLocations(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*GetVendorLocationsResponse, error)
+	GetVendorLocations(ctx context.Context, in *GetVendorLocationsRequest, opts ...grpc.CallOption) (*GetVendorLocationsResponse, error)
 	CreateTargetArea(ctx context.Context, in *CreateTargetAreaRequest, opts ...grpc.CallOption) (*CreateTargetAreaResponse, error)
 	UpdateTargetArea(ctx context.Context, in *UpdateTargetAreaRequest, opts ...grpc.CallOption) (*UpdateTargetAreaResponse, error)
-	GetTargetAreas(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*GetTargetAreasResponse, error)
+	GetTargetAreas(ctx context.Context, in *GetTargetAreasRequest, opts ...grpc.CallOption) (*GetTargetAreasResponse, error)
 	CreateDeviceInfo(ctx context.Context, in *CreateDeviceInfoRequest, opts ...grpc.CallOption) (*CreateDeviceInfoResponse, error)
 	UpdateDeviceInfo(ctx context.Context, in *UpdateDeviceInfoRequest, opts ...grpc.CallOption) (*UpdateDeviceInfoResponse, error)
-	GetDeviceInfos(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*GetDeviceInfosResponse, error)
+	GetDeviceInfos(ctx context.Context, in *GetDeviceInfosRequest, opts ...grpc.CallOption) (*GetDeviceInfosResponse, error)
 	CreateGood(ctx context.Context, in *CreateGoodRequest, opts ...grpc.CallOption) (*CreateGoodResponse, error)
 	UpdateGood(ctx context.Context, in *UpdateGoodRequest, opts ...grpc.CallOption) (*UpdateGoodResponse, error)
 	// Can only accessed by APP administrator and platform administrator
@@ -72,7 +72,7 @@ func (c *cloudHashingGoodsClient) UpdateVendorLocation(ctx context.Context, in *
 	return out, nil
 }
 
-func (c *cloudHashingGoodsClient) GetVendorLocations(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*GetVendorLocationsResponse, error) {
+func (c *cloudHashingGoodsClient) GetVendorLocations(ctx context.Context, in *GetVendorLocationsRequest, opts ...grpc.CallOption) (*GetVendorLocationsResponse, error) {
 	out := new(GetVendorLocationsResponse)
 	err := c.cc.Invoke(ctx, "/cloud.hashing.goods.v1.CloudHashingGoods/GetVendorLocations", in, out, opts...)
 	if err != nil {
@@ -99,7 +99,7 @@ func (c *cloudHashingGoodsClient) UpdateTargetArea(ctx context.Context, in *Upda
 	return out, nil
 }
 
-func (c *cloudHashingGoodsClient) GetTargetAreas(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*GetTargetAreasResponse, error) {
+func (c *cloudHashingGoodsClient) GetTargetAreas(ctx context.Context, in *GetTargetAreasRequest, opts ...grpc.CallOption) (*GetTargetAreasResponse, error) {
 	out := new(GetTargetAreasResponse)
 	err := c.cc.Invoke(ctx, "/cloud.hashing.goods.v1.CloudHashingGoods/GetTargetAreas", in, out, opts...)
 	if err != nil {
@@ -126,7 +126,7 @@ func (c *cloudHashingGoodsClient) UpdateDeviceInfo(ctx context.Context, in *Upda
 	return out, nil
 }
 
-func (c *cloudHashingGoodsClient) GetDeviceInfos(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*GetDeviceInfosResponse, error) {
+func (c *cloudHashingGoodsClient) GetDeviceInfos(ctx context.Context, in *GetDeviceInfosRequest, opts ...grpc.CallOption) (*GetDeviceInfosResponse, error) {
 	out := new(GetDeviceInfosResponse)
 	err := c.cc.Invoke(ctx, "/cloud.hashing.goods.v1.CloudHashingGoods/GetDeviceInfos", in, out, opts...)
 	if err != nil {
@@ -178,13 +178,13 @@ type CloudHashingGoodsServer interface {
 	Version(context.Context, *emptypb.Empty) (*VersionResponse, error)
 	CreateVendorLocation(context.Context, *CreateVendorLocationRequest) (*CreateVendorLocationResponse, error)
 	UpdateVendorLocation(context.Context, *UpdateVendorLocationRequest) (*UpdateVendorLocationResponse, error)
-	GetVendorLocations(context.Context, *emptypb.Empty) (*GetVendorLocationsResponse, error)
+	GetVendorLocations(context.Context, *GetVendorLocationsRequest) (*GetVendorLocationsResponse, error)
 	CreateTargetArea(context.Context, *CreateTargetAreaRequest) (*CreateTargetAreaResponse, error)
 	UpdateTargetArea(context.Context, *UpdateTargetAreaRequest) (*UpdateTargetAreaResponse, error)
-	GetTargetAreas(context.Context, *emptypb.Empty) (*GetTargetAreasResponse, error)
+	GetTargetAreas(context.Context, *GetTargetAreasRequest) (*GetTargetAreasResponse, error)
 	CreateDeviceInfo(context.Context, *CreateDeviceInfoRequest) (*CreateDeviceInfoResponse, error)
 	UpdateDeviceInfo(context.Context, *UpdateDeviceInfoRequest) (*UpdateDeviceInfoResponse, error)
-	GetDeviceInfos(context.Context, *emptypb.Empty) (*GetDeviceInfosResponse, error)
+	GetDeviceInfos(context.Context, *GetDeviceInfosRequest) (*GetDeviceInfosResponse, error)
 	CreateGood(context.Context, *CreateGoodRequest) (*CreateGoodResponse, error)
 	UpdateGood(context.Context, *UpdateGoodRequest) (*UpdateGoodResponse, error)
 	// Can only accessed by APP administrator and platform administrator
@@ -207,7 +207,7 @@ func (UnimplementedCloudHashingGoodsServer) CreateVendorLocation(context.Context
 func (UnimplementedCloudHashingGoodsServer) UpdateVendorLocation(context.Context, *UpdateVendorLocationRequest) (*UpdateVendorLocationResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateVendorLocation not implemented")
 }
-func (UnimplementedCloudHashingGoodsServer) GetVendorLocations(context.Context, *emptypb.Empty) (*GetVendorLocationsResponse, error) {
+func (UnimplementedCloudHashingGoodsServer) GetVendorLocations(context.Context, *GetVendorLocationsRequest) (*GetVendorLocationsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetVendorLocations not implemented")
 }
 func (UnimplementedCloudHashingGoodsServer) CreateTargetArea(context.Context, *CreateTargetAreaRequest) (*CreateTargetAreaResponse, error) {
@@ -216,7 +216,7 @@ func (UnimplementedCloudHashingGoodsServer) CreateTargetArea(context.Context, *C
 func (UnimplementedCloudHashingGoodsServer) UpdateTargetArea(context.Context, *UpdateTargetAreaRequest) (*UpdateTargetAreaResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateTargetArea not implemented")
 }
-func (UnimplementedCloudHashingGoodsServer) GetTargetAreas(context.Context, *emptypb.Empty) (*GetTargetAreasResponse, error) {
+func (UnimplementedCloudHashingGoodsServer) GetTargetAreas(context.Context, *GetTargetAreasRequest) (*GetTargetAreasResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetTargetAreas not implemented")
 }
 func (UnimplementedCloudHashingGoodsServer) CreateDeviceInfo(context.Context, *CreateDeviceInfoRequest) (*CreateDeviceInfoResponse, error) {
@@ -225,7 +225,7 @@ func (UnimplementedCloudHashingGoodsServer) CreateDeviceInfo(context.Context, *C
 func (UnimplementedCloudHashingGoodsServer) UpdateDeviceInfo(context.Context, *UpdateDeviceInfoRequest) (*UpdateDeviceInfoResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateDeviceInfo not implemented")
 }
-func (UnimplementedCloudHashingGoodsServer) GetDeviceInfos(context.Context, *emptypb.Empty) (*GetDeviceInfosResponse, error) {
+func (UnimplementedCloudHashingGoodsServer) GetDeviceInfos(context.Context, *GetDeviceInfosRequest) (*GetDeviceInfosResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetDeviceInfos not implemented")
 }
 func (UnimplementedCloudHashingGoodsServer) CreateGood(context.Context, *CreateGoodRequest) (*CreateGoodResponse, error) {
@@ -308,7 +308,7 @@ func _CloudHashingGoods_UpdateVendorLocation_Handler(srv interface{}, ctx contex
 }
 
 func _CloudHashingGoods_GetVendorLocations_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(emptypb.Empty)
+	in := new(GetVendorLocationsRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -320,7 +320,7 @@ func _CloudHashingGoods_GetVendorLocations_Handler(srv interface{}, ctx context.
 		FullMethod: "/cloud.hashing.goods.v1.CloudHashingGoods/GetVendorLocations",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(CloudHashingGoodsServer).GetVendorLocations(ctx, req.(*emptypb.Empty))
+		return srv.(CloudHashingGoodsServer).GetVendorLocations(ctx, req.(*GetVendorLocationsRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -362,7 +362,7 @@ func _CloudHashingGoods_UpdateTargetArea_Handler(srv interface{}, ctx context.Co
 }
 
 func _CloudHashingGoods_GetTargetAreas_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(emptypb.Empty)
+	in := new(GetTargetAreasRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -374,7 +374,7 @@ func _CloudHashingGoods_GetTargetAreas_Handler(srv interface{}, ctx context.Cont
 		FullMethod: "/cloud.hashing.goods.v1.CloudHashingGoods/GetTargetAreas",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(CloudHashingGoodsServer).GetTargetAreas(ctx, req.(*emptypb.Empty))
+		return srv.(CloudHashingGoodsServer).GetTargetAreas(ctx, req.(*GetTargetAreasRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -416,7 +416,7 @@ func _CloudHashingGoods_UpdateDeviceInfo_Handler(srv interface{}, ctx context.Co
 }
 
 func _CloudHashingGoods_GetDeviceInfos_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(emptypb.Empty)
+	in := new(GetDeviceInfosRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -428,7 +428,7 @@ func _CloudHashingGoods_GetDeviceInfos_Handler(srv interface{}, ctx context.Cont
 		FullMethod: "/cloud.hashing.goods.v1.CloudHashingGoods/GetDeviceInfos",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(CloudHashingGoodsServer).GetDeviceInfos(ctx, req.(*emptypb.Empty))
+		return srv.(CloudHashingGoodsServer).GetDeviceInfos(ctx, req.(*GetDeviceInfosRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
