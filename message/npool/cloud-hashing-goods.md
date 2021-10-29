@@ -4,9 +4,15 @@
 ## Table of Contents
 
 - [npool/cloud-hashing-goods.proto](#npool/cloud-hashing-goods.proto)
+    - [CreateTargetAreaRequest](#cloud.hashing.goods.v1.CreateTargetAreaRequest)
+    - [CreateTargetAreaResponse](#cloud.hashing.goods.v1.CreateTargetAreaResponse)
     - [CreateVendorLocationRequest](#cloud.hashing.goods.v1.CreateVendorLocationRequest)
     - [CreateVendorLocationResponse](#cloud.hashing.goods.v1.CreateVendorLocationResponse)
+    - [GetTargetAreasResponse](#cloud.hashing.goods.v1.GetTargetAreasResponse)
     - [GetVendorLocationsResponse](#cloud.hashing.goods.v1.GetVendorLocationsResponse)
+    - [TargetAreaInfo](#cloud.hashing.goods.v1.TargetAreaInfo)
+    - [UpdateTargetAreaRequest](#cloud.hashing.goods.v1.UpdateTargetAreaRequest)
+    - [UpdateTargetAreaResponse](#cloud.hashing.goods.v1.UpdateTargetAreaResponse)
     - [UpdateVendorLocationRequest](#cloud.hashing.goods.v1.UpdateVendorLocationRequest)
     - [UpdateVendorLocationResponse](#cloud.hashing.goods.v1.UpdateVendorLocationResponse)
     - [VendorLocationInfo](#cloud.hashing.goods.v1.VendorLocationInfo)
@@ -22,6 +28,36 @@
 <p align="right"><a href="#top">Top</a></p>
 
 ## npool/cloud-hashing-goods.proto
+
+
+
+<a name="cloud.hashing.goods.v1.CreateTargetAreaRequest"></a>
+
+### CreateTargetAreaRequest
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| Info | [TargetAreaInfo](#cloud.hashing.goods.v1.TargetAreaInfo) |  |  |
+
+
+
+
+
+
+<a name="cloud.hashing.goods.v1.CreateTargetAreaResponse"></a>
+
+### CreateTargetAreaResponse
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| Info | [TargetAreaInfo](#cloud.hashing.goods.v1.TargetAreaInfo) |  |  |
+
+
+
 
 
 
@@ -55,6 +91,21 @@
 
 
 
+<a name="cloud.hashing.goods.v1.GetTargetAreasResponse"></a>
+
+### GetTargetAreasResponse
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| Infos | [TargetAreaInfo](#cloud.hashing.goods.v1.TargetAreaInfo) | repeated |  |
+
+
+
+
+
+
 <a name="cloud.hashing.goods.v1.GetVendorLocationsResponse"></a>
 
 ### GetVendorLocationsResponse
@@ -64,6 +115,53 @@
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
 | Infos | [VendorLocationInfo](#cloud.hashing.goods.v1.VendorLocationInfo) | repeated |  |
+
+
+
+
+
+
+<a name="cloud.hashing.goods.v1.TargetAreaInfo"></a>
+
+### TargetAreaInfo
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| ID | [string](#string) |  |  |
+| Continent | [string](#string) |  |  |
+| Country | [string](#string) |  |  |
+
+
+
+
+
+
+<a name="cloud.hashing.goods.v1.UpdateTargetAreaRequest"></a>
+
+### UpdateTargetAreaRequest
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| Info | [TargetAreaInfo](#cloud.hashing.goods.v1.TargetAreaInfo) |  |  |
+
+
+
+
+
+
+<a name="cloud.hashing.goods.v1.UpdateTargetAreaResponse"></a>
+
+### UpdateTargetAreaResponse
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| Info | [TargetAreaInfo](#cloud.hashing.goods.v1.TargetAreaInfo) |  |  |
 
 
 
@@ -151,6 +249,9 @@ Cloud Hashing Goods
 | CreateVendorLocation | [CreateVendorLocationRequest](#cloud.hashing.goods.v1.CreateVendorLocationRequest) | [CreateVendorLocationResponse](#cloud.hashing.goods.v1.CreateVendorLocationResponse) |  |
 | UpdateVendorLocation | [UpdateVendorLocationRequest](#cloud.hashing.goods.v1.UpdateVendorLocationRequest) | [UpdateVendorLocationResponse](#cloud.hashing.goods.v1.UpdateVendorLocationResponse) |  |
 | GetVendorLocations | [.google.protobuf.Empty](#google.protobuf.Empty) | [GetVendorLocationsResponse](#cloud.hashing.goods.v1.GetVendorLocationsResponse) |  |
+| CreateTargetArea | [CreateTargetAreaRequest](#cloud.hashing.goods.v1.CreateTargetAreaRequest) | [CreateTargetAreaResponse](#cloud.hashing.goods.v1.CreateTargetAreaResponse) |  |
+| UpdateTargetArea | [UpdateTargetAreaRequest](#cloud.hashing.goods.v1.UpdateTargetAreaRequest) | [UpdateTargetAreaResponse](#cloud.hashing.goods.v1.UpdateTargetAreaResponse) |  |
+| GetTargetAreas | [.google.protobuf.Empty](#google.protobuf.Empty) | [GetTargetAreasResponse](#cloud.hashing.goods.v1.GetTargetAreasResponse) |  |
 
  
 

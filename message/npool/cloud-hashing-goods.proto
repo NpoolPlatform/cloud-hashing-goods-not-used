@@ -33,6 +33,24 @@ service CloudHashingGoods {
             get: "/v1/vendor-locations"
         };
     }
+
+    rpc CreateTargetArea(CreateTargetAreaRequest) returns (CreateTargetAreaResponse) {
+        option (google.api.http) = {
+            post: "/v1/target-area"
+            body: "*"
+        };
+    }
+    rpc UpdateTargetArea(UpdateTargetAreaRequest) returns (UpdateTargetAreaResponse) {
+        option (google.api.http) = {
+            patch: "/v1/target-area"
+            body: "*"
+        };
+    }
+    rpc GetTargetAreas(google.protobuf.Empty) returns (GetTargetAreasResponse) {
+        option (google.api.http) = {
+            get: "/v1/target-areas"
+        };
+    }
 }
 
 // Request body and response
@@ -68,4 +86,28 @@ message GetVendorLocationsResponse {
     repeated VendorLocationInfo Infos = 700;
 }
 
+message TargetAreaInfo {
+    string ID = 800;
+    string Continent = 801;
+    string Country = 802;
+}
 
+message CreateTargetAreaRequest {
+    TargetAreaInfo Info = 900;
+}
+
+message CreateTargetAreaResponse {
+    TargetAreaInfo Info = 1000;
+}
+
+message UpdateTargetAreaRequest {
+    TargetAreaInfo Info = 900;
+}
+
+message UpdateTargetAreaResponse {
+    TargetAreaInfo Info = 1000;
+}
+
+message GetTargetAreasResponse {
+    repeated TargetAreaInfo Infos = 1100;
+}
