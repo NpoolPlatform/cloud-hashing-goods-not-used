@@ -50,7 +50,13 @@ pipeline {
         expression { BUILD_TARGET == 'true' }
       }
       steps {
-        sh 'make test'
+        sh (returnStdout: false, script: '''
+          devboxpod=`kubectl get pods -A | grep development-box | awk '{print $2}'`
+          servicename="cloud-hashing-goods"
+          kubectl cp ./ kube-system/$devboxpod:/tmp/$servicename
+          kubectl exec --namespace kube-system $devboxpod -- make -C /tmp/$servicename deps test
+          kubectl exec --namespace kube-system $devboxpod -- rm -rf /tmp/$servicename
+        '''.stripIndent())
       }
     }
 
