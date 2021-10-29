@@ -12,7 +12,7 @@ import (
 )
 
 func TestVersion(t *testing.T) {
-	if runByGithubAction, _ := strconv.ParseBool(os.Getenv("RUN_BY_GITHUB_ACTION")); runByGithubAction {
+	if runByGithubAction, err := strconv.ParseBool(os.Getenv("RUN_BY_GITHUB_ACTION")); err == nil && runByGithubAction {
 		return
 	}
 
