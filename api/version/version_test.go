@@ -17,6 +17,6 @@ func TestVersion(t *testing.T) {
 		assert.Equal(t, 200, resp.StatusCode())
 		ver, err := version.GetVersion()
 		assert.NotNil(t, err)
-		assert.Equal(t, ver, resp.Body())
+		assert.Equal(t, ver, string(resp.Body()))
 	}
 }
