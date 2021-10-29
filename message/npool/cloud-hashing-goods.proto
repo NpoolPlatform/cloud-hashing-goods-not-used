@@ -9,7 +9,6 @@ import "google/protobuf/empty.proto";
 
 // Cloud Hashing Goods
 service CloudHashingGoods {
-    // Method Version
     rpc Version (google.protobuf.Empty) returns (VersionResponse){
         option (google.api.http) = {
             get: "/version"
@@ -67,6 +66,31 @@ service CloudHashingGoods {
     rpc GetDeviceInfos(google.protobuf.Empty) returns (GetDeviceInfosResponse) {
         option (google.api.http) = {
             get: "/v1/device"
+        };
+    }
+
+    rpc CreateGood(CreateGoodRequest) returns (CreateGoodResponse) {
+        option (google.api.http) = {
+            post: "/v1/good"
+            body: "*"
+        };
+    }
+    rpc UpdateGood(UpdateGoodRequest) returns (UpdateGoodResponse) {
+        option (google.api.http) = {
+            patch: "/v1/good"
+            body: "*"
+        };
+    }
+    // Can only accessed by APP administrator and platform administrator
+    rpc GetAllGoods(GetAllGoodsRequest) returns (GetAllGoodsResponse) {
+        option (google.api.http) = {
+            get: "/v1/all-goods"
+        };
+    }
+    // Accessed by APP user
+    rpc GetGoods(GetGoodsRequest) returns (GetGoodsResponse) {
+        option (google.api.http) = {
+            get: "/v1/goods"
         };
     }
 }
@@ -156,4 +180,60 @@ message UpdateDeviceInfoResponse {
 
 message GetDeviceInfosResponse {
     repeated DeviceInfo Infos = 1700;
+}
+
+message GoodInfo {
+    string ID = 1800;
+    string DeviceInfoID = 1801;
+    float GasPrice = 1802;
+    bool SeparateGasFee = 1803;
+    float UnitPower = 1804;
+    int32 DurationDays = 1805;
+    string CoinInfoID = 1806;
+    bool Actuals = 1807;
+    int64 DeliveryTimestamp = 1808;
+    string InheritFromGoodID = 1809;
+    string VendorLocationID = 1810;
+    float Price = 1811;
+    string BenefitType = 1812;
+    bool Classic = 1813;
+    repeated string SupportCoinTypeIDs = 1814;
+    int32 Total = 1815;
+}
+
+message CreateGoodRequest {
+    GoodInfo Info = 1900;
+}
+
+message CreateGoodResponse {
+    GoodInfo Info = 2000;
+}
+
+message UpdateGoodRequest {
+    GoodInfo Info = 2100;
+}
+
+message UpdateGoodResponse {
+    GoodInfo Info = 2200;
+}
+
+message GetAllGoodsRequest {
+    string AppID = 2300;
+}
+
+message GoodAuthInfo {
+    GoodInfo Info = 2400;
+    bool AppAuthorized = 2401;
+}
+
+message GetAllGoodsResponse {
+    repeated GoodAuthInfo Infos = 2500;
+}
+
+message GetGoodsRequest {
+    string AppID = 2600;
+}
+
+message GetGoodsResponse {
+    repeated GoodInfo Infos = 2700;
 }

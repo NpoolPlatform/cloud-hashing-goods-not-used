@@ -6,17 +6,27 @@
 - [npool/cloud-hashing-goods.proto](#npool/cloud-hashing-goods.proto)
     - [CreateDeviceInfoRequest](#cloud.hashing.goods.v1.CreateDeviceInfoRequest)
     - [CreateDeviceInfoResponse](#cloud.hashing.goods.v1.CreateDeviceInfoResponse)
+    - [CreateGoodRequest](#cloud.hashing.goods.v1.CreateGoodRequest)
+    - [CreateGoodResponse](#cloud.hashing.goods.v1.CreateGoodResponse)
     - [CreateTargetAreaRequest](#cloud.hashing.goods.v1.CreateTargetAreaRequest)
     - [CreateTargetAreaResponse](#cloud.hashing.goods.v1.CreateTargetAreaResponse)
     - [CreateVendorLocationRequest](#cloud.hashing.goods.v1.CreateVendorLocationRequest)
     - [CreateVendorLocationResponse](#cloud.hashing.goods.v1.CreateVendorLocationResponse)
     - [DeviceInfo](#cloud.hashing.goods.v1.DeviceInfo)
+    - [GetAllGoodsRequest](#cloud.hashing.goods.v1.GetAllGoodsRequest)
+    - [GetAllGoodsResponse](#cloud.hashing.goods.v1.GetAllGoodsResponse)
     - [GetDeviceInfosResponse](#cloud.hashing.goods.v1.GetDeviceInfosResponse)
+    - [GetGoodsRequest](#cloud.hashing.goods.v1.GetGoodsRequest)
+    - [GetGoodsResponse](#cloud.hashing.goods.v1.GetGoodsResponse)
     - [GetTargetAreasResponse](#cloud.hashing.goods.v1.GetTargetAreasResponse)
     - [GetVendorLocationsResponse](#cloud.hashing.goods.v1.GetVendorLocationsResponse)
+    - [GoodAuthInfo](#cloud.hashing.goods.v1.GoodAuthInfo)
+    - [GoodInfo](#cloud.hashing.goods.v1.GoodInfo)
     - [TargetAreaInfo](#cloud.hashing.goods.v1.TargetAreaInfo)
     - [UpdateDeviceInfoRequest](#cloud.hashing.goods.v1.UpdateDeviceInfoRequest)
     - [UpdateDeviceInfoResponse](#cloud.hashing.goods.v1.UpdateDeviceInfoResponse)
+    - [UpdateGoodRequest](#cloud.hashing.goods.v1.UpdateGoodRequest)
+    - [UpdateGoodResponse](#cloud.hashing.goods.v1.UpdateGoodResponse)
     - [UpdateTargetAreaRequest](#cloud.hashing.goods.v1.UpdateTargetAreaRequest)
     - [UpdateTargetAreaResponse](#cloud.hashing.goods.v1.UpdateTargetAreaResponse)
     - [UpdateVendorLocationRequest](#cloud.hashing.goods.v1.UpdateVendorLocationRequest)
@@ -61,6 +71,36 @@
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
 | Info | [DeviceInfo](#cloud.hashing.goods.v1.DeviceInfo) |  |  |
+
+
+
+
+
+
+<a name="cloud.hashing.goods.v1.CreateGoodRequest"></a>
+
+### CreateGoodRequest
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| Info | [GoodInfo](#cloud.hashing.goods.v1.GoodInfo) |  |  |
+
+
+
+
+
+
+<a name="cloud.hashing.goods.v1.CreateGoodResponse"></a>
+
+### CreateGoodResponse
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| Info | [GoodInfo](#cloud.hashing.goods.v1.GoodInfo) |  |  |
 
 
 
@@ -146,6 +186,36 @@
 
 
 
+<a name="cloud.hashing.goods.v1.GetAllGoodsRequest"></a>
+
+### GetAllGoodsRequest
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| AppID | [string](#string) |  |  |
+
+
+
+
+
+
+<a name="cloud.hashing.goods.v1.GetAllGoodsResponse"></a>
+
+### GetAllGoodsResponse
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| Infos | [GoodAuthInfo](#cloud.hashing.goods.v1.GoodAuthInfo) | repeated |  |
+
+
+
+
+
+
 <a name="cloud.hashing.goods.v1.GetDeviceInfosResponse"></a>
 
 ### GetDeviceInfosResponse
@@ -155,6 +225,36 @@
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
 | Infos | [DeviceInfo](#cloud.hashing.goods.v1.DeviceInfo) | repeated |  |
+
+
+
+
+
+
+<a name="cloud.hashing.goods.v1.GetGoodsRequest"></a>
+
+### GetGoodsRequest
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| AppID | [string](#string) |  |  |
+
+
+
+
+
+
+<a name="cloud.hashing.goods.v1.GetGoodsResponse"></a>
+
+### GetGoodsResponse
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| Infos | [GoodInfo](#cloud.hashing.goods.v1.GoodInfo) | repeated |  |
 
 
 
@@ -185,6 +285,52 @@
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
 | Infos | [VendorLocationInfo](#cloud.hashing.goods.v1.VendorLocationInfo) | repeated |  |
+
+
+
+
+
+
+<a name="cloud.hashing.goods.v1.GoodAuthInfo"></a>
+
+### GoodAuthInfo
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| Info | [GoodInfo](#cloud.hashing.goods.v1.GoodInfo) |  |  |
+| AppAuthorized | [bool](#bool) |  |  |
+
+
+
+
+
+
+<a name="cloud.hashing.goods.v1.GoodInfo"></a>
+
+### GoodInfo
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| ID | [string](#string) |  |  |
+| DeviceInfoID | [string](#string) |  |  |
+| GasPrice | [float](#float) |  |  |
+| SeparateGasFee | [bool](#bool) |  |  |
+| UnitPower | [float](#float) |  |  |
+| DurationDays | [int32](#int32) |  |  |
+| CoinInfoID | [string](#string) |  |  |
+| Actuals | [bool](#bool) |  |  |
+| DeliveryTimestamp | [int64](#int64) |  |  |
+| InheritFromGoodID | [string](#string) |  |  |
+| VendorLocationID | [string](#string) |  |  |
+| Price | [float](#float) |  |  |
+| BenefitType | [string](#string) |  |  |
+| Classic | [bool](#bool) |  |  |
+| SupportCoinTypeIDs | [string](#string) | repeated |  |
+| Total | [int32](#int32) |  |  |
 
 
 
@@ -232,6 +378,36 @@
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
 | Info | [DeviceInfo](#cloud.hashing.goods.v1.DeviceInfo) |  |  |
+
+
+
+
+
+
+<a name="cloud.hashing.goods.v1.UpdateGoodRequest"></a>
+
+### UpdateGoodRequest
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| Info | [GoodInfo](#cloud.hashing.goods.v1.GoodInfo) |  |  |
+
+
+
+
+
+
+<a name="cloud.hashing.goods.v1.UpdateGoodResponse"></a>
+
+### UpdateGoodResponse
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| Info | [GoodInfo](#cloud.hashing.goods.v1.GoodInfo) |  |  |
 
 
 
@@ -345,7 +521,7 @@ Cloud Hashing Goods
 
 | Method Name | Request Type | Response Type | Description |
 | ----------- | ------------ | ------------- | ------------|
-| Version | [.google.protobuf.Empty](#google.protobuf.Empty) | [VersionResponse](#cloud.hashing.goods.v1.VersionResponse) | Method Version |
+| Version | [.google.protobuf.Empty](#google.protobuf.Empty) | [VersionResponse](#cloud.hashing.goods.v1.VersionResponse) |  |
 | CreateVendorLocation | [CreateVendorLocationRequest](#cloud.hashing.goods.v1.CreateVendorLocationRequest) | [CreateVendorLocationResponse](#cloud.hashing.goods.v1.CreateVendorLocationResponse) |  |
 | UpdateVendorLocation | [UpdateVendorLocationRequest](#cloud.hashing.goods.v1.UpdateVendorLocationRequest) | [UpdateVendorLocationResponse](#cloud.hashing.goods.v1.UpdateVendorLocationResponse) |  |
 | GetVendorLocations | [.google.protobuf.Empty](#google.protobuf.Empty) | [GetVendorLocationsResponse](#cloud.hashing.goods.v1.GetVendorLocationsResponse) |  |
@@ -355,6 +531,10 @@ Cloud Hashing Goods
 | CreateDeviceInfo | [CreateDeviceInfoRequest](#cloud.hashing.goods.v1.CreateDeviceInfoRequest) | [CreateDeviceInfoResponse](#cloud.hashing.goods.v1.CreateDeviceInfoResponse) |  |
 | UpdateDeviceInfo | [UpdateDeviceInfoRequest](#cloud.hashing.goods.v1.UpdateDeviceInfoRequest) | [UpdateDeviceInfoResponse](#cloud.hashing.goods.v1.UpdateDeviceInfoResponse) |  |
 | GetDeviceInfos | [.google.protobuf.Empty](#google.protobuf.Empty) | [GetDeviceInfosResponse](#cloud.hashing.goods.v1.GetDeviceInfosResponse) |  |
+| CreateGood | [CreateGoodRequest](#cloud.hashing.goods.v1.CreateGoodRequest) | [CreateGoodResponse](#cloud.hashing.goods.v1.CreateGoodResponse) |  |
+| UpdateGood | [UpdateGoodRequest](#cloud.hashing.goods.v1.UpdateGoodRequest) | [UpdateGoodResponse](#cloud.hashing.goods.v1.UpdateGoodResponse) |  |
+| GetAllGoods | [GetAllGoodsRequest](#cloud.hashing.goods.v1.GetAllGoodsRequest) | [GetAllGoodsResponse](#cloud.hashing.goods.v1.GetAllGoodsResponse) | Can only accessed by APP administrator and platform administrator |
+| GetGoods | [GetGoodsRequest](#cloud.hashing.goods.v1.GetGoodsRequest) | [GetGoodsResponse](#cloud.hashing.goods.v1.GetGoodsResponse) | Accessed by APP user |
 
  
 
