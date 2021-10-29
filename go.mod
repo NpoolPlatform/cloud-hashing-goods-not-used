@@ -4,11 +4,11 @@ go 1.16
 
 require (
 	github.com/NpoolPlatform/go-service-framework v0.0.0-20211028045918-06746bb7d612
-	github.com/go-resty/resty/v2 v2.6.0 // indirect
+	github.com/go-resty/resty/v2 v2.6.0
 	github.com/grpc-ecosystem/grpc-gateway v1.16.0
 	github.com/grpc-ecosystem/grpc-gateway/v2 v2.6.0
 	github.com/streadway/amqp v1.0.0
-	github.com/stretchr/testify v1.7.0 // indirect
+	github.com/stretchr/testify v1.7.0
 	github.com/urfave/cli/v2 v2.3.0
 	golang.org/x/crypto v0.0.0-20210921155107-089bfa567519 // indirect
 	golang.org/x/net v0.0.0-20211015210444-4f30a5c0130f // indirect
