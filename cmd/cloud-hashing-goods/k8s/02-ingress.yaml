@@ -15,7 +15,7 @@ spec:
       - path: /cloud-hashing-goods
         backend:
           serviceName: cloud-hashing-goods
-          servicePort: http
+          servicePort: api
 
 ---
 
@@ -36,4 +36,4 @@ spec:
       - path: /cloud-hashing-goods
         backend:
           serviceName: cloud-hashing-goods
-          servicePort: http
+          servicePort: api
