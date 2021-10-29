@@ -93,12 +93,57 @@ service CloudHashingGoods {
             get: "/v1/get/goods"
         };
     }
+
+    rpc SetAppGoodPrice(SetAppGoodPriceRequest) returns (SetAppGoodPriceResponse) {
+        option (google.api.http) = {
+            post: "/v1/set/app/good/price"
+            body: "*"
+        };
+    }
+
+    rpc AuthorizeAppGood(AuthorizeAppGoodRequest) returns (AuthorizeAppGoodResponse) {
+        option (google.api.http) = {
+            post: "/v1/authorize/app/good"
+            body: "*"
+        };
+    }
+    rpc UnauthorizeAppGood(UnauthorizeAppGoodRequest) returns (UnauthorizeAppGoodResponse) {
+        option (google.api.http) = {
+            post: "/v1/unauthorize/app/good"
+            body: "*"
+        };
+    }
+
+    rpc AuthorizeAppTargetArea(AuthorizeAppTargetAreaRequest) returns (google.protobuf.Empty) {
+        option (google.api.http) = {
+            post: "/v1/authorize/app/target-area"
+            body: "*"
+        };
+    }
+    rpc UnauthorizeAppTargetArea(UnauthorizeAppTargetAreaRequest) returns (google.protobuf.Empty) {
+        option (google.api.http) = {
+            post: "/v1/unauthorize/app/target-area"
+            body: "*"
+        };
+    }
+
+    rpc AuthorizeAppGoodTargetArea(AuthorizeAppGoodTargetAreaRequest) returns (google.protobuf.Empty) {
+        option (google.api.http) = {
+            post: "/v1/authorize/app/good/target-area"
+            body: "*"
+        };
+    }
+    rpc UnauthorizeAppGoodTargetArea(UnauthorizeAppGoodTargetAreaRequest) returns (google.protobuf.Empty) {
+        option (google.api.http) = {
+            post: "/v1/unauthorize/app/good/target-area"
+            body: "*"
+        };
+    }
 }
 
 message PageInfo {
     int32 PageIndex = 100;
-    int32 PageCount = 101;
-    int32 Total = 102;
+    int32 PageSize = 101;
 }
 
 // Request body and response
@@ -136,6 +181,7 @@ message GetVendorLocationsRequest {
 
 message GetVendorLocationsResponse {
     repeated VendorLocationInfo Infos = 900;
+    int32 Total = 901;
 }
 
 message TargetAreaInfo {
@@ -166,6 +212,7 @@ message GetTargetAreasRequest {
 
 message GetTargetAreasResponse {
     repeated TargetAreaInfo Infos = 1600;
+    int32 Total = 1501;
 }
 
 message DeviceInfo {
@@ -198,6 +245,7 @@ message GetDeviceInfosRequest {
 
 message GetDeviceInfosResponse {
     repeated DeviceInfo Infos = 2300;
+    int32 Total = 2301;
 }
 
 message GoodInfo {
@@ -247,6 +295,7 @@ message GoodAuthInfo {
 
 message GetAllGoodsResponse {
     repeated GoodAuthInfo Infos = 3100;
+    int32 Total = 3101;
 }
 
 message GetGoodsRequest {
@@ -256,4 +305,61 @@ message GetGoodsRequest {
 
 message GetGoodsResponse {
     repeated GoodInfo Infos = 3300;
+    int32 Total = 3301;
+}
+
+message GoodPrice {
+    float Price = 3400;
+    float GasPrice = 3401;
+}
+
+message SetAppGoodPriceRequest {
+    string GoodID = 3500;
+    GoodPrice GoodPrice = 3501;
+}
+
+message SetAppGoodPriceResponse {
+    GoodPrice GoodPrice = 3600;
+    GoodInfo GoodInfo = 3601;
+}
+
+message AuthorizeAppGoodRequest {
+    string AppID = 3700;
+    string GoodID = 3701;
+    bool AuthorizeAllTargetArea = 3702;
+}
+
+message AuthorizeAppGoodResponse {
+    GoodAuthInfo Info = 3800;
+}
+
+message UnauthorizeAppGoodRequest {
+    string AppID = 3900;
+    string GoodID = 3901;
+}
+
+message UnauthorizeAppGoodResponse {
+    GoodAuthInfo Info = 4000;
+}
+
+message AuthorizeAppTargetAreaRequest {
+    string AppID = 4100;
+    string TargetAreaID = 4101;
+}
+
+message UnauthorizeAppTargetAreaRequest {
+    string AppID = 4100;
+    string TargetAreaID = 4101;
+}
+
+message AuthorizeAppGoodTargetAreaRequest {
+    string AppID = 4200;
+    string GoodID = 4201;
+    string TargetAreaID = 4202;
+}
+
+message UnauthorizeAppGoodTargetAreaRequest {
+    string AppID = 4300;
+    string GoodID = 4301;
+    string TargetAreaID = 4302;
 }
