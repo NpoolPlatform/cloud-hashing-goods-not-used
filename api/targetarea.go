@@ -4,16 +4,18 @@ import (
 	"context"
 
 	"github.com/NpoolPlatform/cloud-hashing-goods/message/npool"
+
+	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/target-area" //nolint
 )
 
 func (s *Server) CreateTargetArea(ctx context.Context, in *npool.CreateTargetAreaRequest) (*npool.CreateTargetAreaResponse, error) {
-	return nil, nil
+	return targetarea.Create(in)
 }
 
 func (s *Server) UpdateTargetArea(ctx context.Context, in *npool.UpdateTargetAreaRequest) (*npool.UpdateTargetAreaResponse, error) {
-	return nil, nil
+	return targetarea.Update(in)
 }
 
 func (s *Server) GetTargetAreas(ctx context.Context, in *npool.GetTargetAreasRequest) (*npool.GetTargetAreasResponse, error) {
-	return nil, nil
+	return targetarea.GetAll(in)
 }
