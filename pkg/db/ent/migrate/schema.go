@@ -35,9 +35,22 @@ var (
 		Columns:    GoodInfosColumns,
 		PrimaryKey: []*schema.Column{GoodInfosColumns[0]},
 	}
+	// TargetAreasColumns holds the columns for the "target_areas" table.
+	TargetAreasColumns = []*schema.Column{
+		{Name: "id", Type: field.TypeUUID},
+		{Name: "continent", Type: field.TypeString},
+		{Name: "country", Type: field.TypeString},
+	}
+	// TargetAreasTable holds the schema information for the "target_areas" table.
+	TargetAreasTable = &schema.Table{
+		Name:       "target_areas",
+		Columns:    TargetAreasColumns,
+		PrimaryKey: []*schema.Column{TargetAreasColumns[0]},
+	}
 	// Tables holds all the tables in the schema.
 	Tables = []*schema.Table{
 		GoodInfosTable,
+		TargetAreasTable,
 	}
 )
 

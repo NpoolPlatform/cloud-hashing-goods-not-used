@@ -5,6 +5,7 @@ package ent
 import (
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/goodinfo"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/schema"
+	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/targetarea"
 	"github.com/google/uuid"
 )
 
@@ -22,4 +23,10 @@ func init() {
 	goodinfoDescID := goodinfoFields[0].Descriptor()
 	// goodinfo.DefaultID holds the default value on creation for the id field.
 	goodinfo.DefaultID = goodinfoDescID.Default.(func() uuid.UUID)
+	targetareaFields := schema.TargetArea{}.Fields()
+	_ = targetareaFields
+	// targetareaDescID is the schema descriptor for id field.
+	targetareaDescID := targetareaFields[0].Descriptor()
+	// targetarea.DefaultID holds the default value on creation for the id field.
+	targetarea.DefaultID = targetareaDescID.Default.(func() uuid.UUID)
 }

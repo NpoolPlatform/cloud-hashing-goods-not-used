@@ -22,6 +22,19 @@ func (f GoodInfoFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, er
 	return f(ctx, mv)
 }
 
+// The TargetAreaFunc type is an adapter to allow the use of ordinary
+// function as TargetArea mutator.
+type TargetAreaFunc func(context.Context, *ent.TargetAreaMutation) (ent.Value, error)
+
+// Mutate calls f(ctx, m).
+func (f TargetAreaFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, error) {
+	mv, ok := m.(*ent.TargetAreaMutation)
+	if !ok {
+		return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.TargetAreaMutation", m)
+	}
+	return f(ctx, mv)
+}
+
 // Condition is a hook condition function.
 type Condition func(context.Context, ent.Mutation) bool
 

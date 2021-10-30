@@ -11,6 +11,7 @@ import (
 	"github.com/google/uuid"
 
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/goodinfo"
+	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/targetarea"
 
 	"entgo.io/ent/dialect"
 	"entgo.io/ent/dialect/sql"
@@ -23,6 +24,8 @@ type Client struct {
 	Schema *migrate.Schema
 	// GoodInfo is the client for interacting with the GoodInfo builders.
 	GoodInfo *GoodInfoClient
+	// TargetArea is the client for interacting with the TargetArea builders.
+	TargetArea *TargetAreaClient
 }
 
 // NewClient creates a new client configured with the given options.
@@ -37,6 +40,7 @@ func NewClient(opts ...Option) *Client {
 func (c *Client) init() {
 	c.Schema = migrate.NewSchema(c.driver)
 	c.GoodInfo = NewGoodInfoClient(c.config)
+	c.TargetArea = NewTargetAreaClient(c.config)
 }
 
 // Open opens a database/sql.DB specified by the driver name and
@@ -68,9 +72,10 @@ func (c *Client) Tx(ctx context.Context) (*Tx, error) {
 	cfg := c.config
 	cfg.driver = tx
 	return &Tx{
-		ctx:      ctx,
-		config:   cfg,
-		GoodInfo: NewGoodInfoClient(cfg),
+		ctx:        ctx,
+		config:     cfg,
+		GoodInfo:   NewGoodInfoClient(cfg),
+		TargetArea: NewTargetAreaClient(cfg),
 	}, nil
 }
 
@@ -88,8 +93,9 @@ func (c *Client) BeginTx(ctx context.Context, opts *sql.TxOptions) (*Tx, error) 
 	cfg := c.config
 	cfg.driver = &txDriver{tx: tx, drv: c.driver}
 	return &Tx{
-		config:   cfg,
-		GoodInfo: NewGoodInfoClient(cfg),
+		config:     cfg,
+		GoodInfo:   NewGoodInfoClient(cfg),
+		TargetArea: NewTargetAreaClient(cfg),
 	}, nil
 }
 
@@ -120,6 +126,7 @@ func (c *Client) Close() error {
 // In order to add hooks to a specific client, call: `client.Node.Use(...)`.
 func (c *Client) Use(hooks ...Hook) {
 	c.GoodInfo.Use(hooks...)
+	c.TargetArea.Use(hooks...)
 }
 
 // GoodInfoClient is a client for the GoodInfo schema.
@@ -210,4 +217,94 @@ func (c *GoodInfoClient) GetX(ctx context.Context, id uuid.UUID) *GoodInfo {
 // Hooks returns the client hooks.
 func (c *GoodInfoClient) Hooks() []Hook {
 	return c.hooks.GoodInfo
+}
+
+// TargetAreaClient is a client for the TargetArea schema.
+type TargetAreaClient struct {
+	config
+}
+
+// NewTargetAreaClient returns a client for the TargetArea from the given config.
+func NewTargetAreaClient(c config) *TargetAreaClient {
+	return &TargetAreaClient{config: c}
+}
+
+// Use adds a list of mutation hooks to the hooks stack.
+// A call to `Use(f, g, h)` equals to `targetarea.Hooks(f(g(h())))`.
+func (c *TargetAreaClient) Use(hooks ...Hook) {
+	c.hooks.TargetArea = append(c.hooks.TargetArea, hooks...)
+}
+
+// Create returns a create builder for TargetArea.
+func (c *TargetAreaClient) Create() *TargetAreaCreate {
+	mutation := newTargetAreaMutation(c.config, OpCreate)
+	return &TargetAreaCreate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// CreateBulk returns a builder for creating a bulk of TargetArea entities.
+func (c *TargetAreaClient) CreateBulk(builders ...*TargetAreaCreate) *TargetAreaCreateBulk {
+	return &TargetAreaCreateBulk{config: c.config, builders: builders}
+}
+
+// Update returns an update builder for TargetArea.
+func (c *TargetAreaClient) Update() *TargetAreaUpdate {
+	mutation := newTargetAreaMutation(c.config, OpUpdate)
+	return &TargetAreaUpdate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOne returns an update builder for the given entity.
+func (c *TargetAreaClient) UpdateOne(ta *TargetArea) *TargetAreaUpdateOne {
+	mutation := newTargetAreaMutation(c.config, OpUpdateOne, withTargetArea(ta))
+	return &TargetAreaUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOneID returns an update builder for the given id.
+func (c *TargetAreaClient) UpdateOneID(id uuid.UUID) *TargetAreaUpdateOne {
+	mutation := newTargetAreaMutation(c.config, OpUpdateOne, withTargetAreaID(id))
+	return &TargetAreaUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// Delete returns a delete builder for TargetArea.
+func (c *TargetAreaClient) Delete() *TargetAreaDelete {
+	mutation := newTargetAreaMutation(c.config, OpDelete)
+	return &TargetAreaDelete{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// DeleteOne returns a delete builder for the given entity.
+func (c *TargetAreaClient) DeleteOne(ta *TargetArea) *TargetAreaDeleteOne {
+	return c.DeleteOneID(ta.ID)
+}
+
+// DeleteOneID returns a delete builder for the given id.
+func (c *TargetAreaClient) DeleteOneID(id uuid.UUID) *TargetAreaDeleteOne {
+	builder := c.Delete().Where(targetarea.ID(id))
+	builder.mutation.id = &id
+	builder.mutation.op = OpDeleteOne
+	return &TargetAreaDeleteOne{builder}
+}
+
+// Query returns a query builder for TargetArea.
+func (c *TargetAreaClient) Query() *TargetAreaQuery {
+	return &TargetAreaQuery{
+		config: c.config,
+	}
+}
+
+// Get returns a TargetArea entity by its id.
+func (c *TargetAreaClient) Get(ctx context.Context, id uuid.UUID) (*TargetArea, error) {
+	return c.Query().Where(targetarea.ID(id)).Only(ctx)
+}
+
+// GetX is like Get, but panics if an error occurs.
+func (c *TargetAreaClient) GetX(ctx context.Context, id uuid.UUID) *TargetArea {
+	obj, err := c.Get(ctx, id)
+	if err != nil {
+		panic(err)
+	}
+	return obj
+}
+
+// Hooks returns the client hooks.
+func (c *TargetAreaClient) Hooks() []Hook {
+	return c.hooks.TargetArea
 }

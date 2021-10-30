@@ -8,3 +8,6 @@ import (
 
 // GoodInfo is the predicate function for goodinfo builders.
 type GoodInfo func(*sql.Selector)
+
+// TargetArea is the predicate function for targetarea builders.
+type TargetArea func(*sql.Selector)

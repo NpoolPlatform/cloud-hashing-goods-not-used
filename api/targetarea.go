@@ -14,27 +14,27 @@ import (
 )
 
 func (s *Server) CreateTargetArea(ctx context.Context, in *npool.CreateTargetAreaRequest) (*npool.CreateTargetAreaResponse, error) {
-	resp, err := targetarea.Create(in)
+	resp, err := targetarea.Create(ctx, in)
 	if err != nil {
-		logger.Sugar().Errorw("create target area error: %w", err)
+		logger.Sugar().Errorf("create target area error: %w", err)
 		return &npool.CreateTargetAreaResponse{}, status.Error(codes.Internal, "internal server error")
 	}
 	return resp, nil
 }
 
 func (s *Server) UpdateTargetArea(ctx context.Context, in *npool.UpdateTargetAreaRequest) (*npool.UpdateTargetAreaResponse, error) {
-	resp, err := targetarea.Update(in)
+	resp, err := targetarea.Update(ctx, in)
 	if err != nil {
-		logger.Sugar().Errorw("update target area error: %w", err)
+		logger.Sugar().Errorf("update target area error: %w", err)
 		return &npool.UpdateTargetAreaResponse{}, status.Error(codes.Internal, "internal server error")
 	}
 	return resp, nil
 }
 
 func (s *Server) GetTargetAreas(ctx context.Context, in *npool.GetTargetAreasRequest) (*npool.GetTargetAreasResponse, error) {
-	resp, err := targetarea.GetAll(in)
+	resp, err := targetarea.GetAll(ctx, in)
 	if err != nil {
-		logger.Sugar().Errorw("get target areas error: %w", err)
+		logger.Sugar().Errorf("get target areas error: %w", err)
 		return &npool.GetTargetAreasResponse{}, status.Error(codes.Internal, "internal server error")
 	}
 	return resp, nil

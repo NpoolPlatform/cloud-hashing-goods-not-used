@@ -14,6 +14,8 @@ type Tx struct {
 	config
 	// GoodInfo is the client for interacting with the GoodInfo builders.
 	GoodInfo *GoodInfoClient
+	// TargetArea is the client for interacting with the TargetArea builders.
+	TargetArea *TargetAreaClient
 
 	// lazily loaded.
 	client     *Client
@@ -150,6 +152,7 @@ func (tx *Tx) Client() *Client {
 
 func (tx *Tx) init() {
 	tx.GoodInfo = NewGoodInfoClient(tx.config)
+	tx.TargetArea = NewTargetAreaClient(tx.config)
 }
 
 // txDriver wraps the given dialect.Tx with a nop dialect.Driver implementation.
