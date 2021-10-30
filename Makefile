@@ -54,6 +54,9 @@ verify-shellcheck: ## Runs shellcheck
 verify-spelling: ## Verifies spelling.
 	${REPO_ROOT}/hack/verify-spelling.sh
 
+gen-ent:
+	go generate ./pkg/db/ent
+
 all: verify-build
 
 ${SERVICES}:
