@@ -3,19 +3,39 @@ package api
 import (
 	"context"
 
+	"github.com/NpoolPlatform/go-service-framework/pkg/logger"
+
 	"github.com/NpoolPlatform/cloud-hashing-goods/message/npool"
 
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/target-area" //nolint
+
+	"google.golang.org/grpc/codes"
+	"google.golang.org/grpc/status"
 )
 
 func (s *Server) CreateTargetArea(ctx context.Context, in *npool.CreateTargetAreaRequest) (*npool.CreateTargetAreaResponse, error) {
-	return targetarea.Create(in)
+	resp, err := targetarea.Create(in)
+	if err != nil {
+		logger.Sugar().Errorw("create target area error: %w", err)
+		return &npool.CreateTargetAreaResponse{}, status.Error(codes.Internal, "internal server error")
+	}
+	return resp, nil
 }
 
 func (s *Server) UpdateTargetArea(ctx context.Context, in *npool.UpdateTargetAreaRequest) (*npool.UpdateTargetAreaResponse, error) {
-	return targetarea.Update(in)
+	resp, err := targetarea.Update(in)
+	if err != nil {
+		logger.Sugar().Errorw("update target area error: %w", err)
+		return &npool.UpdateTargetAreaResponse{}, status.Error(codes.Internal, "internal server error")
+	}
+	return resp, nil
 }
 
 func (s *Server) GetTargetAreas(ctx context.Context, in *npool.GetTargetAreasRequest) (*npool.GetTargetAreasResponse, error) {
-	return targetarea.GetAll(in)
+	resp, err := targetarea.GetAll(in)
+	if err != nil {
+		logger.Sugar().Errorw("get target areas error: %w", err)
+		return &npool.GetTargetAreasResponse{}, status.Error(codes.Internal, "internal server error")
+	}
+	return resp, nil
 }
