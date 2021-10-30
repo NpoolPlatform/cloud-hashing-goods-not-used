@@ -4,6 +4,7 @@ import (
 	"time"
 
 	"github.com/NpoolPlatform/cloud-hashing-goods/api"
+	db "github.com/NpoolPlatform/cloud-hashing-goods/pkg/db"
 	msgcli "github.com/NpoolPlatform/cloud-hashing-goods/pkg/message/client"
 	msglistener "github.com/NpoolPlatform/cloud-hashing-goods/pkg/message/listener"
 	msg "github.com/NpoolPlatform/cloud-hashing-goods/pkg/message/message"
@@ -24,6 +25,10 @@ var runCmd = &cli.Command{
 	Aliases: []string{"s"},
 	Usage:   "Run the daemon",
 	Action: func(c *cli.Context) error {
+		if err := db.Init(); err != nil {
+			return err
+		}
+
 		go func() {
 			if err := grpc2.RunGRPC(rpcRegister); err != nil {
 				logger.Sugar().Errorf("fail to run grpc server: %v", err)

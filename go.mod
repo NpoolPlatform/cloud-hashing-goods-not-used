@@ -3,8 +3,10 @@ module github.com/NpoolPlatform/cloud-hashing-goods
 go 1.16
 
 require (
+	entgo.io/ent v0.9.1
 	github.com/NpoolPlatform/go-service-framework v0.0.0-20211028045918-06746bb7d612
 	github.com/go-resty/resty/v2 v2.6.0
+	github.com/google/uuid v1.3.0
 	github.com/grpc-ecosystem/grpc-gateway v1.16.0
 	github.com/grpc-ecosystem/grpc-gateway/v2 v2.6.0
 	github.com/streadway/amqp v1.0.0
