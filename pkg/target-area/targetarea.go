@@ -61,5 +61,24 @@ func Update(ctx context.Context, in *npool.UpdateTargetAreaRequest) (*npool.Upda
 }
 
 func GetAll(ctx context.Context, in *npool.GetTargetAreasRequest) (*npool.GetTargetAreasResponse, error) {
-	return nil, nil
+	infos, err := db.Client().
+		TargetArea.
+		Query().
+		All(ctx)
+	if err != nil {
+		return nil, err
+	}
+
+	areas := []*npool.TargetAreaInfo{}
+	for _, info := range infos {
+		areas = append(areas, &npool.TargetAreaInfo{
+			ID:        info.ID.String(),
+			Continent: info.Continent,
+			Country:   info.Country,
+		})
+	}
+
+	return &npool.GetTargetAreasResponse{
+		Infos: areas,
+	}, nil
 }
