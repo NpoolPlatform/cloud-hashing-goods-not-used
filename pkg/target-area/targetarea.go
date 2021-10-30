@@ -8,8 +8,6 @@ import (
 
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/targetarea"
-
-	"github.com/NpoolPlatform/go-service-framework/pkg/logger"
 )
 
 func Create(ctx context.Context, in *npool.CreateTargetAreaRequest) (*npool.CreateTargetAreaResponse, error) {
@@ -25,9 +23,8 @@ func Create(ctx context.Context, in *npool.CreateTargetAreaRequest) (*npool.Crea
 		Limit(1).
 		All(ctx)
 
-	logger.Sugar().Infof("%v: %v", info1, err)
 	if err == nil {
-		if 0 < len(info1) {
+		if len(info1) > 0 {
 			return &npool.CreateTargetAreaResponse{
 				Info: &npool.TargetAreaInfo{
 					ID:        info1[0].ID.String(),
