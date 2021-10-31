@@ -11,7 +11,7 @@ import (
 
 	"github.com/NpoolPlatform/cloud-hashing-goods/message/npool"
 	db "github.com/NpoolPlatform/cloud-hashing-goods/pkg/db"
-	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/service-name"
+	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/service-name" //nolint
 
 	"github.com/NpoolPlatform/go-service-framework/pkg/app"
 
@@ -29,8 +29,14 @@ func init() {
 
 	configPath := fmt.Sprintf("%s/../../cmd/cloud-hashing-goods", path.Dir(myPath))
 
-	app.Init(servicename.ServiceName, "", "", "", configPath, nil, nil)
-	db.Init()
+	err := app.Init(servicename.ServiceName, "", "", "", configPath, nil, nil)
+	if err != nil {
+		return
+	}
+	err = db.Init()
+	if err != nil {
+		return
+	}
 }
 
 func TestCRUD(t *testing.T) {
