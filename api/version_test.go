@@ -7,8 +7,6 @@ import (
 
 	"github.com/go-resty/resty/v2"
 	"github.com/stretchr/testify/assert"
-
-	_ "github.com/NpoolPlatform/go-service-framework/pkg/version"
 )
 
 func TestVersion(t *testing.T) {
