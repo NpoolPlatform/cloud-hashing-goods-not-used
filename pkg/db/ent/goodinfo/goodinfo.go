@@ -4,6 +4,7 @@ package goodinfo
 
 import (
 	"fmt"
+	"time"
 
 	"github.com/google/uuid"
 )
@@ -47,6 +48,10 @@ const (
 	FieldReviewState = "review_state"
 	// FieldTotal holds the string denoting the total field in the database.
 	FieldTotal = "total"
+	// FieldCreateAt holds the string denoting the create_at field in the database.
+	FieldCreateAt = "create_at"
+	// FieldUpdateAt holds the string denoting the update_at field in the database.
+	FieldUpdateAt = "update_at"
 	// Table holds the table name of the goodinfo in the database.
 	Table = "good_infos"
 )
@@ -71,6 +76,8 @@ var Columns = []string{
 	FieldReviewerID,
 	FieldReviewState,
 	FieldTotal,
+	FieldCreateAt,
+	FieldUpdateAt,
 }
 
 // ValidColumn reports if the column name is valid (part of the table columns).
@@ -94,6 +101,12 @@ var (
 	PriceValidator func(int) error
 	// TotalValidator is a validator for the "total" field. It is called by the builders before save.
 	TotalValidator func(int) error
+	// DefaultCreateAt holds the default value on creation for the "create_at" field.
+	DefaultCreateAt func() time.Time
+	// DefaultUpdateAt holds the default value on creation for the "update_at" field.
+	DefaultUpdateAt func() time.Time
+	// UpdateDefaultUpdateAt holds the default value on update for the "update_at" field.
+	UpdateDefaultUpdateAt func() time.Time
 	// DefaultID holds the default value on creation for the "id" field.
 	DefaultID func() uuid.UUID
 )

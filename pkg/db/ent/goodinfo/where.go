@@ -143,7 +143,7 @@ func Actuals(v bool) predicate.GoodInfo {
 }
 
 // DeliveryTime applies equality check predicate on the "delivery_time" field. It's identical to DeliveryTimeEQ.
-func DeliveryTime(v time.Time) predicate.GoodInfo {
+func DeliveryTime(v int) predicate.GoodInfo {
 	return predicate.GoodInfo(func(s *sql.Selector) {
 		s.Where(sql.EQ(s.C(FieldDeliveryTime), v))
 	})
@@ -188,6 +188,20 @@ func ReviewerID(v uuid.UUID) predicate.GoodInfo {
 func Total(v int) predicate.GoodInfo {
 	return predicate.GoodInfo(func(s *sql.Selector) {
 		s.Where(sql.EQ(s.C(FieldTotal), v))
+	})
+}
+
+// CreateAt applies equality check predicate on the "create_at" field. It's identical to CreateAtEQ.
+func CreateAt(v time.Time) predicate.GoodInfo {
+	return predicate.GoodInfo(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldCreateAt), v))
+	})
+}
+
+// UpdateAt applies equality check predicate on the "update_at" field. It's identical to UpdateAtEQ.
+func UpdateAt(v time.Time) predicate.GoodInfo {
+	return predicate.GoodInfo(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldUpdateAt), v))
 	})
 }
 
@@ -600,21 +614,21 @@ func ActualsNEQ(v bool) predicate.GoodInfo {
 }
 
 // DeliveryTimeEQ applies the EQ predicate on the "delivery_time" field.
-func DeliveryTimeEQ(v time.Time) predicate.GoodInfo {
+func DeliveryTimeEQ(v int) predicate.GoodInfo {
 	return predicate.GoodInfo(func(s *sql.Selector) {
 		s.Where(sql.EQ(s.C(FieldDeliveryTime), v))
 	})
 }
 
 // DeliveryTimeNEQ applies the NEQ predicate on the "delivery_time" field.
-func DeliveryTimeNEQ(v time.Time) predicate.GoodInfo {
+func DeliveryTimeNEQ(v int) predicate.GoodInfo {
 	return predicate.GoodInfo(func(s *sql.Selector) {
 		s.Where(sql.NEQ(s.C(FieldDeliveryTime), v))
 	})
 }
 
 // DeliveryTimeIn applies the In predicate on the "delivery_time" field.
-func DeliveryTimeIn(vs ...time.Time) predicate.GoodInfo {
+func DeliveryTimeIn(vs ...int) predicate.GoodInfo {
 	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
@@ -631,7 +645,7 @@ func DeliveryTimeIn(vs ...time.Time) predicate.GoodInfo {
 }
 
 // DeliveryTimeNotIn applies the NotIn predicate on the "delivery_time" field.
-func DeliveryTimeNotIn(vs ...time.Time) predicate.GoodInfo {
+func DeliveryTimeNotIn(vs ...int) predicate.GoodInfo {
 	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
@@ -648,28 +662,28 @@ func DeliveryTimeNotIn(vs ...time.Time) predicate.GoodInfo {
 }
 
 // DeliveryTimeGT applies the GT predicate on the "delivery_time" field.
-func DeliveryTimeGT(v time.Time) predicate.GoodInfo {
+func DeliveryTimeGT(v int) predicate.GoodInfo {
 	return predicate.GoodInfo(func(s *sql.Selector) {
 		s.Where(sql.GT(s.C(FieldDeliveryTime), v))
 	})
 }
 
 // DeliveryTimeGTE applies the GTE predicate on the "delivery_time" field.
-func DeliveryTimeGTE(v time.Time) predicate.GoodInfo {
+func DeliveryTimeGTE(v int) predicate.GoodInfo {
 	return predicate.GoodInfo(func(s *sql.Selector) {
 		s.Where(sql.GTE(s.C(FieldDeliveryTime), v))
 	})
 }
 
 // DeliveryTimeLT applies the LT predicate on the "delivery_time" field.
-func DeliveryTimeLT(v time.Time) predicate.GoodInfo {
+func DeliveryTimeLT(v int) predicate.GoodInfo {
 	return predicate.GoodInfo(func(s *sql.Selector) {
 		s.Where(sql.LT(s.C(FieldDeliveryTime), v))
 	})
 }
 
 // DeliveryTimeLTE applies the LTE predicate on the "delivery_time" field.
-func DeliveryTimeLTE(v time.Time) predicate.GoodInfo {
+func DeliveryTimeLTE(v int) predicate.GoodInfo {
 	return predicate.GoodInfo(func(s *sql.Selector) {
 		s.Where(sql.LTE(s.C(FieldDeliveryTime), v))
 	})
@@ -1162,6 +1176,158 @@ func TotalLT(v int) predicate.GoodInfo {
 func TotalLTE(v int) predicate.GoodInfo {
 	return predicate.GoodInfo(func(s *sql.Selector) {
 		s.Where(sql.LTE(s.C(FieldTotal), v))
+	})
+}
+
+// CreateAtEQ applies the EQ predicate on the "create_at" field.
+func CreateAtEQ(v time.Time) predicate.GoodInfo {
+	return predicate.GoodInfo(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldCreateAt), v))
+	})
+}
+
+// CreateAtNEQ applies the NEQ predicate on the "create_at" field.
+func CreateAtNEQ(v time.Time) predicate.GoodInfo {
+	return predicate.GoodInfo(func(s *sql.Selector) {
+		s.Where(sql.NEQ(s.C(FieldCreateAt), v))
+	})
+}
+
+// CreateAtIn applies the In predicate on the "create_at" field.
+func CreateAtIn(vs ...time.Time) predicate.GoodInfo {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.GoodInfo(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.In(s.C(FieldCreateAt), v...))
+	})
+}
+
+// CreateAtNotIn applies the NotIn predicate on the "create_at" field.
+func CreateAtNotIn(vs ...time.Time) predicate.GoodInfo {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.GoodInfo(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.NotIn(s.C(FieldCreateAt), v...))
+	})
+}
+
+// CreateAtGT applies the GT predicate on the "create_at" field.
+func CreateAtGT(v time.Time) predicate.GoodInfo {
+	return predicate.GoodInfo(func(s *sql.Selector) {
+		s.Where(sql.GT(s.C(FieldCreateAt), v))
+	})
+}
+
+// CreateAtGTE applies the GTE predicate on the "create_at" field.
+func CreateAtGTE(v time.Time) predicate.GoodInfo {
+	return predicate.GoodInfo(func(s *sql.Selector) {
+		s.Where(sql.GTE(s.C(FieldCreateAt), v))
+	})
+}
+
+// CreateAtLT applies the LT predicate on the "create_at" field.
+func CreateAtLT(v time.Time) predicate.GoodInfo {
+	return predicate.GoodInfo(func(s *sql.Selector) {
+		s.Where(sql.LT(s.C(FieldCreateAt), v))
+	})
+}
+
+// CreateAtLTE applies the LTE predicate on the "create_at" field.
+func CreateAtLTE(v time.Time) predicate.GoodInfo {
+	return predicate.GoodInfo(func(s *sql.Selector) {
+		s.Where(sql.LTE(s.C(FieldCreateAt), v))
+	})
+}
+
+// UpdateAtEQ applies the EQ predicate on the "update_at" field.
+func UpdateAtEQ(v time.Time) predicate.GoodInfo {
+	return predicate.GoodInfo(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldUpdateAt), v))
+	})
+}
+
+// UpdateAtNEQ applies the NEQ predicate on the "update_at" field.
+func UpdateAtNEQ(v time.Time) predicate.GoodInfo {
+	return predicate.GoodInfo(func(s *sql.Selector) {
+		s.Where(sql.NEQ(s.C(FieldUpdateAt), v))
+	})
+}
+
+// UpdateAtIn applies the In predicate on the "update_at" field.
+func UpdateAtIn(vs ...time.Time) predicate.GoodInfo {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.GoodInfo(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.In(s.C(FieldUpdateAt), v...))
+	})
+}
+
+// UpdateAtNotIn applies the NotIn predicate on the "update_at" field.
+func UpdateAtNotIn(vs ...time.Time) predicate.GoodInfo {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.GoodInfo(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.NotIn(s.C(FieldUpdateAt), v...))
+	})
+}
+
+// UpdateAtGT applies the GT predicate on the "update_at" field.
+func UpdateAtGT(v time.Time) predicate.GoodInfo {
+	return predicate.GoodInfo(func(s *sql.Selector) {
+		s.Where(sql.GT(s.C(FieldUpdateAt), v))
+	})
+}
+
+// UpdateAtGTE applies the GTE predicate on the "update_at" field.
+func UpdateAtGTE(v time.Time) predicate.GoodInfo {
+	return predicate.GoodInfo(func(s *sql.Selector) {
+		s.Where(sql.GTE(s.C(FieldUpdateAt), v))
+	})
+}
+
+// UpdateAtLT applies the LT predicate on the "update_at" field.
+func UpdateAtLT(v time.Time) predicate.GoodInfo {
+	return predicate.GoodInfo(func(s *sql.Selector) {
+		s.Where(sql.LT(s.C(FieldUpdateAt), v))
+	})
+}
+
+// UpdateAtLTE applies the LTE predicate on the "update_at" field.
+func UpdateAtLTE(v time.Time) predicate.GoodInfo {
+	return predicate.GoodInfo(func(s *sql.Selector) {
+		s.Where(sql.LTE(s.C(FieldUpdateAt), v))
 	})
 }
 

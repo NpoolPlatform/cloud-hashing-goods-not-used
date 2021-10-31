@@ -18,7 +18,7 @@ var (
 		{Name: "duration", Type: field.TypeInt},
 		{Name: "coin_info_id", Type: field.TypeUUID},
 		{Name: "actuals", Type: field.TypeBool},
-		{Name: "delivery_time", Type: field.TypeTime},
+		{Name: "delivery_time", Type: field.TypeInt},
 		{Name: "inherit_from_good_id", Type: field.TypeUUID},
 		{Name: "vendor_location_id", Type: field.TypeUUID},
 		{Name: "price", Type: field.TypeInt},
@@ -28,6 +28,8 @@ var (
 		{Name: "reviewer_id", Type: field.TypeUUID},
 		{Name: "review_state", Type: field.TypeEnum, Enums: []string{"passed", "rejected"}},
 		{Name: "total", Type: field.TypeInt},
+		{Name: "create_at", Type: field.TypeTime, Default: "CURRENT_TIMESTAMP"},
+		{Name: "update_at", Type: field.TypeTime, Default: "CURRENT_TIMESTAMP"},
 	}
 	// GoodInfosTable holds the schema information for the "good_infos" table.
 	GoodInfosTable = &schema.Table{
@@ -40,6 +42,8 @@ var (
 		{Name: "id", Type: field.TypeUUID, Unique: true},
 		{Name: "continent", Type: field.TypeString},
 		{Name: "country", Type: field.TypeString},
+		{Name: "create_at", Type: field.TypeTime, Default: "CURRENT_TIMESTAMP"},
+		{Name: "update_at", Type: field.TypeTime, Default: "CURRENT_TIMESTAMP"},
 	}
 	// TargetAreasTable holds the schema information for the "target_areas" table.
 	TargetAreasTable = &schema.Table{

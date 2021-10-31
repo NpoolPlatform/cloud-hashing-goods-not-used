@@ -1,7 +1,10 @@
 package schema
 
 import (
+	"time"
+
 	"entgo.io/ent"
+	"entgo.io/ent/dialect/entsql"
 	"entgo.io/ent/schema/field"
 	"entgo.io/ent/schema/index"
 
@@ -21,6 +24,17 @@ func (TargetArea) Fields() []ent.Field {
 			Unique(),
 		field.String("continent"),
 		field.String("country"),
+		field.Time("create_at").
+			Default(time.Now).
+			Annotations(&entsql.Annotation{
+				Default: "CURRENT_TIMESTAMP",
+			}),
+		field.Time("update_at").
+			Default(time.Now).
+			UpdateDefault(time.Now).
+			Annotations(&entsql.Annotation{
+				Default: "CURRENT_TIMESTAMP",
+			}),
 	}
 }
 

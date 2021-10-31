@@ -67,8 +67,8 @@ func (gic *GoodInfoCreate) SetActuals(b bool) *GoodInfoCreate {
 }
 
 // SetDeliveryTime sets the "delivery_time" field.
-func (gic *GoodInfoCreate) SetDeliveryTime(t time.Time) *GoodInfoCreate {
-	gic.mutation.SetDeliveryTime(t)
+func (gic *GoodInfoCreate) SetDeliveryTime(i int) *GoodInfoCreate {
+	gic.mutation.SetDeliveryTime(i)
 	return gic
 }
 
@@ -123,6 +123,34 @@ func (gic *GoodInfoCreate) SetReviewState(gs goodinfo.ReviewState) *GoodInfoCrea
 // SetTotal sets the "total" field.
 func (gic *GoodInfoCreate) SetTotal(i int) *GoodInfoCreate {
 	gic.mutation.SetTotal(i)
+	return gic
+}
+
+// SetCreateAt sets the "create_at" field.
+func (gic *GoodInfoCreate) SetCreateAt(t time.Time) *GoodInfoCreate {
+	gic.mutation.SetCreateAt(t)
+	return gic
+}
+
+// SetNillableCreateAt sets the "create_at" field if the given value is not nil.
+func (gic *GoodInfoCreate) SetNillableCreateAt(t *time.Time) *GoodInfoCreate {
+	if t != nil {
+		gic.SetCreateAt(*t)
+	}
+	return gic
+}
+
+// SetUpdateAt sets the "update_at" field.
+func (gic *GoodInfoCreate) SetUpdateAt(t time.Time) *GoodInfoCreate {
+	gic.mutation.SetUpdateAt(t)
+	return gic
+}
+
+// SetNillableUpdateAt sets the "update_at" field if the given value is not nil.
+func (gic *GoodInfoCreate) SetNillableUpdateAt(t *time.Time) *GoodInfoCreate {
+	if t != nil {
+		gic.SetUpdateAt(*t)
+	}
 	return gic
 }
 
@@ -203,6 +231,14 @@ func (gic *GoodInfoCreate) ExecX(ctx context.Context) {
 
 // defaults sets the default values of the builder before save.
 func (gic *GoodInfoCreate) defaults() {
+	if _, ok := gic.mutation.CreateAt(); !ok {
+		v := goodinfo.DefaultCreateAt()
+		gic.mutation.SetCreateAt(v)
+	}
+	if _, ok := gic.mutation.UpdateAt(); !ok {
+		v := goodinfo.DefaultUpdateAt()
+		gic.mutation.SetUpdateAt(v)
+	}
 	if _, ok := gic.mutation.ID(); !ok {
 		v := goodinfo.DefaultID()
 		gic.mutation.SetID(v)
@@ -297,6 +333,12 @@ func (gic *GoodInfoCreate) check() error {
 			return &ValidationError{Name: "total", err: fmt.Errorf(`ent: validator failed for field "total": %w`, err)}
 		}
 	}
+	if _, ok := gic.mutation.CreateAt(); !ok {
+		return &ValidationError{Name: "create_at", err: errors.New(`ent: missing required field "create_at"`)}
+	}
+	if _, ok := gic.mutation.UpdateAt(); !ok {
+		return &ValidationError{Name: "update_at", err: errors.New(`ent: missing required field "update_at"`)}
+	}
 	return nil
 }
 
@@ -388,7 +430,7 @@ func (gic *GoodInfoCreate) createSpec() (*GoodInfo, *sqlgraph.CreateSpec) {
 	}
 	if value, ok := gic.mutation.DeliveryTime(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeTime,
+			Type:   field.TypeInt,
 			Value:  value,
 			Column: goodinfo.FieldDeliveryTime,
 		})
@@ -465,6 +507,22 @@ func (gic *GoodInfoCreate) createSpec() (*GoodInfo, *sqlgraph.CreateSpec) {
 			Column: goodinfo.FieldTotal,
 		})
 		_node.Total = value
+	}
+	if value, ok := gic.mutation.CreateAt(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeTime,
+			Value:  value,
+			Column: goodinfo.FieldCreateAt,
+		})
+		_node.CreateAt = value
+	}
+	if value, ok := gic.mutation.UpdateAt(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeTime,
+			Value:  value,
+			Column: goodinfo.FieldUpdateAt,
+		})
+		_node.UpdateAt = value
 	}
 	return _node, _spec
 }
@@ -605,7 +663,7 @@ func (u *GoodInfoUpsert) UpdateActuals() *GoodInfoUpsert {
 }
 
 // SetDeliveryTime sets the "delivery_time" field.
-func (u *GoodInfoUpsert) SetDeliveryTime(v time.Time) *GoodInfoUpsert {
+func (u *GoodInfoUpsert) SetDeliveryTime(v int) *GoodInfoUpsert {
 	u.Set(goodinfo.FieldDeliveryTime, v)
 	return u
 }
@@ -721,6 +779,30 @@ func (u *GoodInfoUpsert) SetTotal(v int) *GoodInfoUpsert {
 // UpdateTotal sets the "total" field to the value that was provided on create.
 func (u *GoodInfoUpsert) UpdateTotal() *GoodInfoUpsert {
 	u.SetExcluded(goodinfo.FieldTotal)
+	return u
+}
+
+// SetCreateAt sets the "create_at" field.
+func (u *GoodInfoUpsert) SetCreateAt(v time.Time) *GoodInfoUpsert {
+	u.Set(goodinfo.FieldCreateAt, v)
+	return u
+}
+
+// UpdateCreateAt sets the "create_at" field to the value that was provided on create.
+func (u *GoodInfoUpsert) UpdateCreateAt() *GoodInfoUpsert {
+	u.SetExcluded(goodinfo.FieldCreateAt)
+	return u
+}
+
+// SetUpdateAt sets the "update_at" field.
+func (u *GoodInfoUpsert) SetUpdateAt(v time.Time) *GoodInfoUpsert {
+	u.Set(goodinfo.FieldUpdateAt, v)
+	return u
+}
+
+// UpdateUpdateAt sets the "update_at" field to the value that was provided on create.
+func (u *GoodInfoUpsert) UpdateUpdateAt() *GoodInfoUpsert {
+	u.SetExcluded(goodinfo.FieldUpdateAt)
 	return u
 }
 
@@ -873,7 +955,7 @@ func (u *GoodInfoUpsertOne) UpdateActuals() *GoodInfoUpsertOne {
 }
 
 // SetDeliveryTime sets the "delivery_time" field.
-func (u *GoodInfoUpsertOne) SetDeliveryTime(v time.Time) *GoodInfoUpsertOne {
+func (u *GoodInfoUpsertOne) SetDeliveryTime(v int) *GoodInfoUpsertOne {
 	return u.Update(func(s *GoodInfoUpsert) {
 		s.SetDeliveryTime(v)
 	})
@@ -1009,6 +1091,34 @@ func (u *GoodInfoUpsertOne) SetTotal(v int) *GoodInfoUpsertOne {
 func (u *GoodInfoUpsertOne) UpdateTotal() *GoodInfoUpsertOne {
 	return u.Update(func(s *GoodInfoUpsert) {
 		s.UpdateTotal()
+	})
+}
+
+// SetCreateAt sets the "create_at" field.
+func (u *GoodInfoUpsertOne) SetCreateAt(v time.Time) *GoodInfoUpsertOne {
+	return u.Update(func(s *GoodInfoUpsert) {
+		s.SetCreateAt(v)
+	})
+}
+
+// UpdateCreateAt sets the "create_at" field to the value that was provided on create.
+func (u *GoodInfoUpsertOne) UpdateCreateAt() *GoodInfoUpsertOne {
+	return u.Update(func(s *GoodInfoUpsert) {
+		s.UpdateCreateAt()
+	})
+}
+
+// SetUpdateAt sets the "update_at" field.
+func (u *GoodInfoUpsertOne) SetUpdateAt(v time.Time) *GoodInfoUpsertOne {
+	return u.Update(func(s *GoodInfoUpsert) {
+		s.SetUpdateAt(v)
+	})
+}
+
+// UpdateUpdateAt sets the "update_at" field to the value that was provided on create.
+func (u *GoodInfoUpsertOne) UpdateUpdateAt() *GoodInfoUpsertOne {
+	return u.Update(func(s *GoodInfoUpsert) {
+		s.UpdateUpdateAt()
 	})
 }
 
@@ -1327,7 +1437,7 @@ func (u *GoodInfoUpsertBulk) UpdateActuals() *GoodInfoUpsertBulk {
 }
 
 // SetDeliveryTime sets the "delivery_time" field.
-func (u *GoodInfoUpsertBulk) SetDeliveryTime(v time.Time) *GoodInfoUpsertBulk {
+func (u *GoodInfoUpsertBulk) SetDeliveryTime(v int) *GoodInfoUpsertBulk {
 	return u.Update(func(s *GoodInfoUpsert) {
 		s.SetDeliveryTime(v)
 	})
@@ -1463,6 +1573,34 @@ func (u *GoodInfoUpsertBulk) SetTotal(v int) *GoodInfoUpsertBulk {
 func (u *GoodInfoUpsertBulk) UpdateTotal() *GoodInfoUpsertBulk {
 	return u.Update(func(s *GoodInfoUpsert) {
 		s.UpdateTotal()
+	})
+}
+
+// SetCreateAt sets the "create_at" field.
+func (u *GoodInfoUpsertBulk) SetCreateAt(v time.Time) *GoodInfoUpsertBulk {
+	return u.Update(func(s *GoodInfoUpsert) {
+		s.SetCreateAt(v)
+	})
+}
+
+// UpdateCreateAt sets the "create_at" field to the value that was provided on create.
+func (u *GoodInfoUpsertBulk) UpdateCreateAt() *GoodInfoUpsertBulk {
+	return u.Update(func(s *GoodInfoUpsert) {
+		s.UpdateCreateAt()
+	})
+}
+
+// SetUpdateAt sets the "update_at" field.
+func (u *GoodInfoUpsertBulk) SetUpdateAt(v time.Time) *GoodInfoUpsertBulk {
+	return u.Update(func(s *GoodInfoUpsert) {
+		s.SetUpdateAt(v)
+	})
+}
+
+// UpdateUpdateAt sets the "update_at" field to the value that was provided on create.
+func (u *GoodInfoUpsertBulk) UpdateUpdateAt() *GoodInfoUpsertBulk {
+	return u.Update(func(s *GoodInfoUpsert) {
+		s.UpdateUpdateAt()
 	})
 }
 

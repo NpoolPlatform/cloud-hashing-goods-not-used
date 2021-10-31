@@ -3,6 +3,8 @@
 package targetarea
 
 import (
+	"time"
+
 	"github.com/google/uuid"
 )
 
@@ -15,6 +17,10 @@ const (
 	FieldContinent = "continent"
 	// FieldCountry holds the string denoting the country field in the database.
 	FieldCountry = "country"
+	// FieldCreateAt holds the string denoting the create_at field in the database.
+	FieldCreateAt = "create_at"
+	// FieldUpdateAt holds the string denoting the update_at field in the database.
+	FieldUpdateAt = "update_at"
 	// Table holds the table name of the targetarea in the database.
 	Table = "target_areas"
 )
@@ -24,6 +30,8 @@ var Columns = []string{
 	FieldID,
 	FieldContinent,
 	FieldCountry,
+	FieldCreateAt,
+	FieldUpdateAt,
 }
 
 // ValidColumn reports if the column name is valid (part of the table columns).
@@ -37,6 +45,12 @@ func ValidColumn(column string) bool {
 }
 
 var (
+	// DefaultCreateAt holds the default value on creation for the "create_at" field.
+	DefaultCreateAt func() time.Time
+	// DefaultUpdateAt holds the default value on creation for the "update_at" field.
+	DefaultUpdateAt func() time.Time
+	// UpdateDefaultUpdateAt holds the default value on update for the "update_at" field.
+	UpdateDefaultUpdateAt func() time.Time
 	// DefaultID holds the default value on creation for the "id" field.
 	DefaultID func() uuid.UUID
 )

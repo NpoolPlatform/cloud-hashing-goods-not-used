@@ -6,6 +6,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"time"
 
 	"entgo.io/ent/dialect"
 	"entgo.io/ent/dialect/sql"
@@ -32,6 +33,34 @@ func (tac *TargetAreaCreate) SetContinent(s string) *TargetAreaCreate {
 // SetCountry sets the "country" field.
 func (tac *TargetAreaCreate) SetCountry(s string) *TargetAreaCreate {
 	tac.mutation.SetCountry(s)
+	return tac
+}
+
+// SetCreateAt sets the "create_at" field.
+func (tac *TargetAreaCreate) SetCreateAt(t time.Time) *TargetAreaCreate {
+	tac.mutation.SetCreateAt(t)
+	return tac
+}
+
+// SetNillableCreateAt sets the "create_at" field if the given value is not nil.
+func (tac *TargetAreaCreate) SetNillableCreateAt(t *time.Time) *TargetAreaCreate {
+	if t != nil {
+		tac.SetCreateAt(*t)
+	}
+	return tac
+}
+
+// SetUpdateAt sets the "update_at" field.
+func (tac *TargetAreaCreate) SetUpdateAt(t time.Time) *TargetAreaCreate {
+	tac.mutation.SetUpdateAt(t)
+	return tac
+}
+
+// SetNillableUpdateAt sets the "update_at" field if the given value is not nil.
+func (tac *TargetAreaCreate) SetNillableUpdateAt(t *time.Time) *TargetAreaCreate {
+	if t != nil {
+		tac.SetUpdateAt(*t)
+	}
 	return tac
 }
 
@@ -112,6 +141,14 @@ func (tac *TargetAreaCreate) ExecX(ctx context.Context) {
 
 // defaults sets the default values of the builder before save.
 func (tac *TargetAreaCreate) defaults() {
+	if _, ok := tac.mutation.CreateAt(); !ok {
+		v := targetarea.DefaultCreateAt()
+		tac.mutation.SetCreateAt(v)
+	}
+	if _, ok := tac.mutation.UpdateAt(); !ok {
+		v := targetarea.DefaultUpdateAt()
+		tac.mutation.SetUpdateAt(v)
+	}
 	if _, ok := tac.mutation.ID(); !ok {
 		v := targetarea.DefaultID()
 		tac.mutation.SetID(v)
@@ -125,6 +162,12 @@ func (tac *TargetAreaCreate) check() error {
 	}
 	if _, ok := tac.mutation.Country(); !ok {
 		return &ValidationError{Name: "country", err: errors.New(`ent: missing required field "country"`)}
+	}
+	if _, ok := tac.mutation.CreateAt(); !ok {
+		return &ValidationError{Name: "create_at", err: errors.New(`ent: missing required field "create_at"`)}
+	}
+	if _, ok := tac.mutation.UpdateAt(); !ok {
+		return &ValidationError{Name: "update_at", err: errors.New(`ent: missing required field "update_at"`)}
 	}
 	return nil
 }
@@ -174,6 +217,22 @@ func (tac *TargetAreaCreate) createSpec() (*TargetArea, *sqlgraph.CreateSpec) {
 			Column: targetarea.FieldCountry,
 		})
 		_node.Country = value
+	}
+	if value, ok := tac.mutation.CreateAt(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeTime,
+			Value:  value,
+			Column: targetarea.FieldCreateAt,
+		})
+		_node.CreateAt = value
+	}
+	if value, ok := tac.mutation.UpdateAt(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeTime,
+			Value:  value,
+			Column: targetarea.FieldUpdateAt,
+		})
+		_node.UpdateAt = value
 	}
 	return _node, _spec
 }
@@ -253,6 +312,30 @@ func (u *TargetAreaUpsert) UpdateCountry() *TargetAreaUpsert {
 	return u
 }
 
+// SetCreateAt sets the "create_at" field.
+func (u *TargetAreaUpsert) SetCreateAt(v time.Time) *TargetAreaUpsert {
+	u.Set(targetarea.FieldCreateAt, v)
+	return u
+}
+
+// UpdateCreateAt sets the "create_at" field to the value that was provided on create.
+func (u *TargetAreaUpsert) UpdateCreateAt() *TargetAreaUpsert {
+	u.SetExcluded(targetarea.FieldCreateAt)
+	return u
+}
+
+// SetUpdateAt sets the "update_at" field.
+func (u *TargetAreaUpsert) SetUpdateAt(v time.Time) *TargetAreaUpsert {
+	u.Set(targetarea.FieldUpdateAt, v)
+	return u
+}
+
+// UpdateUpdateAt sets the "update_at" field to the value that was provided on create.
+func (u *TargetAreaUpsert) UpdateUpdateAt() *TargetAreaUpsert {
+	u.SetExcluded(targetarea.FieldUpdateAt)
+	return u
+}
+
 // UpdateNewValues updates the fields using the new values that were set on create except the ID field.
 // Using this option is equivalent to using:
 //
@@ -328,6 +411,34 @@ func (u *TargetAreaUpsertOne) SetCountry(v string) *TargetAreaUpsertOne {
 func (u *TargetAreaUpsertOne) UpdateCountry() *TargetAreaUpsertOne {
 	return u.Update(func(s *TargetAreaUpsert) {
 		s.UpdateCountry()
+	})
+}
+
+// SetCreateAt sets the "create_at" field.
+func (u *TargetAreaUpsertOne) SetCreateAt(v time.Time) *TargetAreaUpsertOne {
+	return u.Update(func(s *TargetAreaUpsert) {
+		s.SetCreateAt(v)
+	})
+}
+
+// UpdateCreateAt sets the "create_at" field to the value that was provided on create.
+func (u *TargetAreaUpsertOne) UpdateCreateAt() *TargetAreaUpsertOne {
+	return u.Update(func(s *TargetAreaUpsert) {
+		s.UpdateCreateAt()
+	})
+}
+
+// SetUpdateAt sets the "update_at" field.
+func (u *TargetAreaUpsertOne) SetUpdateAt(v time.Time) *TargetAreaUpsertOne {
+	return u.Update(func(s *TargetAreaUpsert) {
+		s.SetUpdateAt(v)
+	})
+}
+
+// UpdateUpdateAt sets the "update_at" field to the value that was provided on create.
+func (u *TargetAreaUpsertOne) UpdateUpdateAt() *TargetAreaUpsertOne {
+	return u.Update(func(s *TargetAreaUpsert) {
+		s.UpdateUpdateAt()
 	})
 }
 
@@ -572,6 +683,34 @@ func (u *TargetAreaUpsertBulk) SetCountry(v string) *TargetAreaUpsertBulk {
 func (u *TargetAreaUpsertBulk) UpdateCountry() *TargetAreaUpsertBulk {
 	return u.Update(func(s *TargetAreaUpsert) {
 		s.UpdateCountry()
+	})
+}
+
+// SetCreateAt sets the "create_at" field.
+func (u *TargetAreaUpsertBulk) SetCreateAt(v time.Time) *TargetAreaUpsertBulk {
+	return u.Update(func(s *TargetAreaUpsert) {
+		s.SetCreateAt(v)
+	})
+}
+
+// UpdateCreateAt sets the "create_at" field to the value that was provided on create.
+func (u *TargetAreaUpsertBulk) UpdateCreateAt() *TargetAreaUpsertBulk {
+	return u.Update(func(s *TargetAreaUpsert) {
+		s.UpdateCreateAt()
+	})
+}
+
+// SetUpdateAt sets the "update_at" field.
+func (u *TargetAreaUpsertBulk) SetUpdateAt(v time.Time) *TargetAreaUpsertBulk {
+	return u.Update(func(s *TargetAreaUpsert) {
+		s.SetUpdateAt(v)
+	})
+}
+
+// UpdateUpdateAt sets the "update_at" field to the value that was provided on create.
+func (u *TargetAreaUpsertBulk) UpdateUpdateAt() *TargetAreaUpsertBulk {
+	return u.Update(func(s *TargetAreaUpsert) {
+		s.UpdateUpdateAt()
 	})
 }
 

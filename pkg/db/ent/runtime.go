@@ -3,6 +3,8 @@
 package ent
 
 import (
+	"time"
+
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/goodinfo"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/schema"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/targetarea"
@@ -35,12 +37,32 @@ func init() {
 	goodinfoDescTotal := goodinfoFields[17].Descriptor()
 	// goodinfo.TotalValidator is a validator for the "total" field. It is called by the builders before save.
 	goodinfo.TotalValidator = goodinfoDescTotal.Validators[0].(func(int) error)
+	// goodinfoDescCreateAt is the schema descriptor for create_at field.
+	goodinfoDescCreateAt := goodinfoFields[18].Descriptor()
+	// goodinfo.DefaultCreateAt holds the default value on creation for the create_at field.
+	goodinfo.DefaultCreateAt = goodinfoDescCreateAt.Default.(func() time.Time)
+	// goodinfoDescUpdateAt is the schema descriptor for update_at field.
+	goodinfoDescUpdateAt := goodinfoFields[19].Descriptor()
+	// goodinfo.DefaultUpdateAt holds the default value on creation for the update_at field.
+	goodinfo.DefaultUpdateAt = goodinfoDescUpdateAt.Default.(func() time.Time)
+	// goodinfo.UpdateDefaultUpdateAt holds the default value on update for the update_at field.
+	goodinfo.UpdateDefaultUpdateAt = goodinfoDescUpdateAt.UpdateDefault.(func() time.Time)
 	// goodinfoDescID is the schema descriptor for id field.
 	goodinfoDescID := goodinfoFields[0].Descriptor()
 	// goodinfo.DefaultID holds the default value on creation for the id field.
 	goodinfo.DefaultID = goodinfoDescID.Default.(func() uuid.UUID)
 	targetareaFields := schema.TargetArea{}.Fields()
 	_ = targetareaFields
+	// targetareaDescCreateAt is the schema descriptor for create_at field.
+	targetareaDescCreateAt := targetareaFields[3].Descriptor()
+	// targetarea.DefaultCreateAt holds the default value on creation for the create_at field.
+	targetarea.DefaultCreateAt = targetareaDescCreateAt.Default.(func() time.Time)
+	// targetareaDescUpdateAt is the schema descriptor for update_at field.
+	targetareaDescUpdateAt := targetareaFields[4].Descriptor()
+	// targetarea.DefaultUpdateAt holds the default value on creation for the update_at field.
+	targetarea.DefaultUpdateAt = targetareaDescUpdateAt.Default.(func() time.Time)
+	// targetarea.UpdateDefaultUpdateAt holds the default value on update for the update_at field.
+	targetarea.UpdateDefaultUpdateAt = targetareaDescUpdateAt.UpdateDefault.(func() time.Time)
 	// targetareaDescID is the schema descriptor for id field.
 	targetareaDescID := targetareaFields[0].Descriptor()
 	// targetarea.DefaultID holds the default value on creation for the id field.

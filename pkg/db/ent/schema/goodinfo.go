@@ -1,7 +1,10 @@
 package schema
 
 import (
+	"time"
+
 	"entgo.io/ent"
+	"entgo.io/ent/dialect/entsql"
 	"entgo.io/ent/schema/field"
 
 	"github.com/google/uuid"
@@ -28,7 +31,7 @@ func (GoodInfo) Fields() []ent.Field {
 			Positive(),
 		field.UUID("coin_info_id", uuid.UUID{}),
 		field.Bool("actuals"),
-		field.Time("delivery_time"),
+		field.Int("delivery_time"),
 		field.UUID("inherit_from_good_id", uuid.UUID{}),
 		field.UUID("vendor_location_id", uuid.UUID{}),
 		field.Int("price").
@@ -42,6 +45,17 @@ func (GoodInfo) Fields() []ent.Field {
 			Values("passed", "rejected"),
 		field.Int("total").
 			Positive(),
+		field.Time("create_at").
+			Default(time.Now).
+			Annotations(&entsql.Annotation{
+				Default: "CURRENT_TIMESTAMP",
+			}),
+		field.Time("update_at").
+			Default(time.Now).
+			UpdateDefault(time.Now).
+			Annotations(&entsql.Annotation{
+				Default: "CURRENT_TIMESTAMP",
+			}),
 	}
 }
 

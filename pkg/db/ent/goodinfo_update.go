@@ -92,8 +92,15 @@ func (giu *GoodInfoUpdate) SetActuals(b bool) *GoodInfoUpdate {
 }
 
 // SetDeliveryTime sets the "delivery_time" field.
-func (giu *GoodInfoUpdate) SetDeliveryTime(t time.Time) *GoodInfoUpdate {
-	giu.mutation.SetDeliveryTime(t)
+func (giu *GoodInfoUpdate) SetDeliveryTime(i int) *GoodInfoUpdate {
+	giu.mutation.ResetDeliveryTime()
+	giu.mutation.SetDeliveryTime(i)
+	return giu
+}
+
+// AddDeliveryTime adds i to the "delivery_time" field.
+func (giu *GoodInfoUpdate) AddDeliveryTime(i int) *GoodInfoUpdate {
+	giu.mutation.AddDeliveryTime(i)
 	return giu
 }
 
@@ -165,6 +172,26 @@ func (giu *GoodInfoUpdate) AddTotal(i int) *GoodInfoUpdate {
 	return giu
 }
 
+// SetCreateAt sets the "create_at" field.
+func (giu *GoodInfoUpdate) SetCreateAt(t time.Time) *GoodInfoUpdate {
+	giu.mutation.SetCreateAt(t)
+	return giu
+}
+
+// SetNillableCreateAt sets the "create_at" field if the given value is not nil.
+func (giu *GoodInfoUpdate) SetNillableCreateAt(t *time.Time) *GoodInfoUpdate {
+	if t != nil {
+		giu.SetCreateAt(*t)
+	}
+	return giu
+}
+
+// SetUpdateAt sets the "update_at" field.
+func (giu *GoodInfoUpdate) SetUpdateAt(t time.Time) *GoodInfoUpdate {
+	giu.mutation.SetUpdateAt(t)
+	return giu
+}
+
 // Mutation returns the GoodInfoMutation object of the builder.
 func (giu *GoodInfoUpdate) Mutation() *GoodInfoMutation {
 	return giu.mutation
@@ -176,6 +203,7 @@ func (giu *GoodInfoUpdate) Save(ctx context.Context) (int, error) {
 		err      error
 		affected int
 	)
+	giu.defaults()
 	if len(giu.hooks) == 0 {
 		if err = giu.check(); err != nil {
 			return 0, err
@@ -227,6 +255,14 @@ func (giu *GoodInfoUpdate) Exec(ctx context.Context) error {
 func (giu *GoodInfoUpdate) ExecX(ctx context.Context) {
 	if err := giu.Exec(ctx); err != nil {
 		panic(err)
+	}
+}
+
+// defaults sets the default values of the builder before save.
+func (giu *GoodInfoUpdate) defaults() {
+	if _, ok := giu.mutation.UpdateAt(); !ok {
+		v := goodinfo.UpdateDefaultUpdateAt()
+		giu.mutation.SetUpdateAt(v)
 	}
 }
 
@@ -360,7 +396,14 @@ func (giu *GoodInfoUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	}
 	if value, ok := giu.mutation.DeliveryTime(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeTime,
+			Type:   field.TypeInt,
+			Value:  value,
+			Column: goodinfo.FieldDeliveryTime,
+		})
+	}
+	if value, ok := giu.mutation.AddedDeliveryTime(); ok {
+		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
+			Type:   field.TypeInt,
 			Value:  value,
 			Column: goodinfo.FieldDeliveryTime,
 		})
@@ -440,6 +483,20 @@ func (giu *GoodInfoUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			Type:   field.TypeInt,
 			Value:  value,
 			Column: goodinfo.FieldTotal,
+		})
+	}
+	if value, ok := giu.mutation.CreateAt(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeTime,
+			Value:  value,
+			Column: goodinfo.FieldCreateAt,
+		})
+	}
+	if value, ok := giu.mutation.UpdateAt(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeTime,
+			Value:  value,
+			Column: goodinfo.FieldUpdateAt,
 		})
 	}
 	if n, err = sqlgraph.UpdateNodes(ctx, giu.driver, _spec); err != nil {
@@ -525,8 +582,15 @@ func (giuo *GoodInfoUpdateOne) SetActuals(b bool) *GoodInfoUpdateOne {
 }
 
 // SetDeliveryTime sets the "delivery_time" field.
-func (giuo *GoodInfoUpdateOne) SetDeliveryTime(t time.Time) *GoodInfoUpdateOne {
-	giuo.mutation.SetDeliveryTime(t)
+func (giuo *GoodInfoUpdateOne) SetDeliveryTime(i int) *GoodInfoUpdateOne {
+	giuo.mutation.ResetDeliveryTime()
+	giuo.mutation.SetDeliveryTime(i)
+	return giuo
+}
+
+// AddDeliveryTime adds i to the "delivery_time" field.
+func (giuo *GoodInfoUpdateOne) AddDeliveryTime(i int) *GoodInfoUpdateOne {
+	giuo.mutation.AddDeliveryTime(i)
 	return giuo
 }
 
@@ -598,6 +662,26 @@ func (giuo *GoodInfoUpdateOne) AddTotal(i int) *GoodInfoUpdateOne {
 	return giuo
 }
 
+// SetCreateAt sets the "create_at" field.
+func (giuo *GoodInfoUpdateOne) SetCreateAt(t time.Time) *GoodInfoUpdateOne {
+	giuo.mutation.SetCreateAt(t)
+	return giuo
+}
+
+// SetNillableCreateAt sets the "create_at" field if the given value is not nil.
+func (giuo *GoodInfoUpdateOne) SetNillableCreateAt(t *time.Time) *GoodInfoUpdateOne {
+	if t != nil {
+		giuo.SetCreateAt(*t)
+	}
+	return giuo
+}
+
+// SetUpdateAt sets the "update_at" field.
+func (giuo *GoodInfoUpdateOne) SetUpdateAt(t time.Time) *GoodInfoUpdateOne {
+	giuo.mutation.SetUpdateAt(t)
+	return giuo
+}
+
 // Mutation returns the GoodInfoMutation object of the builder.
 func (giuo *GoodInfoUpdateOne) Mutation() *GoodInfoMutation {
 	return giuo.mutation
@@ -616,6 +700,7 @@ func (giuo *GoodInfoUpdateOne) Save(ctx context.Context) (*GoodInfo, error) {
 		err  error
 		node *GoodInfo
 	)
+	giuo.defaults()
 	if len(giuo.hooks) == 0 {
 		if err = giuo.check(); err != nil {
 			return nil, err
@@ -667,6 +752,14 @@ func (giuo *GoodInfoUpdateOne) Exec(ctx context.Context) error {
 func (giuo *GoodInfoUpdateOne) ExecX(ctx context.Context) {
 	if err := giuo.Exec(ctx); err != nil {
 		panic(err)
+	}
+}
+
+// defaults sets the default values of the builder before save.
+func (giuo *GoodInfoUpdateOne) defaults() {
+	if _, ok := giuo.mutation.UpdateAt(); !ok {
+		v := goodinfo.UpdateDefaultUpdateAt()
+		giuo.mutation.SetUpdateAt(v)
 	}
 }
 
@@ -817,7 +910,14 @@ func (giuo *GoodInfoUpdateOne) sqlSave(ctx context.Context) (_node *GoodInfo, er
 	}
 	if value, ok := giuo.mutation.DeliveryTime(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeTime,
+			Type:   field.TypeInt,
+			Value:  value,
+			Column: goodinfo.FieldDeliveryTime,
+		})
+	}
+	if value, ok := giuo.mutation.AddedDeliveryTime(); ok {
+		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
+			Type:   field.TypeInt,
 			Value:  value,
 			Column: goodinfo.FieldDeliveryTime,
 		})
@@ -897,6 +997,20 @@ func (giuo *GoodInfoUpdateOne) sqlSave(ctx context.Context) (_node *GoodInfo, er
 			Type:   field.TypeInt,
 			Value:  value,
 			Column: goodinfo.FieldTotal,
+		})
+	}
+	if value, ok := giuo.mutation.CreateAt(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeTime,
+			Value:  value,
+			Column: goodinfo.FieldCreateAt,
+		})
+	}
+	if value, ok := giuo.mutation.UpdateAt(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeTime,
+			Value:  value,
+			Column: goodinfo.FieldUpdateAt,
 		})
 	}
 	_node = &GoodInfo{config: giuo.config}

@@ -45,7 +45,8 @@ type GoodInfoMutation struct {
 	addduration           *int
 	coin_info_id          *uuid.UUID
 	actuals               *bool
-	delivery_time         *time.Time
+	delivery_time         *int
+	adddelivery_time      *int
 	inherit_from_good_id  *uuid.UUID
 	vendor_location_id    *uuid.UUID
 	price                 *int
@@ -57,6 +58,8 @@ type GoodInfoMutation struct {
 	review_state          *goodinfo.ReviewState
 	total                 *int
 	addtotal              *int
+	create_at             *time.Time
+	update_at             *time.Time
 	clearedFields         map[string]struct{}
 	done                  bool
 	oldValue              func(context.Context) (*GoodInfo, error)
@@ -461,12 +464,13 @@ func (m *GoodInfoMutation) ResetActuals() {
 }
 
 // SetDeliveryTime sets the "delivery_time" field.
-func (m *GoodInfoMutation) SetDeliveryTime(t time.Time) {
-	m.delivery_time = &t
+func (m *GoodInfoMutation) SetDeliveryTime(i int) {
+	m.delivery_time = &i
+	m.adddelivery_time = nil
 }
 
 // DeliveryTime returns the value of the "delivery_time" field in the mutation.
-func (m *GoodInfoMutation) DeliveryTime() (r time.Time, exists bool) {
+func (m *GoodInfoMutation) DeliveryTime() (r int, exists bool) {
 	v := m.delivery_time
 	if v == nil {
 		return
@@ -477,7 +481,7 @@ func (m *GoodInfoMutation) DeliveryTime() (r time.Time, exists bool) {
 // OldDeliveryTime returns the old "delivery_time" field's value of the GoodInfo entity.
 // If the GoodInfo object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *GoodInfoMutation) OldDeliveryTime(ctx context.Context) (v time.Time, err error) {
+func (m *GoodInfoMutation) OldDeliveryTime(ctx context.Context) (v int, err error) {
 	if !m.op.Is(OpUpdateOne) {
 		return v, fmt.Errorf("OldDeliveryTime is only allowed on UpdateOne operations")
 	}
@@ -491,9 +495,28 @@ func (m *GoodInfoMutation) OldDeliveryTime(ctx context.Context) (v time.Time, er
 	return oldValue.DeliveryTime, nil
 }
 
+// AddDeliveryTime adds i to the "delivery_time" field.
+func (m *GoodInfoMutation) AddDeliveryTime(i int) {
+	if m.adddelivery_time != nil {
+		*m.adddelivery_time += i
+	} else {
+		m.adddelivery_time = &i
+	}
+}
+
+// AddedDeliveryTime returns the value that was added to the "delivery_time" field in this mutation.
+func (m *GoodInfoMutation) AddedDeliveryTime() (r int, exists bool) {
+	v := m.adddelivery_time
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
 // ResetDeliveryTime resets all changes to the "delivery_time" field.
 func (m *GoodInfoMutation) ResetDeliveryTime() {
 	m.delivery_time = nil
+	m.adddelivery_time = nil
 }
 
 // SetInheritFromGoodID sets the "inherit_from_good_id" field.
@@ -860,6 +883,78 @@ func (m *GoodInfoMutation) ResetTotal() {
 	m.addtotal = nil
 }
 
+// SetCreateAt sets the "create_at" field.
+func (m *GoodInfoMutation) SetCreateAt(t time.Time) {
+	m.create_at = &t
+}
+
+// CreateAt returns the value of the "create_at" field in the mutation.
+func (m *GoodInfoMutation) CreateAt() (r time.Time, exists bool) {
+	v := m.create_at
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldCreateAt returns the old "create_at" field's value of the GoodInfo entity.
+// If the GoodInfo object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *GoodInfoMutation) OldCreateAt(ctx context.Context) (v time.Time, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, fmt.Errorf("OldCreateAt is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, fmt.Errorf("OldCreateAt requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldCreateAt: %w", err)
+	}
+	return oldValue.CreateAt, nil
+}
+
+// ResetCreateAt resets all changes to the "create_at" field.
+func (m *GoodInfoMutation) ResetCreateAt() {
+	m.create_at = nil
+}
+
+// SetUpdateAt sets the "update_at" field.
+func (m *GoodInfoMutation) SetUpdateAt(t time.Time) {
+	m.update_at = &t
+}
+
+// UpdateAt returns the value of the "update_at" field in the mutation.
+func (m *GoodInfoMutation) UpdateAt() (r time.Time, exists bool) {
+	v := m.update_at
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldUpdateAt returns the old "update_at" field's value of the GoodInfo entity.
+// If the GoodInfo object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *GoodInfoMutation) OldUpdateAt(ctx context.Context) (v time.Time, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, fmt.Errorf("OldUpdateAt is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, fmt.Errorf("OldUpdateAt requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldUpdateAt: %w", err)
+	}
+	return oldValue.UpdateAt, nil
+}
+
+// ResetUpdateAt resets all changes to the "update_at" field.
+func (m *GoodInfoMutation) ResetUpdateAt() {
+	m.update_at = nil
+}
+
 // Where appends a list predicates to the GoodInfoMutation builder.
 func (m *GoodInfoMutation) Where(ps ...predicate.GoodInfo) {
 	m.predicates = append(m.predicates, ps...)
@@ -879,7 +974,7 @@ func (m *GoodInfoMutation) Type() string {
 // order to get all numeric fields that were incremented/decremented, call
 // AddedFields().
 func (m *GoodInfoMutation) Fields() []string {
-	fields := make([]string, 0, 17)
+	fields := make([]string, 0, 19)
 	if m.device_info_id != nil {
 		fields = append(fields, goodinfo.FieldDeviceInfoID)
 	}
@@ -931,6 +1026,12 @@ func (m *GoodInfoMutation) Fields() []string {
 	if m.total != nil {
 		fields = append(fields, goodinfo.FieldTotal)
 	}
+	if m.create_at != nil {
+		fields = append(fields, goodinfo.FieldCreateAt)
+	}
+	if m.update_at != nil {
+		fields = append(fields, goodinfo.FieldUpdateAt)
+	}
 	return fields
 }
 
@@ -973,6 +1074,10 @@ func (m *GoodInfoMutation) Field(name string) (ent.Value, bool) {
 		return m.ReviewState()
 	case goodinfo.FieldTotal:
 		return m.Total()
+	case goodinfo.FieldCreateAt:
+		return m.CreateAt()
+	case goodinfo.FieldUpdateAt:
+		return m.UpdateAt()
 	}
 	return nil, false
 }
@@ -1016,6 +1121,10 @@ func (m *GoodInfoMutation) OldField(ctx context.Context, name string) (ent.Value
 		return m.OldReviewState(ctx)
 	case goodinfo.FieldTotal:
 		return m.OldTotal(ctx)
+	case goodinfo.FieldCreateAt:
+		return m.OldCreateAt(ctx)
+	case goodinfo.FieldUpdateAt:
+		return m.OldUpdateAt(ctx)
 	}
 	return nil, fmt.Errorf("unknown GoodInfo field %s", name)
 }
@@ -1075,7 +1184,7 @@ func (m *GoodInfoMutation) SetField(name string, value ent.Value) error {
 		m.SetActuals(v)
 		return nil
 	case goodinfo.FieldDeliveryTime:
-		v, ok := value.(time.Time)
+		v, ok := value.(int)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
@@ -1144,6 +1253,20 @@ func (m *GoodInfoMutation) SetField(name string, value ent.Value) error {
 		}
 		m.SetTotal(v)
 		return nil
+	case goodinfo.FieldCreateAt:
+		v, ok := value.(time.Time)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetCreateAt(v)
+		return nil
+	case goodinfo.FieldUpdateAt:
+		v, ok := value.(time.Time)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetUpdateAt(v)
+		return nil
 	}
 	return fmt.Errorf("unknown GoodInfo field %s", name)
 }
@@ -1160,6 +1283,9 @@ func (m *GoodInfoMutation) AddedFields() []string {
 	}
 	if m.addduration != nil {
 		fields = append(fields, goodinfo.FieldDuration)
+	}
+	if m.adddelivery_time != nil {
+		fields = append(fields, goodinfo.FieldDeliveryTime)
 	}
 	if m.addprice != nil {
 		fields = append(fields, goodinfo.FieldPrice)
@@ -1181,6 +1307,8 @@ func (m *GoodInfoMutation) AddedField(name string) (ent.Value, bool) {
 		return m.AddedUnitPower()
 	case goodinfo.FieldDuration:
 		return m.AddedDuration()
+	case goodinfo.FieldDeliveryTime:
+		return m.AddedDeliveryTime()
 	case goodinfo.FieldPrice:
 		return m.AddedPrice()
 	case goodinfo.FieldTotal:
@@ -1214,6 +1342,13 @@ func (m *GoodInfoMutation) AddField(name string, value ent.Value) error {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.AddDuration(v)
+		return nil
+	case goodinfo.FieldDeliveryTime:
+		v, ok := value.(int)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.AddDeliveryTime(v)
 		return nil
 	case goodinfo.FieldPrice:
 		v, ok := value.(int)
@@ -1307,6 +1442,12 @@ func (m *GoodInfoMutation) ResetField(name string) error {
 	case goodinfo.FieldTotal:
 		m.ResetTotal()
 		return nil
+	case goodinfo.FieldCreateAt:
+		m.ResetCreateAt()
+		return nil
+	case goodinfo.FieldUpdateAt:
+		m.ResetUpdateAt()
+		return nil
 	}
 	return fmt.Errorf("unknown GoodInfo field %s", name)
 }
@@ -1367,6 +1508,8 @@ type TargetAreaMutation struct {
 	id            *uuid.UUID
 	continent     *string
 	country       *string
+	create_at     *time.Time
+	update_at     *time.Time
 	clearedFields map[string]struct{}
 	done          bool
 	oldValue      func(context.Context) (*TargetArea, error)
@@ -1530,6 +1673,78 @@ func (m *TargetAreaMutation) ResetCountry() {
 	m.country = nil
 }
 
+// SetCreateAt sets the "create_at" field.
+func (m *TargetAreaMutation) SetCreateAt(t time.Time) {
+	m.create_at = &t
+}
+
+// CreateAt returns the value of the "create_at" field in the mutation.
+func (m *TargetAreaMutation) CreateAt() (r time.Time, exists bool) {
+	v := m.create_at
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldCreateAt returns the old "create_at" field's value of the TargetArea entity.
+// If the TargetArea object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *TargetAreaMutation) OldCreateAt(ctx context.Context) (v time.Time, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, fmt.Errorf("OldCreateAt is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, fmt.Errorf("OldCreateAt requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldCreateAt: %w", err)
+	}
+	return oldValue.CreateAt, nil
+}
+
+// ResetCreateAt resets all changes to the "create_at" field.
+func (m *TargetAreaMutation) ResetCreateAt() {
+	m.create_at = nil
+}
+
+// SetUpdateAt sets the "update_at" field.
+func (m *TargetAreaMutation) SetUpdateAt(t time.Time) {
+	m.update_at = &t
+}
+
+// UpdateAt returns the value of the "update_at" field in the mutation.
+func (m *TargetAreaMutation) UpdateAt() (r time.Time, exists bool) {
+	v := m.update_at
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldUpdateAt returns the old "update_at" field's value of the TargetArea entity.
+// If the TargetArea object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *TargetAreaMutation) OldUpdateAt(ctx context.Context) (v time.Time, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, fmt.Errorf("OldUpdateAt is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, fmt.Errorf("OldUpdateAt requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldUpdateAt: %w", err)
+	}
+	return oldValue.UpdateAt, nil
+}
+
+// ResetUpdateAt resets all changes to the "update_at" field.
+func (m *TargetAreaMutation) ResetUpdateAt() {
+	m.update_at = nil
+}
+
 // Where appends a list predicates to the TargetAreaMutation builder.
 func (m *TargetAreaMutation) Where(ps ...predicate.TargetArea) {
 	m.predicates = append(m.predicates, ps...)
@@ -1549,12 +1764,18 @@ func (m *TargetAreaMutation) Type() string {
 // order to get all numeric fields that were incremented/decremented, call
 // AddedFields().
 func (m *TargetAreaMutation) Fields() []string {
-	fields := make([]string, 0, 2)
+	fields := make([]string, 0, 4)
 	if m.continent != nil {
 		fields = append(fields, targetarea.FieldContinent)
 	}
 	if m.country != nil {
 		fields = append(fields, targetarea.FieldCountry)
+	}
+	if m.create_at != nil {
+		fields = append(fields, targetarea.FieldCreateAt)
+	}
+	if m.update_at != nil {
+		fields = append(fields, targetarea.FieldUpdateAt)
 	}
 	return fields
 }
@@ -1568,6 +1789,10 @@ func (m *TargetAreaMutation) Field(name string) (ent.Value, bool) {
 		return m.Continent()
 	case targetarea.FieldCountry:
 		return m.Country()
+	case targetarea.FieldCreateAt:
+		return m.CreateAt()
+	case targetarea.FieldUpdateAt:
+		return m.UpdateAt()
 	}
 	return nil, false
 }
@@ -1581,6 +1806,10 @@ func (m *TargetAreaMutation) OldField(ctx context.Context, name string) (ent.Val
 		return m.OldContinent(ctx)
 	case targetarea.FieldCountry:
 		return m.OldCountry(ctx)
+	case targetarea.FieldCreateAt:
+		return m.OldCreateAt(ctx)
+	case targetarea.FieldUpdateAt:
+		return m.OldUpdateAt(ctx)
 	}
 	return nil, fmt.Errorf("unknown TargetArea field %s", name)
 }
@@ -1603,6 +1832,20 @@ func (m *TargetAreaMutation) SetField(name string, value ent.Value) error {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.SetCountry(v)
+		return nil
+	case targetarea.FieldCreateAt:
+		v, ok := value.(time.Time)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetCreateAt(v)
+		return nil
+	case targetarea.FieldUpdateAt:
+		v, ok := value.(time.Time)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetUpdateAt(v)
 		return nil
 	}
 	return fmt.Errorf("unknown TargetArea field %s", name)
@@ -1658,6 +1901,12 @@ func (m *TargetAreaMutation) ResetField(name string) error {
 		return nil
 	case targetarea.FieldCountry:
 		m.ResetCountry()
+		return nil
+	case targetarea.FieldCreateAt:
+		m.ResetCreateAt()
+		return nil
+	case targetarea.FieldUpdateAt:
+		m.ResetUpdateAt()
 		return nil
 	}
 	return fmt.Errorf("unknown TargetArea field %s", name)

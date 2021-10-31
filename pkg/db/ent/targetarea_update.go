@@ -5,6 +5,7 @@ package ent
 import (
 	"context"
 	"fmt"
+	"time"
 
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
@@ -38,6 +39,26 @@ func (tau *TargetAreaUpdate) SetCountry(s string) *TargetAreaUpdate {
 	return tau
 }
 
+// SetCreateAt sets the "create_at" field.
+func (tau *TargetAreaUpdate) SetCreateAt(t time.Time) *TargetAreaUpdate {
+	tau.mutation.SetCreateAt(t)
+	return tau
+}
+
+// SetNillableCreateAt sets the "create_at" field if the given value is not nil.
+func (tau *TargetAreaUpdate) SetNillableCreateAt(t *time.Time) *TargetAreaUpdate {
+	if t != nil {
+		tau.SetCreateAt(*t)
+	}
+	return tau
+}
+
+// SetUpdateAt sets the "update_at" field.
+func (tau *TargetAreaUpdate) SetUpdateAt(t time.Time) *TargetAreaUpdate {
+	tau.mutation.SetUpdateAt(t)
+	return tau
+}
+
 // Mutation returns the TargetAreaMutation object of the builder.
 func (tau *TargetAreaUpdate) Mutation() *TargetAreaMutation {
 	return tau.mutation
@@ -49,6 +70,7 @@ func (tau *TargetAreaUpdate) Save(ctx context.Context) (int, error) {
 		err      error
 		affected int
 	)
+	tau.defaults()
 	if len(tau.hooks) == 0 {
 		affected, err = tau.sqlSave(ctx)
 	} else {
@@ -97,6 +119,14 @@ func (tau *TargetAreaUpdate) ExecX(ctx context.Context) {
 	}
 }
 
+// defaults sets the default values of the builder before save.
+func (tau *TargetAreaUpdate) defaults() {
+	if _, ok := tau.mutation.UpdateAt(); !ok {
+		v := targetarea.UpdateDefaultUpdateAt()
+		tau.mutation.SetUpdateAt(v)
+	}
+}
+
 func (tau *TargetAreaUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	_spec := &sqlgraph.UpdateSpec{
 		Node: &sqlgraph.NodeSpec{
@@ -127,6 +157,20 @@ func (tau *TargetAreaUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			Type:   field.TypeString,
 			Value:  value,
 			Column: targetarea.FieldCountry,
+		})
+	}
+	if value, ok := tau.mutation.CreateAt(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeTime,
+			Value:  value,
+			Column: targetarea.FieldCreateAt,
+		})
+	}
+	if value, ok := tau.mutation.UpdateAt(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeTime,
+			Value:  value,
+			Column: targetarea.FieldUpdateAt,
 		})
 	}
 	if n, err = sqlgraph.UpdateNodes(ctx, tau.driver, _spec); err != nil {
@@ -160,6 +204,26 @@ func (tauo *TargetAreaUpdateOne) SetCountry(s string) *TargetAreaUpdateOne {
 	return tauo
 }
 
+// SetCreateAt sets the "create_at" field.
+func (tauo *TargetAreaUpdateOne) SetCreateAt(t time.Time) *TargetAreaUpdateOne {
+	tauo.mutation.SetCreateAt(t)
+	return tauo
+}
+
+// SetNillableCreateAt sets the "create_at" field if the given value is not nil.
+func (tauo *TargetAreaUpdateOne) SetNillableCreateAt(t *time.Time) *TargetAreaUpdateOne {
+	if t != nil {
+		tauo.SetCreateAt(*t)
+	}
+	return tauo
+}
+
+// SetUpdateAt sets the "update_at" field.
+func (tauo *TargetAreaUpdateOne) SetUpdateAt(t time.Time) *TargetAreaUpdateOne {
+	tauo.mutation.SetUpdateAt(t)
+	return tauo
+}
+
 // Mutation returns the TargetAreaMutation object of the builder.
 func (tauo *TargetAreaUpdateOne) Mutation() *TargetAreaMutation {
 	return tauo.mutation
@@ -178,6 +242,7 @@ func (tauo *TargetAreaUpdateOne) Save(ctx context.Context) (*TargetArea, error) 
 		err  error
 		node *TargetArea
 	)
+	tauo.defaults()
 	if len(tauo.hooks) == 0 {
 		node, err = tauo.sqlSave(ctx)
 	} else {
@@ -223,6 +288,14 @@ func (tauo *TargetAreaUpdateOne) Exec(ctx context.Context) error {
 func (tauo *TargetAreaUpdateOne) ExecX(ctx context.Context) {
 	if err := tauo.Exec(ctx); err != nil {
 		panic(err)
+	}
+}
+
+// defaults sets the default values of the builder before save.
+func (tauo *TargetAreaUpdateOne) defaults() {
+	if _, ok := tauo.mutation.UpdateAt(); !ok {
+		v := targetarea.UpdateDefaultUpdateAt()
+		tauo.mutation.SetUpdateAt(v)
 	}
 }
 
@@ -273,6 +346,20 @@ func (tauo *TargetAreaUpdateOne) sqlSave(ctx context.Context) (_node *TargetArea
 			Type:   field.TypeString,
 			Value:  value,
 			Column: targetarea.FieldCountry,
+		})
+	}
+	if value, ok := tauo.mutation.CreateAt(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeTime,
+			Value:  value,
+			Column: targetarea.FieldCreateAt,
+		})
+	}
+	if value, ok := tauo.mutation.UpdateAt(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeTime,
+			Value:  value,
+			Column: targetarea.FieldUpdateAt,
 		})
 	}
 	_node = &TargetArea{config: tauo.config}

@@ -33,7 +33,7 @@ type GoodInfo struct {
 	// Actuals holds the value of the "actuals" field.
 	Actuals bool `json:"actuals,omitempty"`
 	// DeliveryTime holds the value of the "delivery_time" field.
-	DeliveryTime time.Time `json:"delivery_time,omitempty"`
+	DeliveryTime int `json:"delivery_time,omitempty"`
 	// InheritFromGoodID holds the value of the "inherit_from_good_id" field.
 	InheritFromGoodID uuid.UUID `json:"inherit_from_good_id,omitempty"`
 	// VendorLocationID holds the value of the "vendor_location_id" field.
@@ -52,6 +52,10 @@ type GoodInfo struct {
 	ReviewState goodinfo.ReviewState `json:"review_state,omitempty"`
 	// Total holds the value of the "total" field.
 	Total int `json:"total,omitempty"`
+	// CreateAt holds the value of the "create_at" field.
+	CreateAt time.Time `json:"create_at,omitempty"`
+	// UpdateAt holds the value of the "update_at" field.
+	UpdateAt time.Time `json:"update_at,omitempty"`
 }
 
 // scanValues returns the types for scanning values from sql.Rows.
@@ -65,11 +69,11 @@ func (*GoodInfo) scanValues(columns []string) ([]interface{}, error) {
 			values[i] = new(sql.NullBool)
 		case goodinfo.FieldUnitPower:
 			values[i] = new(sql.NullFloat64)
-		case goodinfo.FieldGasPrice, goodinfo.FieldDuration, goodinfo.FieldPrice, goodinfo.FieldTotal:
+		case goodinfo.FieldGasPrice, goodinfo.FieldDuration, goodinfo.FieldDeliveryTime, goodinfo.FieldPrice, goodinfo.FieldTotal:
 			values[i] = new(sql.NullInt64)
 		case goodinfo.FieldBenefitType, goodinfo.FieldReviewState:
 			values[i] = new(sql.NullString)
-		case goodinfo.FieldDeliveryTime:
+		case goodinfo.FieldCreateAt, goodinfo.FieldUpdateAt:
 			values[i] = new(sql.NullTime)
 		case goodinfo.FieldID, goodinfo.FieldDeviceInfoID, goodinfo.FieldCoinInfoID, goodinfo.FieldInheritFromGoodID, goodinfo.FieldVendorLocationID, goodinfo.FieldReviewerID:
 			values[i] = new(uuid.UUID)
@@ -137,10 +141,10 @@ func (gi *GoodInfo) assignValues(columns []string, values []interface{}) error {
 				gi.Actuals = value.Bool
 			}
 		case goodinfo.FieldDeliveryTime:
-			if value, ok := values[i].(*sql.NullTime); !ok {
+			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field delivery_time", values[i])
 			} else if value.Valid {
-				gi.DeliveryTime = value.Time
+				gi.DeliveryTime = int(value.Int64)
 			}
 		case goodinfo.FieldInheritFromGoodID:
 			if value, ok := values[i].(*uuid.UUID); !ok {
@@ -198,6 +202,18 @@ func (gi *GoodInfo) assignValues(columns []string, values []interface{}) error {
 			} else if value.Valid {
 				gi.Total = int(value.Int64)
 			}
+		case goodinfo.FieldCreateAt:
+			if value, ok := values[i].(*sql.NullTime); !ok {
+				return fmt.Errorf("unexpected type %T for field create_at", values[i])
+			} else if value.Valid {
+				gi.CreateAt = value.Time
+			}
+		case goodinfo.FieldUpdateAt:
+			if value, ok := values[i].(*sql.NullTime); !ok {
+				return fmt.Errorf("unexpected type %T for field update_at", values[i])
+			} else if value.Valid {
+				gi.UpdateAt = value.Time
+			}
 		}
 	}
 	return nil
@@ -241,7 +257,7 @@ func (gi *GoodInfo) String() string {
 	builder.WriteString(", actuals=")
 	builder.WriteString(fmt.Sprintf("%v", gi.Actuals))
 	builder.WriteString(", delivery_time=")
-	builder.WriteString(gi.DeliveryTime.Format(time.ANSIC))
+	builder.WriteString(fmt.Sprintf("%v", gi.DeliveryTime))
 	builder.WriteString(", inherit_from_good_id=")
 	builder.WriteString(fmt.Sprintf("%v", gi.InheritFromGoodID))
 	builder.WriteString(", vendor_location_id=")
@@ -260,6 +276,10 @@ func (gi *GoodInfo) String() string {
 	builder.WriteString(fmt.Sprintf("%v", gi.ReviewState))
 	builder.WriteString(", total=")
 	builder.WriteString(fmt.Sprintf("%v", gi.Total))
+	builder.WriteString(", create_at=")
+	builder.WriteString(gi.CreateAt.Format(time.ANSIC))
+	builder.WriteString(", update_at=")
+	builder.WriteString(gi.UpdateAt.Format(time.ANSIC))
 	builder.WriteByte(')')
 	return builder.String()
 }
