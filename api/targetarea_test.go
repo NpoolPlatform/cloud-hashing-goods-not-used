@@ -72,9 +72,35 @@ func TestTargetAreaCRUD(t *testing.T) {
 		info := npool.CreateTargetAreaResponse{}
 		err := json.Unmarshal(resp.Body(), &info)
 		if assert.Nil(t, err) {
-			assert.Equal(t, firstCreateInfo.Info.ID, info.Info.ID)
-			assert.Equal(t, info.Info.Continent, targetAreaInfo.Continent)
-			assert.Equal(t, info.Info.Country, targetAreaInfo.Country)
+			if assert.NotNil(t, info.Info) {
+				assert.Equal(t, firstCreateInfo.Info.ID, info.Info.ID)
+				assert.Equal(t, info.Info.Continent, targetAreaInfo.Continent)
+				assert.Equal(t, info.Info.Country, targetAreaInfo.Country)
+			}
 		}
 	}
+
+	targetAreaInfo.Country = "China"
+	resp, err = cli.R().
+		SetHeader("Content-Type", "application/json").
+		SetBody(npool.CreateTargetAreaRequest{
+			Info: &targetAreaInfo,
+		}).
+		Post("http://localhost:33759/v1/update/target-area")
+	if assert.Nil(t, err) {
+		assert.Equal(t, 200, resp.StatusCode())
+		info := npool.CreateTargetAreaResponse{}
+		err := json.Unmarshal(resp.Body(), &info)
+		if assert.Nil(t, err) {
+			if assert.NotNil(t, info.Info) {
+				assert.Equal(t, firstCreateInfo.Info.ID, info.Info.ID)
+				assert.Equal(t, info.Info.Continent, targetAreaInfo.Continent)
+				assert.Equal(t, info.Info.Country, targetAreaInfo.Country)
+			}
+		}
+	}
+
+	_, err = cli.R().
+		Get("http://localhost:33759/v1/get/target-areas")
+	assert.Nil(t, err)
 }
