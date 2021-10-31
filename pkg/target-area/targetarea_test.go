@@ -3,8 +3,10 @@ package targetarea
 import (
 	"context"
 	"fmt"
+	"os"
 	"path"
 	"runtime"
+	"strconv"
 	"testing"
 
 	"github.com/NpoolPlatform/cloud-hashing-goods/message/npool"
@@ -17,6 +19,9 @@ import (
 )
 
 func init() {
+	if runByGithubAction, err := strconv.ParseBool(os.Getenv("RUN_BY_GITHUB_ACTION")); err == nil && runByGithubAction {
+		return
+	}
 	_, myPath, _, ok := runtime.Caller(0)
 	if !ok {
 		return
@@ -29,6 +34,9 @@ func init() {
 }
 
 func TestCRUD(t *testing.T) {
+	if runByGithubAction, err := strconv.ParseBool(os.Getenv("RUN_BY_GITHUB_ACTION")); err == nil && runByGithubAction {
+		return
+	}
 	resp, err := Create(context.Background(), &npool.CreateTargetAreaRequest{
 		Info: &npool.TargetAreaInfo{
 			Continent: "Asia",
@@ -57,6 +65,9 @@ func TestCRUD(t *testing.T) {
 }
 
 func TestGetAll(t *testing.T) {
+	if runByGithubAction, err := strconv.ParseBool(os.Getenv("RUN_BY_GITHUB_ACTION")); err == nil && runByGithubAction {
+		return
+	}
 	resp, err := GetAll(context.Background(), &npool.GetTargetAreasRequest{})
 	assert.NotNil(t, resp)
 	assert.Nil(t, err)
