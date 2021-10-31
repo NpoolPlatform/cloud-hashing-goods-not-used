@@ -7,6 +7,8 @@ import (
 	"errors"
 	"fmt"
 
+	"entgo.io/ent/dialect"
+	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/targetarea"
@@ -18,6 +20,7 @@ type TargetAreaCreate struct {
 	config
 	mutation *TargetAreaMutation
 	hooks    []Hook
+	conflict []sql.ConflictOption
 }
 
 // SetContinent sets the "continent" field.
@@ -151,6 +154,7 @@ func (tac *TargetAreaCreate) createSpec() (*TargetArea, *sqlgraph.CreateSpec) {
 			},
 		}
 	)
+	_spec.OnConflict = tac.conflict
 	if id, ok := tac.mutation.ID(); ok {
 		_node.ID = id
 		_spec.ID.Value = id
@@ -174,10 +178,202 @@ func (tac *TargetAreaCreate) createSpec() (*TargetArea, *sqlgraph.CreateSpec) {
 	return _node, _spec
 }
 
+// OnConflict allows configuring the `ON CONFLICT` / `ON DUPLICATE KEY` clause
+// of the `INSERT` statement. For example:
+//
+//	client.TargetArea.Create().
+//		SetContinent(v).
+//		OnConflict(
+//			// Update the row with the new values
+//			// the was proposed for insertion.
+//			sql.ResolveWithNewValues(),
+//		).
+//		// Override some of the fields with custom
+//		// update values.
+//		Update(func(u *ent.TargetAreaUpsert) {
+//			SetContinent(v+v).
+//		}).
+//		Exec(ctx)
+//
+func (tac *TargetAreaCreate) OnConflict(opts ...sql.ConflictOption) *TargetAreaUpsertOne {
+	tac.conflict = opts
+	return &TargetAreaUpsertOne{
+		create: tac,
+	}
+}
+
+// OnConflictColumns calls `OnConflict` and configures the columns
+// as conflict target. Using this option is equivalent to using:
+//
+//	client.TargetArea.Create().
+//		OnConflict(sql.ConflictColumns(columns...)).
+//		Exec(ctx)
+//
+func (tac *TargetAreaCreate) OnConflictColumns(columns ...string) *TargetAreaUpsertOne {
+	tac.conflict = append(tac.conflict, sql.ConflictColumns(columns...))
+	return &TargetAreaUpsertOne{
+		create: tac,
+	}
+}
+
+type (
+	// TargetAreaUpsertOne is the builder for "upsert"-ing
+	//  one TargetArea node.
+	TargetAreaUpsertOne struct {
+		create *TargetAreaCreate
+	}
+
+	// TargetAreaUpsert is the "OnConflict" setter.
+	TargetAreaUpsert struct {
+		*sql.UpdateSet
+	}
+)
+
+// SetContinent sets the "continent" field.
+func (u *TargetAreaUpsert) SetContinent(v string) *TargetAreaUpsert {
+	u.Set(targetarea.FieldContinent, v)
+	return u
+}
+
+// UpdateContinent sets the "continent" field to the value that was provided on create.
+func (u *TargetAreaUpsert) UpdateContinent() *TargetAreaUpsert {
+	u.SetExcluded(targetarea.FieldContinent)
+	return u
+}
+
+// SetCountry sets the "country" field.
+func (u *TargetAreaUpsert) SetCountry(v string) *TargetAreaUpsert {
+	u.Set(targetarea.FieldCountry, v)
+	return u
+}
+
+// UpdateCountry sets the "country" field to the value that was provided on create.
+func (u *TargetAreaUpsert) UpdateCountry() *TargetAreaUpsert {
+	u.SetExcluded(targetarea.FieldCountry)
+	return u
+}
+
+// UpdateNewValues updates the fields using the new values that were set on create except the ID field.
+// Using this option is equivalent to using:
+//
+//	client.TargetArea.Create().
+//		OnConflict(
+//			sql.ResolveWithNewValues(),
+//			sql.ResolveWith(func(u *sql.UpdateSet) {
+//				u.SetIgnore(targetarea.FieldID)
+//			}),
+//		).
+//		Exec(ctx)
+//
+func (u *TargetAreaUpsertOne) UpdateNewValues() *TargetAreaUpsertOne {
+	u.create.conflict = append(u.create.conflict, sql.ResolveWithNewValues())
+	u.create.conflict = append(u.create.conflict, sql.ResolveWith(func(s *sql.UpdateSet) {
+		if _, exists := u.create.mutation.ID(); exists {
+			s.SetIgnore(targetarea.FieldID)
+		}
+	}))
+	return u
+}
+
+// Ignore sets each column to itself in case of conflict.
+// Using this option is equivalent to using:
+//
+//  client.TargetArea.Create().
+//      OnConflict(sql.ResolveWithIgnore()).
+//      Exec(ctx)
+//
+func (u *TargetAreaUpsertOne) Ignore() *TargetAreaUpsertOne {
+	u.create.conflict = append(u.create.conflict, sql.ResolveWithIgnore())
+	return u
+}
+
+// DoNothing configures the conflict_action to `DO NOTHING`.
+// Supported only by SQLite and PostgreSQL.
+func (u *TargetAreaUpsertOne) DoNothing() *TargetAreaUpsertOne {
+	u.create.conflict = append(u.create.conflict, sql.DoNothing())
+	return u
+}
+
+// Update allows overriding fields `UPDATE` values. See the TargetAreaCreate.OnConflict
+// documentation for more info.
+func (u *TargetAreaUpsertOne) Update(set func(*TargetAreaUpsert)) *TargetAreaUpsertOne {
+	u.create.conflict = append(u.create.conflict, sql.ResolveWith(func(update *sql.UpdateSet) {
+		set(&TargetAreaUpsert{UpdateSet: update})
+	}))
+	return u
+}
+
+// SetContinent sets the "continent" field.
+func (u *TargetAreaUpsertOne) SetContinent(v string) *TargetAreaUpsertOne {
+	return u.Update(func(s *TargetAreaUpsert) {
+		s.SetContinent(v)
+	})
+}
+
+// UpdateContinent sets the "continent" field to the value that was provided on create.
+func (u *TargetAreaUpsertOne) UpdateContinent() *TargetAreaUpsertOne {
+	return u.Update(func(s *TargetAreaUpsert) {
+		s.UpdateContinent()
+	})
+}
+
+// SetCountry sets the "country" field.
+func (u *TargetAreaUpsertOne) SetCountry(v string) *TargetAreaUpsertOne {
+	return u.Update(func(s *TargetAreaUpsert) {
+		s.SetCountry(v)
+	})
+}
+
+// UpdateCountry sets the "country" field to the value that was provided on create.
+func (u *TargetAreaUpsertOne) UpdateCountry() *TargetAreaUpsertOne {
+	return u.Update(func(s *TargetAreaUpsert) {
+		s.UpdateCountry()
+	})
+}
+
+// Exec executes the query.
+func (u *TargetAreaUpsertOne) Exec(ctx context.Context) error {
+	if len(u.create.conflict) == 0 {
+		return errors.New("ent: missing options for TargetAreaCreate.OnConflict")
+	}
+	return u.create.Exec(ctx)
+}
+
+// ExecX is like Exec, but panics if an error occurs.
+func (u *TargetAreaUpsertOne) ExecX(ctx context.Context) {
+	if err := u.create.Exec(ctx); err != nil {
+		panic(err)
+	}
+}
+
+// Exec executes the UPSERT query and returns the inserted/updated ID.
+func (u *TargetAreaUpsertOne) ID(ctx context.Context) (id uuid.UUID, err error) {
+	if u.create.driver.Dialect() == dialect.MySQL {
+		// In case of "ON CONFLICT", there is no way to get back non-numeric ID
+		// fields from the database since MySQL does not support the RETURNING clause.
+		return id, errors.New("ent: TargetAreaUpsertOne.ID is not supported by MySQL driver. Use TargetAreaUpsertOne.Exec instead")
+	}
+	node, err := u.create.Save(ctx)
+	if err != nil {
+		return id, err
+	}
+	return node.ID, nil
+}
+
+// IDX is like ID, but panics if an error occurs.
+func (u *TargetAreaUpsertOne) IDX(ctx context.Context) uuid.UUID {
+	id, err := u.ID(ctx)
+	if err != nil {
+		panic(err)
+	}
+	return id
+}
+
 // TargetAreaCreateBulk is the builder for creating many TargetArea entities in bulk.
 type TargetAreaCreateBulk struct {
 	config
 	builders []*TargetAreaCreate
+	conflict []sql.ConflictOption
 }
 
 // Save creates the TargetArea entities in the database.
@@ -204,6 +400,7 @@ func (tacb *TargetAreaCreateBulk) Save(ctx context.Context) ([]*TargetArea, erro
 					_, err = mutators[i+1].Mutate(root, tacb.builders[i+1].mutation)
 				} else {
 					spec := &sqlgraph.BatchCreateSpec{Nodes: specs}
+					spec.OnConflict = tacb.conflict
 					// Invoke the actual operation on the latest mutation in the chain.
 					if err = sqlgraph.BatchCreate(ctx, tacb.driver, spec); err != nil {
 						if sqlgraph.IsConstraintError(err) {
@@ -250,6 +447,150 @@ func (tacb *TargetAreaCreateBulk) Exec(ctx context.Context) error {
 // ExecX is like Exec, but panics if an error occurs.
 func (tacb *TargetAreaCreateBulk) ExecX(ctx context.Context) {
 	if err := tacb.Exec(ctx); err != nil {
+		panic(err)
+	}
+}
+
+// OnConflict allows configuring the `ON CONFLICT` / `ON DUPLICATE KEY` clause
+// of the `INSERT` statement. For example:
+//
+//	client.TargetArea.CreateBulk(builders...).
+//		OnConflict(
+//			// Update the row with the new values
+//			// the was proposed for insertion.
+//			sql.ResolveWithNewValues(),
+//		).
+//		// Override some of the fields with custom
+//		// update values.
+//		Update(func(u *ent.TargetAreaUpsert) {
+//			SetContinent(v+v).
+//		}).
+//		Exec(ctx)
+//
+func (tacb *TargetAreaCreateBulk) OnConflict(opts ...sql.ConflictOption) *TargetAreaUpsertBulk {
+	tacb.conflict = opts
+	return &TargetAreaUpsertBulk{
+		create: tacb,
+	}
+}
+
+// OnConflictColumns calls `OnConflict` and configures the columns
+// as conflict target. Using this option is equivalent to using:
+//
+//	client.TargetArea.Create().
+//		OnConflict(sql.ConflictColumns(columns...)).
+//		Exec(ctx)
+//
+func (tacb *TargetAreaCreateBulk) OnConflictColumns(columns ...string) *TargetAreaUpsertBulk {
+	tacb.conflict = append(tacb.conflict, sql.ConflictColumns(columns...))
+	return &TargetAreaUpsertBulk{
+		create: tacb,
+	}
+}
+
+// TargetAreaUpsertBulk is the builder for "upsert"-ing
+// a bulk of TargetArea nodes.
+type TargetAreaUpsertBulk struct {
+	create *TargetAreaCreateBulk
+}
+
+// UpdateNewValues updates the fields using the new values that
+// were set on create. Using this option is equivalent to using:
+//
+//	client.TargetArea.Create().
+//		OnConflict(
+//			sql.ResolveWithNewValues(),
+//			sql.ResolveWith(func(u *sql.UpdateSet) {
+//				u.SetIgnore(targetarea.FieldID)
+//			}),
+//		).
+//		Exec(ctx)
+//
+func (u *TargetAreaUpsertBulk) UpdateNewValues() *TargetAreaUpsertBulk {
+	u.create.conflict = append(u.create.conflict, sql.ResolveWithNewValues())
+	u.create.conflict = append(u.create.conflict, sql.ResolveWith(func(s *sql.UpdateSet) {
+		for _, b := range u.create.builders {
+			if _, exists := b.mutation.ID(); exists {
+				s.SetIgnore(targetarea.FieldID)
+				return
+			}
+		}
+	}))
+	return u
+}
+
+// Ignore sets each column to itself in case of conflict.
+// Using this option is equivalent to using:
+//
+//	client.TargetArea.Create().
+//		OnConflict(sql.ResolveWithIgnore()).
+//		Exec(ctx)
+//
+func (u *TargetAreaUpsertBulk) Ignore() *TargetAreaUpsertBulk {
+	u.create.conflict = append(u.create.conflict, sql.ResolveWithIgnore())
+	return u
+}
+
+// DoNothing configures the conflict_action to `DO NOTHING`.
+// Supported only by SQLite and PostgreSQL.
+func (u *TargetAreaUpsertBulk) DoNothing() *TargetAreaUpsertBulk {
+	u.create.conflict = append(u.create.conflict, sql.DoNothing())
+	return u
+}
+
+// Update allows overriding fields `UPDATE` values. See the TargetAreaCreateBulk.OnConflict
+// documentation for more info.
+func (u *TargetAreaUpsertBulk) Update(set func(*TargetAreaUpsert)) *TargetAreaUpsertBulk {
+	u.create.conflict = append(u.create.conflict, sql.ResolveWith(func(update *sql.UpdateSet) {
+		set(&TargetAreaUpsert{UpdateSet: update})
+	}))
+	return u
+}
+
+// SetContinent sets the "continent" field.
+func (u *TargetAreaUpsertBulk) SetContinent(v string) *TargetAreaUpsertBulk {
+	return u.Update(func(s *TargetAreaUpsert) {
+		s.SetContinent(v)
+	})
+}
+
+// UpdateContinent sets the "continent" field to the value that was provided on create.
+func (u *TargetAreaUpsertBulk) UpdateContinent() *TargetAreaUpsertBulk {
+	return u.Update(func(s *TargetAreaUpsert) {
+		s.UpdateContinent()
+	})
+}
+
+// SetCountry sets the "country" field.
+func (u *TargetAreaUpsertBulk) SetCountry(v string) *TargetAreaUpsertBulk {
+	return u.Update(func(s *TargetAreaUpsert) {
+		s.SetCountry(v)
+	})
+}
+
+// UpdateCountry sets the "country" field to the value that was provided on create.
+func (u *TargetAreaUpsertBulk) UpdateCountry() *TargetAreaUpsertBulk {
+	return u.Update(func(s *TargetAreaUpsert) {
+		s.UpdateCountry()
+	})
+}
+
+// Exec executes the query.
+func (u *TargetAreaUpsertBulk) Exec(ctx context.Context) error {
+	for i, b := range u.create.builders {
+		if len(b.conflict) != 0 {
+			return fmt.Errorf("ent: OnConflict was set for builder %d. Set it on the TargetAreaCreateBulk instead", i)
+		}
+	}
+	if len(u.create.conflict) == 0 {
+		return errors.New("ent: missing options for TargetAreaCreateBulk.OnConflict")
+	}
+	return u.create.Exec(ctx)
+}
+
+// ExecX is like Exec, but panics if an error occurs.
+func (u *TargetAreaUpsertBulk) ExecX(ctx context.Context) {
+	if err := u.create.Exec(ctx); err != nil {
 		panic(err)
 	}
 }

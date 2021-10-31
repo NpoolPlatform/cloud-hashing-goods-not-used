@@ -123,8 +123,8 @@ func (giu *GoodInfoUpdate) AddPrice(i int) *GoodInfoUpdate {
 }
 
 // SetBenefitType sets the "benefit_type" field.
-func (giu *GoodInfoUpdate) SetBenefitType(s string) *GoodInfoUpdate {
-	giu.mutation.SetBenefitType(s)
+func (giu *GoodInfoUpdate) SetBenefitType(gt goodinfo.BenefitType) *GoodInfoUpdate {
+	giu.mutation.SetBenefitType(gt)
 	return giu
 }
 
@@ -146,20 +146,20 @@ func (giu *GoodInfoUpdate) SetReviewerID(u uuid.UUID) *GoodInfoUpdate {
 	return giu
 }
 
-// SetState sets the "state" field.
-func (giu *GoodInfoUpdate) SetState(s string) *GoodInfoUpdate {
-	giu.mutation.SetState(s)
+// SetReviewState sets the "review_state" field.
+func (giu *GoodInfoUpdate) SetReviewState(gs goodinfo.ReviewState) *GoodInfoUpdate {
+	giu.mutation.SetReviewState(gs)
 	return giu
 }
 
-// SetTotal sets the "Total" field.
+// SetTotal sets the "total" field.
 func (giu *GoodInfoUpdate) SetTotal(i int) *GoodInfoUpdate {
 	giu.mutation.ResetTotal()
 	giu.mutation.SetTotal(i)
 	return giu
 }
 
-// AddTotal adds i to the "Total" field.
+// AddTotal adds i to the "total" field.
 func (giu *GoodInfoUpdate) AddTotal(i int) *GoodInfoUpdate {
 	giu.mutation.AddTotal(i)
 	return giu
@@ -235,6 +235,36 @@ func (giu *GoodInfoUpdate) check() error {
 	if v, ok := giu.mutation.GasPrice(); ok {
 		if err := goodinfo.GasPriceValidator(v); err != nil {
 			return &ValidationError{Name: "gas_price", err: fmt.Errorf("ent: validator failed for field \"gas_price\": %w", err)}
+		}
+	}
+	if v, ok := giu.mutation.UnitPower(); ok {
+		if err := goodinfo.UnitPowerValidator(v); err != nil {
+			return &ValidationError{Name: "unit_power", err: fmt.Errorf("ent: validator failed for field \"unit_power\": %w", err)}
+		}
+	}
+	if v, ok := giu.mutation.Duration(); ok {
+		if err := goodinfo.DurationValidator(v); err != nil {
+			return &ValidationError{Name: "duration", err: fmt.Errorf("ent: validator failed for field \"duration\": %w", err)}
+		}
+	}
+	if v, ok := giu.mutation.Price(); ok {
+		if err := goodinfo.PriceValidator(v); err != nil {
+			return &ValidationError{Name: "price", err: fmt.Errorf("ent: validator failed for field \"price\": %w", err)}
+		}
+	}
+	if v, ok := giu.mutation.BenefitType(); ok {
+		if err := goodinfo.BenefitTypeValidator(v); err != nil {
+			return &ValidationError{Name: "benefit_type", err: fmt.Errorf("ent: validator failed for field \"benefit_type\": %w", err)}
+		}
+	}
+	if v, ok := giu.mutation.ReviewState(); ok {
+		if err := goodinfo.ReviewStateValidator(v); err != nil {
+			return &ValidationError{Name: "review_state", err: fmt.Errorf("ent: validator failed for field \"review_state\": %w", err)}
+		}
+	}
+	if v, ok := giu.mutation.Total(); ok {
+		if err := goodinfo.TotalValidator(v); err != nil {
+			return &ValidationError{Name: "total", err: fmt.Errorf("ent: validator failed for field \"total\": %w", err)}
 		}
 	}
 	return nil
@@ -365,7 +395,7 @@ func (giu *GoodInfoUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	}
 	if value, ok := giu.mutation.BenefitType(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
+			Type:   field.TypeEnum,
 			Value:  value,
 			Column: goodinfo.FieldBenefitType,
 		})
@@ -391,11 +421,11 @@ func (giu *GoodInfoUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			Column: goodinfo.FieldReviewerID,
 		})
 	}
-	if value, ok := giu.mutation.State(); ok {
+	if value, ok := giu.mutation.ReviewState(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
+			Type:   field.TypeEnum,
 			Value:  value,
-			Column: goodinfo.FieldState,
+			Column: goodinfo.FieldReviewState,
 		})
 	}
 	if value, ok := giu.mutation.Total(); ok {
@@ -526,8 +556,8 @@ func (giuo *GoodInfoUpdateOne) AddPrice(i int) *GoodInfoUpdateOne {
 }
 
 // SetBenefitType sets the "benefit_type" field.
-func (giuo *GoodInfoUpdateOne) SetBenefitType(s string) *GoodInfoUpdateOne {
-	giuo.mutation.SetBenefitType(s)
+func (giuo *GoodInfoUpdateOne) SetBenefitType(gt goodinfo.BenefitType) *GoodInfoUpdateOne {
+	giuo.mutation.SetBenefitType(gt)
 	return giuo
 }
 
@@ -549,20 +579,20 @@ func (giuo *GoodInfoUpdateOne) SetReviewerID(u uuid.UUID) *GoodInfoUpdateOne {
 	return giuo
 }
 
-// SetState sets the "state" field.
-func (giuo *GoodInfoUpdateOne) SetState(s string) *GoodInfoUpdateOne {
-	giuo.mutation.SetState(s)
+// SetReviewState sets the "review_state" field.
+func (giuo *GoodInfoUpdateOne) SetReviewState(gs goodinfo.ReviewState) *GoodInfoUpdateOne {
+	giuo.mutation.SetReviewState(gs)
 	return giuo
 }
 
-// SetTotal sets the "Total" field.
+// SetTotal sets the "total" field.
 func (giuo *GoodInfoUpdateOne) SetTotal(i int) *GoodInfoUpdateOne {
 	giuo.mutation.ResetTotal()
 	giuo.mutation.SetTotal(i)
 	return giuo
 }
 
-// AddTotal adds i to the "Total" field.
+// AddTotal adds i to the "total" field.
 func (giuo *GoodInfoUpdateOne) AddTotal(i int) *GoodInfoUpdateOne {
 	giuo.mutation.AddTotal(i)
 	return giuo
@@ -645,6 +675,36 @@ func (giuo *GoodInfoUpdateOne) check() error {
 	if v, ok := giuo.mutation.GasPrice(); ok {
 		if err := goodinfo.GasPriceValidator(v); err != nil {
 			return &ValidationError{Name: "gas_price", err: fmt.Errorf("ent: validator failed for field \"gas_price\": %w", err)}
+		}
+	}
+	if v, ok := giuo.mutation.UnitPower(); ok {
+		if err := goodinfo.UnitPowerValidator(v); err != nil {
+			return &ValidationError{Name: "unit_power", err: fmt.Errorf("ent: validator failed for field \"unit_power\": %w", err)}
+		}
+	}
+	if v, ok := giuo.mutation.Duration(); ok {
+		if err := goodinfo.DurationValidator(v); err != nil {
+			return &ValidationError{Name: "duration", err: fmt.Errorf("ent: validator failed for field \"duration\": %w", err)}
+		}
+	}
+	if v, ok := giuo.mutation.Price(); ok {
+		if err := goodinfo.PriceValidator(v); err != nil {
+			return &ValidationError{Name: "price", err: fmt.Errorf("ent: validator failed for field \"price\": %w", err)}
+		}
+	}
+	if v, ok := giuo.mutation.BenefitType(); ok {
+		if err := goodinfo.BenefitTypeValidator(v); err != nil {
+			return &ValidationError{Name: "benefit_type", err: fmt.Errorf("ent: validator failed for field \"benefit_type\": %w", err)}
+		}
+	}
+	if v, ok := giuo.mutation.ReviewState(); ok {
+		if err := goodinfo.ReviewStateValidator(v); err != nil {
+			return &ValidationError{Name: "review_state", err: fmt.Errorf("ent: validator failed for field \"review_state\": %w", err)}
+		}
+	}
+	if v, ok := giuo.mutation.Total(); ok {
+		if err := goodinfo.TotalValidator(v); err != nil {
+			return &ValidationError{Name: "total", err: fmt.Errorf("ent: validator failed for field \"total\": %w", err)}
 		}
 	}
 	return nil
@@ -792,7 +852,7 @@ func (giuo *GoodInfoUpdateOne) sqlSave(ctx context.Context) (_node *GoodInfo, er
 	}
 	if value, ok := giuo.mutation.BenefitType(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
+			Type:   field.TypeEnum,
 			Value:  value,
 			Column: goodinfo.FieldBenefitType,
 		})
@@ -818,11 +878,11 @@ func (giuo *GoodInfoUpdateOne) sqlSave(ctx context.Context) (_node *GoodInfo, er
 			Column: goodinfo.FieldReviewerID,
 		})
 	}
-	if value, ok := giuo.mutation.State(); ok {
+	if value, ok := giuo.mutation.ReviewState(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
+			Type:   field.TypeEnum,
 			Value:  value,
-			Column: goodinfo.FieldState,
+			Column: goodinfo.FieldReviewState,
 		})
 	}
 	if value, ok := giuo.mutation.Total(); ok {

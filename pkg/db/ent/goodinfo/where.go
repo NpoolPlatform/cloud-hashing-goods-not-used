@@ -170,13 +170,6 @@ func Price(v int) predicate.GoodInfo {
 	})
 }
 
-// BenefitType applies equality check predicate on the "benefit_type" field. It's identical to BenefitTypeEQ.
-func BenefitType(v string) predicate.GoodInfo {
-	return predicate.GoodInfo(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldBenefitType), v))
-	})
-}
-
 // Classic applies equality check predicate on the "classic" field. It's identical to ClassicEQ.
 func Classic(v bool) predicate.GoodInfo {
 	return predicate.GoodInfo(func(s *sql.Selector) {
@@ -191,14 +184,7 @@ func ReviewerID(v uuid.UUID) predicate.GoodInfo {
 	})
 }
 
-// State applies equality check predicate on the "state" field. It's identical to StateEQ.
-func State(v string) predicate.GoodInfo {
-	return predicate.GoodInfo(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldState), v))
-	})
-}
-
-// Total applies equality check predicate on the "Total" field. It's identical to TotalEQ.
+// Total applies equality check predicate on the "total" field. It's identical to TotalEQ.
 func Total(v int) predicate.GoodInfo {
 	return predicate.GoodInfo(func(s *sql.Selector) {
 		s.Where(sql.EQ(s.C(FieldTotal), v))
@@ -918,21 +904,21 @@ func PriceLTE(v int) predicate.GoodInfo {
 }
 
 // BenefitTypeEQ applies the EQ predicate on the "benefit_type" field.
-func BenefitTypeEQ(v string) predicate.GoodInfo {
+func BenefitTypeEQ(v BenefitType) predicate.GoodInfo {
 	return predicate.GoodInfo(func(s *sql.Selector) {
 		s.Where(sql.EQ(s.C(FieldBenefitType), v))
 	})
 }
 
 // BenefitTypeNEQ applies the NEQ predicate on the "benefit_type" field.
-func BenefitTypeNEQ(v string) predicate.GoodInfo {
+func BenefitTypeNEQ(v BenefitType) predicate.GoodInfo {
 	return predicate.GoodInfo(func(s *sql.Selector) {
 		s.Where(sql.NEQ(s.C(FieldBenefitType), v))
 	})
 }
 
 // BenefitTypeIn applies the In predicate on the "benefit_type" field.
-func BenefitTypeIn(vs ...string) predicate.GoodInfo {
+func BenefitTypeIn(vs ...BenefitType) predicate.GoodInfo {
 	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
@@ -949,7 +935,7 @@ func BenefitTypeIn(vs ...string) predicate.GoodInfo {
 }
 
 // BenefitTypeNotIn applies the NotIn predicate on the "benefit_type" field.
-func BenefitTypeNotIn(vs ...string) predicate.GoodInfo {
+func BenefitTypeNotIn(vs ...BenefitType) predicate.GoodInfo {
 	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
@@ -962,69 +948,6 @@ func BenefitTypeNotIn(vs ...string) predicate.GoodInfo {
 			return
 		}
 		s.Where(sql.NotIn(s.C(FieldBenefitType), v...))
-	})
-}
-
-// BenefitTypeGT applies the GT predicate on the "benefit_type" field.
-func BenefitTypeGT(v string) predicate.GoodInfo {
-	return predicate.GoodInfo(func(s *sql.Selector) {
-		s.Where(sql.GT(s.C(FieldBenefitType), v))
-	})
-}
-
-// BenefitTypeGTE applies the GTE predicate on the "benefit_type" field.
-func BenefitTypeGTE(v string) predicate.GoodInfo {
-	return predicate.GoodInfo(func(s *sql.Selector) {
-		s.Where(sql.GTE(s.C(FieldBenefitType), v))
-	})
-}
-
-// BenefitTypeLT applies the LT predicate on the "benefit_type" field.
-func BenefitTypeLT(v string) predicate.GoodInfo {
-	return predicate.GoodInfo(func(s *sql.Selector) {
-		s.Where(sql.LT(s.C(FieldBenefitType), v))
-	})
-}
-
-// BenefitTypeLTE applies the LTE predicate on the "benefit_type" field.
-func BenefitTypeLTE(v string) predicate.GoodInfo {
-	return predicate.GoodInfo(func(s *sql.Selector) {
-		s.Where(sql.LTE(s.C(FieldBenefitType), v))
-	})
-}
-
-// BenefitTypeContains applies the Contains predicate on the "benefit_type" field.
-func BenefitTypeContains(v string) predicate.GoodInfo {
-	return predicate.GoodInfo(func(s *sql.Selector) {
-		s.Where(sql.Contains(s.C(FieldBenefitType), v))
-	})
-}
-
-// BenefitTypeHasPrefix applies the HasPrefix predicate on the "benefit_type" field.
-func BenefitTypeHasPrefix(v string) predicate.GoodInfo {
-	return predicate.GoodInfo(func(s *sql.Selector) {
-		s.Where(sql.HasPrefix(s.C(FieldBenefitType), v))
-	})
-}
-
-// BenefitTypeHasSuffix applies the HasSuffix predicate on the "benefit_type" field.
-func BenefitTypeHasSuffix(v string) predicate.GoodInfo {
-	return predicate.GoodInfo(func(s *sql.Selector) {
-		s.Where(sql.HasSuffix(s.C(FieldBenefitType), v))
-	})
-}
-
-// BenefitTypeEqualFold applies the EqualFold predicate on the "benefit_type" field.
-func BenefitTypeEqualFold(v string) predicate.GoodInfo {
-	return predicate.GoodInfo(func(s *sql.Selector) {
-		s.Where(sql.EqualFold(s.C(FieldBenefitType), v))
-	})
-}
-
-// BenefitTypeContainsFold applies the ContainsFold predicate on the "benefit_type" field.
-func BenefitTypeContainsFold(v string) predicate.GoodInfo {
-	return predicate.GoodInfo(func(s *sql.Selector) {
-		s.Where(sql.ContainsFold(s.C(FieldBenefitType), v))
 	})
 }
 
@@ -1118,22 +1041,22 @@ func ReviewerIDLTE(v uuid.UUID) predicate.GoodInfo {
 	})
 }
 
-// StateEQ applies the EQ predicate on the "state" field.
-func StateEQ(v string) predicate.GoodInfo {
+// ReviewStateEQ applies the EQ predicate on the "review_state" field.
+func ReviewStateEQ(v ReviewState) predicate.GoodInfo {
 	return predicate.GoodInfo(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldState), v))
+		s.Where(sql.EQ(s.C(FieldReviewState), v))
 	})
 }
 
-// StateNEQ applies the NEQ predicate on the "state" field.
-func StateNEQ(v string) predicate.GoodInfo {
+// ReviewStateNEQ applies the NEQ predicate on the "review_state" field.
+func ReviewStateNEQ(v ReviewState) predicate.GoodInfo {
 	return predicate.GoodInfo(func(s *sql.Selector) {
-		s.Where(sql.NEQ(s.C(FieldState), v))
+		s.Where(sql.NEQ(s.C(FieldReviewState), v))
 	})
 }
 
-// StateIn applies the In predicate on the "state" field.
-func StateIn(vs ...string) predicate.GoodInfo {
+// ReviewStateIn applies the In predicate on the "review_state" field.
+func ReviewStateIn(vs ...ReviewState) predicate.GoodInfo {
 	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
@@ -1145,12 +1068,12 @@ func StateIn(vs ...string) predicate.GoodInfo {
 			s.Where(sql.False())
 			return
 		}
-		s.Where(sql.In(s.C(FieldState), v...))
+		s.Where(sql.In(s.C(FieldReviewState), v...))
 	})
 }
 
-// StateNotIn applies the NotIn predicate on the "state" field.
-func StateNotIn(vs ...string) predicate.GoodInfo {
+// ReviewStateNotIn applies the NotIn predicate on the "review_state" field.
+func ReviewStateNotIn(vs ...ReviewState) predicate.GoodInfo {
 	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
@@ -1162,88 +1085,25 @@ func StateNotIn(vs ...string) predicate.GoodInfo {
 			s.Where(sql.False())
 			return
 		}
-		s.Where(sql.NotIn(s.C(FieldState), v...))
+		s.Where(sql.NotIn(s.C(FieldReviewState), v...))
 	})
 }
 
-// StateGT applies the GT predicate on the "state" field.
-func StateGT(v string) predicate.GoodInfo {
-	return predicate.GoodInfo(func(s *sql.Selector) {
-		s.Where(sql.GT(s.C(FieldState), v))
-	})
-}
-
-// StateGTE applies the GTE predicate on the "state" field.
-func StateGTE(v string) predicate.GoodInfo {
-	return predicate.GoodInfo(func(s *sql.Selector) {
-		s.Where(sql.GTE(s.C(FieldState), v))
-	})
-}
-
-// StateLT applies the LT predicate on the "state" field.
-func StateLT(v string) predicate.GoodInfo {
-	return predicate.GoodInfo(func(s *sql.Selector) {
-		s.Where(sql.LT(s.C(FieldState), v))
-	})
-}
-
-// StateLTE applies the LTE predicate on the "state" field.
-func StateLTE(v string) predicate.GoodInfo {
-	return predicate.GoodInfo(func(s *sql.Selector) {
-		s.Where(sql.LTE(s.C(FieldState), v))
-	})
-}
-
-// StateContains applies the Contains predicate on the "state" field.
-func StateContains(v string) predicate.GoodInfo {
-	return predicate.GoodInfo(func(s *sql.Selector) {
-		s.Where(sql.Contains(s.C(FieldState), v))
-	})
-}
-
-// StateHasPrefix applies the HasPrefix predicate on the "state" field.
-func StateHasPrefix(v string) predicate.GoodInfo {
-	return predicate.GoodInfo(func(s *sql.Selector) {
-		s.Where(sql.HasPrefix(s.C(FieldState), v))
-	})
-}
-
-// StateHasSuffix applies the HasSuffix predicate on the "state" field.
-func StateHasSuffix(v string) predicate.GoodInfo {
-	return predicate.GoodInfo(func(s *sql.Selector) {
-		s.Where(sql.HasSuffix(s.C(FieldState), v))
-	})
-}
-
-// StateEqualFold applies the EqualFold predicate on the "state" field.
-func StateEqualFold(v string) predicate.GoodInfo {
-	return predicate.GoodInfo(func(s *sql.Selector) {
-		s.Where(sql.EqualFold(s.C(FieldState), v))
-	})
-}
-
-// StateContainsFold applies the ContainsFold predicate on the "state" field.
-func StateContainsFold(v string) predicate.GoodInfo {
-	return predicate.GoodInfo(func(s *sql.Selector) {
-		s.Where(sql.ContainsFold(s.C(FieldState), v))
-	})
-}
-
-// TotalEQ applies the EQ predicate on the "Total" field.
+// TotalEQ applies the EQ predicate on the "total" field.
 func TotalEQ(v int) predicate.GoodInfo {
 	return predicate.GoodInfo(func(s *sql.Selector) {
 		s.Where(sql.EQ(s.C(FieldTotal), v))
 	})
 }
 
-// TotalNEQ applies the NEQ predicate on the "Total" field.
+// TotalNEQ applies the NEQ predicate on the "total" field.
 func TotalNEQ(v int) predicate.GoodInfo {
 	return predicate.GoodInfo(func(s *sql.Selector) {
 		s.Where(sql.NEQ(s.C(FieldTotal), v))
 	})
 }
 
-// TotalIn applies the In predicate on the "Total" field.
+// TotalIn applies the In predicate on the "total" field.
 func TotalIn(vs ...int) predicate.GoodInfo {
 	v := make([]interface{}, len(vs))
 	for i := range v {
@@ -1260,7 +1120,7 @@ func TotalIn(vs ...int) predicate.GoodInfo {
 	})
 }
 
-// TotalNotIn applies the NotIn predicate on the "Total" field.
+// TotalNotIn applies the NotIn predicate on the "total" field.
 func TotalNotIn(vs ...int) predicate.GoodInfo {
 	v := make([]interface{}, len(vs))
 	for i := range v {
@@ -1277,28 +1137,28 @@ func TotalNotIn(vs ...int) predicate.GoodInfo {
 	})
 }
 
-// TotalGT applies the GT predicate on the "Total" field.
+// TotalGT applies the GT predicate on the "total" field.
 func TotalGT(v int) predicate.GoodInfo {
 	return predicate.GoodInfo(func(s *sql.Selector) {
 		s.Where(sql.GT(s.C(FieldTotal), v))
 	})
 }
 
-// TotalGTE applies the GTE predicate on the "Total" field.
+// TotalGTE applies the GTE predicate on the "total" field.
 func TotalGTE(v int) predicate.GoodInfo {
 	return predicate.GoodInfo(func(s *sql.Selector) {
 		s.Where(sql.GTE(s.C(FieldTotal), v))
 	})
 }
 
-// TotalLT applies the LT predicate on the "Total" field.
+// TotalLT applies the LT predicate on the "total" field.
 func TotalLT(v int) predicate.GoodInfo {
 	return predicate.GoodInfo(func(s *sql.Selector) {
 		s.Where(sql.LT(s.C(FieldTotal), v))
 	})
 }
 
-// TotalLTE applies the LTE predicate on the "Total" field.
+// TotalLTE applies the LTE predicate on the "total" field.
 func TotalLTE(v int) predicate.GoodInfo {
 	return predicate.GoodInfo(func(s *sql.Selector) {
 		s.Where(sql.LTE(s.C(FieldTotal), v))

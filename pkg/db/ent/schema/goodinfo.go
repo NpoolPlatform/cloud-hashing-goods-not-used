@@ -16,25 +16,32 @@ type GoodInfo struct {
 func (GoodInfo) Fields() []ent.Field {
 	return []ent.Field{
 		field.UUID("id", uuid.UUID{}).
-			Default(uuid.New),
+			Default(uuid.New).
+			Unique(),
 		field.UUID("device_info_id", uuid.UUID{}),
 		field.Int("gas_price").
 			Positive(),
 		field.Bool("separate_gas_fee"),
-		field.Float("unit_power"),
-		field.Int("duration"),
+		field.Float("unit_power").
+			Positive(),
+		field.Int("duration").
+			Positive(),
 		field.UUID("coin_info_id", uuid.UUID{}),
 		field.Bool("actuals"),
 		field.Time("delivery_time"),
 		field.UUID("inherit_from_good_id", uuid.UUID{}),
 		field.UUID("vendor_location_id", uuid.UUID{}),
-		field.Int("price"),
-		field.String("benefit_type"),
+		field.Int("price").
+			Positive(),
+		field.Enum("benefit_type").
+			Values("pool", "platform"),
 		field.Bool("classic"),
 		field.JSON("support_coin_type_ids", []uuid.UUID{}),
 		field.UUID("reviewer_id", uuid.UUID{}),
-		field.String("state"),
-		field.Int("Total"),
+		field.Enum("review_state").
+			Values("passed", "rejected"),
+		field.Int("total").
+			Positive(),
 	}
 }
 

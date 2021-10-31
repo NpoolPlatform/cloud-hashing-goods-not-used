@@ -10,7 +10,7 @@ import (
 var (
 	// GoodInfosColumns holds the columns for the "good_infos" table.
 	GoodInfosColumns = []*schema.Column{
-		{Name: "id", Type: field.TypeUUID},
+		{Name: "id", Type: field.TypeUUID, Unique: true},
 		{Name: "device_info_id", Type: field.TypeUUID},
 		{Name: "gas_price", Type: field.TypeInt},
 		{Name: "separate_gas_fee", Type: field.TypeBool},
@@ -22,11 +22,11 @@ var (
 		{Name: "inherit_from_good_id", Type: field.TypeUUID},
 		{Name: "vendor_location_id", Type: field.TypeUUID},
 		{Name: "price", Type: field.TypeInt},
-		{Name: "benefit_type", Type: field.TypeString},
+		{Name: "benefit_type", Type: field.TypeEnum, Enums: []string{"pool", "platform"}},
 		{Name: "classic", Type: field.TypeBool},
 		{Name: "support_coin_type_ids", Type: field.TypeJSON},
 		{Name: "reviewer_id", Type: field.TypeUUID},
-		{Name: "state", Type: field.TypeString},
+		{Name: "review_state", Type: field.TypeEnum, Enums: []string{"passed", "rejected"}},
 		{Name: "total", Type: field.TypeInt},
 	}
 	// GoodInfosTable holds the schema information for the "good_infos" table.
@@ -37,7 +37,7 @@ var (
 	}
 	// TargetAreasColumns holds the columns for the "target_areas" table.
 	TargetAreasColumns = []*schema.Column{
-		{Name: "id", Type: field.TypeUUID},
+		{Name: "id", Type: field.TypeUUID, Unique: true},
 		{Name: "continent", Type: field.TypeString},
 		{Name: "country", Type: field.TypeString},
 	}
@@ -46,6 +46,13 @@ var (
 		Name:       "target_areas",
 		Columns:    TargetAreasColumns,
 		PrimaryKey: []*schema.Column{TargetAreasColumns[0]},
+		Indexes: []*schema.Index{
+			{
+				Name:    "targetarea_continent_country",
+				Unique:  true,
+				Columns: []*schema.Column{TargetAreasColumns[1], TargetAreasColumns[2]},
+			},
+		},
 	}
 	// Tables holds all the tables in the schema.
 	Tables = []*schema.Table{

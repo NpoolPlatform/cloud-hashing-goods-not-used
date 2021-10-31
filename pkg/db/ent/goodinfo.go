@@ -41,17 +41,17 @@ type GoodInfo struct {
 	// Price holds the value of the "price" field.
 	Price int `json:"price,omitempty"`
 	// BenefitType holds the value of the "benefit_type" field.
-	BenefitType string `json:"benefit_type,omitempty"`
+	BenefitType goodinfo.BenefitType `json:"benefit_type,omitempty"`
 	// Classic holds the value of the "classic" field.
 	Classic bool `json:"classic,omitempty"`
 	// SupportCoinTypeIds holds the value of the "support_coin_type_ids" field.
 	SupportCoinTypeIds []uuid.UUID `json:"support_coin_type_ids,omitempty"`
 	// ReviewerID holds the value of the "reviewer_id" field.
 	ReviewerID uuid.UUID `json:"reviewer_id,omitempty"`
-	// State holds the value of the "state" field.
-	State string `json:"state,omitempty"`
-	// Total holds the value of the "Total" field.
-	Total int `json:"Total,omitempty"`
+	// ReviewState holds the value of the "review_state" field.
+	ReviewState goodinfo.ReviewState `json:"review_state,omitempty"`
+	// Total holds the value of the "total" field.
+	Total int `json:"total,omitempty"`
 }
 
 // scanValues returns the types for scanning values from sql.Rows.
@@ -67,7 +67,7 @@ func (*GoodInfo) scanValues(columns []string) ([]interface{}, error) {
 			values[i] = new(sql.NullFloat64)
 		case goodinfo.FieldGasPrice, goodinfo.FieldDuration, goodinfo.FieldPrice, goodinfo.FieldTotal:
 			values[i] = new(sql.NullInt64)
-		case goodinfo.FieldBenefitType, goodinfo.FieldState:
+		case goodinfo.FieldBenefitType, goodinfo.FieldReviewState:
 			values[i] = new(sql.NullString)
 		case goodinfo.FieldDeliveryTime:
 			values[i] = new(sql.NullTime)
@@ -164,7 +164,7 @@ func (gi *GoodInfo) assignValues(columns []string, values []interface{}) error {
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field benefit_type", values[i])
 			} else if value.Valid {
-				gi.BenefitType = value.String
+				gi.BenefitType = goodinfo.BenefitType(value.String)
 			}
 		case goodinfo.FieldClassic:
 			if value, ok := values[i].(*sql.NullBool); !ok {
@@ -186,15 +186,15 @@ func (gi *GoodInfo) assignValues(columns []string, values []interface{}) error {
 			} else if value != nil {
 				gi.ReviewerID = *value
 			}
-		case goodinfo.FieldState:
+		case goodinfo.FieldReviewState:
 			if value, ok := values[i].(*sql.NullString); !ok {
-				return fmt.Errorf("unexpected type %T for field state", values[i])
+				return fmt.Errorf("unexpected type %T for field review_state", values[i])
 			} else if value.Valid {
-				gi.State = value.String
+				gi.ReviewState = goodinfo.ReviewState(value.String)
 			}
 		case goodinfo.FieldTotal:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
-				return fmt.Errorf("unexpected type %T for field Total", values[i])
+				return fmt.Errorf("unexpected type %T for field total", values[i])
 			} else if value.Valid {
 				gi.Total = int(value.Int64)
 			}
@@ -249,16 +249,16 @@ func (gi *GoodInfo) String() string {
 	builder.WriteString(", price=")
 	builder.WriteString(fmt.Sprintf("%v", gi.Price))
 	builder.WriteString(", benefit_type=")
-	builder.WriteString(gi.BenefitType)
+	builder.WriteString(fmt.Sprintf("%v", gi.BenefitType))
 	builder.WriteString(", classic=")
 	builder.WriteString(fmt.Sprintf("%v", gi.Classic))
 	builder.WriteString(", support_coin_type_ids=")
 	builder.WriteString(fmt.Sprintf("%v", gi.SupportCoinTypeIds))
 	builder.WriteString(", reviewer_id=")
 	builder.WriteString(fmt.Sprintf("%v", gi.ReviewerID))
-	builder.WriteString(", state=")
-	builder.WriteString(gi.State)
-	builder.WriteString(", Total=")
+	builder.WriteString(", review_state=")
+	builder.WriteString(fmt.Sprintf("%v", gi.ReviewState))
+	builder.WriteString(", total=")
 	builder.WriteString(fmt.Sprintf("%v", gi.Total))
 	builder.WriteByte(')')
 	return builder.String()

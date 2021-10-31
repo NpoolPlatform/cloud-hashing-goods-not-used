@@ -8,6 +8,8 @@ import (
 	"fmt"
 	"time"
 
+	"entgo.io/ent/dialect"
+	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/goodinfo"
@@ -19,6 +21,7 @@ type GoodInfoCreate struct {
 	config
 	mutation *GoodInfoMutation
 	hooks    []Hook
+	conflict []sql.ConflictOption
 }
 
 // SetDeviceInfoID sets the "device_info_id" field.
@@ -88,8 +91,8 @@ func (gic *GoodInfoCreate) SetPrice(i int) *GoodInfoCreate {
 }
 
 // SetBenefitType sets the "benefit_type" field.
-func (gic *GoodInfoCreate) SetBenefitType(s string) *GoodInfoCreate {
-	gic.mutation.SetBenefitType(s)
+func (gic *GoodInfoCreate) SetBenefitType(gt goodinfo.BenefitType) *GoodInfoCreate {
+	gic.mutation.SetBenefitType(gt)
 	return gic
 }
 
@@ -111,13 +114,13 @@ func (gic *GoodInfoCreate) SetReviewerID(u uuid.UUID) *GoodInfoCreate {
 	return gic
 }
 
-// SetState sets the "state" field.
-func (gic *GoodInfoCreate) SetState(s string) *GoodInfoCreate {
-	gic.mutation.SetState(s)
+// SetReviewState sets the "review_state" field.
+func (gic *GoodInfoCreate) SetReviewState(gs goodinfo.ReviewState) *GoodInfoCreate {
+	gic.mutation.SetReviewState(gs)
 	return gic
 }
 
-// SetTotal sets the "Total" field.
+// SetTotal sets the "total" field.
 func (gic *GoodInfoCreate) SetTotal(i int) *GoodInfoCreate {
 	gic.mutation.SetTotal(i)
 	return gic
@@ -225,8 +228,18 @@ func (gic *GoodInfoCreate) check() error {
 	if _, ok := gic.mutation.UnitPower(); !ok {
 		return &ValidationError{Name: "unit_power", err: errors.New(`ent: missing required field "unit_power"`)}
 	}
+	if v, ok := gic.mutation.UnitPower(); ok {
+		if err := goodinfo.UnitPowerValidator(v); err != nil {
+			return &ValidationError{Name: "unit_power", err: fmt.Errorf(`ent: validator failed for field "unit_power": %w`, err)}
+		}
+	}
 	if _, ok := gic.mutation.Duration(); !ok {
 		return &ValidationError{Name: "duration", err: errors.New(`ent: missing required field "duration"`)}
+	}
+	if v, ok := gic.mutation.Duration(); ok {
+		if err := goodinfo.DurationValidator(v); err != nil {
+			return &ValidationError{Name: "duration", err: fmt.Errorf(`ent: validator failed for field "duration": %w`, err)}
+		}
 	}
 	if _, ok := gic.mutation.CoinInfoID(); !ok {
 		return &ValidationError{Name: "coin_info_id", err: errors.New(`ent: missing required field "coin_info_id"`)}
@@ -246,8 +259,18 @@ func (gic *GoodInfoCreate) check() error {
 	if _, ok := gic.mutation.Price(); !ok {
 		return &ValidationError{Name: "price", err: errors.New(`ent: missing required field "price"`)}
 	}
+	if v, ok := gic.mutation.Price(); ok {
+		if err := goodinfo.PriceValidator(v); err != nil {
+			return &ValidationError{Name: "price", err: fmt.Errorf(`ent: validator failed for field "price": %w`, err)}
+		}
+	}
 	if _, ok := gic.mutation.BenefitType(); !ok {
 		return &ValidationError{Name: "benefit_type", err: errors.New(`ent: missing required field "benefit_type"`)}
+	}
+	if v, ok := gic.mutation.BenefitType(); ok {
+		if err := goodinfo.BenefitTypeValidator(v); err != nil {
+			return &ValidationError{Name: "benefit_type", err: fmt.Errorf(`ent: validator failed for field "benefit_type": %w`, err)}
+		}
 	}
 	if _, ok := gic.mutation.Classic(); !ok {
 		return &ValidationError{Name: "classic", err: errors.New(`ent: missing required field "classic"`)}
@@ -258,11 +281,21 @@ func (gic *GoodInfoCreate) check() error {
 	if _, ok := gic.mutation.ReviewerID(); !ok {
 		return &ValidationError{Name: "reviewer_id", err: errors.New(`ent: missing required field "reviewer_id"`)}
 	}
-	if _, ok := gic.mutation.State(); !ok {
-		return &ValidationError{Name: "state", err: errors.New(`ent: missing required field "state"`)}
+	if _, ok := gic.mutation.ReviewState(); !ok {
+		return &ValidationError{Name: "review_state", err: errors.New(`ent: missing required field "review_state"`)}
+	}
+	if v, ok := gic.mutation.ReviewState(); ok {
+		if err := goodinfo.ReviewStateValidator(v); err != nil {
+			return &ValidationError{Name: "review_state", err: fmt.Errorf(`ent: validator failed for field "review_state": %w`, err)}
+		}
 	}
 	if _, ok := gic.mutation.Total(); !ok {
-		return &ValidationError{Name: "Total", err: errors.New(`ent: missing required field "Total"`)}
+		return &ValidationError{Name: "total", err: errors.New(`ent: missing required field "total"`)}
+	}
+	if v, ok := gic.mutation.Total(); ok {
+		if err := goodinfo.TotalValidator(v); err != nil {
+			return &ValidationError{Name: "total", err: fmt.Errorf(`ent: validator failed for field "total": %w`, err)}
+		}
 	}
 	return nil
 }
@@ -292,6 +325,7 @@ func (gic *GoodInfoCreate) createSpec() (*GoodInfo, *sqlgraph.CreateSpec) {
 			},
 		}
 	)
+	_spec.OnConflict = gic.conflict
 	if id, ok := gic.mutation.ID(); ok {
 		_node.ID = id
 		_spec.ID.Value = id
@@ -386,7 +420,7 @@ func (gic *GoodInfoCreate) createSpec() (*GoodInfo, *sqlgraph.CreateSpec) {
 	}
 	if value, ok := gic.mutation.BenefitType(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
+			Type:   field.TypeEnum,
 			Value:  value,
 			Column: goodinfo.FieldBenefitType,
 		})
@@ -416,13 +450,13 @@ func (gic *GoodInfoCreate) createSpec() (*GoodInfo, *sqlgraph.CreateSpec) {
 		})
 		_node.ReviewerID = value
 	}
-	if value, ok := gic.mutation.State(); ok {
+	if value, ok := gic.mutation.ReviewState(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
+			Type:   field.TypeEnum,
 			Value:  value,
-			Column: goodinfo.FieldState,
+			Column: goodinfo.FieldReviewState,
 		})
-		_node.State = value
+		_node.ReviewState = value
 	}
 	if value, ok := gic.mutation.Total(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
@@ -435,10 +469,592 @@ func (gic *GoodInfoCreate) createSpec() (*GoodInfo, *sqlgraph.CreateSpec) {
 	return _node, _spec
 }
 
+// OnConflict allows configuring the `ON CONFLICT` / `ON DUPLICATE KEY` clause
+// of the `INSERT` statement. For example:
+//
+//	client.GoodInfo.Create().
+//		SetDeviceInfoID(v).
+//		OnConflict(
+//			// Update the row with the new values
+//			// the was proposed for insertion.
+//			sql.ResolveWithNewValues(),
+//		).
+//		// Override some of the fields with custom
+//		// update values.
+//		Update(func(u *ent.GoodInfoUpsert) {
+//			SetDeviceInfoID(v+v).
+//		}).
+//		Exec(ctx)
+//
+func (gic *GoodInfoCreate) OnConflict(opts ...sql.ConflictOption) *GoodInfoUpsertOne {
+	gic.conflict = opts
+	return &GoodInfoUpsertOne{
+		create: gic,
+	}
+}
+
+// OnConflictColumns calls `OnConflict` and configures the columns
+// as conflict target. Using this option is equivalent to using:
+//
+//	client.GoodInfo.Create().
+//		OnConflict(sql.ConflictColumns(columns...)).
+//		Exec(ctx)
+//
+func (gic *GoodInfoCreate) OnConflictColumns(columns ...string) *GoodInfoUpsertOne {
+	gic.conflict = append(gic.conflict, sql.ConflictColumns(columns...))
+	return &GoodInfoUpsertOne{
+		create: gic,
+	}
+}
+
+type (
+	// GoodInfoUpsertOne is the builder for "upsert"-ing
+	//  one GoodInfo node.
+	GoodInfoUpsertOne struct {
+		create *GoodInfoCreate
+	}
+
+	// GoodInfoUpsert is the "OnConflict" setter.
+	GoodInfoUpsert struct {
+		*sql.UpdateSet
+	}
+)
+
+// SetDeviceInfoID sets the "device_info_id" field.
+func (u *GoodInfoUpsert) SetDeviceInfoID(v uuid.UUID) *GoodInfoUpsert {
+	u.Set(goodinfo.FieldDeviceInfoID, v)
+	return u
+}
+
+// UpdateDeviceInfoID sets the "device_info_id" field to the value that was provided on create.
+func (u *GoodInfoUpsert) UpdateDeviceInfoID() *GoodInfoUpsert {
+	u.SetExcluded(goodinfo.FieldDeviceInfoID)
+	return u
+}
+
+// SetGasPrice sets the "gas_price" field.
+func (u *GoodInfoUpsert) SetGasPrice(v int) *GoodInfoUpsert {
+	u.Set(goodinfo.FieldGasPrice, v)
+	return u
+}
+
+// UpdateGasPrice sets the "gas_price" field to the value that was provided on create.
+func (u *GoodInfoUpsert) UpdateGasPrice() *GoodInfoUpsert {
+	u.SetExcluded(goodinfo.FieldGasPrice)
+	return u
+}
+
+// SetSeparateGasFee sets the "separate_gas_fee" field.
+func (u *GoodInfoUpsert) SetSeparateGasFee(v bool) *GoodInfoUpsert {
+	u.Set(goodinfo.FieldSeparateGasFee, v)
+	return u
+}
+
+// UpdateSeparateGasFee sets the "separate_gas_fee" field to the value that was provided on create.
+func (u *GoodInfoUpsert) UpdateSeparateGasFee() *GoodInfoUpsert {
+	u.SetExcluded(goodinfo.FieldSeparateGasFee)
+	return u
+}
+
+// SetUnitPower sets the "unit_power" field.
+func (u *GoodInfoUpsert) SetUnitPower(v float64) *GoodInfoUpsert {
+	u.Set(goodinfo.FieldUnitPower, v)
+	return u
+}
+
+// UpdateUnitPower sets the "unit_power" field to the value that was provided on create.
+func (u *GoodInfoUpsert) UpdateUnitPower() *GoodInfoUpsert {
+	u.SetExcluded(goodinfo.FieldUnitPower)
+	return u
+}
+
+// SetDuration sets the "duration" field.
+func (u *GoodInfoUpsert) SetDuration(v int) *GoodInfoUpsert {
+	u.Set(goodinfo.FieldDuration, v)
+	return u
+}
+
+// UpdateDuration sets the "duration" field to the value that was provided on create.
+func (u *GoodInfoUpsert) UpdateDuration() *GoodInfoUpsert {
+	u.SetExcluded(goodinfo.FieldDuration)
+	return u
+}
+
+// SetCoinInfoID sets the "coin_info_id" field.
+func (u *GoodInfoUpsert) SetCoinInfoID(v uuid.UUID) *GoodInfoUpsert {
+	u.Set(goodinfo.FieldCoinInfoID, v)
+	return u
+}
+
+// UpdateCoinInfoID sets the "coin_info_id" field to the value that was provided on create.
+func (u *GoodInfoUpsert) UpdateCoinInfoID() *GoodInfoUpsert {
+	u.SetExcluded(goodinfo.FieldCoinInfoID)
+	return u
+}
+
+// SetActuals sets the "actuals" field.
+func (u *GoodInfoUpsert) SetActuals(v bool) *GoodInfoUpsert {
+	u.Set(goodinfo.FieldActuals, v)
+	return u
+}
+
+// UpdateActuals sets the "actuals" field to the value that was provided on create.
+func (u *GoodInfoUpsert) UpdateActuals() *GoodInfoUpsert {
+	u.SetExcluded(goodinfo.FieldActuals)
+	return u
+}
+
+// SetDeliveryTime sets the "delivery_time" field.
+func (u *GoodInfoUpsert) SetDeliveryTime(v time.Time) *GoodInfoUpsert {
+	u.Set(goodinfo.FieldDeliveryTime, v)
+	return u
+}
+
+// UpdateDeliveryTime sets the "delivery_time" field to the value that was provided on create.
+func (u *GoodInfoUpsert) UpdateDeliveryTime() *GoodInfoUpsert {
+	u.SetExcluded(goodinfo.FieldDeliveryTime)
+	return u
+}
+
+// SetInheritFromGoodID sets the "inherit_from_good_id" field.
+func (u *GoodInfoUpsert) SetInheritFromGoodID(v uuid.UUID) *GoodInfoUpsert {
+	u.Set(goodinfo.FieldInheritFromGoodID, v)
+	return u
+}
+
+// UpdateInheritFromGoodID sets the "inherit_from_good_id" field to the value that was provided on create.
+func (u *GoodInfoUpsert) UpdateInheritFromGoodID() *GoodInfoUpsert {
+	u.SetExcluded(goodinfo.FieldInheritFromGoodID)
+	return u
+}
+
+// SetVendorLocationID sets the "vendor_location_id" field.
+func (u *GoodInfoUpsert) SetVendorLocationID(v uuid.UUID) *GoodInfoUpsert {
+	u.Set(goodinfo.FieldVendorLocationID, v)
+	return u
+}
+
+// UpdateVendorLocationID sets the "vendor_location_id" field to the value that was provided on create.
+func (u *GoodInfoUpsert) UpdateVendorLocationID() *GoodInfoUpsert {
+	u.SetExcluded(goodinfo.FieldVendorLocationID)
+	return u
+}
+
+// SetPrice sets the "price" field.
+func (u *GoodInfoUpsert) SetPrice(v int) *GoodInfoUpsert {
+	u.Set(goodinfo.FieldPrice, v)
+	return u
+}
+
+// UpdatePrice sets the "price" field to the value that was provided on create.
+func (u *GoodInfoUpsert) UpdatePrice() *GoodInfoUpsert {
+	u.SetExcluded(goodinfo.FieldPrice)
+	return u
+}
+
+// SetBenefitType sets the "benefit_type" field.
+func (u *GoodInfoUpsert) SetBenefitType(v goodinfo.BenefitType) *GoodInfoUpsert {
+	u.Set(goodinfo.FieldBenefitType, v)
+	return u
+}
+
+// UpdateBenefitType sets the "benefit_type" field to the value that was provided on create.
+func (u *GoodInfoUpsert) UpdateBenefitType() *GoodInfoUpsert {
+	u.SetExcluded(goodinfo.FieldBenefitType)
+	return u
+}
+
+// SetClassic sets the "classic" field.
+func (u *GoodInfoUpsert) SetClassic(v bool) *GoodInfoUpsert {
+	u.Set(goodinfo.FieldClassic, v)
+	return u
+}
+
+// UpdateClassic sets the "classic" field to the value that was provided on create.
+func (u *GoodInfoUpsert) UpdateClassic() *GoodInfoUpsert {
+	u.SetExcluded(goodinfo.FieldClassic)
+	return u
+}
+
+// SetSupportCoinTypeIds sets the "support_coin_type_ids" field.
+func (u *GoodInfoUpsert) SetSupportCoinTypeIds(v []uuid.UUID) *GoodInfoUpsert {
+	u.Set(goodinfo.FieldSupportCoinTypeIds, v)
+	return u
+}
+
+// UpdateSupportCoinTypeIds sets the "support_coin_type_ids" field to the value that was provided on create.
+func (u *GoodInfoUpsert) UpdateSupportCoinTypeIds() *GoodInfoUpsert {
+	u.SetExcluded(goodinfo.FieldSupportCoinTypeIds)
+	return u
+}
+
+// SetReviewerID sets the "reviewer_id" field.
+func (u *GoodInfoUpsert) SetReviewerID(v uuid.UUID) *GoodInfoUpsert {
+	u.Set(goodinfo.FieldReviewerID, v)
+	return u
+}
+
+// UpdateReviewerID sets the "reviewer_id" field to the value that was provided on create.
+func (u *GoodInfoUpsert) UpdateReviewerID() *GoodInfoUpsert {
+	u.SetExcluded(goodinfo.FieldReviewerID)
+	return u
+}
+
+// SetReviewState sets the "review_state" field.
+func (u *GoodInfoUpsert) SetReviewState(v goodinfo.ReviewState) *GoodInfoUpsert {
+	u.Set(goodinfo.FieldReviewState, v)
+	return u
+}
+
+// UpdateReviewState sets the "review_state" field to the value that was provided on create.
+func (u *GoodInfoUpsert) UpdateReviewState() *GoodInfoUpsert {
+	u.SetExcluded(goodinfo.FieldReviewState)
+	return u
+}
+
+// SetTotal sets the "total" field.
+func (u *GoodInfoUpsert) SetTotal(v int) *GoodInfoUpsert {
+	u.Set(goodinfo.FieldTotal, v)
+	return u
+}
+
+// UpdateTotal sets the "total" field to the value that was provided on create.
+func (u *GoodInfoUpsert) UpdateTotal() *GoodInfoUpsert {
+	u.SetExcluded(goodinfo.FieldTotal)
+	return u
+}
+
+// UpdateNewValues updates the fields using the new values that were set on create except the ID field.
+// Using this option is equivalent to using:
+//
+//	client.GoodInfo.Create().
+//		OnConflict(
+//			sql.ResolveWithNewValues(),
+//			sql.ResolveWith(func(u *sql.UpdateSet) {
+//				u.SetIgnore(goodinfo.FieldID)
+//			}),
+//		).
+//		Exec(ctx)
+//
+func (u *GoodInfoUpsertOne) UpdateNewValues() *GoodInfoUpsertOne {
+	u.create.conflict = append(u.create.conflict, sql.ResolveWithNewValues())
+	u.create.conflict = append(u.create.conflict, sql.ResolveWith(func(s *sql.UpdateSet) {
+		if _, exists := u.create.mutation.ID(); exists {
+			s.SetIgnore(goodinfo.FieldID)
+		}
+	}))
+	return u
+}
+
+// Ignore sets each column to itself in case of conflict.
+// Using this option is equivalent to using:
+//
+//  client.GoodInfo.Create().
+//      OnConflict(sql.ResolveWithIgnore()).
+//      Exec(ctx)
+//
+func (u *GoodInfoUpsertOne) Ignore() *GoodInfoUpsertOne {
+	u.create.conflict = append(u.create.conflict, sql.ResolveWithIgnore())
+	return u
+}
+
+// DoNothing configures the conflict_action to `DO NOTHING`.
+// Supported only by SQLite and PostgreSQL.
+func (u *GoodInfoUpsertOne) DoNothing() *GoodInfoUpsertOne {
+	u.create.conflict = append(u.create.conflict, sql.DoNothing())
+	return u
+}
+
+// Update allows overriding fields `UPDATE` values. See the GoodInfoCreate.OnConflict
+// documentation for more info.
+func (u *GoodInfoUpsertOne) Update(set func(*GoodInfoUpsert)) *GoodInfoUpsertOne {
+	u.create.conflict = append(u.create.conflict, sql.ResolveWith(func(update *sql.UpdateSet) {
+		set(&GoodInfoUpsert{UpdateSet: update})
+	}))
+	return u
+}
+
+// SetDeviceInfoID sets the "device_info_id" field.
+func (u *GoodInfoUpsertOne) SetDeviceInfoID(v uuid.UUID) *GoodInfoUpsertOne {
+	return u.Update(func(s *GoodInfoUpsert) {
+		s.SetDeviceInfoID(v)
+	})
+}
+
+// UpdateDeviceInfoID sets the "device_info_id" field to the value that was provided on create.
+func (u *GoodInfoUpsertOne) UpdateDeviceInfoID() *GoodInfoUpsertOne {
+	return u.Update(func(s *GoodInfoUpsert) {
+		s.UpdateDeviceInfoID()
+	})
+}
+
+// SetGasPrice sets the "gas_price" field.
+func (u *GoodInfoUpsertOne) SetGasPrice(v int) *GoodInfoUpsertOne {
+	return u.Update(func(s *GoodInfoUpsert) {
+		s.SetGasPrice(v)
+	})
+}
+
+// UpdateGasPrice sets the "gas_price" field to the value that was provided on create.
+func (u *GoodInfoUpsertOne) UpdateGasPrice() *GoodInfoUpsertOne {
+	return u.Update(func(s *GoodInfoUpsert) {
+		s.UpdateGasPrice()
+	})
+}
+
+// SetSeparateGasFee sets the "separate_gas_fee" field.
+func (u *GoodInfoUpsertOne) SetSeparateGasFee(v bool) *GoodInfoUpsertOne {
+	return u.Update(func(s *GoodInfoUpsert) {
+		s.SetSeparateGasFee(v)
+	})
+}
+
+// UpdateSeparateGasFee sets the "separate_gas_fee" field to the value that was provided on create.
+func (u *GoodInfoUpsertOne) UpdateSeparateGasFee() *GoodInfoUpsertOne {
+	return u.Update(func(s *GoodInfoUpsert) {
+		s.UpdateSeparateGasFee()
+	})
+}
+
+// SetUnitPower sets the "unit_power" field.
+func (u *GoodInfoUpsertOne) SetUnitPower(v float64) *GoodInfoUpsertOne {
+	return u.Update(func(s *GoodInfoUpsert) {
+		s.SetUnitPower(v)
+	})
+}
+
+// UpdateUnitPower sets the "unit_power" field to the value that was provided on create.
+func (u *GoodInfoUpsertOne) UpdateUnitPower() *GoodInfoUpsertOne {
+	return u.Update(func(s *GoodInfoUpsert) {
+		s.UpdateUnitPower()
+	})
+}
+
+// SetDuration sets the "duration" field.
+func (u *GoodInfoUpsertOne) SetDuration(v int) *GoodInfoUpsertOne {
+	return u.Update(func(s *GoodInfoUpsert) {
+		s.SetDuration(v)
+	})
+}
+
+// UpdateDuration sets the "duration" field to the value that was provided on create.
+func (u *GoodInfoUpsertOne) UpdateDuration() *GoodInfoUpsertOne {
+	return u.Update(func(s *GoodInfoUpsert) {
+		s.UpdateDuration()
+	})
+}
+
+// SetCoinInfoID sets the "coin_info_id" field.
+func (u *GoodInfoUpsertOne) SetCoinInfoID(v uuid.UUID) *GoodInfoUpsertOne {
+	return u.Update(func(s *GoodInfoUpsert) {
+		s.SetCoinInfoID(v)
+	})
+}
+
+// UpdateCoinInfoID sets the "coin_info_id" field to the value that was provided on create.
+func (u *GoodInfoUpsertOne) UpdateCoinInfoID() *GoodInfoUpsertOne {
+	return u.Update(func(s *GoodInfoUpsert) {
+		s.UpdateCoinInfoID()
+	})
+}
+
+// SetActuals sets the "actuals" field.
+func (u *GoodInfoUpsertOne) SetActuals(v bool) *GoodInfoUpsertOne {
+	return u.Update(func(s *GoodInfoUpsert) {
+		s.SetActuals(v)
+	})
+}
+
+// UpdateActuals sets the "actuals" field to the value that was provided on create.
+func (u *GoodInfoUpsertOne) UpdateActuals() *GoodInfoUpsertOne {
+	return u.Update(func(s *GoodInfoUpsert) {
+		s.UpdateActuals()
+	})
+}
+
+// SetDeliveryTime sets the "delivery_time" field.
+func (u *GoodInfoUpsertOne) SetDeliveryTime(v time.Time) *GoodInfoUpsertOne {
+	return u.Update(func(s *GoodInfoUpsert) {
+		s.SetDeliveryTime(v)
+	})
+}
+
+// UpdateDeliveryTime sets the "delivery_time" field to the value that was provided on create.
+func (u *GoodInfoUpsertOne) UpdateDeliveryTime() *GoodInfoUpsertOne {
+	return u.Update(func(s *GoodInfoUpsert) {
+		s.UpdateDeliveryTime()
+	})
+}
+
+// SetInheritFromGoodID sets the "inherit_from_good_id" field.
+func (u *GoodInfoUpsertOne) SetInheritFromGoodID(v uuid.UUID) *GoodInfoUpsertOne {
+	return u.Update(func(s *GoodInfoUpsert) {
+		s.SetInheritFromGoodID(v)
+	})
+}
+
+// UpdateInheritFromGoodID sets the "inherit_from_good_id" field to the value that was provided on create.
+func (u *GoodInfoUpsertOne) UpdateInheritFromGoodID() *GoodInfoUpsertOne {
+	return u.Update(func(s *GoodInfoUpsert) {
+		s.UpdateInheritFromGoodID()
+	})
+}
+
+// SetVendorLocationID sets the "vendor_location_id" field.
+func (u *GoodInfoUpsertOne) SetVendorLocationID(v uuid.UUID) *GoodInfoUpsertOne {
+	return u.Update(func(s *GoodInfoUpsert) {
+		s.SetVendorLocationID(v)
+	})
+}
+
+// UpdateVendorLocationID sets the "vendor_location_id" field to the value that was provided on create.
+func (u *GoodInfoUpsertOne) UpdateVendorLocationID() *GoodInfoUpsertOne {
+	return u.Update(func(s *GoodInfoUpsert) {
+		s.UpdateVendorLocationID()
+	})
+}
+
+// SetPrice sets the "price" field.
+func (u *GoodInfoUpsertOne) SetPrice(v int) *GoodInfoUpsertOne {
+	return u.Update(func(s *GoodInfoUpsert) {
+		s.SetPrice(v)
+	})
+}
+
+// UpdatePrice sets the "price" field to the value that was provided on create.
+func (u *GoodInfoUpsertOne) UpdatePrice() *GoodInfoUpsertOne {
+	return u.Update(func(s *GoodInfoUpsert) {
+		s.UpdatePrice()
+	})
+}
+
+// SetBenefitType sets the "benefit_type" field.
+func (u *GoodInfoUpsertOne) SetBenefitType(v goodinfo.BenefitType) *GoodInfoUpsertOne {
+	return u.Update(func(s *GoodInfoUpsert) {
+		s.SetBenefitType(v)
+	})
+}
+
+// UpdateBenefitType sets the "benefit_type" field to the value that was provided on create.
+func (u *GoodInfoUpsertOne) UpdateBenefitType() *GoodInfoUpsertOne {
+	return u.Update(func(s *GoodInfoUpsert) {
+		s.UpdateBenefitType()
+	})
+}
+
+// SetClassic sets the "classic" field.
+func (u *GoodInfoUpsertOne) SetClassic(v bool) *GoodInfoUpsertOne {
+	return u.Update(func(s *GoodInfoUpsert) {
+		s.SetClassic(v)
+	})
+}
+
+// UpdateClassic sets the "classic" field to the value that was provided on create.
+func (u *GoodInfoUpsertOne) UpdateClassic() *GoodInfoUpsertOne {
+	return u.Update(func(s *GoodInfoUpsert) {
+		s.UpdateClassic()
+	})
+}
+
+// SetSupportCoinTypeIds sets the "support_coin_type_ids" field.
+func (u *GoodInfoUpsertOne) SetSupportCoinTypeIds(v []uuid.UUID) *GoodInfoUpsertOne {
+	return u.Update(func(s *GoodInfoUpsert) {
+		s.SetSupportCoinTypeIds(v)
+	})
+}
+
+// UpdateSupportCoinTypeIds sets the "support_coin_type_ids" field to the value that was provided on create.
+func (u *GoodInfoUpsertOne) UpdateSupportCoinTypeIds() *GoodInfoUpsertOne {
+	return u.Update(func(s *GoodInfoUpsert) {
+		s.UpdateSupportCoinTypeIds()
+	})
+}
+
+// SetReviewerID sets the "reviewer_id" field.
+func (u *GoodInfoUpsertOne) SetReviewerID(v uuid.UUID) *GoodInfoUpsertOne {
+	return u.Update(func(s *GoodInfoUpsert) {
+		s.SetReviewerID(v)
+	})
+}
+
+// UpdateReviewerID sets the "reviewer_id" field to the value that was provided on create.
+func (u *GoodInfoUpsertOne) UpdateReviewerID() *GoodInfoUpsertOne {
+	return u.Update(func(s *GoodInfoUpsert) {
+		s.UpdateReviewerID()
+	})
+}
+
+// SetReviewState sets the "review_state" field.
+func (u *GoodInfoUpsertOne) SetReviewState(v goodinfo.ReviewState) *GoodInfoUpsertOne {
+	return u.Update(func(s *GoodInfoUpsert) {
+		s.SetReviewState(v)
+	})
+}
+
+// UpdateReviewState sets the "review_state" field to the value that was provided on create.
+func (u *GoodInfoUpsertOne) UpdateReviewState() *GoodInfoUpsertOne {
+	return u.Update(func(s *GoodInfoUpsert) {
+		s.UpdateReviewState()
+	})
+}
+
+// SetTotal sets the "total" field.
+func (u *GoodInfoUpsertOne) SetTotal(v int) *GoodInfoUpsertOne {
+	return u.Update(func(s *GoodInfoUpsert) {
+		s.SetTotal(v)
+	})
+}
+
+// UpdateTotal sets the "total" field to the value that was provided on create.
+func (u *GoodInfoUpsertOne) UpdateTotal() *GoodInfoUpsertOne {
+	return u.Update(func(s *GoodInfoUpsert) {
+		s.UpdateTotal()
+	})
+}
+
+// Exec executes the query.
+func (u *GoodInfoUpsertOne) Exec(ctx context.Context) error {
+	if len(u.create.conflict) == 0 {
+		return errors.New("ent: missing options for GoodInfoCreate.OnConflict")
+	}
+	return u.create.Exec(ctx)
+}
+
+// ExecX is like Exec, but panics if an error occurs.
+func (u *GoodInfoUpsertOne) ExecX(ctx context.Context) {
+	if err := u.create.Exec(ctx); err != nil {
+		panic(err)
+	}
+}
+
+// Exec executes the UPSERT query and returns the inserted/updated ID.
+func (u *GoodInfoUpsertOne) ID(ctx context.Context) (id uuid.UUID, err error) {
+	if u.create.driver.Dialect() == dialect.MySQL {
+		// In case of "ON CONFLICT", there is no way to get back non-numeric ID
+		// fields from the database since MySQL does not support the RETURNING clause.
+		return id, errors.New("ent: GoodInfoUpsertOne.ID is not supported by MySQL driver. Use GoodInfoUpsertOne.Exec instead")
+	}
+	node, err := u.create.Save(ctx)
+	if err != nil {
+		return id, err
+	}
+	return node.ID, nil
+}
+
+// IDX is like ID, but panics if an error occurs.
+func (u *GoodInfoUpsertOne) IDX(ctx context.Context) uuid.UUID {
+	id, err := u.ID(ctx)
+	if err != nil {
+		panic(err)
+	}
+	return id
+}
+
 // GoodInfoCreateBulk is the builder for creating many GoodInfo entities in bulk.
 type GoodInfoCreateBulk struct {
 	config
 	builders []*GoodInfoCreate
+	conflict []sql.ConflictOption
 }
 
 // Save creates the GoodInfo entities in the database.
@@ -465,6 +1081,7 @@ func (gicb *GoodInfoCreateBulk) Save(ctx context.Context) ([]*GoodInfo, error) {
 					_, err = mutators[i+1].Mutate(root, gicb.builders[i+1].mutation)
 				} else {
 					spec := &sqlgraph.BatchCreateSpec{Nodes: specs}
+					spec.OnConflict = gicb.conflict
 					// Invoke the actual operation on the latest mutation in the chain.
 					if err = sqlgraph.BatchCreate(ctx, gicb.driver, spec); err != nil {
 						if sqlgraph.IsConstraintError(err) {
@@ -511,6 +1128,360 @@ func (gicb *GoodInfoCreateBulk) Exec(ctx context.Context) error {
 // ExecX is like Exec, but panics if an error occurs.
 func (gicb *GoodInfoCreateBulk) ExecX(ctx context.Context) {
 	if err := gicb.Exec(ctx); err != nil {
+		panic(err)
+	}
+}
+
+// OnConflict allows configuring the `ON CONFLICT` / `ON DUPLICATE KEY` clause
+// of the `INSERT` statement. For example:
+//
+//	client.GoodInfo.CreateBulk(builders...).
+//		OnConflict(
+//			// Update the row with the new values
+//			// the was proposed for insertion.
+//			sql.ResolveWithNewValues(),
+//		).
+//		// Override some of the fields with custom
+//		// update values.
+//		Update(func(u *ent.GoodInfoUpsert) {
+//			SetDeviceInfoID(v+v).
+//		}).
+//		Exec(ctx)
+//
+func (gicb *GoodInfoCreateBulk) OnConflict(opts ...sql.ConflictOption) *GoodInfoUpsertBulk {
+	gicb.conflict = opts
+	return &GoodInfoUpsertBulk{
+		create: gicb,
+	}
+}
+
+// OnConflictColumns calls `OnConflict` and configures the columns
+// as conflict target. Using this option is equivalent to using:
+//
+//	client.GoodInfo.Create().
+//		OnConflict(sql.ConflictColumns(columns...)).
+//		Exec(ctx)
+//
+func (gicb *GoodInfoCreateBulk) OnConflictColumns(columns ...string) *GoodInfoUpsertBulk {
+	gicb.conflict = append(gicb.conflict, sql.ConflictColumns(columns...))
+	return &GoodInfoUpsertBulk{
+		create: gicb,
+	}
+}
+
+// GoodInfoUpsertBulk is the builder for "upsert"-ing
+// a bulk of GoodInfo nodes.
+type GoodInfoUpsertBulk struct {
+	create *GoodInfoCreateBulk
+}
+
+// UpdateNewValues updates the fields using the new values that
+// were set on create. Using this option is equivalent to using:
+//
+//	client.GoodInfo.Create().
+//		OnConflict(
+//			sql.ResolveWithNewValues(),
+//			sql.ResolveWith(func(u *sql.UpdateSet) {
+//				u.SetIgnore(goodinfo.FieldID)
+//			}),
+//		).
+//		Exec(ctx)
+//
+func (u *GoodInfoUpsertBulk) UpdateNewValues() *GoodInfoUpsertBulk {
+	u.create.conflict = append(u.create.conflict, sql.ResolveWithNewValues())
+	u.create.conflict = append(u.create.conflict, sql.ResolveWith(func(s *sql.UpdateSet) {
+		for _, b := range u.create.builders {
+			if _, exists := b.mutation.ID(); exists {
+				s.SetIgnore(goodinfo.FieldID)
+				return
+			}
+		}
+	}))
+	return u
+}
+
+// Ignore sets each column to itself in case of conflict.
+// Using this option is equivalent to using:
+//
+//	client.GoodInfo.Create().
+//		OnConflict(sql.ResolveWithIgnore()).
+//		Exec(ctx)
+//
+func (u *GoodInfoUpsertBulk) Ignore() *GoodInfoUpsertBulk {
+	u.create.conflict = append(u.create.conflict, sql.ResolveWithIgnore())
+	return u
+}
+
+// DoNothing configures the conflict_action to `DO NOTHING`.
+// Supported only by SQLite and PostgreSQL.
+func (u *GoodInfoUpsertBulk) DoNothing() *GoodInfoUpsertBulk {
+	u.create.conflict = append(u.create.conflict, sql.DoNothing())
+	return u
+}
+
+// Update allows overriding fields `UPDATE` values. See the GoodInfoCreateBulk.OnConflict
+// documentation for more info.
+func (u *GoodInfoUpsertBulk) Update(set func(*GoodInfoUpsert)) *GoodInfoUpsertBulk {
+	u.create.conflict = append(u.create.conflict, sql.ResolveWith(func(update *sql.UpdateSet) {
+		set(&GoodInfoUpsert{UpdateSet: update})
+	}))
+	return u
+}
+
+// SetDeviceInfoID sets the "device_info_id" field.
+func (u *GoodInfoUpsertBulk) SetDeviceInfoID(v uuid.UUID) *GoodInfoUpsertBulk {
+	return u.Update(func(s *GoodInfoUpsert) {
+		s.SetDeviceInfoID(v)
+	})
+}
+
+// UpdateDeviceInfoID sets the "device_info_id" field to the value that was provided on create.
+func (u *GoodInfoUpsertBulk) UpdateDeviceInfoID() *GoodInfoUpsertBulk {
+	return u.Update(func(s *GoodInfoUpsert) {
+		s.UpdateDeviceInfoID()
+	})
+}
+
+// SetGasPrice sets the "gas_price" field.
+func (u *GoodInfoUpsertBulk) SetGasPrice(v int) *GoodInfoUpsertBulk {
+	return u.Update(func(s *GoodInfoUpsert) {
+		s.SetGasPrice(v)
+	})
+}
+
+// UpdateGasPrice sets the "gas_price" field to the value that was provided on create.
+func (u *GoodInfoUpsertBulk) UpdateGasPrice() *GoodInfoUpsertBulk {
+	return u.Update(func(s *GoodInfoUpsert) {
+		s.UpdateGasPrice()
+	})
+}
+
+// SetSeparateGasFee sets the "separate_gas_fee" field.
+func (u *GoodInfoUpsertBulk) SetSeparateGasFee(v bool) *GoodInfoUpsertBulk {
+	return u.Update(func(s *GoodInfoUpsert) {
+		s.SetSeparateGasFee(v)
+	})
+}
+
+// UpdateSeparateGasFee sets the "separate_gas_fee" field to the value that was provided on create.
+func (u *GoodInfoUpsertBulk) UpdateSeparateGasFee() *GoodInfoUpsertBulk {
+	return u.Update(func(s *GoodInfoUpsert) {
+		s.UpdateSeparateGasFee()
+	})
+}
+
+// SetUnitPower sets the "unit_power" field.
+func (u *GoodInfoUpsertBulk) SetUnitPower(v float64) *GoodInfoUpsertBulk {
+	return u.Update(func(s *GoodInfoUpsert) {
+		s.SetUnitPower(v)
+	})
+}
+
+// UpdateUnitPower sets the "unit_power" field to the value that was provided on create.
+func (u *GoodInfoUpsertBulk) UpdateUnitPower() *GoodInfoUpsertBulk {
+	return u.Update(func(s *GoodInfoUpsert) {
+		s.UpdateUnitPower()
+	})
+}
+
+// SetDuration sets the "duration" field.
+func (u *GoodInfoUpsertBulk) SetDuration(v int) *GoodInfoUpsertBulk {
+	return u.Update(func(s *GoodInfoUpsert) {
+		s.SetDuration(v)
+	})
+}
+
+// UpdateDuration sets the "duration" field to the value that was provided on create.
+func (u *GoodInfoUpsertBulk) UpdateDuration() *GoodInfoUpsertBulk {
+	return u.Update(func(s *GoodInfoUpsert) {
+		s.UpdateDuration()
+	})
+}
+
+// SetCoinInfoID sets the "coin_info_id" field.
+func (u *GoodInfoUpsertBulk) SetCoinInfoID(v uuid.UUID) *GoodInfoUpsertBulk {
+	return u.Update(func(s *GoodInfoUpsert) {
+		s.SetCoinInfoID(v)
+	})
+}
+
+// UpdateCoinInfoID sets the "coin_info_id" field to the value that was provided on create.
+func (u *GoodInfoUpsertBulk) UpdateCoinInfoID() *GoodInfoUpsertBulk {
+	return u.Update(func(s *GoodInfoUpsert) {
+		s.UpdateCoinInfoID()
+	})
+}
+
+// SetActuals sets the "actuals" field.
+func (u *GoodInfoUpsertBulk) SetActuals(v bool) *GoodInfoUpsertBulk {
+	return u.Update(func(s *GoodInfoUpsert) {
+		s.SetActuals(v)
+	})
+}
+
+// UpdateActuals sets the "actuals" field to the value that was provided on create.
+func (u *GoodInfoUpsertBulk) UpdateActuals() *GoodInfoUpsertBulk {
+	return u.Update(func(s *GoodInfoUpsert) {
+		s.UpdateActuals()
+	})
+}
+
+// SetDeliveryTime sets the "delivery_time" field.
+func (u *GoodInfoUpsertBulk) SetDeliveryTime(v time.Time) *GoodInfoUpsertBulk {
+	return u.Update(func(s *GoodInfoUpsert) {
+		s.SetDeliveryTime(v)
+	})
+}
+
+// UpdateDeliveryTime sets the "delivery_time" field to the value that was provided on create.
+func (u *GoodInfoUpsertBulk) UpdateDeliveryTime() *GoodInfoUpsertBulk {
+	return u.Update(func(s *GoodInfoUpsert) {
+		s.UpdateDeliveryTime()
+	})
+}
+
+// SetInheritFromGoodID sets the "inherit_from_good_id" field.
+func (u *GoodInfoUpsertBulk) SetInheritFromGoodID(v uuid.UUID) *GoodInfoUpsertBulk {
+	return u.Update(func(s *GoodInfoUpsert) {
+		s.SetInheritFromGoodID(v)
+	})
+}
+
+// UpdateInheritFromGoodID sets the "inherit_from_good_id" field to the value that was provided on create.
+func (u *GoodInfoUpsertBulk) UpdateInheritFromGoodID() *GoodInfoUpsertBulk {
+	return u.Update(func(s *GoodInfoUpsert) {
+		s.UpdateInheritFromGoodID()
+	})
+}
+
+// SetVendorLocationID sets the "vendor_location_id" field.
+func (u *GoodInfoUpsertBulk) SetVendorLocationID(v uuid.UUID) *GoodInfoUpsertBulk {
+	return u.Update(func(s *GoodInfoUpsert) {
+		s.SetVendorLocationID(v)
+	})
+}
+
+// UpdateVendorLocationID sets the "vendor_location_id" field to the value that was provided on create.
+func (u *GoodInfoUpsertBulk) UpdateVendorLocationID() *GoodInfoUpsertBulk {
+	return u.Update(func(s *GoodInfoUpsert) {
+		s.UpdateVendorLocationID()
+	})
+}
+
+// SetPrice sets the "price" field.
+func (u *GoodInfoUpsertBulk) SetPrice(v int) *GoodInfoUpsertBulk {
+	return u.Update(func(s *GoodInfoUpsert) {
+		s.SetPrice(v)
+	})
+}
+
+// UpdatePrice sets the "price" field to the value that was provided on create.
+func (u *GoodInfoUpsertBulk) UpdatePrice() *GoodInfoUpsertBulk {
+	return u.Update(func(s *GoodInfoUpsert) {
+		s.UpdatePrice()
+	})
+}
+
+// SetBenefitType sets the "benefit_type" field.
+func (u *GoodInfoUpsertBulk) SetBenefitType(v goodinfo.BenefitType) *GoodInfoUpsertBulk {
+	return u.Update(func(s *GoodInfoUpsert) {
+		s.SetBenefitType(v)
+	})
+}
+
+// UpdateBenefitType sets the "benefit_type" field to the value that was provided on create.
+func (u *GoodInfoUpsertBulk) UpdateBenefitType() *GoodInfoUpsertBulk {
+	return u.Update(func(s *GoodInfoUpsert) {
+		s.UpdateBenefitType()
+	})
+}
+
+// SetClassic sets the "classic" field.
+func (u *GoodInfoUpsertBulk) SetClassic(v bool) *GoodInfoUpsertBulk {
+	return u.Update(func(s *GoodInfoUpsert) {
+		s.SetClassic(v)
+	})
+}
+
+// UpdateClassic sets the "classic" field to the value that was provided on create.
+func (u *GoodInfoUpsertBulk) UpdateClassic() *GoodInfoUpsertBulk {
+	return u.Update(func(s *GoodInfoUpsert) {
+		s.UpdateClassic()
+	})
+}
+
+// SetSupportCoinTypeIds sets the "support_coin_type_ids" field.
+func (u *GoodInfoUpsertBulk) SetSupportCoinTypeIds(v []uuid.UUID) *GoodInfoUpsertBulk {
+	return u.Update(func(s *GoodInfoUpsert) {
+		s.SetSupportCoinTypeIds(v)
+	})
+}
+
+// UpdateSupportCoinTypeIds sets the "support_coin_type_ids" field to the value that was provided on create.
+func (u *GoodInfoUpsertBulk) UpdateSupportCoinTypeIds() *GoodInfoUpsertBulk {
+	return u.Update(func(s *GoodInfoUpsert) {
+		s.UpdateSupportCoinTypeIds()
+	})
+}
+
+// SetReviewerID sets the "reviewer_id" field.
+func (u *GoodInfoUpsertBulk) SetReviewerID(v uuid.UUID) *GoodInfoUpsertBulk {
+	return u.Update(func(s *GoodInfoUpsert) {
+		s.SetReviewerID(v)
+	})
+}
+
+// UpdateReviewerID sets the "reviewer_id" field to the value that was provided on create.
+func (u *GoodInfoUpsertBulk) UpdateReviewerID() *GoodInfoUpsertBulk {
+	return u.Update(func(s *GoodInfoUpsert) {
+		s.UpdateReviewerID()
+	})
+}
+
+// SetReviewState sets the "review_state" field.
+func (u *GoodInfoUpsertBulk) SetReviewState(v goodinfo.ReviewState) *GoodInfoUpsertBulk {
+	return u.Update(func(s *GoodInfoUpsert) {
+		s.SetReviewState(v)
+	})
+}
+
+// UpdateReviewState sets the "review_state" field to the value that was provided on create.
+func (u *GoodInfoUpsertBulk) UpdateReviewState() *GoodInfoUpsertBulk {
+	return u.Update(func(s *GoodInfoUpsert) {
+		s.UpdateReviewState()
+	})
+}
+
+// SetTotal sets the "total" field.
+func (u *GoodInfoUpsertBulk) SetTotal(v int) *GoodInfoUpsertBulk {
+	return u.Update(func(s *GoodInfoUpsert) {
+		s.SetTotal(v)
+	})
+}
+
+// UpdateTotal sets the "total" field to the value that was provided on create.
+func (u *GoodInfoUpsertBulk) UpdateTotal() *GoodInfoUpsertBulk {
+	return u.Update(func(s *GoodInfoUpsert) {
+		s.UpdateTotal()
+	})
+}
+
+// Exec executes the query.
+func (u *GoodInfoUpsertBulk) Exec(ctx context.Context) error {
+	for i, b := range u.create.builders {
+		if len(b.conflict) != 0 {
+			return fmt.Errorf("ent: OnConflict was set for builder %d. Set it on the GoodInfoCreateBulk instead", i)
+		}
+	}
+	if len(u.create.conflict) == 0 {
+		return errors.New("ent: missing options for GoodInfoCreateBulk.OnConflict")
+	}
+	return u.create.Exec(ctx)
+}
+
+// ExecX is like Exec, but panics if an error occurs.
+func (u *GoodInfoUpsertBulk) ExecX(ctx context.Context) {
+	if err := u.create.Exec(ctx); err != nil {
 		panic(err)
 	}
 }

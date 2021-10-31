@@ -3,6 +3,7 @@ package schema
 import (
 	"entgo.io/ent"
 	"entgo.io/ent/schema/field"
+	"entgo.io/ent/schema/index"
 
 	"github.com/google/uuid"
 )
@@ -16,7 +17,8 @@ type TargetArea struct {
 func (TargetArea) Fields() []ent.Field {
 	return []ent.Field{
 		field.UUID("id", uuid.UUID{}).
-			Default(uuid.New),
+			Default(uuid.New).
+			Unique(),
 		field.String("continent"),
 		field.String("country"),
 	}
@@ -25,4 +27,11 @@ func (TargetArea) Fields() []ent.Field {
 // Edges of the TargetArea.
 func (TargetArea) Edges() []ent.Edge {
 	return nil
+}
+
+func (TargetArea) Indexes() []ent.Index {
+	return []ent.Index{
+		index.Fields("continent", "country").
+			Unique(),
+	}
 }

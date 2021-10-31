@@ -3,6 +3,8 @@
 package goodinfo
 
 import (
+	"fmt"
+
 	"github.com/google/uuid"
 )
 
@@ -41,8 +43,8 @@ const (
 	FieldSupportCoinTypeIds = "support_coin_type_ids"
 	// FieldReviewerID holds the string denoting the reviewer_id field in the database.
 	FieldReviewerID = "reviewer_id"
-	// FieldState holds the string denoting the state field in the database.
-	FieldState = "state"
+	// FieldReviewState holds the string denoting the review_state field in the database.
+	FieldReviewState = "review_state"
 	// FieldTotal holds the string denoting the total field in the database.
 	FieldTotal = "total"
 	// Table holds the table name of the goodinfo in the database.
@@ -67,7 +69,7 @@ var Columns = []string{
 	FieldClassic,
 	FieldSupportCoinTypeIds,
 	FieldReviewerID,
-	FieldState,
+	FieldReviewState,
 	FieldTotal,
 }
 
@@ -84,6 +86,60 @@ func ValidColumn(column string) bool {
 var (
 	// GasPriceValidator is a validator for the "gas_price" field. It is called by the builders before save.
 	GasPriceValidator func(int) error
+	// UnitPowerValidator is a validator for the "unit_power" field. It is called by the builders before save.
+	UnitPowerValidator func(float64) error
+	// DurationValidator is a validator for the "duration" field. It is called by the builders before save.
+	DurationValidator func(int) error
+	// PriceValidator is a validator for the "price" field. It is called by the builders before save.
+	PriceValidator func(int) error
+	// TotalValidator is a validator for the "total" field. It is called by the builders before save.
+	TotalValidator func(int) error
 	// DefaultID holds the default value on creation for the "id" field.
 	DefaultID func() uuid.UUID
 )
+
+// BenefitType defines the type for the "benefit_type" enum field.
+type BenefitType string
+
+// BenefitType values.
+const (
+	BenefitTypePool     BenefitType = "pool"
+	BenefitTypePlatform BenefitType = "platform"
+)
+
+func (bt BenefitType) String() string {
+	return string(bt)
+}
+
+// BenefitTypeValidator is a validator for the "benefit_type" field enum values. It is called by the builders before save.
+func BenefitTypeValidator(bt BenefitType) error {
+	switch bt {
+	case BenefitTypePool, BenefitTypePlatform:
+		return nil
+	default:
+		return fmt.Errorf("goodinfo: invalid enum value for benefit_type field: %q", bt)
+	}
+}
+
+// ReviewState defines the type for the "review_state" enum field.
+type ReviewState string
+
+// ReviewState values.
+const (
+	ReviewStatePassed   ReviewState = "passed"
+	ReviewStateRejected ReviewState = "rejected"
+)
+
+func (rs ReviewState) String() string {
+	return string(rs)
+}
+
+// ReviewStateValidator is a validator for the "review_state" field enum values. It is called by the builders before save.
+func ReviewStateValidator(rs ReviewState) error {
+	switch rs {
+	case ReviewStatePassed, ReviewStateRejected:
+		return nil
+	default:
+		return fmt.Errorf("goodinfo: invalid enum value for review_state field: %q", rs)
+	}
+}

@@ -50,13 +50,13 @@ type GoodInfoMutation struct {
 	vendor_location_id    *uuid.UUID
 	price                 *int
 	addprice              *int
-	benefit_type          *string
+	benefit_type          *goodinfo.BenefitType
 	classic               *bool
 	support_coin_type_ids *[]uuid.UUID
 	reviewer_id           *uuid.UUID
-	state                 *string
-	_Total                *int
-	add_Total             *int
+	review_state          *goodinfo.ReviewState
+	total                 *int
+	addtotal              *int
 	clearedFields         map[string]struct{}
 	done                  bool
 	oldValue              func(context.Context) (*GoodInfo, error)
@@ -625,12 +625,12 @@ func (m *GoodInfoMutation) ResetPrice() {
 }
 
 // SetBenefitType sets the "benefit_type" field.
-func (m *GoodInfoMutation) SetBenefitType(s string) {
-	m.benefit_type = &s
+func (m *GoodInfoMutation) SetBenefitType(gt goodinfo.BenefitType) {
+	m.benefit_type = &gt
 }
 
 // BenefitType returns the value of the "benefit_type" field in the mutation.
-func (m *GoodInfoMutation) BenefitType() (r string, exists bool) {
+func (m *GoodInfoMutation) BenefitType() (r goodinfo.BenefitType, exists bool) {
 	v := m.benefit_type
 	if v == nil {
 		return
@@ -641,7 +641,7 @@ func (m *GoodInfoMutation) BenefitType() (r string, exists bool) {
 // OldBenefitType returns the old "benefit_type" field's value of the GoodInfo entity.
 // If the GoodInfo object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *GoodInfoMutation) OldBenefitType(ctx context.Context) (v string, err error) {
+func (m *GoodInfoMutation) OldBenefitType(ctx context.Context) (v goodinfo.BenefitType, err error) {
 	if !m.op.Is(OpUpdateOne) {
 		return v, fmt.Errorf("OldBenefitType is only allowed on UpdateOne operations")
 	}
@@ -768,58 +768,58 @@ func (m *GoodInfoMutation) ResetReviewerID() {
 	m.reviewer_id = nil
 }
 
-// SetState sets the "state" field.
-func (m *GoodInfoMutation) SetState(s string) {
-	m.state = &s
+// SetReviewState sets the "review_state" field.
+func (m *GoodInfoMutation) SetReviewState(gs goodinfo.ReviewState) {
+	m.review_state = &gs
 }
 
-// State returns the value of the "state" field in the mutation.
-func (m *GoodInfoMutation) State() (r string, exists bool) {
-	v := m.state
+// ReviewState returns the value of the "review_state" field in the mutation.
+func (m *GoodInfoMutation) ReviewState() (r goodinfo.ReviewState, exists bool) {
+	v := m.review_state
 	if v == nil {
 		return
 	}
 	return *v, true
 }
 
-// OldState returns the old "state" field's value of the GoodInfo entity.
+// OldReviewState returns the old "review_state" field's value of the GoodInfo entity.
 // If the GoodInfo object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *GoodInfoMutation) OldState(ctx context.Context) (v string, err error) {
+func (m *GoodInfoMutation) OldReviewState(ctx context.Context) (v goodinfo.ReviewState, err error) {
 	if !m.op.Is(OpUpdateOne) {
-		return v, fmt.Errorf("OldState is only allowed on UpdateOne operations")
+		return v, fmt.Errorf("OldReviewState is only allowed on UpdateOne operations")
 	}
 	if m.id == nil || m.oldValue == nil {
-		return v, fmt.Errorf("OldState requires an ID field in the mutation")
+		return v, fmt.Errorf("OldReviewState requires an ID field in the mutation")
 	}
 	oldValue, err := m.oldValue(ctx)
 	if err != nil {
-		return v, fmt.Errorf("querying old value for OldState: %w", err)
+		return v, fmt.Errorf("querying old value for OldReviewState: %w", err)
 	}
-	return oldValue.State, nil
+	return oldValue.ReviewState, nil
 }
 
-// ResetState resets all changes to the "state" field.
-func (m *GoodInfoMutation) ResetState() {
-	m.state = nil
+// ResetReviewState resets all changes to the "review_state" field.
+func (m *GoodInfoMutation) ResetReviewState() {
+	m.review_state = nil
 }
 
-// SetTotal sets the "Total" field.
+// SetTotal sets the "total" field.
 func (m *GoodInfoMutation) SetTotal(i int) {
-	m._Total = &i
-	m.add_Total = nil
+	m.total = &i
+	m.addtotal = nil
 }
 
-// Total returns the value of the "Total" field in the mutation.
+// Total returns the value of the "total" field in the mutation.
 func (m *GoodInfoMutation) Total() (r int, exists bool) {
-	v := m._Total
+	v := m.total
 	if v == nil {
 		return
 	}
 	return *v, true
 }
 
-// OldTotal returns the old "Total" field's value of the GoodInfo entity.
+// OldTotal returns the old "total" field's value of the GoodInfo entity.
 // If the GoodInfo object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
 func (m *GoodInfoMutation) OldTotal(ctx context.Context) (v int, err error) {
@@ -836,28 +836,28 @@ func (m *GoodInfoMutation) OldTotal(ctx context.Context) (v int, err error) {
 	return oldValue.Total, nil
 }
 
-// AddTotal adds i to the "Total" field.
+// AddTotal adds i to the "total" field.
 func (m *GoodInfoMutation) AddTotal(i int) {
-	if m.add_Total != nil {
-		*m.add_Total += i
+	if m.addtotal != nil {
+		*m.addtotal += i
 	} else {
-		m.add_Total = &i
+		m.addtotal = &i
 	}
 }
 
-// AddedTotal returns the value that was added to the "Total" field in this mutation.
+// AddedTotal returns the value that was added to the "total" field in this mutation.
 func (m *GoodInfoMutation) AddedTotal() (r int, exists bool) {
-	v := m.add_Total
+	v := m.addtotal
 	if v == nil {
 		return
 	}
 	return *v, true
 }
 
-// ResetTotal resets all changes to the "Total" field.
+// ResetTotal resets all changes to the "total" field.
 func (m *GoodInfoMutation) ResetTotal() {
-	m._Total = nil
-	m.add_Total = nil
+	m.total = nil
+	m.addtotal = nil
 }
 
 // Where appends a list predicates to the GoodInfoMutation builder.
@@ -925,10 +925,10 @@ func (m *GoodInfoMutation) Fields() []string {
 	if m.reviewer_id != nil {
 		fields = append(fields, goodinfo.FieldReviewerID)
 	}
-	if m.state != nil {
-		fields = append(fields, goodinfo.FieldState)
+	if m.review_state != nil {
+		fields = append(fields, goodinfo.FieldReviewState)
 	}
-	if m._Total != nil {
+	if m.total != nil {
 		fields = append(fields, goodinfo.FieldTotal)
 	}
 	return fields
@@ -969,8 +969,8 @@ func (m *GoodInfoMutation) Field(name string) (ent.Value, bool) {
 		return m.SupportCoinTypeIds()
 	case goodinfo.FieldReviewerID:
 		return m.ReviewerID()
-	case goodinfo.FieldState:
-		return m.State()
+	case goodinfo.FieldReviewState:
+		return m.ReviewState()
 	case goodinfo.FieldTotal:
 		return m.Total()
 	}
@@ -1012,8 +1012,8 @@ func (m *GoodInfoMutation) OldField(ctx context.Context, name string) (ent.Value
 		return m.OldSupportCoinTypeIds(ctx)
 	case goodinfo.FieldReviewerID:
 		return m.OldReviewerID(ctx)
-	case goodinfo.FieldState:
-		return m.OldState(ctx)
+	case goodinfo.FieldReviewState:
+		return m.OldReviewState(ctx)
 	case goodinfo.FieldTotal:
 		return m.OldTotal(ctx)
 	}
@@ -1103,7 +1103,7 @@ func (m *GoodInfoMutation) SetField(name string, value ent.Value) error {
 		m.SetPrice(v)
 		return nil
 	case goodinfo.FieldBenefitType:
-		v, ok := value.(string)
+		v, ok := value.(goodinfo.BenefitType)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
@@ -1130,12 +1130,12 @@ func (m *GoodInfoMutation) SetField(name string, value ent.Value) error {
 		}
 		m.SetReviewerID(v)
 		return nil
-	case goodinfo.FieldState:
-		v, ok := value.(string)
+	case goodinfo.FieldReviewState:
+		v, ok := value.(goodinfo.ReviewState)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
-		m.SetState(v)
+		m.SetReviewState(v)
 		return nil
 	case goodinfo.FieldTotal:
 		v, ok := value.(int)
@@ -1164,7 +1164,7 @@ func (m *GoodInfoMutation) AddedFields() []string {
 	if m.addprice != nil {
 		fields = append(fields, goodinfo.FieldPrice)
 	}
-	if m.add_Total != nil {
+	if m.addtotal != nil {
 		fields = append(fields, goodinfo.FieldTotal)
 	}
 	return fields
@@ -1301,8 +1301,8 @@ func (m *GoodInfoMutation) ResetField(name string) error {
 	case goodinfo.FieldReviewerID:
 		m.ResetReviewerID()
 		return nil
-	case goodinfo.FieldState:
-		m.ResetState()
+	case goodinfo.FieldReviewState:
+		m.ResetReviewState()
 		return nil
 	case goodinfo.FieldTotal:
 		m.ResetTotal()
