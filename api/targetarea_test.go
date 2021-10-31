@@ -13,7 +13,7 @@ import (
 	"github.com/NpoolPlatform/cloud-hashing-goods/message/npool"
 )
 
-func TestTargetAreaCRUD(t *testing.T) {
+func TestTargetAreaCRUD(t *testing.T) { //nolint
 	if runByGithubAction, err := strconv.ParseBool(os.Getenv("RUN_BY_GITHUB_ACTION")); err == nil && runByGithubAction {
 		return
 	}
@@ -99,8 +99,11 @@ func TestTargetAreaCRUD(t *testing.T) {
 			}
 		}
 	}
+}
 
-	_, err = cli.R().
+func TestGetTargetAreas(t *testing.T) {
+	cli := resty.New()
+	_, err := cli.R().
 		Get("http://localhost:33759/v1/get/target-areas")
 	assert.Nil(t, err)
 }
