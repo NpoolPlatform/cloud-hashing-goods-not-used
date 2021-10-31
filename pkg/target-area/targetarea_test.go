@@ -27,7 +27,8 @@ func init() {
 		return
 	}
 
-	configPath := fmt.Sprintf("%s/../../cmd/cloud-hashing-goods", path.Dir(myPath))
+	appName := path.Base(path.Dir(path.Dir(path.Dir(myPath))))
+	configPath := fmt.Sprintf("%s/../../cmd/%v", path.Dir(myPath), appName)
 
 	err := app.Init(servicename.ServiceName, "", "", "", configPath, nil, nil)
 	if err != nil {
