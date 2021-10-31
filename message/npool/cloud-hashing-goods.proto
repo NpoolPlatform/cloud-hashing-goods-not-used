@@ -48,7 +48,7 @@ service CloudHashingGoods {
     }
     rpc GetTargetAreas(GetTargetAreasRequest) returns (GetTargetAreasResponse) {
         option (google.api.http) = {
-            get: "/v1/get/target-areas"
+            post: "/v1/get/target-areas"
         };
     }
 
