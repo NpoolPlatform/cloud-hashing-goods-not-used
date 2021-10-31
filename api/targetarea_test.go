@@ -102,6 +102,10 @@ func TestTargetAreaCRUD(t *testing.T) { //nolint
 }
 
 func TestGetTargetAreas(t *testing.T) {
+	if runByGithubAction, err := strconv.ParseBool(os.Getenv("RUN_BY_GITHUB_ACTION")); err == nil && runByGithubAction {
+		return
+	}
+
 	cli := resty.New()
 	_, err := cli.R().
 		Get("http://localhost:33759/v1/get/target-areas")
