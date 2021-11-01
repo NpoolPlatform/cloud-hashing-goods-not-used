@@ -5,46 +5,26 @@ import (
 
 	"github.com/NpoolPlatform/cloud-hashing-goods/message/npool"
 
-	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db"
-	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/vendorlocation"
+	_ "github.com/NpoolPlatform/cloud-hashing-goods/pkg/db"                //nolint
+	_ "github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/targetarea" //nolint
 
-	"github.com/google/uuid"
+	_ "github.com/google/uuid" //nolint
 
 	"golang.org/x/xerrors"
 )
 
-func Create(ctx context.Context, in *npool.CreateTargetAreaRequest) (*npool.CreateTargetAreaResponse, error) {
-	info, err := db.Client().
-		TargetArea.
-		Create().
-		SetContinent(in.GetInfo().GetContinent()).
-		SetCountry(in.GetInfo().GetCountry()).
-		Save(ctx)
-	if err != nil {
-		return nil, err
-	}
-
-	return &npool.CreateTargetAreaResponse{
-		Info: &npool.TargetAreaInfo{
-			ID:        info.ID.String(),
-			Continent: info.Continent,
-			Country:   info.Country,
-		},
-	}, nil
+func Create(ctx context.Context, in *npool.CreateVendorLocationRequest) (*npool.CreateVendorLocationResponse, error) {
+	return nil, xerrors.Errorf("NOT IMPLEMENTED")
 }
 
-func Update(ctx context.Context, in *npool.UpdateTargetAreaRequest) (*npool.UpdateTargetAreaResponse, error) {
-	id, err := uuid.Parse(in.GetInfo().GetID())
-	if err != nil {
-		return nil, xerrors.Errorf("invalid target area id: %v", err)
-	}
+func Update(ctx context.Context, in *npool.UpdateVendorLocationRequest) (*npool.UpdateVendorLocationResponse, error) {
+	return nil, xerrors.Errorf("NOT IMPLEMENTED")
+}
 
-	info, err := db.Client().
-		TargetArea.
-		UpdateOneID(id).
-		SetContinent(in.GetInfo().GetContinent()).
-		SetCountry(in.GetInfo().GetCountry()).
-		Save(ctx)
-	if err != nil {
-		return nil, err
-	}
+func Delete(ctx context.Context, in *npool.DeleteVendorLocationRequest) (*npool.DeleteVendorLocationResponse, error) {
+	return nil, xerrors.Errorf("NOT IMPLEMENTED")
+}
+
+func GetAll(ctx context.Context, in *npool.GetVendorLocationsRequest) (*npool.GetVendorLocationsResponse, error) {
+	return nil, xerrors.Errorf("NOT IMPLEMENTED")
+}

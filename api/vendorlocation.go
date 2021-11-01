@@ -3,21 +3,48 @@ package api
 import (
 	"context"
 
+	"github.com/NpoolPlatform/go-service-framework/pkg/logger"
+
 	"github.com/NpoolPlatform/cloud-hashing-goods/message/npool"
+
+	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/vendor-location" //nolint
+
+	"google.golang.org/grpc/codes"
+	"google.golang.org/grpc/status"
 )
 
 func (s *Server) CreateVendorLocation(ctx context.Context, in *npool.CreateVendorLocationRequest) (*npool.CreateVendorLocationResponse, error) {
-	return nil, nil
+	resp, err := vendorlocation.Create(ctx, in)
+	if err != nil {
+		logger.Sugar().Errorf("create vendor location error: %w", err)
+		return &npool.CreateVendorLocationResponse{}, status.Error(codes.Internal, "internal server error")
+	}
+	return resp, nil
 }
 
 func (s *Server) UpdateVendorLocation(ctx context.Context, in *npool.UpdateVendorLocationRequest) (*npool.UpdateVendorLocationResponse, error) {
-	return nil, nil
+	resp, err := vendorlocation.Update(ctx, in)
+	if err != nil {
+		logger.Sugar().Errorf("update vendor location error: %w", err)
+		return &npool.UpdateVendorLocationResponse{}, status.Error(codes.Internal, "internal server error")
+	}
+	return resp, nil
 }
 
 func (s *Server) DeleteVendorLocation(ctx context.Context, in *npool.DeleteVendorLocationRequest) (*npool.DeleteVendorLocationResponse, error) {
-	return nil, nil
+	resp, err := vendorlocation.Delete(ctx, in)
+	if err != nil {
+		logger.Sugar().Errorf("delete vendor location error: %w", err)
+		return &npool.DeleteVendorLocationResponse{}, status.Error(codes.Internal, "internal server error")
+	}
+	return resp, nil
 }
 
 func (s *Server) GetVendorLocations(ctx context.Context, in *npool.GetVendorLocationsRequest) (*npool.GetVendorLocationsResponse, error) {
-	return &npool.GetVendorLocationsResponse{}, nil
+	resp, err := vendorlocation.GetAll(ctx, in)
+	if err != nil {
+		logger.Sugar().Errorf("get vendor locations error: %w", err)
+		return &npool.GetVendorLocationsResponse{}, status.Error(codes.Internal, "internal server error")
+	}
+	return resp, nil
 }
