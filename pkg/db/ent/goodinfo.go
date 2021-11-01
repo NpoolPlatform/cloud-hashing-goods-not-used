@@ -6,7 +6,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"strings"
-	"time"
 
 	"entgo.io/ent/dialect/sql"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/goodinfo"
@@ -53,9 +52,11 @@ type GoodInfo struct {
 	// Total holds the value of the "total" field.
 	Total int `json:"total,omitempty"`
 	// CreateAt holds the value of the "create_at" field.
-	CreateAt time.Time `json:"create_at,omitempty"`
+	CreateAt int64 `json:"create_at,omitempty"`
 	// UpdateAt holds the value of the "update_at" field.
-	UpdateAt time.Time `json:"update_at,omitempty"`
+	UpdateAt int64 `json:"update_at,omitempty"`
+	// DeleteAt holds the value of the "delete_at" field.
+	DeleteAt int64 `json:"delete_at,omitempty"`
 }
 
 // scanValues returns the types for scanning values from sql.Rows.
@@ -69,12 +70,10 @@ func (*GoodInfo) scanValues(columns []string) ([]interface{}, error) {
 			values[i] = new(sql.NullBool)
 		case goodinfo.FieldUnitPower:
 			values[i] = new(sql.NullFloat64)
-		case goodinfo.FieldGasPrice, goodinfo.FieldDuration, goodinfo.FieldDeliveryTime, goodinfo.FieldPrice, goodinfo.FieldTotal:
+		case goodinfo.FieldGasPrice, goodinfo.FieldDuration, goodinfo.FieldDeliveryTime, goodinfo.FieldPrice, goodinfo.FieldTotal, goodinfo.FieldCreateAt, goodinfo.FieldUpdateAt, goodinfo.FieldDeleteAt:
 			values[i] = new(sql.NullInt64)
 		case goodinfo.FieldBenefitType, goodinfo.FieldReviewState:
 			values[i] = new(sql.NullString)
-		case goodinfo.FieldCreateAt, goodinfo.FieldUpdateAt:
-			values[i] = new(sql.NullTime)
 		case goodinfo.FieldID, goodinfo.FieldDeviceInfoID, goodinfo.FieldCoinInfoID, goodinfo.FieldInheritFromGoodID, goodinfo.FieldVendorLocationID, goodinfo.FieldReviewerID:
 			values[i] = new(uuid.UUID)
 		default:
@@ -203,16 +202,22 @@ func (gi *GoodInfo) assignValues(columns []string, values []interface{}) error {
 				gi.Total = int(value.Int64)
 			}
 		case goodinfo.FieldCreateAt:
-			if value, ok := values[i].(*sql.NullTime); !ok {
+			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field create_at", values[i])
 			} else if value.Valid {
-				gi.CreateAt = value.Time
+				gi.CreateAt = value.Int64
 			}
 		case goodinfo.FieldUpdateAt:
-			if value, ok := values[i].(*sql.NullTime); !ok {
+			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field update_at", values[i])
 			} else if value.Valid {
-				gi.UpdateAt = value.Time
+				gi.UpdateAt = value.Int64
+			}
+		case goodinfo.FieldDeleteAt:
+			if value, ok := values[i].(*sql.NullInt64); !ok {
+				return fmt.Errorf("unexpected type %T for field delete_at", values[i])
+			} else if value.Valid {
+				gi.DeleteAt = value.Int64
 			}
 		}
 	}
@@ -277,9 +282,11 @@ func (gi *GoodInfo) String() string {
 	builder.WriteString(", total=")
 	builder.WriteString(fmt.Sprintf("%v", gi.Total))
 	builder.WriteString(", create_at=")
-	builder.WriteString(gi.CreateAt.Format(time.ANSIC))
+	builder.WriteString(fmt.Sprintf("%v", gi.CreateAt))
 	builder.WriteString(", update_at=")
-	builder.WriteString(gi.UpdateAt.Format(time.ANSIC))
+	builder.WriteString(fmt.Sprintf("%v", gi.UpdateAt))
+	builder.WriteString(", delete_at=")
+	builder.WriteString(fmt.Sprintf("%v", gi.DeleteAt))
 	builder.WriteByte(')')
 	return builder.String()
 }

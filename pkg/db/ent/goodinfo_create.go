@@ -6,7 +6,6 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"time"
 
 	"entgo.io/ent/dialect"
 	"entgo.io/ent/dialect/sql"
@@ -127,29 +126,43 @@ func (gic *GoodInfoCreate) SetTotal(i int) *GoodInfoCreate {
 }
 
 // SetCreateAt sets the "create_at" field.
-func (gic *GoodInfoCreate) SetCreateAt(t time.Time) *GoodInfoCreate {
-	gic.mutation.SetCreateAt(t)
+func (gic *GoodInfoCreate) SetCreateAt(i int64) *GoodInfoCreate {
+	gic.mutation.SetCreateAt(i)
 	return gic
 }
 
 // SetNillableCreateAt sets the "create_at" field if the given value is not nil.
-func (gic *GoodInfoCreate) SetNillableCreateAt(t *time.Time) *GoodInfoCreate {
-	if t != nil {
-		gic.SetCreateAt(*t)
+func (gic *GoodInfoCreate) SetNillableCreateAt(i *int64) *GoodInfoCreate {
+	if i != nil {
+		gic.SetCreateAt(*i)
 	}
 	return gic
 }
 
 // SetUpdateAt sets the "update_at" field.
-func (gic *GoodInfoCreate) SetUpdateAt(t time.Time) *GoodInfoCreate {
-	gic.mutation.SetUpdateAt(t)
+func (gic *GoodInfoCreate) SetUpdateAt(i int64) *GoodInfoCreate {
+	gic.mutation.SetUpdateAt(i)
 	return gic
 }
 
 // SetNillableUpdateAt sets the "update_at" field if the given value is not nil.
-func (gic *GoodInfoCreate) SetNillableUpdateAt(t *time.Time) *GoodInfoCreate {
-	if t != nil {
-		gic.SetUpdateAt(*t)
+func (gic *GoodInfoCreate) SetNillableUpdateAt(i *int64) *GoodInfoCreate {
+	if i != nil {
+		gic.SetUpdateAt(*i)
+	}
+	return gic
+}
+
+// SetDeleteAt sets the "delete_at" field.
+func (gic *GoodInfoCreate) SetDeleteAt(i int64) *GoodInfoCreate {
+	gic.mutation.SetDeleteAt(i)
+	return gic
+}
+
+// SetNillableDeleteAt sets the "delete_at" field if the given value is not nil.
+func (gic *GoodInfoCreate) SetNillableDeleteAt(i *int64) *GoodInfoCreate {
+	if i != nil {
+		gic.SetDeleteAt(*i)
 	}
 	return gic
 }
@@ -238,6 +251,10 @@ func (gic *GoodInfoCreate) defaults() {
 	if _, ok := gic.mutation.UpdateAt(); !ok {
 		v := goodinfo.DefaultUpdateAt()
 		gic.mutation.SetUpdateAt(v)
+	}
+	if _, ok := gic.mutation.DeleteAt(); !ok {
+		v := goodinfo.DefaultDeleteAt()
+		gic.mutation.SetDeleteAt(v)
 	}
 	if _, ok := gic.mutation.ID(); !ok {
 		v := goodinfo.DefaultID()
@@ -338,6 +355,9 @@ func (gic *GoodInfoCreate) check() error {
 	}
 	if _, ok := gic.mutation.UpdateAt(); !ok {
 		return &ValidationError{Name: "update_at", err: errors.New(`ent: missing required field "update_at"`)}
+	}
+	if _, ok := gic.mutation.DeleteAt(); !ok {
+		return &ValidationError{Name: "delete_at", err: errors.New(`ent: missing required field "delete_at"`)}
 	}
 	return nil
 }
@@ -510,7 +530,7 @@ func (gic *GoodInfoCreate) createSpec() (*GoodInfo, *sqlgraph.CreateSpec) {
 	}
 	if value, ok := gic.mutation.CreateAt(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeTime,
+			Type:   field.TypeInt64,
 			Value:  value,
 			Column: goodinfo.FieldCreateAt,
 		})
@@ -518,11 +538,19 @@ func (gic *GoodInfoCreate) createSpec() (*GoodInfo, *sqlgraph.CreateSpec) {
 	}
 	if value, ok := gic.mutation.UpdateAt(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeTime,
+			Type:   field.TypeInt64,
 			Value:  value,
 			Column: goodinfo.FieldUpdateAt,
 		})
 		_node.UpdateAt = value
+	}
+	if value, ok := gic.mutation.DeleteAt(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeInt64,
+			Value:  value,
+			Column: goodinfo.FieldDeleteAt,
+		})
+		_node.DeleteAt = value
 	}
 	return _node, _spec
 }
@@ -783,7 +811,7 @@ func (u *GoodInfoUpsert) UpdateTotal() *GoodInfoUpsert {
 }
 
 // SetCreateAt sets the "create_at" field.
-func (u *GoodInfoUpsert) SetCreateAt(v time.Time) *GoodInfoUpsert {
+func (u *GoodInfoUpsert) SetCreateAt(v int64) *GoodInfoUpsert {
 	u.Set(goodinfo.FieldCreateAt, v)
 	return u
 }
@@ -795,7 +823,7 @@ func (u *GoodInfoUpsert) UpdateCreateAt() *GoodInfoUpsert {
 }
 
 // SetUpdateAt sets the "update_at" field.
-func (u *GoodInfoUpsert) SetUpdateAt(v time.Time) *GoodInfoUpsert {
+func (u *GoodInfoUpsert) SetUpdateAt(v int64) *GoodInfoUpsert {
 	u.Set(goodinfo.FieldUpdateAt, v)
 	return u
 }
@@ -803,6 +831,18 @@ func (u *GoodInfoUpsert) SetUpdateAt(v time.Time) *GoodInfoUpsert {
 // UpdateUpdateAt sets the "update_at" field to the value that was provided on create.
 func (u *GoodInfoUpsert) UpdateUpdateAt() *GoodInfoUpsert {
 	u.SetExcluded(goodinfo.FieldUpdateAt)
+	return u
+}
+
+// SetDeleteAt sets the "delete_at" field.
+func (u *GoodInfoUpsert) SetDeleteAt(v int64) *GoodInfoUpsert {
+	u.Set(goodinfo.FieldDeleteAt, v)
+	return u
+}
+
+// UpdateDeleteAt sets the "delete_at" field to the value that was provided on create.
+func (u *GoodInfoUpsert) UpdateDeleteAt() *GoodInfoUpsert {
+	u.SetExcluded(goodinfo.FieldDeleteAt)
 	return u
 }
 
@@ -1095,7 +1135,7 @@ func (u *GoodInfoUpsertOne) UpdateTotal() *GoodInfoUpsertOne {
 }
 
 // SetCreateAt sets the "create_at" field.
-func (u *GoodInfoUpsertOne) SetCreateAt(v time.Time) *GoodInfoUpsertOne {
+func (u *GoodInfoUpsertOne) SetCreateAt(v int64) *GoodInfoUpsertOne {
 	return u.Update(func(s *GoodInfoUpsert) {
 		s.SetCreateAt(v)
 	})
@@ -1109,7 +1149,7 @@ func (u *GoodInfoUpsertOne) UpdateCreateAt() *GoodInfoUpsertOne {
 }
 
 // SetUpdateAt sets the "update_at" field.
-func (u *GoodInfoUpsertOne) SetUpdateAt(v time.Time) *GoodInfoUpsertOne {
+func (u *GoodInfoUpsertOne) SetUpdateAt(v int64) *GoodInfoUpsertOne {
 	return u.Update(func(s *GoodInfoUpsert) {
 		s.SetUpdateAt(v)
 	})
@@ -1119,6 +1159,20 @@ func (u *GoodInfoUpsertOne) SetUpdateAt(v time.Time) *GoodInfoUpsertOne {
 func (u *GoodInfoUpsertOne) UpdateUpdateAt() *GoodInfoUpsertOne {
 	return u.Update(func(s *GoodInfoUpsert) {
 		s.UpdateUpdateAt()
+	})
+}
+
+// SetDeleteAt sets the "delete_at" field.
+func (u *GoodInfoUpsertOne) SetDeleteAt(v int64) *GoodInfoUpsertOne {
+	return u.Update(func(s *GoodInfoUpsert) {
+		s.SetDeleteAt(v)
+	})
+}
+
+// UpdateDeleteAt sets the "delete_at" field to the value that was provided on create.
+func (u *GoodInfoUpsertOne) UpdateDeleteAt() *GoodInfoUpsertOne {
+	return u.Update(func(s *GoodInfoUpsert) {
+		s.UpdateDeleteAt()
 	})
 }
 
@@ -1577,7 +1631,7 @@ func (u *GoodInfoUpsertBulk) UpdateTotal() *GoodInfoUpsertBulk {
 }
 
 // SetCreateAt sets the "create_at" field.
-func (u *GoodInfoUpsertBulk) SetCreateAt(v time.Time) *GoodInfoUpsertBulk {
+func (u *GoodInfoUpsertBulk) SetCreateAt(v int64) *GoodInfoUpsertBulk {
 	return u.Update(func(s *GoodInfoUpsert) {
 		s.SetCreateAt(v)
 	})
@@ -1591,7 +1645,7 @@ func (u *GoodInfoUpsertBulk) UpdateCreateAt() *GoodInfoUpsertBulk {
 }
 
 // SetUpdateAt sets the "update_at" field.
-func (u *GoodInfoUpsertBulk) SetUpdateAt(v time.Time) *GoodInfoUpsertBulk {
+func (u *GoodInfoUpsertBulk) SetUpdateAt(v int64) *GoodInfoUpsertBulk {
 	return u.Update(func(s *GoodInfoUpsert) {
 		s.SetUpdateAt(v)
 	})
@@ -1601,6 +1655,20 @@ func (u *GoodInfoUpsertBulk) SetUpdateAt(v time.Time) *GoodInfoUpsertBulk {
 func (u *GoodInfoUpsertBulk) UpdateUpdateAt() *GoodInfoUpsertBulk {
 	return u.Update(func(s *GoodInfoUpsert) {
 		s.UpdateUpdateAt()
+	})
+}
+
+// SetDeleteAt sets the "delete_at" field.
+func (u *GoodInfoUpsertBulk) SetDeleteAt(v int64) *GoodInfoUpsertBulk {
+	return u.Update(func(s *GoodInfoUpsert) {
+		s.SetDeleteAt(v)
+	})
+}
+
+// UpdateDeleteAt sets the "delete_at" field to the value that was provided on create.
+func (u *GoodInfoUpsertBulk) UpdateDeleteAt() *GoodInfoUpsertBulk {
+	return u.Update(func(s *GoodInfoUpsert) {
+		s.UpdateDeleteAt()
 	})
 }
 

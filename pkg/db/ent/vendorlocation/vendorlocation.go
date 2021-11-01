@@ -3,8 +3,6 @@
 package vendorlocation
 
 import (
-	"time"
-
 	"github.com/google/uuid"
 )
 
@@ -63,11 +61,11 @@ var (
 	// AddressValidator is a validator for the "address" field. It is called by the builders before save.
 	AddressValidator func(string) error
 	// DefaultCreateAt holds the default value on creation for the "create_at" field.
-	DefaultCreateAt func() time.Time
+	DefaultCreateAt func() int64
 	// DefaultUpdateAt holds the default value on creation for the "update_at" field.
-	DefaultUpdateAt func() time.Time
-	// UpdateDefaultUpdateAt holds the default value on update for the "update_at" field.
-	UpdateDefaultUpdateAt func() time.Time
+	DefaultUpdateAt func() int64
+	// DefaultDeleteAt holds the default value on creation for the "delete_at" field.
+	DefaultDeleteAt func() int64
 	// DefaultID holds the default value on creation for the "id" field.
 	DefaultID func() uuid.UUID
 )

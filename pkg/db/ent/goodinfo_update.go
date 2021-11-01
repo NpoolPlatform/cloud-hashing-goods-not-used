@@ -5,7 +5,6 @@ package ent
 import (
 	"context"
 	"fmt"
-	"time"
 
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
@@ -173,22 +172,65 @@ func (giu *GoodInfoUpdate) AddTotal(i int) *GoodInfoUpdate {
 }
 
 // SetCreateAt sets the "create_at" field.
-func (giu *GoodInfoUpdate) SetCreateAt(t time.Time) *GoodInfoUpdate {
-	giu.mutation.SetCreateAt(t)
+func (giu *GoodInfoUpdate) SetCreateAt(i int64) *GoodInfoUpdate {
+	giu.mutation.ResetCreateAt()
+	giu.mutation.SetCreateAt(i)
 	return giu
 }
 
 // SetNillableCreateAt sets the "create_at" field if the given value is not nil.
-func (giu *GoodInfoUpdate) SetNillableCreateAt(t *time.Time) *GoodInfoUpdate {
-	if t != nil {
-		giu.SetCreateAt(*t)
+func (giu *GoodInfoUpdate) SetNillableCreateAt(i *int64) *GoodInfoUpdate {
+	if i != nil {
+		giu.SetCreateAt(*i)
 	}
 	return giu
 }
 
+// AddCreateAt adds i to the "create_at" field.
+func (giu *GoodInfoUpdate) AddCreateAt(i int64) *GoodInfoUpdate {
+	giu.mutation.AddCreateAt(i)
+	return giu
+}
+
 // SetUpdateAt sets the "update_at" field.
-func (giu *GoodInfoUpdate) SetUpdateAt(t time.Time) *GoodInfoUpdate {
-	giu.mutation.SetUpdateAt(t)
+func (giu *GoodInfoUpdate) SetUpdateAt(i int64) *GoodInfoUpdate {
+	giu.mutation.ResetUpdateAt()
+	giu.mutation.SetUpdateAt(i)
+	return giu
+}
+
+// SetNillableUpdateAt sets the "update_at" field if the given value is not nil.
+func (giu *GoodInfoUpdate) SetNillableUpdateAt(i *int64) *GoodInfoUpdate {
+	if i != nil {
+		giu.SetUpdateAt(*i)
+	}
+	return giu
+}
+
+// AddUpdateAt adds i to the "update_at" field.
+func (giu *GoodInfoUpdate) AddUpdateAt(i int64) *GoodInfoUpdate {
+	giu.mutation.AddUpdateAt(i)
+	return giu
+}
+
+// SetDeleteAt sets the "delete_at" field.
+func (giu *GoodInfoUpdate) SetDeleteAt(i int64) *GoodInfoUpdate {
+	giu.mutation.ResetDeleteAt()
+	giu.mutation.SetDeleteAt(i)
+	return giu
+}
+
+// SetNillableDeleteAt sets the "delete_at" field if the given value is not nil.
+func (giu *GoodInfoUpdate) SetNillableDeleteAt(i *int64) *GoodInfoUpdate {
+	if i != nil {
+		giu.SetDeleteAt(*i)
+	}
+	return giu
+}
+
+// AddDeleteAt adds i to the "delete_at" field.
+func (giu *GoodInfoUpdate) AddDeleteAt(i int64) *GoodInfoUpdate {
+	giu.mutation.AddDeleteAt(i)
 	return giu
 }
 
@@ -203,7 +245,6 @@ func (giu *GoodInfoUpdate) Save(ctx context.Context) (int, error) {
 		err      error
 		affected int
 	)
-	giu.defaults()
 	if len(giu.hooks) == 0 {
 		if err = giu.check(); err != nil {
 			return 0, err
@@ -255,14 +296,6 @@ func (giu *GoodInfoUpdate) Exec(ctx context.Context) error {
 func (giu *GoodInfoUpdate) ExecX(ctx context.Context) {
 	if err := giu.Exec(ctx); err != nil {
 		panic(err)
-	}
-}
-
-// defaults sets the default values of the builder before save.
-func (giu *GoodInfoUpdate) defaults() {
-	if _, ok := giu.mutation.UpdateAt(); !ok {
-		v := goodinfo.UpdateDefaultUpdateAt()
-		giu.mutation.SetUpdateAt(v)
 	}
 }
 
@@ -487,16 +520,44 @@ func (giu *GoodInfoUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	}
 	if value, ok := giu.mutation.CreateAt(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeTime,
+			Type:   field.TypeInt64,
+			Value:  value,
+			Column: goodinfo.FieldCreateAt,
+		})
+	}
+	if value, ok := giu.mutation.AddedCreateAt(); ok {
+		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
+			Type:   field.TypeInt64,
 			Value:  value,
 			Column: goodinfo.FieldCreateAt,
 		})
 	}
 	if value, ok := giu.mutation.UpdateAt(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeTime,
+			Type:   field.TypeInt64,
 			Value:  value,
 			Column: goodinfo.FieldUpdateAt,
+		})
+	}
+	if value, ok := giu.mutation.AddedUpdateAt(); ok {
+		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
+			Type:   field.TypeInt64,
+			Value:  value,
+			Column: goodinfo.FieldUpdateAt,
+		})
+	}
+	if value, ok := giu.mutation.DeleteAt(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeInt64,
+			Value:  value,
+			Column: goodinfo.FieldDeleteAt,
+		})
+	}
+	if value, ok := giu.mutation.AddedDeleteAt(); ok {
+		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
+			Type:   field.TypeInt64,
+			Value:  value,
+			Column: goodinfo.FieldDeleteAt,
 		})
 	}
 	if n, err = sqlgraph.UpdateNodes(ctx, giu.driver, _spec); err != nil {
@@ -663,22 +724,65 @@ func (giuo *GoodInfoUpdateOne) AddTotal(i int) *GoodInfoUpdateOne {
 }
 
 // SetCreateAt sets the "create_at" field.
-func (giuo *GoodInfoUpdateOne) SetCreateAt(t time.Time) *GoodInfoUpdateOne {
-	giuo.mutation.SetCreateAt(t)
+func (giuo *GoodInfoUpdateOne) SetCreateAt(i int64) *GoodInfoUpdateOne {
+	giuo.mutation.ResetCreateAt()
+	giuo.mutation.SetCreateAt(i)
 	return giuo
 }
 
 // SetNillableCreateAt sets the "create_at" field if the given value is not nil.
-func (giuo *GoodInfoUpdateOne) SetNillableCreateAt(t *time.Time) *GoodInfoUpdateOne {
-	if t != nil {
-		giuo.SetCreateAt(*t)
+func (giuo *GoodInfoUpdateOne) SetNillableCreateAt(i *int64) *GoodInfoUpdateOne {
+	if i != nil {
+		giuo.SetCreateAt(*i)
 	}
 	return giuo
 }
 
+// AddCreateAt adds i to the "create_at" field.
+func (giuo *GoodInfoUpdateOne) AddCreateAt(i int64) *GoodInfoUpdateOne {
+	giuo.mutation.AddCreateAt(i)
+	return giuo
+}
+
 // SetUpdateAt sets the "update_at" field.
-func (giuo *GoodInfoUpdateOne) SetUpdateAt(t time.Time) *GoodInfoUpdateOne {
-	giuo.mutation.SetUpdateAt(t)
+func (giuo *GoodInfoUpdateOne) SetUpdateAt(i int64) *GoodInfoUpdateOne {
+	giuo.mutation.ResetUpdateAt()
+	giuo.mutation.SetUpdateAt(i)
+	return giuo
+}
+
+// SetNillableUpdateAt sets the "update_at" field if the given value is not nil.
+func (giuo *GoodInfoUpdateOne) SetNillableUpdateAt(i *int64) *GoodInfoUpdateOne {
+	if i != nil {
+		giuo.SetUpdateAt(*i)
+	}
+	return giuo
+}
+
+// AddUpdateAt adds i to the "update_at" field.
+func (giuo *GoodInfoUpdateOne) AddUpdateAt(i int64) *GoodInfoUpdateOne {
+	giuo.mutation.AddUpdateAt(i)
+	return giuo
+}
+
+// SetDeleteAt sets the "delete_at" field.
+func (giuo *GoodInfoUpdateOne) SetDeleteAt(i int64) *GoodInfoUpdateOne {
+	giuo.mutation.ResetDeleteAt()
+	giuo.mutation.SetDeleteAt(i)
+	return giuo
+}
+
+// SetNillableDeleteAt sets the "delete_at" field if the given value is not nil.
+func (giuo *GoodInfoUpdateOne) SetNillableDeleteAt(i *int64) *GoodInfoUpdateOne {
+	if i != nil {
+		giuo.SetDeleteAt(*i)
+	}
+	return giuo
+}
+
+// AddDeleteAt adds i to the "delete_at" field.
+func (giuo *GoodInfoUpdateOne) AddDeleteAt(i int64) *GoodInfoUpdateOne {
+	giuo.mutation.AddDeleteAt(i)
 	return giuo
 }
 
@@ -700,7 +804,6 @@ func (giuo *GoodInfoUpdateOne) Save(ctx context.Context) (*GoodInfo, error) {
 		err  error
 		node *GoodInfo
 	)
-	giuo.defaults()
 	if len(giuo.hooks) == 0 {
 		if err = giuo.check(); err != nil {
 			return nil, err
@@ -752,14 +855,6 @@ func (giuo *GoodInfoUpdateOne) Exec(ctx context.Context) error {
 func (giuo *GoodInfoUpdateOne) ExecX(ctx context.Context) {
 	if err := giuo.Exec(ctx); err != nil {
 		panic(err)
-	}
-}
-
-// defaults sets the default values of the builder before save.
-func (giuo *GoodInfoUpdateOne) defaults() {
-	if _, ok := giuo.mutation.UpdateAt(); !ok {
-		v := goodinfo.UpdateDefaultUpdateAt()
-		giuo.mutation.SetUpdateAt(v)
 	}
 }
 
@@ -1001,16 +1096,44 @@ func (giuo *GoodInfoUpdateOne) sqlSave(ctx context.Context) (_node *GoodInfo, er
 	}
 	if value, ok := giuo.mutation.CreateAt(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeTime,
+			Type:   field.TypeInt64,
+			Value:  value,
+			Column: goodinfo.FieldCreateAt,
+		})
+	}
+	if value, ok := giuo.mutation.AddedCreateAt(); ok {
+		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
+			Type:   field.TypeInt64,
 			Value:  value,
 			Column: goodinfo.FieldCreateAt,
 		})
 	}
 	if value, ok := giuo.mutation.UpdateAt(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeTime,
+			Type:   field.TypeInt64,
 			Value:  value,
 			Column: goodinfo.FieldUpdateAt,
+		})
+	}
+	if value, ok := giuo.mutation.AddedUpdateAt(); ok {
+		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
+			Type:   field.TypeInt64,
+			Value:  value,
+			Column: goodinfo.FieldUpdateAt,
+		})
+	}
+	if value, ok := giuo.mutation.DeleteAt(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeInt64,
+			Value:  value,
+			Column: goodinfo.FieldDeleteAt,
+		})
+	}
+	if value, ok := giuo.mutation.AddedDeleteAt(); ok {
+		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
+			Type:   field.TypeInt64,
+			Value:  value,
+			Column: goodinfo.FieldDeleteAt,
 		})
 	}
 	_node = &GoodInfo{config: giuo.config}

@@ -5,7 +5,6 @@ package ent
 import (
 	"fmt"
 	"strings"
-	"time"
 
 	"entgo.io/ent/dialect/sql"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/vendorlocation"
@@ -26,11 +25,11 @@ type VendorLocation struct {
 	// Address holds the value of the "address" field.
 	Address string `json:"address,omitempty"`
 	// CreateAt holds the value of the "create_at" field.
-	CreateAt time.Time `json:"create_at,omitempty"`
+	CreateAt int64 `json:"create_at,omitempty"`
 	// UpdateAt holds the value of the "update_at" field.
-	UpdateAt time.Time `json:"update_at,omitempty"`
+	UpdateAt int64 `json:"update_at,omitempty"`
 	// DeleteAt holds the value of the "delete_at" field.
-	DeleteAt time.Time `json:"delete_at,omitempty"`
+	DeleteAt int64 `json:"delete_at,omitempty"`
 }
 
 // scanValues returns the types for scanning values from sql.Rows.
@@ -38,10 +37,10 @@ func (*VendorLocation) scanValues(columns []string) ([]interface{}, error) {
 	values := make([]interface{}, len(columns))
 	for i := range columns {
 		switch columns[i] {
+		case vendorlocation.FieldCreateAt, vendorlocation.FieldUpdateAt, vendorlocation.FieldDeleteAt:
+			values[i] = new(sql.NullInt64)
 		case vendorlocation.FieldCountry, vendorlocation.FieldProvince, vendorlocation.FieldCity, vendorlocation.FieldAddress:
 			values[i] = new(sql.NullString)
-		case vendorlocation.FieldCreateAt, vendorlocation.FieldUpdateAt, vendorlocation.FieldDeleteAt:
-			values[i] = new(sql.NullTime)
 		case vendorlocation.FieldID:
 			values[i] = new(uuid.UUID)
 		default:
@@ -90,22 +89,22 @@ func (vl *VendorLocation) assignValues(columns []string, values []interface{}) e
 				vl.Address = value.String
 			}
 		case vendorlocation.FieldCreateAt:
-			if value, ok := values[i].(*sql.NullTime); !ok {
+			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field create_at", values[i])
 			} else if value.Valid {
-				vl.CreateAt = value.Time
+				vl.CreateAt = value.Int64
 			}
 		case vendorlocation.FieldUpdateAt:
-			if value, ok := values[i].(*sql.NullTime); !ok {
+			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field update_at", values[i])
 			} else if value.Valid {
-				vl.UpdateAt = value.Time
+				vl.UpdateAt = value.Int64
 			}
 		case vendorlocation.FieldDeleteAt:
-			if value, ok := values[i].(*sql.NullTime); !ok {
+			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field delete_at", values[i])
 			} else if value.Valid {
-				vl.DeleteAt = value.Time
+				vl.DeleteAt = value.Int64
 			}
 		}
 	}
@@ -144,11 +143,11 @@ func (vl *VendorLocation) String() string {
 	builder.WriteString(", address=")
 	builder.WriteString(vl.Address)
 	builder.WriteString(", create_at=")
-	builder.WriteString(vl.CreateAt.Format(time.ANSIC))
+	builder.WriteString(fmt.Sprintf("%v", vl.CreateAt))
 	builder.WriteString(", update_at=")
-	builder.WriteString(vl.UpdateAt.Format(time.ANSIC))
+	builder.WriteString(fmt.Sprintf("%v", vl.UpdateAt))
 	builder.WriteString(", delete_at=")
-	builder.WriteString(vl.DeleteAt.Format(time.ANSIC))
+	builder.WriteString(fmt.Sprintf("%v", vl.DeleteAt))
 	builder.WriteByte(')')
 	return builder.String()
 }

@@ -6,7 +6,6 @@ import (
 	"context"
 	"fmt"
 	"sync"
-	"time"
 
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/goodinfo"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/predicate"
@@ -60,8 +59,12 @@ type GoodInfoMutation struct {
 	review_state          *goodinfo.ReviewState
 	total                 *int
 	addtotal              *int
-	create_at             *time.Time
-	update_at             *time.Time
+	create_at             *int64
+	addcreate_at          *int64
+	update_at             *int64
+	addupdate_at          *int64
+	delete_at             *int64
+	adddelete_at          *int64
 	clearedFields         map[string]struct{}
 	done                  bool
 	oldValue              func(context.Context) (*GoodInfo, error)
@@ -886,12 +889,13 @@ func (m *GoodInfoMutation) ResetTotal() {
 }
 
 // SetCreateAt sets the "create_at" field.
-func (m *GoodInfoMutation) SetCreateAt(t time.Time) {
-	m.create_at = &t
+func (m *GoodInfoMutation) SetCreateAt(i int64) {
+	m.create_at = &i
+	m.addcreate_at = nil
 }
 
 // CreateAt returns the value of the "create_at" field in the mutation.
-func (m *GoodInfoMutation) CreateAt() (r time.Time, exists bool) {
+func (m *GoodInfoMutation) CreateAt() (r int64, exists bool) {
 	v := m.create_at
 	if v == nil {
 		return
@@ -902,7 +906,7 @@ func (m *GoodInfoMutation) CreateAt() (r time.Time, exists bool) {
 // OldCreateAt returns the old "create_at" field's value of the GoodInfo entity.
 // If the GoodInfo object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *GoodInfoMutation) OldCreateAt(ctx context.Context) (v time.Time, err error) {
+func (m *GoodInfoMutation) OldCreateAt(ctx context.Context) (v int64, err error) {
 	if !m.op.Is(OpUpdateOne) {
 		return v, fmt.Errorf("OldCreateAt is only allowed on UpdateOne operations")
 	}
@@ -916,18 +920,38 @@ func (m *GoodInfoMutation) OldCreateAt(ctx context.Context) (v time.Time, err er
 	return oldValue.CreateAt, nil
 }
 
+// AddCreateAt adds i to the "create_at" field.
+func (m *GoodInfoMutation) AddCreateAt(i int64) {
+	if m.addcreate_at != nil {
+		*m.addcreate_at += i
+	} else {
+		m.addcreate_at = &i
+	}
+}
+
+// AddedCreateAt returns the value that was added to the "create_at" field in this mutation.
+func (m *GoodInfoMutation) AddedCreateAt() (r int64, exists bool) {
+	v := m.addcreate_at
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
 // ResetCreateAt resets all changes to the "create_at" field.
 func (m *GoodInfoMutation) ResetCreateAt() {
 	m.create_at = nil
+	m.addcreate_at = nil
 }
 
 // SetUpdateAt sets the "update_at" field.
-func (m *GoodInfoMutation) SetUpdateAt(t time.Time) {
-	m.update_at = &t
+func (m *GoodInfoMutation) SetUpdateAt(i int64) {
+	m.update_at = &i
+	m.addupdate_at = nil
 }
 
 // UpdateAt returns the value of the "update_at" field in the mutation.
-func (m *GoodInfoMutation) UpdateAt() (r time.Time, exists bool) {
+func (m *GoodInfoMutation) UpdateAt() (r int64, exists bool) {
 	v := m.update_at
 	if v == nil {
 		return
@@ -938,7 +962,7 @@ func (m *GoodInfoMutation) UpdateAt() (r time.Time, exists bool) {
 // OldUpdateAt returns the old "update_at" field's value of the GoodInfo entity.
 // If the GoodInfo object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *GoodInfoMutation) OldUpdateAt(ctx context.Context) (v time.Time, err error) {
+func (m *GoodInfoMutation) OldUpdateAt(ctx context.Context) (v int64, err error) {
 	if !m.op.Is(OpUpdateOne) {
 		return v, fmt.Errorf("OldUpdateAt is only allowed on UpdateOne operations")
 	}
@@ -952,9 +976,84 @@ func (m *GoodInfoMutation) OldUpdateAt(ctx context.Context) (v time.Time, err er
 	return oldValue.UpdateAt, nil
 }
 
+// AddUpdateAt adds i to the "update_at" field.
+func (m *GoodInfoMutation) AddUpdateAt(i int64) {
+	if m.addupdate_at != nil {
+		*m.addupdate_at += i
+	} else {
+		m.addupdate_at = &i
+	}
+}
+
+// AddedUpdateAt returns the value that was added to the "update_at" field in this mutation.
+func (m *GoodInfoMutation) AddedUpdateAt() (r int64, exists bool) {
+	v := m.addupdate_at
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
 // ResetUpdateAt resets all changes to the "update_at" field.
 func (m *GoodInfoMutation) ResetUpdateAt() {
 	m.update_at = nil
+	m.addupdate_at = nil
+}
+
+// SetDeleteAt sets the "delete_at" field.
+func (m *GoodInfoMutation) SetDeleteAt(i int64) {
+	m.delete_at = &i
+	m.adddelete_at = nil
+}
+
+// DeleteAt returns the value of the "delete_at" field in the mutation.
+func (m *GoodInfoMutation) DeleteAt() (r int64, exists bool) {
+	v := m.delete_at
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldDeleteAt returns the old "delete_at" field's value of the GoodInfo entity.
+// If the GoodInfo object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *GoodInfoMutation) OldDeleteAt(ctx context.Context) (v int64, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, fmt.Errorf("OldDeleteAt is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, fmt.Errorf("OldDeleteAt requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldDeleteAt: %w", err)
+	}
+	return oldValue.DeleteAt, nil
+}
+
+// AddDeleteAt adds i to the "delete_at" field.
+func (m *GoodInfoMutation) AddDeleteAt(i int64) {
+	if m.adddelete_at != nil {
+		*m.adddelete_at += i
+	} else {
+		m.adddelete_at = &i
+	}
+}
+
+// AddedDeleteAt returns the value that was added to the "delete_at" field in this mutation.
+func (m *GoodInfoMutation) AddedDeleteAt() (r int64, exists bool) {
+	v := m.adddelete_at
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// ResetDeleteAt resets all changes to the "delete_at" field.
+func (m *GoodInfoMutation) ResetDeleteAt() {
+	m.delete_at = nil
+	m.adddelete_at = nil
 }
 
 // Where appends a list predicates to the GoodInfoMutation builder.
@@ -976,7 +1075,7 @@ func (m *GoodInfoMutation) Type() string {
 // order to get all numeric fields that were incremented/decremented, call
 // AddedFields().
 func (m *GoodInfoMutation) Fields() []string {
-	fields := make([]string, 0, 19)
+	fields := make([]string, 0, 20)
 	if m.device_info_id != nil {
 		fields = append(fields, goodinfo.FieldDeviceInfoID)
 	}
@@ -1034,6 +1133,9 @@ func (m *GoodInfoMutation) Fields() []string {
 	if m.update_at != nil {
 		fields = append(fields, goodinfo.FieldUpdateAt)
 	}
+	if m.delete_at != nil {
+		fields = append(fields, goodinfo.FieldDeleteAt)
+	}
 	return fields
 }
 
@@ -1080,6 +1182,8 @@ func (m *GoodInfoMutation) Field(name string) (ent.Value, bool) {
 		return m.CreateAt()
 	case goodinfo.FieldUpdateAt:
 		return m.UpdateAt()
+	case goodinfo.FieldDeleteAt:
+		return m.DeleteAt()
 	}
 	return nil, false
 }
@@ -1127,6 +1231,8 @@ func (m *GoodInfoMutation) OldField(ctx context.Context, name string) (ent.Value
 		return m.OldCreateAt(ctx)
 	case goodinfo.FieldUpdateAt:
 		return m.OldUpdateAt(ctx)
+	case goodinfo.FieldDeleteAt:
+		return m.OldDeleteAt(ctx)
 	}
 	return nil, fmt.Errorf("unknown GoodInfo field %s", name)
 }
@@ -1256,18 +1362,25 @@ func (m *GoodInfoMutation) SetField(name string, value ent.Value) error {
 		m.SetTotal(v)
 		return nil
 	case goodinfo.FieldCreateAt:
-		v, ok := value.(time.Time)
+		v, ok := value.(int64)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.SetCreateAt(v)
 		return nil
 	case goodinfo.FieldUpdateAt:
-		v, ok := value.(time.Time)
+		v, ok := value.(int64)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.SetUpdateAt(v)
+		return nil
+	case goodinfo.FieldDeleteAt:
+		v, ok := value.(int64)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetDeleteAt(v)
 		return nil
 	}
 	return fmt.Errorf("unknown GoodInfo field %s", name)
@@ -1295,6 +1408,15 @@ func (m *GoodInfoMutation) AddedFields() []string {
 	if m.addtotal != nil {
 		fields = append(fields, goodinfo.FieldTotal)
 	}
+	if m.addcreate_at != nil {
+		fields = append(fields, goodinfo.FieldCreateAt)
+	}
+	if m.addupdate_at != nil {
+		fields = append(fields, goodinfo.FieldUpdateAt)
+	}
+	if m.adddelete_at != nil {
+		fields = append(fields, goodinfo.FieldDeleteAt)
+	}
 	return fields
 }
 
@@ -1315,6 +1437,12 @@ func (m *GoodInfoMutation) AddedField(name string) (ent.Value, bool) {
 		return m.AddedPrice()
 	case goodinfo.FieldTotal:
 		return m.AddedTotal()
+	case goodinfo.FieldCreateAt:
+		return m.AddedCreateAt()
+	case goodinfo.FieldUpdateAt:
+		return m.AddedUpdateAt()
+	case goodinfo.FieldDeleteAt:
+		return m.AddedDeleteAt()
 	}
 	return nil, false
 }
@@ -1365,6 +1493,27 @@ func (m *GoodInfoMutation) AddField(name string, value ent.Value) error {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.AddTotal(v)
+		return nil
+	case goodinfo.FieldCreateAt:
+		v, ok := value.(int64)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.AddCreateAt(v)
+		return nil
+	case goodinfo.FieldUpdateAt:
+		v, ok := value.(int64)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.AddUpdateAt(v)
+		return nil
+	case goodinfo.FieldDeleteAt:
+		v, ok := value.(int64)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.AddDeleteAt(v)
 		return nil
 	}
 	return fmt.Errorf("unknown GoodInfo numeric field %s", name)
@@ -1450,6 +1599,9 @@ func (m *GoodInfoMutation) ResetField(name string) error {
 	case goodinfo.FieldUpdateAt:
 		m.ResetUpdateAt()
 		return nil
+	case goodinfo.FieldDeleteAt:
+		m.ResetDeleteAt()
+		return nil
 	}
 	return fmt.Errorf("unknown GoodInfo field %s", name)
 }
@@ -1510,9 +1662,12 @@ type TargetAreaMutation struct {
 	id            *uuid.UUID
 	continent     *string
 	country       *string
-	create_at     *time.Time
-	update_at     *time.Time
-	delete_at     *time.Time
+	create_at     *int64
+	addcreate_at  *int64
+	update_at     *int64
+	addupdate_at  *int64
+	delete_at     *int64
+	adddelete_at  *int64
 	clearedFields map[string]struct{}
 	done          bool
 	oldValue      func(context.Context) (*TargetArea, error)
@@ -1677,12 +1832,13 @@ func (m *TargetAreaMutation) ResetCountry() {
 }
 
 // SetCreateAt sets the "create_at" field.
-func (m *TargetAreaMutation) SetCreateAt(t time.Time) {
-	m.create_at = &t
+func (m *TargetAreaMutation) SetCreateAt(i int64) {
+	m.create_at = &i
+	m.addcreate_at = nil
 }
 
 // CreateAt returns the value of the "create_at" field in the mutation.
-func (m *TargetAreaMutation) CreateAt() (r time.Time, exists bool) {
+func (m *TargetAreaMutation) CreateAt() (r int64, exists bool) {
 	v := m.create_at
 	if v == nil {
 		return
@@ -1693,7 +1849,7 @@ func (m *TargetAreaMutation) CreateAt() (r time.Time, exists bool) {
 // OldCreateAt returns the old "create_at" field's value of the TargetArea entity.
 // If the TargetArea object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *TargetAreaMutation) OldCreateAt(ctx context.Context) (v time.Time, err error) {
+func (m *TargetAreaMutation) OldCreateAt(ctx context.Context) (v int64, err error) {
 	if !m.op.Is(OpUpdateOne) {
 		return v, fmt.Errorf("OldCreateAt is only allowed on UpdateOne operations")
 	}
@@ -1707,18 +1863,38 @@ func (m *TargetAreaMutation) OldCreateAt(ctx context.Context) (v time.Time, err 
 	return oldValue.CreateAt, nil
 }
 
+// AddCreateAt adds i to the "create_at" field.
+func (m *TargetAreaMutation) AddCreateAt(i int64) {
+	if m.addcreate_at != nil {
+		*m.addcreate_at += i
+	} else {
+		m.addcreate_at = &i
+	}
+}
+
+// AddedCreateAt returns the value that was added to the "create_at" field in this mutation.
+func (m *TargetAreaMutation) AddedCreateAt() (r int64, exists bool) {
+	v := m.addcreate_at
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
 // ResetCreateAt resets all changes to the "create_at" field.
 func (m *TargetAreaMutation) ResetCreateAt() {
 	m.create_at = nil
+	m.addcreate_at = nil
 }
 
 // SetUpdateAt sets the "update_at" field.
-func (m *TargetAreaMutation) SetUpdateAt(t time.Time) {
-	m.update_at = &t
+func (m *TargetAreaMutation) SetUpdateAt(i int64) {
+	m.update_at = &i
+	m.addupdate_at = nil
 }
 
 // UpdateAt returns the value of the "update_at" field in the mutation.
-func (m *TargetAreaMutation) UpdateAt() (r time.Time, exists bool) {
+func (m *TargetAreaMutation) UpdateAt() (r int64, exists bool) {
 	v := m.update_at
 	if v == nil {
 		return
@@ -1729,7 +1905,7 @@ func (m *TargetAreaMutation) UpdateAt() (r time.Time, exists bool) {
 // OldUpdateAt returns the old "update_at" field's value of the TargetArea entity.
 // If the TargetArea object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *TargetAreaMutation) OldUpdateAt(ctx context.Context) (v time.Time, err error) {
+func (m *TargetAreaMutation) OldUpdateAt(ctx context.Context) (v int64, err error) {
 	if !m.op.Is(OpUpdateOne) {
 		return v, fmt.Errorf("OldUpdateAt is only allowed on UpdateOne operations")
 	}
@@ -1743,18 +1919,38 @@ func (m *TargetAreaMutation) OldUpdateAt(ctx context.Context) (v time.Time, err 
 	return oldValue.UpdateAt, nil
 }
 
+// AddUpdateAt adds i to the "update_at" field.
+func (m *TargetAreaMutation) AddUpdateAt(i int64) {
+	if m.addupdate_at != nil {
+		*m.addupdate_at += i
+	} else {
+		m.addupdate_at = &i
+	}
+}
+
+// AddedUpdateAt returns the value that was added to the "update_at" field in this mutation.
+func (m *TargetAreaMutation) AddedUpdateAt() (r int64, exists bool) {
+	v := m.addupdate_at
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
 // ResetUpdateAt resets all changes to the "update_at" field.
 func (m *TargetAreaMutation) ResetUpdateAt() {
 	m.update_at = nil
+	m.addupdate_at = nil
 }
 
 // SetDeleteAt sets the "delete_at" field.
-func (m *TargetAreaMutation) SetDeleteAt(t time.Time) {
-	m.delete_at = &t
+func (m *TargetAreaMutation) SetDeleteAt(i int64) {
+	m.delete_at = &i
+	m.adddelete_at = nil
 }
 
 // DeleteAt returns the value of the "delete_at" field in the mutation.
-func (m *TargetAreaMutation) DeleteAt() (r time.Time, exists bool) {
+func (m *TargetAreaMutation) DeleteAt() (r int64, exists bool) {
 	v := m.delete_at
 	if v == nil {
 		return
@@ -1765,7 +1961,7 @@ func (m *TargetAreaMutation) DeleteAt() (r time.Time, exists bool) {
 // OldDeleteAt returns the old "delete_at" field's value of the TargetArea entity.
 // If the TargetArea object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *TargetAreaMutation) OldDeleteAt(ctx context.Context) (v time.Time, err error) {
+func (m *TargetAreaMutation) OldDeleteAt(ctx context.Context) (v int64, err error) {
 	if !m.op.Is(OpUpdateOne) {
 		return v, fmt.Errorf("OldDeleteAt is only allowed on UpdateOne operations")
 	}
@@ -1779,22 +1975,28 @@ func (m *TargetAreaMutation) OldDeleteAt(ctx context.Context) (v time.Time, err 
 	return oldValue.DeleteAt, nil
 }
 
-// ClearDeleteAt clears the value of the "delete_at" field.
-func (m *TargetAreaMutation) ClearDeleteAt() {
-	m.delete_at = nil
-	m.clearedFields[targetarea.FieldDeleteAt] = struct{}{}
+// AddDeleteAt adds i to the "delete_at" field.
+func (m *TargetAreaMutation) AddDeleteAt(i int64) {
+	if m.adddelete_at != nil {
+		*m.adddelete_at += i
+	} else {
+		m.adddelete_at = &i
+	}
 }
 
-// DeleteAtCleared returns if the "delete_at" field was cleared in this mutation.
-func (m *TargetAreaMutation) DeleteAtCleared() bool {
-	_, ok := m.clearedFields[targetarea.FieldDeleteAt]
-	return ok
+// AddedDeleteAt returns the value that was added to the "delete_at" field in this mutation.
+func (m *TargetAreaMutation) AddedDeleteAt() (r int64, exists bool) {
+	v := m.adddelete_at
+	if v == nil {
+		return
+	}
+	return *v, true
 }
 
 // ResetDeleteAt resets all changes to the "delete_at" field.
 func (m *TargetAreaMutation) ResetDeleteAt() {
 	m.delete_at = nil
-	delete(m.clearedFields, targetarea.FieldDeleteAt)
+	m.adddelete_at = nil
 }
 
 // Where appends a list predicates to the TargetAreaMutation builder.
@@ -1893,21 +2095,21 @@ func (m *TargetAreaMutation) SetField(name string, value ent.Value) error {
 		m.SetCountry(v)
 		return nil
 	case targetarea.FieldCreateAt:
-		v, ok := value.(time.Time)
+		v, ok := value.(int64)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.SetCreateAt(v)
 		return nil
 	case targetarea.FieldUpdateAt:
-		v, ok := value.(time.Time)
+		v, ok := value.(int64)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.SetUpdateAt(v)
 		return nil
 	case targetarea.FieldDeleteAt:
-		v, ok := value.(time.Time)
+		v, ok := value.(int64)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
@@ -1920,13 +2122,31 @@ func (m *TargetAreaMutation) SetField(name string, value ent.Value) error {
 // AddedFields returns all numeric fields that were incremented/decremented during
 // this mutation.
 func (m *TargetAreaMutation) AddedFields() []string {
-	return nil
+	var fields []string
+	if m.addcreate_at != nil {
+		fields = append(fields, targetarea.FieldCreateAt)
+	}
+	if m.addupdate_at != nil {
+		fields = append(fields, targetarea.FieldUpdateAt)
+	}
+	if m.adddelete_at != nil {
+		fields = append(fields, targetarea.FieldDeleteAt)
+	}
+	return fields
 }
 
 // AddedField returns the numeric value that was incremented/decremented on a field
 // with the given name. The second boolean return value indicates that this field
 // was not set, or was not defined in the schema.
 func (m *TargetAreaMutation) AddedField(name string) (ent.Value, bool) {
+	switch name {
+	case targetarea.FieldCreateAt:
+		return m.AddedCreateAt()
+	case targetarea.FieldUpdateAt:
+		return m.AddedUpdateAt()
+	case targetarea.FieldDeleteAt:
+		return m.AddedDeleteAt()
+	}
 	return nil, false
 }
 
@@ -1935,6 +2155,27 @@ func (m *TargetAreaMutation) AddedField(name string) (ent.Value, bool) {
 // type.
 func (m *TargetAreaMutation) AddField(name string, value ent.Value) error {
 	switch name {
+	case targetarea.FieldCreateAt:
+		v, ok := value.(int64)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.AddCreateAt(v)
+		return nil
+	case targetarea.FieldUpdateAt:
+		v, ok := value.(int64)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.AddUpdateAt(v)
+		return nil
+	case targetarea.FieldDeleteAt:
+		v, ok := value.(int64)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.AddDeleteAt(v)
+		return nil
 	}
 	return fmt.Errorf("unknown TargetArea numeric field %s", name)
 }
@@ -1942,11 +2183,7 @@ func (m *TargetAreaMutation) AddField(name string, value ent.Value) error {
 // ClearedFields returns all nullable fields that were cleared during this
 // mutation.
 func (m *TargetAreaMutation) ClearedFields() []string {
-	var fields []string
-	if m.FieldCleared(targetarea.FieldDeleteAt) {
-		fields = append(fields, targetarea.FieldDeleteAt)
-	}
-	return fields
+	return nil
 }
 
 // FieldCleared returns a boolean indicating if a field with the given name was
@@ -1959,11 +2196,6 @@ func (m *TargetAreaMutation) FieldCleared(name string) bool {
 // ClearField clears the value of the field with the given name. It returns an
 // error if the field is not defined in the schema.
 func (m *TargetAreaMutation) ClearField(name string) error {
-	switch name {
-	case targetarea.FieldDeleteAt:
-		m.ClearDeleteAt()
-		return nil
-	}
 	return fmt.Errorf("unknown TargetArea nullable field %s", name)
 }
 
@@ -2048,9 +2280,12 @@ type VendorLocationMutation struct {
 	province      *string
 	city          *string
 	address       *string
-	create_at     *time.Time
-	update_at     *time.Time
-	delete_at     *time.Time
+	create_at     *int64
+	addcreate_at  *int64
+	update_at     *int64
+	addupdate_at  *int64
+	delete_at     *int64
+	adddelete_at  *int64
 	clearedFields map[string]struct{}
 	done          bool
 	oldValue      func(context.Context) (*VendorLocation, error)
@@ -2287,12 +2522,13 @@ func (m *VendorLocationMutation) ResetAddress() {
 }
 
 // SetCreateAt sets the "create_at" field.
-func (m *VendorLocationMutation) SetCreateAt(t time.Time) {
-	m.create_at = &t
+func (m *VendorLocationMutation) SetCreateAt(i int64) {
+	m.create_at = &i
+	m.addcreate_at = nil
 }
 
 // CreateAt returns the value of the "create_at" field in the mutation.
-func (m *VendorLocationMutation) CreateAt() (r time.Time, exists bool) {
+func (m *VendorLocationMutation) CreateAt() (r int64, exists bool) {
 	v := m.create_at
 	if v == nil {
 		return
@@ -2303,7 +2539,7 @@ func (m *VendorLocationMutation) CreateAt() (r time.Time, exists bool) {
 // OldCreateAt returns the old "create_at" field's value of the VendorLocation entity.
 // If the VendorLocation object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *VendorLocationMutation) OldCreateAt(ctx context.Context) (v time.Time, err error) {
+func (m *VendorLocationMutation) OldCreateAt(ctx context.Context) (v int64, err error) {
 	if !m.op.Is(OpUpdateOne) {
 		return v, fmt.Errorf("OldCreateAt is only allowed on UpdateOne operations")
 	}
@@ -2317,18 +2553,38 @@ func (m *VendorLocationMutation) OldCreateAt(ctx context.Context) (v time.Time, 
 	return oldValue.CreateAt, nil
 }
 
+// AddCreateAt adds i to the "create_at" field.
+func (m *VendorLocationMutation) AddCreateAt(i int64) {
+	if m.addcreate_at != nil {
+		*m.addcreate_at += i
+	} else {
+		m.addcreate_at = &i
+	}
+}
+
+// AddedCreateAt returns the value that was added to the "create_at" field in this mutation.
+func (m *VendorLocationMutation) AddedCreateAt() (r int64, exists bool) {
+	v := m.addcreate_at
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
 // ResetCreateAt resets all changes to the "create_at" field.
 func (m *VendorLocationMutation) ResetCreateAt() {
 	m.create_at = nil
+	m.addcreate_at = nil
 }
 
 // SetUpdateAt sets the "update_at" field.
-func (m *VendorLocationMutation) SetUpdateAt(t time.Time) {
-	m.update_at = &t
+func (m *VendorLocationMutation) SetUpdateAt(i int64) {
+	m.update_at = &i
+	m.addupdate_at = nil
 }
 
 // UpdateAt returns the value of the "update_at" field in the mutation.
-func (m *VendorLocationMutation) UpdateAt() (r time.Time, exists bool) {
+func (m *VendorLocationMutation) UpdateAt() (r int64, exists bool) {
 	v := m.update_at
 	if v == nil {
 		return
@@ -2339,7 +2595,7 @@ func (m *VendorLocationMutation) UpdateAt() (r time.Time, exists bool) {
 // OldUpdateAt returns the old "update_at" field's value of the VendorLocation entity.
 // If the VendorLocation object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *VendorLocationMutation) OldUpdateAt(ctx context.Context) (v time.Time, err error) {
+func (m *VendorLocationMutation) OldUpdateAt(ctx context.Context) (v int64, err error) {
 	if !m.op.Is(OpUpdateOne) {
 		return v, fmt.Errorf("OldUpdateAt is only allowed on UpdateOne operations")
 	}
@@ -2353,18 +2609,38 @@ func (m *VendorLocationMutation) OldUpdateAt(ctx context.Context) (v time.Time, 
 	return oldValue.UpdateAt, nil
 }
 
+// AddUpdateAt adds i to the "update_at" field.
+func (m *VendorLocationMutation) AddUpdateAt(i int64) {
+	if m.addupdate_at != nil {
+		*m.addupdate_at += i
+	} else {
+		m.addupdate_at = &i
+	}
+}
+
+// AddedUpdateAt returns the value that was added to the "update_at" field in this mutation.
+func (m *VendorLocationMutation) AddedUpdateAt() (r int64, exists bool) {
+	v := m.addupdate_at
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
 // ResetUpdateAt resets all changes to the "update_at" field.
 func (m *VendorLocationMutation) ResetUpdateAt() {
 	m.update_at = nil
+	m.addupdate_at = nil
 }
 
 // SetDeleteAt sets the "delete_at" field.
-func (m *VendorLocationMutation) SetDeleteAt(t time.Time) {
-	m.delete_at = &t
+func (m *VendorLocationMutation) SetDeleteAt(i int64) {
+	m.delete_at = &i
+	m.adddelete_at = nil
 }
 
 // DeleteAt returns the value of the "delete_at" field in the mutation.
-func (m *VendorLocationMutation) DeleteAt() (r time.Time, exists bool) {
+func (m *VendorLocationMutation) DeleteAt() (r int64, exists bool) {
 	v := m.delete_at
 	if v == nil {
 		return
@@ -2375,7 +2651,7 @@ func (m *VendorLocationMutation) DeleteAt() (r time.Time, exists bool) {
 // OldDeleteAt returns the old "delete_at" field's value of the VendorLocation entity.
 // If the VendorLocation object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *VendorLocationMutation) OldDeleteAt(ctx context.Context) (v time.Time, err error) {
+func (m *VendorLocationMutation) OldDeleteAt(ctx context.Context) (v int64, err error) {
 	if !m.op.Is(OpUpdateOne) {
 		return v, fmt.Errorf("OldDeleteAt is only allowed on UpdateOne operations")
 	}
@@ -2389,22 +2665,28 @@ func (m *VendorLocationMutation) OldDeleteAt(ctx context.Context) (v time.Time, 
 	return oldValue.DeleteAt, nil
 }
 
-// ClearDeleteAt clears the value of the "delete_at" field.
-func (m *VendorLocationMutation) ClearDeleteAt() {
-	m.delete_at = nil
-	m.clearedFields[vendorlocation.FieldDeleteAt] = struct{}{}
+// AddDeleteAt adds i to the "delete_at" field.
+func (m *VendorLocationMutation) AddDeleteAt(i int64) {
+	if m.adddelete_at != nil {
+		*m.adddelete_at += i
+	} else {
+		m.adddelete_at = &i
+	}
 }
 
-// DeleteAtCleared returns if the "delete_at" field was cleared in this mutation.
-func (m *VendorLocationMutation) DeleteAtCleared() bool {
-	_, ok := m.clearedFields[vendorlocation.FieldDeleteAt]
-	return ok
+// AddedDeleteAt returns the value that was added to the "delete_at" field in this mutation.
+func (m *VendorLocationMutation) AddedDeleteAt() (r int64, exists bool) {
+	v := m.adddelete_at
+	if v == nil {
+		return
+	}
+	return *v, true
 }
 
 // ResetDeleteAt resets all changes to the "delete_at" field.
 func (m *VendorLocationMutation) ResetDeleteAt() {
 	m.delete_at = nil
-	delete(m.clearedFields, vendorlocation.FieldDeleteAt)
+	m.adddelete_at = nil
 }
 
 // Where appends a list predicates to the VendorLocationMutation builder.
@@ -2531,21 +2813,21 @@ func (m *VendorLocationMutation) SetField(name string, value ent.Value) error {
 		m.SetAddress(v)
 		return nil
 	case vendorlocation.FieldCreateAt:
-		v, ok := value.(time.Time)
+		v, ok := value.(int64)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.SetCreateAt(v)
 		return nil
 	case vendorlocation.FieldUpdateAt:
-		v, ok := value.(time.Time)
+		v, ok := value.(int64)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.SetUpdateAt(v)
 		return nil
 	case vendorlocation.FieldDeleteAt:
-		v, ok := value.(time.Time)
+		v, ok := value.(int64)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
@@ -2558,13 +2840,31 @@ func (m *VendorLocationMutation) SetField(name string, value ent.Value) error {
 // AddedFields returns all numeric fields that were incremented/decremented during
 // this mutation.
 func (m *VendorLocationMutation) AddedFields() []string {
-	return nil
+	var fields []string
+	if m.addcreate_at != nil {
+		fields = append(fields, vendorlocation.FieldCreateAt)
+	}
+	if m.addupdate_at != nil {
+		fields = append(fields, vendorlocation.FieldUpdateAt)
+	}
+	if m.adddelete_at != nil {
+		fields = append(fields, vendorlocation.FieldDeleteAt)
+	}
+	return fields
 }
 
 // AddedField returns the numeric value that was incremented/decremented on a field
 // with the given name. The second boolean return value indicates that this field
 // was not set, or was not defined in the schema.
 func (m *VendorLocationMutation) AddedField(name string) (ent.Value, bool) {
+	switch name {
+	case vendorlocation.FieldCreateAt:
+		return m.AddedCreateAt()
+	case vendorlocation.FieldUpdateAt:
+		return m.AddedUpdateAt()
+	case vendorlocation.FieldDeleteAt:
+		return m.AddedDeleteAt()
+	}
 	return nil, false
 }
 
@@ -2573,6 +2873,27 @@ func (m *VendorLocationMutation) AddedField(name string) (ent.Value, bool) {
 // type.
 func (m *VendorLocationMutation) AddField(name string, value ent.Value) error {
 	switch name {
+	case vendorlocation.FieldCreateAt:
+		v, ok := value.(int64)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.AddCreateAt(v)
+		return nil
+	case vendorlocation.FieldUpdateAt:
+		v, ok := value.(int64)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.AddUpdateAt(v)
+		return nil
+	case vendorlocation.FieldDeleteAt:
+		v, ok := value.(int64)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.AddDeleteAt(v)
+		return nil
 	}
 	return fmt.Errorf("unknown VendorLocation numeric field %s", name)
 }
@@ -2580,11 +2901,7 @@ func (m *VendorLocationMutation) AddField(name string, value ent.Value) error {
 // ClearedFields returns all nullable fields that were cleared during this
 // mutation.
 func (m *VendorLocationMutation) ClearedFields() []string {
-	var fields []string
-	if m.FieldCleared(vendorlocation.FieldDeleteAt) {
-		fields = append(fields, vendorlocation.FieldDeleteAt)
-	}
-	return fields
+	return nil
 }
 
 // FieldCleared returns a boolean indicating if a field with the given name was
@@ -2597,11 +2914,6 @@ func (m *VendorLocationMutation) FieldCleared(name string) bool {
 // ClearField clears the value of the field with the given name. It returns an
 // error if the field is not defined in the schema.
 func (m *VendorLocationMutation) ClearField(name string) error {
-	switch name {
-	case vendorlocation.FieldDeleteAt:
-		m.ClearDeleteAt()
-		return nil
-	}
 	return fmt.Errorf("unknown VendorLocation nullable field %s", name)
 }
 

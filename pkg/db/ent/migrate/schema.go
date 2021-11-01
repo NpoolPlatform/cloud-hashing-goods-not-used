@@ -28,8 +28,9 @@ var (
 		{Name: "reviewer_id", Type: field.TypeUUID},
 		{Name: "review_state", Type: field.TypeEnum, Enums: []string{"passed", "rejected"}},
 		{Name: "total", Type: field.TypeInt},
-		{Name: "create_at", Type: field.TypeTime, Default: "CURRENT_TIMESTAMP"},
-		{Name: "update_at", Type: field.TypeTime, Default: "CURRENT_TIMESTAMP"},
+		{Name: "create_at", Type: field.TypeInt64},
+		{Name: "update_at", Type: field.TypeInt64},
+		{Name: "delete_at", Type: field.TypeInt64},
 	}
 	// GoodInfosTable holds the schema information for the "good_infos" table.
 	GoodInfosTable = &schema.Table{
@@ -40,11 +41,11 @@ var (
 	// TargetAreasColumns holds the columns for the "target_areas" table.
 	TargetAreasColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeUUID, Unique: true},
-		{Name: "continent", Type: field.TypeString, Size: 128},
-		{Name: "country", Type: field.TypeString, Size: 128},
-		{Name: "create_at", Type: field.TypeTime, Default: "CURRENT_TIMESTAMP"},
-		{Name: "update_at", Type: field.TypeTime, Default: "CURRENT_TIMESTAMP"},
-		{Name: "delete_at", Type: field.TypeTime, Nullable: true},
+		{Name: "continent", Type: field.TypeString, Size: 128, Default: ""},
+		{Name: "country", Type: field.TypeString, Size: 128, Default: ""},
+		{Name: "create_at", Type: field.TypeInt64},
+		{Name: "update_at", Type: field.TypeInt64},
+		{Name: "delete_at", Type: field.TypeInt64},
 	}
 	// TargetAreasTable holds the schema information for the "target_areas" table.
 	TargetAreasTable = &schema.Table{
@@ -66,9 +67,9 @@ var (
 		{Name: "province", Type: field.TypeString, Size: 128},
 		{Name: "city", Type: field.TypeString, Size: 128},
 		{Name: "address", Type: field.TypeString, Size: 256},
-		{Name: "create_at", Type: field.TypeTime, Default: "CURRENT_TIMESTAMP"},
-		{Name: "update_at", Type: field.TypeTime, Default: "CURRENT_TIMESTAMP"},
-		{Name: "delete_at", Type: field.TypeTime, Nullable: true},
+		{Name: "create_at", Type: field.TypeInt64},
+		{Name: "update_at", Type: field.TypeInt64},
+		{Name: "delete_at", Type: field.TypeInt64},
 	}
 	// VendorLocationsTable holds the schema information for the "vendor_locations" table.
 	VendorLocationsTable = &schema.Table{

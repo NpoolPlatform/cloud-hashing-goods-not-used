@@ -4,7 +4,6 @@ import (
 	"time"
 
 	"entgo.io/ent"
-	"entgo.io/ent/dialect/entsql"
 	"entgo.io/ent/schema/field"
 
 	"github.com/google/uuid"
@@ -45,16 +44,17 @@ func (GoodInfo) Fields() []ent.Field {
 			Values("passed", "rejected"),
 		field.Int("total").
 			Positive(),
-		field.Time("create_at").
-			Default(time.Now).
-			Annotations(&entsql.Annotation{
-				Default: "CURRENT_TIMESTAMP",
+		field.Int64("create_at").
+			DefaultFunc(func() int64 {
+				return time.Now().UnixNano()
 			}),
-		field.Time("update_at").
-			Default(time.Now).
-			UpdateDefault(time.Now).
-			Annotations(&entsql.Annotation{
-				Default: "CURRENT_TIMESTAMP",
+		field.Int64("update_at").
+			DefaultFunc(func() int64 {
+				return time.Now().UnixNano()
+			}),
+		field.Int64("delete_at").
+			DefaultFunc(func() int64 {
+				return 0
 			}),
 	}
 }

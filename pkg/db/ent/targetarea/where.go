@@ -3,8 +3,6 @@
 package targetarea
 
 import (
-	"time"
-
 	"entgo.io/ent/dialect/sql"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/predicate"
 	"github.com/google/uuid"
@@ -108,21 +106,21 @@ func Country(v string) predicate.TargetArea {
 }
 
 // CreateAt applies equality check predicate on the "create_at" field. It's identical to CreateAtEQ.
-func CreateAt(v time.Time) predicate.TargetArea {
+func CreateAt(v int64) predicate.TargetArea {
 	return predicate.TargetArea(func(s *sql.Selector) {
 		s.Where(sql.EQ(s.C(FieldCreateAt), v))
 	})
 }
 
 // UpdateAt applies equality check predicate on the "update_at" field. It's identical to UpdateAtEQ.
-func UpdateAt(v time.Time) predicate.TargetArea {
+func UpdateAt(v int64) predicate.TargetArea {
 	return predicate.TargetArea(func(s *sql.Selector) {
 		s.Where(sql.EQ(s.C(FieldUpdateAt), v))
 	})
 }
 
 // DeleteAt applies equality check predicate on the "delete_at" field. It's identical to DeleteAtEQ.
-func DeleteAt(v time.Time) predicate.TargetArea {
+func DeleteAt(v int64) predicate.TargetArea {
 	return predicate.TargetArea(func(s *sql.Selector) {
 		s.Where(sql.EQ(s.C(FieldDeleteAt), v))
 	})
@@ -351,21 +349,21 @@ func CountryContainsFold(v string) predicate.TargetArea {
 }
 
 // CreateAtEQ applies the EQ predicate on the "create_at" field.
-func CreateAtEQ(v time.Time) predicate.TargetArea {
+func CreateAtEQ(v int64) predicate.TargetArea {
 	return predicate.TargetArea(func(s *sql.Selector) {
 		s.Where(sql.EQ(s.C(FieldCreateAt), v))
 	})
 }
 
 // CreateAtNEQ applies the NEQ predicate on the "create_at" field.
-func CreateAtNEQ(v time.Time) predicate.TargetArea {
+func CreateAtNEQ(v int64) predicate.TargetArea {
 	return predicate.TargetArea(func(s *sql.Selector) {
 		s.Where(sql.NEQ(s.C(FieldCreateAt), v))
 	})
 }
 
 // CreateAtIn applies the In predicate on the "create_at" field.
-func CreateAtIn(vs ...time.Time) predicate.TargetArea {
+func CreateAtIn(vs ...int64) predicate.TargetArea {
 	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
@@ -382,7 +380,7 @@ func CreateAtIn(vs ...time.Time) predicate.TargetArea {
 }
 
 // CreateAtNotIn applies the NotIn predicate on the "create_at" field.
-func CreateAtNotIn(vs ...time.Time) predicate.TargetArea {
+func CreateAtNotIn(vs ...int64) predicate.TargetArea {
 	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
@@ -399,49 +397,49 @@ func CreateAtNotIn(vs ...time.Time) predicate.TargetArea {
 }
 
 // CreateAtGT applies the GT predicate on the "create_at" field.
-func CreateAtGT(v time.Time) predicate.TargetArea {
+func CreateAtGT(v int64) predicate.TargetArea {
 	return predicate.TargetArea(func(s *sql.Selector) {
 		s.Where(sql.GT(s.C(FieldCreateAt), v))
 	})
 }
 
 // CreateAtGTE applies the GTE predicate on the "create_at" field.
-func CreateAtGTE(v time.Time) predicate.TargetArea {
+func CreateAtGTE(v int64) predicate.TargetArea {
 	return predicate.TargetArea(func(s *sql.Selector) {
 		s.Where(sql.GTE(s.C(FieldCreateAt), v))
 	})
 }
 
 // CreateAtLT applies the LT predicate on the "create_at" field.
-func CreateAtLT(v time.Time) predicate.TargetArea {
+func CreateAtLT(v int64) predicate.TargetArea {
 	return predicate.TargetArea(func(s *sql.Selector) {
 		s.Where(sql.LT(s.C(FieldCreateAt), v))
 	})
 }
 
 // CreateAtLTE applies the LTE predicate on the "create_at" field.
-func CreateAtLTE(v time.Time) predicate.TargetArea {
+func CreateAtLTE(v int64) predicate.TargetArea {
 	return predicate.TargetArea(func(s *sql.Selector) {
 		s.Where(sql.LTE(s.C(FieldCreateAt), v))
 	})
 }
 
 // UpdateAtEQ applies the EQ predicate on the "update_at" field.
-func UpdateAtEQ(v time.Time) predicate.TargetArea {
+func UpdateAtEQ(v int64) predicate.TargetArea {
 	return predicate.TargetArea(func(s *sql.Selector) {
 		s.Where(sql.EQ(s.C(FieldUpdateAt), v))
 	})
 }
 
 // UpdateAtNEQ applies the NEQ predicate on the "update_at" field.
-func UpdateAtNEQ(v time.Time) predicate.TargetArea {
+func UpdateAtNEQ(v int64) predicate.TargetArea {
 	return predicate.TargetArea(func(s *sql.Selector) {
 		s.Where(sql.NEQ(s.C(FieldUpdateAt), v))
 	})
 }
 
 // UpdateAtIn applies the In predicate on the "update_at" field.
-func UpdateAtIn(vs ...time.Time) predicate.TargetArea {
+func UpdateAtIn(vs ...int64) predicate.TargetArea {
 	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
@@ -458,7 +456,7 @@ func UpdateAtIn(vs ...time.Time) predicate.TargetArea {
 }
 
 // UpdateAtNotIn applies the NotIn predicate on the "update_at" field.
-func UpdateAtNotIn(vs ...time.Time) predicate.TargetArea {
+func UpdateAtNotIn(vs ...int64) predicate.TargetArea {
 	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
@@ -475,49 +473,49 @@ func UpdateAtNotIn(vs ...time.Time) predicate.TargetArea {
 }
 
 // UpdateAtGT applies the GT predicate on the "update_at" field.
-func UpdateAtGT(v time.Time) predicate.TargetArea {
+func UpdateAtGT(v int64) predicate.TargetArea {
 	return predicate.TargetArea(func(s *sql.Selector) {
 		s.Where(sql.GT(s.C(FieldUpdateAt), v))
 	})
 }
 
 // UpdateAtGTE applies the GTE predicate on the "update_at" field.
-func UpdateAtGTE(v time.Time) predicate.TargetArea {
+func UpdateAtGTE(v int64) predicate.TargetArea {
 	return predicate.TargetArea(func(s *sql.Selector) {
 		s.Where(sql.GTE(s.C(FieldUpdateAt), v))
 	})
 }
 
 // UpdateAtLT applies the LT predicate on the "update_at" field.
-func UpdateAtLT(v time.Time) predicate.TargetArea {
+func UpdateAtLT(v int64) predicate.TargetArea {
 	return predicate.TargetArea(func(s *sql.Selector) {
 		s.Where(sql.LT(s.C(FieldUpdateAt), v))
 	})
 }
 
 // UpdateAtLTE applies the LTE predicate on the "update_at" field.
-func UpdateAtLTE(v time.Time) predicate.TargetArea {
+func UpdateAtLTE(v int64) predicate.TargetArea {
 	return predicate.TargetArea(func(s *sql.Selector) {
 		s.Where(sql.LTE(s.C(FieldUpdateAt), v))
 	})
 }
 
 // DeleteAtEQ applies the EQ predicate on the "delete_at" field.
-func DeleteAtEQ(v time.Time) predicate.TargetArea {
+func DeleteAtEQ(v int64) predicate.TargetArea {
 	return predicate.TargetArea(func(s *sql.Selector) {
 		s.Where(sql.EQ(s.C(FieldDeleteAt), v))
 	})
 }
 
 // DeleteAtNEQ applies the NEQ predicate on the "delete_at" field.
-func DeleteAtNEQ(v time.Time) predicate.TargetArea {
+func DeleteAtNEQ(v int64) predicate.TargetArea {
 	return predicate.TargetArea(func(s *sql.Selector) {
 		s.Where(sql.NEQ(s.C(FieldDeleteAt), v))
 	})
 }
 
 // DeleteAtIn applies the In predicate on the "delete_at" field.
-func DeleteAtIn(vs ...time.Time) predicate.TargetArea {
+func DeleteAtIn(vs ...int64) predicate.TargetArea {
 	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
@@ -534,7 +532,7 @@ func DeleteAtIn(vs ...time.Time) predicate.TargetArea {
 }
 
 // DeleteAtNotIn applies the NotIn predicate on the "delete_at" field.
-func DeleteAtNotIn(vs ...time.Time) predicate.TargetArea {
+func DeleteAtNotIn(vs ...int64) predicate.TargetArea {
 	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
@@ -551,44 +549,30 @@ func DeleteAtNotIn(vs ...time.Time) predicate.TargetArea {
 }
 
 // DeleteAtGT applies the GT predicate on the "delete_at" field.
-func DeleteAtGT(v time.Time) predicate.TargetArea {
+func DeleteAtGT(v int64) predicate.TargetArea {
 	return predicate.TargetArea(func(s *sql.Selector) {
 		s.Where(sql.GT(s.C(FieldDeleteAt), v))
 	})
 }
 
 // DeleteAtGTE applies the GTE predicate on the "delete_at" field.
-func DeleteAtGTE(v time.Time) predicate.TargetArea {
+func DeleteAtGTE(v int64) predicate.TargetArea {
 	return predicate.TargetArea(func(s *sql.Selector) {
 		s.Where(sql.GTE(s.C(FieldDeleteAt), v))
 	})
 }
 
 // DeleteAtLT applies the LT predicate on the "delete_at" field.
-func DeleteAtLT(v time.Time) predicate.TargetArea {
+func DeleteAtLT(v int64) predicate.TargetArea {
 	return predicate.TargetArea(func(s *sql.Selector) {
 		s.Where(sql.LT(s.C(FieldDeleteAt), v))
 	})
 }
 
 // DeleteAtLTE applies the LTE predicate on the "delete_at" field.
-func DeleteAtLTE(v time.Time) predicate.TargetArea {
+func DeleteAtLTE(v int64) predicate.TargetArea {
 	return predicate.TargetArea(func(s *sql.Selector) {
 		s.Where(sql.LTE(s.C(FieldDeleteAt), v))
-	})
-}
-
-// DeleteAtIsNil applies the IsNil predicate on the "delete_at" field.
-func DeleteAtIsNil() predicate.TargetArea {
-	return predicate.TargetArea(func(s *sql.Selector) {
-		s.Where(sql.IsNull(s.C(FieldDeleteAt)))
-	})
-}
-
-// DeleteAtNotNil applies the NotNil predicate on the "delete_at" field.
-func DeleteAtNotNil() predicate.TargetArea {
-	return predicate.TargetArea(func(s *sql.Selector) {
-		s.Where(sql.NotNull(s.C(FieldDeleteAt)))
 	})
 }
 

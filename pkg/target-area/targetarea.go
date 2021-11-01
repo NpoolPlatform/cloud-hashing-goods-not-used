@@ -46,6 +46,7 @@ func Update(ctx context.Context, in *npool.UpdateTargetAreaRequest) (*npool.Upda
 		UpdateOneID(id).
 		SetContinent(in.GetInfo().GetContinent()).
 		SetCountry(in.GetInfo().GetCountry()).
+		SetUpdateAt(time.Now().UnixNano()).
 		Save(ctx)
 	if err != nil {
 		return nil, err
@@ -63,7 +64,7 @@ func Delete(ctx context.Context, in *npool.DeleteTargetAreaRequest) (*npool.Dele
 	info, err := db.Client().
 		TargetArea.
 		UpdateOneID(uuid.MustParse(in.GetID())).
-		SetDeleteAt(time.Now()).
+		SetDeleteAt(time.Now().UnixNano()).
 		Save(ctx)
 	if err != nil {
 		return nil, xerrors.Errorf("fail to delete target area: %v", err)
@@ -112,8 +113,8 @@ func GetAll(ctx context.Context, in *npool.GetTargetAreasRequest) (*npool.GetTar
 		TargetArea.
 		Query().
 		Where(
-			targetarea.Not(
-				targetarea.DeleteAt(time.Time{}),
+			targetarea.Or(
+				targetarea.DeleteAt(0),
 			),
 		).
 		All(ctx)

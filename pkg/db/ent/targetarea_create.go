@@ -6,7 +6,6 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"time"
 
 	"entgo.io/ent/dialect"
 	"entgo.io/ent/dialect/sql"
@@ -30,50 +29,66 @@ func (tac *TargetAreaCreate) SetContinent(s string) *TargetAreaCreate {
 	return tac
 }
 
+// SetNillableContinent sets the "continent" field if the given value is not nil.
+func (tac *TargetAreaCreate) SetNillableContinent(s *string) *TargetAreaCreate {
+	if s != nil {
+		tac.SetContinent(*s)
+	}
+	return tac
+}
+
 // SetCountry sets the "country" field.
 func (tac *TargetAreaCreate) SetCountry(s string) *TargetAreaCreate {
 	tac.mutation.SetCountry(s)
 	return tac
 }
 
+// SetNillableCountry sets the "country" field if the given value is not nil.
+func (tac *TargetAreaCreate) SetNillableCountry(s *string) *TargetAreaCreate {
+	if s != nil {
+		tac.SetCountry(*s)
+	}
+	return tac
+}
+
 // SetCreateAt sets the "create_at" field.
-func (tac *TargetAreaCreate) SetCreateAt(t time.Time) *TargetAreaCreate {
-	tac.mutation.SetCreateAt(t)
+func (tac *TargetAreaCreate) SetCreateAt(i int64) *TargetAreaCreate {
+	tac.mutation.SetCreateAt(i)
 	return tac
 }
 
 // SetNillableCreateAt sets the "create_at" field if the given value is not nil.
-func (tac *TargetAreaCreate) SetNillableCreateAt(t *time.Time) *TargetAreaCreate {
-	if t != nil {
-		tac.SetCreateAt(*t)
+func (tac *TargetAreaCreate) SetNillableCreateAt(i *int64) *TargetAreaCreate {
+	if i != nil {
+		tac.SetCreateAt(*i)
 	}
 	return tac
 }
 
 // SetUpdateAt sets the "update_at" field.
-func (tac *TargetAreaCreate) SetUpdateAt(t time.Time) *TargetAreaCreate {
-	tac.mutation.SetUpdateAt(t)
+func (tac *TargetAreaCreate) SetUpdateAt(i int64) *TargetAreaCreate {
+	tac.mutation.SetUpdateAt(i)
 	return tac
 }
 
 // SetNillableUpdateAt sets the "update_at" field if the given value is not nil.
-func (tac *TargetAreaCreate) SetNillableUpdateAt(t *time.Time) *TargetAreaCreate {
-	if t != nil {
-		tac.SetUpdateAt(*t)
+func (tac *TargetAreaCreate) SetNillableUpdateAt(i *int64) *TargetAreaCreate {
+	if i != nil {
+		tac.SetUpdateAt(*i)
 	}
 	return tac
 }
 
 // SetDeleteAt sets the "delete_at" field.
-func (tac *TargetAreaCreate) SetDeleteAt(t time.Time) *TargetAreaCreate {
-	tac.mutation.SetDeleteAt(t)
+func (tac *TargetAreaCreate) SetDeleteAt(i int64) *TargetAreaCreate {
+	tac.mutation.SetDeleteAt(i)
 	return tac
 }
 
 // SetNillableDeleteAt sets the "delete_at" field if the given value is not nil.
-func (tac *TargetAreaCreate) SetNillableDeleteAt(t *time.Time) *TargetAreaCreate {
-	if t != nil {
-		tac.SetDeleteAt(*t)
+func (tac *TargetAreaCreate) SetNillableDeleteAt(i *int64) *TargetAreaCreate {
+	if i != nil {
+		tac.SetDeleteAt(*i)
 	}
 	return tac
 }
@@ -155,6 +170,14 @@ func (tac *TargetAreaCreate) ExecX(ctx context.Context) {
 
 // defaults sets the default values of the builder before save.
 func (tac *TargetAreaCreate) defaults() {
+	if _, ok := tac.mutation.Continent(); !ok {
+		v := targetarea.DefaultContinent
+		tac.mutation.SetContinent(v)
+	}
+	if _, ok := tac.mutation.Country(); !ok {
+		v := targetarea.DefaultCountry
+		tac.mutation.SetCountry(v)
+	}
 	if _, ok := tac.mutation.CreateAt(); !ok {
 		v := targetarea.DefaultCreateAt()
 		tac.mutation.SetCreateAt(v)
@@ -162,6 +185,10 @@ func (tac *TargetAreaCreate) defaults() {
 	if _, ok := tac.mutation.UpdateAt(); !ok {
 		v := targetarea.DefaultUpdateAt()
 		tac.mutation.SetUpdateAt(v)
+	}
+	if _, ok := tac.mutation.DeleteAt(); !ok {
+		v := targetarea.DefaultDeleteAt()
+		tac.mutation.SetDeleteAt(v)
 	}
 	if _, ok := tac.mutation.ID(); !ok {
 		v := targetarea.DefaultID()
@@ -192,6 +219,9 @@ func (tac *TargetAreaCreate) check() error {
 	}
 	if _, ok := tac.mutation.UpdateAt(); !ok {
 		return &ValidationError{Name: "update_at", err: errors.New(`ent: missing required field "update_at"`)}
+	}
+	if _, ok := tac.mutation.DeleteAt(); !ok {
+		return &ValidationError{Name: "delete_at", err: errors.New(`ent: missing required field "delete_at"`)}
 	}
 	return nil
 }
@@ -244,7 +274,7 @@ func (tac *TargetAreaCreate) createSpec() (*TargetArea, *sqlgraph.CreateSpec) {
 	}
 	if value, ok := tac.mutation.CreateAt(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeTime,
+			Type:   field.TypeInt64,
 			Value:  value,
 			Column: targetarea.FieldCreateAt,
 		})
@@ -252,7 +282,7 @@ func (tac *TargetAreaCreate) createSpec() (*TargetArea, *sqlgraph.CreateSpec) {
 	}
 	if value, ok := tac.mutation.UpdateAt(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeTime,
+			Type:   field.TypeInt64,
 			Value:  value,
 			Column: targetarea.FieldUpdateAt,
 		})
@@ -260,7 +290,7 @@ func (tac *TargetAreaCreate) createSpec() (*TargetArea, *sqlgraph.CreateSpec) {
 	}
 	if value, ok := tac.mutation.DeleteAt(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeTime,
+			Type:   field.TypeInt64,
 			Value:  value,
 			Column: targetarea.FieldDeleteAt,
 		})
@@ -345,7 +375,7 @@ func (u *TargetAreaUpsert) UpdateCountry() *TargetAreaUpsert {
 }
 
 // SetCreateAt sets the "create_at" field.
-func (u *TargetAreaUpsert) SetCreateAt(v time.Time) *TargetAreaUpsert {
+func (u *TargetAreaUpsert) SetCreateAt(v int64) *TargetAreaUpsert {
 	u.Set(targetarea.FieldCreateAt, v)
 	return u
 }
@@ -357,7 +387,7 @@ func (u *TargetAreaUpsert) UpdateCreateAt() *TargetAreaUpsert {
 }
 
 // SetUpdateAt sets the "update_at" field.
-func (u *TargetAreaUpsert) SetUpdateAt(v time.Time) *TargetAreaUpsert {
+func (u *TargetAreaUpsert) SetUpdateAt(v int64) *TargetAreaUpsert {
 	u.Set(targetarea.FieldUpdateAt, v)
 	return u
 }
@@ -369,7 +399,7 @@ func (u *TargetAreaUpsert) UpdateUpdateAt() *TargetAreaUpsert {
 }
 
 // SetDeleteAt sets the "delete_at" field.
-func (u *TargetAreaUpsert) SetDeleteAt(v time.Time) *TargetAreaUpsert {
+func (u *TargetAreaUpsert) SetDeleteAt(v int64) *TargetAreaUpsert {
 	u.Set(targetarea.FieldDeleteAt, v)
 	return u
 }
@@ -377,12 +407,6 @@ func (u *TargetAreaUpsert) SetDeleteAt(v time.Time) *TargetAreaUpsert {
 // UpdateDeleteAt sets the "delete_at" field to the value that was provided on create.
 func (u *TargetAreaUpsert) UpdateDeleteAt() *TargetAreaUpsert {
 	u.SetExcluded(targetarea.FieldDeleteAt)
-	return u
-}
-
-// ClearDeleteAt clears the value of the "delete_at" field.
-func (u *TargetAreaUpsert) ClearDeleteAt() *TargetAreaUpsert {
-	u.SetNull(targetarea.FieldDeleteAt)
 	return u
 }
 
@@ -465,7 +489,7 @@ func (u *TargetAreaUpsertOne) UpdateCountry() *TargetAreaUpsertOne {
 }
 
 // SetCreateAt sets the "create_at" field.
-func (u *TargetAreaUpsertOne) SetCreateAt(v time.Time) *TargetAreaUpsertOne {
+func (u *TargetAreaUpsertOne) SetCreateAt(v int64) *TargetAreaUpsertOne {
 	return u.Update(func(s *TargetAreaUpsert) {
 		s.SetCreateAt(v)
 	})
@@ -479,7 +503,7 @@ func (u *TargetAreaUpsertOne) UpdateCreateAt() *TargetAreaUpsertOne {
 }
 
 // SetUpdateAt sets the "update_at" field.
-func (u *TargetAreaUpsertOne) SetUpdateAt(v time.Time) *TargetAreaUpsertOne {
+func (u *TargetAreaUpsertOne) SetUpdateAt(v int64) *TargetAreaUpsertOne {
 	return u.Update(func(s *TargetAreaUpsert) {
 		s.SetUpdateAt(v)
 	})
@@ -493,7 +517,7 @@ func (u *TargetAreaUpsertOne) UpdateUpdateAt() *TargetAreaUpsertOne {
 }
 
 // SetDeleteAt sets the "delete_at" field.
-func (u *TargetAreaUpsertOne) SetDeleteAt(v time.Time) *TargetAreaUpsertOne {
+func (u *TargetAreaUpsertOne) SetDeleteAt(v int64) *TargetAreaUpsertOne {
 	return u.Update(func(s *TargetAreaUpsert) {
 		s.SetDeleteAt(v)
 	})
@@ -503,13 +527,6 @@ func (u *TargetAreaUpsertOne) SetDeleteAt(v time.Time) *TargetAreaUpsertOne {
 func (u *TargetAreaUpsertOne) UpdateDeleteAt() *TargetAreaUpsertOne {
 	return u.Update(func(s *TargetAreaUpsert) {
 		s.UpdateDeleteAt()
-	})
-}
-
-// ClearDeleteAt clears the value of the "delete_at" field.
-func (u *TargetAreaUpsertOne) ClearDeleteAt() *TargetAreaUpsertOne {
-	return u.Update(func(s *TargetAreaUpsert) {
-		s.ClearDeleteAt()
 	})
 }
 
@@ -758,7 +775,7 @@ func (u *TargetAreaUpsertBulk) UpdateCountry() *TargetAreaUpsertBulk {
 }
 
 // SetCreateAt sets the "create_at" field.
-func (u *TargetAreaUpsertBulk) SetCreateAt(v time.Time) *TargetAreaUpsertBulk {
+func (u *TargetAreaUpsertBulk) SetCreateAt(v int64) *TargetAreaUpsertBulk {
 	return u.Update(func(s *TargetAreaUpsert) {
 		s.SetCreateAt(v)
 	})
@@ -772,7 +789,7 @@ func (u *TargetAreaUpsertBulk) UpdateCreateAt() *TargetAreaUpsertBulk {
 }
 
 // SetUpdateAt sets the "update_at" field.
-func (u *TargetAreaUpsertBulk) SetUpdateAt(v time.Time) *TargetAreaUpsertBulk {
+func (u *TargetAreaUpsertBulk) SetUpdateAt(v int64) *TargetAreaUpsertBulk {
 	return u.Update(func(s *TargetAreaUpsert) {
 		s.SetUpdateAt(v)
 	})
@@ -786,7 +803,7 @@ func (u *TargetAreaUpsertBulk) UpdateUpdateAt() *TargetAreaUpsertBulk {
 }
 
 // SetDeleteAt sets the "delete_at" field.
-func (u *TargetAreaUpsertBulk) SetDeleteAt(v time.Time) *TargetAreaUpsertBulk {
+func (u *TargetAreaUpsertBulk) SetDeleteAt(v int64) *TargetAreaUpsertBulk {
 	return u.Update(func(s *TargetAreaUpsert) {
 		s.SetDeleteAt(v)
 	})
@@ -796,13 +813,6 @@ func (u *TargetAreaUpsertBulk) SetDeleteAt(v time.Time) *TargetAreaUpsertBulk {
 func (u *TargetAreaUpsertBulk) UpdateDeleteAt() *TargetAreaUpsertBulk {
 	return u.Update(func(s *TargetAreaUpsert) {
 		s.UpdateDeleteAt()
-	})
-}
-
-// ClearDeleteAt clears the value of the "delete_at" field.
-func (u *TargetAreaUpsertBulk) ClearDeleteAt() *TargetAreaUpsertBulk {
-	return u.Update(func(s *TargetAreaUpsert) {
-		s.ClearDeleteAt()
 	})
 }
 

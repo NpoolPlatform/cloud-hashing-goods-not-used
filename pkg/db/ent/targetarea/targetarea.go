@@ -3,8 +3,6 @@
 package targetarea
 
 import (
-	"time"
-
 	"github.com/google/uuid"
 )
 
@@ -48,16 +46,20 @@ func ValidColumn(column string) bool {
 }
 
 var (
+	// DefaultContinent holds the default value on creation for the "continent" field.
+	DefaultContinent string
 	// ContinentValidator is a validator for the "continent" field. It is called by the builders before save.
 	ContinentValidator func(string) error
+	// DefaultCountry holds the default value on creation for the "country" field.
+	DefaultCountry string
 	// CountryValidator is a validator for the "country" field. It is called by the builders before save.
 	CountryValidator func(string) error
 	// DefaultCreateAt holds the default value on creation for the "create_at" field.
-	DefaultCreateAt func() time.Time
+	DefaultCreateAt func() int64
 	// DefaultUpdateAt holds the default value on creation for the "update_at" field.
-	DefaultUpdateAt func() time.Time
-	// UpdateDefaultUpdateAt holds the default value on update for the "update_at" field.
-	UpdateDefaultUpdateAt func() time.Time
+	DefaultUpdateAt func() int64
+	// DefaultDeleteAt holds the default value on creation for the "delete_at" field.
+	DefaultDeleteAt func() int64
 	// DefaultID holds the default value on creation for the "id" field.
 	DefaultID func() uuid.UUID
 )

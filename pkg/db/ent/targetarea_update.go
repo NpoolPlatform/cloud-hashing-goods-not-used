@@ -5,7 +5,6 @@ package ent
 import (
 	"context"
 	"fmt"
-	"time"
 
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
@@ -33,49 +32,88 @@ func (tau *TargetAreaUpdate) SetContinent(s string) *TargetAreaUpdate {
 	return tau
 }
 
+// SetNillableContinent sets the "continent" field if the given value is not nil.
+func (tau *TargetAreaUpdate) SetNillableContinent(s *string) *TargetAreaUpdate {
+	if s != nil {
+		tau.SetContinent(*s)
+	}
+	return tau
+}
+
 // SetCountry sets the "country" field.
 func (tau *TargetAreaUpdate) SetCountry(s string) *TargetAreaUpdate {
 	tau.mutation.SetCountry(s)
 	return tau
 }
 
+// SetNillableCountry sets the "country" field if the given value is not nil.
+func (tau *TargetAreaUpdate) SetNillableCountry(s *string) *TargetAreaUpdate {
+	if s != nil {
+		tau.SetCountry(*s)
+	}
+	return tau
+}
+
 // SetCreateAt sets the "create_at" field.
-func (tau *TargetAreaUpdate) SetCreateAt(t time.Time) *TargetAreaUpdate {
-	tau.mutation.SetCreateAt(t)
+func (tau *TargetAreaUpdate) SetCreateAt(i int64) *TargetAreaUpdate {
+	tau.mutation.ResetCreateAt()
+	tau.mutation.SetCreateAt(i)
 	return tau
 }
 
 // SetNillableCreateAt sets the "create_at" field if the given value is not nil.
-func (tau *TargetAreaUpdate) SetNillableCreateAt(t *time.Time) *TargetAreaUpdate {
-	if t != nil {
-		tau.SetCreateAt(*t)
+func (tau *TargetAreaUpdate) SetNillableCreateAt(i *int64) *TargetAreaUpdate {
+	if i != nil {
+		tau.SetCreateAt(*i)
 	}
+	return tau
+}
+
+// AddCreateAt adds i to the "create_at" field.
+func (tau *TargetAreaUpdate) AddCreateAt(i int64) *TargetAreaUpdate {
+	tau.mutation.AddCreateAt(i)
 	return tau
 }
 
 // SetUpdateAt sets the "update_at" field.
-func (tau *TargetAreaUpdate) SetUpdateAt(t time.Time) *TargetAreaUpdate {
-	tau.mutation.SetUpdateAt(t)
+func (tau *TargetAreaUpdate) SetUpdateAt(i int64) *TargetAreaUpdate {
+	tau.mutation.ResetUpdateAt()
+	tau.mutation.SetUpdateAt(i)
 	return tau
 }
 
-// SetDeleteAt sets the "delete_at" field.
-func (tau *TargetAreaUpdate) SetDeleteAt(t time.Time) *TargetAreaUpdate {
-	tau.mutation.SetDeleteAt(t)
-	return tau
-}
-
-// SetNillableDeleteAt sets the "delete_at" field if the given value is not nil.
-func (tau *TargetAreaUpdate) SetNillableDeleteAt(t *time.Time) *TargetAreaUpdate {
-	if t != nil {
-		tau.SetDeleteAt(*t)
+// SetNillableUpdateAt sets the "update_at" field if the given value is not nil.
+func (tau *TargetAreaUpdate) SetNillableUpdateAt(i *int64) *TargetAreaUpdate {
+	if i != nil {
+		tau.SetUpdateAt(*i)
 	}
 	return tau
 }
 
-// ClearDeleteAt clears the value of the "delete_at" field.
-func (tau *TargetAreaUpdate) ClearDeleteAt() *TargetAreaUpdate {
-	tau.mutation.ClearDeleteAt()
+// AddUpdateAt adds i to the "update_at" field.
+func (tau *TargetAreaUpdate) AddUpdateAt(i int64) *TargetAreaUpdate {
+	tau.mutation.AddUpdateAt(i)
+	return tau
+}
+
+// SetDeleteAt sets the "delete_at" field.
+func (tau *TargetAreaUpdate) SetDeleteAt(i int64) *TargetAreaUpdate {
+	tau.mutation.ResetDeleteAt()
+	tau.mutation.SetDeleteAt(i)
+	return tau
+}
+
+// SetNillableDeleteAt sets the "delete_at" field if the given value is not nil.
+func (tau *TargetAreaUpdate) SetNillableDeleteAt(i *int64) *TargetAreaUpdate {
+	if i != nil {
+		tau.SetDeleteAt(*i)
+	}
+	return tau
+}
+
+// AddDeleteAt adds i to the "delete_at" field.
+func (tau *TargetAreaUpdate) AddDeleteAt(i int64) *TargetAreaUpdate {
+	tau.mutation.AddDeleteAt(i)
 	return tau
 }
 
@@ -90,7 +128,6 @@ func (tau *TargetAreaUpdate) Save(ctx context.Context) (int, error) {
 		err      error
 		affected int
 	)
-	tau.defaults()
 	if len(tau.hooks) == 0 {
 		if err = tau.check(); err != nil {
 			return 0, err
@@ -145,14 +182,6 @@ func (tau *TargetAreaUpdate) ExecX(ctx context.Context) {
 	}
 }
 
-// defaults sets the default values of the builder before save.
-func (tau *TargetAreaUpdate) defaults() {
-	if _, ok := tau.mutation.UpdateAt(); !ok {
-		v := targetarea.UpdateDefaultUpdateAt()
-		tau.mutation.SetUpdateAt(v)
-	}
-}
-
 // check runs all checks and user-defined validators on the builder.
 func (tau *TargetAreaUpdate) check() error {
 	if v, ok := tau.mutation.Continent(); ok {
@@ -202,28 +231,43 @@ func (tau *TargetAreaUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	}
 	if value, ok := tau.mutation.CreateAt(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeTime,
+			Type:   field.TypeInt64,
+			Value:  value,
+			Column: targetarea.FieldCreateAt,
+		})
+	}
+	if value, ok := tau.mutation.AddedCreateAt(); ok {
+		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
+			Type:   field.TypeInt64,
 			Value:  value,
 			Column: targetarea.FieldCreateAt,
 		})
 	}
 	if value, ok := tau.mutation.UpdateAt(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeTime,
+			Type:   field.TypeInt64,
+			Value:  value,
+			Column: targetarea.FieldUpdateAt,
+		})
+	}
+	if value, ok := tau.mutation.AddedUpdateAt(); ok {
+		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
+			Type:   field.TypeInt64,
 			Value:  value,
 			Column: targetarea.FieldUpdateAt,
 		})
 	}
 	if value, ok := tau.mutation.DeleteAt(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeTime,
+			Type:   field.TypeInt64,
 			Value:  value,
 			Column: targetarea.FieldDeleteAt,
 		})
 	}
-	if tau.mutation.DeleteAtCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeTime,
+	if value, ok := tau.mutation.AddedDeleteAt(); ok {
+		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
+			Type:   field.TypeInt64,
+			Value:  value,
 			Column: targetarea.FieldDeleteAt,
 		})
 	}
@@ -252,49 +296,88 @@ func (tauo *TargetAreaUpdateOne) SetContinent(s string) *TargetAreaUpdateOne {
 	return tauo
 }
 
+// SetNillableContinent sets the "continent" field if the given value is not nil.
+func (tauo *TargetAreaUpdateOne) SetNillableContinent(s *string) *TargetAreaUpdateOne {
+	if s != nil {
+		tauo.SetContinent(*s)
+	}
+	return tauo
+}
+
 // SetCountry sets the "country" field.
 func (tauo *TargetAreaUpdateOne) SetCountry(s string) *TargetAreaUpdateOne {
 	tauo.mutation.SetCountry(s)
 	return tauo
 }
 
+// SetNillableCountry sets the "country" field if the given value is not nil.
+func (tauo *TargetAreaUpdateOne) SetNillableCountry(s *string) *TargetAreaUpdateOne {
+	if s != nil {
+		tauo.SetCountry(*s)
+	}
+	return tauo
+}
+
 // SetCreateAt sets the "create_at" field.
-func (tauo *TargetAreaUpdateOne) SetCreateAt(t time.Time) *TargetAreaUpdateOne {
-	tauo.mutation.SetCreateAt(t)
+func (tauo *TargetAreaUpdateOne) SetCreateAt(i int64) *TargetAreaUpdateOne {
+	tauo.mutation.ResetCreateAt()
+	tauo.mutation.SetCreateAt(i)
 	return tauo
 }
 
 // SetNillableCreateAt sets the "create_at" field if the given value is not nil.
-func (tauo *TargetAreaUpdateOne) SetNillableCreateAt(t *time.Time) *TargetAreaUpdateOne {
-	if t != nil {
-		tauo.SetCreateAt(*t)
+func (tauo *TargetAreaUpdateOne) SetNillableCreateAt(i *int64) *TargetAreaUpdateOne {
+	if i != nil {
+		tauo.SetCreateAt(*i)
 	}
+	return tauo
+}
+
+// AddCreateAt adds i to the "create_at" field.
+func (tauo *TargetAreaUpdateOne) AddCreateAt(i int64) *TargetAreaUpdateOne {
+	tauo.mutation.AddCreateAt(i)
 	return tauo
 }
 
 // SetUpdateAt sets the "update_at" field.
-func (tauo *TargetAreaUpdateOne) SetUpdateAt(t time.Time) *TargetAreaUpdateOne {
-	tauo.mutation.SetUpdateAt(t)
+func (tauo *TargetAreaUpdateOne) SetUpdateAt(i int64) *TargetAreaUpdateOne {
+	tauo.mutation.ResetUpdateAt()
+	tauo.mutation.SetUpdateAt(i)
 	return tauo
 }
 
-// SetDeleteAt sets the "delete_at" field.
-func (tauo *TargetAreaUpdateOne) SetDeleteAt(t time.Time) *TargetAreaUpdateOne {
-	tauo.mutation.SetDeleteAt(t)
-	return tauo
-}
-
-// SetNillableDeleteAt sets the "delete_at" field if the given value is not nil.
-func (tauo *TargetAreaUpdateOne) SetNillableDeleteAt(t *time.Time) *TargetAreaUpdateOne {
-	if t != nil {
-		tauo.SetDeleteAt(*t)
+// SetNillableUpdateAt sets the "update_at" field if the given value is not nil.
+func (tauo *TargetAreaUpdateOne) SetNillableUpdateAt(i *int64) *TargetAreaUpdateOne {
+	if i != nil {
+		tauo.SetUpdateAt(*i)
 	}
 	return tauo
 }
 
-// ClearDeleteAt clears the value of the "delete_at" field.
-func (tauo *TargetAreaUpdateOne) ClearDeleteAt() *TargetAreaUpdateOne {
-	tauo.mutation.ClearDeleteAt()
+// AddUpdateAt adds i to the "update_at" field.
+func (tauo *TargetAreaUpdateOne) AddUpdateAt(i int64) *TargetAreaUpdateOne {
+	tauo.mutation.AddUpdateAt(i)
+	return tauo
+}
+
+// SetDeleteAt sets the "delete_at" field.
+func (tauo *TargetAreaUpdateOne) SetDeleteAt(i int64) *TargetAreaUpdateOne {
+	tauo.mutation.ResetDeleteAt()
+	tauo.mutation.SetDeleteAt(i)
+	return tauo
+}
+
+// SetNillableDeleteAt sets the "delete_at" field if the given value is not nil.
+func (tauo *TargetAreaUpdateOne) SetNillableDeleteAt(i *int64) *TargetAreaUpdateOne {
+	if i != nil {
+		tauo.SetDeleteAt(*i)
+	}
+	return tauo
+}
+
+// AddDeleteAt adds i to the "delete_at" field.
+func (tauo *TargetAreaUpdateOne) AddDeleteAt(i int64) *TargetAreaUpdateOne {
+	tauo.mutation.AddDeleteAt(i)
 	return tauo
 }
 
@@ -316,7 +399,6 @@ func (tauo *TargetAreaUpdateOne) Save(ctx context.Context) (*TargetArea, error) 
 		err  error
 		node *TargetArea
 	)
-	tauo.defaults()
 	if len(tauo.hooks) == 0 {
 		if err = tauo.check(); err != nil {
 			return nil, err
@@ -368,14 +450,6 @@ func (tauo *TargetAreaUpdateOne) Exec(ctx context.Context) error {
 func (tauo *TargetAreaUpdateOne) ExecX(ctx context.Context) {
 	if err := tauo.Exec(ctx); err != nil {
 		panic(err)
-	}
-}
-
-// defaults sets the default values of the builder before save.
-func (tauo *TargetAreaUpdateOne) defaults() {
-	if _, ok := tauo.mutation.UpdateAt(); !ok {
-		v := targetarea.UpdateDefaultUpdateAt()
-		tauo.mutation.SetUpdateAt(v)
 	}
 }
 
@@ -445,28 +519,43 @@ func (tauo *TargetAreaUpdateOne) sqlSave(ctx context.Context) (_node *TargetArea
 	}
 	if value, ok := tauo.mutation.CreateAt(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeTime,
+			Type:   field.TypeInt64,
+			Value:  value,
+			Column: targetarea.FieldCreateAt,
+		})
+	}
+	if value, ok := tauo.mutation.AddedCreateAt(); ok {
+		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
+			Type:   field.TypeInt64,
 			Value:  value,
 			Column: targetarea.FieldCreateAt,
 		})
 	}
 	if value, ok := tauo.mutation.UpdateAt(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeTime,
+			Type:   field.TypeInt64,
+			Value:  value,
+			Column: targetarea.FieldUpdateAt,
+		})
+	}
+	if value, ok := tauo.mutation.AddedUpdateAt(); ok {
+		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
+			Type:   field.TypeInt64,
 			Value:  value,
 			Column: targetarea.FieldUpdateAt,
 		})
 	}
 	if value, ok := tauo.mutation.DeleteAt(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeTime,
+			Type:   field.TypeInt64,
 			Value:  value,
 			Column: targetarea.FieldDeleteAt,
 		})
 	}
-	if tauo.mutation.DeleteAtCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeTime,
+	if value, ok := tauo.mutation.AddedDeleteAt(); ok {
+		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
+			Type:   field.TypeInt64,
+			Value:  value,
 			Column: targetarea.FieldDeleteAt,
 		})
 	}

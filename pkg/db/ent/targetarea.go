@@ -5,7 +5,6 @@ package ent
 import (
 	"fmt"
 	"strings"
-	"time"
 
 	"entgo.io/ent/dialect/sql"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/targetarea"
@@ -22,11 +21,11 @@ type TargetArea struct {
 	// Country holds the value of the "country" field.
 	Country string `json:"country,omitempty"`
 	// CreateAt holds the value of the "create_at" field.
-	CreateAt time.Time `json:"create_at,omitempty"`
+	CreateAt int64 `json:"create_at,omitempty"`
 	// UpdateAt holds the value of the "update_at" field.
-	UpdateAt time.Time `json:"update_at,omitempty"`
+	UpdateAt int64 `json:"update_at,omitempty"`
 	// DeleteAt holds the value of the "delete_at" field.
-	DeleteAt time.Time `json:"delete_at,omitempty"`
+	DeleteAt int64 `json:"delete_at,omitempty"`
 }
 
 // scanValues returns the types for scanning values from sql.Rows.
@@ -34,10 +33,10 @@ func (*TargetArea) scanValues(columns []string) ([]interface{}, error) {
 	values := make([]interface{}, len(columns))
 	for i := range columns {
 		switch columns[i] {
+		case targetarea.FieldCreateAt, targetarea.FieldUpdateAt, targetarea.FieldDeleteAt:
+			values[i] = new(sql.NullInt64)
 		case targetarea.FieldContinent, targetarea.FieldCountry:
 			values[i] = new(sql.NullString)
-		case targetarea.FieldCreateAt, targetarea.FieldUpdateAt, targetarea.FieldDeleteAt:
-			values[i] = new(sql.NullTime)
 		case targetarea.FieldID:
 			values[i] = new(uuid.UUID)
 		default:
@@ -74,22 +73,22 @@ func (ta *TargetArea) assignValues(columns []string, values []interface{}) error
 				ta.Country = value.String
 			}
 		case targetarea.FieldCreateAt:
-			if value, ok := values[i].(*sql.NullTime); !ok {
+			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field create_at", values[i])
 			} else if value.Valid {
-				ta.CreateAt = value.Time
+				ta.CreateAt = value.Int64
 			}
 		case targetarea.FieldUpdateAt:
-			if value, ok := values[i].(*sql.NullTime); !ok {
+			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field update_at", values[i])
 			} else if value.Valid {
-				ta.UpdateAt = value.Time
+				ta.UpdateAt = value.Int64
 			}
 		case targetarea.FieldDeleteAt:
-			if value, ok := values[i].(*sql.NullTime); !ok {
+			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field delete_at", values[i])
 			} else if value.Valid {
-				ta.DeleteAt = value.Time
+				ta.DeleteAt = value.Int64
 			}
 		}
 	}
@@ -124,11 +123,11 @@ func (ta *TargetArea) String() string {
 	builder.WriteString(", country=")
 	builder.WriteString(ta.Country)
 	builder.WriteString(", create_at=")
-	builder.WriteString(ta.CreateAt.Format(time.ANSIC))
+	builder.WriteString(fmt.Sprintf("%v", ta.CreateAt))
 	builder.WriteString(", update_at=")
-	builder.WriteString(ta.UpdateAt.Format(time.ANSIC))
+	builder.WriteString(fmt.Sprintf("%v", ta.UpdateAt))
 	builder.WriteString(", delete_at=")
-	builder.WriteString(ta.DeleteAt.Format(time.ANSIC))
+	builder.WriteString(fmt.Sprintf("%v", ta.DeleteAt))
 	builder.WriteByte(')')
 	return builder.String()
 }

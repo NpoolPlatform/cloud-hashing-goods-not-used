@@ -5,7 +5,6 @@ package ent
 import (
 	"context"
 	"fmt"
-	"time"
 
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
@@ -52,42 +51,65 @@ func (vlu *VendorLocationUpdate) SetAddress(s string) *VendorLocationUpdate {
 }
 
 // SetCreateAt sets the "create_at" field.
-func (vlu *VendorLocationUpdate) SetCreateAt(t time.Time) *VendorLocationUpdate {
-	vlu.mutation.SetCreateAt(t)
+func (vlu *VendorLocationUpdate) SetCreateAt(i int64) *VendorLocationUpdate {
+	vlu.mutation.ResetCreateAt()
+	vlu.mutation.SetCreateAt(i)
 	return vlu
 }
 
 // SetNillableCreateAt sets the "create_at" field if the given value is not nil.
-func (vlu *VendorLocationUpdate) SetNillableCreateAt(t *time.Time) *VendorLocationUpdate {
-	if t != nil {
-		vlu.SetCreateAt(*t)
+func (vlu *VendorLocationUpdate) SetNillableCreateAt(i *int64) *VendorLocationUpdate {
+	if i != nil {
+		vlu.SetCreateAt(*i)
 	}
+	return vlu
+}
+
+// AddCreateAt adds i to the "create_at" field.
+func (vlu *VendorLocationUpdate) AddCreateAt(i int64) *VendorLocationUpdate {
+	vlu.mutation.AddCreateAt(i)
 	return vlu
 }
 
 // SetUpdateAt sets the "update_at" field.
-func (vlu *VendorLocationUpdate) SetUpdateAt(t time.Time) *VendorLocationUpdate {
-	vlu.mutation.SetUpdateAt(t)
+func (vlu *VendorLocationUpdate) SetUpdateAt(i int64) *VendorLocationUpdate {
+	vlu.mutation.ResetUpdateAt()
+	vlu.mutation.SetUpdateAt(i)
 	return vlu
 }
 
-// SetDeleteAt sets the "delete_at" field.
-func (vlu *VendorLocationUpdate) SetDeleteAt(t time.Time) *VendorLocationUpdate {
-	vlu.mutation.SetDeleteAt(t)
-	return vlu
-}
-
-// SetNillableDeleteAt sets the "delete_at" field if the given value is not nil.
-func (vlu *VendorLocationUpdate) SetNillableDeleteAt(t *time.Time) *VendorLocationUpdate {
-	if t != nil {
-		vlu.SetDeleteAt(*t)
+// SetNillableUpdateAt sets the "update_at" field if the given value is not nil.
+func (vlu *VendorLocationUpdate) SetNillableUpdateAt(i *int64) *VendorLocationUpdate {
+	if i != nil {
+		vlu.SetUpdateAt(*i)
 	}
 	return vlu
 }
 
-// ClearDeleteAt clears the value of the "delete_at" field.
-func (vlu *VendorLocationUpdate) ClearDeleteAt() *VendorLocationUpdate {
-	vlu.mutation.ClearDeleteAt()
+// AddUpdateAt adds i to the "update_at" field.
+func (vlu *VendorLocationUpdate) AddUpdateAt(i int64) *VendorLocationUpdate {
+	vlu.mutation.AddUpdateAt(i)
+	return vlu
+}
+
+// SetDeleteAt sets the "delete_at" field.
+func (vlu *VendorLocationUpdate) SetDeleteAt(i int64) *VendorLocationUpdate {
+	vlu.mutation.ResetDeleteAt()
+	vlu.mutation.SetDeleteAt(i)
+	return vlu
+}
+
+// SetNillableDeleteAt sets the "delete_at" field if the given value is not nil.
+func (vlu *VendorLocationUpdate) SetNillableDeleteAt(i *int64) *VendorLocationUpdate {
+	if i != nil {
+		vlu.SetDeleteAt(*i)
+	}
+	return vlu
+}
+
+// AddDeleteAt adds i to the "delete_at" field.
+func (vlu *VendorLocationUpdate) AddDeleteAt(i int64) *VendorLocationUpdate {
+	vlu.mutation.AddDeleteAt(i)
 	return vlu
 }
 
@@ -102,7 +124,6 @@ func (vlu *VendorLocationUpdate) Save(ctx context.Context) (int, error) {
 		err      error
 		affected int
 	)
-	vlu.defaults()
 	if len(vlu.hooks) == 0 {
 		if err = vlu.check(); err != nil {
 			return 0, err
@@ -154,14 +175,6 @@ func (vlu *VendorLocationUpdate) Exec(ctx context.Context) error {
 func (vlu *VendorLocationUpdate) ExecX(ctx context.Context) {
 	if err := vlu.Exec(ctx); err != nil {
 		panic(err)
-	}
-}
-
-// defaults sets the default values of the builder before save.
-func (vlu *VendorLocationUpdate) defaults() {
-	if _, ok := vlu.mutation.UpdateAt(); !ok {
-		v := vendorlocation.UpdateDefaultUpdateAt()
-		vlu.mutation.SetUpdateAt(v)
 	}
 }
 
@@ -238,28 +251,43 @@ func (vlu *VendorLocationUpdate) sqlSave(ctx context.Context) (n int, err error)
 	}
 	if value, ok := vlu.mutation.CreateAt(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeTime,
+			Type:   field.TypeInt64,
+			Value:  value,
+			Column: vendorlocation.FieldCreateAt,
+		})
+	}
+	if value, ok := vlu.mutation.AddedCreateAt(); ok {
+		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
+			Type:   field.TypeInt64,
 			Value:  value,
 			Column: vendorlocation.FieldCreateAt,
 		})
 	}
 	if value, ok := vlu.mutation.UpdateAt(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeTime,
+			Type:   field.TypeInt64,
+			Value:  value,
+			Column: vendorlocation.FieldUpdateAt,
+		})
+	}
+	if value, ok := vlu.mutation.AddedUpdateAt(); ok {
+		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
+			Type:   field.TypeInt64,
 			Value:  value,
 			Column: vendorlocation.FieldUpdateAt,
 		})
 	}
 	if value, ok := vlu.mutation.DeleteAt(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeTime,
+			Type:   field.TypeInt64,
 			Value:  value,
 			Column: vendorlocation.FieldDeleteAt,
 		})
 	}
-	if vlu.mutation.DeleteAtCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeTime,
+	if value, ok := vlu.mutation.AddedDeleteAt(); ok {
+		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
+			Type:   field.TypeInt64,
+			Value:  value,
 			Column: vendorlocation.FieldDeleteAt,
 		})
 	}
@@ -307,42 +335,65 @@ func (vluo *VendorLocationUpdateOne) SetAddress(s string) *VendorLocationUpdateO
 }
 
 // SetCreateAt sets the "create_at" field.
-func (vluo *VendorLocationUpdateOne) SetCreateAt(t time.Time) *VendorLocationUpdateOne {
-	vluo.mutation.SetCreateAt(t)
+func (vluo *VendorLocationUpdateOne) SetCreateAt(i int64) *VendorLocationUpdateOne {
+	vluo.mutation.ResetCreateAt()
+	vluo.mutation.SetCreateAt(i)
 	return vluo
 }
 
 // SetNillableCreateAt sets the "create_at" field if the given value is not nil.
-func (vluo *VendorLocationUpdateOne) SetNillableCreateAt(t *time.Time) *VendorLocationUpdateOne {
-	if t != nil {
-		vluo.SetCreateAt(*t)
+func (vluo *VendorLocationUpdateOne) SetNillableCreateAt(i *int64) *VendorLocationUpdateOne {
+	if i != nil {
+		vluo.SetCreateAt(*i)
 	}
+	return vluo
+}
+
+// AddCreateAt adds i to the "create_at" field.
+func (vluo *VendorLocationUpdateOne) AddCreateAt(i int64) *VendorLocationUpdateOne {
+	vluo.mutation.AddCreateAt(i)
 	return vluo
 }
 
 // SetUpdateAt sets the "update_at" field.
-func (vluo *VendorLocationUpdateOne) SetUpdateAt(t time.Time) *VendorLocationUpdateOne {
-	vluo.mutation.SetUpdateAt(t)
+func (vluo *VendorLocationUpdateOne) SetUpdateAt(i int64) *VendorLocationUpdateOne {
+	vluo.mutation.ResetUpdateAt()
+	vluo.mutation.SetUpdateAt(i)
 	return vluo
 }
 
-// SetDeleteAt sets the "delete_at" field.
-func (vluo *VendorLocationUpdateOne) SetDeleteAt(t time.Time) *VendorLocationUpdateOne {
-	vluo.mutation.SetDeleteAt(t)
-	return vluo
-}
-
-// SetNillableDeleteAt sets the "delete_at" field if the given value is not nil.
-func (vluo *VendorLocationUpdateOne) SetNillableDeleteAt(t *time.Time) *VendorLocationUpdateOne {
-	if t != nil {
-		vluo.SetDeleteAt(*t)
+// SetNillableUpdateAt sets the "update_at" field if the given value is not nil.
+func (vluo *VendorLocationUpdateOne) SetNillableUpdateAt(i *int64) *VendorLocationUpdateOne {
+	if i != nil {
+		vluo.SetUpdateAt(*i)
 	}
 	return vluo
 }
 
-// ClearDeleteAt clears the value of the "delete_at" field.
-func (vluo *VendorLocationUpdateOne) ClearDeleteAt() *VendorLocationUpdateOne {
-	vluo.mutation.ClearDeleteAt()
+// AddUpdateAt adds i to the "update_at" field.
+func (vluo *VendorLocationUpdateOne) AddUpdateAt(i int64) *VendorLocationUpdateOne {
+	vluo.mutation.AddUpdateAt(i)
+	return vluo
+}
+
+// SetDeleteAt sets the "delete_at" field.
+func (vluo *VendorLocationUpdateOne) SetDeleteAt(i int64) *VendorLocationUpdateOne {
+	vluo.mutation.ResetDeleteAt()
+	vluo.mutation.SetDeleteAt(i)
+	return vluo
+}
+
+// SetNillableDeleteAt sets the "delete_at" field if the given value is not nil.
+func (vluo *VendorLocationUpdateOne) SetNillableDeleteAt(i *int64) *VendorLocationUpdateOne {
+	if i != nil {
+		vluo.SetDeleteAt(*i)
+	}
+	return vluo
+}
+
+// AddDeleteAt adds i to the "delete_at" field.
+func (vluo *VendorLocationUpdateOne) AddDeleteAt(i int64) *VendorLocationUpdateOne {
+	vluo.mutation.AddDeleteAt(i)
 	return vluo
 }
 
@@ -364,7 +415,6 @@ func (vluo *VendorLocationUpdateOne) Save(ctx context.Context) (*VendorLocation,
 		err  error
 		node *VendorLocation
 	)
-	vluo.defaults()
 	if len(vluo.hooks) == 0 {
 		if err = vluo.check(); err != nil {
 			return nil, err
@@ -416,14 +466,6 @@ func (vluo *VendorLocationUpdateOne) Exec(ctx context.Context) error {
 func (vluo *VendorLocationUpdateOne) ExecX(ctx context.Context) {
 	if err := vluo.Exec(ctx); err != nil {
 		panic(err)
-	}
-}
-
-// defaults sets the default values of the builder before save.
-func (vluo *VendorLocationUpdateOne) defaults() {
-	if _, ok := vluo.mutation.UpdateAt(); !ok {
-		v := vendorlocation.UpdateDefaultUpdateAt()
-		vluo.mutation.SetUpdateAt(v)
 	}
 }
 
@@ -517,28 +559,43 @@ func (vluo *VendorLocationUpdateOne) sqlSave(ctx context.Context) (_node *Vendor
 	}
 	if value, ok := vluo.mutation.CreateAt(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeTime,
+			Type:   field.TypeInt64,
+			Value:  value,
+			Column: vendorlocation.FieldCreateAt,
+		})
+	}
+	if value, ok := vluo.mutation.AddedCreateAt(); ok {
+		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
+			Type:   field.TypeInt64,
 			Value:  value,
 			Column: vendorlocation.FieldCreateAt,
 		})
 	}
 	if value, ok := vluo.mutation.UpdateAt(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeTime,
+			Type:   field.TypeInt64,
+			Value:  value,
+			Column: vendorlocation.FieldUpdateAt,
+		})
+	}
+	if value, ok := vluo.mutation.AddedUpdateAt(); ok {
+		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
+			Type:   field.TypeInt64,
 			Value:  value,
 			Column: vendorlocation.FieldUpdateAt,
 		})
 	}
 	if value, ok := vluo.mutation.DeleteAt(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeTime,
+			Type:   field.TypeInt64,
 			Value:  value,
 			Column: vendorlocation.FieldDeleteAt,
 		})
 	}
-	if vluo.mutation.DeleteAtCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeTime,
+	if value, ok := vluo.mutation.AddedDeleteAt(); ok {
+		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
+			Type:   field.TypeInt64,
+			Value:  value,
 			Column: vendorlocation.FieldDeleteAt,
 		})
 	}

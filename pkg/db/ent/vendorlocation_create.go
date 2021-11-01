@@ -6,7 +6,6 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"time"
 
 	"entgo.io/ent/dialect"
 	"entgo.io/ent/dialect/sql"
@@ -49,43 +48,43 @@ func (vlc *VendorLocationCreate) SetAddress(s string) *VendorLocationCreate {
 }
 
 // SetCreateAt sets the "create_at" field.
-func (vlc *VendorLocationCreate) SetCreateAt(t time.Time) *VendorLocationCreate {
-	vlc.mutation.SetCreateAt(t)
+func (vlc *VendorLocationCreate) SetCreateAt(i int64) *VendorLocationCreate {
+	vlc.mutation.SetCreateAt(i)
 	return vlc
 }
 
 // SetNillableCreateAt sets the "create_at" field if the given value is not nil.
-func (vlc *VendorLocationCreate) SetNillableCreateAt(t *time.Time) *VendorLocationCreate {
-	if t != nil {
-		vlc.SetCreateAt(*t)
+func (vlc *VendorLocationCreate) SetNillableCreateAt(i *int64) *VendorLocationCreate {
+	if i != nil {
+		vlc.SetCreateAt(*i)
 	}
 	return vlc
 }
 
 // SetUpdateAt sets the "update_at" field.
-func (vlc *VendorLocationCreate) SetUpdateAt(t time.Time) *VendorLocationCreate {
-	vlc.mutation.SetUpdateAt(t)
+func (vlc *VendorLocationCreate) SetUpdateAt(i int64) *VendorLocationCreate {
+	vlc.mutation.SetUpdateAt(i)
 	return vlc
 }
 
 // SetNillableUpdateAt sets the "update_at" field if the given value is not nil.
-func (vlc *VendorLocationCreate) SetNillableUpdateAt(t *time.Time) *VendorLocationCreate {
-	if t != nil {
-		vlc.SetUpdateAt(*t)
+func (vlc *VendorLocationCreate) SetNillableUpdateAt(i *int64) *VendorLocationCreate {
+	if i != nil {
+		vlc.SetUpdateAt(*i)
 	}
 	return vlc
 }
 
 // SetDeleteAt sets the "delete_at" field.
-func (vlc *VendorLocationCreate) SetDeleteAt(t time.Time) *VendorLocationCreate {
-	vlc.mutation.SetDeleteAt(t)
+func (vlc *VendorLocationCreate) SetDeleteAt(i int64) *VendorLocationCreate {
+	vlc.mutation.SetDeleteAt(i)
 	return vlc
 }
 
 // SetNillableDeleteAt sets the "delete_at" field if the given value is not nil.
-func (vlc *VendorLocationCreate) SetNillableDeleteAt(t *time.Time) *VendorLocationCreate {
-	if t != nil {
-		vlc.SetDeleteAt(*t)
+func (vlc *VendorLocationCreate) SetNillableDeleteAt(i *int64) *VendorLocationCreate {
+	if i != nil {
+		vlc.SetDeleteAt(*i)
 	}
 	return vlc
 }
@@ -175,6 +174,10 @@ func (vlc *VendorLocationCreate) defaults() {
 		v := vendorlocation.DefaultUpdateAt()
 		vlc.mutation.SetUpdateAt(v)
 	}
+	if _, ok := vlc.mutation.DeleteAt(); !ok {
+		v := vendorlocation.DefaultDeleteAt()
+		vlc.mutation.SetDeleteAt(v)
+	}
 	if _, ok := vlc.mutation.ID(); !ok {
 		v := vendorlocation.DefaultID()
 		vlc.mutation.SetID(v)
@@ -220,6 +223,9 @@ func (vlc *VendorLocationCreate) check() error {
 	}
 	if _, ok := vlc.mutation.UpdateAt(); !ok {
 		return &ValidationError{Name: "update_at", err: errors.New(`ent: missing required field "update_at"`)}
+	}
+	if _, ok := vlc.mutation.DeleteAt(); !ok {
+		return &ValidationError{Name: "delete_at", err: errors.New(`ent: missing required field "delete_at"`)}
 	}
 	return nil
 }
@@ -288,7 +294,7 @@ func (vlc *VendorLocationCreate) createSpec() (*VendorLocation, *sqlgraph.Create
 	}
 	if value, ok := vlc.mutation.CreateAt(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeTime,
+			Type:   field.TypeInt64,
 			Value:  value,
 			Column: vendorlocation.FieldCreateAt,
 		})
@@ -296,7 +302,7 @@ func (vlc *VendorLocationCreate) createSpec() (*VendorLocation, *sqlgraph.Create
 	}
 	if value, ok := vlc.mutation.UpdateAt(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeTime,
+			Type:   field.TypeInt64,
 			Value:  value,
 			Column: vendorlocation.FieldUpdateAt,
 		})
@@ -304,7 +310,7 @@ func (vlc *VendorLocationCreate) createSpec() (*VendorLocation, *sqlgraph.Create
 	}
 	if value, ok := vlc.mutation.DeleteAt(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeTime,
+			Type:   field.TypeInt64,
 			Value:  value,
 			Column: vendorlocation.FieldDeleteAt,
 		})
@@ -413,7 +419,7 @@ func (u *VendorLocationUpsert) UpdateAddress() *VendorLocationUpsert {
 }
 
 // SetCreateAt sets the "create_at" field.
-func (u *VendorLocationUpsert) SetCreateAt(v time.Time) *VendorLocationUpsert {
+func (u *VendorLocationUpsert) SetCreateAt(v int64) *VendorLocationUpsert {
 	u.Set(vendorlocation.FieldCreateAt, v)
 	return u
 }
@@ -425,7 +431,7 @@ func (u *VendorLocationUpsert) UpdateCreateAt() *VendorLocationUpsert {
 }
 
 // SetUpdateAt sets the "update_at" field.
-func (u *VendorLocationUpsert) SetUpdateAt(v time.Time) *VendorLocationUpsert {
+func (u *VendorLocationUpsert) SetUpdateAt(v int64) *VendorLocationUpsert {
 	u.Set(vendorlocation.FieldUpdateAt, v)
 	return u
 }
@@ -437,7 +443,7 @@ func (u *VendorLocationUpsert) UpdateUpdateAt() *VendorLocationUpsert {
 }
 
 // SetDeleteAt sets the "delete_at" field.
-func (u *VendorLocationUpsert) SetDeleteAt(v time.Time) *VendorLocationUpsert {
+func (u *VendorLocationUpsert) SetDeleteAt(v int64) *VendorLocationUpsert {
 	u.Set(vendorlocation.FieldDeleteAt, v)
 	return u
 }
@@ -445,12 +451,6 @@ func (u *VendorLocationUpsert) SetDeleteAt(v time.Time) *VendorLocationUpsert {
 // UpdateDeleteAt sets the "delete_at" field to the value that was provided on create.
 func (u *VendorLocationUpsert) UpdateDeleteAt() *VendorLocationUpsert {
 	u.SetExcluded(vendorlocation.FieldDeleteAt)
-	return u
-}
-
-// ClearDeleteAt clears the value of the "delete_at" field.
-func (u *VendorLocationUpsert) ClearDeleteAt() *VendorLocationUpsert {
-	u.SetNull(vendorlocation.FieldDeleteAt)
 	return u
 }
 
@@ -561,7 +561,7 @@ func (u *VendorLocationUpsertOne) UpdateAddress() *VendorLocationUpsertOne {
 }
 
 // SetCreateAt sets the "create_at" field.
-func (u *VendorLocationUpsertOne) SetCreateAt(v time.Time) *VendorLocationUpsertOne {
+func (u *VendorLocationUpsertOne) SetCreateAt(v int64) *VendorLocationUpsertOne {
 	return u.Update(func(s *VendorLocationUpsert) {
 		s.SetCreateAt(v)
 	})
@@ -575,7 +575,7 @@ func (u *VendorLocationUpsertOne) UpdateCreateAt() *VendorLocationUpsertOne {
 }
 
 // SetUpdateAt sets the "update_at" field.
-func (u *VendorLocationUpsertOne) SetUpdateAt(v time.Time) *VendorLocationUpsertOne {
+func (u *VendorLocationUpsertOne) SetUpdateAt(v int64) *VendorLocationUpsertOne {
 	return u.Update(func(s *VendorLocationUpsert) {
 		s.SetUpdateAt(v)
 	})
@@ -589,7 +589,7 @@ func (u *VendorLocationUpsertOne) UpdateUpdateAt() *VendorLocationUpsertOne {
 }
 
 // SetDeleteAt sets the "delete_at" field.
-func (u *VendorLocationUpsertOne) SetDeleteAt(v time.Time) *VendorLocationUpsertOne {
+func (u *VendorLocationUpsertOne) SetDeleteAt(v int64) *VendorLocationUpsertOne {
 	return u.Update(func(s *VendorLocationUpsert) {
 		s.SetDeleteAt(v)
 	})
@@ -599,13 +599,6 @@ func (u *VendorLocationUpsertOne) SetDeleteAt(v time.Time) *VendorLocationUpsert
 func (u *VendorLocationUpsertOne) UpdateDeleteAt() *VendorLocationUpsertOne {
 	return u.Update(func(s *VendorLocationUpsert) {
 		s.UpdateDeleteAt()
-	})
-}
-
-// ClearDeleteAt clears the value of the "delete_at" field.
-func (u *VendorLocationUpsertOne) ClearDeleteAt() *VendorLocationUpsertOne {
-	return u.Update(func(s *VendorLocationUpsert) {
-		s.ClearDeleteAt()
 	})
 }
 
@@ -882,7 +875,7 @@ func (u *VendorLocationUpsertBulk) UpdateAddress() *VendorLocationUpsertBulk {
 }
 
 // SetCreateAt sets the "create_at" field.
-func (u *VendorLocationUpsertBulk) SetCreateAt(v time.Time) *VendorLocationUpsertBulk {
+func (u *VendorLocationUpsertBulk) SetCreateAt(v int64) *VendorLocationUpsertBulk {
 	return u.Update(func(s *VendorLocationUpsert) {
 		s.SetCreateAt(v)
 	})
@@ -896,7 +889,7 @@ func (u *VendorLocationUpsertBulk) UpdateCreateAt() *VendorLocationUpsertBulk {
 }
 
 // SetUpdateAt sets the "update_at" field.
-func (u *VendorLocationUpsertBulk) SetUpdateAt(v time.Time) *VendorLocationUpsertBulk {
+func (u *VendorLocationUpsertBulk) SetUpdateAt(v int64) *VendorLocationUpsertBulk {
 	return u.Update(func(s *VendorLocationUpsert) {
 		s.SetUpdateAt(v)
 	})
@@ -910,7 +903,7 @@ func (u *VendorLocationUpsertBulk) UpdateUpdateAt() *VendorLocationUpsertBulk {
 }
 
 // SetDeleteAt sets the "delete_at" field.
-func (u *VendorLocationUpsertBulk) SetDeleteAt(v time.Time) *VendorLocationUpsertBulk {
+func (u *VendorLocationUpsertBulk) SetDeleteAt(v int64) *VendorLocationUpsertBulk {
 	return u.Update(func(s *VendorLocationUpsert) {
 		s.SetDeleteAt(v)
 	})
@@ -920,13 +913,6 @@ func (u *VendorLocationUpsertBulk) SetDeleteAt(v time.Time) *VendorLocationUpser
 func (u *VendorLocationUpsertBulk) UpdateDeleteAt() *VendorLocationUpsertBulk {
 	return u.Update(func(s *VendorLocationUpsert) {
 		s.UpdateDeleteAt()
-	})
-}
-
-// ClearDeleteAt clears the value of the "delete_at" field.
-func (u *VendorLocationUpsertBulk) ClearDeleteAt() *VendorLocationUpsertBulk {
-	return u.Update(func(s *VendorLocationUpsert) {
-		s.ClearDeleteAt()
 	})
 }
 
