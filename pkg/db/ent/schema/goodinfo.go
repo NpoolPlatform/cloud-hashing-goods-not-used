@@ -51,6 +51,9 @@ func (GoodInfo) Fields() []ent.Field {
 		field.Int64("update_at").
 			DefaultFunc(func() int64 {
 				return time.Now().UnixNano()
+			}).
+			UpdateDefault(func() int64 {
+				return time.Now().UnixNano()
 			}),
 		field.Int64("delete_at").
 			DefaultFunc(func() int64 {
