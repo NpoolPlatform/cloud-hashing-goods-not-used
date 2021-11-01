@@ -160,8 +160,18 @@ func (tac *TargetAreaCreate) check() error {
 	if _, ok := tac.mutation.Continent(); !ok {
 		return &ValidationError{Name: "continent", err: errors.New(`ent: missing required field "continent"`)}
 	}
+	if v, ok := tac.mutation.Continent(); ok {
+		if err := targetarea.ContinentValidator(v); err != nil {
+			return &ValidationError{Name: "continent", err: fmt.Errorf(`ent: validator failed for field "continent": %w`, err)}
+		}
+	}
 	if _, ok := tac.mutation.Country(); !ok {
 		return &ValidationError{Name: "country", err: errors.New(`ent: missing required field "country"`)}
+	}
+	if v, ok := tac.mutation.Country(); ok {
+		if err := targetarea.CountryValidator(v); err != nil {
+			return &ValidationError{Name: "country", err: fmt.Errorf(`ent: validator failed for field "country": %w`, err)}
+		}
 	}
 	if _, ok := tac.mutation.CreateAt(); !ok {
 		return &ValidationError{Name: "create_at", err: errors.New(`ent: missing required field "create_at"`)}

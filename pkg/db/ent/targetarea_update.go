@@ -72,12 +72,18 @@ func (tau *TargetAreaUpdate) Save(ctx context.Context) (int, error) {
 	)
 	tau.defaults()
 	if len(tau.hooks) == 0 {
+		if err = tau.check(); err != nil {
+			return 0, err
+		}
 		affected, err = tau.sqlSave(ctx)
 	} else {
 		var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
 			mutation, ok := m.(*TargetAreaMutation)
 			if !ok {
 				return nil, fmt.Errorf("unexpected mutation type %T", m)
+			}
+			if err = tau.check(); err != nil {
+				return 0, err
 			}
 			tau.mutation = mutation
 			affected, err = tau.sqlSave(ctx)
@@ -125,6 +131,21 @@ func (tau *TargetAreaUpdate) defaults() {
 		v := targetarea.UpdateDefaultUpdateAt()
 		tau.mutation.SetUpdateAt(v)
 	}
+}
+
+// check runs all checks and user-defined validators on the builder.
+func (tau *TargetAreaUpdate) check() error {
+	if v, ok := tau.mutation.Continent(); ok {
+		if err := targetarea.ContinentValidator(v); err != nil {
+			return &ValidationError{Name: "continent", err: fmt.Errorf("ent: validator failed for field \"continent\": %w", err)}
+		}
+	}
+	if v, ok := tau.mutation.Country(); ok {
+		if err := targetarea.CountryValidator(v); err != nil {
+			return &ValidationError{Name: "country", err: fmt.Errorf("ent: validator failed for field \"country\": %w", err)}
+		}
+	}
+	return nil
 }
 
 func (tau *TargetAreaUpdate) sqlSave(ctx context.Context) (n int, err error) {
@@ -244,12 +265,18 @@ func (tauo *TargetAreaUpdateOne) Save(ctx context.Context) (*TargetArea, error) 
 	)
 	tauo.defaults()
 	if len(tauo.hooks) == 0 {
+		if err = tauo.check(); err != nil {
+			return nil, err
+		}
 		node, err = tauo.sqlSave(ctx)
 	} else {
 		var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
 			mutation, ok := m.(*TargetAreaMutation)
 			if !ok {
 				return nil, fmt.Errorf("unexpected mutation type %T", m)
+			}
+			if err = tauo.check(); err != nil {
+				return nil, err
 			}
 			tauo.mutation = mutation
 			node, err = tauo.sqlSave(ctx)
@@ -297,6 +324,21 @@ func (tauo *TargetAreaUpdateOne) defaults() {
 		v := targetarea.UpdateDefaultUpdateAt()
 		tauo.mutation.SetUpdateAt(v)
 	}
+}
+
+// check runs all checks and user-defined validators on the builder.
+func (tauo *TargetAreaUpdateOne) check() error {
+	if v, ok := tauo.mutation.Continent(); ok {
+		if err := targetarea.ContinentValidator(v); err != nil {
+			return &ValidationError{Name: "continent", err: fmt.Errorf("ent: validator failed for field \"continent\": %w", err)}
+		}
+	}
+	if v, ok := tauo.mutation.Country(); ok {
+		if err := targetarea.CountryValidator(v); err != nil {
+			return &ValidationError{Name: "country", err: fmt.Errorf("ent: validator failed for field \"country\": %w", err)}
+		}
+	}
+	return nil
 }
 
 func (tauo *TargetAreaUpdateOne) sqlSave(ctx context.Context) (_node *TargetArea, err error) {

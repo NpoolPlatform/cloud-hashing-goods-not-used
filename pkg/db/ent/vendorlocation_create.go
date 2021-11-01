@@ -172,14 +172,34 @@ func (vlc *VendorLocationCreate) check() error {
 	if _, ok := vlc.mutation.Country(); !ok {
 		return &ValidationError{Name: "country", err: errors.New(`ent: missing required field "country"`)}
 	}
+	if v, ok := vlc.mutation.Country(); ok {
+		if err := vendorlocation.CountryValidator(v); err != nil {
+			return &ValidationError{Name: "country", err: fmt.Errorf(`ent: validator failed for field "country": %w`, err)}
+		}
+	}
 	if _, ok := vlc.mutation.Province(); !ok {
 		return &ValidationError{Name: "province", err: errors.New(`ent: missing required field "province"`)}
+	}
+	if v, ok := vlc.mutation.Province(); ok {
+		if err := vendorlocation.ProvinceValidator(v); err != nil {
+			return &ValidationError{Name: "province", err: fmt.Errorf(`ent: validator failed for field "province": %w`, err)}
+		}
 	}
 	if _, ok := vlc.mutation.City(); !ok {
 		return &ValidationError{Name: "city", err: errors.New(`ent: missing required field "city"`)}
 	}
+	if v, ok := vlc.mutation.City(); ok {
+		if err := vendorlocation.CityValidator(v); err != nil {
+			return &ValidationError{Name: "city", err: fmt.Errorf(`ent: validator failed for field "city": %w`, err)}
+		}
+	}
 	if _, ok := vlc.mutation.Address(); !ok {
 		return &ValidationError{Name: "address", err: errors.New(`ent: missing required field "address"`)}
+	}
+	if v, ok := vlc.mutation.Address(); ok {
+		if err := vendorlocation.AddressValidator(v); err != nil {
+			return &ValidationError{Name: "address", err: fmt.Errorf(`ent: validator failed for field "address": %w`, err)}
+		}
 	}
 	if _, ok := vlc.mutation.CreateAt(); !ok {
 		return &ValidationError{Name: "create_at", err: errors.New(`ent: missing required field "create_at"`)}

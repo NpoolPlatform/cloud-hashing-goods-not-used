@@ -40,8 +40,8 @@ var (
 	// TargetAreasColumns holds the columns for the "target_areas" table.
 	TargetAreasColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeUUID, Unique: true},
-		{Name: "continent", Type: field.TypeString},
-		{Name: "country", Type: field.TypeString},
+		{Name: "continent", Type: field.TypeString, Size: 32},
+		{Name: "country", Type: field.TypeString, Size: 64},
 		{Name: "create_at", Type: field.TypeTime, Default: "CURRENT_TIMESTAMP"},
 		{Name: "update_at", Type: field.TypeTime, Default: "CURRENT_TIMESTAMP"},
 	}
@@ -61,10 +61,10 @@ var (
 	// VendorLocationsColumns holds the columns for the "vendor_locations" table.
 	VendorLocationsColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeUUID, Unique: true},
-		{Name: "country", Type: field.TypeString},
-		{Name: "province", Type: field.TypeString},
-		{Name: "city", Type: field.TypeString},
-		{Name: "address", Type: field.TypeString},
+		{Name: "country", Type: field.TypeString, Size: 64},
+		{Name: "province", Type: field.TypeString, Size: 64},
+		{Name: "city", Type: field.TypeString, Size: 64},
+		{Name: "address", Type: field.TypeString, Size: 256},
 		{Name: "create_at", Type: field.TypeTime, Default: "CURRENT_TIMESTAMP"},
 		{Name: "update_at", Type: field.TypeTime, Default: "CURRENT_TIMESTAMP"},
 	}

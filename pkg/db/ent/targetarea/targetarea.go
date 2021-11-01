@@ -45,6 +45,10 @@ func ValidColumn(column string) bool {
 }
 
 var (
+	// ContinentValidator is a validator for the "continent" field. It is called by the builders before save.
+	ContinentValidator func(string) error
+	// CountryValidator is a validator for the "country" field. It is called by the builders before save.
+	CountryValidator func(string) error
 	// DefaultCreateAt holds the default value on creation for the "create_at" field.
 	DefaultCreateAt func() time.Time
 	// DefaultUpdateAt holds the default value on creation for the "update_at" field.

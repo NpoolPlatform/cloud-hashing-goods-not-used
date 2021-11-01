@@ -18,9 +18,9 @@ func TestCreateTargetArea(t *testing.T) { //nolint
 		return
 	}
 
-	continent := "AsiaRestfulApiTest"
-	country := "ChinaRestfulApiTest"
-	country1 := "ChinaaaaRestfulApiTest"
+	continent := "AsiaTargetAreaRestfulApiTest"
+	country := "ChinaTargetAreaRestfulApiTest"
+	country1 := "ChinaaaaTargetAreaRestfulApiTest"
 
 	targetAreaInfo := npool.TargetAreaInfo{
 		Continent: continent,

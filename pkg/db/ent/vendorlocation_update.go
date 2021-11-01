@@ -84,12 +84,18 @@ func (vlu *VendorLocationUpdate) Save(ctx context.Context) (int, error) {
 	)
 	vlu.defaults()
 	if len(vlu.hooks) == 0 {
+		if err = vlu.check(); err != nil {
+			return 0, err
+		}
 		affected, err = vlu.sqlSave(ctx)
 	} else {
 		var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
 			mutation, ok := m.(*VendorLocationMutation)
 			if !ok {
 				return nil, fmt.Errorf("unexpected mutation type %T", m)
+			}
+			if err = vlu.check(); err != nil {
+				return 0, err
 			}
 			vlu.mutation = mutation
 			affected, err = vlu.sqlSave(ctx)
@@ -137,6 +143,31 @@ func (vlu *VendorLocationUpdate) defaults() {
 		v := vendorlocation.UpdateDefaultUpdateAt()
 		vlu.mutation.SetUpdateAt(v)
 	}
+}
+
+// check runs all checks and user-defined validators on the builder.
+func (vlu *VendorLocationUpdate) check() error {
+	if v, ok := vlu.mutation.Country(); ok {
+		if err := vendorlocation.CountryValidator(v); err != nil {
+			return &ValidationError{Name: "country", err: fmt.Errorf("ent: validator failed for field \"country\": %w", err)}
+		}
+	}
+	if v, ok := vlu.mutation.Province(); ok {
+		if err := vendorlocation.ProvinceValidator(v); err != nil {
+			return &ValidationError{Name: "province", err: fmt.Errorf("ent: validator failed for field \"province\": %w", err)}
+		}
+	}
+	if v, ok := vlu.mutation.City(); ok {
+		if err := vendorlocation.CityValidator(v); err != nil {
+			return &ValidationError{Name: "city", err: fmt.Errorf("ent: validator failed for field \"city\": %w", err)}
+		}
+	}
+	if v, ok := vlu.mutation.Address(); ok {
+		if err := vendorlocation.AddressValidator(v); err != nil {
+			return &ValidationError{Name: "address", err: fmt.Errorf("ent: validator failed for field \"address\": %w", err)}
+		}
+	}
+	return nil
 }
 
 func (vlu *VendorLocationUpdate) sqlSave(ctx context.Context) (n int, err error) {
@@ -282,12 +313,18 @@ func (vluo *VendorLocationUpdateOne) Save(ctx context.Context) (*VendorLocation,
 	)
 	vluo.defaults()
 	if len(vluo.hooks) == 0 {
+		if err = vluo.check(); err != nil {
+			return nil, err
+		}
 		node, err = vluo.sqlSave(ctx)
 	} else {
 		var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
 			mutation, ok := m.(*VendorLocationMutation)
 			if !ok {
 				return nil, fmt.Errorf("unexpected mutation type %T", m)
+			}
+			if err = vluo.check(); err != nil {
+				return nil, err
 			}
 			vluo.mutation = mutation
 			node, err = vluo.sqlSave(ctx)
@@ -335,6 +372,31 @@ func (vluo *VendorLocationUpdateOne) defaults() {
 		v := vendorlocation.UpdateDefaultUpdateAt()
 		vluo.mutation.SetUpdateAt(v)
 	}
+}
+
+// check runs all checks and user-defined validators on the builder.
+func (vluo *VendorLocationUpdateOne) check() error {
+	if v, ok := vluo.mutation.Country(); ok {
+		if err := vendorlocation.CountryValidator(v); err != nil {
+			return &ValidationError{Name: "country", err: fmt.Errorf("ent: validator failed for field \"country\": %w", err)}
+		}
+	}
+	if v, ok := vluo.mutation.Province(); ok {
+		if err := vendorlocation.ProvinceValidator(v); err != nil {
+			return &ValidationError{Name: "province", err: fmt.Errorf("ent: validator failed for field \"province\": %w", err)}
+		}
+	}
+	if v, ok := vluo.mutation.City(); ok {
+		if err := vendorlocation.CityValidator(v); err != nil {
+			return &ValidationError{Name: "city", err: fmt.Errorf("ent: validator failed for field \"city\": %w", err)}
+		}
+	}
+	if v, ok := vluo.mutation.Address(); ok {
+		if err := vendorlocation.AddressValidator(v); err != nil {
+			return &ValidationError{Name: "address", err: fmt.Errorf("ent: validator failed for field \"address\": %w", err)}
+		}
+	}
+	return nil
 }
 
 func (vluo *VendorLocationUpdateOne) sqlSave(ctx context.Context) (_node *VendorLocation, err error) {

@@ -22,8 +22,10 @@ func (TargetArea) Fields() []ent.Field {
 		field.UUID("id", uuid.UUID{}).
 			Default(uuid.New).
 			Unique(),
-		field.String("continent"),
-		field.String("country"),
+		field.String("continent").
+			MaxLen(32),
+		field.String("country").
+			MaxLen(64),
 		field.Time("create_at").
 			Default(time.Now).
 			Annotations(&entsql.Annotation{

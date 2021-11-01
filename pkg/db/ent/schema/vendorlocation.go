@@ -22,10 +22,14 @@ func (VendorLocation) Fields() []ent.Field {
 		field.UUID("id", uuid.UUID{}).
 			Default(uuid.New).
 			Unique(),
-		field.String("country"),
-		field.String("province"),
-		field.String("city"),
-		field.String("address"),
+		field.String("country").
+			MaxLen(64),
+		field.String("province").
+			MaxLen(64),
+		field.String("city").
+			MaxLen(64),
+		field.String("address").
+			MaxLen(256),
 		field.Time("create_at").
 			Default(time.Now).
 			Annotations(&entsql.Annotation{

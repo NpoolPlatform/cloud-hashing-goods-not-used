@@ -54,6 +54,14 @@ func init() {
 	goodinfo.DefaultID = goodinfoDescID.Default.(func() uuid.UUID)
 	targetareaFields := schema.TargetArea{}.Fields()
 	_ = targetareaFields
+	// targetareaDescContinent is the schema descriptor for continent field.
+	targetareaDescContinent := targetareaFields[1].Descriptor()
+	// targetarea.ContinentValidator is a validator for the "continent" field. It is called by the builders before save.
+	targetarea.ContinentValidator = targetareaDescContinent.Validators[0].(func(string) error)
+	// targetareaDescCountry is the schema descriptor for country field.
+	targetareaDescCountry := targetareaFields[2].Descriptor()
+	// targetarea.CountryValidator is a validator for the "country" field. It is called by the builders before save.
+	targetarea.CountryValidator = targetareaDescCountry.Validators[0].(func(string) error)
 	// targetareaDescCreateAt is the schema descriptor for create_at field.
 	targetareaDescCreateAt := targetareaFields[3].Descriptor()
 	// targetarea.DefaultCreateAt holds the default value on creation for the create_at field.
@@ -70,6 +78,22 @@ func init() {
 	targetarea.DefaultID = targetareaDescID.Default.(func() uuid.UUID)
 	vendorlocationFields := schema.VendorLocation{}.Fields()
 	_ = vendorlocationFields
+	// vendorlocationDescCountry is the schema descriptor for country field.
+	vendorlocationDescCountry := vendorlocationFields[1].Descriptor()
+	// vendorlocation.CountryValidator is a validator for the "country" field. It is called by the builders before save.
+	vendorlocation.CountryValidator = vendorlocationDescCountry.Validators[0].(func(string) error)
+	// vendorlocationDescProvince is the schema descriptor for province field.
+	vendorlocationDescProvince := vendorlocationFields[2].Descriptor()
+	// vendorlocation.ProvinceValidator is a validator for the "province" field. It is called by the builders before save.
+	vendorlocation.ProvinceValidator = vendorlocationDescProvince.Validators[0].(func(string) error)
+	// vendorlocationDescCity is the schema descriptor for city field.
+	vendorlocationDescCity := vendorlocationFields[3].Descriptor()
+	// vendorlocation.CityValidator is a validator for the "city" field. It is called by the builders before save.
+	vendorlocation.CityValidator = vendorlocationDescCity.Validators[0].(func(string) error)
+	// vendorlocationDescAddress is the schema descriptor for address field.
+	vendorlocationDescAddress := vendorlocationFields[4].Descriptor()
+	// vendorlocation.AddressValidator is a validator for the "address" field. It is called by the builders before save.
+	vendorlocation.AddressValidator = vendorlocationDescAddress.Validators[0].(func(string) error)
 	// vendorlocationDescCreateAt is the schema descriptor for create_at field.
 	vendorlocationDescCreateAt := vendorlocationFields[5].Descriptor()
 	// vendorlocation.DefaultCreateAt holds the default value on creation for the create_at field.
