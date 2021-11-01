@@ -14,6 +14,10 @@ func (s *Server) UpdateVendorLocation(ctx context.Context, in *npool.UpdateVendo
 	return nil, nil
 }
 
+func (s *Server) DeleteVendorLocation(ctx context.Context, in *npool.DeleteVendorLocationRequest) (*npool.DeleteVendorLocationResponse, error) {
+	return nil, nil
+}
+
 func (s *Server) GetVendorLocations(ctx context.Context, in *npool.GetVendorLocationsRequest) (*npool.GetVendorLocationsResponse, error) {
 	return &npool.GetVendorLocationsResponse{}, nil
 }

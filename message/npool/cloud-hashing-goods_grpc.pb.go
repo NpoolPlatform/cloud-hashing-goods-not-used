@@ -22,6 +22,7 @@ type CloudHashingGoodsClient interface {
 	Version(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*VersionResponse, error)
 	CreateVendorLocation(ctx context.Context, in *CreateVendorLocationRequest, opts ...grpc.CallOption) (*CreateVendorLocationResponse, error)
 	UpdateVendorLocation(ctx context.Context, in *UpdateVendorLocationRequest, opts ...grpc.CallOption) (*UpdateVendorLocationResponse, error)
+	DeleteVendorLocation(ctx context.Context, in *DeleteVendorLocationRequest, opts ...grpc.CallOption) (*DeleteVendorLocationResponse, error)
 	GetVendorLocations(ctx context.Context, in *GetVendorLocationsRequest, opts ...grpc.CallOption) (*GetVendorLocationsResponse, error)
 	CreateTargetArea(ctx context.Context, in *CreateTargetAreaRequest, opts ...grpc.CallOption) (*CreateTargetAreaResponse, error)
 	UpdateTargetArea(ctx context.Context, in *UpdateTargetAreaRequest, opts ...grpc.CallOption) (*UpdateTargetAreaResponse, error)
@@ -78,6 +79,15 @@ func (c *cloudHashingGoodsClient) CreateVendorLocation(ctx context.Context, in *
 func (c *cloudHashingGoodsClient) UpdateVendorLocation(ctx context.Context, in *UpdateVendorLocationRequest, opts ...grpc.CallOption) (*UpdateVendorLocationResponse, error) {
 	out := new(UpdateVendorLocationResponse)
 	err := c.cc.Invoke(ctx, "/cloud.hashing.goods.v1.CloudHashingGoods/UpdateVendorLocation", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *cloudHashingGoodsClient) DeleteVendorLocation(ctx context.Context, in *DeleteVendorLocationRequest, opts ...grpc.CallOption) (*DeleteVendorLocationResponse, error) {
+	out := new(DeleteVendorLocationResponse)
+	err := c.cc.Invoke(ctx, "/cloud.hashing.goods.v1.CloudHashingGoods/DeleteVendorLocation", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -298,6 +308,7 @@ type CloudHashingGoodsServer interface {
 	Version(context.Context, *emptypb.Empty) (*VersionResponse, error)
 	CreateVendorLocation(context.Context, *CreateVendorLocationRequest) (*CreateVendorLocationResponse, error)
 	UpdateVendorLocation(context.Context, *UpdateVendorLocationRequest) (*UpdateVendorLocationResponse, error)
+	DeleteVendorLocation(context.Context, *DeleteVendorLocationRequest) (*DeleteVendorLocationResponse, error)
 	GetVendorLocations(context.Context, *GetVendorLocationsRequest) (*GetVendorLocationsResponse, error)
 	CreateTargetArea(context.Context, *CreateTargetAreaRequest) (*CreateTargetAreaResponse, error)
 	UpdateTargetArea(context.Context, *UpdateTargetAreaRequest) (*UpdateTargetAreaResponse, error)
@@ -338,6 +349,9 @@ func (UnimplementedCloudHashingGoodsServer) CreateVendorLocation(context.Context
 }
 func (UnimplementedCloudHashingGoodsServer) UpdateVendorLocation(context.Context, *UpdateVendorLocationRequest) (*UpdateVendorLocationResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateVendorLocation not implemented")
+}
+func (UnimplementedCloudHashingGoodsServer) DeleteVendorLocation(context.Context, *DeleteVendorLocationRequest) (*DeleteVendorLocationResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteVendorLocation not implemented")
 }
 func (UnimplementedCloudHashingGoodsServer) GetVendorLocations(context.Context, *GetVendorLocationsRequest) (*GetVendorLocationsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetVendorLocations not implemented")
@@ -471,6 +485,24 @@ func _CloudHashingGoods_UpdateVendorLocation_Handler(srv interface{}, ctx contex
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(CloudHashingGoodsServer).UpdateVendorLocation(ctx, req.(*UpdateVendorLocationRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _CloudHashingGoods_DeleteVendorLocation_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteVendorLocationRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CloudHashingGoodsServer).DeleteVendorLocation(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cloud.hashing.goods.v1.CloudHashingGoods/DeleteVendorLocation",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CloudHashingGoodsServer).DeleteVendorLocation(ctx, req.(*DeleteVendorLocationRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -907,6 +939,10 @@ var CloudHashingGoods_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "UpdateVendorLocation",
 			Handler:    _CloudHashingGoods_UpdateVendorLocation_Handler,
+		},
+		{
+			MethodName: "DeleteVendorLocation",
+			Handler:    _CloudHashingGoods_DeleteVendorLocation_Handler,
 		},
 		{
 			MethodName: "GetVendorLocations",

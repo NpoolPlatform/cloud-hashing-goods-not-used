@@ -12,6 +12,7 @@ import (
 
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/goodinfo"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/targetarea"
+	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/vendorlocation"
 
 	"entgo.io/ent/dialect"
 	"entgo.io/ent/dialect/sql"
@@ -26,6 +27,8 @@ type Client struct {
 	GoodInfo *GoodInfoClient
 	// TargetArea is the client for interacting with the TargetArea builders.
 	TargetArea *TargetAreaClient
+	// VendorLocation is the client for interacting with the VendorLocation builders.
+	VendorLocation *VendorLocationClient
 }
 
 // NewClient creates a new client configured with the given options.
@@ -41,6 +44,7 @@ func (c *Client) init() {
 	c.Schema = migrate.NewSchema(c.driver)
 	c.GoodInfo = NewGoodInfoClient(c.config)
 	c.TargetArea = NewTargetAreaClient(c.config)
+	c.VendorLocation = NewVendorLocationClient(c.config)
 }
 
 // Open opens a database/sql.DB specified by the driver name and
@@ -72,10 +76,11 @@ func (c *Client) Tx(ctx context.Context) (*Tx, error) {
 	cfg := c.config
 	cfg.driver = tx
 	return &Tx{
-		ctx:        ctx,
-		config:     cfg,
-		GoodInfo:   NewGoodInfoClient(cfg),
-		TargetArea: NewTargetAreaClient(cfg),
+		ctx:            ctx,
+		config:         cfg,
+		GoodInfo:       NewGoodInfoClient(cfg),
+		TargetArea:     NewTargetAreaClient(cfg),
+		VendorLocation: NewVendorLocationClient(cfg),
 	}, nil
 }
 
@@ -93,9 +98,10 @@ func (c *Client) BeginTx(ctx context.Context, opts *sql.TxOptions) (*Tx, error) 
 	cfg := c.config
 	cfg.driver = &txDriver{tx: tx, drv: c.driver}
 	return &Tx{
-		config:     cfg,
-		GoodInfo:   NewGoodInfoClient(cfg),
-		TargetArea: NewTargetAreaClient(cfg),
+		config:         cfg,
+		GoodInfo:       NewGoodInfoClient(cfg),
+		TargetArea:     NewTargetAreaClient(cfg),
+		VendorLocation: NewVendorLocationClient(cfg),
 	}, nil
 }
 
@@ -127,6 +133,7 @@ func (c *Client) Close() error {
 func (c *Client) Use(hooks ...Hook) {
 	c.GoodInfo.Use(hooks...)
 	c.TargetArea.Use(hooks...)
+	c.VendorLocation.Use(hooks...)
 }
 
 // GoodInfoClient is a client for the GoodInfo schema.
@@ -307,4 +314,94 @@ func (c *TargetAreaClient) GetX(ctx context.Context, id uuid.UUID) *TargetArea {
 // Hooks returns the client hooks.
 func (c *TargetAreaClient) Hooks() []Hook {
 	return c.hooks.TargetArea
+}
+
+// VendorLocationClient is a client for the VendorLocation schema.
+type VendorLocationClient struct {
+	config
+}
+
+// NewVendorLocationClient returns a client for the VendorLocation from the given config.
+func NewVendorLocationClient(c config) *VendorLocationClient {
+	return &VendorLocationClient{config: c}
+}
+
+// Use adds a list of mutation hooks to the hooks stack.
+// A call to `Use(f, g, h)` equals to `vendorlocation.Hooks(f(g(h())))`.
+func (c *VendorLocationClient) Use(hooks ...Hook) {
+	c.hooks.VendorLocation = append(c.hooks.VendorLocation, hooks...)
+}
+
+// Create returns a create builder for VendorLocation.
+func (c *VendorLocationClient) Create() *VendorLocationCreate {
+	mutation := newVendorLocationMutation(c.config, OpCreate)
+	return &VendorLocationCreate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// CreateBulk returns a builder for creating a bulk of VendorLocation entities.
+func (c *VendorLocationClient) CreateBulk(builders ...*VendorLocationCreate) *VendorLocationCreateBulk {
+	return &VendorLocationCreateBulk{config: c.config, builders: builders}
+}
+
+// Update returns an update builder for VendorLocation.
+func (c *VendorLocationClient) Update() *VendorLocationUpdate {
+	mutation := newVendorLocationMutation(c.config, OpUpdate)
+	return &VendorLocationUpdate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOne returns an update builder for the given entity.
+func (c *VendorLocationClient) UpdateOne(vl *VendorLocation) *VendorLocationUpdateOne {
+	mutation := newVendorLocationMutation(c.config, OpUpdateOne, withVendorLocation(vl))
+	return &VendorLocationUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOneID returns an update builder for the given id.
+func (c *VendorLocationClient) UpdateOneID(id uuid.UUID) *VendorLocationUpdateOne {
+	mutation := newVendorLocationMutation(c.config, OpUpdateOne, withVendorLocationID(id))
+	return &VendorLocationUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// Delete returns a delete builder for VendorLocation.
+func (c *VendorLocationClient) Delete() *VendorLocationDelete {
+	mutation := newVendorLocationMutation(c.config, OpDelete)
+	return &VendorLocationDelete{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// DeleteOne returns a delete builder for the given entity.
+func (c *VendorLocationClient) DeleteOne(vl *VendorLocation) *VendorLocationDeleteOne {
+	return c.DeleteOneID(vl.ID)
+}
+
+// DeleteOneID returns a delete builder for the given id.
+func (c *VendorLocationClient) DeleteOneID(id uuid.UUID) *VendorLocationDeleteOne {
+	builder := c.Delete().Where(vendorlocation.ID(id))
+	builder.mutation.id = &id
+	builder.mutation.op = OpDeleteOne
+	return &VendorLocationDeleteOne{builder}
+}
+
+// Query returns a query builder for VendorLocation.
+func (c *VendorLocationClient) Query() *VendorLocationQuery {
+	return &VendorLocationQuery{
+		config: c.config,
+	}
+}
+
+// Get returns a VendorLocation entity by its id.
+func (c *VendorLocationClient) Get(ctx context.Context, id uuid.UUID) (*VendorLocation, error) {
+	return c.Query().Where(vendorlocation.ID(id)).Only(ctx)
+}
+
+// GetX is like Get, but panics if an error occurs.
+func (c *VendorLocationClient) GetX(ctx context.Context, id uuid.UUID) *VendorLocation {
+	obj, err := c.Get(ctx, id)
+	if err != nil {
+		panic(err)
+	}
+	return obj
+}
+
+// Hooks returns the client hooks.
+func (c *VendorLocationClient) Hooks() []Hook {
+	return c.hooks.VendorLocation
 }

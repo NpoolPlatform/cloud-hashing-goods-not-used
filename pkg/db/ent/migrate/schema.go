@@ -58,10 +58,34 @@ var (
 			},
 		},
 	}
+	// VendorLocationsColumns holds the columns for the "vendor_locations" table.
+	VendorLocationsColumns = []*schema.Column{
+		{Name: "id", Type: field.TypeUUID, Unique: true},
+		{Name: "country", Type: field.TypeString},
+		{Name: "province", Type: field.TypeString},
+		{Name: "city", Type: field.TypeString},
+		{Name: "address", Type: field.TypeString},
+		{Name: "create_at", Type: field.TypeTime, Default: "CURRENT_TIMESTAMP"},
+		{Name: "update_at", Type: field.TypeTime, Default: "CURRENT_TIMESTAMP"},
+	}
+	// VendorLocationsTable holds the schema information for the "vendor_locations" table.
+	VendorLocationsTable = &schema.Table{
+		Name:       "vendor_locations",
+		Columns:    VendorLocationsColumns,
+		PrimaryKey: []*schema.Column{VendorLocationsColumns[0]},
+		Indexes: []*schema.Index{
+			{
+				Name:    "vendorlocation_country_province_city_address",
+				Unique:  true,
+				Columns: []*schema.Column{VendorLocationsColumns[1], VendorLocationsColumns[2], VendorLocationsColumns[3], VendorLocationsColumns[4]},
+			},
+		},
+	}
 	// Tables holds all the tables in the schema.
 	Tables = []*schema.Table{
 		GoodInfosTable,
 		TargetAreasTable,
+		VendorLocationsTable,
 	}
 )
 

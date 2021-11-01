@@ -8,6 +8,7 @@ import (
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/goodinfo"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/schema"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/targetarea"
+	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/vendorlocation"
 	"github.com/google/uuid"
 )
 
@@ -67,4 +68,20 @@ func init() {
 	targetareaDescID := targetareaFields[0].Descriptor()
 	// targetarea.DefaultID holds the default value on creation for the id field.
 	targetarea.DefaultID = targetareaDescID.Default.(func() uuid.UUID)
+	vendorlocationFields := schema.VendorLocation{}.Fields()
+	_ = vendorlocationFields
+	// vendorlocationDescCreateAt is the schema descriptor for create_at field.
+	vendorlocationDescCreateAt := vendorlocationFields[5].Descriptor()
+	// vendorlocation.DefaultCreateAt holds the default value on creation for the create_at field.
+	vendorlocation.DefaultCreateAt = vendorlocationDescCreateAt.Default.(func() time.Time)
+	// vendorlocationDescUpdateAt is the schema descriptor for update_at field.
+	vendorlocationDescUpdateAt := vendorlocationFields[6].Descriptor()
+	// vendorlocation.DefaultUpdateAt holds the default value on creation for the update_at field.
+	vendorlocation.DefaultUpdateAt = vendorlocationDescUpdateAt.Default.(func() time.Time)
+	// vendorlocation.UpdateDefaultUpdateAt holds the default value on update for the update_at field.
+	vendorlocation.UpdateDefaultUpdateAt = vendorlocationDescUpdateAt.UpdateDefault.(func() time.Time)
+	// vendorlocationDescID is the schema descriptor for id field.
+	vendorlocationDescID := vendorlocationFields[0].Descriptor()
+	// vendorlocation.DefaultID holds the default value on creation for the id field.
+	vendorlocation.DefaultID = vendorlocationDescID.Default.(func() uuid.UUID)
 }

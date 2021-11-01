@@ -11,3 +11,6 @@ type GoodInfo func(*sql.Selector)
 
 // TargetArea is the predicate function for targetarea builders.
 type TargetArea func(*sql.Selector)
+
+// VendorLocation is the predicate function for vendorlocation builders.
+type VendorLocation func(*sql.Selector)

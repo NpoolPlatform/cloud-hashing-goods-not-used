@@ -27,6 +27,12 @@ service CloudHashingGoods {
             body: "*"
         };
     }
+    rpc DeleteVendorLocation(DeleteVendorLocationRequest) returns (DeleteVendorLocationResponse) {
+        option (google.api.http) = {
+            post: "/v1/delete/vendor-location"
+            body: "*"
+        };
+    }
     rpc GetVendorLocations(GetVendorLocationsRequest) returns (GetVendorLocationsResponse) {
         option (google.api.http) = {
             post: "/v1/get/vendor-locations"
@@ -205,6 +211,14 @@ message UpdateVendorLocationRequest {
 
 message UpdateVendorLocationResponse {
     VendorLocationInfo Info = 700;
+}
+
+message DeleteVendorLocationRequest {
+    string ID = 710;
+}
+
+message DeleteVendorLocationResponse {
+    VendorLocationInfo Info = 720;
 }
 
 message GetVendorLocationsRequest {
