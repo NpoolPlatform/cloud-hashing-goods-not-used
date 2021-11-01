@@ -80,6 +80,10 @@ func TestCRUD(t *testing.T) {
 		}
 	}
 
+	nano = time.Now().Unix() + 1
+	continent = fmt.Sprintf("AsiaPackageApiTest-%v", nano)
+	country = fmt.Sprintf("ChinaPackageApiTest-%v", nano)
+
 	resp, err = Create(context.Background(), &npool.CreateTargetAreaRequest{
 		Info: &npool.TargetAreaInfo{
 			Continent: continent,

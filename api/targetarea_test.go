@@ -118,11 +118,11 @@ func TestCreateTargetArea(t *testing.T) { //nolint
 		}
 	}
 
-	nano := time.Now().Unix()
+	nano = time.Now().Unix() + 1
 	continent = fmt.Sprintf("AsiaTargetAreaRestfulApiTest-%v", nano)
 	country = fmt.Sprintf("ChinaTargetAreaRestfulApiTest-%v", nano)
 
-	targetAreaInfo := npool.TargetAreaInfo{
+	targetAreaInfo = npool.TargetAreaInfo{
 		Continent: continent,
 		Country:   country,
 	}
