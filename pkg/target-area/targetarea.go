@@ -46,7 +46,6 @@ func Update(ctx context.Context, in *npool.UpdateTargetAreaRequest) (*npool.Upda
 		UpdateOneID(id).
 		SetContinent(in.GetInfo().GetContinent()).
 		SetCountry(in.GetInfo().GetCountry()).
-		SetUpdateAt(time.Now().UnixNano()).
 		Save(ctx)
 	if err != nil {
 		return nil, err
