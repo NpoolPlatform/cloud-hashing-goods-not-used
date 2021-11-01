@@ -31,6 +31,24 @@ func (s *Server) UpdateTargetArea(ctx context.Context, in *npool.UpdateTargetAre
 	return resp, nil
 }
 
+func (s *Server) DeleteTargetArea(ctx context.Context, in *npool.DeleteTargetAreaRequest) (*npool.DeleteTargetAreaResponse, error) {
+	resp, err := targetarea.Delete(ctx, in)
+	if err != nil {
+		logger.Sugar().Errorf("delete target area error: %w", err)
+		return &npool.DeleteTargetAreaResponse{}, status.Error(codes.Internal, "internal server error")
+	}
+	return resp, nil
+}
+
+func (s *Server) DeleteTargetAreaByContinentCountry(ctx context.Context, in *npool.DeleteTargetAreaByContinentCountryRequest) (*npool.DeleteTargetAreaByContinentCountryResponse, error) {
+	resp, err := targetarea.DeleteByContinentCountry(ctx, in)
+	if err != nil {
+		logger.Sugar().Errorf("delete target area by continent '%v' and country '%v' error: %w", in.GetContinent(), in.GetCountry(), err)
+		return &npool.DeleteTargetAreaByContinentCountryResponse{}, status.Error(codes.Internal, "internal server error")
+	}
+	return resp, nil
+}
+
 func (s *Server) GetTargetAreas(ctx context.Context, in *npool.GetTargetAreasRequest) (*npool.GetTargetAreasResponse, error) {
 	resp, err := targetarea.GetAll(ctx, in)
 	if err != nil {

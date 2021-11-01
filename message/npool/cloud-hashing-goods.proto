@@ -46,6 +46,18 @@ service CloudHashingGoods {
             body: "*"
         };
     }
+    rpc DeleteTargetArea(DeleteTargetAreaRequest) returns (DeleteTargetAreaResponse) {
+        option (google.api.http) = {
+            post: "/v1/delete/target-area"
+            body: "*"
+        };
+    }
+    rpc DeleteTargetAreaByContinentCountry(DeleteTargetAreaByContinentCountryRequest) returns (DeleteTargetAreaByContinentCountryResponse) {
+        option (google.api.http) = {
+            post: "/v1/delete/target-area/continent/country"
+            body: "*"
+        };
+    }
     rpc GetTargetAreas(GetTargetAreasRequest) returns (GetTargetAreasResponse) {
         option (google.api.http) = {
             post: "/v1/get/target-areas"
@@ -224,6 +236,23 @@ message UpdateTargetAreaRequest {
 
 message UpdateTargetAreaResponse {
     TargetAreaInfo Info = 1400;
+}
+
+message DeleteTargetAreaRequest {
+    string ID = 1410;
+}
+
+message DeleteTargetAreaResponse {
+    TargetAreaInfo Info = 1420;
+}
+
+message DeleteTargetAreaByContinentCountryRequest {
+    string Continent = 1430;
+    string Country = 1431;
+}
+
+message DeleteTargetAreaByContinentCountryResponse {
+    TargetAreaInfo Info = 1440;
 }
 
 message GetTargetAreasRequest {

@@ -13,14 +13,18 @@ import (
 	"github.com/NpoolPlatform/cloud-hashing-goods/message/npool"
 )
 
-func TestTargetAreaCRUD(t *testing.T) { //nolint
+func TestCreateTargetArea(t *testing.T) { //nolint
 	if runByGithubAction, err := strconv.ParseBool(os.Getenv("RUN_BY_GITHUB_ACTION")); err == nil && runByGithubAction {
 		return
 	}
 
+	continent := "AsiaRestfulApiTest"
+	country := "ChinaRestfulApiTest"
+	country1 := "ChinaaaaRestfulApiTest"
+
 	targetAreaInfo := npool.TargetAreaInfo{
-		Continent: "Asia",
-		Country:   "China",
+		Continent: continent,
+		Country:   country,
 	}
 	firstCreateInfo := npool.CreateTargetAreaResponse{}
 
@@ -48,18 +52,10 @@ func TestTargetAreaCRUD(t *testing.T) { //nolint
 			Info: &targetAreaInfo,
 		}).
 		Post("http://localhost:33759/v1/create/target-area")
-	if assert.Nil(t, err) {
-		assert.Equal(t, 200, resp.StatusCode())
-		info := npool.CreateTargetAreaResponse{}
-		err := json.Unmarshal(resp.Body(), &info)
-		if assert.Nil(t, err) {
-			assert.Equal(t, firstCreateInfo.Info.ID, info.Info.ID)
-			assert.Equal(t, info.Info.Continent, targetAreaInfo.Continent)
-			assert.Equal(t, info.Info.Country, targetAreaInfo.Country)
-		}
-	}
+	assert.Nil(t, err)
+	assert.NotEqual(t, 200, resp.StatusCode())
 
-	targetAreaInfo.Country = "Chinaa"
+	targetAreaInfo.Country = country1
 	targetAreaInfo.ID = firstCreateInfo.Info.ID
 	resp, err = cli.R().
 		SetHeader("Content-Type", "application/json").
@@ -80,7 +76,7 @@ func TestTargetAreaCRUD(t *testing.T) { //nolint
 		}
 	}
 
-	targetAreaInfo.Country = "China"
+	targetAreaInfo.Country = country
 	resp, err = cli.R().
 		SetHeader("Content-Type", "application/json").
 		SetBody(npool.CreateTargetAreaRequest{
@@ -94,6 +90,56 @@ func TestTargetAreaCRUD(t *testing.T) { //nolint
 		if assert.Nil(t, err) {
 			if assert.NotNil(t, info.Info) {
 				assert.Equal(t, firstCreateInfo.Info.ID, info.Info.ID)
+				assert.Equal(t, info.Info.Continent, targetAreaInfo.Continent)
+				assert.Equal(t, info.Info.Country, targetAreaInfo.Country)
+			}
+		}
+	}
+
+	resp, err = cli.R().
+		SetHeader("Content-Type", "application/json").
+		SetBody(npool.DeleteTargetAreaRequest{
+			ID: firstCreateInfo.Info.ID,
+		}).
+		Post("http://localhost:33759/v1/delete/target-area")
+	if assert.Nil(t, err) {
+		assert.Equal(t, 200, resp.StatusCode())
+		info := npool.DeleteTargetAreaResponse{}
+		err := json.Unmarshal(resp.Body(), &info)
+		if assert.Nil(t, err) {
+			if assert.NotNil(t, info.Info) {
+				assert.Equal(t, firstCreateInfo.Info.ID, info.Info.ID)
+				assert.Equal(t, info.Info.Continent, targetAreaInfo.Continent)
+				assert.Equal(t, info.Info.Country, targetAreaInfo.Country)
+			}
+		}
+	}
+
+	resp1, err := cli.R().
+		SetHeader("Content-Type", "application/json").
+		SetBody(npool.CreateTargetAreaRequest{
+			Info: &targetAreaInfo,
+		}).
+		Post("http://localhost:33759/v1/create/target-area")
+	assert.Nil(t, err)
+	info1 := npool.CreateTargetAreaResponse{}
+	err = json.Unmarshal(resp1.Body(), &info1)
+	assert.Nil(t, err)
+
+	resp, err = cli.R().
+		SetHeader("Content-Type", "application/json").
+		SetBody(npool.DeleteTargetAreaByContinentCountryRequest{
+			Continent: targetAreaInfo.Continent,
+			Country:   targetAreaInfo.Country,
+		}).
+		Post("http://localhost:33759/v1/delete/target-area/continent/country")
+	if assert.Nil(t, err) {
+		assert.Equal(t, 200, resp.StatusCode())
+		info := npool.DeleteTargetAreaResponse{}
+		err := json.Unmarshal(resp.Body(), &info)
+		if assert.Nil(t, err) {
+			if assert.NotNil(t, info.Info) {
+				assert.Equal(t, info1.Info.ID, info.Info.ID)
 				assert.Equal(t, info.Info.Continent, targetAreaInfo.Continent)
 				assert.Equal(t, info.Info.Country, targetAreaInfo.Country)
 			}

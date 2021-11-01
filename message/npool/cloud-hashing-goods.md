@@ -18,6 +18,10 @@
     - [CreateTargetAreaResponse](#cloud.hashing.goods.v1.CreateTargetAreaResponse)
     - [CreateVendorLocationRequest](#cloud.hashing.goods.v1.CreateVendorLocationRequest)
     - [CreateVendorLocationResponse](#cloud.hashing.goods.v1.CreateVendorLocationResponse)
+    - [DeleteTargetAreaByContinentCountryRequest](#cloud.hashing.goods.v1.DeleteTargetAreaByContinentCountryRequest)
+    - [DeleteTargetAreaByContinentCountryResponse](#cloud.hashing.goods.v1.DeleteTargetAreaByContinentCountryResponse)
+    - [DeleteTargetAreaRequest](#cloud.hashing.goods.v1.DeleteTargetAreaRequest)
+    - [DeleteTargetAreaResponse](#cloud.hashing.goods.v1.DeleteTargetAreaResponse)
     - [DeviceInfo](#cloud.hashing.goods.v1.DeviceInfo)
     - [GetAllGoodsRequest](#cloud.hashing.goods.v1.GetAllGoodsRequest)
     - [GetAllGoodsResponse](#cloud.hashing.goods.v1.GetAllGoodsResponse)
@@ -278,6 +282,67 @@
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
 | Info | [VendorLocationInfo](#cloud.hashing.goods.v1.VendorLocationInfo) |  |  |
+
+
+
+
+
+
+<a name="cloud.hashing.goods.v1.DeleteTargetAreaByContinentCountryRequest"></a>
+
+### DeleteTargetAreaByContinentCountryRequest
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| Continent | [string](#string) |  |  |
+| Country | [string](#string) |  |  |
+
+
+
+
+
+
+<a name="cloud.hashing.goods.v1.DeleteTargetAreaByContinentCountryResponse"></a>
+
+### DeleteTargetAreaByContinentCountryResponse
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| Info | [TargetAreaInfo](#cloud.hashing.goods.v1.TargetAreaInfo) |  |  |
+
+
+
+
+
+
+<a name="cloud.hashing.goods.v1.DeleteTargetAreaRequest"></a>
+
+### DeleteTargetAreaRequest
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| ID | [string](#string) |  |  |
+
+
+
+
+
+
+<a name="cloud.hashing.goods.v1.DeleteTargetAreaResponse"></a>
+
+### DeleteTargetAreaResponse
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| Info | [TargetAreaInfo](#cloud.hashing.goods.v1.TargetAreaInfo) |  |  |
 
 
 
@@ -907,6 +972,8 @@ Cloud Hashing Goods
 | GetVendorLocations | [GetVendorLocationsRequest](#cloud.hashing.goods.v1.GetVendorLocationsRequest) | [GetVendorLocationsResponse](#cloud.hashing.goods.v1.GetVendorLocationsResponse) |  |
 | CreateTargetArea | [CreateTargetAreaRequest](#cloud.hashing.goods.v1.CreateTargetAreaRequest) | [CreateTargetAreaResponse](#cloud.hashing.goods.v1.CreateTargetAreaResponse) |  |
 | UpdateTargetArea | [UpdateTargetAreaRequest](#cloud.hashing.goods.v1.UpdateTargetAreaRequest) | [UpdateTargetAreaResponse](#cloud.hashing.goods.v1.UpdateTargetAreaResponse) |  |
+| DeleteTargetArea | [DeleteTargetAreaRequest](#cloud.hashing.goods.v1.DeleteTargetAreaRequest) | [DeleteTargetAreaResponse](#cloud.hashing.goods.v1.DeleteTargetAreaResponse) |  |
+| DeleteTargetAreaByContinentCountry | [DeleteTargetAreaByContinentCountryRequest](#cloud.hashing.goods.v1.DeleteTargetAreaByContinentCountryRequest) | [DeleteTargetAreaByContinentCountryResponse](#cloud.hashing.goods.v1.DeleteTargetAreaByContinentCountryResponse) |  |
 | GetTargetAreas | [GetTargetAreasRequest](#cloud.hashing.goods.v1.GetTargetAreasRequest) | [GetTargetAreasResponse](#cloud.hashing.goods.v1.GetTargetAreasResponse) |  |
 | CreateDeviceInfo | [CreateDeviceInfoRequest](#cloud.hashing.goods.v1.CreateDeviceInfoRequest) | [CreateDeviceInfoResponse](#cloud.hashing.goods.v1.CreateDeviceInfoResponse) |  |
 | UpdateDeviceInfo | [UpdateDeviceInfoRequest](#cloud.hashing.goods.v1.UpdateDeviceInfoRequest) | [UpdateDeviceInfoResponse](#cloud.hashing.goods.v1.UpdateDeviceInfoResponse) |  |

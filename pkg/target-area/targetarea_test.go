@@ -44,19 +44,34 @@ func TestCRUD(t *testing.T) {
 	if runByGithubAction, err := strconv.ParseBool(os.Getenv("RUN_BY_GITHUB_ACTION")); err == nil && runByGithubAction {
 		return
 	}
+
+	continent := "AsiaPackageApiTest"
+	country := "ChinaPackageApiTest"
+	country1 := "ChinaPackageApiTest"
+
 	resp, err := Create(context.Background(), &npool.CreateTargetAreaRequest{
 		Info: &npool.TargetAreaInfo{
-			Continent: "Asia",
-			Country:   "China",
+			Continent: continent,
+			Country:   country,
 		},
 	})
 	assert.Nil(t, err)
 	if assert.NotNil(t, resp) {
 		if assert.NotNil(t, resp.Info) {
-			assert.Equal(t, resp.Info.Continent, "Asia")
-			assert.Equal(t, resp.Info.Country, "China")
+			assert.Equal(t, resp.Info.Continent, continent)
+			assert.Equal(t, resp.Info.Country, country)
 		}
 	}
+
+	_, err = Create(context.Background(), &npool.CreateTargetAreaRequest{
+		Info: &npool.TargetAreaInfo{
+			Continent: continent,
+			Country:   country,
+		},
+	})
+	assert.NotNil(t, err)
+
+	resp.Info.Country = country1
 
 	resp1, err := Update(context.Background(), &npool.UpdateTargetAreaRequest{
 		Info: resp.Info,
@@ -65,8 +80,39 @@ func TestCRUD(t *testing.T) {
 	if assert.NotNil(t, resp1) {
 		if assert.NotNil(t, resp1.Info) {
 			assert.Equal(t, resp1.Info.ID, resp.Info.ID)
-			assert.Equal(t, resp1.Info.Continent, "Asia")
-			assert.Equal(t, resp1.Info.Country, "China")
+			assert.Equal(t, resp1.Info.Continent, continent)
+			assert.Equal(t, resp1.Info.Country, country1)
+		}
+	}
+
+	resp2, err := Delete(context.Background(), &npool.DeleteTargetAreaRequest{
+		ID: resp1.Info.ID,
+	})
+	if assert.Nil(t, err) {
+		if assert.NotNil(t, resp2.Info) {
+			assert.Equal(t, resp2.Info.ID, resp1.Info.ID)
+			assert.Equal(t, resp2.Info.Continent, continent)
+			assert.Equal(t, resp2.Info.Country, country1)
+		}
+	}
+
+	resp, err = Create(context.Background(), &npool.CreateTargetAreaRequest{
+		Info: &npool.TargetAreaInfo{
+			Continent: continent,
+			Country:   country,
+		},
+	})
+	assert.Nil(t, err)
+
+	resp3, err := DeleteByContinentCountry(context.Background(), &npool.DeleteTargetAreaByContinentCountryRequest{
+		Continent: continent,
+		Country:   country,
+	})
+	if assert.Nil(t, err) {
+		if assert.NotNil(t, resp3.Info) {
+			assert.Equal(t, resp3.Info.ID, resp.Info.ID)
+			assert.Equal(t, resp3.Info.Continent, continent)
+			assert.Equal(t, resp3.Info.Country, country)
 		}
 	}
 }

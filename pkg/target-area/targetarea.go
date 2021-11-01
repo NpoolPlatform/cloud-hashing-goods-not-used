@@ -2,7 +2,6 @@ package targetarea
 
 import (
 	"context"
-	"database/sql"
 
 	"github.com/NpoolPlatform/cloud-hashing-goods/message/npool"
 
@@ -15,32 +14,6 @@ import (
 )
 
 func Create(ctx context.Context, in *npool.CreateTargetAreaRequest) (*npool.CreateTargetAreaResponse, error) {
-	info1, err := db.Client().
-		TargetArea.
-		Query().
-		Where(
-			targetarea.And(
-				targetarea.Continent(in.GetInfo().GetContinent()),
-				targetarea.Country(in.GetInfo().GetCountry()),
-			),
-		).
-		Limit(1).
-		All(ctx)
-
-	if err == nil {
-		if len(info1) > 0 {
-			return &npool.CreateTargetAreaResponse{
-				Info: &npool.TargetAreaInfo{
-					ID:        info1[0].ID.String(),
-					Continent: info1[0].Continent,
-					Country:   info1[0].Country,
-				},
-			}, nil
-		}
-	} else if err != sql.ErrNoRows {
-		return nil, err
-	}
-
 	info, err := db.Client().
 		TargetArea.
 		Create().
@@ -80,6 +53,75 @@ func Update(ctx context.Context, in *npool.UpdateTargetAreaRequest) (*npool.Upda
 			ID:        info.ID.String(),
 			Continent: info.Continent,
 			Country:   info.Country,
+		},
+	}, nil
+}
+
+func Delete(ctx context.Context, in *npool.DeleteTargetAreaRequest) (*npool.DeleteTargetAreaResponse, error) {
+	infos, err := db.Client().
+		TargetArea.
+		Query().
+		Where(
+			targetarea.Or(
+				targetarea.ID(uuid.MustParse(in.GetID())),
+			),
+		).
+		All(ctx)
+	if err != nil {
+		return nil, xerrors.Errorf("fail to query target area: %v", err)
+	}
+	if len(infos) == 0 {
+		return nil, xerrors.Errorf("invalid target area")
+	}
+
+	err = db.Client().
+		TargetArea.
+		DeleteOneID(uuid.MustParse(in.GetID())).
+		Exec(ctx)
+	if err != nil {
+		return nil, xerrors.Errorf("fail to delete target area: %v", err)
+	}
+
+	return &npool.DeleteTargetAreaResponse{
+		Info: &npool.TargetAreaInfo{
+			ID:        infos[0].ID.String(),
+			Continent: infos[0].Continent,
+			Country:   infos[0].Country,
+		},
+	}, nil
+}
+
+func DeleteByContinentCountry(ctx context.Context, in *npool.DeleteTargetAreaByContinentCountryRequest) (*npool.DeleteTargetAreaByContinentCountryResponse, error) {
+	infos, err := db.Client().
+		TargetArea.
+		Query().
+		Where(
+			targetarea.Or(
+				targetarea.Continent(in.GetContinent()),
+				targetarea.Country(in.GetCountry()),
+			),
+		).
+		All(ctx)
+	if err != nil {
+		return nil, xerrors.Errorf("fail to query target area: %v", err)
+	}
+	if len(infos) == 0 {
+		return nil, xerrors.Errorf("invalid target area")
+	}
+
+	err = db.Client().
+		TargetArea.
+		DeleteOne(infos[0]).
+		Exec(ctx)
+	if err != nil {
+		return nil, xerrors.Errorf("fail to delete target area: %v", err)
+	}
+
+	return &npool.DeleteTargetAreaByContinentCountryResponse{
+		Info: &npool.TargetAreaInfo{
+			ID:        infos[0].ID.String(),
+			Continent: infos[0].Continent,
+			Country:   infos[0].Country,
 		},
 	}, nil
 }
