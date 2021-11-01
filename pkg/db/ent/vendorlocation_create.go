@@ -76,6 +76,20 @@ func (vlc *VendorLocationCreate) SetNillableUpdateAt(t *time.Time) *VendorLocati
 	return vlc
 }
 
+// SetDeleteAt sets the "delete_at" field.
+func (vlc *VendorLocationCreate) SetDeleteAt(t time.Time) *VendorLocationCreate {
+	vlc.mutation.SetDeleteAt(t)
+	return vlc
+}
+
+// SetNillableDeleteAt sets the "delete_at" field if the given value is not nil.
+func (vlc *VendorLocationCreate) SetNillableDeleteAt(t *time.Time) *VendorLocationCreate {
+	if t != nil {
+		vlc.SetDeleteAt(*t)
+	}
+	return vlc
+}
+
 // SetID sets the "id" field.
 func (vlc *VendorLocationCreate) SetID(u uuid.UUID) *VendorLocationCreate {
 	vlc.mutation.SetID(u)
@@ -288,6 +302,14 @@ func (vlc *VendorLocationCreate) createSpec() (*VendorLocation, *sqlgraph.Create
 		})
 		_node.UpdateAt = value
 	}
+	if value, ok := vlc.mutation.DeleteAt(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeTime,
+			Value:  value,
+			Column: vendorlocation.FieldDeleteAt,
+		})
+		_node.DeleteAt = value
+	}
 	return _node, _spec
 }
 
@@ -411,6 +433,24 @@ func (u *VendorLocationUpsert) SetUpdateAt(v time.Time) *VendorLocationUpsert {
 // UpdateUpdateAt sets the "update_at" field to the value that was provided on create.
 func (u *VendorLocationUpsert) UpdateUpdateAt() *VendorLocationUpsert {
 	u.SetExcluded(vendorlocation.FieldUpdateAt)
+	return u
+}
+
+// SetDeleteAt sets the "delete_at" field.
+func (u *VendorLocationUpsert) SetDeleteAt(v time.Time) *VendorLocationUpsert {
+	u.Set(vendorlocation.FieldDeleteAt, v)
+	return u
+}
+
+// UpdateDeleteAt sets the "delete_at" field to the value that was provided on create.
+func (u *VendorLocationUpsert) UpdateDeleteAt() *VendorLocationUpsert {
+	u.SetExcluded(vendorlocation.FieldDeleteAt)
+	return u
+}
+
+// ClearDeleteAt clears the value of the "delete_at" field.
+func (u *VendorLocationUpsert) ClearDeleteAt() *VendorLocationUpsert {
+	u.SetNull(vendorlocation.FieldDeleteAt)
 	return u
 }
 
@@ -545,6 +585,27 @@ func (u *VendorLocationUpsertOne) SetUpdateAt(v time.Time) *VendorLocationUpsert
 func (u *VendorLocationUpsertOne) UpdateUpdateAt() *VendorLocationUpsertOne {
 	return u.Update(func(s *VendorLocationUpsert) {
 		s.UpdateUpdateAt()
+	})
+}
+
+// SetDeleteAt sets the "delete_at" field.
+func (u *VendorLocationUpsertOne) SetDeleteAt(v time.Time) *VendorLocationUpsertOne {
+	return u.Update(func(s *VendorLocationUpsert) {
+		s.SetDeleteAt(v)
+	})
+}
+
+// UpdateDeleteAt sets the "delete_at" field to the value that was provided on create.
+func (u *VendorLocationUpsertOne) UpdateDeleteAt() *VendorLocationUpsertOne {
+	return u.Update(func(s *VendorLocationUpsert) {
+		s.UpdateDeleteAt()
+	})
+}
+
+// ClearDeleteAt clears the value of the "delete_at" field.
+func (u *VendorLocationUpsertOne) ClearDeleteAt() *VendorLocationUpsertOne {
+	return u.Update(func(s *VendorLocationUpsert) {
+		s.ClearDeleteAt()
 	})
 }
 
@@ -845,6 +906,27 @@ func (u *VendorLocationUpsertBulk) SetUpdateAt(v time.Time) *VendorLocationUpser
 func (u *VendorLocationUpsertBulk) UpdateUpdateAt() *VendorLocationUpsertBulk {
 	return u.Update(func(s *VendorLocationUpsert) {
 		s.UpdateUpdateAt()
+	})
+}
+
+// SetDeleteAt sets the "delete_at" field.
+func (u *VendorLocationUpsertBulk) SetDeleteAt(v time.Time) *VendorLocationUpsertBulk {
+	return u.Update(func(s *VendorLocationUpsert) {
+		s.SetDeleteAt(v)
+	})
+}
+
+// UpdateDeleteAt sets the "delete_at" field to the value that was provided on create.
+func (u *VendorLocationUpsertBulk) UpdateDeleteAt() *VendorLocationUpsertBulk {
+	return u.Update(func(s *VendorLocationUpsert) {
+		s.UpdateDeleteAt()
+	})
+}
+
+// ClearDeleteAt clears the value of the "delete_at" field.
+func (u *VendorLocationUpsertBulk) ClearDeleteAt() *VendorLocationUpsertBulk {
+	return u.Update(func(s *VendorLocationUpsert) {
+		s.ClearDeleteAt()
 	})
 }
 

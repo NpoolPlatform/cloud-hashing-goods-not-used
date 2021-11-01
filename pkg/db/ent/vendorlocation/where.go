@@ -135,6 +135,13 @@ func UpdateAt(v time.Time) predicate.VendorLocation {
 	})
 }
 
+// DeleteAt applies equality check predicate on the "delete_at" field. It's identical to DeleteAtEQ.
+func DeleteAt(v time.Time) predicate.VendorLocation {
+	return predicate.VendorLocation(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldDeleteAt), v))
+	})
+}
+
 // CountryEQ applies the EQ predicate on the "country" field.
 func CountryEQ(v string) predicate.VendorLocation {
 	return predicate.VendorLocation(func(s *sql.Selector) {
@@ -728,6 +735,96 @@ func UpdateAtLT(v time.Time) predicate.VendorLocation {
 func UpdateAtLTE(v time.Time) predicate.VendorLocation {
 	return predicate.VendorLocation(func(s *sql.Selector) {
 		s.Where(sql.LTE(s.C(FieldUpdateAt), v))
+	})
+}
+
+// DeleteAtEQ applies the EQ predicate on the "delete_at" field.
+func DeleteAtEQ(v time.Time) predicate.VendorLocation {
+	return predicate.VendorLocation(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldDeleteAt), v))
+	})
+}
+
+// DeleteAtNEQ applies the NEQ predicate on the "delete_at" field.
+func DeleteAtNEQ(v time.Time) predicate.VendorLocation {
+	return predicate.VendorLocation(func(s *sql.Selector) {
+		s.Where(sql.NEQ(s.C(FieldDeleteAt), v))
+	})
+}
+
+// DeleteAtIn applies the In predicate on the "delete_at" field.
+func DeleteAtIn(vs ...time.Time) predicate.VendorLocation {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.VendorLocation(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.In(s.C(FieldDeleteAt), v...))
+	})
+}
+
+// DeleteAtNotIn applies the NotIn predicate on the "delete_at" field.
+func DeleteAtNotIn(vs ...time.Time) predicate.VendorLocation {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.VendorLocation(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.NotIn(s.C(FieldDeleteAt), v...))
+	})
+}
+
+// DeleteAtGT applies the GT predicate on the "delete_at" field.
+func DeleteAtGT(v time.Time) predicate.VendorLocation {
+	return predicate.VendorLocation(func(s *sql.Selector) {
+		s.Where(sql.GT(s.C(FieldDeleteAt), v))
+	})
+}
+
+// DeleteAtGTE applies the GTE predicate on the "delete_at" field.
+func DeleteAtGTE(v time.Time) predicate.VendorLocation {
+	return predicate.VendorLocation(func(s *sql.Selector) {
+		s.Where(sql.GTE(s.C(FieldDeleteAt), v))
+	})
+}
+
+// DeleteAtLT applies the LT predicate on the "delete_at" field.
+func DeleteAtLT(v time.Time) predicate.VendorLocation {
+	return predicate.VendorLocation(func(s *sql.Selector) {
+		s.Where(sql.LT(s.C(FieldDeleteAt), v))
+	})
+}
+
+// DeleteAtLTE applies the LTE predicate on the "delete_at" field.
+func DeleteAtLTE(v time.Time) predicate.VendorLocation {
+	return predicate.VendorLocation(func(s *sql.Selector) {
+		s.Where(sql.LTE(s.C(FieldDeleteAt), v))
+	})
+}
+
+// DeleteAtIsNil applies the IsNil predicate on the "delete_at" field.
+func DeleteAtIsNil() predicate.VendorLocation {
+	return predicate.VendorLocation(func(s *sql.Selector) {
+		s.Where(sql.IsNull(s.C(FieldDeleteAt)))
+	})
+}
+
+// DeleteAtNotNil applies the NotNil predicate on the "delete_at" field.
+func DeleteAtNotNil() predicate.VendorLocation {
+	return predicate.VendorLocation(func(s *sql.Selector) {
+		s.Where(sql.NotNull(s.C(FieldDeleteAt)))
 	})
 }
 

@@ -23,11 +23,11 @@ func (VendorLocation) Fields() []ent.Field {
 			Default(uuid.New).
 			Unique(),
 		field.String("country").
-			MaxLen(64),
+			MaxLen(128),
 		field.String("province").
-			MaxLen(64),
+			MaxLen(128),
 		field.String("city").
-			MaxLen(64),
+			MaxLen(128),
 		field.String("address").
 			MaxLen(256),
 		field.Time("create_at").
@@ -41,6 +41,8 @@ func (VendorLocation) Fields() []ent.Field {
 			Annotations(&entsql.Annotation{
 				Default: "CURRENT_TIMESTAMP",
 			}),
+		field.Time("delete_at").
+			Optional(),
 	}
 }
 

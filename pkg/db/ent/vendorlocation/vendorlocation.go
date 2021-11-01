@@ -25,6 +25,8 @@ const (
 	FieldCreateAt = "create_at"
 	// FieldUpdateAt holds the string denoting the update_at field in the database.
 	FieldUpdateAt = "update_at"
+	// FieldDeleteAt holds the string denoting the delete_at field in the database.
+	FieldDeleteAt = "delete_at"
 	// Table holds the table name of the vendorlocation in the database.
 	Table = "vendor_locations"
 )
@@ -38,6 +40,7 @@ var Columns = []string{
 	FieldAddress,
 	FieldCreateAt,
 	FieldUpdateAt,
+	FieldDeleteAt,
 }
 
 // ValidColumn reports if the column name is valid (part of the table columns).

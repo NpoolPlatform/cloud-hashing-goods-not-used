@@ -2,9 +2,11 @@ package api
 
 import (
 	"encoding/json"
+	"fmt"
 	"os"
 	"strconv"
 	"testing"
+	"time"
 
 	"github.com/go-resty/resty/v2"
 	"github.com/google/uuid"
@@ -18,9 +20,10 @@ func TestCreateTargetArea(t *testing.T) { //nolint
 		return
 	}
 
-	continent := "AsiaTargetAreaRestfulApiTest"
-	country := "ChinaTargetAreaRestfulApiTest"
-	country1 := "ChinaaaaTargetAreaRestfulApiTest"
+	nano := time.Now().Unix()
+	continent := fmt.Sprintf("AsiaTargetAreaRestfulApiTest-%v", nano)
+	country := fmt.Sprintf("ChinaTargetAreaRestfulApiTest-%v", nano)
+	country1 := fmt.Sprintf("ChinaaaaTargetAreaRestfulApiTest-%v", nano)
 
 	targetAreaInfo := npool.TargetAreaInfo{
 		Continent: continent,
@@ -59,7 +62,7 @@ func TestCreateTargetArea(t *testing.T) { //nolint
 	targetAreaInfo.ID = firstCreateInfo.Info.ID
 	resp, err = cli.R().
 		SetHeader("Content-Type", "application/json").
-		SetBody(npool.CreateTargetAreaRequest{
+		SetBody(npool.UpdateTargetAreaRequest{
 			Info: &targetAreaInfo,
 		}).
 		Post("http://localhost:33759/v1/update/target-area")
@@ -113,6 +116,15 @@ func TestCreateTargetArea(t *testing.T) { //nolint
 				assert.Equal(t, info.Info.Country, targetAreaInfo.Country)
 			}
 		}
+	}
+
+	nano := time.Now().Unix()
+	continent = fmt.Sprintf("AsiaTargetAreaRestfulApiTest-%v", nano)
+	country = fmt.Sprintf("ChinaTargetAreaRestfulApiTest-%v", nano)
+
+	targetAreaInfo := npool.TargetAreaInfo{
+		Continent: continent,
+		Country:   country,
 	}
 
 	resp1, err := cli.R().

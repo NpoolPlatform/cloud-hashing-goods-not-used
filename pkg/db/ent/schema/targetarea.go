@@ -23,9 +23,9 @@ func (TargetArea) Fields() []ent.Field {
 			Default(uuid.New).
 			Unique(),
 		field.String("continent").
-			MaxLen(32),
+			MaxLen(128),
 		field.String("country").
-			MaxLen(64),
+			MaxLen(128),
 		field.Time("create_at").
 			Default(time.Now).
 			Annotations(&entsql.Annotation{
@@ -37,6 +37,8 @@ func (TargetArea) Fields() []ent.Field {
 			Annotations(&entsql.Annotation{
 				Default: "CURRENT_TIMESTAMP",
 			}),
+		field.Time("delete_at").
+			Optional(),
 	}
 }
 

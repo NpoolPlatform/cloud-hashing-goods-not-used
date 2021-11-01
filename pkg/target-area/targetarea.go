@@ -2,6 +2,8 @@ package targetarea
 
 import (
 	"context"
+	"fmt"
+	"time"
 
 	"github.com/NpoolPlatform/cloud-hashing-goods/message/npool"
 
@@ -58,35 +60,20 @@ func Update(ctx context.Context, in *npool.UpdateTargetAreaRequest) (*npool.Upda
 }
 
 func Delete(ctx context.Context, in *npool.DeleteTargetAreaRequest) (*npool.DeleteTargetAreaResponse, error) {
-	infos, err := db.Client().
+	info, err := db.Client().
 		TargetArea.
-		Query().
-		Where(
-			targetarea.Or(
-				targetarea.ID(uuid.MustParse(in.GetID())),
-			),
-		).
-		All(ctx)
-	if err != nil {
-		return nil, xerrors.Errorf("fail to query target area: %v", err)
-	}
-	if len(infos) == 0 {
-		return nil, xerrors.Errorf("invalid target area")
-	}
-
-	err = db.Client().
-		TargetArea.
-		DeleteOneID(uuid.MustParse(in.GetID())).
-		Exec(ctx)
+		UpdateOneID(uuid.MustParse(in.GetID())).
+		SetDeleteAt(time.Now()).
+		Save(ctx)
 	if err != nil {
 		return nil, xerrors.Errorf("fail to delete target area: %v", err)
 	}
 
 	return &npool.DeleteTargetAreaResponse{
 		Info: &npool.TargetAreaInfo{
-			ID:        infos[0].ID.String(),
-			Continent: infos[0].Continent,
-			Country:   infos[0].Country,
+			ID:        info.ID.String(),
+			Continent: info.Continent,
+			Country:   info.Country,
 		},
 	}, nil
 }
@@ -109,20 +96,14 @@ func DeleteByContinentCountry(ctx context.Context, in *npool.DeleteTargetAreaByC
 		return nil, xerrors.Errorf("invalid target area")
 	}
 
-	err = db.Client().
-		TargetArea.
-		DeleteOne(infos[0]).
-		Exec(ctx)
+	info, err := Delete(ctx, &npool.DeleteTargetAreaRequest{
+		ID: infos[0].ID.String(),
+	})
 	if err != nil {
 		return nil, xerrors.Errorf("fail to delete target area: %v", err)
 	}
-
 	return &npool.DeleteTargetAreaByContinentCountryResponse{
-		Info: &npool.TargetAreaInfo{
-			ID:        infos[0].ID.String(),
-			Continent: infos[0].Continent,
-			Country:   infos[0].Country,
-		},
+		Info: info.Info,
 	}, nil
 }
 
@@ -130,10 +111,17 @@ func GetAll(ctx context.Context, in *npool.GetTargetAreasRequest) (*npool.GetTar
 	infos, err := db.Client().
 		TargetArea.
 		Query().
+		Where(
+			targetarea.Not(
+				targetarea.DeleteAt(time.Time{}),
+			),
+		).
 		All(ctx)
 	if err != nil {
 		return nil, err
 	}
+
+	fmt.Println(infos)
 
 	areas := []*npool.TargetAreaInfo{}
 	for _, info := range infos {

@@ -40,10 +40,11 @@ var (
 	// TargetAreasColumns holds the columns for the "target_areas" table.
 	TargetAreasColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeUUID, Unique: true},
-		{Name: "continent", Type: field.TypeString, Size: 32},
-		{Name: "country", Type: field.TypeString, Size: 64},
+		{Name: "continent", Type: field.TypeString, Size: 128},
+		{Name: "country", Type: field.TypeString, Size: 128},
 		{Name: "create_at", Type: field.TypeTime, Default: "CURRENT_TIMESTAMP"},
 		{Name: "update_at", Type: field.TypeTime, Default: "CURRENT_TIMESTAMP"},
+		{Name: "delete_at", Type: field.TypeTime, Nullable: true},
 	}
 	// TargetAreasTable holds the schema information for the "target_areas" table.
 	TargetAreasTable = &schema.Table{
@@ -61,12 +62,13 @@ var (
 	// VendorLocationsColumns holds the columns for the "vendor_locations" table.
 	VendorLocationsColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeUUID, Unique: true},
-		{Name: "country", Type: field.TypeString, Size: 64},
-		{Name: "province", Type: field.TypeString, Size: 64},
-		{Name: "city", Type: field.TypeString, Size: 64},
+		{Name: "country", Type: field.TypeString, Size: 128},
+		{Name: "province", Type: field.TypeString, Size: 128},
+		{Name: "city", Type: field.TypeString, Size: 128},
 		{Name: "address", Type: field.TypeString, Size: 256},
 		{Name: "create_at", Type: field.TypeTime, Default: "CURRENT_TIMESTAMP"},
 		{Name: "update_at", Type: field.TypeTime, Default: "CURRENT_TIMESTAMP"},
+		{Name: "delete_at", Type: field.TypeTime, Nullable: true},
 	}
 	// VendorLocationsTable holds the schema information for the "vendor_locations" table.
 	VendorLocationsTable = &schema.Table{

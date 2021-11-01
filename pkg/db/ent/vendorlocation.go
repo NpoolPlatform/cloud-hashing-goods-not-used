@@ -29,6 +29,8 @@ type VendorLocation struct {
 	CreateAt time.Time `json:"create_at,omitempty"`
 	// UpdateAt holds the value of the "update_at" field.
 	UpdateAt time.Time `json:"update_at,omitempty"`
+	// DeleteAt holds the value of the "delete_at" field.
+	DeleteAt time.Time `json:"delete_at,omitempty"`
 }
 
 // scanValues returns the types for scanning values from sql.Rows.
@@ -38,7 +40,7 @@ func (*VendorLocation) scanValues(columns []string) ([]interface{}, error) {
 		switch columns[i] {
 		case vendorlocation.FieldCountry, vendorlocation.FieldProvince, vendorlocation.FieldCity, vendorlocation.FieldAddress:
 			values[i] = new(sql.NullString)
-		case vendorlocation.FieldCreateAt, vendorlocation.FieldUpdateAt:
+		case vendorlocation.FieldCreateAt, vendorlocation.FieldUpdateAt, vendorlocation.FieldDeleteAt:
 			values[i] = new(sql.NullTime)
 		case vendorlocation.FieldID:
 			values[i] = new(uuid.UUID)
@@ -99,6 +101,12 @@ func (vl *VendorLocation) assignValues(columns []string, values []interface{}) e
 			} else if value.Valid {
 				vl.UpdateAt = value.Time
 			}
+		case vendorlocation.FieldDeleteAt:
+			if value, ok := values[i].(*sql.NullTime); !ok {
+				return fmt.Errorf("unexpected type %T for field delete_at", values[i])
+			} else if value.Valid {
+				vl.DeleteAt = value.Time
+			}
 		}
 	}
 	return nil
@@ -139,6 +147,8 @@ func (vl *VendorLocation) String() string {
 	builder.WriteString(vl.CreateAt.Format(time.ANSIC))
 	builder.WriteString(", update_at=")
 	builder.WriteString(vl.UpdateAt.Format(time.ANSIC))
+	builder.WriteString(", delete_at=")
+	builder.WriteString(vl.DeleteAt.Format(time.ANSIC))
 	builder.WriteByte(')')
 	return builder.String()
 }

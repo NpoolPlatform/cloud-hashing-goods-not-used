@@ -6,6 +6,7 @@ import (
 	"os"
 	"strconv"
 	"testing"
+	"time"
 
 	"github.com/NpoolPlatform/cloud-hashing-goods/message/npool"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/test-init" //nolint
@@ -27,9 +28,10 @@ func TestCRUD(t *testing.T) {
 		return
 	}
 
-	continent := "AsiaPackageApiTest"
-	country := "ChinaPackageApiTest"
-	country1 := "ChinaPackageApiTest"
+	nano := time.Now().UnixNano()
+	continent := fmt.Sprintf("AsiaPackageApiTest-%v", nano)
+	country := fmt.Sprintf("ChinaPackageApiTest-%v", nano)
+	country1 := fmt.Sprintf("ChinaPackageApiTest-%v", nano)
 
 	resp, err := Create(context.Background(), &npool.CreateTargetAreaRequest{
 		Info: &npool.TargetAreaInfo{

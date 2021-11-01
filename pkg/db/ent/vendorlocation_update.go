@@ -71,6 +71,26 @@ func (vlu *VendorLocationUpdate) SetUpdateAt(t time.Time) *VendorLocationUpdate 
 	return vlu
 }
 
+// SetDeleteAt sets the "delete_at" field.
+func (vlu *VendorLocationUpdate) SetDeleteAt(t time.Time) *VendorLocationUpdate {
+	vlu.mutation.SetDeleteAt(t)
+	return vlu
+}
+
+// SetNillableDeleteAt sets the "delete_at" field if the given value is not nil.
+func (vlu *VendorLocationUpdate) SetNillableDeleteAt(t *time.Time) *VendorLocationUpdate {
+	if t != nil {
+		vlu.SetDeleteAt(*t)
+	}
+	return vlu
+}
+
+// ClearDeleteAt clears the value of the "delete_at" field.
+func (vlu *VendorLocationUpdate) ClearDeleteAt() *VendorLocationUpdate {
+	vlu.mutation.ClearDeleteAt()
+	return vlu
+}
+
 // Mutation returns the VendorLocationMutation object of the builder.
 func (vlu *VendorLocationUpdate) Mutation() *VendorLocationMutation {
 	return vlu.mutation
@@ -230,6 +250,19 @@ func (vlu *VendorLocationUpdate) sqlSave(ctx context.Context) (n int, err error)
 			Column: vendorlocation.FieldUpdateAt,
 		})
 	}
+	if value, ok := vlu.mutation.DeleteAt(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeTime,
+			Value:  value,
+			Column: vendorlocation.FieldDeleteAt,
+		})
+	}
+	if vlu.mutation.DeleteAtCleared() {
+		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
+			Type:   field.TypeTime,
+			Column: vendorlocation.FieldDeleteAt,
+		})
+	}
 	if n, err = sqlgraph.UpdateNodes(ctx, vlu.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
 			err = &NotFoundError{vendorlocation.Label}
@@ -290,6 +323,26 @@ func (vluo *VendorLocationUpdateOne) SetNillableCreateAt(t *time.Time) *VendorLo
 // SetUpdateAt sets the "update_at" field.
 func (vluo *VendorLocationUpdateOne) SetUpdateAt(t time.Time) *VendorLocationUpdateOne {
 	vluo.mutation.SetUpdateAt(t)
+	return vluo
+}
+
+// SetDeleteAt sets the "delete_at" field.
+func (vluo *VendorLocationUpdateOne) SetDeleteAt(t time.Time) *VendorLocationUpdateOne {
+	vluo.mutation.SetDeleteAt(t)
+	return vluo
+}
+
+// SetNillableDeleteAt sets the "delete_at" field if the given value is not nil.
+func (vluo *VendorLocationUpdateOne) SetNillableDeleteAt(t *time.Time) *VendorLocationUpdateOne {
+	if t != nil {
+		vluo.SetDeleteAt(*t)
+	}
+	return vluo
+}
+
+// ClearDeleteAt clears the value of the "delete_at" field.
+func (vluo *VendorLocationUpdateOne) ClearDeleteAt() *VendorLocationUpdateOne {
+	vluo.mutation.ClearDeleteAt()
 	return vluo
 }
 
@@ -474,6 +527,19 @@ func (vluo *VendorLocationUpdateOne) sqlSave(ctx context.Context) (_node *Vendor
 			Type:   field.TypeTime,
 			Value:  value,
 			Column: vendorlocation.FieldUpdateAt,
+		})
+	}
+	if value, ok := vluo.mutation.DeleteAt(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeTime,
+			Value:  value,
+			Column: vendorlocation.FieldDeleteAt,
+		})
+	}
+	if vluo.mutation.DeleteAtCleared() {
+		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
+			Type:   field.TypeTime,
+			Column: vendorlocation.FieldDeleteAt,
 		})
 	}
 	_node = &VendorLocation{config: vluo.config}

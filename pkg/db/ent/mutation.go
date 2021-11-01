@@ -1512,6 +1512,7 @@ type TargetAreaMutation struct {
 	country       *string
 	create_at     *time.Time
 	update_at     *time.Time
+	delete_at     *time.Time
 	clearedFields map[string]struct{}
 	done          bool
 	oldValue      func(context.Context) (*TargetArea, error)
@@ -1747,6 +1748,55 @@ func (m *TargetAreaMutation) ResetUpdateAt() {
 	m.update_at = nil
 }
 
+// SetDeleteAt sets the "delete_at" field.
+func (m *TargetAreaMutation) SetDeleteAt(t time.Time) {
+	m.delete_at = &t
+}
+
+// DeleteAt returns the value of the "delete_at" field in the mutation.
+func (m *TargetAreaMutation) DeleteAt() (r time.Time, exists bool) {
+	v := m.delete_at
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldDeleteAt returns the old "delete_at" field's value of the TargetArea entity.
+// If the TargetArea object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *TargetAreaMutation) OldDeleteAt(ctx context.Context) (v time.Time, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, fmt.Errorf("OldDeleteAt is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, fmt.Errorf("OldDeleteAt requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldDeleteAt: %w", err)
+	}
+	return oldValue.DeleteAt, nil
+}
+
+// ClearDeleteAt clears the value of the "delete_at" field.
+func (m *TargetAreaMutation) ClearDeleteAt() {
+	m.delete_at = nil
+	m.clearedFields[targetarea.FieldDeleteAt] = struct{}{}
+}
+
+// DeleteAtCleared returns if the "delete_at" field was cleared in this mutation.
+func (m *TargetAreaMutation) DeleteAtCleared() bool {
+	_, ok := m.clearedFields[targetarea.FieldDeleteAt]
+	return ok
+}
+
+// ResetDeleteAt resets all changes to the "delete_at" field.
+func (m *TargetAreaMutation) ResetDeleteAt() {
+	m.delete_at = nil
+	delete(m.clearedFields, targetarea.FieldDeleteAt)
+}
+
 // Where appends a list predicates to the TargetAreaMutation builder.
 func (m *TargetAreaMutation) Where(ps ...predicate.TargetArea) {
 	m.predicates = append(m.predicates, ps...)
@@ -1766,7 +1816,7 @@ func (m *TargetAreaMutation) Type() string {
 // order to get all numeric fields that were incremented/decremented, call
 // AddedFields().
 func (m *TargetAreaMutation) Fields() []string {
-	fields := make([]string, 0, 4)
+	fields := make([]string, 0, 5)
 	if m.continent != nil {
 		fields = append(fields, targetarea.FieldContinent)
 	}
@@ -1778,6 +1828,9 @@ func (m *TargetAreaMutation) Fields() []string {
 	}
 	if m.update_at != nil {
 		fields = append(fields, targetarea.FieldUpdateAt)
+	}
+	if m.delete_at != nil {
+		fields = append(fields, targetarea.FieldDeleteAt)
 	}
 	return fields
 }
@@ -1795,6 +1848,8 @@ func (m *TargetAreaMutation) Field(name string) (ent.Value, bool) {
 		return m.CreateAt()
 	case targetarea.FieldUpdateAt:
 		return m.UpdateAt()
+	case targetarea.FieldDeleteAt:
+		return m.DeleteAt()
 	}
 	return nil, false
 }
@@ -1812,6 +1867,8 @@ func (m *TargetAreaMutation) OldField(ctx context.Context, name string) (ent.Val
 		return m.OldCreateAt(ctx)
 	case targetarea.FieldUpdateAt:
 		return m.OldUpdateAt(ctx)
+	case targetarea.FieldDeleteAt:
+		return m.OldDeleteAt(ctx)
 	}
 	return nil, fmt.Errorf("unknown TargetArea field %s", name)
 }
@@ -1849,6 +1906,13 @@ func (m *TargetAreaMutation) SetField(name string, value ent.Value) error {
 		}
 		m.SetUpdateAt(v)
 		return nil
+	case targetarea.FieldDeleteAt:
+		v, ok := value.(time.Time)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetDeleteAt(v)
+		return nil
 	}
 	return fmt.Errorf("unknown TargetArea field %s", name)
 }
@@ -1878,7 +1942,11 @@ func (m *TargetAreaMutation) AddField(name string, value ent.Value) error {
 // ClearedFields returns all nullable fields that were cleared during this
 // mutation.
 func (m *TargetAreaMutation) ClearedFields() []string {
-	return nil
+	var fields []string
+	if m.FieldCleared(targetarea.FieldDeleteAt) {
+		fields = append(fields, targetarea.FieldDeleteAt)
+	}
+	return fields
 }
 
 // FieldCleared returns a boolean indicating if a field with the given name was
@@ -1891,6 +1959,11 @@ func (m *TargetAreaMutation) FieldCleared(name string) bool {
 // ClearField clears the value of the field with the given name. It returns an
 // error if the field is not defined in the schema.
 func (m *TargetAreaMutation) ClearField(name string) error {
+	switch name {
+	case targetarea.FieldDeleteAt:
+		m.ClearDeleteAt()
+		return nil
+	}
 	return fmt.Errorf("unknown TargetArea nullable field %s", name)
 }
 
@@ -1909,6 +1982,9 @@ func (m *TargetAreaMutation) ResetField(name string) error {
 		return nil
 	case targetarea.FieldUpdateAt:
 		m.ResetUpdateAt()
+		return nil
+	case targetarea.FieldDeleteAt:
+		m.ResetDeleteAt()
 		return nil
 	}
 	return fmt.Errorf("unknown TargetArea field %s", name)
@@ -1974,6 +2050,7 @@ type VendorLocationMutation struct {
 	address       *string
 	create_at     *time.Time
 	update_at     *time.Time
+	delete_at     *time.Time
 	clearedFields map[string]struct{}
 	done          bool
 	oldValue      func(context.Context) (*VendorLocation, error)
@@ -2281,6 +2358,55 @@ func (m *VendorLocationMutation) ResetUpdateAt() {
 	m.update_at = nil
 }
 
+// SetDeleteAt sets the "delete_at" field.
+func (m *VendorLocationMutation) SetDeleteAt(t time.Time) {
+	m.delete_at = &t
+}
+
+// DeleteAt returns the value of the "delete_at" field in the mutation.
+func (m *VendorLocationMutation) DeleteAt() (r time.Time, exists bool) {
+	v := m.delete_at
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldDeleteAt returns the old "delete_at" field's value of the VendorLocation entity.
+// If the VendorLocation object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *VendorLocationMutation) OldDeleteAt(ctx context.Context) (v time.Time, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, fmt.Errorf("OldDeleteAt is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, fmt.Errorf("OldDeleteAt requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldDeleteAt: %w", err)
+	}
+	return oldValue.DeleteAt, nil
+}
+
+// ClearDeleteAt clears the value of the "delete_at" field.
+func (m *VendorLocationMutation) ClearDeleteAt() {
+	m.delete_at = nil
+	m.clearedFields[vendorlocation.FieldDeleteAt] = struct{}{}
+}
+
+// DeleteAtCleared returns if the "delete_at" field was cleared in this mutation.
+func (m *VendorLocationMutation) DeleteAtCleared() bool {
+	_, ok := m.clearedFields[vendorlocation.FieldDeleteAt]
+	return ok
+}
+
+// ResetDeleteAt resets all changes to the "delete_at" field.
+func (m *VendorLocationMutation) ResetDeleteAt() {
+	m.delete_at = nil
+	delete(m.clearedFields, vendorlocation.FieldDeleteAt)
+}
+
 // Where appends a list predicates to the VendorLocationMutation builder.
 func (m *VendorLocationMutation) Where(ps ...predicate.VendorLocation) {
 	m.predicates = append(m.predicates, ps...)
@@ -2300,7 +2426,7 @@ func (m *VendorLocationMutation) Type() string {
 // order to get all numeric fields that were incremented/decremented, call
 // AddedFields().
 func (m *VendorLocationMutation) Fields() []string {
-	fields := make([]string, 0, 6)
+	fields := make([]string, 0, 7)
 	if m.country != nil {
 		fields = append(fields, vendorlocation.FieldCountry)
 	}
@@ -2318,6 +2444,9 @@ func (m *VendorLocationMutation) Fields() []string {
 	}
 	if m.update_at != nil {
 		fields = append(fields, vendorlocation.FieldUpdateAt)
+	}
+	if m.delete_at != nil {
+		fields = append(fields, vendorlocation.FieldDeleteAt)
 	}
 	return fields
 }
@@ -2339,6 +2468,8 @@ func (m *VendorLocationMutation) Field(name string) (ent.Value, bool) {
 		return m.CreateAt()
 	case vendorlocation.FieldUpdateAt:
 		return m.UpdateAt()
+	case vendorlocation.FieldDeleteAt:
+		return m.DeleteAt()
 	}
 	return nil, false
 }
@@ -2360,6 +2491,8 @@ func (m *VendorLocationMutation) OldField(ctx context.Context, name string) (ent
 		return m.OldCreateAt(ctx)
 	case vendorlocation.FieldUpdateAt:
 		return m.OldUpdateAt(ctx)
+	case vendorlocation.FieldDeleteAt:
+		return m.OldDeleteAt(ctx)
 	}
 	return nil, fmt.Errorf("unknown VendorLocation field %s", name)
 }
@@ -2411,6 +2544,13 @@ func (m *VendorLocationMutation) SetField(name string, value ent.Value) error {
 		}
 		m.SetUpdateAt(v)
 		return nil
+	case vendorlocation.FieldDeleteAt:
+		v, ok := value.(time.Time)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetDeleteAt(v)
+		return nil
 	}
 	return fmt.Errorf("unknown VendorLocation field %s", name)
 }
@@ -2440,7 +2580,11 @@ func (m *VendorLocationMutation) AddField(name string, value ent.Value) error {
 // ClearedFields returns all nullable fields that were cleared during this
 // mutation.
 func (m *VendorLocationMutation) ClearedFields() []string {
-	return nil
+	var fields []string
+	if m.FieldCleared(vendorlocation.FieldDeleteAt) {
+		fields = append(fields, vendorlocation.FieldDeleteAt)
+	}
+	return fields
 }
 
 // FieldCleared returns a boolean indicating if a field with the given name was
@@ -2453,6 +2597,11 @@ func (m *VendorLocationMutation) FieldCleared(name string) bool {
 // ClearField clears the value of the field with the given name. It returns an
 // error if the field is not defined in the schema.
 func (m *VendorLocationMutation) ClearField(name string) error {
+	switch name {
+	case vendorlocation.FieldDeleteAt:
+		m.ClearDeleteAt()
+		return nil
+	}
 	return fmt.Errorf("unknown VendorLocation nullable field %s", name)
 }
 
@@ -2477,6 +2626,9 @@ func (m *VendorLocationMutation) ResetField(name string) error {
 		return nil
 	case vendorlocation.FieldUpdateAt:
 		m.ResetUpdateAt()
+		return nil
+	case vendorlocation.FieldDeleteAt:
+		m.ResetDeleteAt()
 		return nil
 	}
 	return fmt.Errorf("unknown VendorLocation field %s", name)

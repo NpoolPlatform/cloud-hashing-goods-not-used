@@ -59,6 +59,26 @@ func (tau *TargetAreaUpdate) SetUpdateAt(t time.Time) *TargetAreaUpdate {
 	return tau
 }
 
+// SetDeleteAt sets the "delete_at" field.
+func (tau *TargetAreaUpdate) SetDeleteAt(t time.Time) *TargetAreaUpdate {
+	tau.mutation.SetDeleteAt(t)
+	return tau
+}
+
+// SetNillableDeleteAt sets the "delete_at" field if the given value is not nil.
+func (tau *TargetAreaUpdate) SetNillableDeleteAt(t *time.Time) *TargetAreaUpdate {
+	if t != nil {
+		tau.SetDeleteAt(*t)
+	}
+	return tau
+}
+
+// ClearDeleteAt clears the value of the "delete_at" field.
+func (tau *TargetAreaUpdate) ClearDeleteAt() *TargetAreaUpdate {
+	tau.mutation.ClearDeleteAt()
+	return tau
+}
+
 // Mutation returns the TargetAreaMutation object of the builder.
 func (tau *TargetAreaUpdate) Mutation() *TargetAreaMutation {
 	return tau.mutation
@@ -194,6 +214,19 @@ func (tau *TargetAreaUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			Column: targetarea.FieldUpdateAt,
 		})
 	}
+	if value, ok := tau.mutation.DeleteAt(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeTime,
+			Value:  value,
+			Column: targetarea.FieldDeleteAt,
+		})
+	}
+	if tau.mutation.DeleteAtCleared() {
+		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
+			Type:   field.TypeTime,
+			Column: targetarea.FieldDeleteAt,
+		})
+	}
 	if n, err = sqlgraph.UpdateNodes(ctx, tau.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
 			err = &NotFoundError{targetarea.Label}
@@ -242,6 +275,26 @@ func (tauo *TargetAreaUpdateOne) SetNillableCreateAt(t *time.Time) *TargetAreaUp
 // SetUpdateAt sets the "update_at" field.
 func (tauo *TargetAreaUpdateOne) SetUpdateAt(t time.Time) *TargetAreaUpdateOne {
 	tauo.mutation.SetUpdateAt(t)
+	return tauo
+}
+
+// SetDeleteAt sets the "delete_at" field.
+func (tauo *TargetAreaUpdateOne) SetDeleteAt(t time.Time) *TargetAreaUpdateOne {
+	tauo.mutation.SetDeleteAt(t)
+	return tauo
+}
+
+// SetNillableDeleteAt sets the "delete_at" field if the given value is not nil.
+func (tauo *TargetAreaUpdateOne) SetNillableDeleteAt(t *time.Time) *TargetAreaUpdateOne {
+	if t != nil {
+		tauo.SetDeleteAt(*t)
+	}
+	return tauo
+}
+
+// ClearDeleteAt clears the value of the "delete_at" field.
+func (tauo *TargetAreaUpdateOne) ClearDeleteAt() *TargetAreaUpdateOne {
+	tauo.mutation.ClearDeleteAt()
 	return tauo
 }
 
@@ -402,6 +455,19 @@ func (tauo *TargetAreaUpdateOne) sqlSave(ctx context.Context) (_node *TargetArea
 			Type:   field.TypeTime,
 			Value:  value,
 			Column: targetarea.FieldUpdateAt,
+		})
+	}
+	if value, ok := tauo.mutation.DeleteAt(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeTime,
+			Value:  value,
+			Column: targetarea.FieldDeleteAt,
+		})
+	}
+	if tauo.mutation.DeleteAtCleared() {
+		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
+			Type:   field.TypeTime,
+			Column: targetarea.FieldDeleteAt,
 		})
 	}
 	_node = &TargetArea{config: tauo.config}
