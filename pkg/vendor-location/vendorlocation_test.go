@@ -24,6 +24,10 @@ func init() {
 }
 
 func TestVendorLocationCRUD(t *testing.T) { //nolint
+	if runByGithubAction, err := strconv.ParseBool(os.Getenv("RUN_BY_GITHUB_ACTION")); err == nil && runByGithubAction {
+		return
+	}
+
 	nano := time.Now().UnixNano()
 	country := fmt.Sprintf("ChinaVendorLocationPackageTest-%v", nano)
 	province := fmt.Sprintf("ShanghaiVendorLocationPackageTest-%v", nano)
