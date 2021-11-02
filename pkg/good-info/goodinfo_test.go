@@ -84,6 +84,30 @@ func TestGoodInfoCRUD(t *testing.T) { //nolint
 		assert.Equal(t, resp.Info.SupportCoinTypeIDs, supportCoinTypeIDs)
 		assert.Equal(t, resp.Info.Total, total)
 	}
+
+	goodInfo.BenefitType = "platform"
+	goodInfo.ID = resp.Info.ID
+
+	resp1, err := Update(context.Background(), &npool.UpdateGoodRequest{
+		Info: &goodInfo,
+	})
+	if assert.Nil(t, err) {
+		assert.Equal(t, resp1.Info.ID, resp.Info.ID)
+		assert.Equal(t, resp1.Info.DeviceInfoID, deviceInfoID)
+		assert.Equal(t, resp1.Info.GasPrice, gasPrice)
+		assert.Equal(t, resp1.Info.SeparateGasFee, separateGasFee)
+		assert.Equal(t, resp1.Info.UnitPower, unitPower)
+		assert.Equal(t, resp1.Info.DurationDays, duration)
+		assert.Equal(t, resp1.Info.CoinInfoID, coinInfoID)
+		assert.Equal(t, resp1.Info.Actuals, actuals)
+		assert.Equal(t, resp1.Info.InheritFromGoodID, inheritFromGoodID)
+		assert.Equal(t, resp1.Info.VendorLocationID, vendorLocationID)
+		assert.Equal(t, resp1.Info.Price, price)
+		assert.Equal(t, resp1.Info.BenefitType, goodInfo.BenefitType)
+		assert.Equal(t, resp1.Info.Classic, classic)
+		assert.Equal(t, resp1.Info.SupportCoinTypeIDs, supportCoinTypeIDs)
+		assert.Equal(t, resp1.Info.Total, total)
+	}
 }
 
 func TestGetAll(t *testing.T) {

@@ -106,6 +106,49 @@ func Create(ctx context.Context, in *npool.CreateGoodRequest) (*npool.CreateGood
 	}, nil
 }
 
+func Update(ctx context.Context, in *npool.UpdateGoodRequest) (*npool.UpdateGoodResponse, error) {
+	goodID, err := uuid.Parse(in.GetInfo().GetID())
+	if err != nil {
+		return nil, xerrors.Errorf("invalid good id: %v", err)
+	}
+
+	if err := validateRequestGoodInfo(in.GetInfo()); err != nil {
+		return nil, xerrors.Errorf("invalid request good info: %v", err)
+	}
+
+	ids := []uuid.UUID{}
+	for _, id := range in.GetInfo().GetSupportCoinTypeIDs() {
+		ids = append(ids, uuid.MustParse(id))
+	}
+
+	info, err := db.Client().
+		GoodInfo.
+		UpdateOneID(goodID).
+		SetDeviceInfoID(uuid.MustParse(in.GetInfo().GetDeviceInfoID())).
+		SetGasPrice(in.GetInfo().GetGasPrice()).
+		SetSeparateGasFee(in.GetInfo().GetSeparateGasFee()).
+		SetUnitPower(in.GetInfo().GetUnitPower()).
+		SetDurationDays(in.GetInfo().GetDurationDays()).
+		SetCoinInfoID(uuid.MustParse(in.GetInfo().GetCoinInfoID())).
+		SetActuals(in.GetInfo().GetActuals()).
+		SetDeliveryAt(in.GetInfo().GetDeliveryAt()).
+		SetInheritFromGoodID(uuid.MustParse(in.GetInfo().GetInheritFromGoodID())).
+		SetVendorLocationID(uuid.MustParse(in.GetInfo().GetVendorLocationID())).
+		SetPrice(in.GetInfo().GetPrice()).
+		SetBenefitType(goodinfo.BenefitType(in.GetInfo().GetBenefitType())).
+		SetClassic(in.GetInfo().GetClassic()).
+		SetSupportCoinTypeIds(ids).
+		SetTotal(in.GetInfo().GetTotal()).
+		Save(ctx)
+	if err != nil {
+		return nil, xerrors.Errorf("fail to update good info: %v", err)
+	}
+
+	return &npool.UpdateGoodResponse{
+		Info: dbRowToInfo(info),
+	}, nil
+}
+
 func GetAll(ctx context.Context, in *npool.GetGoodsRequest) (*npool.GetGoodsResponse, error) {
 	return nil, nil
 }
