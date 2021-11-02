@@ -38,6 +38,8 @@ type CloudHashingGoodsClient interface {
 	GetDeviceInfos(ctx context.Context, in *GetDeviceInfosRequest, opts ...grpc.CallOption) (*GetDeviceInfosResponse, error)
 	CreateGood(ctx context.Context, in *CreateGoodRequest, opts ...grpc.CallOption) (*CreateGoodResponse, error)
 	UpdateGood(ctx context.Context, in *UpdateGoodRequest, opts ...grpc.CallOption) (*UpdateGoodResponse, error)
+	GetGood(ctx context.Context, in *GetGoodRequest, opts ...grpc.CallOption) (*GetGoodResponse, error)
+	DeleteGood(ctx context.Context, in *DeleteGoodRequest, opts ...grpc.CallOption) (*DeleteGoodResponse, error)
 	// Can only accessed by APP administrator and platform administrator
 	GetAllGoods(ctx context.Context, in *GetAllGoodsRequest, opts ...grpc.CallOption) (*GetAllGoodsResponse, error)
 	// Accessed by APP user
@@ -233,6 +235,24 @@ func (c *cloudHashingGoodsClient) UpdateGood(ctx context.Context, in *UpdateGood
 	return out, nil
 }
 
+func (c *cloudHashingGoodsClient) GetGood(ctx context.Context, in *GetGoodRequest, opts ...grpc.CallOption) (*GetGoodResponse, error) {
+	out := new(GetGoodResponse)
+	err := c.cc.Invoke(ctx, "/cloud.hashing.goods.v1.CloudHashingGoods/GetGood", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *cloudHashingGoodsClient) DeleteGood(ctx context.Context, in *DeleteGoodRequest, opts ...grpc.CallOption) (*DeleteGoodResponse, error) {
+	out := new(DeleteGoodResponse)
+	err := c.cc.Invoke(ctx, "/cloud.hashing.goods.v1.CloudHashingGoods/DeleteGood", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *cloudHashingGoodsClient) GetAllGoods(ctx context.Context, in *GetAllGoodsRequest, opts ...grpc.CallOption) (*GetAllGoodsResponse, error) {
 	out := new(GetAllGoodsResponse)
 	err := c.cc.Invoke(ctx, "/cloud.hashing.goods.v1.CloudHashingGoods/GetAllGoods", in, out, opts...)
@@ -364,6 +384,8 @@ type CloudHashingGoodsServer interface {
 	GetDeviceInfos(context.Context, *GetDeviceInfosRequest) (*GetDeviceInfosResponse, error)
 	CreateGood(context.Context, *CreateGoodRequest) (*CreateGoodResponse, error)
 	UpdateGood(context.Context, *UpdateGoodRequest) (*UpdateGoodResponse, error)
+	GetGood(context.Context, *GetGoodRequest) (*GetGoodResponse, error)
+	DeleteGood(context.Context, *DeleteGoodRequest) (*DeleteGoodResponse, error)
 	// Can only accessed by APP administrator and platform administrator
 	GetAllGoods(context.Context, *GetAllGoodsRequest) (*GetAllGoodsResponse, error)
 	// Accessed by APP user
@@ -441,6 +463,12 @@ func (UnimplementedCloudHashingGoodsServer) CreateGood(context.Context, *CreateG
 }
 func (UnimplementedCloudHashingGoodsServer) UpdateGood(context.Context, *UpdateGoodRequest) (*UpdateGoodResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateGood not implemented")
+}
+func (UnimplementedCloudHashingGoodsServer) GetGood(context.Context, *GetGoodRequest) (*GetGoodResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetGood not implemented")
+}
+func (UnimplementedCloudHashingGoodsServer) DeleteGood(context.Context, *DeleteGoodRequest) (*DeleteGoodResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteGood not implemented")
 }
 func (UnimplementedCloudHashingGoodsServer) GetAllGoods(context.Context, *GetAllGoodsRequest) (*GetAllGoodsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetAllGoods not implemented")
@@ -833,6 +861,42 @@ func _CloudHashingGoods_UpdateGood_Handler(srv interface{}, ctx context.Context,
 	return interceptor(ctx, in, info, handler)
 }
 
+func _CloudHashingGoods_GetGood_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetGoodRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CloudHashingGoodsServer).GetGood(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cloud.hashing.goods.v1.CloudHashingGoods/GetGood",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CloudHashingGoodsServer).GetGood(ctx, req.(*GetGoodRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _CloudHashingGoods_DeleteGood_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteGoodRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CloudHashingGoodsServer).DeleteGood(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cloud.hashing.goods.v1.CloudHashingGoods/DeleteGood",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CloudHashingGoodsServer).DeleteGood(ctx, req.(*DeleteGoodRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _CloudHashingGoods_GetAllGoods_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(GetAllGoodsRequest)
 	if err := dec(in); err != nil {
@@ -1131,6 +1195,14 @@ var CloudHashingGoods_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "UpdateGood",
 			Handler:    _CloudHashingGoods_UpdateGood_Handler,
+		},
+		{
+			MethodName: "GetGood",
+			Handler:    _CloudHashingGoods_GetGood_Handler,
+		},
+		{
+			MethodName: "DeleteGood",
+			Handler:    _CloudHashingGoods_DeleteGood_Handler,
 		},
 		{
 			MethodName: "GetAllGoods",

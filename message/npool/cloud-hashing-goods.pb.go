@@ -2237,6 +2237,194 @@ func (x *UpdateGoodResponse) GetInfo() *GoodInfo {
 	return nil
 }
 
+type GetGoodRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	ID string `protobuf:"bytes,2810,opt,name=ID,proto3" json:"ID,omitempty"`
+}
+
+func (x *GetGoodRequest) Reset() {
+	*x = GetGoodRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_npool_cloud_hashing_goods_proto_msgTypes[42]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *GetGoodRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetGoodRequest) ProtoMessage() {}
+
+func (x *GetGoodRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_npool_cloud_hashing_goods_proto_msgTypes[42]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetGoodRequest.ProtoReflect.Descriptor instead.
+func (*GetGoodRequest) Descriptor() ([]byte, []int) {
+	return file_npool_cloud_hashing_goods_proto_rawDescGZIP(), []int{42}
+}
+
+func (x *GetGoodRequest) GetID() string {
+	if x != nil {
+		return x.ID
+	}
+	return ""
+}
+
+type GetGoodResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Info *GoodInfo `protobuf:"bytes,2820,opt,name=Info,proto3" json:"Info,omitempty"`
+}
+
+func (x *GetGoodResponse) Reset() {
+	*x = GetGoodResponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_npool_cloud_hashing_goods_proto_msgTypes[43]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *GetGoodResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetGoodResponse) ProtoMessage() {}
+
+func (x *GetGoodResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_npool_cloud_hashing_goods_proto_msgTypes[43]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetGoodResponse.ProtoReflect.Descriptor instead.
+func (*GetGoodResponse) Descriptor() ([]byte, []int) {
+	return file_npool_cloud_hashing_goods_proto_rawDescGZIP(), []int{43}
+}
+
+func (x *GetGoodResponse) GetInfo() *GoodInfo {
+	if x != nil {
+		return x.Info
+	}
+	return nil
+}
+
+type DeleteGoodRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	ID string `protobuf:"bytes,2830,opt,name=ID,proto3" json:"ID,omitempty"`
+}
+
+func (x *DeleteGoodRequest) Reset() {
+	*x = DeleteGoodRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_npool_cloud_hashing_goods_proto_msgTypes[44]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *DeleteGoodRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DeleteGoodRequest) ProtoMessage() {}
+
+func (x *DeleteGoodRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_npool_cloud_hashing_goods_proto_msgTypes[44]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DeleteGoodRequest.ProtoReflect.Descriptor instead.
+func (*DeleteGoodRequest) Descriptor() ([]byte, []int) {
+	return file_npool_cloud_hashing_goods_proto_rawDescGZIP(), []int{44}
+}
+
+func (x *DeleteGoodRequest) GetID() string {
+	if x != nil {
+		return x.ID
+	}
+	return ""
+}
+
+type DeleteGoodResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Info *GoodInfo `protobuf:"bytes,2840,opt,name=Info,proto3" json:"Info,omitempty"`
+}
+
+func (x *DeleteGoodResponse) Reset() {
+	*x = DeleteGoodResponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_npool_cloud_hashing_goods_proto_msgTypes[45]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *DeleteGoodResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DeleteGoodResponse) ProtoMessage() {}
+
+func (x *DeleteGoodResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_npool_cloud_hashing_goods_proto_msgTypes[45]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DeleteGoodResponse.ProtoReflect.Descriptor instead.
+func (*DeleteGoodResponse) Descriptor() ([]byte, []int) {
+	return file_npool_cloud_hashing_goods_proto_rawDescGZIP(), []int{45}
+}
+
+func (x *DeleteGoodResponse) GetInfo() *GoodInfo {
+	if x != nil {
+		return x.Info
+	}
+	return nil
+}
+
 type GetAllGoodsRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -2249,7 +2437,7 @@ type GetAllGoodsRequest struct {
 func (x *GetAllGoodsRequest) Reset() {
 	*x = GetAllGoodsRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_npool_cloud_hashing_goods_proto_msgTypes[42]
+		mi := &file_npool_cloud_hashing_goods_proto_msgTypes[46]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2262,7 +2450,7 @@ func (x *GetAllGoodsRequest) String() string {
 func (*GetAllGoodsRequest) ProtoMessage() {}
 
 func (x *GetAllGoodsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_npool_cloud_hashing_goods_proto_msgTypes[42]
+	mi := &file_npool_cloud_hashing_goods_proto_msgTypes[46]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2275,7 +2463,7 @@ func (x *GetAllGoodsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetAllGoodsRequest.ProtoReflect.Descriptor instead.
 func (*GetAllGoodsRequest) Descriptor() ([]byte, []int) {
-	return file_npool_cloud_hashing_goods_proto_rawDescGZIP(), []int{42}
+	return file_npool_cloud_hashing_goods_proto_rawDescGZIP(), []int{46}
 }
 
 func (x *GetAllGoodsRequest) GetAppID() string {
@@ -2304,7 +2492,7 @@ type GoodAuthInfo struct {
 func (x *GoodAuthInfo) Reset() {
 	*x = GoodAuthInfo{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_npool_cloud_hashing_goods_proto_msgTypes[43]
+		mi := &file_npool_cloud_hashing_goods_proto_msgTypes[47]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2317,7 +2505,7 @@ func (x *GoodAuthInfo) String() string {
 func (*GoodAuthInfo) ProtoMessage() {}
 
 func (x *GoodAuthInfo) ProtoReflect() protoreflect.Message {
-	mi := &file_npool_cloud_hashing_goods_proto_msgTypes[43]
+	mi := &file_npool_cloud_hashing_goods_proto_msgTypes[47]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2330,7 +2518,7 @@ func (x *GoodAuthInfo) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GoodAuthInfo.ProtoReflect.Descriptor instead.
 func (*GoodAuthInfo) Descriptor() ([]byte, []int) {
-	return file_npool_cloud_hashing_goods_proto_rawDescGZIP(), []int{43}
+	return file_npool_cloud_hashing_goods_proto_rawDescGZIP(), []int{47}
 }
 
 func (x *GoodAuthInfo) GetInfo() *GoodInfo {
@@ -2359,7 +2547,7 @@ type GetAllGoodsResponse struct {
 func (x *GetAllGoodsResponse) Reset() {
 	*x = GetAllGoodsResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_npool_cloud_hashing_goods_proto_msgTypes[44]
+		mi := &file_npool_cloud_hashing_goods_proto_msgTypes[48]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2372,7 +2560,7 @@ func (x *GetAllGoodsResponse) String() string {
 func (*GetAllGoodsResponse) ProtoMessage() {}
 
 func (x *GetAllGoodsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_npool_cloud_hashing_goods_proto_msgTypes[44]
+	mi := &file_npool_cloud_hashing_goods_proto_msgTypes[48]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2385,7 +2573,7 @@ func (x *GetAllGoodsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetAllGoodsResponse.ProtoReflect.Descriptor instead.
 func (*GetAllGoodsResponse) Descriptor() ([]byte, []int) {
-	return file_npool_cloud_hashing_goods_proto_rawDescGZIP(), []int{44}
+	return file_npool_cloud_hashing_goods_proto_rawDescGZIP(), []int{48}
 }
 
 func (x *GetAllGoodsResponse) GetInfos() []*GoodAuthInfo {
@@ -2414,7 +2602,7 @@ type GetGoodsRequest struct {
 func (x *GetGoodsRequest) Reset() {
 	*x = GetGoodsRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_npool_cloud_hashing_goods_proto_msgTypes[45]
+		mi := &file_npool_cloud_hashing_goods_proto_msgTypes[49]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2427,7 +2615,7 @@ func (x *GetGoodsRequest) String() string {
 func (*GetGoodsRequest) ProtoMessage() {}
 
 func (x *GetGoodsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_npool_cloud_hashing_goods_proto_msgTypes[45]
+	mi := &file_npool_cloud_hashing_goods_proto_msgTypes[49]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2440,7 +2628,7 @@ func (x *GetGoodsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetGoodsRequest.ProtoReflect.Descriptor instead.
 func (*GetGoodsRequest) Descriptor() ([]byte, []int) {
-	return file_npool_cloud_hashing_goods_proto_rawDescGZIP(), []int{45}
+	return file_npool_cloud_hashing_goods_proto_rawDescGZIP(), []int{49}
 }
 
 func (x *GetGoodsRequest) GetAppID() string {
@@ -2469,7 +2657,7 @@ type GetGoodsResponse struct {
 func (x *GetGoodsResponse) Reset() {
 	*x = GetGoodsResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_npool_cloud_hashing_goods_proto_msgTypes[46]
+		mi := &file_npool_cloud_hashing_goods_proto_msgTypes[50]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2482,7 +2670,7 @@ func (x *GetGoodsResponse) String() string {
 func (*GetGoodsResponse) ProtoMessage() {}
 
 func (x *GetGoodsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_npool_cloud_hashing_goods_proto_msgTypes[46]
+	mi := &file_npool_cloud_hashing_goods_proto_msgTypes[50]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2495,7 +2683,7 @@ func (x *GetGoodsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetGoodsResponse.ProtoReflect.Descriptor instead.
 func (*GetGoodsResponse) Descriptor() ([]byte, []int) {
-	return file_npool_cloud_hashing_goods_proto_rawDescGZIP(), []int{46}
+	return file_npool_cloud_hashing_goods_proto_rawDescGZIP(), []int{50}
 }
 
 func (x *GetGoodsResponse) GetInfos() []*GoodInfo {
@@ -2524,7 +2712,7 @@ type GoodPrice struct {
 func (x *GoodPrice) Reset() {
 	*x = GoodPrice{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_npool_cloud_hashing_goods_proto_msgTypes[47]
+		mi := &file_npool_cloud_hashing_goods_proto_msgTypes[51]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2537,7 +2725,7 @@ func (x *GoodPrice) String() string {
 func (*GoodPrice) ProtoMessage() {}
 
 func (x *GoodPrice) ProtoReflect() protoreflect.Message {
-	mi := &file_npool_cloud_hashing_goods_proto_msgTypes[47]
+	mi := &file_npool_cloud_hashing_goods_proto_msgTypes[51]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2550,7 +2738,7 @@ func (x *GoodPrice) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GoodPrice.ProtoReflect.Descriptor instead.
 func (*GoodPrice) Descriptor() ([]byte, []int) {
-	return file_npool_cloud_hashing_goods_proto_rawDescGZIP(), []int{47}
+	return file_npool_cloud_hashing_goods_proto_rawDescGZIP(), []int{51}
 }
 
 func (x *GoodPrice) GetPrice() float32 {
@@ -2579,7 +2767,7 @@ type SetAppGoodPriceRequest struct {
 func (x *SetAppGoodPriceRequest) Reset() {
 	*x = SetAppGoodPriceRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_npool_cloud_hashing_goods_proto_msgTypes[48]
+		mi := &file_npool_cloud_hashing_goods_proto_msgTypes[52]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2592,7 +2780,7 @@ func (x *SetAppGoodPriceRequest) String() string {
 func (*SetAppGoodPriceRequest) ProtoMessage() {}
 
 func (x *SetAppGoodPriceRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_npool_cloud_hashing_goods_proto_msgTypes[48]
+	mi := &file_npool_cloud_hashing_goods_proto_msgTypes[52]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2605,7 +2793,7 @@ func (x *SetAppGoodPriceRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SetAppGoodPriceRequest.ProtoReflect.Descriptor instead.
 func (*SetAppGoodPriceRequest) Descriptor() ([]byte, []int) {
-	return file_npool_cloud_hashing_goods_proto_rawDescGZIP(), []int{48}
+	return file_npool_cloud_hashing_goods_proto_rawDescGZIP(), []int{52}
 }
 
 func (x *SetAppGoodPriceRequest) GetGoodID() string {
@@ -2634,7 +2822,7 @@ type SetAppGoodPriceResponse struct {
 func (x *SetAppGoodPriceResponse) Reset() {
 	*x = SetAppGoodPriceResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_npool_cloud_hashing_goods_proto_msgTypes[49]
+		mi := &file_npool_cloud_hashing_goods_proto_msgTypes[53]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2647,7 +2835,7 @@ func (x *SetAppGoodPriceResponse) String() string {
 func (*SetAppGoodPriceResponse) ProtoMessage() {}
 
 func (x *SetAppGoodPriceResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_npool_cloud_hashing_goods_proto_msgTypes[49]
+	mi := &file_npool_cloud_hashing_goods_proto_msgTypes[53]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2660,7 +2848,7 @@ func (x *SetAppGoodPriceResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SetAppGoodPriceResponse.ProtoReflect.Descriptor instead.
 func (*SetAppGoodPriceResponse) Descriptor() ([]byte, []int) {
-	return file_npool_cloud_hashing_goods_proto_rawDescGZIP(), []int{49}
+	return file_npool_cloud_hashing_goods_proto_rawDescGZIP(), []int{53}
 }
 
 func (x *SetAppGoodPriceResponse) GetGoodPrice() *GoodPrice {
@@ -2690,7 +2878,7 @@ type AuthorizeAppGoodRequest struct {
 func (x *AuthorizeAppGoodRequest) Reset() {
 	*x = AuthorizeAppGoodRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_npool_cloud_hashing_goods_proto_msgTypes[50]
+		mi := &file_npool_cloud_hashing_goods_proto_msgTypes[54]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2703,7 +2891,7 @@ func (x *AuthorizeAppGoodRequest) String() string {
 func (*AuthorizeAppGoodRequest) ProtoMessage() {}
 
 func (x *AuthorizeAppGoodRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_npool_cloud_hashing_goods_proto_msgTypes[50]
+	mi := &file_npool_cloud_hashing_goods_proto_msgTypes[54]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2716,7 +2904,7 @@ func (x *AuthorizeAppGoodRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AuthorizeAppGoodRequest.ProtoReflect.Descriptor instead.
 func (*AuthorizeAppGoodRequest) Descriptor() ([]byte, []int) {
-	return file_npool_cloud_hashing_goods_proto_rawDescGZIP(), []int{50}
+	return file_npool_cloud_hashing_goods_proto_rawDescGZIP(), []int{54}
 }
 
 func (x *AuthorizeAppGoodRequest) GetAppID() string {
@@ -2751,7 +2939,7 @@ type AuthorizeAppGoodResponse struct {
 func (x *AuthorizeAppGoodResponse) Reset() {
 	*x = AuthorizeAppGoodResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_npool_cloud_hashing_goods_proto_msgTypes[51]
+		mi := &file_npool_cloud_hashing_goods_proto_msgTypes[55]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2764,7 +2952,7 @@ func (x *AuthorizeAppGoodResponse) String() string {
 func (*AuthorizeAppGoodResponse) ProtoMessage() {}
 
 func (x *AuthorizeAppGoodResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_npool_cloud_hashing_goods_proto_msgTypes[51]
+	mi := &file_npool_cloud_hashing_goods_proto_msgTypes[55]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2777,7 +2965,7 @@ func (x *AuthorizeAppGoodResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AuthorizeAppGoodResponse.ProtoReflect.Descriptor instead.
 func (*AuthorizeAppGoodResponse) Descriptor() ([]byte, []int) {
-	return file_npool_cloud_hashing_goods_proto_rawDescGZIP(), []int{51}
+	return file_npool_cloud_hashing_goods_proto_rawDescGZIP(), []int{55}
 }
 
 func (x *AuthorizeAppGoodResponse) GetInfo() *GoodAuthInfo {
@@ -2799,7 +2987,7 @@ type UnauthorizeAppGoodRequest struct {
 func (x *UnauthorizeAppGoodRequest) Reset() {
 	*x = UnauthorizeAppGoodRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_npool_cloud_hashing_goods_proto_msgTypes[52]
+		mi := &file_npool_cloud_hashing_goods_proto_msgTypes[56]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2812,7 +3000,7 @@ func (x *UnauthorizeAppGoodRequest) String() string {
 func (*UnauthorizeAppGoodRequest) ProtoMessage() {}
 
 func (x *UnauthorizeAppGoodRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_npool_cloud_hashing_goods_proto_msgTypes[52]
+	mi := &file_npool_cloud_hashing_goods_proto_msgTypes[56]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2825,7 +3013,7 @@ func (x *UnauthorizeAppGoodRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UnauthorizeAppGoodRequest.ProtoReflect.Descriptor instead.
 func (*UnauthorizeAppGoodRequest) Descriptor() ([]byte, []int) {
-	return file_npool_cloud_hashing_goods_proto_rawDescGZIP(), []int{52}
+	return file_npool_cloud_hashing_goods_proto_rawDescGZIP(), []int{56}
 }
 
 func (x *UnauthorizeAppGoodRequest) GetAppID() string {
@@ -2853,7 +3041,7 @@ type UnauthorizeAppGoodResponse struct {
 func (x *UnauthorizeAppGoodResponse) Reset() {
 	*x = UnauthorizeAppGoodResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_npool_cloud_hashing_goods_proto_msgTypes[53]
+		mi := &file_npool_cloud_hashing_goods_proto_msgTypes[57]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2866,7 +3054,7 @@ func (x *UnauthorizeAppGoodResponse) String() string {
 func (*UnauthorizeAppGoodResponse) ProtoMessage() {}
 
 func (x *UnauthorizeAppGoodResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_npool_cloud_hashing_goods_proto_msgTypes[53]
+	mi := &file_npool_cloud_hashing_goods_proto_msgTypes[57]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2879,7 +3067,7 @@ func (x *UnauthorizeAppGoodResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UnauthorizeAppGoodResponse.ProtoReflect.Descriptor instead.
 func (*UnauthorizeAppGoodResponse) Descriptor() ([]byte, []int) {
-	return file_npool_cloud_hashing_goods_proto_rawDescGZIP(), []int{53}
+	return file_npool_cloud_hashing_goods_proto_rawDescGZIP(), []int{57}
 }
 
 func (x *UnauthorizeAppGoodResponse) GetInfo() *GoodAuthInfo {
@@ -2901,7 +3089,7 @@ type AuthorizeAppTargetAreaRequest struct {
 func (x *AuthorizeAppTargetAreaRequest) Reset() {
 	*x = AuthorizeAppTargetAreaRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_npool_cloud_hashing_goods_proto_msgTypes[54]
+		mi := &file_npool_cloud_hashing_goods_proto_msgTypes[58]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2914,7 +3102,7 @@ func (x *AuthorizeAppTargetAreaRequest) String() string {
 func (*AuthorizeAppTargetAreaRequest) ProtoMessage() {}
 
 func (x *AuthorizeAppTargetAreaRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_npool_cloud_hashing_goods_proto_msgTypes[54]
+	mi := &file_npool_cloud_hashing_goods_proto_msgTypes[58]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2927,7 +3115,7 @@ func (x *AuthorizeAppTargetAreaRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AuthorizeAppTargetAreaRequest.ProtoReflect.Descriptor instead.
 func (*AuthorizeAppTargetAreaRequest) Descriptor() ([]byte, []int) {
-	return file_npool_cloud_hashing_goods_proto_rawDescGZIP(), []int{54}
+	return file_npool_cloud_hashing_goods_proto_rawDescGZIP(), []int{58}
 }
 
 func (x *AuthorizeAppTargetAreaRequest) GetAppID() string {
@@ -2956,7 +3144,7 @@ type UnauthorizeAppTargetAreaRequest struct {
 func (x *UnauthorizeAppTargetAreaRequest) Reset() {
 	*x = UnauthorizeAppTargetAreaRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_npool_cloud_hashing_goods_proto_msgTypes[55]
+		mi := &file_npool_cloud_hashing_goods_proto_msgTypes[59]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2969,7 +3157,7 @@ func (x *UnauthorizeAppTargetAreaRequest) String() string {
 func (*UnauthorizeAppTargetAreaRequest) ProtoMessage() {}
 
 func (x *UnauthorizeAppTargetAreaRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_npool_cloud_hashing_goods_proto_msgTypes[55]
+	mi := &file_npool_cloud_hashing_goods_proto_msgTypes[59]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2982,7 +3170,7 @@ func (x *UnauthorizeAppTargetAreaRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UnauthorizeAppTargetAreaRequest.ProtoReflect.Descriptor instead.
 func (*UnauthorizeAppTargetAreaRequest) Descriptor() ([]byte, []int) {
-	return file_npool_cloud_hashing_goods_proto_rawDescGZIP(), []int{55}
+	return file_npool_cloud_hashing_goods_proto_rawDescGZIP(), []int{59}
 }
 
 func (x *UnauthorizeAppTargetAreaRequest) GetAppID() string {
@@ -3012,7 +3200,7 @@ type AuthorizeAppGoodTargetAreaRequest struct {
 func (x *AuthorizeAppGoodTargetAreaRequest) Reset() {
 	*x = AuthorizeAppGoodTargetAreaRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_npool_cloud_hashing_goods_proto_msgTypes[56]
+		mi := &file_npool_cloud_hashing_goods_proto_msgTypes[60]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -3025,7 +3213,7 @@ func (x *AuthorizeAppGoodTargetAreaRequest) String() string {
 func (*AuthorizeAppGoodTargetAreaRequest) ProtoMessage() {}
 
 func (x *AuthorizeAppGoodTargetAreaRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_npool_cloud_hashing_goods_proto_msgTypes[56]
+	mi := &file_npool_cloud_hashing_goods_proto_msgTypes[60]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3038,7 +3226,7 @@ func (x *AuthorizeAppGoodTargetAreaRequest) ProtoReflect() protoreflect.Message 
 
 // Deprecated: Use AuthorizeAppGoodTargetAreaRequest.ProtoReflect.Descriptor instead.
 func (*AuthorizeAppGoodTargetAreaRequest) Descriptor() ([]byte, []int) {
-	return file_npool_cloud_hashing_goods_proto_rawDescGZIP(), []int{56}
+	return file_npool_cloud_hashing_goods_proto_rawDescGZIP(), []int{60}
 }
 
 func (x *AuthorizeAppGoodTargetAreaRequest) GetAppID() string {
@@ -3075,7 +3263,7 @@ type UnauthorizeAppGoodTargetAreaRequest struct {
 func (x *UnauthorizeAppGoodTargetAreaRequest) Reset() {
 	*x = UnauthorizeAppGoodTargetAreaRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_npool_cloud_hashing_goods_proto_msgTypes[57]
+		mi := &file_npool_cloud_hashing_goods_proto_msgTypes[61]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -3088,7 +3276,7 @@ func (x *UnauthorizeAppGoodTargetAreaRequest) String() string {
 func (*UnauthorizeAppGoodTargetAreaRequest) ProtoMessage() {}
 
 func (x *UnauthorizeAppGoodTargetAreaRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_npool_cloud_hashing_goods_proto_msgTypes[57]
+	mi := &file_npool_cloud_hashing_goods_proto_msgTypes[61]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3101,7 +3289,7 @@ func (x *UnauthorizeAppGoodTargetAreaRequest) ProtoReflect() protoreflect.Messag
 
 // Deprecated: Use UnauthorizeAppGoodTargetAreaRequest.ProtoReflect.Descriptor instead.
 func (*UnauthorizeAppGoodTargetAreaRequest) Descriptor() ([]byte, []int) {
-	return file_npool_cloud_hashing_goods_proto_rawDescGZIP(), []int{57}
+	return file_npool_cloud_hashing_goods_proto_rawDescGZIP(), []int{61}
 }
 
 func (x *UnauthorizeAppGoodTargetAreaRequest) GetAppID() string {
@@ -3142,7 +3330,7 @@ type GoodComment struct {
 func (x *GoodComment) Reset() {
 	*x = GoodComment{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_npool_cloud_hashing_goods_proto_msgTypes[58]
+		mi := &file_npool_cloud_hashing_goods_proto_msgTypes[62]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -3155,7 +3343,7 @@ func (x *GoodComment) String() string {
 func (*GoodComment) ProtoMessage() {}
 
 func (x *GoodComment) ProtoReflect() protoreflect.Message {
-	mi := &file_npool_cloud_hashing_goods_proto_msgTypes[58]
+	mi := &file_npool_cloud_hashing_goods_proto_msgTypes[62]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3168,7 +3356,7 @@ func (x *GoodComment) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GoodComment.ProtoReflect.Descriptor instead.
 func (*GoodComment) Descriptor() ([]byte, []int) {
-	return file_npool_cloud_hashing_goods_proto_rawDescGZIP(), []int{58}
+	return file_npool_cloud_hashing_goods_proto_rawDescGZIP(), []int{62}
 }
 
 func (x *GoodComment) GetID() string {
@@ -3231,7 +3419,7 @@ type CreateGoodCommentRequest struct {
 func (x *CreateGoodCommentRequest) Reset() {
 	*x = CreateGoodCommentRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_npool_cloud_hashing_goods_proto_msgTypes[59]
+		mi := &file_npool_cloud_hashing_goods_proto_msgTypes[63]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -3244,7 +3432,7 @@ func (x *CreateGoodCommentRequest) String() string {
 func (*CreateGoodCommentRequest) ProtoMessage() {}
 
 func (x *CreateGoodCommentRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_npool_cloud_hashing_goods_proto_msgTypes[59]
+	mi := &file_npool_cloud_hashing_goods_proto_msgTypes[63]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3257,7 +3445,7 @@ func (x *CreateGoodCommentRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CreateGoodCommentRequest.ProtoReflect.Descriptor instead.
 func (*CreateGoodCommentRequest) Descriptor() ([]byte, []int) {
-	return file_npool_cloud_hashing_goods_proto_rawDescGZIP(), []int{59}
+	return file_npool_cloud_hashing_goods_proto_rawDescGZIP(), []int{63}
 }
 
 func (x *CreateGoodCommentRequest) GetComment() *GoodComment {
@@ -3278,7 +3466,7 @@ type CreateGoodCommentResponse struct {
 func (x *CreateGoodCommentResponse) Reset() {
 	*x = CreateGoodCommentResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_npool_cloud_hashing_goods_proto_msgTypes[60]
+		mi := &file_npool_cloud_hashing_goods_proto_msgTypes[64]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -3291,7 +3479,7 @@ func (x *CreateGoodCommentResponse) String() string {
 func (*CreateGoodCommentResponse) ProtoMessage() {}
 
 func (x *CreateGoodCommentResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_npool_cloud_hashing_goods_proto_msgTypes[60]
+	mi := &file_npool_cloud_hashing_goods_proto_msgTypes[64]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3304,7 +3492,7 @@ func (x *CreateGoodCommentResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CreateGoodCommentResponse.ProtoReflect.Descriptor instead.
 func (*CreateGoodCommentResponse) Descriptor() ([]byte, []int) {
-	return file_npool_cloud_hashing_goods_proto_rawDescGZIP(), []int{60}
+	return file_npool_cloud_hashing_goods_proto_rawDescGZIP(), []int{64}
 }
 
 func (x *CreateGoodCommentResponse) GetComment() *GoodComment {
@@ -3325,7 +3513,7 @@ type UpdateGoodCommentRequest struct {
 func (x *UpdateGoodCommentRequest) Reset() {
 	*x = UpdateGoodCommentRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_npool_cloud_hashing_goods_proto_msgTypes[61]
+		mi := &file_npool_cloud_hashing_goods_proto_msgTypes[65]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -3338,7 +3526,7 @@ func (x *UpdateGoodCommentRequest) String() string {
 func (*UpdateGoodCommentRequest) ProtoMessage() {}
 
 func (x *UpdateGoodCommentRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_npool_cloud_hashing_goods_proto_msgTypes[61]
+	mi := &file_npool_cloud_hashing_goods_proto_msgTypes[65]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3351,7 +3539,7 @@ func (x *UpdateGoodCommentRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateGoodCommentRequest.ProtoReflect.Descriptor instead.
 func (*UpdateGoodCommentRequest) Descriptor() ([]byte, []int) {
-	return file_npool_cloud_hashing_goods_proto_rawDescGZIP(), []int{61}
+	return file_npool_cloud_hashing_goods_proto_rawDescGZIP(), []int{65}
 }
 
 func (x *UpdateGoodCommentRequest) GetComment() *GoodComment {
@@ -3372,7 +3560,7 @@ type UpdateGoodCommentResponse struct {
 func (x *UpdateGoodCommentResponse) Reset() {
 	*x = UpdateGoodCommentResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_npool_cloud_hashing_goods_proto_msgTypes[62]
+		mi := &file_npool_cloud_hashing_goods_proto_msgTypes[66]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -3385,7 +3573,7 @@ func (x *UpdateGoodCommentResponse) String() string {
 func (*UpdateGoodCommentResponse) ProtoMessage() {}
 
 func (x *UpdateGoodCommentResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_npool_cloud_hashing_goods_proto_msgTypes[62]
+	mi := &file_npool_cloud_hashing_goods_proto_msgTypes[66]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3398,7 +3586,7 @@ func (x *UpdateGoodCommentResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateGoodCommentResponse.ProtoReflect.Descriptor instead.
 func (*UpdateGoodCommentResponse) Descriptor() ([]byte, []int) {
-	return file_npool_cloud_hashing_goods_proto_rawDescGZIP(), []int{62}
+	return file_npool_cloud_hashing_goods_proto_rawDescGZIP(), []int{66}
 }
 
 func (x *UpdateGoodCommentResponse) GetComment() *GoodComment {
@@ -3420,7 +3608,7 @@ type GetGoodCommentsRequest struct {
 func (x *GetGoodCommentsRequest) Reset() {
 	*x = GetGoodCommentsRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_npool_cloud_hashing_goods_proto_msgTypes[63]
+		mi := &file_npool_cloud_hashing_goods_proto_msgTypes[67]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -3433,7 +3621,7 @@ func (x *GetGoodCommentsRequest) String() string {
 func (*GetGoodCommentsRequest) ProtoMessage() {}
 
 func (x *GetGoodCommentsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_npool_cloud_hashing_goods_proto_msgTypes[63]
+	mi := &file_npool_cloud_hashing_goods_proto_msgTypes[67]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3446,7 +3634,7 @@ func (x *GetGoodCommentsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetGoodCommentsRequest.ProtoReflect.Descriptor instead.
 func (*GetGoodCommentsRequest) Descriptor() ([]byte, []int) {
-	return file_npool_cloud_hashing_goods_proto_rawDescGZIP(), []int{63}
+	return file_npool_cloud_hashing_goods_proto_rawDescGZIP(), []int{67}
 }
 
 func (x *GetGoodCommentsRequest) GetPageInfo() *PageInfo {
@@ -3475,7 +3663,7 @@ type GetGoodCommentsResponse struct {
 func (x *GetGoodCommentsResponse) Reset() {
 	*x = GetGoodCommentsResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_npool_cloud_hashing_goods_proto_msgTypes[64]
+		mi := &file_npool_cloud_hashing_goods_proto_msgTypes[68]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -3488,7 +3676,7 @@ func (x *GetGoodCommentsResponse) String() string {
 func (*GetGoodCommentsResponse) ProtoMessage() {}
 
 func (x *GetGoodCommentsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_npool_cloud_hashing_goods_proto_msgTypes[64]
+	mi := &file_npool_cloud_hashing_goods_proto_msgTypes[68]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3501,7 +3689,7 @@ func (x *GetGoodCommentsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetGoodCommentsResponse.ProtoReflect.Descriptor instead.
 func (*GetGoodCommentsResponse) Descriptor() ([]byte, []int) {
-	return file_npool_cloud_hashing_goods_proto_rawDescGZIP(), []int{64}
+	return file_npool_cloud_hashing_goods_proto_rawDescGZIP(), []int{68}
 }
 
 func (x *GetGoodCommentsResponse) GetComments() []*GoodComment {
@@ -3781,6 +3969,20 @@ var file_npool_cloud_hashing_goods_proto_rawDesc = []byte{
 	0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x35, 0x0a, 0x04, 0x49, 0x6e, 0x66, 0x6f, 0x18,
 	0xf0, 0x15, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x20, 0x2e, 0x63, 0x6c, 0x6f, 0x75, 0x64, 0x2e, 0x68,
 	0x61, 0x73, 0x68, 0x69, 0x6e, 0x67, 0x2e, 0x67, 0x6f, 0x6f, 0x64, 0x73, 0x2e, 0x76, 0x31, 0x2e,
+	0x47, 0x6f, 0x6f, 0x64, 0x49, 0x6e, 0x66, 0x6f, 0x52, 0x04, 0x49, 0x6e, 0x66, 0x6f, 0x22, 0x21,
+	0x0a, 0x0e, 0x47, 0x65, 0x74, 0x47, 0x6f, 0x6f, 0x64, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74,
+	0x12, 0x0f, 0x0a, 0x02, 0x49, 0x44, 0x18, 0xfa, 0x15, 0x20, 0x01, 0x28, 0x09, 0x52, 0x02, 0x49,
+	0x44, 0x22, 0x48, 0x0a, 0x0f, 0x47, 0x65, 0x74, 0x47, 0x6f, 0x6f, 0x64, 0x52, 0x65, 0x73, 0x70,
+	0x6f, 0x6e, 0x73, 0x65, 0x12, 0x35, 0x0a, 0x04, 0x49, 0x6e, 0x66, 0x6f, 0x18, 0x84, 0x16, 0x20,
+	0x01, 0x28, 0x0b, 0x32, 0x20, 0x2e, 0x63, 0x6c, 0x6f, 0x75, 0x64, 0x2e, 0x68, 0x61, 0x73, 0x68,
+	0x69, 0x6e, 0x67, 0x2e, 0x67, 0x6f, 0x6f, 0x64, 0x73, 0x2e, 0x76, 0x31, 0x2e, 0x47, 0x6f, 0x6f,
+	0x64, 0x49, 0x6e, 0x66, 0x6f, 0x52, 0x04, 0x49, 0x6e, 0x66, 0x6f, 0x22, 0x24, 0x0a, 0x11, 0x44,
+	0x65, 0x6c, 0x65, 0x74, 0x65, 0x47, 0x6f, 0x6f, 0x64, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74,
+	0x12, 0x0f, 0x0a, 0x02, 0x49, 0x44, 0x18, 0x8e, 0x16, 0x20, 0x01, 0x28, 0x09, 0x52, 0x02, 0x49,
+	0x44, 0x22, 0x4b, 0x0a, 0x12, 0x44, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x47, 0x6f, 0x6f, 0x64, 0x52,
+	0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x35, 0x0a, 0x04, 0x49, 0x6e, 0x66, 0x6f, 0x18,
+	0x98, 0x16, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x20, 0x2e, 0x63, 0x6c, 0x6f, 0x75, 0x64, 0x2e, 0x68,
+	0x61, 0x73, 0x68, 0x69, 0x6e, 0x67, 0x2e, 0x67, 0x6f, 0x6f, 0x64, 0x73, 0x2e, 0x76, 0x31, 0x2e,
 	0x47, 0x6f, 0x6f, 0x64, 0x49, 0x6e, 0x66, 0x6f, 0x52, 0x04, 0x49, 0x6e, 0x66, 0x6f, 0x22, 0x6a,
 	0x0a, 0x12, 0x47, 0x65, 0x74, 0x41, 0x6c, 0x6c, 0x47, 0x6f, 0x6f, 0x64, 0x73, 0x52, 0x65, 0x71,
 	0x75, 0x65, 0x73, 0x74, 0x12, 0x15, 0x0a, 0x05, 0x41, 0x70, 0x70, 0x49, 0x44, 0x18, 0xd4, 0x16,
@@ -3936,7 +4138,7 @@ var file_npool_cloud_hashing_goods_proto_rawDesc = []byte{
 	0x68, 0x69, 0x6e, 0x67, 0x2e, 0x67, 0x6f, 0x6f, 0x64, 0x73, 0x2e, 0x76, 0x31, 0x2e, 0x47, 0x6f,
 	0x6f, 0x64, 0x43, 0x6f, 0x6d, 0x6d, 0x65, 0x6e, 0x74, 0x52, 0x08, 0x43, 0x6f, 0x6d, 0x6d, 0x65,
 	0x6e, 0x74, 0x73, 0x12, 0x15, 0x0a, 0x05, 0x54, 0x6f, 0x74, 0x61, 0x6c, 0x18, 0x89, 0x27, 0x20,
-	0x01, 0x28, 0x05, 0x52, 0x05, 0x54, 0x6f, 0x74, 0x61, 0x6c, 0x32, 0xfb, 0x24, 0x0a, 0x11, 0x43,
+	0x01, 0x28, 0x05, 0x52, 0x05, 0x54, 0x6f, 0x74, 0x61, 0x6c, 0x32, 0xf1, 0x26, 0x0a, 0x11, 0x43,
 	0x6c, 0x6f, 0x75, 0x64, 0x48, 0x61, 0x73, 0x68, 0x69, 0x6e, 0x67, 0x47, 0x6f, 0x6f, 0x64, 0x73,
 	0x12, 0x5c, 0x0a, 0x07, 0x56, 0x65, 0x72, 0x73, 0x69, 0x6f, 0x6e, 0x12, 0x16, 0x2e, 0x67, 0x6f,
 	0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2e, 0x45, 0x6d,
@@ -4118,125 +4320,141 @@ var file_npool_cloud_hashing_goods_proto_rawDesc = []byte{
 	0x73, 0x68, 0x69, 0x6e, 0x67, 0x2e, 0x67, 0x6f, 0x6f, 0x64, 0x73, 0x2e, 0x76, 0x31, 0x2e, 0x55,
 	0x70, 0x64, 0x61, 0x74, 0x65, 0x47, 0x6f, 0x6f, 0x64, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73,
 	0x65, 0x22, 0x1a, 0x82, 0xd3, 0xe4, 0x93, 0x02, 0x14, 0x22, 0x0f, 0x2f, 0x76, 0x31, 0x2f, 0x75,
-	0x70, 0x64, 0x61, 0x74, 0x65, 0x2f, 0x67, 0x6f, 0x6f, 0x64, 0x3a, 0x01, 0x2a, 0x12, 0x81, 0x01,
-	0x0a, 0x0b, 0x47, 0x65, 0x74, 0x41, 0x6c, 0x6c, 0x47, 0x6f, 0x6f, 0x64, 0x73, 0x12, 0x2a, 0x2e,
-	0x63, 0x6c, 0x6f, 0x75, 0x64, 0x2e, 0x68, 0x61, 0x73, 0x68, 0x69, 0x6e, 0x67, 0x2e, 0x67, 0x6f,
-	0x6f, 0x64, 0x73, 0x2e, 0x76, 0x31, 0x2e, 0x47, 0x65, 0x74, 0x41, 0x6c, 0x6c, 0x47, 0x6f, 0x6f,
-	0x64, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x2b, 0x2e, 0x63, 0x6c, 0x6f, 0x75,
-	0x64, 0x2e, 0x68, 0x61, 0x73, 0x68, 0x69, 0x6e, 0x67, 0x2e, 0x67, 0x6f, 0x6f, 0x64, 0x73, 0x2e,
-	0x76, 0x31, 0x2e, 0x47, 0x65, 0x74, 0x41, 0x6c, 0x6c, 0x47, 0x6f, 0x6f, 0x64, 0x73, 0x52, 0x65,
-	0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x19, 0x82, 0xd3, 0xe4, 0x93, 0x02, 0x13, 0x12, 0x11,
-	0x2f, 0x76, 0x31, 0x2f, 0x67, 0x65, 0x74, 0x2f, 0x61, 0x6c, 0x6c, 0x2d, 0x67, 0x6f, 0x6f, 0x64,
-	0x73, 0x12, 0x74, 0x0a, 0x08, 0x47, 0x65, 0x74, 0x47, 0x6f, 0x6f, 0x64, 0x73, 0x12, 0x27, 0x2e,
-	0x63, 0x6c, 0x6f, 0x75, 0x64, 0x2e, 0x68, 0x61, 0x73, 0x68, 0x69, 0x6e, 0x67, 0x2e, 0x67, 0x6f,
-	0x6f, 0x64, 0x73, 0x2e, 0x76, 0x31, 0x2e, 0x47, 0x65, 0x74, 0x47, 0x6f, 0x6f, 0x64, 0x73, 0x52,
-	0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x28, 0x2e, 0x63, 0x6c, 0x6f, 0x75, 0x64, 0x2e, 0x68,
-	0x61, 0x73, 0x68, 0x69, 0x6e, 0x67, 0x2e, 0x67, 0x6f, 0x6f, 0x64, 0x73, 0x2e, 0x76, 0x31, 0x2e,
-	0x47, 0x65, 0x74, 0x47, 0x6f, 0x6f, 0x64, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65,
-	0x22, 0x15, 0x82, 0xd3, 0xe4, 0x93, 0x02, 0x0f, 0x12, 0x0d, 0x2f, 0x76, 0x31, 0x2f, 0x67, 0x65,
-	0x74, 0x2f, 0x67, 0x6f, 0x6f, 0x64, 0x73, 0x12, 0x95, 0x01, 0x0a, 0x0f, 0x53, 0x65, 0x74, 0x41,
-	0x70, 0x70, 0x47, 0x6f, 0x6f, 0x64, 0x50, 0x72, 0x69, 0x63, 0x65, 0x12, 0x2e, 0x2e, 0x63, 0x6c,
-	0x6f, 0x75, 0x64, 0x2e, 0x68, 0x61, 0x73, 0x68, 0x69, 0x6e, 0x67, 0x2e, 0x67, 0x6f, 0x6f, 0x64,
-	0x73, 0x2e, 0x76, 0x31, 0x2e, 0x53, 0x65, 0x74, 0x41, 0x70, 0x70, 0x47, 0x6f, 0x6f, 0x64, 0x50,
-	0x72, 0x69, 0x63, 0x65, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x2f, 0x2e, 0x63, 0x6c,
-	0x6f, 0x75, 0x64, 0x2e, 0x68, 0x61, 0x73, 0x68, 0x69, 0x6e, 0x67, 0x2e, 0x67, 0x6f, 0x6f, 0x64,
-	0x73, 0x2e, 0x76, 0x31, 0x2e, 0x53, 0x65, 0x74, 0x41, 0x70, 0x70, 0x47, 0x6f, 0x6f, 0x64, 0x50,
-	0x72, 0x69, 0x63, 0x65, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x21, 0x82, 0xd3,
-	0xe4, 0x93, 0x02, 0x1b, 0x22, 0x16, 0x2f, 0x76, 0x31, 0x2f, 0x73, 0x65, 0x74, 0x2f, 0x61, 0x70,
-	0x70, 0x2f, 0x67, 0x6f, 0x6f, 0x64, 0x2f, 0x70, 0x72, 0x69, 0x63, 0x65, 0x3a, 0x01, 0x2a, 0x12,
-	0x98, 0x01, 0x0a, 0x10, 0x41, 0x75, 0x74, 0x68, 0x6f, 0x72, 0x69, 0x7a, 0x65, 0x41, 0x70, 0x70,
-	0x47, 0x6f, 0x6f, 0x64, 0x12, 0x2f, 0x2e, 0x63, 0x6c, 0x6f, 0x75, 0x64, 0x2e, 0x68, 0x61, 0x73,
-	0x68, 0x69, 0x6e, 0x67, 0x2e, 0x67, 0x6f, 0x6f, 0x64, 0x73, 0x2e, 0x76, 0x31, 0x2e, 0x41, 0x75,
-	0x74, 0x68, 0x6f, 0x72, 0x69, 0x7a, 0x65, 0x41, 0x70, 0x70, 0x47, 0x6f, 0x6f, 0x64, 0x52, 0x65,
-	0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x30, 0x2e, 0x63, 0x6c, 0x6f, 0x75, 0x64, 0x2e, 0x68, 0x61,
-	0x73, 0x68, 0x69, 0x6e, 0x67, 0x2e, 0x67, 0x6f, 0x6f, 0x64, 0x73, 0x2e, 0x76, 0x31, 0x2e, 0x41,
-	0x75, 0x74, 0x68, 0x6f, 0x72, 0x69, 0x7a, 0x65, 0x41, 0x70, 0x70, 0x47, 0x6f, 0x6f, 0x64, 0x52,
-	0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x21, 0x82, 0xd3, 0xe4, 0x93, 0x02, 0x1b, 0x22,
-	0x16, 0x2f, 0x76, 0x31, 0x2f, 0x61, 0x75, 0x74, 0x68, 0x6f, 0x72, 0x69, 0x7a, 0x65, 0x2f, 0x61,
-	0x70, 0x70, 0x2f, 0x67, 0x6f, 0x6f, 0x64, 0x3a, 0x01, 0x2a, 0x12, 0xa0, 0x01, 0x0a, 0x12, 0x55,
-	0x6e, 0x61, 0x75, 0x74, 0x68, 0x6f, 0x72, 0x69, 0x7a, 0x65, 0x41, 0x70, 0x70, 0x47, 0x6f, 0x6f,
-	0x64, 0x12, 0x31, 0x2e, 0x63, 0x6c, 0x6f, 0x75, 0x64, 0x2e, 0x68, 0x61, 0x73, 0x68, 0x69, 0x6e,
-	0x67, 0x2e, 0x67, 0x6f, 0x6f, 0x64, 0x73, 0x2e, 0x76, 0x31, 0x2e, 0x55, 0x6e, 0x61, 0x75, 0x74,
-	0x68, 0x6f, 0x72, 0x69, 0x7a, 0x65, 0x41, 0x70, 0x70, 0x47, 0x6f, 0x6f, 0x64, 0x52, 0x65, 0x71,
-	0x75, 0x65, 0x73, 0x74, 0x1a, 0x32, 0x2e, 0x63, 0x6c, 0x6f, 0x75, 0x64, 0x2e, 0x68, 0x61, 0x73,
-	0x68, 0x69, 0x6e, 0x67, 0x2e, 0x67, 0x6f, 0x6f, 0x64, 0x73, 0x2e, 0x76, 0x31, 0x2e, 0x55, 0x6e,
-	0x61, 0x75, 0x74, 0x68, 0x6f, 0x72, 0x69, 0x7a, 0x65, 0x41, 0x70, 0x70, 0x47, 0x6f, 0x6f, 0x64,
-	0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x23, 0x82, 0xd3, 0xe4, 0x93, 0x02, 0x1d,
-	0x22, 0x18, 0x2f, 0x76, 0x31, 0x2f, 0x75, 0x6e, 0x61, 0x75, 0x74, 0x68, 0x6f, 0x72, 0x69, 0x7a,
-	0x65, 0x2f, 0x61, 0x70, 0x70, 0x2f, 0x67, 0x6f, 0x6f, 0x64, 0x3a, 0x01, 0x2a, 0x12, 0x91, 0x01,
-	0x0a, 0x16, 0x41, 0x75, 0x74, 0x68, 0x6f, 0x72, 0x69, 0x7a, 0x65, 0x41, 0x70, 0x70, 0x54, 0x61,
-	0x72, 0x67, 0x65, 0x74, 0x41, 0x72, 0x65, 0x61, 0x12, 0x35, 0x2e, 0x63, 0x6c, 0x6f, 0x75, 0x64,
+	0x70, 0x64, 0x61, 0x74, 0x65, 0x2f, 0x67, 0x6f, 0x6f, 0x64, 0x3a, 0x01, 0x2a, 0x12, 0x73, 0x0a,
+	0x07, 0x47, 0x65, 0x74, 0x47, 0x6f, 0x6f, 0x64, 0x12, 0x26, 0x2e, 0x63, 0x6c, 0x6f, 0x75, 0x64,
 	0x2e, 0x68, 0x61, 0x73, 0x68, 0x69, 0x6e, 0x67, 0x2e, 0x67, 0x6f, 0x6f, 0x64, 0x73, 0x2e, 0x76,
-	0x31, 0x2e, 0x41, 0x75, 0x74, 0x68, 0x6f, 0x72, 0x69, 0x7a, 0x65, 0x41, 0x70, 0x70, 0x54, 0x61,
-	0x72, 0x67, 0x65, 0x74, 0x41, 0x72, 0x65, 0x61, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a,
-	0x16, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75,
-	0x66, 0x2e, 0x45, 0x6d, 0x70, 0x74, 0x79, 0x22, 0x28, 0x82, 0xd3, 0xe4, 0x93, 0x02, 0x22, 0x22,
-	0x1d, 0x2f, 0x76, 0x31, 0x2f, 0x61, 0x75, 0x74, 0x68, 0x6f, 0x72, 0x69, 0x7a, 0x65, 0x2f, 0x61,
-	0x70, 0x70, 0x2f, 0x74, 0x61, 0x72, 0x67, 0x65, 0x74, 0x2d, 0x61, 0x72, 0x65, 0x61, 0x3a, 0x01,
-	0x2a, 0x12, 0x97, 0x01, 0x0a, 0x18, 0x55, 0x6e, 0x61, 0x75, 0x74, 0x68, 0x6f, 0x72, 0x69, 0x7a,
-	0x65, 0x41, 0x70, 0x70, 0x54, 0x61, 0x72, 0x67, 0x65, 0x74, 0x41, 0x72, 0x65, 0x61, 0x12, 0x37,
-	0x2e, 0x63, 0x6c, 0x6f, 0x75, 0x64, 0x2e, 0x68, 0x61, 0x73, 0x68, 0x69, 0x6e, 0x67, 0x2e, 0x67,
-	0x6f, 0x6f, 0x64, 0x73, 0x2e, 0x76, 0x31, 0x2e, 0x55, 0x6e, 0x61, 0x75, 0x74, 0x68, 0x6f, 0x72,
-	0x69, 0x7a, 0x65, 0x41, 0x70, 0x70, 0x54, 0x61, 0x72, 0x67, 0x65, 0x74, 0x41, 0x72, 0x65, 0x61,
-	0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x16, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65,
-	0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2e, 0x45, 0x6d, 0x70, 0x74, 0x79, 0x22,
-	0x2a, 0x82, 0xd3, 0xe4, 0x93, 0x02, 0x24, 0x22, 0x1f, 0x2f, 0x76, 0x31, 0x2f, 0x75, 0x6e, 0x61,
-	0x75, 0x74, 0x68, 0x6f, 0x72, 0x69, 0x7a, 0x65, 0x2f, 0x61, 0x70, 0x70, 0x2f, 0x74, 0x61, 0x72,
-	0x67, 0x65, 0x74, 0x2d, 0x61, 0x72, 0x65, 0x61, 0x3a, 0x01, 0x2a, 0x12, 0x9e, 0x01, 0x0a, 0x1a,
-	0x41, 0x75, 0x74, 0x68, 0x6f, 0x72, 0x69, 0x7a, 0x65, 0x41, 0x70, 0x70, 0x47, 0x6f, 0x6f, 0x64,
-	0x54, 0x61, 0x72, 0x67, 0x65, 0x74, 0x41, 0x72, 0x65, 0x61, 0x12, 0x39, 0x2e, 0x63, 0x6c, 0x6f,
+	0x31, 0x2e, 0x47, 0x65, 0x74, 0x47, 0x6f, 0x6f, 0x64, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74,
+	0x1a, 0x27, 0x2e, 0x63, 0x6c, 0x6f, 0x75, 0x64, 0x2e, 0x68, 0x61, 0x73, 0x68, 0x69, 0x6e, 0x67,
+	0x2e, 0x67, 0x6f, 0x6f, 0x64, 0x73, 0x2e, 0x76, 0x31, 0x2e, 0x47, 0x65, 0x74, 0x47, 0x6f, 0x6f,
+	0x64, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x17, 0x82, 0xd3, 0xe4, 0x93, 0x02,
+	0x11, 0x22, 0x0c, 0x2f, 0x76, 0x31, 0x2f, 0x67, 0x65, 0x74, 0x2f, 0x67, 0x6f, 0x6f, 0x64, 0x3a,
+	0x01, 0x2a, 0x12, 0x7f, 0x0a, 0x0a, 0x44, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x47, 0x6f, 0x6f, 0x64,
+	0x12, 0x29, 0x2e, 0x63, 0x6c, 0x6f, 0x75, 0x64, 0x2e, 0x68, 0x61, 0x73, 0x68, 0x69, 0x6e, 0x67,
+	0x2e, 0x67, 0x6f, 0x6f, 0x64, 0x73, 0x2e, 0x76, 0x31, 0x2e, 0x44, 0x65, 0x6c, 0x65, 0x74, 0x65,
+	0x47, 0x6f, 0x6f, 0x64, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x2a, 0x2e, 0x63, 0x6c,
+	0x6f, 0x75, 0x64, 0x2e, 0x68, 0x61, 0x73, 0x68, 0x69, 0x6e, 0x67, 0x2e, 0x67, 0x6f, 0x6f, 0x64,
+	0x73, 0x2e, 0x76, 0x31, 0x2e, 0x44, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x47, 0x6f, 0x6f, 0x64, 0x52,
+	0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x1a, 0x82, 0xd3, 0xe4, 0x93, 0x02, 0x14, 0x22,
+	0x0f, 0x2f, 0x76, 0x31, 0x2f, 0x64, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x2f, 0x67, 0x6f, 0x6f, 0x64,
+	0x3a, 0x01, 0x2a, 0x12, 0x81, 0x01, 0x0a, 0x0b, 0x47, 0x65, 0x74, 0x41, 0x6c, 0x6c, 0x47, 0x6f,
+	0x6f, 0x64, 0x73, 0x12, 0x2a, 0x2e, 0x63, 0x6c, 0x6f, 0x75, 0x64, 0x2e, 0x68, 0x61, 0x73, 0x68,
+	0x69, 0x6e, 0x67, 0x2e, 0x67, 0x6f, 0x6f, 0x64, 0x73, 0x2e, 0x76, 0x31, 0x2e, 0x47, 0x65, 0x74,
+	0x41, 0x6c, 0x6c, 0x47, 0x6f, 0x6f, 0x64, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a,
+	0x2b, 0x2e, 0x63, 0x6c, 0x6f, 0x75, 0x64, 0x2e, 0x68, 0x61, 0x73, 0x68, 0x69, 0x6e, 0x67, 0x2e,
+	0x67, 0x6f, 0x6f, 0x64, 0x73, 0x2e, 0x76, 0x31, 0x2e, 0x47, 0x65, 0x74, 0x41, 0x6c, 0x6c, 0x47,
+	0x6f, 0x6f, 0x64, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x19, 0x82, 0xd3,
+	0xe4, 0x93, 0x02, 0x13, 0x12, 0x11, 0x2f, 0x76, 0x31, 0x2f, 0x67, 0x65, 0x74, 0x2f, 0x61, 0x6c,
+	0x6c, 0x2d, 0x67, 0x6f, 0x6f, 0x64, 0x73, 0x12, 0x74, 0x0a, 0x08, 0x47, 0x65, 0x74, 0x47, 0x6f,
+	0x6f, 0x64, 0x73, 0x12, 0x27, 0x2e, 0x63, 0x6c, 0x6f, 0x75, 0x64, 0x2e, 0x68, 0x61, 0x73, 0x68,
+	0x69, 0x6e, 0x67, 0x2e, 0x67, 0x6f, 0x6f, 0x64, 0x73, 0x2e, 0x76, 0x31, 0x2e, 0x47, 0x65, 0x74,
+	0x47, 0x6f, 0x6f, 0x64, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x28, 0x2e, 0x63,
+	0x6c, 0x6f, 0x75, 0x64, 0x2e, 0x68, 0x61, 0x73, 0x68, 0x69, 0x6e, 0x67, 0x2e, 0x67, 0x6f, 0x6f,
+	0x64, 0x73, 0x2e, 0x76, 0x31, 0x2e, 0x47, 0x65, 0x74, 0x47, 0x6f, 0x6f, 0x64, 0x73, 0x52, 0x65,
+	0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x15, 0x82, 0xd3, 0xe4, 0x93, 0x02, 0x0f, 0x12, 0x0d,
+	0x2f, 0x76, 0x31, 0x2f, 0x67, 0x65, 0x74, 0x2f, 0x67, 0x6f, 0x6f, 0x64, 0x73, 0x12, 0x95, 0x01,
+	0x0a, 0x0f, 0x53, 0x65, 0x74, 0x41, 0x70, 0x70, 0x47, 0x6f, 0x6f, 0x64, 0x50, 0x72, 0x69, 0x63,
+	0x65, 0x12, 0x2e, 0x2e, 0x63, 0x6c, 0x6f, 0x75, 0x64, 0x2e, 0x68, 0x61, 0x73, 0x68, 0x69, 0x6e,
+	0x67, 0x2e, 0x67, 0x6f, 0x6f, 0x64, 0x73, 0x2e, 0x76, 0x31, 0x2e, 0x53, 0x65, 0x74, 0x41, 0x70,
+	0x70, 0x47, 0x6f, 0x6f, 0x64, 0x50, 0x72, 0x69, 0x63, 0x65, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73,
+	0x74, 0x1a, 0x2f, 0x2e, 0x63, 0x6c, 0x6f, 0x75, 0x64, 0x2e, 0x68, 0x61, 0x73, 0x68, 0x69, 0x6e,
+	0x67, 0x2e, 0x67, 0x6f, 0x6f, 0x64, 0x73, 0x2e, 0x76, 0x31, 0x2e, 0x53, 0x65, 0x74, 0x41, 0x70,
+	0x70, 0x47, 0x6f, 0x6f, 0x64, 0x50, 0x72, 0x69, 0x63, 0x65, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e,
+	0x73, 0x65, 0x22, 0x21, 0x82, 0xd3, 0xe4, 0x93, 0x02, 0x1b, 0x22, 0x16, 0x2f, 0x76, 0x31, 0x2f,
+	0x73, 0x65, 0x74, 0x2f, 0x61, 0x70, 0x70, 0x2f, 0x67, 0x6f, 0x6f, 0x64, 0x2f, 0x70, 0x72, 0x69,
+	0x63, 0x65, 0x3a, 0x01, 0x2a, 0x12, 0x98, 0x01, 0x0a, 0x10, 0x41, 0x75, 0x74, 0x68, 0x6f, 0x72,
+	0x69, 0x7a, 0x65, 0x41, 0x70, 0x70, 0x47, 0x6f, 0x6f, 0x64, 0x12, 0x2f, 0x2e, 0x63, 0x6c, 0x6f,
 	0x75, 0x64, 0x2e, 0x68, 0x61, 0x73, 0x68, 0x69, 0x6e, 0x67, 0x2e, 0x67, 0x6f, 0x6f, 0x64, 0x73,
 	0x2e, 0x76, 0x31, 0x2e, 0x41, 0x75, 0x74, 0x68, 0x6f, 0x72, 0x69, 0x7a, 0x65, 0x41, 0x70, 0x70,
-	0x47, 0x6f, 0x6f, 0x64, 0x54, 0x61, 0x72, 0x67, 0x65, 0x74, 0x41, 0x72, 0x65, 0x61, 0x52, 0x65,
-	0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x16, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x70,
-	0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2e, 0x45, 0x6d, 0x70, 0x74, 0x79, 0x22, 0x2d, 0x82,
-	0xd3, 0xe4, 0x93, 0x02, 0x27, 0x22, 0x22, 0x2f, 0x76, 0x31, 0x2f, 0x61, 0x75, 0x74, 0x68, 0x6f,
-	0x72, 0x69, 0x7a, 0x65, 0x2f, 0x61, 0x70, 0x70, 0x2f, 0x67, 0x6f, 0x6f, 0x64, 0x2f, 0x74, 0x61,
-	0x72, 0x67, 0x65, 0x74, 0x2d, 0x61, 0x72, 0x65, 0x61, 0x3a, 0x01, 0x2a, 0x12, 0xa4, 0x01, 0x0a,
-	0x1c, 0x55, 0x6e, 0x61, 0x75, 0x74, 0x68, 0x6f, 0x72, 0x69, 0x7a, 0x65, 0x41, 0x70, 0x70, 0x47,
-	0x6f, 0x6f, 0x64, 0x54, 0x61, 0x72, 0x67, 0x65, 0x74, 0x41, 0x72, 0x65, 0x61, 0x12, 0x3b, 0x2e,
-	0x63, 0x6c, 0x6f, 0x75, 0x64, 0x2e, 0x68, 0x61, 0x73, 0x68, 0x69, 0x6e, 0x67, 0x2e, 0x67, 0x6f,
-	0x6f, 0x64, 0x73, 0x2e, 0x76, 0x31, 0x2e, 0x55, 0x6e, 0x61, 0x75, 0x74, 0x68, 0x6f, 0x72, 0x69,
-	0x7a, 0x65, 0x41, 0x70, 0x70, 0x47, 0x6f, 0x6f, 0x64, 0x54, 0x61, 0x72, 0x67, 0x65, 0x74, 0x41,
-	0x72, 0x65, 0x61, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x16, 0x2e, 0x67, 0x6f, 0x6f,
-	0x67, 0x6c, 0x65, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2e, 0x45, 0x6d, 0x70,
-	0x74, 0x79, 0x22, 0x2f, 0x82, 0xd3, 0xe4, 0x93, 0x02, 0x29, 0x22, 0x24, 0x2f, 0x76, 0x31, 0x2f,
-	0x75, 0x6e, 0x61, 0x75, 0x74, 0x68, 0x6f, 0x72, 0x69, 0x7a, 0x65, 0x2f, 0x61, 0x70, 0x70, 0x2f,
-	0x67, 0x6f, 0x6f, 0x64, 0x2f, 0x74, 0x61, 0x72, 0x67, 0x65, 0x74, 0x2d, 0x61, 0x72, 0x65, 0x61,
-	0x3a, 0x01, 0x2a, 0x12, 0x9c, 0x01, 0x0a, 0x11, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x47, 0x6f,
-	0x6f, 0x64, 0x43, 0x6f, 0x6d, 0x6d, 0x65, 0x6e, 0x74, 0x12, 0x30, 0x2e, 0x63, 0x6c, 0x6f, 0x75,
-	0x64, 0x2e, 0x68, 0x61, 0x73, 0x68, 0x69, 0x6e, 0x67, 0x2e, 0x67, 0x6f, 0x6f, 0x64, 0x73, 0x2e,
-	0x76, 0x31, 0x2e, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x47, 0x6f, 0x6f, 0x64, 0x43, 0x6f, 0x6d,
-	0x6d, 0x65, 0x6e, 0x74, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x31, 0x2e, 0x63, 0x6c,
+	0x47, 0x6f, 0x6f, 0x64, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x30, 0x2e, 0x63, 0x6c,
 	0x6f, 0x75, 0x64, 0x2e, 0x68, 0x61, 0x73, 0x68, 0x69, 0x6e, 0x67, 0x2e, 0x67, 0x6f, 0x6f, 0x64,
-	0x73, 0x2e, 0x76, 0x31, 0x2e, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x47, 0x6f, 0x6f, 0x64, 0x43,
-	0x6f, 0x6d, 0x6d, 0x65, 0x6e, 0x74, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x22,
-	0x82, 0xd3, 0xe4, 0x93, 0x02, 0x1c, 0x22, 0x17, 0x2f, 0x76, 0x31, 0x2f, 0x63, 0x72, 0x65, 0x61,
-	0x74, 0x65, 0x2f, 0x67, 0x6f, 0x6f, 0x64, 0x2f, 0x63, 0x6f, 0x6d, 0x6d, 0x65, 0x6e, 0x74, 0x3a,
-	0x01, 0x2a, 0x12, 0x9c, 0x01, 0x0a, 0x11, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x47, 0x6f, 0x6f,
-	0x64, 0x43, 0x6f, 0x6d, 0x6d, 0x65, 0x6e, 0x74, 0x12, 0x30, 0x2e, 0x63, 0x6c, 0x6f, 0x75, 0x64,
-	0x2e, 0x68, 0x61, 0x73, 0x68, 0x69, 0x6e, 0x67, 0x2e, 0x67, 0x6f, 0x6f, 0x64, 0x73, 0x2e, 0x76,
-	0x31, 0x2e, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x47, 0x6f, 0x6f, 0x64, 0x43, 0x6f, 0x6d, 0x6d,
-	0x65, 0x6e, 0x74, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x31, 0x2e, 0x63, 0x6c, 0x6f,
+	0x73, 0x2e, 0x76, 0x31, 0x2e, 0x41, 0x75, 0x74, 0x68, 0x6f, 0x72, 0x69, 0x7a, 0x65, 0x41, 0x70,
+	0x70, 0x47, 0x6f, 0x6f, 0x64, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x21, 0x82,
+	0xd3, 0xe4, 0x93, 0x02, 0x1b, 0x22, 0x16, 0x2f, 0x76, 0x31, 0x2f, 0x61, 0x75, 0x74, 0x68, 0x6f,
+	0x72, 0x69, 0x7a, 0x65, 0x2f, 0x61, 0x70, 0x70, 0x2f, 0x67, 0x6f, 0x6f, 0x64, 0x3a, 0x01, 0x2a,
+	0x12, 0xa0, 0x01, 0x0a, 0x12, 0x55, 0x6e, 0x61, 0x75, 0x74, 0x68, 0x6f, 0x72, 0x69, 0x7a, 0x65,
+	0x41, 0x70, 0x70, 0x47, 0x6f, 0x6f, 0x64, 0x12, 0x31, 0x2e, 0x63, 0x6c, 0x6f, 0x75, 0x64, 0x2e,
+	0x68, 0x61, 0x73, 0x68, 0x69, 0x6e, 0x67, 0x2e, 0x67, 0x6f, 0x6f, 0x64, 0x73, 0x2e, 0x76, 0x31,
+	0x2e, 0x55, 0x6e, 0x61, 0x75, 0x74, 0x68, 0x6f, 0x72, 0x69, 0x7a, 0x65, 0x41, 0x70, 0x70, 0x47,
+	0x6f, 0x6f, 0x64, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x32, 0x2e, 0x63, 0x6c, 0x6f,
 	0x75, 0x64, 0x2e, 0x68, 0x61, 0x73, 0x68, 0x69, 0x6e, 0x67, 0x2e, 0x67, 0x6f, 0x6f, 0x64, 0x73,
-	0x2e, 0x76, 0x31, 0x2e, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x47, 0x6f, 0x6f, 0x64, 0x43, 0x6f,
-	0x6d, 0x6d, 0x65, 0x6e, 0x74, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x22, 0x82,
-	0xd3, 0xe4, 0x93, 0x02, 0x1c, 0x22, 0x17, 0x2f, 0x76, 0x31, 0x2f, 0x75, 0x70, 0x64, 0x61, 0x74,
-	0x65, 0x2f, 0x67, 0x6f, 0x6f, 0x64, 0x2f, 0x63, 0x6f, 0x6d, 0x6d, 0x65, 0x6e, 0x74, 0x3a, 0x01,
-	0x2a, 0x12, 0x94, 0x01, 0x0a, 0x0f, 0x47, 0x65, 0x74, 0x47, 0x6f, 0x6f, 0x64, 0x43, 0x6f, 0x6d,
-	0x6d, 0x65, 0x6e, 0x74, 0x73, 0x12, 0x2e, 0x2e, 0x63, 0x6c, 0x6f, 0x75, 0x64, 0x2e, 0x68, 0x61,
-	0x73, 0x68, 0x69, 0x6e, 0x67, 0x2e, 0x67, 0x6f, 0x6f, 0x64, 0x73, 0x2e, 0x76, 0x31, 0x2e, 0x47,
-	0x65, 0x74, 0x47, 0x6f, 0x6f, 0x64, 0x43, 0x6f, 0x6d, 0x6d, 0x65, 0x6e, 0x74, 0x73, 0x52, 0x65,
-	0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x2f, 0x2e, 0x63, 0x6c, 0x6f, 0x75, 0x64, 0x2e, 0x68, 0x61,
-	0x73, 0x68, 0x69, 0x6e, 0x67, 0x2e, 0x67, 0x6f, 0x6f, 0x64, 0x73, 0x2e, 0x76, 0x31, 0x2e, 0x47,
-	0x65, 0x74, 0x47, 0x6f, 0x6f, 0x64, 0x43, 0x6f, 0x6d, 0x6d, 0x65, 0x6e, 0x74, 0x73, 0x52, 0x65,
-	0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x20, 0x82, 0xd3, 0xe4, 0x93, 0x02, 0x1a, 0x22, 0x15,
-	0x2f, 0x76, 0x31, 0x2f, 0x67, 0x65, 0x74, 0x2f, 0x67, 0x6f, 0x6f, 0x64, 0x2f, 0x63, 0x6f, 0x6d,
-	0x6d, 0x65, 0x6e, 0x74, 0x73, 0x3a, 0x01, 0x2a, 0x42, 0x3c, 0x5a, 0x3a, 0x67, 0x69, 0x74, 0x68,
-	0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x4e, 0x70, 0x6f, 0x6f, 0x6c, 0x50, 0x6c, 0x61, 0x74,
-	0x66, 0x6f, 0x72, 0x6d, 0x2f, 0x63, 0x6c, 0x6f, 0x75, 0x64, 0x2d, 0x68, 0x61, 0x73, 0x68, 0x69,
-	0x6e, 0x67, 0x2d, 0x67, 0x6f, 0x6f, 0x64, 0x73, 0x2f, 0x6d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65,
-	0x2f, 0x6e, 0x70, 0x6f, 0x6f, 0x6c, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x2e, 0x76, 0x31, 0x2e, 0x55, 0x6e, 0x61, 0x75, 0x74, 0x68, 0x6f, 0x72, 0x69, 0x7a, 0x65, 0x41,
+	0x70, 0x70, 0x47, 0x6f, 0x6f, 0x64, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x23,
+	0x82, 0xd3, 0xe4, 0x93, 0x02, 0x1d, 0x22, 0x18, 0x2f, 0x76, 0x31, 0x2f, 0x75, 0x6e, 0x61, 0x75,
+	0x74, 0x68, 0x6f, 0x72, 0x69, 0x7a, 0x65, 0x2f, 0x61, 0x70, 0x70, 0x2f, 0x67, 0x6f, 0x6f, 0x64,
+	0x3a, 0x01, 0x2a, 0x12, 0x91, 0x01, 0x0a, 0x16, 0x41, 0x75, 0x74, 0x68, 0x6f, 0x72, 0x69, 0x7a,
+	0x65, 0x41, 0x70, 0x70, 0x54, 0x61, 0x72, 0x67, 0x65, 0x74, 0x41, 0x72, 0x65, 0x61, 0x12, 0x35,
+	0x2e, 0x63, 0x6c, 0x6f, 0x75, 0x64, 0x2e, 0x68, 0x61, 0x73, 0x68, 0x69, 0x6e, 0x67, 0x2e, 0x67,
+	0x6f, 0x6f, 0x64, 0x73, 0x2e, 0x76, 0x31, 0x2e, 0x41, 0x75, 0x74, 0x68, 0x6f, 0x72, 0x69, 0x7a,
+	0x65, 0x41, 0x70, 0x70, 0x54, 0x61, 0x72, 0x67, 0x65, 0x74, 0x41, 0x72, 0x65, 0x61, 0x52, 0x65,
+	0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x16, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x70,
+	0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2e, 0x45, 0x6d, 0x70, 0x74, 0x79, 0x22, 0x28, 0x82,
+	0xd3, 0xe4, 0x93, 0x02, 0x22, 0x22, 0x1d, 0x2f, 0x76, 0x31, 0x2f, 0x61, 0x75, 0x74, 0x68, 0x6f,
+	0x72, 0x69, 0x7a, 0x65, 0x2f, 0x61, 0x70, 0x70, 0x2f, 0x74, 0x61, 0x72, 0x67, 0x65, 0x74, 0x2d,
+	0x61, 0x72, 0x65, 0x61, 0x3a, 0x01, 0x2a, 0x12, 0x97, 0x01, 0x0a, 0x18, 0x55, 0x6e, 0x61, 0x75,
+	0x74, 0x68, 0x6f, 0x72, 0x69, 0x7a, 0x65, 0x41, 0x70, 0x70, 0x54, 0x61, 0x72, 0x67, 0x65, 0x74,
+	0x41, 0x72, 0x65, 0x61, 0x12, 0x37, 0x2e, 0x63, 0x6c, 0x6f, 0x75, 0x64, 0x2e, 0x68, 0x61, 0x73,
+	0x68, 0x69, 0x6e, 0x67, 0x2e, 0x67, 0x6f, 0x6f, 0x64, 0x73, 0x2e, 0x76, 0x31, 0x2e, 0x55, 0x6e,
+	0x61, 0x75, 0x74, 0x68, 0x6f, 0x72, 0x69, 0x7a, 0x65, 0x41, 0x70, 0x70, 0x54, 0x61, 0x72, 0x67,
+	0x65, 0x74, 0x41, 0x72, 0x65, 0x61, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x16, 0x2e,
+	0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2e,
+	0x45, 0x6d, 0x70, 0x74, 0x79, 0x22, 0x2a, 0x82, 0xd3, 0xe4, 0x93, 0x02, 0x24, 0x22, 0x1f, 0x2f,
+	0x76, 0x31, 0x2f, 0x75, 0x6e, 0x61, 0x75, 0x74, 0x68, 0x6f, 0x72, 0x69, 0x7a, 0x65, 0x2f, 0x61,
+	0x70, 0x70, 0x2f, 0x74, 0x61, 0x72, 0x67, 0x65, 0x74, 0x2d, 0x61, 0x72, 0x65, 0x61, 0x3a, 0x01,
+	0x2a, 0x12, 0x9e, 0x01, 0x0a, 0x1a, 0x41, 0x75, 0x74, 0x68, 0x6f, 0x72, 0x69, 0x7a, 0x65, 0x41,
+	0x70, 0x70, 0x47, 0x6f, 0x6f, 0x64, 0x54, 0x61, 0x72, 0x67, 0x65, 0x74, 0x41, 0x72, 0x65, 0x61,
+	0x12, 0x39, 0x2e, 0x63, 0x6c, 0x6f, 0x75, 0x64, 0x2e, 0x68, 0x61, 0x73, 0x68, 0x69, 0x6e, 0x67,
+	0x2e, 0x67, 0x6f, 0x6f, 0x64, 0x73, 0x2e, 0x76, 0x31, 0x2e, 0x41, 0x75, 0x74, 0x68, 0x6f, 0x72,
+	0x69, 0x7a, 0x65, 0x41, 0x70, 0x70, 0x47, 0x6f, 0x6f, 0x64, 0x54, 0x61, 0x72, 0x67, 0x65, 0x74,
+	0x41, 0x72, 0x65, 0x61, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x16, 0x2e, 0x67, 0x6f,
+	0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2e, 0x45, 0x6d,
+	0x70, 0x74, 0x79, 0x22, 0x2d, 0x82, 0xd3, 0xe4, 0x93, 0x02, 0x27, 0x22, 0x22, 0x2f, 0x76, 0x31,
+	0x2f, 0x61, 0x75, 0x74, 0x68, 0x6f, 0x72, 0x69, 0x7a, 0x65, 0x2f, 0x61, 0x70, 0x70, 0x2f, 0x67,
+	0x6f, 0x6f, 0x64, 0x2f, 0x74, 0x61, 0x72, 0x67, 0x65, 0x74, 0x2d, 0x61, 0x72, 0x65, 0x61, 0x3a,
+	0x01, 0x2a, 0x12, 0xa4, 0x01, 0x0a, 0x1c, 0x55, 0x6e, 0x61, 0x75, 0x74, 0x68, 0x6f, 0x72, 0x69,
+	0x7a, 0x65, 0x41, 0x70, 0x70, 0x47, 0x6f, 0x6f, 0x64, 0x54, 0x61, 0x72, 0x67, 0x65, 0x74, 0x41,
+	0x72, 0x65, 0x61, 0x12, 0x3b, 0x2e, 0x63, 0x6c, 0x6f, 0x75, 0x64, 0x2e, 0x68, 0x61, 0x73, 0x68,
+	0x69, 0x6e, 0x67, 0x2e, 0x67, 0x6f, 0x6f, 0x64, 0x73, 0x2e, 0x76, 0x31, 0x2e, 0x55, 0x6e, 0x61,
+	0x75, 0x74, 0x68, 0x6f, 0x72, 0x69, 0x7a, 0x65, 0x41, 0x70, 0x70, 0x47, 0x6f, 0x6f, 0x64, 0x54,
+	0x61, 0x72, 0x67, 0x65, 0x74, 0x41, 0x72, 0x65, 0x61, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74,
+	0x1a, 0x16, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62,
+	0x75, 0x66, 0x2e, 0x45, 0x6d, 0x70, 0x74, 0x79, 0x22, 0x2f, 0x82, 0xd3, 0xe4, 0x93, 0x02, 0x29,
+	0x22, 0x24, 0x2f, 0x76, 0x31, 0x2f, 0x75, 0x6e, 0x61, 0x75, 0x74, 0x68, 0x6f, 0x72, 0x69, 0x7a,
+	0x65, 0x2f, 0x61, 0x70, 0x70, 0x2f, 0x67, 0x6f, 0x6f, 0x64, 0x2f, 0x74, 0x61, 0x72, 0x67, 0x65,
+	0x74, 0x2d, 0x61, 0x72, 0x65, 0x61, 0x3a, 0x01, 0x2a, 0x12, 0x9c, 0x01, 0x0a, 0x11, 0x43, 0x72,
+	0x65, 0x61, 0x74, 0x65, 0x47, 0x6f, 0x6f, 0x64, 0x43, 0x6f, 0x6d, 0x6d, 0x65, 0x6e, 0x74, 0x12,
+	0x30, 0x2e, 0x63, 0x6c, 0x6f, 0x75, 0x64, 0x2e, 0x68, 0x61, 0x73, 0x68, 0x69, 0x6e, 0x67, 0x2e,
+	0x67, 0x6f, 0x6f, 0x64, 0x73, 0x2e, 0x76, 0x31, 0x2e, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x47,
+	0x6f, 0x6f, 0x64, 0x43, 0x6f, 0x6d, 0x6d, 0x65, 0x6e, 0x74, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73,
+	0x74, 0x1a, 0x31, 0x2e, 0x63, 0x6c, 0x6f, 0x75, 0x64, 0x2e, 0x68, 0x61, 0x73, 0x68, 0x69, 0x6e,
+	0x67, 0x2e, 0x67, 0x6f, 0x6f, 0x64, 0x73, 0x2e, 0x76, 0x31, 0x2e, 0x43, 0x72, 0x65, 0x61, 0x74,
+	0x65, 0x47, 0x6f, 0x6f, 0x64, 0x43, 0x6f, 0x6d, 0x6d, 0x65, 0x6e, 0x74, 0x52, 0x65, 0x73, 0x70,
+	0x6f, 0x6e, 0x73, 0x65, 0x22, 0x22, 0x82, 0xd3, 0xe4, 0x93, 0x02, 0x1c, 0x22, 0x17, 0x2f, 0x76,
+	0x31, 0x2f, 0x63, 0x72, 0x65, 0x61, 0x74, 0x65, 0x2f, 0x67, 0x6f, 0x6f, 0x64, 0x2f, 0x63, 0x6f,
+	0x6d, 0x6d, 0x65, 0x6e, 0x74, 0x3a, 0x01, 0x2a, 0x12, 0x9c, 0x01, 0x0a, 0x11, 0x55, 0x70, 0x64,
+	0x61, 0x74, 0x65, 0x47, 0x6f, 0x6f, 0x64, 0x43, 0x6f, 0x6d, 0x6d, 0x65, 0x6e, 0x74, 0x12, 0x30,
+	0x2e, 0x63, 0x6c, 0x6f, 0x75, 0x64, 0x2e, 0x68, 0x61, 0x73, 0x68, 0x69, 0x6e, 0x67, 0x2e, 0x67,
+	0x6f, 0x6f, 0x64, 0x73, 0x2e, 0x76, 0x31, 0x2e, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x47, 0x6f,
+	0x6f, 0x64, 0x43, 0x6f, 0x6d, 0x6d, 0x65, 0x6e, 0x74, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74,
+	0x1a, 0x31, 0x2e, 0x63, 0x6c, 0x6f, 0x75, 0x64, 0x2e, 0x68, 0x61, 0x73, 0x68, 0x69, 0x6e, 0x67,
+	0x2e, 0x67, 0x6f, 0x6f, 0x64, 0x73, 0x2e, 0x76, 0x31, 0x2e, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65,
+	0x47, 0x6f, 0x6f, 0x64, 0x43, 0x6f, 0x6d, 0x6d, 0x65, 0x6e, 0x74, 0x52, 0x65, 0x73, 0x70, 0x6f,
+	0x6e, 0x73, 0x65, 0x22, 0x22, 0x82, 0xd3, 0xe4, 0x93, 0x02, 0x1c, 0x22, 0x17, 0x2f, 0x76, 0x31,
+	0x2f, 0x75, 0x70, 0x64, 0x61, 0x74, 0x65, 0x2f, 0x67, 0x6f, 0x6f, 0x64, 0x2f, 0x63, 0x6f, 0x6d,
+	0x6d, 0x65, 0x6e, 0x74, 0x3a, 0x01, 0x2a, 0x12, 0x94, 0x01, 0x0a, 0x0f, 0x47, 0x65, 0x74, 0x47,
+	0x6f, 0x6f, 0x64, 0x43, 0x6f, 0x6d, 0x6d, 0x65, 0x6e, 0x74, 0x73, 0x12, 0x2e, 0x2e, 0x63, 0x6c,
+	0x6f, 0x75, 0x64, 0x2e, 0x68, 0x61, 0x73, 0x68, 0x69, 0x6e, 0x67, 0x2e, 0x67, 0x6f, 0x6f, 0x64,
+	0x73, 0x2e, 0x76, 0x31, 0x2e, 0x47, 0x65, 0x74, 0x47, 0x6f, 0x6f, 0x64, 0x43, 0x6f, 0x6d, 0x6d,
+	0x65, 0x6e, 0x74, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x2f, 0x2e, 0x63, 0x6c,
+	0x6f, 0x75, 0x64, 0x2e, 0x68, 0x61, 0x73, 0x68, 0x69, 0x6e, 0x67, 0x2e, 0x67, 0x6f, 0x6f, 0x64,
+	0x73, 0x2e, 0x76, 0x31, 0x2e, 0x47, 0x65, 0x74, 0x47, 0x6f, 0x6f, 0x64, 0x43, 0x6f, 0x6d, 0x6d,
+	0x65, 0x6e, 0x74, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x20, 0x82, 0xd3,
+	0xe4, 0x93, 0x02, 0x1a, 0x22, 0x15, 0x2f, 0x76, 0x31, 0x2f, 0x67, 0x65, 0x74, 0x2f, 0x67, 0x6f,
+	0x6f, 0x64, 0x2f, 0x63, 0x6f, 0x6d, 0x6d, 0x65, 0x6e, 0x74, 0x73, 0x3a, 0x01, 0x2a, 0x42, 0x3c,
+	0x5a, 0x3a, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x4e, 0x70, 0x6f,
+	0x6f, 0x6c, 0x50, 0x6c, 0x61, 0x74, 0x66, 0x6f, 0x72, 0x6d, 0x2f, 0x63, 0x6c, 0x6f, 0x75, 0x64,
+	0x2d, 0x68, 0x61, 0x73, 0x68, 0x69, 0x6e, 0x67, 0x2d, 0x67, 0x6f, 0x6f, 0x64, 0x73, 0x2f, 0x6d,
+	0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x2f, 0x6e, 0x70, 0x6f, 0x6f, 0x6c, 0x62, 0x06, 0x70, 0x72,
+	0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -4251,7 +4469,7 @@ func file_npool_cloud_hashing_goods_proto_rawDescGZIP() []byte {
 	return file_npool_cloud_hashing_goods_proto_rawDescData
 }
 
-var file_npool_cloud_hashing_goods_proto_msgTypes = make([]protoimpl.MessageInfo, 65)
+var file_npool_cloud_hashing_goods_proto_msgTypes = make([]protoimpl.MessageInfo, 69)
 var file_npool_cloud_hashing_goods_proto_goTypes = []interface{}{
 	(*PageInfo)(nil),                                   // 0: cloud.hashing.goods.v1.PageInfo
 	(*VersionResponse)(nil),                            // 1: cloud.hashing.goods.v1.VersionResponse
@@ -4295,30 +4513,34 @@ var file_npool_cloud_hashing_goods_proto_goTypes = []interface{}{
 	(*CreateGoodResponse)(nil),                         // 39: cloud.hashing.goods.v1.CreateGoodResponse
 	(*UpdateGoodRequest)(nil),                          // 40: cloud.hashing.goods.v1.UpdateGoodRequest
 	(*UpdateGoodResponse)(nil),                         // 41: cloud.hashing.goods.v1.UpdateGoodResponse
-	(*GetAllGoodsRequest)(nil),                         // 42: cloud.hashing.goods.v1.GetAllGoodsRequest
-	(*GoodAuthInfo)(nil),                               // 43: cloud.hashing.goods.v1.GoodAuthInfo
-	(*GetAllGoodsResponse)(nil),                        // 44: cloud.hashing.goods.v1.GetAllGoodsResponse
-	(*GetGoodsRequest)(nil),                            // 45: cloud.hashing.goods.v1.GetGoodsRequest
-	(*GetGoodsResponse)(nil),                           // 46: cloud.hashing.goods.v1.GetGoodsResponse
-	(*GoodPrice)(nil),                                  // 47: cloud.hashing.goods.v1.GoodPrice
-	(*SetAppGoodPriceRequest)(nil),                     // 48: cloud.hashing.goods.v1.SetAppGoodPriceRequest
-	(*SetAppGoodPriceResponse)(nil),                    // 49: cloud.hashing.goods.v1.SetAppGoodPriceResponse
-	(*AuthorizeAppGoodRequest)(nil),                    // 50: cloud.hashing.goods.v1.AuthorizeAppGoodRequest
-	(*AuthorizeAppGoodResponse)(nil),                   // 51: cloud.hashing.goods.v1.AuthorizeAppGoodResponse
-	(*UnauthorizeAppGoodRequest)(nil),                  // 52: cloud.hashing.goods.v1.UnauthorizeAppGoodRequest
-	(*UnauthorizeAppGoodResponse)(nil),                 // 53: cloud.hashing.goods.v1.UnauthorizeAppGoodResponse
-	(*AuthorizeAppTargetAreaRequest)(nil),              // 54: cloud.hashing.goods.v1.AuthorizeAppTargetAreaRequest
-	(*UnauthorizeAppTargetAreaRequest)(nil),            // 55: cloud.hashing.goods.v1.UnauthorizeAppTargetAreaRequest
-	(*AuthorizeAppGoodTargetAreaRequest)(nil),          // 56: cloud.hashing.goods.v1.AuthorizeAppGoodTargetAreaRequest
-	(*UnauthorizeAppGoodTargetAreaRequest)(nil),        // 57: cloud.hashing.goods.v1.UnauthorizeAppGoodTargetAreaRequest
-	(*GoodComment)(nil),                                // 58: cloud.hashing.goods.v1.GoodComment
-	(*CreateGoodCommentRequest)(nil),                   // 59: cloud.hashing.goods.v1.CreateGoodCommentRequest
-	(*CreateGoodCommentResponse)(nil),                  // 60: cloud.hashing.goods.v1.CreateGoodCommentResponse
-	(*UpdateGoodCommentRequest)(nil),                   // 61: cloud.hashing.goods.v1.UpdateGoodCommentRequest
-	(*UpdateGoodCommentResponse)(nil),                  // 62: cloud.hashing.goods.v1.UpdateGoodCommentResponse
-	(*GetGoodCommentsRequest)(nil),                     // 63: cloud.hashing.goods.v1.GetGoodCommentsRequest
-	(*GetGoodCommentsResponse)(nil),                    // 64: cloud.hashing.goods.v1.GetGoodCommentsResponse
-	(*emptypb.Empty)(nil),                              // 65: google.protobuf.Empty
+	(*GetGoodRequest)(nil),                             // 42: cloud.hashing.goods.v1.GetGoodRequest
+	(*GetGoodResponse)(nil),                            // 43: cloud.hashing.goods.v1.GetGoodResponse
+	(*DeleteGoodRequest)(nil),                          // 44: cloud.hashing.goods.v1.DeleteGoodRequest
+	(*DeleteGoodResponse)(nil),                         // 45: cloud.hashing.goods.v1.DeleteGoodResponse
+	(*GetAllGoodsRequest)(nil),                         // 46: cloud.hashing.goods.v1.GetAllGoodsRequest
+	(*GoodAuthInfo)(nil),                               // 47: cloud.hashing.goods.v1.GoodAuthInfo
+	(*GetAllGoodsResponse)(nil),                        // 48: cloud.hashing.goods.v1.GetAllGoodsResponse
+	(*GetGoodsRequest)(nil),                            // 49: cloud.hashing.goods.v1.GetGoodsRequest
+	(*GetGoodsResponse)(nil),                           // 50: cloud.hashing.goods.v1.GetGoodsResponse
+	(*GoodPrice)(nil),                                  // 51: cloud.hashing.goods.v1.GoodPrice
+	(*SetAppGoodPriceRequest)(nil),                     // 52: cloud.hashing.goods.v1.SetAppGoodPriceRequest
+	(*SetAppGoodPriceResponse)(nil),                    // 53: cloud.hashing.goods.v1.SetAppGoodPriceResponse
+	(*AuthorizeAppGoodRequest)(nil),                    // 54: cloud.hashing.goods.v1.AuthorizeAppGoodRequest
+	(*AuthorizeAppGoodResponse)(nil),                   // 55: cloud.hashing.goods.v1.AuthorizeAppGoodResponse
+	(*UnauthorizeAppGoodRequest)(nil),                  // 56: cloud.hashing.goods.v1.UnauthorizeAppGoodRequest
+	(*UnauthorizeAppGoodResponse)(nil),                 // 57: cloud.hashing.goods.v1.UnauthorizeAppGoodResponse
+	(*AuthorizeAppTargetAreaRequest)(nil),              // 58: cloud.hashing.goods.v1.AuthorizeAppTargetAreaRequest
+	(*UnauthorizeAppTargetAreaRequest)(nil),            // 59: cloud.hashing.goods.v1.UnauthorizeAppTargetAreaRequest
+	(*AuthorizeAppGoodTargetAreaRequest)(nil),          // 60: cloud.hashing.goods.v1.AuthorizeAppGoodTargetAreaRequest
+	(*UnauthorizeAppGoodTargetAreaRequest)(nil),        // 61: cloud.hashing.goods.v1.UnauthorizeAppGoodTargetAreaRequest
+	(*GoodComment)(nil),                                // 62: cloud.hashing.goods.v1.GoodComment
+	(*CreateGoodCommentRequest)(nil),                   // 63: cloud.hashing.goods.v1.CreateGoodCommentRequest
+	(*CreateGoodCommentResponse)(nil),                  // 64: cloud.hashing.goods.v1.CreateGoodCommentResponse
+	(*UpdateGoodCommentRequest)(nil),                   // 65: cloud.hashing.goods.v1.UpdateGoodCommentRequest
+	(*UpdateGoodCommentResponse)(nil),                  // 66: cloud.hashing.goods.v1.UpdateGoodCommentResponse
+	(*GetGoodCommentsRequest)(nil),                     // 67: cloud.hashing.goods.v1.GetGoodCommentsRequest
+	(*GetGoodCommentsResponse)(nil),                    // 68: cloud.hashing.goods.v1.GetGoodCommentsResponse
+	(*emptypb.Empty)(nil),                              // 69: google.protobuf.Empty
 }
 var file_npool_cloud_hashing_goods_proto_depIdxs = []int32{
 	2,  // 0: cloud.hashing.goods.v1.CreateVendorLocationRequest.Info:type_name -> cloud.hashing.goods.v1.VendorLocationInfo
@@ -4350,89 +4572,95 @@ var file_npool_cloud_hashing_goods_proto_depIdxs = []int32{
 	37, // 26: cloud.hashing.goods.v1.CreateGoodResponse.Info:type_name -> cloud.hashing.goods.v1.GoodInfo
 	37, // 27: cloud.hashing.goods.v1.UpdateGoodRequest.Info:type_name -> cloud.hashing.goods.v1.GoodInfo
 	37, // 28: cloud.hashing.goods.v1.UpdateGoodResponse.Info:type_name -> cloud.hashing.goods.v1.GoodInfo
-	0,  // 29: cloud.hashing.goods.v1.GetAllGoodsRequest.PageInfo:type_name -> cloud.hashing.goods.v1.PageInfo
-	37, // 30: cloud.hashing.goods.v1.GoodAuthInfo.Info:type_name -> cloud.hashing.goods.v1.GoodInfo
-	43, // 31: cloud.hashing.goods.v1.GetAllGoodsResponse.Infos:type_name -> cloud.hashing.goods.v1.GoodAuthInfo
-	0,  // 32: cloud.hashing.goods.v1.GetGoodsRequest.PageInfo:type_name -> cloud.hashing.goods.v1.PageInfo
-	37, // 33: cloud.hashing.goods.v1.GetGoodsResponse.Infos:type_name -> cloud.hashing.goods.v1.GoodInfo
-	47, // 34: cloud.hashing.goods.v1.SetAppGoodPriceRequest.GoodPrice:type_name -> cloud.hashing.goods.v1.GoodPrice
-	47, // 35: cloud.hashing.goods.v1.SetAppGoodPriceResponse.GoodPrice:type_name -> cloud.hashing.goods.v1.GoodPrice
-	37, // 36: cloud.hashing.goods.v1.SetAppGoodPriceResponse.GoodInfo:type_name -> cloud.hashing.goods.v1.GoodInfo
-	43, // 37: cloud.hashing.goods.v1.AuthorizeAppGoodResponse.Info:type_name -> cloud.hashing.goods.v1.GoodAuthInfo
-	43, // 38: cloud.hashing.goods.v1.UnauthorizeAppGoodResponse.Info:type_name -> cloud.hashing.goods.v1.GoodAuthInfo
-	58, // 39: cloud.hashing.goods.v1.CreateGoodCommentRequest.Comment:type_name -> cloud.hashing.goods.v1.GoodComment
-	58, // 40: cloud.hashing.goods.v1.CreateGoodCommentResponse.Comment:type_name -> cloud.hashing.goods.v1.GoodComment
-	58, // 41: cloud.hashing.goods.v1.UpdateGoodCommentRequest.Comment:type_name -> cloud.hashing.goods.v1.GoodComment
-	58, // 42: cloud.hashing.goods.v1.UpdateGoodCommentResponse.Comment:type_name -> cloud.hashing.goods.v1.GoodComment
-	0,  // 43: cloud.hashing.goods.v1.GetGoodCommentsRequest.PageInfo:type_name -> cloud.hashing.goods.v1.PageInfo
-	58, // 44: cloud.hashing.goods.v1.GetGoodCommentsResponse.Comments:type_name -> cloud.hashing.goods.v1.GoodComment
-	65, // 45: cloud.hashing.goods.v1.CloudHashingGoods.Version:input_type -> google.protobuf.Empty
-	3,  // 46: cloud.hashing.goods.v1.CloudHashingGoods.CreateVendorLocation:input_type -> cloud.hashing.goods.v1.CreateVendorLocationRequest
-	7,  // 47: cloud.hashing.goods.v1.CloudHashingGoods.UpdateVendorLocation:input_type -> cloud.hashing.goods.v1.UpdateVendorLocationRequest
-	5,  // 48: cloud.hashing.goods.v1.CloudHashingGoods.GetVendorLocation:input_type -> cloud.hashing.goods.v1.GetVendorLocationRequest
-	9,  // 49: cloud.hashing.goods.v1.CloudHashingGoods.DeleteVendorLocation:input_type -> cloud.hashing.goods.v1.DeleteVendorLocationRequest
-	11, // 50: cloud.hashing.goods.v1.CloudHashingGoods.GetVendorLocations:input_type -> cloud.hashing.goods.v1.GetVendorLocationsRequest
-	14, // 51: cloud.hashing.goods.v1.CloudHashingGoods.CreateTargetArea:input_type -> cloud.hashing.goods.v1.CreateTargetAreaRequest
-	18, // 52: cloud.hashing.goods.v1.CloudHashingGoods.UpdateTargetArea:input_type -> cloud.hashing.goods.v1.UpdateTargetAreaRequest
-	16, // 53: cloud.hashing.goods.v1.CloudHashingGoods.GetTargetArea:input_type -> cloud.hashing.goods.v1.GetTargetAreaRequest
-	20, // 54: cloud.hashing.goods.v1.CloudHashingGoods.DeleteTargetArea:input_type -> cloud.hashing.goods.v1.DeleteTargetAreaRequest
-	22, // 55: cloud.hashing.goods.v1.CloudHashingGoods.DeleteTargetAreaByContinentCountry:input_type -> cloud.hashing.goods.v1.DeleteTargetAreaByContinentCountryRequest
-	24, // 56: cloud.hashing.goods.v1.CloudHashingGoods.GetTargetAreas:input_type -> cloud.hashing.goods.v1.GetTargetAreasRequest
-	27, // 57: cloud.hashing.goods.v1.CloudHashingGoods.CreateDeviceInfo:input_type -> cloud.hashing.goods.v1.CreateDeviceInfoRequest
-	29, // 58: cloud.hashing.goods.v1.CloudHashingGoods.UpdateDeviceInfo:input_type -> cloud.hashing.goods.v1.UpdateDeviceInfoRequest
-	31, // 59: cloud.hashing.goods.v1.CloudHashingGoods.GetDeviceInfo:input_type -> cloud.hashing.goods.v1.GetDeviceInfoRequest
-	33, // 60: cloud.hashing.goods.v1.CloudHashingGoods.DeleteDeviceInfo:input_type -> cloud.hashing.goods.v1.DeleteDeviceInfoRequest
-	35, // 61: cloud.hashing.goods.v1.CloudHashingGoods.GetDeviceInfos:input_type -> cloud.hashing.goods.v1.GetDeviceInfosRequest
-	38, // 62: cloud.hashing.goods.v1.CloudHashingGoods.CreateGood:input_type -> cloud.hashing.goods.v1.CreateGoodRequest
-	40, // 63: cloud.hashing.goods.v1.CloudHashingGoods.UpdateGood:input_type -> cloud.hashing.goods.v1.UpdateGoodRequest
-	42, // 64: cloud.hashing.goods.v1.CloudHashingGoods.GetAllGoods:input_type -> cloud.hashing.goods.v1.GetAllGoodsRequest
-	45, // 65: cloud.hashing.goods.v1.CloudHashingGoods.GetGoods:input_type -> cloud.hashing.goods.v1.GetGoodsRequest
-	48, // 66: cloud.hashing.goods.v1.CloudHashingGoods.SetAppGoodPrice:input_type -> cloud.hashing.goods.v1.SetAppGoodPriceRequest
-	50, // 67: cloud.hashing.goods.v1.CloudHashingGoods.AuthorizeAppGood:input_type -> cloud.hashing.goods.v1.AuthorizeAppGoodRequest
-	52, // 68: cloud.hashing.goods.v1.CloudHashingGoods.UnauthorizeAppGood:input_type -> cloud.hashing.goods.v1.UnauthorizeAppGoodRequest
-	54, // 69: cloud.hashing.goods.v1.CloudHashingGoods.AuthorizeAppTargetArea:input_type -> cloud.hashing.goods.v1.AuthorizeAppTargetAreaRequest
-	55, // 70: cloud.hashing.goods.v1.CloudHashingGoods.UnauthorizeAppTargetArea:input_type -> cloud.hashing.goods.v1.UnauthorizeAppTargetAreaRequest
-	56, // 71: cloud.hashing.goods.v1.CloudHashingGoods.AuthorizeAppGoodTargetArea:input_type -> cloud.hashing.goods.v1.AuthorizeAppGoodTargetAreaRequest
-	57, // 72: cloud.hashing.goods.v1.CloudHashingGoods.UnauthorizeAppGoodTargetArea:input_type -> cloud.hashing.goods.v1.UnauthorizeAppGoodTargetAreaRequest
-	59, // 73: cloud.hashing.goods.v1.CloudHashingGoods.CreateGoodComment:input_type -> cloud.hashing.goods.v1.CreateGoodCommentRequest
-	61, // 74: cloud.hashing.goods.v1.CloudHashingGoods.UpdateGoodComment:input_type -> cloud.hashing.goods.v1.UpdateGoodCommentRequest
-	63, // 75: cloud.hashing.goods.v1.CloudHashingGoods.GetGoodComments:input_type -> cloud.hashing.goods.v1.GetGoodCommentsRequest
-	1,  // 76: cloud.hashing.goods.v1.CloudHashingGoods.Version:output_type -> cloud.hashing.goods.v1.VersionResponse
-	4,  // 77: cloud.hashing.goods.v1.CloudHashingGoods.CreateVendorLocation:output_type -> cloud.hashing.goods.v1.CreateVendorLocationResponse
-	8,  // 78: cloud.hashing.goods.v1.CloudHashingGoods.UpdateVendorLocation:output_type -> cloud.hashing.goods.v1.UpdateVendorLocationResponse
-	6,  // 79: cloud.hashing.goods.v1.CloudHashingGoods.GetVendorLocation:output_type -> cloud.hashing.goods.v1.GetVendorLocationResponse
-	10, // 80: cloud.hashing.goods.v1.CloudHashingGoods.DeleteVendorLocation:output_type -> cloud.hashing.goods.v1.DeleteVendorLocationResponse
-	12, // 81: cloud.hashing.goods.v1.CloudHashingGoods.GetVendorLocations:output_type -> cloud.hashing.goods.v1.GetVendorLocationsResponse
-	15, // 82: cloud.hashing.goods.v1.CloudHashingGoods.CreateTargetArea:output_type -> cloud.hashing.goods.v1.CreateTargetAreaResponse
-	19, // 83: cloud.hashing.goods.v1.CloudHashingGoods.UpdateTargetArea:output_type -> cloud.hashing.goods.v1.UpdateTargetAreaResponse
-	17, // 84: cloud.hashing.goods.v1.CloudHashingGoods.GetTargetArea:output_type -> cloud.hashing.goods.v1.GetTargetAreaResponse
-	21, // 85: cloud.hashing.goods.v1.CloudHashingGoods.DeleteTargetArea:output_type -> cloud.hashing.goods.v1.DeleteTargetAreaResponse
-	23, // 86: cloud.hashing.goods.v1.CloudHashingGoods.DeleteTargetAreaByContinentCountry:output_type -> cloud.hashing.goods.v1.DeleteTargetAreaByContinentCountryResponse
-	25, // 87: cloud.hashing.goods.v1.CloudHashingGoods.GetTargetAreas:output_type -> cloud.hashing.goods.v1.GetTargetAreasResponse
-	28, // 88: cloud.hashing.goods.v1.CloudHashingGoods.CreateDeviceInfo:output_type -> cloud.hashing.goods.v1.CreateDeviceInfoResponse
-	30, // 89: cloud.hashing.goods.v1.CloudHashingGoods.UpdateDeviceInfo:output_type -> cloud.hashing.goods.v1.UpdateDeviceInfoResponse
-	32, // 90: cloud.hashing.goods.v1.CloudHashingGoods.GetDeviceInfo:output_type -> cloud.hashing.goods.v1.GetDeviceInfoResponse
-	34, // 91: cloud.hashing.goods.v1.CloudHashingGoods.DeleteDeviceInfo:output_type -> cloud.hashing.goods.v1.DeleteDeviceInfoResponse
-	36, // 92: cloud.hashing.goods.v1.CloudHashingGoods.GetDeviceInfos:output_type -> cloud.hashing.goods.v1.GetDeviceInfosResponse
-	39, // 93: cloud.hashing.goods.v1.CloudHashingGoods.CreateGood:output_type -> cloud.hashing.goods.v1.CreateGoodResponse
-	41, // 94: cloud.hashing.goods.v1.CloudHashingGoods.UpdateGood:output_type -> cloud.hashing.goods.v1.UpdateGoodResponse
-	44, // 95: cloud.hashing.goods.v1.CloudHashingGoods.GetAllGoods:output_type -> cloud.hashing.goods.v1.GetAllGoodsResponse
-	46, // 96: cloud.hashing.goods.v1.CloudHashingGoods.GetGoods:output_type -> cloud.hashing.goods.v1.GetGoodsResponse
-	49, // 97: cloud.hashing.goods.v1.CloudHashingGoods.SetAppGoodPrice:output_type -> cloud.hashing.goods.v1.SetAppGoodPriceResponse
-	51, // 98: cloud.hashing.goods.v1.CloudHashingGoods.AuthorizeAppGood:output_type -> cloud.hashing.goods.v1.AuthorizeAppGoodResponse
-	53, // 99: cloud.hashing.goods.v1.CloudHashingGoods.UnauthorizeAppGood:output_type -> cloud.hashing.goods.v1.UnauthorizeAppGoodResponse
-	65, // 100: cloud.hashing.goods.v1.CloudHashingGoods.AuthorizeAppTargetArea:output_type -> google.protobuf.Empty
-	65, // 101: cloud.hashing.goods.v1.CloudHashingGoods.UnauthorizeAppTargetArea:output_type -> google.protobuf.Empty
-	65, // 102: cloud.hashing.goods.v1.CloudHashingGoods.AuthorizeAppGoodTargetArea:output_type -> google.protobuf.Empty
-	65, // 103: cloud.hashing.goods.v1.CloudHashingGoods.UnauthorizeAppGoodTargetArea:output_type -> google.protobuf.Empty
-	60, // 104: cloud.hashing.goods.v1.CloudHashingGoods.CreateGoodComment:output_type -> cloud.hashing.goods.v1.CreateGoodCommentResponse
-	62, // 105: cloud.hashing.goods.v1.CloudHashingGoods.UpdateGoodComment:output_type -> cloud.hashing.goods.v1.UpdateGoodCommentResponse
-	64, // 106: cloud.hashing.goods.v1.CloudHashingGoods.GetGoodComments:output_type -> cloud.hashing.goods.v1.GetGoodCommentsResponse
-	76, // [76:107] is the sub-list for method output_type
-	45, // [45:76] is the sub-list for method input_type
-	45, // [45:45] is the sub-list for extension type_name
-	45, // [45:45] is the sub-list for extension extendee
-	0,  // [0:45] is the sub-list for field type_name
+	37, // 29: cloud.hashing.goods.v1.GetGoodResponse.Info:type_name -> cloud.hashing.goods.v1.GoodInfo
+	37, // 30: cloud.hashing.goods.v1.DeleteGoodResponse.Info:type_name -> cloud.hashing.goods.v1.GoodInfo
+	0,  // 31: cloud.hashing.goods.v1.GetAllGoodsRequest.PageInfo:type_name -> cloud.hashing.goods.v1.PageInfo
+	37, // 32: cloud.hashing.goods.v1.GoodAuthInfo.Info:type_name -> cloud.hashing.goods.v1.GoodInfo
+	47, // 33: cloud.hashing.goods.v1.GetAllGoodsResponse.Infos:type_name -> cloud.hashing.goods.v1.GoodAuthInfo
+	0,  // 34: cloud.hashing.goods.v1.GetGoodsRequest.PageInfo:type_name -> cloud.hashing.goods.v1.PageInfo
+	37, // 35: cloud.hashing.goods.v1.GetGoodsResponse.Infos:type_name -> cloud.hashing.goods.v1.GoodInfo
+	51, // 36: cloud.hashing.goods.v1.SetAppGoodPriceRequest.GoodPrice:type_name -> cloud.hashing.goods.v1.GoodPrice
+	51, // 37: cloud.hashing.goods.v1.SetAppGoodPriceResponse.GoodPrice:type_name -> cloud.hashing.goods.v1.GoodPrice
+	37, // 38: cloud.hashing.goods.v1.SetAppGoodPriceResponse.GoodInfo:type_name -> cloud.hashing.goods.v1.GoodInfo
+	47, // 39: cloud.hashing.goods.v1.AuthorizeAppGoodResponse.Info:type_name -> cloud.hashing.goods.v1.GoodAuthInfo
+	47, // 40: cloud.hashing.goods.v1.UnauthorizeAppGoodResponse.Info:type_name -> cloud.hashing.goods.v1.GoodAuthInfo
+	62, // 41: cloud.hashing.goods.v1.CreateGoodCommentRequest.Comment:type_name -> cloud.hashing.goods.v1.GoodComment
+	62, // 42: cloud.hashing.goods.v1.CreateGoodCommentResponse.Comment:type_name -> cloud.hashing.goods.v1.GoodComment
+	62, // 43: cloud.hashing.goods.v1.UpdateGoodCommentRequest.Comment:type_name -> cloud.hashing.goods.v1.GoodComment
+	62, // 44: cloud.hashing.goods.v1.UpdateGoodCommentResponse.Comment:type_name -> cloud.hashing.goods.v1.GoodComment
+	0,  // 45: cloud.hashing.goods.v1.GetGoodCommentsRequest.PageInfo:type_name -> cloud.hashing.goods.v1.PageInfo
+	62, // 46: cloud.hashing.goods.v1.GetGoodCommentsResponse.Comments:type_name -> cloud.hashing.goods.v1.GoodComment
+	69, // 47: cloud.hashing.goods.v1.CloudHashingGoods.Version:input_type -> google.protobuf.Empty
+	3,  // 48: cloud.hashing.goods.v1.CloudHashingGoods.CreateVendorLocation:input_type -> cloud.hashing.goods.v1.CreateVendorLocationRequest
+	7,  // 49: cloud.hashing.goods.v1.CloudHashingGoods.UpdateVendorLocation:input_type -> cloud.hashing.goods.v1.UpdateVendorLocationRequest
+	5,  // 50: cloud.hashing.goods.v1.CloudHashingGoods.GetVendorLocation:input_type -> cloud.hashing.goods.v1.GetVendorLocationRequest
+	9,  // 51: cloud.hashing.goods.v1.CloudHashingGoods.DeleteVendorLocation:input_type -> cloud.hashing.goods.v1.DeleteVendorLocationRequest
+	11, // 52: cloud.hashing.goods.v1.CloudHashingGoods.GetVendorLocations:input_type -> cloud.hashing.goods.v1.GetVendorLocationsRequest
+	14, // 53: cloud.hashing.goods.v1.CloudHashingGoods.CreateTargetArea:input_type -> cloud.hashing.goods.v1.CreateTargetAreaRequest
+	18, // 54: cloud.hashing.goods.v1.CloudHashingGoods.UpdateTargetArea:input_type -> cloud.hashing.goods.v1.UpdateTargetAreaRequest
+	16, // 55: cloud.hashing.goods.v1.CloudHashingGoods.GetTargetArea:input_type -> cloud.hashing.goods.v1.GetTargetAreaRequest
+	20, // 56: cloud.hashing.goods.v1.CloudHashingGoods.DeleteTargetArea:input_type -> cloud.hashing.goods.v1.DeleteTargetAreaRequest
+	22, // 57: cloud.hashing.goods.v1.CloudHashingGoods.DeleteTargetAreaByContinentCountry:input_type -> cloud.hashing.goods.v1.DeleteTargetAreaByContinentCountryRequest
+	24, // 58: cloud.hashing.goods.v1.CloudHashingGoods.GetTargetAreas:input_type -> cloud.hashing.goods.v1.GetTargetAreasRequest
+	27, // 59: cloud.hashing.goods.v1.CloudHashingGoods.CreateDeviceInfo:input_type -> cloud.hashing.goods.v1.CreateDeviceInfoRequest
+	29, // 60: cloud.hashing.goods.v1.CloudHashingGoods.UpdateDeviceInfo:input_type -> cloud.hashing.goods.v1.UpdateDeviceInfoRequest
+	31, // 61: cloud.hashing.goods.v1.CloudHashingGoods.GetDeviceInfo:input_type -> cloud.hashing.goods.v1.GetDeviceInfoRequest
+	33, // 62: cloud.hashing.goods.v1.CloudHashingGoods.DeleteDeviceInfo:input_type -> cloud.hashing.goods.v1.DeleteDeviceInfoRequest
+	35, // 63: cloud.hashing.goods.v1.CloudHashingGoods.GetDeviceInfos:input_type -> cloud.hashing.goods.v1.GetDeviceInfosRequest
+	38, // 64: cloud.hashing.goods.v1.CloudHashingGoods.CreateGood:input_type -> cloud.hashing.goods.v1.CreateGoodRequest
+	40, // 65: cloud.hashing.goods.v1.CloudHashingGoods.UpdateGood:input_type -> cloud.hashing.goods.v1.UpdateGoodRequest
+	42, // 66: cloud.hashing.goods.v1.CloudHashingGoods.GetGood:input_type -> cloud.hashing.goods.v1.GetGoodRequest
+	44, // 67: cloud.hashing.goods.v1.CloudHashingGoods.DeleteGood:input_type -> cloud.hashing.goods.v1.DeleteGoodRequest
+	46, // 68: cloud.hashing.goods.v1.CloudHashingGoods.GetAllGoods:input_type -> cloud.hashing.goods.v1.GetAllGoodsRequest
+	49, // 69: cloud.hashing.goods.v1.CloudHashingGoods.GetGoods:input_type -> cloud.hashing.goods.v1.GetGoodsRequest
+	52, // 70: cloud.hashing.goods.v1.CloudHashingGoods.SetAppGoodPrice:input_type -> cloud.hashing.goods.v1.SetAppGoodPriceRequest
+	54, // 71: cloud.hashing.goods.v1.CloudHashingGoods.AuthorizeAppGood:input_type -> cloud.hashing.goods.v1.AuthorizeAppGoodRequest
+	56, // 72: cloud.hashing.goods.v1.CloudHashingGoods.UnauthorizeAppGood:input_type -> cloud.hashing.goods.v1.UnauthorizeAppGoodRequest
+	58, // 73: cloud.hashing.goods.v1.CloudHashingGoods.AuthorizeAppTargetArea:input_type -> cloud.hashing.goods.v1.AuthorizeAppTargetAreaRequest
+	59, // 74: cloud.hashing.goods.v1.CloudHashingGoods.UnauthorizeAppTargetArea:input_type -> cloud.hashing.goods.v1.UnauthorizeAppTargetAreaRequest
+	60, // 75: cloud.hashing.goods.v1.CloudHashingGoods.AuthorizeAppGoodTargetArea:input_type -> cloud.hashing.goods.v1.AuthorizeAppGoodTargetAreaRequest
+	61, // 76: cloud.hashing.goods.v1.CloudHashingGoods.UnauthorizeAppGoodTargetArea:input_type -> cloud.hashing.goods.v1.UnauthorizeAppGoodTargetAreaRequest
+	63, // 77: cloud.hashing.goods.v1.CloudHashingGoods.CreateGoodComment:input_type -> cloud.hashing.goods.v1.CreateGoodCommentRequest
+	65, // 78: cloud.hashing.goods.v1.CloudHashingGoods.UpdateGoodComment:input_type -> cloud.hashing.goods.v1.UpdateGoodCommentRequest
+	67, // 79: cloud.hashing.goods.v1.CloudHashingGoods.GetGoodComments:input_type -> cloud.hashing.goods.v1.GetGoodCommentsRequest
+	1,  // 80: cloud.hashing.goods.v1.CloudHashingGoods.Version:output_type -> cloud.hashing.goods.v1.VersionResponse
+	4,  // 81: cloud.hashing.goods.v1.CloudHashingGoods.CreateVendorLocation:output_type -> cloud.hashing.goods.v1.CreateVendorLocationResponse
+	8,  // 82: cloud.hashing.goods.v1.CloudHashingGoods.UpdateVendorLocation:output_type -> cloud.hashing.goods.v1.UpdateVendorLocationResponse
+	6,  // 83: cloud.hashing.goods.v1.CloudHashingGoods.GetVendorLocation:output_type -> cloud.hashing.goods.v1.GetVendorLocationResponse
+	10, // 84: cloud.hashing.goods.v1.CloudHashingGoods.DeleteVendorLocation:output_type -> cloud.hashing.goods.v1.DeleteVendorLocationResponse
+	12, // 85: cloud.hashing.goods.v1.CloudHashingGoods.GetVendorLocations:output_type -> cloud.hashing.goods.v1.GetVendorLocationsResponse
+	15, // 86: cloud.hashing.goods.v1.CloudHashingGoods.CreateTargetArea:output_type -> cloud.hashing.goods.v1.CreateTargetAreaResponse
+	19, // 87: cloud.hashing.goods.v1.CloudHashingGoods.UpdateTargetArea:output_type -> cloud.hashing.goods.v1.UpdateTargetAreaResponse
+	17, // 88: cloud.hashing.goods.v1.CloudHashingGoods.GetTargetArea:output_type -> cloud.hashing.goods.v1.GetTargetAreaResponse
+	21, // 89: cloud.hashing.goods.v1.CloudHashingGoods.DeleteTargetArea:output_type -> cloud.hashing.goods.v1.DeleteTargetAreaResponse
+	23, // 90: cloud.hashing.goods.v1.CloudHashingGoods.DeleteTargetAreaByContinentCountry:output_type -> cloud.hashing.goods.v1.DeleteTargetAreaByContinentCountryResponse
+	25, // 91: cloud.hashing.goods.v1.CloudHashingGoods.GetTargetAreas:output_type -> cloud.hashing.goods.v1.GetTargetAreasResponse
+	28, // 92: cloud.hashing.goods.v1.CloudHashingGoods.CreateDeviceInfo:output_type -> cloud.hashing.goods.v1.CreateDeviceInfoResponse
+	30, // 93: cloud.hashing.goods.v1.CloudHashingGoods.UpdateDeviceInfo:output_type -> cloud.hashing.goods.v1.UpdateDeviceInfoResponse
+	32, // 94: cloud.hashing.goods.v1.CloudHashingGoods.GetDeviceInfo:output_type -> cloud.hashing.goods.v1.GetDeviceInfoResponse
+	34, // 95: cloud.hashing.goods.v1.CloudHashingGoods.DeleteDeviceInfo:output_type -> cloud.hashing.goods.v1.DeleteDeviceInfoResponse
+	36, // 96: cloud.hashing.goods.v1.CloudHashingGoods.GetDeviceInfos:output_type -> cloud.hashing.goods.v1.GetDeviceInfosResponse
+	39, // 97: cloud.hashing.goods.v1.CloudHashingGoods.CreateGood:output_type -> cloud.hashing.goods.v1.CreateGoodResponse
+	41, // 98: cloud.hashing.goods.v1.CloudHashingGoods.UpdateGood:output_type -> cloud.hashing.goods.v1.UpdateGoodResponse
+	43, // 99: cloud.hashing.goods.v1.CloudHashingGoods.GetGood:output_type -> cloud.hashing.goods.v1.GetGoodResponse
+	45, // 100: cloud.hashing.goods.v1.CloudHashingGoods.DeleteGood:output_type -> cloud.hashing.goods.v1.DeleteGoodResponse
+	48, // 101: cloud.hashing.goods.v1.CloudHashingGoods.GetAllGoods:output_type -> cloud.hashing.goods.v1.GetAllGoodsResponse
+	50, // 102: cloud.hashing.goods.v1.CloudHashingGoods.GetGoods:output_type -> cloud.hashing.goods.v1.GetGoodsResponse
+	53, // 103: cloud.hashing.goods.v1.CloudHashingGoods.SetAppGoodPrice:output_type -> cloud.hashing.goods.v1.SetAppGoodPriceResponse
+	55, // 104: cloud.hashing.goods.v1.CloudHashingGoods.AuthorizeAppGood:output_type -> cloud.hashing.goods.v1.AuthorizeAppGoodResponse
+	57, // 105: cloud.hashing.goods.v1.CloudHashingGoods.UnauthorizeAppGood:output_type -> cloud.hashing.goods.v1.UnauthorizeAppGoodResponse
+	69, // 106: cloud.hashing.goods.v1.CloudHashingGoods.AuthorizeAppTargetArea:output_type -> google.protobuf.Empty
+	69, // 107: cloud.hashing.goods.v1.CloudHashingGoods.UnauthorizeAppTargetArea:output_type -> google.protobuf.Empty
+	69, // 108: cloud.hashing.goods.v1.CloudHashingGoods.AuthorizeAppGoodTargetArea:output_type -> google.protobuf.Empty
+	69, // 109: cloud.hashing.goods.v1.CloudHashingGoods.UnauthorizeAppGoodTargetArea:output_type -> google.protobuf.Empty
+	64, // 110: cloud.hashing.goods.v1.CloudHashingGoods.CreateGoodComment:output_type -> cloud.hashing.goods.v1.CreateGoodCommentResponse
+	66, // 111: cloud.hashing.goods.v1.CloudHashingGoods.UpdateGoodComment:output_type -> cloud.hashing.goods.v1.UpdateGoodCommentResponse
+	68, // 112: cloud.hashing.goods.v1.CloudHashingGoods.GetGoodComments:output_type -> cloud.hashing.goods.v1.GetGoodCommentsResponse
+	80, // [80:113] is the sub-list for method output_type
+	47, // [47:80] is the sub-list for method input_type
+	47, // [47:47] is the sub-list for extension type_name
+	47, // [47:47] is the sub-list for extension extendee
+	0,  // [0:47] is the sub-list for field type_name
 }
 
 func init() { file_npool_cloud_hashing_goods_proto_init() }
@@ -4946,7 +5174,7 @@ func file_npool_cloud_hashing_goods_proto_init() {
 			}
 		}
 		file_npool_cloud_hashing_goods_proto_msgTypes[42].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*GetAllGoodsRequest); i {
+			switch v := v.(*GetGoodRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -4958,7 +5186,7 @@ func file_npool_cloud_hashing_goods_proto_init() {
 			}
 		}
 		file_npool_cloud_hashing_goods_proto_msgTypes[43].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*GoodAuthInfo); i {
+			switch v := v.(*GetGoodResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -4970,7 +5198,7 @@ func file_npool_cloud_hashing_goods_proto_init() {
 			}
 		}
 		file_npool_cloud_hashing_goods_proto_msgTypes[44].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*GetAllGoodsResponse); i {
+			switch v := v.(*DeleteGoodRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -4982,7 +5210,7 @@ func file_npool_cloud_hashing_goods_proto_init() {
 			}
 		}
 		file_npool_cloud_hashing_goods_proto_msgTypes[45].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*GetGoodsRequest); i {
+			switch v := v.(*DeleteGoodResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -4994,7 +5222,7 @@ func file_npool_cloud_hashing_goods_proto_init() {
 			}
 		}
 		file_npool_cloud_hashing_goods_proto_msgTypes[46].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*GetGoodsResponse); i {
+			switch v := v.(*GetAllGoodsRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -5006,7 +5234,7 @@ func file_npool_cloud_hashing_goods_proto_init() {
 			}
 		}
 		file_npool_cloud_hashing_goods_proto_msgTypes[47].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*GoodPrice); i {
+			switch v := v.(*GoodAuthInfo); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -5018,7 +5246,7 @@ func file_npool_cloud_hashing_goods_proto_init() {
 			}
 		}
 		file_npool_cloud_hashing_goods_proto_msgTypes[48].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*SetAppGoodPriceRequest); i {
+			switch v := v.(*GetAllGoodsResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -5030,7 +5258,7 @@ func file_npool_cloud_hashing_goods_proto_init() {
 			}
 		}
 		file_npool_cloud_hashing_goods_proto_msgTypes[49].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*SetAppGoodPriceResponse); i {
+			switch v := v.(*GetGoodsRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -5042,7 +5270,7 @@ func file_npool_cloud_hashing_goods_proto_init() {
 			}
 		}
 		file_npool_cloud_hashing_goods_proto_msgTypes[50].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*AuthorizeAppGoodRequest); i {
+			switch v := v.(*GetGoodsResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -5054,7 +5282,7 @@ func file_npool_cloud_hashing_goods_proto_init() {
 			}
 		}
 		file_npool_cloud_hashing_goods_proto_msgTypes[51].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*AuthorizeAppGoodResponse); i {
+			switch v := v.(*GoodPrice); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -5066,7 +5294,7 @@ func file_npool_cloud_hashing_goods_proto_init() {
 			}
 		}
 		file_npool_cloud_hashing_goods_proto_msgTypes[52].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*UnauthorizeAppGoodRequest); i {
+			switch v := v.(*SetAppGoodPriceRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -5078,7 +5306,7 @@ func file_npool_cloud_hashing_goods_proto_init() {
 			}
 		}
 		file_npool_cloud_hashing_goods_proto_msgTypes[53].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*UnauthorizeAppGoodResponse); i {
+			switch v := v.(*SetAppGoodPriceResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -5090,7 +5318,7 @@ func file_npool_cloud_hashing_goods_proto_init() {
 			}
 		}
 		file_npool_cloud_hashing_goods_proto_msgTypes[54].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*AuthorizeAppTargetAreaRequest); i {
+			switch v := v.(*AuthorizeAppGoodRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -5102,7 +5330,7 @@ func file_npool_cloud_hashing_goods_proto_init() {
 			}
 		}
 		file_npool_cloud_hashing_goods_proto_msgTypes[55].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*UnauthorizeAppTargetAreaRequest); i {
+			switch v := v.(*AuthorizeAppGoodResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -5114,7 +5342,7 @@ func file_npool_cloud_hashing_goods_proto_init() {
 			}
 		}
 		file_npool_cloud_hashing_goods_proto_msgTypes[56].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*AuthorizeAppGoodTargetAreaRequest); i {
+			switch v := v.(*UnauthorizeAppGoodRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -5126,7 +5354,7 @@ func file_npool_cloud_hashing_goods_proto_init() {
 			}
 		}
 		file_npool_cloud_hashing_goods_proto_msgTypes[57].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*UnauthorizeAppGoodTargetAreaRequest); i {
+			switch v := v.(*UnauthorizeAppGoodResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -5138,7 +5366,7 @@ func file_npool_cloud_hashing_goods_proto_init() {
 			}
 		}
 		file_npool_cloud_hashing_goods_proto_msgTypes[58].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*GoodComment); i {
+			switch v := v.(*AuthorizeAppTargetAreaRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -5150,7 +5378,7 @@ func file_npool_cloud_hashing_goods_proto_init() {
 			}
 		}
 		file_npool_cloud_hashing_goods_proto_msgTypes[59].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*CreateGoodCommentRequest); i {
+			switch v := v.(*UnauthorizeAppTargetAreaRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -5162,7 +5390,7 @@ func file_npool_cloud_hashing_goods_proto_init() {
 			}
 		}
 		file_npool_cloud_hashing_goods_proto_msgTypes[60].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*CreateGoodCommentResponse); i {
+			switch v := v.(*AuthorizeAppGoodTargetAreaRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -5174,7 +5402,7 @@ func file_npool_cloud_hashing_goods_proto_init() {
 			}
 		}
 		file_npool_cloud_hashing_goods_proto_msgTypes[61].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*UpdateGoodCommentRequest); i {
+			switch v := v.(*UnauthorizeAppGoodTargetAreaRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -5186,7 +5414,7 @@ func file_npool_cloud_hashing_goods_proto_init() {
 			}
 		}
 		file_npool_cloud_hashing_goods_proto_msgTypes[62].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*UpdateGoodCommentResponse); i {
+			switch v := v.(*GoodComment); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -5198,7 +5426,7 @@ func file_npool_cloud_hashing_goods_proto_init() {
 			}
 		}
 		file_npool_cloud_hashing_goods_proto_msgTypes[63].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*GetGoodCommentsRequest); i {
+			switch v := v.(*CreateGoodCommentRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -5210,6 +5438,54 @@ func file_npool_cloud_hashing_goods_proto_init() {
 			}
 		}
 		file_npool_cloud_hashing_goods_proto_msgTypes[64].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*CreateGoodCommentResponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_npool_cloud_hashing_goods_proto_msgTypes[65].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*UpdateGoodCommentRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_npool_cloud_hashing_goods_proto_msgTypes[66].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*UpdateGoodCommentResponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_npool_cloud_hashing_goods_proto_msgTypes[67].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*GetGoodCommentsRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_npool_cloud_hashing_goods_proto_msgTypes[68].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*GetGoodCommentsResponse); i {
 			case 0:
 				return &v.state
@@ -5228,7 +5504,7 @@ func file_npool_cloud_hashing_goods_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_npool_cloud_hashing_goods_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   65,
+			NumMessages:   69,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

@@ -91,9 +91,14 @@ func Get(ctx context.Context, in *npool.GetTargetAreaRequest) (*npool.GetTargetA
 }
 
 func Delete(ctx context.Context, in *npool.DeleteTargetAreaRequest) (*npool.DeleteTargetAreaResponse, error) {
+	id, err := uuid.Parse(in.GetID())
+	if err != nil {
+		return nil, xerrors.Errorf("invalid target area id: %v", err)
+	}
+
 	info, err := db.Client().
 		TargetArea.
-		UpdateOneID(uuid.MustParse(in.GetID())).
+		UpdateOneID(id).
 		SetDeleteAt(time.Now().UnixNano()).
 		Save(ctx)
 	if err != nil {

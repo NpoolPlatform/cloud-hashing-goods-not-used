@@ -108,6 +108,48 @@ func TestGoodInfoCRUD(t *testing.T) { //nolint
 		assert.Equal(t, resp1.Info.SupportCoinTypeIDs, supportCoinTypeIDs)
 		assert.Equal(t, resp1.Info.Total, total)
 	}
+
+	resp2, err := Get(context.Background(), &npool.GetGoodRequest{
+		ID: resp.Info.ID,
+	})
+	if assert.Nil(t, err) {
+		assert.Equal(t, resp2.Info.ID, resp.Info.ID)
+		assert.Equal(t, resp2.Info.DeviceInfoID, deviceInfoID)
+		assert.Equal(t, resp2.Info.GasPrice, gasPrice)
+		assert.Equal(t, resp2.Info.SeparateGasFee, separateGasFee)
+		assert.Equal(t, resp2.Info.UnitPower, unitPower)
+		assert.Equal(t, resp2.Info.DurationDays, duration)
+		assert.Equal(t, resp2.Info.CoinInfoID, coinInfoID)
+		assert.Equal(t, resp2.Info.Actuals, actuals)
+		assert.Equal(t, resp2.Info.InheritFromGoodID, inheritFromGoodID)
+		assert.Equal(t, resp2.Info.VendorLocationID, vendorLocationID)
+		assert.Equal(t, resp2.Info.Price, price)
+		assert.Equal(t, resp2.Info.BenefitType, goodInfo.BenefitType)
+		assert.Equal(t, resp2.Info.Classic, classic)
+		assert.Equal(t, resp2.Info.SupportCoinTypeIDs, supportCoinTypeIDs)
+		assert.Equal(t, resp2.Info.Total, total)
+	}
+
+	resp3, err := Delete(context.Background(), &npool.DeleteGoodRequest{
+		ID: resp.Info.ID,
+	})
+	if assert.Nil(t, err) {
+		assert.Equal(t, resp3.Info.ID, resp.Info.ID)
+		assert.Equal(t, resp3.Info.DeviceInfoID, deviceInfoID)
+		assert.Equal(t, resp3.Info.GasPrice, gasPrice)
+		assert.Equal(t, resp3.Info.SeparateGasFee, separateGasFee)
+		assert.Equal(t, resp3.Info.UnitPower, unitPower)
+		assert.Equal(t, resp3.Info.DurationDays, duration)
+		assert.Equal(t, resp3.Info.CoinInfoID, coinInfoID)
+		assert.Equal(t, resp3.Info.Actuals, actuals)
+		assert.Equal(t, resp3.Info.InheritFromGoodID, inheritFromGoodID)
+		assert.Equal(t, resp3.Info.VendorLocationID, vendorLocationID)
+		assert.Equal(t, resp3.Info.Price, price)
+		assert.Equal(t, resp3.Info.BenefitType, goodInfo.BenefitType)
+		assert.Equal(t, resp3.Info.Classic, classic)
+		assert.Equal(t, resp3.Info.SupportCoinTypeIDs, supportCoinTypeIDs)
+		assert.Equal(t, resp3.Info.Total, total)
+	}
 }
 
 func TestGetAll(t *testing.T) {

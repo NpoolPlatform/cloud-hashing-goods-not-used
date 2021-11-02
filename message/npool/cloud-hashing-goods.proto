@@ -124,6 +124,18 @@ service CloudHashingGoods {
             body: "*"
         };
     }
+    rpc GetGood(GetGoodRequest) returns (GetGoodResponse) {
+        option (google.api.http) = {
+            post: "/v1/get/good"
+            body: "*"
+        };
+    }
+    rpc DeleteGood(DeleteGoodRequest) returns (DeleteGoodResponse) {
+        option (google.api.http) = {
+            post: "/v1/delete/good"
+            body: "*"
+        };
+    }
     // Can only accessed by APP administrator and platform administrator
     rpc GetAllGoods(GetAllGoodsRequest) returns (GetAllGoodsResponse) {
         option (google.api.http) = {
@@ -400,6 +412,22 @@ message UpdateGoodRequest {
 
 message UpdateGoodResponse {
     GoodInfo Info = 2800;
+}
+
+message GetGoodRequest {
+    string ID = 2810;
+}
+
+message GetGoodResponse {
+    GoodInfo Info = 2820;
+}
+
+message DeleteGoodRequest {
+    string ID = 2830;
+}
+
+message DeleteGoodResponse {
+    GoodInfo Info = 2840;
 }
 
 message GetAllGoodsRequest {

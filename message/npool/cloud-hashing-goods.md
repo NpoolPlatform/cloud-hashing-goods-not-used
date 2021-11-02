@@ -20,6 +20,8 @@
     - [CreateVendorLocationResponse](#cloud.hashing.goods.v1.CreateVendorLocationResponse)
     - [DeleteDeviceInfoRequest](#cloud.hashing.goods.v1.DeleteDeviceInfoRequest)
     - [DeleteDeviceInfoResponse](#cloud.hashing.goods.v1.DeleteDeviceInfoResponse)
+    - [DeleteGoodRequest](#cloud.hashing.goods.v1.DeleteGoodRequest)
+    - [DeleteGoodResponse](#cloud.hashing.goods.v1.DeleteGoodResponse)
     - [DeleteTargetAreaByContinentCountryRequest](#cloud.hashing.goods.v1.DeleteTargetAreaByContinentCountryRequest)
     - [DeleteTargetAreaByContinentCountryResponse](#cloud.hashing.goods.v1.DeleteTargetAreaByContinentCountryResponse)
     - [DeleteTargetAreaRequest](#cloud.hashing.goods.v1.DeleteTargetAreaRequest)
@@ -35,6 +37,8 @@
     - [GetDeviceInfosResponse](#cloud.hashing.goods.v1.GetDeviceInfosResponse)
     - [GetGoodCommentsRequest](#cloud.hashing.goods.v1.GetGoodCommentsRequest)
     - [GetGoodCommentsResponse](#cloud.hashing.goods.v1.GetGoodCommentsResponse)
+    - [GetGoodRequest](#cloud.hashing.goods.v1.GetGoodRequest)
+    - [GetGoodResponse](#cloud.hashing.goods.v1.GetGoodResponse)
     - [GetGoodsRequest](#cloud.hashing.goods.v1.GetGoodsRequest)
     - [GetGoodsResponse](#cloud.hashing.goods.v1.GetGoodsResponse)
     - [GetTargetAreaRequest](#cloud.hashing.goods.v1.GetTargetAreaRequest)
@@ -328,6 +332,36 @@
 
 
 
+<a name="cloud.hashing.goods.v1.DeleteGoodRequest"></a>
+
+### DeleteGoodRequest
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| ID | [string](#string) |  |  |
+
+
+
+
+
+
+<a name="cloud.hashing.goods.v1.DeleteGoodResponse"></a>
+
+### DeleteGoodResponse
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| Info | [GoodInfo](#cloud.hashing.goods.v1.GoodInfo) |  |  |
+
+
+
+
+
+
 <a name="cloud.hashing.goods.v1.DeleteTargetAreaByContinentCountryRequest"></a>
 
 ### DeleteTargetAreaByContinentCountryRequest
@@ -557,6 +591,36 @@
 | ----- | ---- | ----- | ----------- |
 | Comments | [GoodComment](#cloud.hashing.goods.v1.GoodComment) | repeated |  |
 | Total | [int32](#int32) |  |  |
+
+
+
+
+
+
+<a name="cloud.hashing.goods.v1.GetGoodRequest"></a>
+
+### GetGoodRequest
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| ID | [string](#string) |  |  |
+
+
+
+
+
+
+<a name="cloud.hashing.goods.v1.GetGoodResponse"></a>
+
+### GetGoodResponse
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| Info | [GoodInfo](#cloud.hashing.goods.v1.GoodInfo) |  |  |
 
 
 
@@ -1145,6 +1209,8 @@ Cloud Hashing Goods
 | GetDeviceInfos | [GetDeviceInfosRequest](#cloud.hashing.goods.v1.GetDeviceInfosRequest) | [GetDeviceInfosResponse](#cloud.hashing.goods.v1.GetDeviceInfosResponse) |  |
 | CreateGood | [CreateGoodRequest](#cloud.hashing.goods.v1.CreateGoodRequest) | [CreateGoodResponse](#cloud.hashing.goods.v1.CreateGoodResponse) |  |
 | UpdateGood | [UpdateGoodRequest](#cloud.hashing.goods.v1.UpdateGoodRequest) | [UpdateGoodResponse](#cloud.hashing.goods.v1.UpdateGoodResponse) |  |
+| GetGood | [GetGoodRequest](#cloud.hashing.goods.v1.GetGoodRequest) | [GetGoodResponse](#cloud.hashing.goods.v1.GetGoodResponse) |  |
+| DeleteGood | [DeleteGoodRequest](#cloud.hashing.goods.v1.DeleteGoodRequest) | [DeleteGoodResponse](#cloud.hashing.goods.v1.DeleteGoodResponse) |  |
 | GetAllGoods | [GetAllGoodsRequest](#cloud.hashing.goods.v1.GetAllGoodsRequest) | [GetAllGoodsResponse](#cloud.hashing.goods.v1.GetAllGoodsResponse) | Can only accessed by APP administrator and platform administrator |
 | GetGoods | [GetGoodsRequest](#cloud.hashing.goods.v1.GetGoodsRequest) | [GetGoodsResponse](#cloud.hashing.goods.v1.GetGoodsResponse) | Accessed by APP user |
 | SetAppGoodPrice | [SetAppGoodPriceRequest](#cloud.hashing.goods.v1.SetAppGoodPriceRequest) | [SetAppGoodPriceResponse](#cloud.hashing.goods.v1.SetAppGoodPriceResponse) |  |

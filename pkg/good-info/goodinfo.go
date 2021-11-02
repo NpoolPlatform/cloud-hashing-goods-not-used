@@ -2,8 +2,8 @@ package goodinfo
 
 import (
 	"context"
-	_ "fmt"  //nolint
-	_ "time" //nolint
+	_ "fmt" //nolint
+	"time"
 
 	"github.com/NpoolPlatform/cloud-hashing-goods/message/npool"
 
@@ -149,6 +149,73 @@ func Update(ctx context.Context, in *npool.UpdateGoodRequest) (*npool.UpdateGood
 	}, nil
 }
 
+func Get(ctx context.Context, in *npool.GetGoodRequest) (*npool.GetGoodResponse, error) {
+	id, err := uuid.Parse(in.GetID())
+	if err != nil {
+		return nil, xerrors.Errorf("invalid good id: %v", err)
+	}
+
+	infos, err := db.Client().
+		GoodInfo.
+		Query().
+		Where(
+			goodinfo.Or(
+				goodinfo.ID(id),
+			),
+		).
+		All(ctx)
+	if err != nil {
+		return nil, xerrors.Errorf("fail to query good info: %v", err)
+	}
+	if len(infos) == 0 {
+		return nil, xerrors.Errorf("empty result of good info")
+	}
+
+	return &npool.GetGoodResponse{
+		Info: dbRowToInfo(infos[0]),
+	}, nil
+}
+
+func Delete(ctx context.Context, in *npool.DeleteGoodRequest) (*npool.GetGoodResponse, error) {
+	id, err := uuid.Parse(in.GetID())
+	if err != nil {
+		return nil, xerrors.Errorf("invalid good id: %v", err)
+	}
+
+	info, err := db.Client().
+		GoodInfo.
+		UpdateOneID(id).
+		SetDeleteAt(time.Now().UnixNano()).
+		Save(ctx)
+	if err != nil {
+		return nil, xerrors.Errorf("fail to delete good info: %v", err)
+	}
+
+	return &npool.GetGoodResponse{
+		Info: dbRowToInfo(info),
+	}, nil
+}
+
 func GetAll(ctx context.Context, in *npool.GetGoodsRequest) (*npool.GetGoodsResponse, error) {
-	return nil, nil
+	rows, err := db.Client().
+		GoodInfo.
+		Query().
+		Where(
+			goodinfo.Or(
+				goodinfo.DeleteAt(0),
+			),
+		).
+		All(ctx)
+	if err != nil {
+		return nil, xerrors.Errorf("fail to query good info: %v", err)
+	}
+
+	infos := []*npool.GoodInfo{}
+	for _, row := range rows {
+		infos = append(infos, dbRowToInfo(row))
+	}
+
+	return &npool.GetGoodsResponse{
+		Infos: infos,
+	}, nil
 }
