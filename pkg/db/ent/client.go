@@ -10,6 +10,7 @@ import (
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/migrate"
 	"github.com/google/uuid"
 
+	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/appareaauth"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/deviceinfo"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/goodinfo"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/targetarea"
@@ -24,6 +25,8 @@ type Client struct {
 	config
 	// Schema is the client for creating, migrating and dropping schema.
 	Schema *migrate.Schema
+	// AppAreaAuth is the client for interacting with the AppAreaAuth builders.
+	AppAreaAuth *AppAreaAuthClient
 	// DeviceInfo is the client for interacting with the DeviceInfo builders.
 	DeviceInfo *DeviceInfoClient
 	// GoodInfo is the client for interacting with the GoodInfo builders.
@@ -45,6 +48,7 @@ func NewClient(opts ...Option) *Client {
 
 func (c *Client) init() {
 	c.Schema = migrate.NewSchema(c.driver)
+	c.AppAreaAuth = NewAppAreaAuthClient(c.config)
 	c.DeviceInfo = NewDeviceInfoClient(c.config)
 	c.GoodInfo = NewGoodInfoClient(c.config)
 	c.TargetArea = NewTargetAreaClient(c.config)
@@ -82,6 +86,7 @@ func (c *Client) Tx(ctx context.Context) (*Tx, error) {
 	return &Tx{
 		ctx:            ctx,
 		config:         cfg,
+		AppAreaAuth:    NewAppAreaAuthClient(cfg),
 		DeviceInfo:     NewDeviceInfoClient(cfg),
 		GoodInfo:       NewGoodInfoClient(cfg),
 		TargetArea:     NewTargetAreaClient(cfg),
@@ -104,6 +109,7 @@ func (c *Client) BeginTx(ctx context.Context, opts *sql.TxOptions) (*Tx, error) 
 	cfg.driver = &txDriver{tx: tx, drv: c.driver}
 	return &Tx{
 		config:         cfg,
+		AppAreaAuth:    NewAppAreaAuthClient(cfg),
 		DeviceInfo:     NewDeviceInfoClient(cfg),
 		GoodInfo:       NewGoodInfoClient(cfg),
 		TargetArea:     NewTargetAreaClient(cfg),
@@ -114,7 +120,7 @@ func (c *Client) BeginTx(ctx context.Context, opts *sql.TxOptions) (*Tx, error) 
 // Debug returns a new debug-client. It's used to get verbose logging on specific operations.
 //
 //	client.Debug().
-//		DeviceInfo.
+//		AppAreaAuth.
 //		Query().
 //		Count(ctx)
 //
@@ -137,10 +143,101 @@ func (c *Client) Close() error {
 // Use adds the mutation hooks to all the entity clients.
 // In order to add hooks to a specific client, call: `client.Node.Use(...)`.
 func (c *Client) Use(hooks ...Hook) {
+	c.AppAreaAuth.Use(hooks...)
 	c.DeviceInfo.Use(hooks...)
 	c.GoodInfo.Use(hooks...)
 	c.TargetArea.Use(hooks...)
 	c.VendorLocation.Use(hooks...)
+}
+
+// AppAreaAuthClient is a client for the AppAreaAuth schema.
+type AppAreaAuthClient struct {
+	config
+}
+
+// NewAppAreaAuthClient returns a client for the AppAreaAuth from the given config.
+func NewAppAreaAuthClient(c config) *AppAreaAuthClient {
+	return &AppAreaAuthClient{config: c}
+}
+
+// Use adds a list of mutation hooks to the hooks stack.
+// A call to `Use(f, g, h)` equals to `appareaauth.Hooks(f(g(h())))`.
+func (c *AppAreaAuthClient) Use(hooks ...Hook) {
+	c.hooks.AppAreaAuth = append(c.hooks.AppAreaAuth, hooks...)
+}
+
+// Create returns a create builder for AppAreaAuth.
+func (c *AppAreaAuthClient) Create() *AppAreaAuthCreate {
+	mutation := newAppAreaAuthMutation(c.config, OpCreate)
+	return &AppAreaAuthCreate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// CreateBulk returns a builder for creating a bulk of AppAreaAuth entities.
+func (c *AppAreaAuthClient) CreateBulk(builders ...*AppAreaAuthCreate) *AppAreaAuthCreateBulk {
+	return &AppAreaAuthCreateBulk{config: c.config, builders: builders}
+}
+
+// Update returns an update builder for AppAreaAuth.
+func (c *AppAreaAuthClient) Update() *AppAreaAuthUpdate {
+	mutation := newAppAreaAuthMutation(c.config, OpUpdate)
+	return &AppAreaAuthUpdate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOne returns an update builder for the given entity.
+func (c *AppAreaAuthClient) UpdateOne(aaa *AppAreaAuth) *AppAreaAuthUpdateOne {
+	mutation := newAppAreaAuthMutation(c.config, OpUpdateOne, withAppAreaAuth(aaa))
+	return &AppAreaAuthUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOneID returns an update builder for the given id.
+func (c *AppAreaAuthClient) UpdateOneID(id uuid.UUID) *AppAreaAuthUpdateOne {
+	mutation := newAppAreaAuthMutation(c.config, OpUpdateOne, withAppAreaAuthID(id))
+	return &AppAreaAuthUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// Delete returns a delete builder for AppAreaAuth.
+func (c *AppAreaAuthClient) Delete() *AppAreaAuthDelete {
+	mutation := newAppAreaAuthMutation(c.config, OpDelete)
+	return &AppAreaAuthDelete{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// DeleteOne returns a delete builder for the given entity.
+func (c *AppAreaAuthClient) DeleteOne(aaa *AppAreaAuth) *AppAreaAuthDeleteOne {
+	return c.DeleteOneID(aaa.ID)
+}
+
+// DeleteOneID returns a delete builder for the given id.
+func (c *AppAreaAuthClient) DeleteOneID(id uuid.UUID) *AppAreaAuthDeleteOne {
+	builder := c.Delete().Where(appareaauth.ID(id))
+	builder.mutation.id = &id
+	builder.mutation.op = OpDeleteOne
+	return &AppAreaAuthDeleteOne{builder}
+}
+
+// Query returns a query builder for AppAreaAuth.
+func (c *AppAreaAuthClient) Query() *AppAreaAuthQuery {
+	return &AppAreaAuthQuery{
+		config: c.config,
+	}
+}
+
+// Get returns a AppAreaAuth entity by its id.
+func (c *AppAreaAuthClient) Get(ctx context.Context, id uuid.UUID) (*AppAreaAuth, error) {
+	return c.Query().Where(appareaauth.ID(id)).Only(ctx)
+}
+
+// GetX is like Get, but panics if an error occurs.
+func (c *AppAreaAuthClient) GetX(ctx context.Context, id uuid.UUID) *AppAreaAuth {
+	obj, err := c.Get(ctx, id)
+	if err != nil {
+		panic(err)
+	}
+	return obj
+}
+
+// Hooks returns the client hooks.
+func (c *AppAreaAuthClient) Hooks() []Hook {
+	return c.hooks.AppAreaAuth
 }
 
 // DeviceInfoClient is a client for the DeviceInfo schema.

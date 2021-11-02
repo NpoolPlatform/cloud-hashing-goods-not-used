@@ -9,6 +9,19 @@ import (
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent"
 )
 
+// The AppAreaAuthFunc type is an adapter to allow the use of ordinary
+// function as AppAreaAuth mutator.
+type AppAreaAuthFunc func(context.Context, *ent.AppAreaAuthMutation) (ent.Value, error)
+
+// Mutate calls f(ctx, m).
+func (f AppAreaAuthFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, error) {
+	mv, ok := m.(*ent.AppAreaAuthMutation)
+	if !ok {
+		return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.AppAreaAuthMutation", m)
+	}
+	return f(ctx, mv)
+}
+
 // The DeviceInfoFunc type is an adapter to allow the use of ordinary
 // function as DeviceInfo mutator.
 type DeviceInfoFunc func(context.Context, *ent.DeviceInfoMutation) (ent.Value, error)

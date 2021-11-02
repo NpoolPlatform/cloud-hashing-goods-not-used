@@ -8,6 +8,28 @@ import (
 )
 
 var (
+	// AppAreaAuthsColumns holds the columns for the "app_area_auths" table.
+	AppAreaAuthsColumns = []*schema.Column{
+		{Name: "id", Type: field.TypeUUID, Unique: true},
+		{Name: "target_area_id", Type: field.TypeUUID},
+		{Name: "app_id", Type: field.TypeUUID},
+		{Name: "create_at", Type: field.TypeInt64},
+		{Name: "update_at", Type: field.TypeInt64},
+		{Name: "delete_at", Type: field.TypeInt64},
+	}
+	// AppAreaAuthsTable holds the schema information for the "app_area_auths" table.
+	AppAreaAuthsTable = &schema.Table{
+		Name:       "app_area_auths",
+		Columns:    AppAreaAuthsColumns,
+		PrimaryKey: []*schema.Column{AppAreaAuthsColumns[0]},
+		Indexes: []*schema.Index{
+			{
+				Name:    "appareaauth_target_area_id_app_id",
+				Unique:  true,
+				Columns: []*schema.Column{AppAreaAuthsColumns[1], AppAreaAuthsColumns[2]},
+			},
+		},
+	}
 	// DeviceInfosColumns holds the columns for the "device_infos" table.
 	DeviceInfosColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeUUID, Unique: true},
@@ -108,6 +130,7 @@ var (
 	}
 	// Tables holds all the tables in the schema.
 	Tables = []*schema.Table{
+		AppAreaAuthsTable,
 		DeviceInfosTable,
 		GoodInfosTable,
 		TargetAreasTable,

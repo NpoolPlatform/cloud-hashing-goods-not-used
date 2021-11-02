@@ -3,6 +3,7 @@
 package ent
 
 import (
+	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/appareaauth"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/deviceinfo"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/goodinfo"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/schema"
@@ -15,6 +16,26 @@ import (
 // (default values, validators, hooks and policies) and stitches it
 // to their package variables.
 func init() {
+	appareaauthFields := schema.AppAreaAuth{}.Fields()
+	_ = appareaauthFields
+	// appareaauthDescCreateAt is the schema descriptor for create_at field.
+	appareaauthDescCreateAt := appareaauthFields[3].Descriptor()
+	// appareaauth.DefaultCreateAt holds the default value on creation for the create_at field.
+	appareaauth.DefaultCreateAt = appareaauthDescCreateAt.Default.(func() int64)
+	// appareaauthDescUpdateAt is the schema descriptor for update_at field.
+	appareaauthDescUpdateAt := appareaauthFields[4].Descriptor()
+	// appareaauth.DefaultUpdateAt holds the default value on creation for the update_at field.
+	appareaauth.DefaultUpdateAt = appareaauthDescUpdateAt.Default.(func() int64)
+	// appareaauth.UpdateDefaultUpdateAt holds the default value on update for the update_at field.
+	appareaauth.UpdateDefaultUpdateAt = appareaauthDescUpdateAt.UpdateDefault.(func() int64)
+	// appareaauthDescDeleteAt is the schema descriptor for delete_at field.
+	appareaauthDescDeleteAt := appareaauthFields[5].Descriptor()
+	// appareaauth.DefaultDeleteAt holds the default value on creation for the delete_at field.
+	appareaauth.DefaultDeleteAt = appareaauthDescDeleteAt.Default.(func() int64)
+	// appareaauthDescID is the schema descriptor for id field.
+	appareaauthDescID := appareaauthFields[0].Descriptor()
+	// appareaauth.DefaultID holds the default value on creation for the id field.
+	appareaauth.DefaultID = appareaauthDescID.Default.(func() uuid.UUID)
 	deviceinfoFields := schema.DeviceInfo{}.Fields()
 	_ = deviceinfoFields
 	// deviceinfoDescType is the schema descriptor for type field.

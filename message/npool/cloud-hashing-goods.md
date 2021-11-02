@@ -4,10 +4,14 @@
 ## Table of Contents
 
 - [npool/cloud-hashing-goods.proto](#npool/cloud-hashing-goods.proto)
+    - [AppTargetAreaInfo](#cloud.hashing.goods.v1.AppTargetAreaInfo)
     - [AuthorizeAppGoodRequest](#cloud.hashing.goods.v1.AuthorizeAppGoodRequest)
     - [AuthorizeAppGoodResponse](#cloud.hashing.goods.v1.AuthorizeAppGoodResponse)
     - [AuthorizeAppGoodTargetAreaRequest](#cloud.hashing.goods.v1.AuthorizeAppGoodTargetAreaRequest)
     - [AuthorizeAppTargetAreaRequest](#cloud.hashing.goods.v1.AuthorizeAppTargetAreaRequest)
+    - [AuthorizeAppTargetAreaResponse](#cloud.hashing.goods.v1.AuthorizeAppTargetAreaResponse)
+    - [CheckAppTargetAreaRequest](#cloud.hashing.goods.v1.CheckAppTargetAreaRequest)
+    - [CheckAppTargetAreaResponse](#cloud.hashing.goods.v1.CheckAppTargetAreaResponse)
     - [CreateDeviceInfoRequest](#cloud.hashing.goods.v1.CreateDeviceInfoRequest)
     - [CreateDeviceInfoResponse](#cloud.hashing.goods.v1.CreateDeviceInfoResponse)
     - [CreateGoodCommentRequest](#cloud.hashing.goods.v1.CreateGoodCommentRequest)
@@ -85,6 +89,22 @@
 
 
 
+<a name="cloud.hashing.goods.v1.AppTargetAreaInfo"></a>
+
+### AppTargetAreaInfo
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| AppID | [string](#string) |  |  |
+| TargetAreaID | [string](#string) |  |  |
+
+
+
+
+
+
 <a name="cloud.hashing.goods.v1.AuthorizeAppGoodRequest"></a>
 
 ### AuthorizeAppGoodRequest
@@ -142,8 +162,53 @@
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| AppID | [string](#string) |  |  |
-| TargetAreaID | [string](#string) |  |  |
+| Info | [AppTargetAreaInfo](#cloud.hashing.goods.v1.AppTargetAreaInfo) |  |  |
+
+
+
+
+
+
+<a name="cloud.hashing.goods.v1.AuthorizeAppTargetAreaResponse"></a>
+
+### AuthorizeAppTargetAreaResponse
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| Info | [AppTargetAreaInfo](#cloud.hashing.goods.v1.AppTargetAreaInfo) |  |  |
+
+
+
+
+
+
+<a name="cloud.hashing.goods.v1.CheckAppTargetAreaRequest"></a>
+
+### CheckAppTargetAreaRequest
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| Info | [AppTargetAreaInfo](#cloud.hashing.goods.v1.AppTargetAreaInfo) |  |  |
+
+
+
+
+
+
+<a name="cloud.hashing.goods.v1.CheckAppTargetAreaResponse"></a>
+
+### CheckAppTargetAreaResponse
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| Info | [AppTargetAreaInfo](#cloud.hashing.goods.v1.AppTargetAreaInfo) |  |  |
+| Authorized | [bool](#bool) |  |  |
 
 
 
@@ -950,8 +1015,7 @@
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| AppID | [string](#string) |  |  |
-| TargetAreaID | [string](#string) |  |  |
+| Info | [AppTargetAreaInfo](#cloud.hashing.goods.v1.AppTargetAreaInfo) |  |  |
 
 
 
@@ -1180,7 +1244,8 @@ Cloud Hashing Goods
 | SetAppGoodPrice | [SetAppGoodPriceRequest](#cloud.hashing.goods.v1.SetAppGoodPriceRequest) | [SetAppGoodPriceResponse](#cloud.hashing.goods.v1.SetAppGoodPriceResponse) |  |
 | AuthorizeAppGood | [AuthorizeAppGoodRequest](#cloud.hashing.goods.v1.AuthorizeAppGoodRequest) | [AuthorizeAppGoodResponse](#cloud.hashing.goods.v1.AuthorizeAppGoodResponse) |  |
 | UnauthorizeAppGood | [UnauthorizeAppGoodRequest](#cloud.hashing.goods.v1.UnauthorizeAppGoodRequest) | [UnauthorizeAppGoodResponse](#cloud.hashing.goods.v1.UnauthorizeAppGoodResponse) |  |
-| AuthorizeAppTargetArea | [AuthorizeAppTargetAreaRequest](#cloud.hashing.goods.v1.AuthorizeAppTargetAreaRequest) | [.google.protobuf.Empty](#google.protobuf.Empty) |  |
+| AuthorizeAppTargetArea | [AuthorizeAppTargetAreaRequest](#cloud.hashing.goods.v1.AuthorizeAppTargetAreaRequest) | [AuthorizeAppTargetAreaResponse](#cloud.hashing.goods.v1.AuthorizeAppTargetAreaResponse) |  |
+| CheckAppTargetArea | [CheckAppTargetAreaRequest](#cloud.hashing.goods.v1.CheckAppTargetAreaRequest) | [CheckAppTargetAreaResponse](#cloud.hashing.goods.v1.CheckAppTargetAreaResponse) |  |
 | UnauthorizeAppTargetArea | [UnauthorizeAppTargetAreaRequest](#cloud.hashing.goods.v1.UnauthorizeAppTargetAreaRequest) | [.google.protobuf.Empty](#google.protobuf.Empty) |  |
 | AuthorizeAppGoodTargetArea | [AuthorizeAppGoodTargetAreaRequest](#cloud.hashing.goods.v1.AuthorizeAppGoodTargetAreaRequest) | [.google.protobuf.Empty](#google.protobuf.Empty) |  |
 | UnauthorizeAppGoodTargetArea | [UnauthorizeAppGoodTargetAreaRequest](#cloud.hashing.goods.v1.UnauthorizeAppGoodTargetAreaRequest) | [.google.protobuf.Empty](#google.protobuf.Empty) |  |
