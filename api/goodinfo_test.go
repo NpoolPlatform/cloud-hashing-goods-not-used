@@ -84,4 +84,102 @@ func TestGoodCRUD(t *testing.T) { //nolint
 			assert.Equal(t, firstCreateInfo.Info.Total, goodInfo.Total)
 		}
 	}
+
+	goodInfo.BenefitType = "platform"
+	goodInfo.ID = firstCreateInfo.Info.ID
+
+	resp, err = cli.R().
+		SetHeader("Content-Type", "application/json").
+		SetBody(npool.UpdateGoodRequest{
+			Info: &goodInfo,
+		}).
+		Post("http://localhost:33759/v1/update/good")
+	if assert.Nil(t, err) {
+		assert.Equal(t, 200, resp.StatusCode())
+		info := npool.UpdateGoodResponse{}
+		err := json.Unmarshal(resp.Body(), &info)
+		if assert.Nil(t, err) {
+			assert.Equal(t, firstCreateInfo.Info.ID, info.Info.ID)
+			assert.Equal(t, info.Info.DeviceInfoID, goodInfo.DeviceInfoID)
+			assert.Equal(t, info.Info.GasPrice, goodInfo.GasPrice)
+			assert.Equal(t, info.Info.SeparateGasFee, goodInfo.SeparateGasFee)
+			assert.Equal(t, info.Info.UnitPower, goodInfo.UnitPower)
+			assert.Equal(t, info.Info.DurationDays, goodInfo.DurationDays)
+			assert.Equal(t, info.Info.CoinInfoID, goodInfo.CoinInfoID)
+			assert.Equal(t, info.Info.DeliveryAt, goodInfo.DeliveryAt)
+			assert.Equal(t, info.Info.Actuals, goodInfo.Actuals)
+			assert.Equal(t, info.Info.InheritFromGoodID, goodInfo.InheritFromGoodID)
+			assert.Equal(t, info.Info.VendorLocationID, goodInfo.VendorLocationID)
+			assert.Equal(t, info.Info.Price, goodInfo.Price)
+			assert.Equal(t, info.Info.BenefitType, goodInfo.BenefitType)
+			assert.Equal(t, info.Info.Classic, goodInfo.Classic)
+			assert.Equal(t, info.Info.SupportCoinTypeIDs, goodInfo.SupportCoinTypeIDs)
+			assert.Equal(t, info.Info.Total, goodInfo.Total)
+		}
+	}
+
+	resp, err = cli.R().
+		SetHeader("Content-Type", "application/json").
+		SetBody(npool.GetGoodRequest{
+			ID: goodInfo.ID,
+		}).
+		Post("http://localhost:33759/v1/get/good")
+	if assert.Nil(t, err) {
+		assert.Equal(t, 200, resp.StatusCode())
+		info := npool.GetGoodResponse{}
+		err := json.Unmarshal(resp.Body(), &info)
+		if assert.Nil(t, err) {
+			assert.Equal(t, firstCreateInfo.Info.ID, info.Info.ID)
+			assert.Equal(t, info.Info.DeviceInfoID, goodInfo.DeviceInfoID)
+			assert.Equal(t, info.Info.GasPrice, goodInfo.GasPrice)
+			assert.Equal(t, info.Info.SeparateGasFee, goodInfo.SeparateGasFee)
+			assert.Equal(t, info.Info.UnitPower, goodInfo.UnitPower)
+			assert.Equal(t, info.Info.DurationDays, goodInfo.DurationDays)
+			assert.Equal(t, info.Info.CoinInfoID, goodInfo.CoinInfoID)
+			assert.Equal(t, info.Info.DeliveryAt, goodInfo.DeliveryAt)
+			assert.Equal(t, info.Info.Actuals, goodInfo.Actuals)
+			assert.Equal(t, info.Info.InheritFromGoodID, goodInfo.InheritFromGoodID)
+			assert.Equal(t, info.Info.VendorLocationID, goodInfo.VendorLocationID)
+			assert.Equal(t, info.Info.Price, goodInfo.Price)
+			assert.Equal(t, info.Info.BenefitType, goodInfo.BenefitType)
+			assert.Equal(t, info.Info.Classic, goodInfo.Classic)
+			assert.Equal(t, info.Info.SupportCoinTypeIDs, goodInfo.SupportCoinTypeIDs)
+			assert.Equal(t, info.Info.Total, goodInfo.Total)
+		}
+	}
+
+	resp, err = cli.R().
+		SetHeader("Content-Type", "application/json").
+		SetBody(npool.GetGoodRequest{
+			ID: goodInfo.ID,
+		}).
+		Post("http://localhost:33759/v1/delete/good")
+	if assert.Nil(t, err) {
+		assert.Equal(t, 200, resp.StatusCode())
+		info := npool.DeleteGoodResponse{}
+		err := json.Unmarshal(resp.Body(), &info)
+		if assert.Nil(t, err) {
+			assert.Equal(t, firstCreateInfo.Info.ID, info.Info.ID)
+			assert.Equal(t, info.Info.DeviceInfoID, goodInfo.DeviceInfoID)
+			assert.Equal(t, info.Info.GasPrice, goodInfo.GasPrice)
+			assert.Equal(t, info.Info.SeparateGasFee, goodInfo.SeparateGasFee)
+			assert.Equal(t, info.Info.UnitPower, goodInfo.UnitPower)
+			assert.Equal(t, info.Info.DurationDays, goodInfo.DurationDays)
+			assert.Equal(t, info.Info.CoinInfoID, goodInfo.CoinInfoID)
+			assert.Equal(t, info.Info.DeliveryAt, goodInfo.DeliveryAt)
+			assert.Equal(t, info.Info.Actuals, goodInfo.Actuals)
+			assert.Equal(t, info.Info.InheritFromGoodID, goodInfo.InheritFromGoodID)
+			assert.Equal(t, info.Info.VendorLocationID, goodInfo.VendorLocationID)
+			assert.Equal(t, info.Info.Price, goodInfo.Price)
+			assert.Equal(t, info.Info.BenefitType, goodInfo.BenefitType)
+			assert.Equal(t, info.Info.Classic, goodInfo.Classic)
+			assert.Equal(t, info.Info.SupportCoinTypeIDs, goodInfo.SupportCoinTypeIDs)
+			assert.Equal(t, info.Info.Total, goodInfo.Total)
+		}
+	}
+
+	_, err = cli.R().
+		SetHeader("Content-Type", "application/json").
+		Get("http://localhost:33759/v1/get/goods")
+	assert.Nil(t, err)
 }
