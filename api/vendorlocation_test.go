@@ -62,13 +62,59 @@ func TestCreateVendorLocation(t *testing.T) { //nolint
 		SetBody(npool.UpdateVendorLocationRequest{
 			Info: &vendorLocationInfo,
 		}).
-		Post("http://localhost:33759/v1/create/vendor-location")
+		Post("http://localhost:33759/v1/update/vendor-location")
 	if assert.Nil(t, err) {
 		assert.Equal(t, 200, resp.StatusCode())
 		info := npool.UpdateVendorLocationResponse{}
 		err := json.Unmarshal(resp.Body(), &info)
 		if assert.Nil(t, err) {
-			assert.NotEqual(t, info.Info.ID, firstCreateInfo.Info.ID)
+			assert.Equal(t, info.Info.ID, firstCreateInfo.Info.ID)
+			assert.Equal(t, info.Info.Country, vendorLocationInfo.Country)
+			assert.Equal(t, info.Info.Province, vendorLocationInfo.Province)
+			assert.Equal(t, info.Info.City, vendorLocationInfo.City)
+			assert.Equal(t, info.Info.Address, vendorLocationInfo.Address)
+		}
+	}
+
+	resp, err = cli.R().
+		SetHeader("Content-Type", "application/json").
+		SetBody(npool.GetVendorLocationRequest{
+			ID: firstCreateInfo.Info.ID,
+		}).
+		Post("http://localhost:33759/v1/get/vendor-location")
+	if assert.Nil(t, err) {
+		assert.Equal(t, 200, resp.StatusCode())
+		info := npool.GetVendorLocationResponse{}
+		err := json.Unmarshal(resp.Body(), &info)
+		if assert.Nil(t, err) {
+			assert.Equal(t, info.Info.ID, firstCreateInfo.Info.ID)
+			assert.Equal(t, info.Info.Country, vendorLocationInfo.Country)
+			assert.Equal(t, info.Info.Province, vendorLocationInfo.Province)
+			assert.Equal(t, info.Info.City, vendorLocationInfo.City)
+			assert.Equal(t, info.Info.Address, vendorLocationInfo.Address)
+		}
+	}
+
+	resp, err = cli.R().
+		SetHeader("Content-Type", "application/json").
+		SetBody(npool.GetVendorLocationsRequest{}).
+		Post("http://localhost:33759/v1/get/vendor-locations")
+	if assert.Nil(t, err) {
+		assert.Equal(t, 200, resp.StatusCode())
+	}
+
+	resp, err = cli.R().
+		SetHeader("Content-Type", "application/json").
+		SetBody(npool.DeleteVendorLocationRequest{
+			ID: firstCreateInfo.Info.ID,
+		}).
+		Post("http://localhost:33759/v1/delete/vendor-location")
+	if assert.Nil(t, err) {
+		assert.Equal(t, 200, resp.StatusCode())
+		info := npool.DeleteVendorLocationResponse{}
+		err := json.Unmarshal(resp.Body(), &info)
+		if assert.Nil(t, err) {
+			assert.Equal(t, info.Info.ID, firstCreateInfo.Info.ID)
 			assert.Equal(t, info.Info.Country, vendorLocationInfo.Country)
 			assert.Equal(t, info.Info.Province, vendorLocationInfo.Province)
 			assert.Equal(t, info.Info.City, vendorLocationInfo.City)
