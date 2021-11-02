@@ -764,16 +764,16 @@
 | ----- | ---- | ----- | ----------- |
 | ID | [string](#string) |  |  |
 | DeviceInfoID | [string](#string) |  |  |
-| GasPrice | [float](#float) |  |  |
+| GasPrice | [int64](#int64) |  |  |
 | SeparateGasFee | [bool](#bool) |  |  |
-| UnitPower | [float](#float) |  |  |
+| UnitPower | [int32](#int32) |  |  |
 | DurationDays | [int32](#int32) |  |  |
 | CoinInfoID | [string](#string) |  |  |
 | Actuals | [bool](#bool) |  |  |
-| DeliveryTimestamp | [int64](#int64) |  |  |
+| DeliveryAt | [int32](#int32) |  |  |
 | InheritFromGoodID | [string](#string) |  |  |
 | VendorLocationID | [string](#string) |  |  |
-| Price | [float](#float) |  |  |
+| Price | [int64](#int64) |  |  |
 | BenefitType | [string](#string) |  |  |
 | Classic | [bool](#bool) |  |  |
 | SupportCoinTypeIDs | [string](#string) | repeated |  |

@@ -829,28 +829,26 @@ type GoodInfoMutation struct {
 	typ                   string
 	id                    *uuid.UUID
 	device_info_id        *uuid.UUID
-	gas_price             *int
-	addgas_price          *int
+	gas_price             *int64
+	addgas_price          *int64
 	separate_gas_fee      *bool
-	unit_power            *float64
-	addunit_power         *float64
-	duration              *int
-	addduration           *int
+	unit_power            *int32
+	addunit_power         *int32
+	duration_days         *int32
+	addduration_days      *int32
 	coin_info_id          *uuid.UUID
 	actuals               *bool
-	delivery_time         *int
-	adddelivery_time      *int
+	delivery_at           *int32
+	adddelivery_at        *int32
 	inherit_from_good_id  *uuid.UUID
 	vendor_location_id    *uuid.UUID
-	price                 *int
-	addprice              *int
+	price                 *int64
+	addprice              *int64
 	benefit_type          *goodinfo.BenefitType
 	classic               *bool
 	support_coin_type_ids *[]uuid.UUID
-	reviewer_id           *uuid.UUID
-	review_state          *goodinfo.ReviewState
-	total                 *int
-	addtotal              *int
+	total                 *int32
+	addtotal              *int32
 	create_at             *int64
 	addcreate_at          *int64
 	update_at             *int64
@@ -985,13 +983,13 @@ func (m *GoodInfoMutation) ResetDeviceInfoID() {
 }
 
 // SetGasPrice sets the "gas_price" field.
-func (m *GoodInfoMutation) SetGasPrice(i int) {
+func (m *GoodInfoMutation) SetGasPrice(i int64) {
 	m.gas_price = &i
 	m.addgas_price = nil
 }
 
 // GasPrice returns the value of the "gas_price" field in the mutation.
-func (m *GoodInfoMutation) GasPrice() (r int, exists bool) {
+func (m *GoodInfoMutation) GasPrice() (r int64, exists bool) {
 	v := m.gas_price
 	if v == nil {
 		return
@@ -1002,7 +1000,7 @@ func (m *GoodInfoMutation) GasPrice() (r int, exists bool) {
 // OldGasPrice returns the old "gas_price" field's value of the GoodInfo entity.
 // If the GoodInfo object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *GoodInfoMutation) OldGasPrice(ctx context.Context) (v int, err error) {
+func (m *GoodInfoMutation) OldGasPrice(ctx context.Context) (v int64, err error) {
 	if !m.op.Is(OpUpdateOne) {
 		return v, fmt.Errorf("OldGasPrice is only allowed on UpdateOne operations")
 	}
@@ -1017,7 +1015,7 @@ func (m *GoodInfoMutation) OldGasPrice(ctx context.Context) (v int, err error) {
 }
 
 // AddGasPrice adds i to the "gas_price" field.
-func (m *GoodInfoMutation) AddGasPrice(i int) {
+func (m *GoodInfoMutation) AddGasPrice(i int64) {
 	if m.addgas_price != nil {
 		*m.addgas_price += i
 	} else {
@@ -1026,7 +1024,7 @@ func (m *GoodInfoMutation) AddGasPrice(i int) {
 }
 
 // AddedGasPrice returns the value that was added to the "gas_price" field in this mutation.
-func (m *GoodInfoMutation) AddedGasPrice() (r int, exists bool) {
+func (m *GoodInfoMutation) AddedGasPrice() (r int64, exists bool) {
 	v := m.addgas_price
 	if v == nil {
 		return
@@ -1077,13 +1075,13 @@ func (m *GoodInfoMutation) ResetSeparateGasFee() {
 }
 
 // SetUnitPower sets the "unit_power" field.
-func (m *GoodInfoMutation) SetUnitPower(f float64) {
-	m.unit_power = &f
+func (m *GoodInfoMutation) SetUnitPower(i int32) {
+	m.unit_power = &i
 	m.addunit_power = nil
 }
 
 // UnitPower returns the value of the "unit_power" field in the mutation.
-func (m *GoodInfoMutation) UnitPower() (r float64, exists bool) {
+func (m *GoodInfoMutation) UnitPower() (r int32, exists bool) {
 	v := m.unit_power
 	if v == nil {
 		return
@@ -1094,7 +1092,7 @@ func (m *GoodInfoMutation) UnitPower() (r float64, exists bool) {
 // OldUnitPower returns the old "unit_power" field's value of the GoodInfo entity.
 // If the GoodInfo object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *GoodInfoMutation) OldUnitPower(ctx context.Context) (v float64, err error) {
+func (m *GoodInfoMutation) OldUnitPower(ctx context.Context) (v int32, err error) {
 	if !m.op.Is(OpUpdateOne) {
 		return v, fmt.Errorf("OldUnitPower is only allowed on UpdateOne operations")
 	}
@@ -1108,17 +1106,17 @@ func (m *GoodInfoMutation) OldUnitPower(ctx context.Context) (v float64, err err
 	return oldValue.UnitPower, nil
 }
 
-// AddUnitPower adds f to the "unit_power" field.
-func (m *GoodInfoMutation) AddUnitPower(f float64) {
+// AddUnitPower adds i to the "unit_power" field.
+func (m *GoodInfoMutation) AddUnitPower(i int32) {
 	if m.addunit_power != nil {
-		*m.addunit_power += f
+		*m.addunit_power += i
 	} else {
-		m.addunit_power = &f
+		m.addunit_power = &i
 	}
 }
 
 // AddedUnitPower returns the value that was added to the "unit_power" field in this mutation.
-func (m *GoodInfoMutation) AddedUnitPower() (r float64, exists bool) {
+func (m *GoodInfoMutation) AddedUnitPower() (r int32, exists bool) {
 	v := m.addunit_power
 	if v == nil {
 		return
@@ -1132,60 +1130,60 @@ func (m *GoodInfoMutation) ResetUnitPower() {
 	m.addunit_power = nil
 }
 
-// SetDuration sets the "duration" field.
-func (m *GoodInfoMutation) SetDuration(i int) {
-	m.duration = &i
-	m.addduration = nil
+// SetDurationDays sets the "duration_days" field.
+func (m *GoodInfoMutation) SetDurationDays(i int32) {
+	m.duration_days = &i
+	m.addduration_days = nil
 }
 
-// Duration returns the value of the "duration" field in the mutation.
-func (m *GoodInfoMutation) Duration() (r int, exists bool) {
-	v := m.duration
+// DurationDays returns the value of the "duration_days" field in the mutation.
+func (m *GoodInfoMutation) DurationDays() (r int32, exists bool) {
+	v := m.duration_days
 	if v == nil {
 		return
 	}
 	return *v, true
 }
 
-// OldDuration returns the old "duration" field's value of the GoodInfo entity.
+// OldDurationDays returns the old "duration_days" field's value of the GoodInfo entity.
 // If the GoodInfo object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *GoodInfoMutation) OldDuration(ctx context.Context) (v int, err error) {
+func (m *GoodInfoMutation) OldDurationDays(ctx context.Context) (v int32, err error) {
 	if !m.op.Is(OpUpdateOne) {
-		return v, fmt.Errorf("OldDuration is only allowed on UpdateOne operations")
+		return v, fmt.Errorf("OldDurationDays is only allowed on UpdateOne operations")
 	}
 	if m.id == nil || m.oldValue == nil {
-		return v, fmt.Errorf("OldDuration requires an ID field in the mutation")
+		return v, fmt.Errorf("OldDurationDays requires an ID field in the mutation")
 	}
 	oldValue, err := m.oldValue(ctx)
 	if err != nil {
-		return v, fmt.Errorf("querying old value for OldDuration: %w", err)
+		return v, fmt.Errorf("querying old value for OldDurationDays: %w", err)
 	}
-	return oldValue.Duration, nil
+	return oldValue.DurationDays, nil
 }
 
-// AddDuration adds i to the "duration" field.
-func (m *GoodInfoMutation) AddDuration(i int) {
-	if m.addduration != nil {
-		*m.addduration += i
+// AddDurationDays adds i to the "duration_days" field.
+func (m *GoodInfoMutation) AddDurationDays(i int32) {
+	if m.addduration_days != nil {
+		*m.addduration_days += i
 	} else {
-		m.addduration = &i
+		m.addduration_days = &i
 	}
 }
 
-// AddedDuration returns the value that was added to the "duration" field in this mutation.
-func (m *GoodInfoMutation) AddedDuration() (r int, exists bool) {
-	v := m.addduration
+// AddedDurationDays returns the value that was added to the "duration_days" field in this mutation.
+func (m *GoodInfoMutation) AddedDurationDays() (r int32, exists bool) {
+	v := m.addduration_days
 	if v == nil {
 		return
 	}
 	return *v, true
 }
 
-// ResetDuration resets all changes to the "duration" field.
-func (m *GoodInfoMutation) ResetDuration() {
-	m.duration = nil
-	m.addduration = nil
+// ResetDurationDays resets all changes to the "duration_days" field.
+func (m *GoodInfoMutation) ResetDurationDays() {
+	m.duration_days = nil
+	m.addduration_days = nil
 }
 
 // SetCoinInfoID sets the "coin_info_id" field.
@@ -1260,60 +1258,60 @@ func (m *GoodInfoMutation) ResetActuals() {
 	m.actuals = nil
 }
 
-// SetDeliveryTime sets the "delivery_time" field.
-func (m *GoodInfoMutation) SetDeliveryTime(i int) {
-	m.delivery_time = &i
-	m.adddelivery_time = nil
+// SetDeliveryAt sets the "delivery_at" field.
+func (m *GoodInfoMutation) SetDeliveryAt(i int32) {
+	m.delivery_at = &i
+	m.adddelivery_at = nil
 }
 
-// DeliveryTime returns the value of the "delivery_time" field in the mutation.
-func (m *GoodInfoMutation) DeliveryTime() (r int, exists bool) {
-	v := m.delivery_time
+// DeliveryAt returns the value of the "delivery_at" field in the mutation.
+func (m *GoodInfoMutation) DeliveryAt() (r int32, exists bool) {
+	v := m.delivery_at
 	if v == nil {
 		return
 	}
 	return *v, true
 }
 
-// OldDeliveryTime returns the old "delivery_time" field's value of the GoodInfo entity.
+// OldDeliveryAt returns the old "delivery_at" field's value of the GoodInfo entity.
 // If the GoodInfo object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *GoodInfoMutation) OldDeliveryTime(ctx context.Context) (v int, err error) {
+func (m *GoodInfoMutation) OldDeliveryAt(ctx context.Context) (v int32, err error) {
 	if !m.op.Is(OpUpdateOne) {
-		return v, fmt.Errorf("OldDeliveryTime is only allowed on UpdateOne operations")
+		return v, fmt.Errorf("OldDeliveryAt is only allowed on UpdateOne operations")
 	}
 	if m.id == nil || m.oldValue == nil {
-		return v, fmt.Errorf("OldDeliveryTime requires an ID field in the mutation")
+		return v, fmt.Errorf("OldDeliveryAt requires an ID field in the mutation")
 	}
 	oldValue, err := m.oldValue(ctx)
 	if err != nil {
-		return v, fmt.Errorf("querying old value for OldDeliveryTime: %w", err)
+		return v, fmt.Errorf("querying old value for OldDeliveryAt: %w", err)
 	}
-	return oldValue.DeliveryTime, nil
+	return oldValue.DeliveryAt, nil
 }
 
-// AddDeliveryTime adds i to the "delivery_time" field.
-func (m *GoodInfoMutation) AddDeliveryTime(i int) {
-	if m.adddelivery_time != nil {
-		*m.adddelivery_time += i
+// AddDeliveryAt adds i to the "delivery_at" field.
+func (m *GoodInfoMutation) AddDeliveryAt(i int32) {
+	if m.adddelivery_at != nil {
+		*m.adddelivery_at += i
 	} else {
-		m.adddelivery_time = &i
+		m.adddelivery_at = &i
 	}
 }
 
-// AddedDeliveryTime returns the value that was added to the "delivery_time" field in this mutation.
-func (m *GoodInfoMutation) AddedDeliveryTime() (r int, exists bool) {
-	v := m.adddelivery_time
+// AddedDeliveryAt returns the value that was added to the "delivery_at" field in this mutation.
+func (m *GoodInfoMutation) AddedDeliveryAt() (r int32, exists bool) {
+	v := m.adddelivery_at
 	if v == nil {
 		return
 	}
 	return *v, true
 }
 
-// ResetDeliveryTime resets all changes to the "delivery_time" field.
-func (m *GoodInfoMutation) ResetDeliveryTime() {
-	m.delivery_time = nil
-	m.adddelivery_time = nil
+// ResetDeliveryAt resets all changes to the "delivery_at" field.
+func (m *GoodInfoMutation) ResetDeliveryAt() {
+	m.delivery_at = nil
+	m.adddelivery_at = nil
 }
 
 // SetInheritFromGoodID sets the "inherit_from_good_id" field.
@@ -1389,13 +1387,13 @@ func (m *GoodInfoMutation) ResetVendorLocationID() {
 }
 
 // SetPrice sets the "price" field.
-func (m *GoodInfoMutation) SetPrice(i int) {
+func (m *GoodInfoMutation) SetPrice(i int64) {
 	m.price = &i
 	m.addprice = nil
 }
 
 // Price returns the value of the "price" field in the mutation.
-func (m *GoodInfoMutation) Price() (r int, exists bool) {
+func (m *GoodInfoMutation) Price() (r int64, exists bool) {
 	v := m.price
 	if v == nil {
 		return
@@ -1406,7 +1404,7 @@ func (m *GoodInfoMutation) Price() (r int, exists bool) {
 // OldPrice returns the old "price" field's value of the GoodInfo entity.
 // If the GoodInfo object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *GoodInfoMutation) OldPrice(ctx context.Context) (v int, err error) {
+func (m *GoodInfoMutation) OldPrice(ctx context.Context) (v int64, err error) {
 	if !m.op.Is(OpUpdateOne) {
 		return v, fmt.Errorf("OldPrice is only allowed on UpdateOne operations")
 	}
@@ -1421,7 +1419,7 @@ func (m *GoodInfoMutation) OldPrice(ctx context.Context) (v int, err error) {
 }
 
 // AddPrice adds i to the "price" field.
-func (m *GoodInfoMutation) AddPrice(i int) {
+func (m *GoodInfoMutation) AddPrice(i int64) {
 	if m.addprice != nil {
 		*m.addprice += i
 	} else {
@@ -1430,7 +1428,7 @@ func (m *GoodInfoMutation) AddPrice(i int) {
 }
 
 // AddedPrice returns the value that was added to the "price" field in this mutation.
-func (m *GoodInfoMutation) AddedPrice() (r int, exists bool) {
+func (m *GoodInfoMutation) AddedPrice() (r int64, exists bool) {
 	v := m.addprice
 	if v == nil {
 		return
@@ -1552,86 +1550,14 @@ func (m *GoodInfoMutation) ResetSupportCoinTypeIds() {
 	m.support_coin_type_ids = nil
 }
 
-// SetReviewerID sets the "reviewer_id" field.
-func (m *GoodInfoMutation) SetReviewerID(u uuid.UUID) {
-	m.reviewer_id = &u
-}
-
-// ReviewerID returns the value of the "reviewer_id" field in the mutation.
-func (m *GoodInfoMutation) ReviewerID() (r uuid.UUID, exists bool) {
-	v := m.reviewer_id
-	if v == nil {
-		return
-	}
-	return *v, true
-}
-
-// OldReviewerID returns the old "reviewer_id" field's value of the GoodInfo entity.
-// If the GoodInfo object wasn't provided to the builder, the object is fetched from the database.
-// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *GoodInfoMutation) OldReviewerID(ctx context.Context) (v uuid.UUID, err error) {
-	if !m.op.Is(OpUpdateOne) {
-		return v, fmt.Errorf("OldReviewerID is only allowed on UpdateOne operations")
-	}
-	if m.id == nil || m.oldValue == nil {
-		return v, fmt.Errorf("OldReviewerID requires an ID field in the mutation")
-	}
-	oldValue, err := m.oldValue(ctx)
-	if err != nil {
-		return v, fmt.Errorf("querying old value for OldReviewerID: %w", err)
-	}
-	return oldValue.ReviewerID, nil
-}
-
-// ResetReviewerID resets all changes to the "reviewer_id" field.
-func (m *GoodInfoMutation) ResetReviewerID() {
-	m.reviewer_id = nil
-}
-
-// SetReviewState sets the "review_state" field.
-func (m *GoodInfoMutation) SetReviewState(gs goodinfo.ReviewState) {
-	m.review_state = &gs
-}
-
-// ReviewState returns the value of the "review_state" field in the mutation.
-func (m *GoodInfoMutation) ReviewState() (r goodinfo.ReviewState, exists bool) {
-	v := m.review_state
-	if v == nil {
-		return
-	}
-	return *v, true
-}
-
-// OldReviewState returns the old "review_state" field's value of the GoodInfo entity.
-// If the GoodInfo object wasn't provided to the builder, the object is fetched from the database.
-// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *GoodInfoMutation) OldReviewState(ctx context.Context) (v goodinfo.ReviewState, err error) {
-	if !m.op.Is(OpUpdateOne) {
-		return v, fmt.Errorf("OldReviewState is only allowed on UpdateOne operations")
-	}
-	if m.id == nil || m.oldValue == nil {
-		return v, fmt.Errorf("OldReviewState requires an ID field in the mutation")
-	}
-	oldValue, err := m.oldValue(ctx)
-	if err != nil {
-		return v, fmt.Errorf("querying old value for OldReviewState: %w", err)
-	}
-	return oldValue.ReviewState, nil
-}
-
-// ResetReviewState resets all changes to the "review_state" field.
-func (m *GoodInfoMutation) ResetReviewState() {
-	m.review_state = nil
-}
-
 // SetTotal sets the "total" field.
-func (m *GoodInfoMutation) SetTotal(i int) {
+func (m *GoodInfoMutation) SetTotal(i int32) {
 	m.total = &i
 	m.addtotal = nil
 }
 
 // Total returns the value of the "total" field in the mutation.
-func (m *GoodInfoMutation) Total() (r int, exists bool) {
+func (m *GoodInfoMutation) Total() (r int32, exists bool) {
 	v := m.total
 	if v == nil {
 		return
@@ -1642,7 +1568,7 @@ func (m *GoodInfoMutation) Total() (r int, exists bool) {
 // OldTotal returns the old "total" field's value of the GoodInfo entity.
 // If the GoodInfo object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *GoodInfoMutation) OldTotal(ctx context.Context) (v int, err error) {
+func (m *GoodInfoMutation) OldTotal(ctx context.Context) (v int32, err error) {
 	if !m.op.Is(OpUpdateOne) {
 		return v, fmt.Errorf("OldTotal is only allowed on UpdateOne operations")
 	}
@@ -1657,7 +1583,7 @@ func (m *GoodInfoMutation) OldTotal(ctx context.Context) (v int, err error) {
 }
 
 // AddTotal adds i to the "total" field.
-func (m *GoodInfoMutation) AddTotal(i int) {
+func (m *GoodInfoMutation) AddTotal(i int32) {
 	if m.addtotal != nil {
 		*m.addtotal += i
 	} else {
@@ -1666,7 +1592,7 @@ func (m *GoodInfoMutation) AddTotal(i int) {
 }
 
 // AddedTotal returns the value that was added to the "total" field in this mutation.
-func (m *GoodInfoMutation) AddedTotal() (r int, exists bool) {
+func (m *GoodInfoMutation) AddedTotal() (r int32, exists bool) {
 	v := m.addtotal
 	if v == nil {
 		return
@@ -1867,7 +1793,7 @@ func (m *GoodInfoMutation) Type() string {
 // order to get all numeric fields that were incremented/decremented, call
 // AddedFields().
 func (m *GoodInfoMutation) Fields() []string {
-	fields := make([]string, 0, 20)
+	fields := make([]string, 0, 18)
 	if m.device_info_id != nil {
 		fields = append(fields, goodinfo.FieldDeviceInfoID)
 	}
@@ -1880,8 +1806,8 @@ func (m *GoodInfoMutation) Fields() []string {
 	if m.unit_power != nil {
 		fields = append(fields, goodinfo.FieldUnitPower)
 	}
-	if m.duration != nil {
-		fields = append(fields, goodinfo.FieldDuration)
+	if m.duration_days != nil {
+		fields = append(fields, goodinfo.FieldDurationDays)
 	}
 	if m.coin_info_id != nil {
 		fields = append(fields, goodinfo.FieldCoinInfoID)
@@ -1889,8 +1815,8 @@ func (m *GoodInfoMutation) Fields() []string {
 	if m.actuals != nil {
 		fields = append(fields, goodinfo.FieldActuals)
 	}
-	if m.delivery_time != nil {
-		fields = append(fields, goodinfo.FieldDeliveryTime)
+	if m.delivery_at != nil {
+		fields = append(fields, goodinfo.FieldDeliveryAt)
 	}
 	if m.inherit_from_good_id != nil {
 		fields = append(fields, goodinfo.FieldInheritFromGoodID)
@@ -1909,12 +1835,6 @@ func (m *GoodInfoMutation) Fields() []string {
 	}
 	if m.support_coin_type_ids != nil {
 		fields = append(fields, goodinfo.FieldSupportCoinTypeIds)
-	}
-	if m.reviewer_id != nil {
-		fields = append(fields, goodinfo.FieldReviewerID)
-	}
-	if m.review_state != nil {
-		fields = append(fields, goodinfo.FieldReviewState)
 	}
 	if m.total != nil {
 		fields = append(fields, goodinfo.FieldTotal)
@@ -1944,14 +1864,14 @@ func (m *GoodInfoMutation) Field(name string) (ent.Value, bool) {
 		return m.SeparateGasFee()
 	case goodinfo.FieldUnitPower:
 		return m.UnitPower()
-	case goodinfo.FieldDuration:
-		return m.Duration()
+	case goodinfo.FieldDurationDays:
+		return m.DurationDays()
 	case goodinfo.FieldCoinInfoID:
 		return m.CoinInfoID()
 	case goodinfo.FieldActuals:
 		return m.Actuals()
-	case goodinfo.FieldDeliveryTime:
-		return m.DeliveryTime()
+	case goodinfo.FieldDeliveryAt:
+		return m.DeliveryAt()
 	case goodinfo.FieldInheritFromGoodID:
 		return m.InheritFromGoodID()
 	case goodinfo.FieldVendorLocationID:
@@ -1964,10 +1884,6 @@ func (m *GoodInfoMutation) Field(name string) (ent.Value, bool) {
 		return m.Classic()
 	case goodinfo.FieldSupportCoinTypeIds:
 		return m.SupportCoinTypeIds()
-	case goodinfo.FieldReviewerID:
-		return m.ReviewerID()
-	case goodinfo.FieldReviewState:
-		return m.ReviewState()
 	case goodinfo.FieldTotal:
 		return m.Total()
 	case goodinfo.FieldCreateAt:
@@ -1993,14 +1909,14 @@ func (m *GoodInfoMutation) OldField(ctx context.Context, name string) (ent.Value
 		return m.OldSeparateGasFee(ctx)
 	case goodinfo.FieldUnitPower:
 		return m.OldUnitPower(ctx)
-	case goodinfo.FieldDuration:
-		return m.OldDuration(ctx)
+	case goodinfo.FieldDurationDays:
+		return m.OldDurationDays(ctx)
 	case goodinfo.FieldCoinInfoID:
 		return m.OldCoinInfoID(ctx)
 	case goodinfo.FieldActuals:
 		return m.OldActuals(ctx)
-	case goodinfo.FieldDeliveryTime:
-		return m.OldDeliveryTime(ctx)
+	case goodinfo.FieldDeliveryAt:
+		return m.OldDeliveryAt(ctx)
 	case goodinfo.FieldInheritFromGoodID:
 		return m.OldInheritFromGoodID(ctx)
 	case goodinfo.FieldVendorLocationID:
@@ -2013,10 +1929,6 @@ func (m *GoodInfoMutation) OldField(ctx context.Context, name string) (ent.Value
 		return m.OldClassic(ctx)
 	case goodinfo.FieldSupportCoinTypeIds:
 		return m.OldSupportCoinTypeIds(ctx)
-	case goodinfo.FieldReviewerID:
-		return m.OldReviewerID(ctx)
-	case goodinfo.FieldReviewState:
-		return m.OldReviewState(ctx)
 	case goodinfo.FieldTotal:
 		return m.OldTotal(ctx)
 	case goodinfo.FieldCreateAt:
@@ -2042,7 +1954,7 @@ func (m *GoodInfoMutation) SetField(name string, value ent.Value) error {
 		m.SetDeviceInfoID(v)
 		return nil
 	case goodinfo.FieldGasPrice:
-		v, ok := value.(int)
+		v, ok := value.(int64)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
@@ -2056,18 +1968,18 @@ func (m *GoodInfoMutation) SetField(name string, value ent.Value) error {
 		m.SetSeparateGasFee(v)
 		return nil
 	case goodinfo.FieldUnitPower:
-		v, ok := value.(float64)
+		v, ok := value.(int32)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.SetUnitPower(v)
 		return nil
-	case goodinfo.FieldDuration:
-		v, ok := value.(int)
+	case goodinfo.FieldDurationDays:
+		v, ok := value.(int32)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
-		m.SetDuration(v)
+		m.SetDurationDays(v)
 		return nil
 	case goodinfo.FieldCoinInfoID:
 		v, ok := value.(uuid.UUID)
@@ -2083,12 +1995,12 @@ func (m *GoodInfoMutation) SetField(name string, value ent.Value) error {
 		}
 		m.SetActuals(v)
 		return nil
-	case goodinfo.FieldDeliveryTime:
-		v, ok := value.(int)
+	case goodinfo.FieldDeliveryAt:
+		v, ok := value.(int32)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
-		m.SetDeliveryTime(v)
+		m.SetDeliveryAt(v)
 		return nil
 	case goodinfo.FieldInheritFromGoodID:
 		v, ok := value.(uuid.UUID)
@@ -2105,7 +2017,7 @@ func (m *GoodInfoMutation) SetField(name string, value ent.Value) error {
 		m.SetVendorLocationID(v)
 		return nil
 	case goodinfo.FieldPrice:
-		v, ok := value.(int)
+		v, ok := value.(int64)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
@@ -2132,22 +2044,8 @@ func (m *GoodInfoMutation) SetField(name string, value ent.Value) error {
 		}
 		m.SetSupportCoinTypeIds(v)
 		return nil
-	case goodinfo.FieldReviewerID:
-		v, ok := value.(uuid.UUID)
-		if !ok {
-			return fmt.Errorf("unexpected type %T for field %s", value, name)
-		}
-		m.SetReviewerID(v)
-		return nil
-	case goodinfo.FieldReviewState:
-		v, ok := value.(goodinfo.ReviewState)
-		if !ok {
-			return fmt.Errorf("unexpected type %T for field %s", value, name)
-		}
-		m.SetReviewState(v)
-		return nil
 	case goodinfo.FieldTotal:
-		v, ok := value.(int)
+		v, ok := value.(int32)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
@@ -2188,11 +2086,11 @@ func (m *GoodInfoMutation) AddedFields() []string {
 	if m.addunit_power != nil {
 		fields = append(fields, goodinfo.FieldUnitPower)
 	}
-	if m.addduration != nil {
-		fields = append(fields, goodinfo.FieldDuration)
+	if m.addduration_days != nil {
+		fields = append(fields, goodinfo.FieldDurationDays)
 	}
-	if m.adddelivery_time != nil {
-		fields = append(fields, goodinfo.FieldDeliveryTime)
+	if m.adddelivery_at != nil {
+		fields = append(fields, goodinfo.FieldDeliveryAt)
 	}
 	if m.addprice != nil {
 		fields = append(fields, goodinfo.FieldPrice)
@@ -2221,10 +2119,10 @@ func (m *GoodInfoMutation) AddedField(name string) (ent.Value, bool) {
 		return m.AddedGasPrice()
 	case goodinfo.FieldUnitPower:
 		return m.AddedUnitPower()
-	case goodinfo.FieldDuration:
-		return m.AddedDuration()
-	case goodinfo.FieldDeliveryTime:
-		return m.AddedDeliveryTime()
+	case goodinfo.FieldDurationDays:
+		return m.AddedDurationDays()
+	case goodinfo.FieldDeliveryAt:
+		return m.AddedDeliveryAt()
 	case goodinfo.FieldPrice:
 		return m.AddedPrice()
 	case goodinfo.FieldTotal:
@@ -2245,42 +2143,42 @@ func (m *GoodInfoMutation) AddedField(name string) (ent.Value, bool) {
 func (m *GoodInfoMutation) AddField(name string, value ent.Value) error {
 	switch name {
 	case goodinfo.FieldGasPrice:
-		v, ok := value.(int)
+		v, ok := value.(int64)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.AddGasPrice(v)
 		return nil
 	case goodinfo.FieldUnitPower:
-		v, ok := value.(float64)
+		v, ok := value.(int32)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.AddUnitPower(v)
 		return nil
-	case goodinfo.FieldDuration:
-		v, ok := value.(int)
+	case goodinfo.FieldDurationDays:
+		v, ok := value.(int32)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
-		m.AddDuration(v)
+		m.AddDurationDays(v)
 		return nil
-	case goodinfo.FieldDeliveryTime:
-		v, ok := value.(int)
+	case goodinfo.FieldDeliveryAt:
+		v, ok := value.(int32)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
-		m.AddDeliveryTime(v)
+		m.AddDeliveryAt(v)
 		return nil
 	case goodinfo.FieldPrice:
-		v, ok := value.(int)
+		v, ok := value.(int64)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.AddPrice(v)
 		return nil
 	case goodinfo.FieldTotal:
-		v, ok := value.(int)
+		v, ok := value.(int32)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
@@ -2346,8 +2244,8 @@ func (m *GoodInfoMutation) ResetField(name string) error {
 	case goodinfo.FieldUnitPower:
 		m.ResetUnitPower()
 		return nil
-	case goodinfo.FieldDuration:
-		m.ResetDuration()
+	case goodinfo.FieldDurationDays:
+		m.ResetDurationDays()
 		return nil
 	case goodinfo.FieldCoinInfoID:
 		m.ResetCoinInfoID()
@@ -2355,8 +2253,8 @@ func (m *GoodInfoMutation) ResetField(name string) error {
 	case goodinfo.FieldActuals:
 		m.ResetActuals()
 		return nil
-	case goodinfo.FieldDeliveryTime:
-		m.ResetDeliveryTime()
+	case goodinfo.FieldDeliveryAt:
+		m.ResetDeliveryAt()
 		return nil
 	case goodinfo.FieldInheritFromGoodID:
 		m.ResetInheritFromGoodID()
@@ -2375,12 +2273,6 @@ func (m *GoodInfoMutation) ResetField(name string) error {
 		return nil
 	case goodinfo.FieldSupportCoinTypeIds:
 		m.ResetSupportCoinTypeIds()
-		return nil
-	case goodinfo.FieldReviewerID:
-		m.ResetReviewerID()
-		return nil
-	case goodinfo.FieldReviewState:
-		m.ResetReviewState()
 		return nil
 	case goodinfo.FieldTotal:
 		m.ResetTotal()

@@ -21,28 +21,25 @@ func (GoodInfo) Fields() []ent.Field {
 			Default(uuid.New).
 			Unique(),
 		field.UUID("device_info_id", uuid.UUID{}),
-		field.Int("gas_price").
+		field.Int64("gas_price").
 			Positive(),
 		field.Bool("separate_gas_fee"),
-		field.Float("unit_power").
+		field.Int32("unit_power").
 			Positive(),
-		field.Int("duration").
+		field.Int32("duration_days").
 			Positive(),
 		field.UUID("coin_info_id", uuid.UUID{}),
 		field.Bool("actuals"),
-		field.Int("delivery_time"),
+		field.Int32("delivery_at"),
 		field.UUID("inherit_from_good_id", uuid.UUID{}),
 		field.UUID("vendor_location_id", uuid.UUID{}),
-		field.Int("price").
+		field.Int64("price").
 			Positive(),
 		field.Enum("benefit_type").
 			Values("pool", "platform"),
 		field.Bool("classic"),
 		field.JSON("support_coin_type_ids", []uuid.UUID{}),
-		field.UUID("reviewer_id", uuid.UUID{}),
-		field.Enum("review_state").
-			Values("passed", "rejected"),
-		field.Int("total").
+		field.Int32("total").
 			Positive(),
 		field.Int64("create_at").
 			DefaultFunc(func() int64 {

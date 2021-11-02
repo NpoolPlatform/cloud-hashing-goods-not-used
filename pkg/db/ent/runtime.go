@@ -52,35 +52,35 @@ func init() {
 	// goodinfoDescGasPrice is the schema descriptor for gas_price field.
 	goodinfoDescGasPrice := goodinfoFields[2].Descriptor()
 	// goodinfo.GasPriceValidator is a validator for the "gas_price" field. It is called by the builders before save.
-	goodinfo.GasPriceValidator = goodinfoDescGasPrice.Validators[0].(func(int) error)
+	goodinfo.GasPriceValidator = goodinfoDescGasPrice.Validators[0].(func(int64) error)
 	// goodinfoDescUnitPower is the schema descriptor for unit_power field.
 	goodinfoDescUnitPower := goodinfoFields[4].Descriptor()
 	// goodinfo.UnitPowerValidator is a validator for the "unit_power" field. It is called by the builders before save.
-	goodinfo.UnitPowerValidator = goodinfoDescUnitPower.Validators[0].(func(float64) error)
-	// goodinfoDescDuration is the schema descriptor for duration field.
-	goodinfoDescDuration := goodinfoFields[5].Descriptor()
-	// goodinfo.DurationValidator is a validator for the "duration" field. It is called by the builders before save.
-	goodinfo.DurationValidator = goodinfoDescDuration.Validators[0].(func(int) error)
+	goodinfo.UnitPowerValidator = goodinfoDescUnitPower.Validators[0].(func(int32) error)
+	// goodinfoDescDurationDays is the schema descriptor for duration_days field.
+	goodinfoDescDurationDays := goodinfoFields[5].Descriptor()
+	// goodinfo.DurationDaysValidator is a validator for the "duration_days" field. It is called by the builders before save.
+	goodinfo.DurationDaysValidator = goodinfoDescDurationDays.Validators[0].(func(int32) error)
 	// goodinfoDescPrice is the schema descriptor for price field.
 	goodinfoDescPrice := goodinfoFields[11].Descriptor()
 	// goodinfo.PriceValidator is a validator for the "price" field. It is called by the builders before save.
-	goodinfo.PriceValidator = goodinfoDescPrice.Validators[0].(func(int) error)
+	goodinfo.PriceValidator = goodinfoDescPrice.Validators[0].(func(int64) error)
 	// goodinfoDescTotal is the schema descriptor for total field.
-	goodinfoDescTotal := goodinfoFields[17].Descriptor()
+	goodinfoDescTotal := goodinfoFields[15].Descriptor()
 	// goodinfo.TotalValidator is a validator for the "total" field. It is called by the builders before save.
-	goodinfo.TotalValidator = goodinfoDescTotal.Validators[0].(func(int) error)
+	goodinfo.TotalValidator = goodinfoDescTotal.Validators[0].(func(int32) error)
 	// goodinfoDescCreateAt is the schema descriptor for create_at field.
-	goodinfoDescCreateAt := goodinfoFields[18].Descriptor()
+	goodinfoDescCreateAt := goodinfoFields[16].Descriptor()
 	// goodinfo.DefaultCreateAt holds the default value on creation for the create_at field.
 	goodinfo.DefaultCreateAt = goodinfoDescCreateAt.Default.(func() int64)
 	// goodinfoDescUpdateAt is the schema descriptor for update_at field.
-	goodinfoDescUpdateAt := goodinfoFields[19].Descriptor()
+	goodinfoDescUpdateAt := goodinfoFields[17].Descriptor()
 	// goodinfo.DefaultUpdateAt holds the default value on creation for the update_at field.
 	goodinfo.DefaultUpdateAt = goodinfoDescUpdateAt.Default.(func() int64)
 	// goodinfo.UpdateDefaultUpdateAt holds the default value on update for the update_at field.
 	goodinfo.UpdateDefaultUpdateAt = goodinfoDescUpdateAt.UpdateDefault.(func() int64)
 	// goodinfoDescDeleteAt is the schema descriptor for delete_at field.
-	goodinfoDescDeleteAt := goodinfoFields[20].Descriptor()
+	goodinfoDescDeleteAt := goodinfoFields[18].Descriptor()
 	// goodinfo.DefaultDeleteAt holds the default value on creation for the delete_at field.
 	goodinfo.DefaultDeleteAt = goodinfoDescDeleteAt.Default.(func() int64)
 	// goodinfoDescID is the schema descriptor for id field.

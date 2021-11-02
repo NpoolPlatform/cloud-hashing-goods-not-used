@@ -370,16 +370,16 @@ message GetDeviceInfosResponse {
 message GoodInfo {
     string ID = 2400;
     string DeviceInfoID = 2401;
-    float GasPrice = 2402;
+    int64 GasPrice = 2402;
     bool SeparateGasFee = 2403;
-    float UnitPower = 2404;
+    int32 UnitPower = 2404;
     int32 DurationDays = 2405;
     string CoinInfoID = 2406;
     bool Actuals = 2407;
-    int64 DeliveryTimestamp = 2408;
+    int32 DeliveryAt = 2408;
     string InheritFromGoodID = 2409;
     string VendorLocationID = 2410;
-    float Price = 2411;
+    int64 Price = 2411;
     string BenefitType = 2412;
     bool Classic = 2413;
     repeated string SupportCoinTypeIDs = 2414;

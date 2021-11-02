@@ -30,7 +30,7 @@ func (gic *GoodInfoCreate) SetDeviceInfoID(u uuid.UUID) *GoodInfoCreate {
 }
 
 // SetGasPrice sets the "gas_price" field.
-func (gic *GoodInfoCreate) SetGasPrice(i int) *GoodInfoCreate {
+func (gic *GoodInfoCreate) SetGasPrice(i int64) *GoodInfoCreate {
 	gic.mutation.SetGasPrice(i)
 	return gic
 }
@@ -42,14 +42,14 @@ func (gic *GoodInfoCreate) SetSeparateGasFee(b bool) *GoodInfoCreate {
 }
 
 // SetUnitPower sets the "unit_power" field.
-func (gic *GoodInfoCreate) SetUnitPower(f float64) *GoodInfoCreate {
-	gic.mutation.SetUnitPower(f)
+func (gic *GoodInfoCreate) SetUnitPower(i int32) *GoodInfoCreate {
+	gic.mutation.SetUnitPower(i)
 	return gic
 }
 
-// SetDuration sets the "duration" field.
-func (gic *GoodInfoCreate) SetDuration(i int) *GoodInfoCreate {
-	gic.mutation.SetDuration(i)
+// SetDurationDays sets the "duration_days" field.
+func (gic *GoodInfoCreate) SetDurationDays(i int32) *GoodInfoCreate {
+	gic.mutation.SetDurationDays(i)
 	return gic
 }
 
@@ -65,9 +65,9 @@ func (gic *GoodInfoCreate) SetActuals(b bool) *GoodInfoCreate {
 	return gic
 }
 
-// SetDeliveryTime sets the "delivery_time" field.
-func (gic *GoodInfoCreate) SetDeliveryTime(i int) *GoodInfoCreate {
-	gic.mutation.SetDeliveryTime(i)
+// SetDeliveryAt sets the "delivery_at" field.
+func (gic *GoodInfoCreate) SetDeliveryAt(i int32) *GoodInfoCreate {
+	gic.mutation.SetDeliveryAt(i)
 	return gic
 }
 
@@ -84,7 +84,7 @@ func (gic *GoodInfoCreate) SetVendorLocationID(u uuid.UUID) *GoodInfoCreate {
 }
 
 // SetPrice sets the "price" field.
-func (gic *GoodInfoCreate) SetPrice(i int) *GoodInfoCreate {
+func (gic *GoodInfoCreate) SetPrice(i int64) *GoodInfoCreate {
 	gic.mutation.SetPrice(i)
 	return gic
 }
@@ -107,20 +107,8 @@ func (gic *GoodInfoCreate) SetSupportCoinTypeIds(u []uuid.UUID) *GoodInfoCreate 
 	return gic
 }
 
-// SetReviewerID sets the "reviewer_id" field.
-func (gic *GoodInfoCreate) SetReviewerID(u uuid.UUID) *GoodInfoCreate {
-	gic.mutation.SetReviewerID(u)
-	return gic
-}
-
-// SetReviewState sets the "review_state" field.
-func (gic *GoodInfoCreate) SetReviewState(gs goodinfo.ReviewState) *GoodInfoCreate {
-	gic.mutation.SetReviewState(gs)
-	return gic
-}
-
 // SetTotal sets the "total" field.
-func (gic *GoodInfoCreate) SetTotal(i int) *GoodInfoCreate {
+func (gic *GoodInfoCreate) SetTotal(i int32) *GoodInfoCreate {
 	gic.mutation.SetTotal(i)
 	return gic
 }
@@ -286,12 +274,12 @@ func (gic *GoodInfoCreate) check() error {
 			return &ValidationError{Name: "unit_power", err: fmt.Errorf(`ent: validator failed for field "unit_power": %w`, err)}
 		}
 	}
-	if _, ok := gic.mutation.Duration(); !ok {
-		return &ValidationError{Name: "duration", err: errors.New(`ent: missing required field "duration"`)}
+	if _, ok := gic.mutation.DurationDays(); !ok {
+		return &ValidationError{Name: "duration_days", err: errors.New(`ent: missing required field "duration_days"`)}
 	}
-	if v, ok := gic.mutation.Duration(); ok {
-		if err := goodinfo.DurationValidator(v); err != nil {
-			return &ValidationError{Name: "duration", err: fmt.Errorf(`ent: validator failed for field "duration": %w`, err)}
+	if v, ok := gic.mutation.DurationDays(); ok {
+		if err := goodinfo.DurationDaysValidator(v); err != nil {
+			return &ValidationError{Name: "duration_days", err: fmt.Errorf(`ent: validator failed for field "duration_days": %w`, err)}
 		}
 	}
 	if _, ok := gic.mutation.CoinInfoID(); !ok {
@@ -300,8 +288,8 @@ func (gic *GoodInfoCreate) check() error {
 	if _, ok := gic.mutation.Actuals(); !ok {
 		return &ValidationError{Name: "actuals", err: errors.New(`ent: missing required field "actuals"`)}
 	}
-	if _, ok := gic.mutation.DeliveryTime(); !ok {
-		return &ValidationError{Name: "delivery_time", err: errors.New(`ent: missing required field "delivery_time"`)}
+	if _, ok := gic.mutation.DeliveryAt(); !ok {
+		return &ValidationError{Name: "delivery_at", err: errors.New(`ent: missing required field "delivery_at"`)}
 	}
 	if _, ok := gic.mutation.InheritFromGoodID(); !ok {
 		return &ValidationError{Name: "inherit_from_good_id", err: errors.New(`ent: missing required field "inherit_from_good_id"`)}
@@ -330,17 +318,6 @@ func (gic *GoodInfoCreate) check() error {
 	}
 	if _, ok := gic.mutation.SupportCoinTypeIds(); !ok {
 		return &ValidationError{Name: "support_coin_type_ids", err: errors.New(`ent: missing required field "support_coin_type_ids"`)}
-	}
-	if _, ok := gic.mutation.ReviewerID(); !ok {
-		return &ValidationError{Name: "reviewer_id", err: errors.New(`ent: missing required field "reviewer_id"`)}
-	}
-	if _, ok := gic.mutation.ReviewState(); !ok {
-		return &ValidationError{Name: "review_state", err: errors.New(`ent: missing required field "review_state"`)}
-	}
-	if v, ok := gic.mutation.ReviewState(); ok {
-		if err := goodinfo.ReviewStateValidator(v); err != nil {
-			return &ValidationError{Name: "review_state", err: fmt.Errorf(`ent: validator failed for field "review_state": %w`, err)}
-		}
 	}
 	if _, ok := gic.mutation.Total(); !ok {
 		return &ValidationError{Name: "total", err: errors.New(`ent: missing required field "total"`)}
@@ -402,7 +379,7 @@ func (gic *GoodInfoCreate) createSpec() (*GoodInfo, *sqlgraph.CreateSpec) {
 	}
 	if value, ok := gic.mutation.GasPrice(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt,
+			Type:   field.TypeInt64,
 			Value:  value,
 			Column: goodinfo.FieldGasPrice,
 		})
@@ -418,19 +395,19 @@ func (gic *GoodInfoCreate) createSpec() (*GoodInfo, *sqlgraph.CreateSpec) {
 	}
 	if value, ok := gic.mutation.UnitPower(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeFloat64,
+			Type:   field.TypeInt32,
 			Value:  value,
 			Column: goodinfo.FieldUnitPower,
 		})
 		_node.UnitPower = value
 	}
-	if value, ok := gic.mutation.Duration(); ok {
+	if value, ok := gic.mutation.DurationDays(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt,
+			Type:   field.TypeInt32,
 			Value:  value,
-			Column: goodinfo.FieldDuration,
+			Column: goodinfo.FieldDurationDays,
 		})
-		_node.Duration = value
+		_node.DurationDays = value
 	}
 	if value, ok := gic.mutation.CoinInfoID(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
@@ -448,13 +425,13 @@ func (gic *GoodInfoCreate) createSpec() (*GoodInfo, *sqlgraph.CreateSpec) {
 		})
 		_node.Actuals = value
 	}
-	if value, ok := gic.mutation.DeliveryTime(); ok {
+	if value, ok := gic.mutation.DeliveryAt(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt,
+			Type:   field.TypeInt32,
 			Value:  value,
-			Column: goodinfo.FieldDeliveryTime,
+			Column: goodinfo.FieldDeliveryAt,
 		})
-		_node.DeliveryTime = value
+		_node.DeliveryAt = value
 	}
 	if value, ok := gic.mutation.InheritFromGoodID(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
@@ -474,7 +451,7 @@ func (gic *GoodInfoCreate) createSpec() (*GoodInfo, *sqlgraph.CreateSpec) {
 	}
 	if value, ok := gic.mutation.Price(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt,
+			Type:   field.TypeInt64,
 			Value:  value,
 			Column: goodinfo.FieldPrice,
 		})
@@ -504,25 +481,9 @@ func (gic *GoodInfoCreate) createSpec() (*GoodInfo, *sqlgraph.CreateSpec) {
 		})
 		_node.SupportCoinTypeIds = value
 	}
-	if value, ok := gic.mutation.ReviewerID(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeUUID,
-			Value:  value,
-			Column: goodinfo.FieldReviewerID,
-		})
-		_node.ReviewerID = value
-	}
-	if value, ok := gic.mutation.ReviewState(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeEnum,
-			Value:  value,
-			Column: goodinfo.FieldReviewState,
-		})
-		_node.ReviewState = value
-	}
 	if value, ok := gic.mutation.Total(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt,
+			Type:   field.TypeInt32,
 			Value:  value,
 			Column: goodinfo.FieldTotal,
 		})
@@ -619,7 +580,7 @@ func (u *GoodInfoUpsert) UpdateDeviceInfoID() *GoodInfoUpsert {
 }
 
 // SetGasPrice sets the "gas_price" field.
-func (u *GoodInfoUpsert) SetGasPrice(v int) *GoodInfoUpsert {
+func (u *GoodInfoUpsert) SetGasPrice(v int64) *GoodInfoUpsert {
 	u.Set(goodinfo.FieldGasPrice, v)
 	return u
 }
@@ -643,7 +604,7 @@ func (u *GoodInfoUpsert) UpdateSeparateGasFee() *GoodInfoUpsert {
 }
 
 // SetUnitPower sets the "unit_power" field.
-func (u *GoodInfoUpsert) SetUnitPower(v float64) *GoodInfoUpsert {
+func (u *GoodInfoUpsert) SetUnitPower(v int32) *GoodInfoUpsert {
 	u.Set(goodinfo.FieldUnitPower, v)
 	return u
 }
@@ -654,15 +615,15 @@ func (u *GoodInfoUpsert) UpdateUnitPower() *GoodInfoUpsert {
 	return u
 }
 
-// SetDuration sets the "duration" field.
-func (u *GoodInfoUpsert) SetDuration(v int) *GoodInfoUpsert {
-	u.Set(goodinfo.FieldDuration, v)
+// SetDurationDays sets the "duration_days" field.
+func (u *GoodInfoUpsert) SetDurationDays(v int32) *GoodInfoUpsert {
+	u.Set(goodinfo.FieldDurationDays, v)
 	return u
 }
 
-// UpdateDuration sets the "duration" field to the value that was provided on create.
-func (u *GoodInfoUpsert) UpdateDuration() *GoodInfoUpsert {
-	u.SetExcluded(goodinfo.FieldDuration)
+// UpdateDurationDays sets the "duration_days" field to the value that was provided on create.
+func (u *GoodInfoUpsert) UpdateDurationDays() *GoodInfoUpsert {
+	u.SetExcluded(goodinfo.FieldDurationDays)
 	return u
 }
 
@@ -690,15 +651,15 @@ func (u *GoodInfoUpsert) UpdateActuals() *GoodInfoUpsert {
 	return u
 }
 
-// SetDeliveryTime sets the "delivery_time" field.
-func (u *GoodInfoUpsert) SetDeliveryTime(v int) *GoodInfoUpsert {
-	u.Set(goodinfo.FieldDeliveryTime, v)
+// SetDeliveryAt sets the "delivery_at" field.
+func (u *GoodInfoUpsert) SetDeliveryAt(v int32) *GoodInfoUpsert {
+	u.Set(goodinfo.FieldDeliveryAt, v)
 	return u
 }
 
-// UpdateDeliveryTime sets the "delivery_time" field to the value that was provided on create.
-func (u *GoodInfoUpsert) UpdateDeliveryTime() *GoodInfoUpsert {
-	u.SetExcluded(goodinfo.FieldDeliveryTime)
+// UpdateDeliveryAt sets the "delivery_at" field to the value that was provided on create.
+func (u *GoodInfoUpsert) UpdateDeliveryAt() *GoodInfoUpsert {
+	u.SetExcluded(goodinfo.FieldDeliveryAt)
 	return u
 }
 
@@ -727,7 +688,7 @@ func (u *GoodInfoUpsert) UpdateVendorLocationID() *GoodInfoUpsert {
 }
 
 // SetPrice sets the "price" field.
-func (u *GoodInfoUpsert) SetPrice(v int) *GoodInfoUpsert {
+func (u *GoodInfoUpsert) SetPrice(v int64) *GoodInfoUpsert {
 	u.Set(goodinfo.FieldPrice, v)
 	return u
 }
@@ -774,32 +735,8 @@ func (u *GoodInfoUpsert) UpdateSupportCoinTypeIds() *GoodInfoUpsert {
 	return u
 }
 
-// SetReviewerID sets the "reviewer_id" field.
-func (u *GoodInfoUpsert) SetReviewerID(v uuid.UUID) *GoodInfoUpsert {
-	u.Set(goodinfo.FieldReviewerID, v)
-	return u
-}
-
-// UpdateReviewerID sets the "reviewer_id" field to the value that was provided on create.
-func (u *GoodInfoUpsert) UpdateReviewerID() *GoodInfoUpsert {
-	u.SetExcluded(goodinfo.FieldReviewerID)
-	return u
-}
-
-// SetReviewState sets the "review_state" field.
-func (u *GoodInfoUpsert) SetReviewState(v goodinfo.ReviewState) *GoodInfoUpsert {
-	u.Set(goodinfo.FieldReviewState, v)
-	return u
-}
-
-// UpdateReviewState sets the "review_state" field to the value that was provided on create.
-func (u *GoodInfoUpsert) UpdateReviewState() *GoodInfoUpsert {
-	u.SetExcluded(goodinfo.FieldReviewState)
-	return u
-}
-
 // SetTotal sets the "total" field.
-func (u *GoodInfoUpsert) SetTotal(v int) *GoodInfoUpsert {
+func (u *GoodInfoUpsert) SetTotal(v int32) *GoodInfoUpsert {
 	u.Set(goodinfo.FieldTotal, v)
 	return u
 }
@@ -911,7 +848,7 @@ func (u *GoodInfoUpsertOne) UpdateDeviceInfoID() *GoodInfoUpsertOne {
 }
 
 // SetGasPrice sets the "gas_price" field.
-func (u *GoodInfoUpsertOne) SetGasPrice(v int) *GoodInfoUpsertOne {
+func (u *GoodInfoUpsertOne) SetGasPrice(v int64) *GoodInfoUpsertOne {
 	return u.Update(func(s *GoodInfoUpsert) {
 		s.SetGasPrice(v)
 	})
@@ -939,7 +876,7 @@ func (u *GoodInfoUpsertOne) UpdateSeparateGasFee() *GoodInfoUpsertOne {
 }
 
 // SetUnitPower sets the "unit_power" field.
-func (u *GoodInfoUpsertOne) SetUnitPower(v float64) *GoodInfoUpsertOne {
+func (u *GoodInfoUpsertOne) SetUnitPower(v int32) *GoodInfoUpsertOne {
 	return u.Update(func(s *GoodInfoUpsert) {
 		s.SetUnitPower(v)
 	})
@@ -952,17 +889,17 @@ func (u *GoodInfoUpsertOne) UpdateUnitPower() *GoodInfoUpsertOne {
 	})
 }
 
-// SetDuration sets the "duration" field.
-func (u *GoodInfoUpsertOne) SetDuration(v int) *GoodInfoUpsertOne {
+// SetDurationDays sets the "duration_days" field.
+func (u *GoodInfoUpsertOne) SetDurationDays(v int32) *GoodInfoUpsertOne {
 	return u.Update(func(s *GoodInfoUpsert) {
-		s.SetDuration(v)
+		s.SetDurationDays(v)
 	})
 }
 
-// UpdateDuration sets the "duration" field to the value that was provided on create.
-func (u *GoodInfoUpsertOne) UpdateDuration() *GoodInfoUpsertOne {
+// UpdateDurationDays sets the "duration_days" field to the value that was provided on create.
+func (u *GoodInfoUpsertOne) UpdateDurationDays() *GoodInfoUpsertOne {
 	return u.Update(func(s *GoodInfoUpsert) {
-		s.UpdateDuration()
+		s.UpdateDurationDays()
 	})
 }
 
@@ -994,17 +931,17 @@ func (u *GoodInfoUpsertOne) UpdateActuals() *GoodInfoUpsertOne {
 	})
 }
 
-// SetDeliveryTime sets the "delivery_time" field.
-func (u *GoodInfoUpsertOne) SetDeliveryTime(v int) *GoodInfoUpsertOne {
+// SetDeliveryAt sets the "delivery_at" field.
+func (u *GoodInfoUpsertOne) SetDeliveryAt(v int32) *GoodInfoUpsertOne {
 	return u.Update(func(s *GoodInfoUpsert) {
-		s.SetDeliveryTime(v)
+		s.SetDeliveryAt(v)
 	})
 }
 
-// UpdateDeliveryTime sets the "delivery_time" field to the value that was provided on create.
-func (u *GoodInfoUpsertOne) UpdateDeliveryTime() *GoodInfoUpsertOne {
+// UpdateDeliveryAt sets the "delivery_at" field to the value that was provided on create.
+func (u *GoodInfoUpsertOne) UpdateDeliveryAt() *GoodInfoUpsertOne {
 	return u.Update(func(s *GoodInfoUpsert) {
-		s.UpdateDeliveryTime()
+		s.UpdateDeliveryAt()
 	})
 }
 
@@ -1037,7 +974,7 @@ func (u *GoodInfoUpsertOne) UpdateVendorLocationID() *GoodInfoUpsertOne {
 }
 
 // SetPrice sets the "price" field.
-func (u *GoodInfoUpsertOne) SetPrice(v int) *GoodInfoUpsertOne {
+func (u *GoodInfoUpsertOne) SetPrice(v int64) *GoodInfoUpsertOne {
 	return u.Update(func(s *GoodInfoUpsert) {
 		s.SetPrice(v)
 	})
@@ -1092,36 +1029,8 @@ func (u *GoodInfoUpsertOne) UpdateSupportCoinTypeIds() *GoodInfoUpsertOne {
 	})
 }
 
-// SetReviewerID sets the "reviewer_id" field.
-func (u *GoodInfoUpsertOne) SetReviewerID(v uuid.UUID) *GoodInfoUpsertOne {
-	return u.Update(func(s *GoodInfoUpsert) {
-		s.SetReviewerID(v)
-	})
-}
-
-// UpdateReviewerID sets the "reviewer_id" field to the value that was provided on create.
-func (u *GoodInfoUpsertOne) UpdateReviewerID() *GoodInfoUpsertOne {
-	return u.Update(func(s *GoodInfoUpsert) {
-		s.UpdateReviewerID()
-	})
-}
-
-// SetReviewState sets the "review_state" field.
-func (u *GoodInfoUpsertOne) SetReviewState(v goodinfo.ReviewState) *GoodInfoUpsertOne {
-	return u.Update(func(s *GoodInfoUpsert) {
-		s.SetReviewState(v)
-	})
-}
-
-// UpdateReviewState sets the "review_state" field to the value that was provided on create.
-func (u *GoodInfoUpsertOne) UpdateReviewState() *GoodInfoUpsertOne {
-	return u.Update(func(s *GoodInfoUpsert) {
-		s.UpdateReviewState()
-	})
-}
-
 // SetTotal sets the "total" field.
-func (u *GoodInfoUpsertOne) SetTotal(v int) *GoodInfoUpsertOne {
+func (u *GoodInfoUpsertOne) SetTotal(v int32) *GoodInfoUpsertOne {
 	return u.Update(func(s *GoodInfoUpsert) {
 		s.SetTotal(v)
 	})
@@ -1407,7 +1316,7 @@ func (u *GoodInfoUpsertBulk) UpdateDeviceInfoID() *GoodInfoUpsertBulk {
 }
 
 // SetGasPrice sets the "gas_price" field.
-func (u *GoodInfoUpsertBulk) SetGasPrice(v int) *GoodInfoUpsertBulk {
+func (u *GoodInfoUpsertBulk) SetGasPrice(v int64) *GoodInfoUpsertBulk {
 	return u.Update(func(s *GoodInfoUpsert) {
 		s.SetGasPrice(v)
 	})
@@ -1435,7 +1344,7 @@ func (u *GoodInfoUpsertBulk) UpdateSeparateGasFee() *GoodInfoUpsertBulk {
 }
 
 // SetUnitPower sets the "unit_power" field.
-func (u *GoodInfoUpsertBulk) SetUnitPower(v float64) *GoodInfoUpsertBulk {
+func (u *GoodInfoUpsertBulk) SetUnitPower(v int32) *GoodInfoUpsertBulk {
 	return u.Update(func(s *GoodInfoUpsert) {
 		s.SetUnitPower(v)
 	})
@@ -1448,17 +1357,17 @@ func (u *GoodInfoUpsertBulk) UpdateUnitPower() *GoodInfoUpsertBulk {
 	})
 }
 
-// SetDuration sets the "duration" field.
-func (u *GoodInfoUpsertBulk) SetDuration(v int) *GoodInfoUpsertBulk {
+// SetDurationDays sets the "duration_days" field.
+func (u *GoodInfoUpsertBulk) SetDurationDays(v int32) *GoodInfoUpsertBulk {
 	return u.Update(func(s *GoodInfoUpsert) {
-		s.SetDuration(v)
+		s.SetDurationDays(v)
 	})
 }
 
-// UpdateDuration sets the "duration" field to the value that was provided on create.
-func (u *GoodInfoUpsertBulk) UpdateDuration() *GoodInfoUpsertBulk {
+// UpdateDurationDays sets the "duration_days" field to the value that was provided on create.
+func (u *GoodInfoUpsertBulk) UpdateDurationDays() *GoodInfoUpsertBulk {
 	return u.Update(func(s *GoodInfoUpsert) {
-		s.UpdateDuration()
+		s.UpdateDurationDays()
 	})
 }
 
@@ -1490,17 +1399,17 @@ func (u *GoodInfoUpsertBulk) UpdateActuals() *GoodInfoUpsertBulk {
 	})
 }
 
-// SetDeliveryTime sets the "delivery_time" field.
-func (u *GoodInfoUpsertBulk) SetDeliveryTime(v int) *GoodInfoUpsertBulk {
+// SetDeliveryAt sets the "delivery_at" field.
+func (u *GoodInfoUpsertBulk) SetDeliveryAt(v int32) *GoodInfoUpsertBulk {
 	return u.Update(func(s *GoodInfoUpsert) {
-		s.SetDeliveryTime(v)
+		s.SetDeliveryAt(v)
 	})
 }
 
-// UpdateDeliveryTime sets the "delivery_time" field to the value that was provided on create.
-func (u *GoodInfoUpsertBulk) UpdateDeliveryTime() *GoodInfoUpsertBulk {
+// UpdateDeliveryAt sets the "delivery_at" field to the value that was provided on create.
+func (u *GoodInfoUpsertBulk) UpdateDeliveryAt() *GoodInfoUpsertBulk {
 	return u.Update(func(s *GoodInfoUpsert) {
-		s.UpdateDeliveryTime()
+		s.UpdateDeliveryAt()
 	})
 }
 
@@ -1533,7 +1442,7 @@ func (u *GoodInfoUpsertBulk) UpdateVendorLocationID() *GoodInfoUpsertBulk {
 }
 
 // SetPrice sets the "price" field.
-func (u *GoodInfoUpsertBulk) SetPrice(v int) *GoodInfoUpsertBulk {
+func (u *GoodInfoUpsertBulk) SetPrice(v int64) *GoodInfoUpsertBulk {
 	return u.Update(func(s *GoodInfoUpsert) {
 		s.SetPrice(v)
 	})
@@ -1588,36 +1497,8 @@ func (u *GoodInfoUpsertBulk) UpdateSupportCoinTypeIds() *GoodInfoUpsertBulk {
 	})
 }
 
-// SetReviewerID sets the "reviewer_id" field.
-func (u *GoodInfoUpsertBulk) SetReviewerID(v uuid.UUID) *GoodInfoUpsertBulk {
-	return u.Update(func(s *GoodInfoUpsert) {
-		s.SetReviewerID(v)
-	})
-}
-
-// UpdateReviewerID sets the "reviewer_id" field to the value that was provided on create.
-func (u *GoodInfoUpsertBulk) UpdateReviewerID() *GoodInfoUpsertBulk {
-	return u.Update(func(s *GoodInfoUpsert) {
-		s.UpdateReviewerID()
-	})
-}
-
-// SetReviewState sets the "review_state" field.
-func (u *GoodInfoUpsertBulk) SetReviewState(v goodinfo.ReviewState) *GoodInfoUpsertBulk {
-	return u.Update(func(s *GoodInfoUpsert) {
-		s.SetReviewState(v)
-	})
-}
-
-// UpdateReviewState sets the "review_state" field to the value that was provided on create.
-func (u *GoodInfoUpsertBulk) UpdateReviewState() *GoodInfoUpsertBulk {
-	return u.Update(func(s *GoodInfoUpsert) {
-		s.UpdateReviewState()
-	})
-}
-
 // SetTotal sets the "total" field.
-func (u *GoodInfoUpsertBulk) SetTotal(v int) *GoodInfoUpsertBulk {
+func (u *GoodInfoUpsertBulk) SetTotal(v int32) *GoodInfoUpsertBulk {
 	return u.Update(func(s *GoodInfoUpsert) {
 		s.SetTotal(v)
 	})

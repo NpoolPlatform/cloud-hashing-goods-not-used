@@ -21,14 +21,14 @@ const (
 	FieldSeparateGasFee = "separate_gas_fee"
 	// FieldUnitPower holds the string denoting the unit_power field in the database.
 	FieldUnitPower = "unit_power"
-	// FieldDuration holds the string denoting the duration field in the database.
-	FieldDuration = "duration"
+	// FieldDurationDays holds the string denoting the duration_days field in the database.
+	FieldDurationDays = "duration_days"
 	// FieldCoinInfoID holds the string denoting the coin_info_id field in the database.
 	FieldCoinInfoID = "coin_info_id"
 	// FieldActuals holds the string denoting the actuals field in the database.
 	FieldActuals = "actuals"
-	// FieldDeliveryTime holds the string denoting the delivery_time field in the database.
-	FieldDeliveryTime = "delivery_time"
+	// FieldDeliveryAt holds the string denoting the delivery_at field in the database.
+	FieldDeliveryAt = "delivery_at"
 	// FieldInheritFromGoodID holds the string denoting the inherit_from_good_id field in the database.
 	FieldInheritFromGoodID = "inherit_from_good_id"
 	// FieldVendorLocationID holds the string denoting the vendor_location_id field in the database.
@@ -41,10 +41,6 @@ const (
 	FieldClassic = "classic"
 	// FieldSupportCoinTypeIds holds the string denoting the support_coin_type_ids field in the database.
 	FieldSupportCoinTypeIds = "support_coin_type_ids"
-	// FieldReviewerID holds the string denoting the reviewer_id field in the database.
-	FieldReviewerID = "reviewer_id"
-	// FieldReviewState holds the string denoting the review_state field in the database.
-	FieldReviewState = "review_state"
 	// FieldTotal holds the string denoting the total field in the database.
 	FieldTotal = "total"
 	// FieldCreateAt holds the string denoting the create_at field in the database.
@@ -64,18 +60,16 @@ var Columns = []string{
 	FieldGasPrice,
 	FieldSeparateGasFee,
 	FieldUnitPower,
-	FieldDuration,
+	FieldDurationDays,
 	FieldCoinInfoID,
 	FieldActuals,
-	FieldDeliveryTime,
+	FieldDeliveryAt,
 	FieldInheritFromGoodID,
 	FieldVendorLocationID,
 	FieldPrice,
 	FieldBenefitType,
 	FieldClassic,
 	FieldSupportCoinTypeIds,
-	FieldReviewerID,
-	FieldReviewState,
 	FieldTotal,
 	FieldCreateAt,
 	FieldUpdateAt,
@@ -94,15 +88,15 @@ func ValidColumn(column string) bool {
 
 var (
 	// GasPriceValidator is a validator for the "gas_price" field. It is called by the builders before save.
-	GasPriceValidator func(int) error
+	GasPriceValidator func(int64) error
 	// UnitPowerValidator is a validator for the "unit_power" field. It is called by the builders before save.
-	UnitPowerValidator func(float64) error
-	// DurationValidator is a validator for the "duration" field. It is called by the builders before save.
-	DurationValidator func(int) error
+	UnitPowerValidator func(int32) error
+	// DurationDaysValidator is a validator for the "duration_days" field. It is called by the builders before save.
+	DurationDaysValidator func(int32) error
 	// PriceValidator is a validator for the "price" field. It is called by the builders before save.
-	PriceValidator func(int) error
+	PriceValidator func(int64) error
 	// TotalValidator is a validator for the "total" field. It is called by the builders before save.
-	TotalValidator func(int) error
+	TotalValidator func(int32) error
 	// DefaultCreateAt holds the default value on creation for the "create_at" field.
 	DefaultCreateAt func() int64
 	// DefaultUpdateAt holds the default value on creation for the "update_at" field.
@@ -135,28 +129,5 @@ func BenefitTypeValidator(bt BenefitType) error {
 		return nil
 	default:
 		return fmt.Errorf("goodinfo: invalid enum value for benefit_type field: %q", bt)
-	}
-}
-
-// ReviewState defines the type for the "review_state" enum field.
-type ReviewState string
-
-// ReviewState values.
-const (
-	ReviewStatePassed   ReviewState = "passed"
-	ReviewStateRejected ReviewState = "rejected"
-)
-
-func (rs ReviewState) String() string {
-	return string(rs)
-}
-
-// ReviewStateValidator is a validator for the "review_state" field enum values. It is called by the builders before save.
-func ReviewStateValidator(rs ReviewState) error {
-	switch rs {
-	case ReviewStatePassed, ReviewStateRejected:
-		return nil
-	default:
-		return fmt.Errorf("goodinfo: invalid enum value for review_state field: %q", rs)
 	}
 }

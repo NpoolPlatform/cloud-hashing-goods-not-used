@@ -99,7 +99,7 @@ func DeviceInfoID(v uuid.UUID) predicate.GoodInfo {
 }
 
 // GasPrice applies equality check predicate on the "gas_price" field. It's identical to GasPriceEQ.
-func GasPrice(v int) predicate.GoodInfo {
+func GasPrice(v int64) predicate.GoodInfo {
 	return predicate.GoodInfo(func(s *sql.Selector) {
 		s.Where(sql.EQ(s.C(FieldGasPrice), v))
 	})
@@ -113,16 +113,16 @@ func SeparateGasFee(v bool) predicate.GoodInfo {
 }
 
 // UnitPower applies equality check predicate on the "unit_power" field. It's identical to UnitPowerEQ.
-func UnitPower(v float64) predicate.GoodInfo {
+func UnitPower(v int32) predicate.GoodInfo {
 	return predicate.GoodInfo(func(s *sql.Selector) {
 		s.Where(sql.EQ(s.C(FieldUnitPower), v))
 	})
 }
 
-// Duration applies equality check predicate on the "duration" field. It's identical to DurationEQ.
-func Duration(v int) predicate.GoodInfo {
+// DurationDays applies equality check predicate on the "duration_days" field. It's identical to DurationDaysEQ.
+func DurationDays(v int32) predicate.GoodInfo {
 	return predicate.GoodInfo(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldDuration), v))
+		s.Where(sql.EQ(s.C(FieldDurationDays), v))
 	})
 }
 
@@ -140,10 +140,10 @@ func Actuals(v bool) predicate.GoodInfo {
 	})
 }
 
-// DeliveryTime applies equality check predicate on the "delivery_time" field. It's identical to DeliveryTimeEQ.
-func DeliveryTime(v int) predicate.GoodInfo {
+// DeliveryAt applies equality check predicate on the "delivery_at" field. It's identical to DeliveryAtEQ.
+func DeliveryAt(v int32) predicate.GoodInfo {
 	return predicate.GoodInfo(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldDeliveryTime), v))
+		s.Where(sql.EQ(s.C(FieldDeliveryAt), v))
 	})
 }
 
@@ -162,7 +162,7 @@ func VendorLocationID(v uuid.UUID) predicate.GoodInfo {
 }
 
 // Price applies equality check predicate on the "price" field. It's identical to PriceEQ.
-func Price(v int) predicate.GoodInfo {
+func Price(v int64) predicate.GoodInfo {
 	return predicate.GoodInfo(func(s *sql.Selector) {
 		s.Where(sql.EQ(s.C(FieldPrice), v))
 	})
@@ -175,15 +175,8 @@ func Classic(v bool) predicate.GoodInfo {
 	})
 }
 
-// ReviewerID applies equality check predicate on the "reviewer_id" field. It's identical to ReviewerIDEQ.
-func ReviewerID(v uuid.UUID) predicate.GoodInfo {
-	return predicate.GoodInfo(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldReviewerID), v))
-	})
-}
-
 // Total applies equality check predicate on the "total" field. It's identical to TotalEQ.
-func Total(v int) predicate.GoodInfo {
+func Total(v int32) predicate.GoodInfo {
 	return predicate.GoodInfo(func(s *sql.Selector) {
 		s.Where(sql.EQ(s.C(FieldTotal), v))
 	})
@@ -287,21 +280,21 @@ func DeviceInfoIDLTE(v uuid.UUID) predicate.GoodInfo {
 }
 
 // GasPriceEQ applies the EQ predicate on the "gas_price" field.
-func GasPriceEQ(v int) predicate.GoodInfo {
+func GasPriceEQ(v int64) predicate.GoodInfo {
 	return predicate.GoodInfo(func(s *sql.Selector) {
 		s.Where(sql.EQ(s.C(FieldGasPrice), v))
 	})
 }
 
 // GasPriceNEQ applies the NEQ predicate on the "gas_price" field.
-func GasPriceNEQ(v int) predicate.GoodInfo {
+func GasPriceNEQ(v int64) predicate.GoodInfo {
 	return predicate.GoodInfo(func(s *sql.Selector) {
 		s.Where(sql.NEQ(s.C(FieldGasPrice), v))
 	})
 }
 
 // GasPriceIn applies the In predicate on the "gas_price" field.
-func GasPriceIn(vs ...int) predicate.GoodInfo {
+func GasPriceIn(vs ...int64) predicate.GoodInfo {
 	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
@@ -318,7 +311,7 @@ func GasPriceIn(vs ...int) predicate.GoodInfo {
 }
 
 // GasPriceNotIn applies the NotIn predicate on the "gas_price" field.
-func GasPriceNotIn(vs ...int) predicate.GoodInfo {
+func GasPriceNotIn(vs ...int64) predicate.GoodInfo {
 	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
@@ -335,28 +328,28 @@ func GasPriceNotIn(vs ...int) predicate.GoodInfo {
 }
 
 // GasPriceGT applies the GT predicate on the "gas_price" field.
-func GasPriceGT(v int) predicate.GoodInfo {
+func GasPriceGT(v int64) predicate.GoodInfo {
 	return predicate.GoodInfo(func(s *sql.Selector) {
 		s.Where(sql.GT(s.C(FieldGasPrice), v))
 	})
 }
 
 // GasPriceGTE applies the GTE predicate on the "gas_price" field.
-func GasPriceGTE(v int) predicate.GoodInfo {
+func GasPriceGTE(v int64) predicate.GoodInfo {
 	return predicate.GoodInfo(func(s *sql.Selector) {
 		s.Where(sql.GTE(s.C(FieldGasPrice), v))
 	})
 }
 
 // GasPriceLT applies the LT predicate on the "gas_price" field.
-func GasPriceLT(v int) predicate.GoodInfo {
+func GasPriceLT(v int64) predicate.GoodInfo {
 	return predicate.GoodInfo(func(s *sql.Selector) {
 		s.Where(sql.LT(s.C(FieldGasPrice), v))
 	})
 }
 
 // GasPriceLTE applies the LTE predicate on the "gas_price" field.
-func GasPriceLTE(v int) predicate.GoodInfo {
+func GasPriceLTE(v int64) predicate.GoodInfo {
 	return predicate.GoodInfo(func(s *sql.Selector) {
 		s.Where(sql.LTE(s.C(FieldGasPrice), v))
 	})
@@ -377,21 +370,21 @@ func SeparateGasFeeNEQ(v bool) predicate.GoodInfo {
 }
 
 // UnitPowerEQ applies the EQ predicate on the "unit_power" field.
-func UnitPowerEQ(v float64) predicate.GoodInfo {
+func UnitPowerEQ(v int32) predicate.GoodInfo {
 	return predicate.GoodInfo(func(s *sql.Selector) {
 		s.Where(sql.EQ(s.C(FieldUnitPower), v))
 	})
 }
 
 // UnitPowerNEQ applies the NEQ predicate on the "unit_power" field.
-func UnitPowerNEQ(v float64) predicate.GoodInfo {
+func UnitPowerNEQ(v int32) predicate.GoodInfo {
 	return predicate.GoodInfo(func(s *sql.Selector) {
 		s.Where(sql.NEQ(s.C(FieldUnitPower), v))
 	})
 }
 
 // UnitPowerIn applies the In predicate on the "unit_power" field.
-func UnitPowerIn(vs ...float64) predicate.GoodInfo {
+func UnitPowerIn(vs ...int32) predicate.GoodInfo {
 	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
@@ -408,7 +401,7 @@ func UnitPowerIn(vs ...float64) predicate.GoodInfo {
 }
 
 // UnitPowerNotIn applies the NotIn predicate on the "unit_power" field.
-func UnitPowerNotIn(vs ...float64) predicate.GoodInfo {
+func UnitPowerNotIn(vs ...int32) predicate.GoodInfo {
 	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
@@ -425,49 +418,49 @@ func UnitPowerNotIn(vs ...float64) predicate.GoodInfo {
 }
 
 // UnitPowerGT applies the GT predicate on the "unit_power" field.
-func UnitPowerGT(v float64) predicate.GoodInfo {
+func UnitPowerGT(v int32) predicate.GoodInfo {
 	return predicate.GoodInfo(func(s *sql.Selector) {
 		s.Where(sql.GT(s.C(FieldUnitPower), v))
 	})
 }
 
 // UnitPowerGTE applies the GTE predicate on the "unit_power" field.
-func UnitPowerGTE(v float64) predicate.GoodInfo {
+func UnitPowerGTE(v int32) predicate.GoodInfo {
 	return predicate.GoodInfo(func(s *sql.Selector) {
 		s.Where(sql.GTE(s.C(FieldUnitPower), v))
 	})
 }
 
 // UnitPowerLT applies the LT predicate on the "unit_power" field.
-func UnitPowerLT(v float64) predicate.GoodInfo {
+func UnitPowerLT(v int32) predicate.GoodInfo {
 	return predicate.GoodInfo(func(s *sql.Selector) {
 		s.Where(sql.LT(s.C(FieldUnitPower), v))
 	})
 }
 
 // UnitPowerLTE applies the LTE predicate on the "unit_power" field.
-func UnitPowerLTE(v float64) predicate.GoodInfo {
+func UnitPowerLTE(v int32) predicate.GoodInfo {
 	return predicate.GoodInfo(func(s *sql.Selector) {
 		s.Where(sql.LTE(s.C(FieldUnitPower), v))
 	})
 }
 
-// DurationEQ applies the EQ predicate on the "duration" field.
-func DurationEQ(v int) predicate.GoodInfo {
+// DurationDaysEQ applies the EQ predicate on the "duration_days" field.
+func DurationDaysEQ(v int32) predicate.GoodInfo {
 	return predicate.GoodInfo(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldDuration), v))
+		s.Where(sql.EQ(s.C(FieldDurationDays), v))
 	})
 }
 
-// DurationNEQ applies the NEQ predicate on the "duration" field.
-func DurationNEQ(v int) predicate.GoodInfo {
+// DurationDaysNEQ applies the NEQ predicate on the "duration_days" field.
+func DurationDaysNEQ(v int32) predicate.GoodInfo {
 	return predicate.GoodInfo(func(s *sql.Selector) {
-		s.Where(sql.NEQ(s.C(FieldDuration), v))
+		s.Where(sql.NEQ(s.C(FieldDurationDays), v))
 	})
 }
 
-// DurationIn applies the In predicate on the "duration" field.
-func DurationIn(vs ...int) predicate.GoodInfo {
+// DurationDaysIn applies the In predicate on the "duration_days" field.
+func DurationDaysIn(vs ...int32) predicate.GoodInfo {
 	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
@@ -479,12 +472,12 @@ func DurationIn(vs ...int) predicate.GoodInfo {
 			s.Where(sql.False())
 			return
 		}
-		s.Where(sql.In(s.C(FieldDuration), v...))
+		s.Where(sql.In(s.C(FieldDurationDays), v...))
 	})
 }
 
-// DurationNotIn applies the NotIn predicate on the "duration" field.
-func DurationNotIn(vs ...int) predicate.GoodInfo {
+// DurationDaysNotIn applies the NotIn predicate on the "duration_days" field.
+func DurationDaysNotIn(vs ...int32) predicate.GoodInfo {
 	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
@@ -496,35 +489,35 @@ func DurationNotIn(vs ...int) predicate.GoodInfo {
 			s.Where(sql.False())
 			return
 		}
-		s.Where(sql.NotIn(s.C(FieldDuration), v...))
+		s.Where(sql.NotIn(s.C(FieldDurationDays), v...))
 	})
 }
 
-// DurationGT applies the GT predicate on the "duration" field.
-func DurationGT(v int) predicate.GoodInfo {
+// DurationDaysGT applies the GT predicate on the "duration_days" field.
+func DurationDaysGT(v int32) predicate.GoodInfo {
 	return predicate.GoodInfo(func(s *sql.Selector) {
-		s.Where(sql.GT(s.C(FieldDuration), v))
+		s.Where(sql.GT(s.C(FieldDurationDays), v))
 	})
 }
 
-// DurationGTE applies the GTE predicate on the "duration" field.
-func DurationGTE(v int) predicate.GoodInfo {
+// DurationDaysGTE applies the GTE predicate on the "duration_days" field.
+func DurationDaysGTE(v int32) predicate.GoodInfo {
 	return predicate.GoodInfo(func(s *sql.Selector) {
-		s.Where(sql.GTE(s.C(FieldDuration), v))
+		s.Where(sql.GTE(s.C(FieldDurationDays), v))
 	})
 }
 
-// DurationLT applies the LT predicate on the "duration" field.
-func DurationLT(v int) predicate.GoodInfo {
+// DurationDaysLT applies the LT predicate on the "duration_days" field.
+func DurationDaysLT(v int32) predicate.GoodInfo {
 	return predicate.GoodInfo(func(s *sql.Selector) {
-		s.Where(sql.LT(s.C(FieldDuration), v))
+		s.Where(sql.LT(s.C(FieldDurationDays), v))
 	})
 }
 
-// DurationLTE applies the LTE predicate on the "duration" field.
-func DurationLTE(v int) predicate.GoodInfo {
+// DurationDaysLTE applies the LTE predicate on the "duration_days" field.
+func DurationDaysLTE(v int32) predicate.GoodInfo {
 	return predicate.GoodInfo(func(s *sql.Selector) {
-		s.Where(sql.LTE(s.C(FieldDuration), v))
+		s.Where(sql.LTE(s.C(FieldDurationDays), v))
 	})
 }
 
@@ -618,22 +611,22 @@ func ActualsNEQ(v bool) predicate.GoodInfo {
 	})
 }
 
-// DeliveryTimeEQ applies the EQ predicate on the "delivery_time" field.
-func DeliveryTimeEQ(v int) predicate.GoodInfo {
+// DeliveryAtEQ applies the EQ predicate on the "delivery_at" field.
+func DeliveryAtEQ(v int32) predicate.GoodInfo {
 	return predicate.GoodInfo(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldDeliveryTime), v))
+		s.Where(sql.EQ(s.C(FieldDeliveryAt), v))
 	})
 }
 
-// DeliveryTimeNEQ applies the NEQ predicate on the "delivery_time" field.
-func DeliveryTimeNEQ(v int) predicate.GoodInfo {
+// DeliveryAtNEQ applies the NEQ predicate on the "delivery_at" field.
+func DeliveryAtNEQ(v int32) predicate.GoodInfo {
 	return predicate.GoodInfo(func(s *sql.Selector) {
-		s.Where(sql.NEQ(s.C(FieldDeliveryTime), v))
+		s.Where(sql.NEQ(s.C(FieldDeliveryAt), v))
 	})
 }
 
-// DeliveryTimeIn applies the In predicate on the "delivery_time" field.
-func DeliveryTimeIn(vs ...int) predicate.GoodInfo {
+// DeliveryAtIn applies the In predicate on the "delivery_at" field.
+func DeliveryAtIn(vs ...int32) predicate.GoodInfo {
 	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
@@ -645,12 +638,12 @@ func DeliveryTimeIn(vs ...int) predicate.GoodInfo {
 			s.Where(sql.False())
 			return
 		}
-		s.Where(sql.In(s.C(FieldDeliveryTime), v...))
+		s.Where(sql.In(s.C(FieldDeliveryAt), v...))
 	})
 }
 
-// DeliveryTimeNotIn applies the NotIn predicate on the "delivery_time" field.
-func DeliveryTimeNotIn(vs ...int) predicate.GoodInfo {
+// DeliveryAtNotIn applies the NotIn predicate on the "delivery_at" field.
+func DeliveryAtNotIn(vs ...int32) predicate.GoodInfo {
 	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
@@ -662,35 +655,35 @@ func DeliveryTimeNotIn(vs ...int) predicate.GoodInfo {
 			s.Where(sql.False())
 			return
 		}
-		s.Where(sql.NotIn(s.C(FieldDeliveryTime), v...))
+		s.Where(sql.NotIn(s.C(FieldDeliveryAt), v...))
 	})
 }
 
-// DeliveryTimeGT applies the GT predicate on the "delivery_time" field.
-func DeliveryTimeGT(v int) predicate.GoodInfo {
+// DeliveryAtGT applies the GT predicate on the "delivery_at" field.
+func DeliveryAtGT(v int32) predicate.GoodInfo {
 	return predicate.GoodInfo(func(s *sql.Selector) {
-		s.Where(sql.GT(s.C(FieldDeliveryTime), v))
+		s.Where(sql.GT(s.C(FieldDeliveryAt), v))
 	})
 }
 
-// DeliveryTimeGTE applies the GTE predicate on the "delivery_time" field.
-func DeliveryTimeGTE(v int) predicate.GoodInfo {
+// DeliveryAtGTE applies the GTE predicate on the "delivery_at" field.
+func DeliveryAtGTE(v int32) predicate.GoodInfo {
 	return predicate.GoodInfo(func(s *sql.Selector) {
-		s.Where(sql.GTE(s.C(FieldDeliveryTime), v))
+		s.Where(sql.GTE(s.C(FieldDeliveryAt), v))
 	})
 }
 
-// DeliveryTimeLT applies the LT predicate on the "delivery_time" field.
-func DeliveryTimeLT(v int) predicate.GoodInfo {
+// DeliveryAtLT applies the LT predicate on the "delivery_at" field.
+func DeliveryAtLT(v int32) predicate.GoodInfo {
 	return predicate.GoodInfo(func(s *sql.Selector) {
-		s.Where(sql.LT(s.C(FieldDeliveryTime), v))
+		s.Where(sql.LT(s.C(FieldDeliveryAt), v))
 	})
 }
 
-// DeliveryTimeLTE applies the LTE predicate on the "delivery_time" field.
-func DeliveryTimeLTE(v int) predicate.GoodInfo {
+// DeliveryAtLTE applies the LTE predicate on the "delivery_at" field.
+func DeliveryAtLTE(v int32) predicate.GoodInfo {
 	return predicate.GoodInfo(func(s *sql.Selector) {
-		s.Where(sql.LTE(s.C(FieldDeliveryTime), v))
+		s.Where(sql.LTE(s.C(FieldDeliveryAt), v))
 	})
 }
 
@@ -847,21 +840,21 @@ func VendorLocationIDLTE(v uuid.UUID) predicate.GoodInfo {
 }
 
 // PriceEQ applies the EQ predicate on the "price" field.
-func PriceEQ(v int) predicate.GoodInfo {
+func PriceEQ(v int64) predicate.GoodInfo {
 	return predicate.GoodInfo(func(s *sql.Selector) {
 		s.Where(sql.EQ(s.C(FieldPrice), v))
 	})
 }
 
 // PriceNEQ applies the NEQ predicate on the "price" field.
-func PriceNEQ(v int) predicate.GoodInfo {
+func PriceNEQ(v int64) predicate.GoodInfo {
 	return predicate.GoodInfo(func(s *sql.Selector) {
 		s.Where(sql.NEQ(s.C(FieldPrice), v))
 	})
 }
 
 // PriceIn applies the In predicate on the "price" field.
-func PriceIn(vs ...int) predicate.GoodInfo {
+func PriceIn(vs ...int64) predicate.GoodInfo {
 	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
@@ -878,7 +871,7 @@ func PriceIn(vs ...int) predicate.GoodInfo {
 }
 
 // PriceNotIn applies the NotIn predicate on the "price" field.
-func PriceNotIn(vs ...int) predicate.GoodInfo {
+func PriceNotIn(vs ...int64) predicate.GoodInfo {
 	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
@@ -895,28 +888,28 @@ func PriceNotIn(vs ...int) predicate.GoodInfo {
 }
 
 // PriceGT applies the GT predicate on the "price" field.
-func PriceGT(v int) predicate.GoodInfo {
+func PriceGT(v int64) predicate.GoodInfo {
 	return predicate.GoodInfo(func(s *sql.Selector) {
 		s.Where(sql.GT(s.C(FieldPrice), v))
 	})
 }
 
 // PriceGTE applies the GTE predicate on the "price" field.
-func PriceGTE(v int) predicate.GoodInfo {
+func PriceGTE(v int64) predicate.GoodInfo {
 	return predicate.GoodInfo(func(s *sql.Selector) {
 		s.Where(sql.GTE(s.C(FieldPrice), v))
 	})
 }
 
 // PriceLT applies the LT predicate on the "price" field.
-func PriceLT(v int) predicate.GoodInfo {
+func PriceLT(v int64) predicate.GoodInfo {
 	return predicate.GoodInfo(func(s *sql.Selector) {
 		s.Where(sql.LT(s.C(FieldPrice), v))
 	})
 }
 
 // PriceLTE applies the LTE predicate on the "price" field.
-func PriceLTE(v int) predicate.GoodInfo {
+func PriceLTE(v int64) predicate.GoodInfo {
 	return predicate.GoodInfo(func(s *sql.Selector) {
 		s.Where(sql.LTE(s.C(FieldPrice), v))
 	})
@@ -984,146 +977,22 @@ func ClassicNEQ(v bool) predicate.GoodInfo {
 	})
 }
 
-// ReviewerIDEQ applies the EQ predicate on the "reviewer_id" field.
-func ReviewerIDEQ(v uuid.UUID) predicate.GoodInfo {
-	return predicate.GoodInfo(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldReviewerID), v))
-	})
-}
-
-// ReviewerIDNEQ applies the NEQ predicate on the "reviewer_id" field.
-func ReviewerIDNEQ(v uuid.UUID) predicate.GoodInfo {
-	return predicate.GoodInfo(func(s *sql.Selector) {
-		s.Where(sql.NEQ(s.C(FieldReviewerID), v))
-	})
-}
-
-// ReviewerIDIn applies the In predicate on the "reviewer_id" field.
-func ReviewerIDIn(vs ...uuid.UUID) predicate.GoodInfo {
-	v := make([]interface{}, len(vs))
-	for i := range v {
-		v[i] = vs[i]
-	}
-	return predicate.GoodInfo(func(s *sql.Selector) {
-		// if not arguments were provided, append the FALSE constants,
-		// since we can't apply "IN ()". This will make this predicate falsy.
-		if len(v) == 0 {
-			s.Where(sql.False())
-			return
-		}
-		s.Where(sql.In(s.C(FieldReviewerID), v...))
-	})
-}
-
-// ReviewerIDNotIn applies the NotIn predicate on the "reviewer_id" field.
-func ReviewerIDNotIn(vs ...uuid.UUID) predicate.GoodInfo {
-	v := make([]interface{}, len(vs))
-	for i := range v {
-		v[i] = vs[i]
-	}
-	return predicate.GoodInfo(func(s *sql.Selector) {
-		// if not arguments were provided, append the FALSE constants,
-		// since we can't apply "IN ()". This will make this predicate falsy.
-		if len(v) == 0 {
-			s.Where(sql.False())
-			return
-		}
-		s.Where(sql.NotIn(s.C(FieldReviewerID), v...))
-	})
-}
-
-// ReviewerIDGT applies the GT predicate on the "reviewer_id" field.
-func ReviewerIDGT(v uuid.UUID) predicate.GoodInfo {
-	return predicate.GoodInfo(func(s *sql.Selector) {
-		s.Where(sql.GT(s.C(FieldReviewerID), v))
-	})
-}
-
-// ReviewerIDGTE applies the GTE predicate on the "reviewer_id" field.
-func ReviewerIDGTE(v uuid.UUID) predicate.GoodInfo {
-	return predicate.GoodInfo(func(s *sql.Selector) {
-		s.Where(sql.GTE(s.C(FieldReviewerID), v))
-	})
-}
-
-// ReviewerIDLT applies the LT predicate on the "reviewer_id" field.
-func ReviewerIDLT(v uuid.UUID) predicate.GoodInfo {
-	return predicate.GoodInfo(func(s *sql.Selector) {
-		s.Where(sql.LT(s.C(FieldReviewerID), v))
-	})
-}
-
-// ReviewerIDLTE applies the LTE predicate on the "reviewer_id" field.
-func ReviewerIDLTE(v uuid.UUID) predicate.GoodInfo {
-	return predicate.GoodInfo(func(s *sql.Selector) {
-		s.Where(sql.LTE(s.C(FieldReviewerID), v))
-	})
-}
-
-// ReviewStateEQ applies the EQ predicate on the "review_state" field.
-func ReviewStateEQ(v ReviewState) predicate.GoodInfo {
-	return predicate.GoodInfo(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldReviewState), v))
-	})
-}
-
-// ReviewStateNEQ applies the NEQ predicate on the "review_state" field.
-func ReviewStateNEQ(v ReviewState) predicate.GoodInfo {
-	return predicate.GoodInfo(func(s *sql.Selector) {
-		s.Where(sql.NEQ(s.C(FieldReviewState), v))
-	})
-}
-
-// ReviewStateIn applies the In predicate on the "review_state" field.
-func ReviewStateIn(vs ...ReviewState) predicate.GoodInfo {
-	v := make([]interface{}, len(vs))
-	for i := range v {
-		v[i] = vs[i]
-	}
-	return predicate.GoodInfo(func(s *sql.Selector) {
-		// if not arguments were provided, append the FALSE constants,
-		// since we can't apply "IN ()". This will make this predicate falsy.
-		if len(v) == 0 {
-			s.Where(sql.False())
-			return
-		}
-		s.Where(sql.In(s.C(FieldReviewState), v...))
-	})
-}
-
-// ReviewStateNotIn applies the NotIn predicate on the "review_state" field.
-func ReviewStateNotIn(vs ...ReviewState) predicate.GoodInfo {
-	v := make([]interface{}, len(vs))
-	for i := range v {
-		v[i] = vs[i]
-	}
-	return predicate.GoodInfo(func(s *sql.Selector) {
-		// if not arguments were provided, append the FALSE constants,
-		// since we can't apply "IN ()". This will make this predicate falsy.
-		if len(v) == 0 {
-			s.Where(sql.False())
-			return
-		}
-		s.Where(sql.NotIn(s.C(FieldReviewState), v...))
-	})
-}
-
 // TotalEQ applies the EQ predicate on the "total" field.
-func TotalEQ(v int) predicate.GoodInfo {
+func TotalEQ(v int32) predicate.GoodInfo {
 	return predicate.GoodInfo(func(s *sql.Selector) {
 		s.Where(sql.EQ(s.C(FieldTotal), v))
 	})
 }
 
 // TotalNEQ applies the NEQ predicate on the "total" field.
-func TotalNEQ(v int) predicate.GoodInfo {
+func TotalNEQ(v int32) predicate.GoodInfo {
 	return predicate.GoodInfo(func(s *sql.Selector) {
 		s.Where(sql.NEQ(s.C(FieldTotal), v))
 	})
 }
 
 // TotalIn applies the In predicate on the "total" field.
-func TotalIn(vs ...int) predicate.GoodInfo {
+func TotalIn(vs ...int32) predicate.GoodInfo {
 	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
@@ -1140,7 +1009,7 @@ func TotalIn(vs ...int) predicate.GoodInfo {
 }
 
 // TotalNotIn applies the NotIn predicate on the "total" field.
-func TotalNotIn(vs ...int) predicate.GoodInfo {
+func TotalNotIn(vs ...int32) predicate.GoodInfo {
 	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
@@ -1157,28 +1026,28 @@ func TotalNotIn(vs ...int) predicate.GoodInfo {
 }
 
 // TotalGT applies the GT predicate on the "total" field.
-func TotalGT(v int) predicate.GoodInfo {
+func TotalGT(v int32) predicate.GoodInfo {
 	return predicate.GoodInfo(func(s *sql.Selector) {
 		s.Where(sql.GT(s.C(FieldTotal), v))
 	})
 }
 
 // TotalGTE applies the GTE predicate on the "total" field.
-func TotalGTE(v int) predicate.GoodInfo {
+func TotalGTE(v int32) predicate.GoodInfo {
 	return predicate.GoodInfo(func(s *sql.Selector) {
 		s.Where(sql.GTE(s.C(FieldTotal), v))
 	})
 }
 
 // TotalLT applies the LT predicate on the "total" field.
-func TotalLT(v int) predicate.GoodInfo {
+func TotalLT(v int32) predicate.GoodInfo {
 	return predicate.GoodInfo(func(s *sql.Selector) {
 		s.Where(sql.LT(s.C(FieldTotal), v))
 	})
 }
 
 // TotalLTE applies the LTE predicate on the "total" field.
-func TotalLTE(v int) predicate.GoodInfo {
+func TotalLTE(v int32) predicate.GoodInfo {
 	return predicate.GoodInfo(func(s *sql.Selector) {
 		s.Where(sql.LTE(s.C(FieldTotal), v))
 	})

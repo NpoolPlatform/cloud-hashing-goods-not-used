@@ -20,37 +20,33 @@ type GoodInfo struct {
 	// DeviceInfoID holds the value of the "device_info_id" field.
 	DeviceInfoID uuid.UUID `json:"device_info_id,omitempty"`
 	// GasPrice holds the value of the "gas_price" field.
-	GasPrice int `json:"gas_price,omitempty"`
+	GasPrice int64 `json:"gas_price,omitempty"`
 	// SeparateGasFee holds the value of the "separate_gas_fee" field.
 	SeparateGasFee bool `json:"separate_gas_fee,omitempty"`
 	// UnitPower holds the value of the "unit_power" field.
-	UnitPower float64 `json:"unit_power,omitempty"`
-	// Duration holds the value of the "duration" field.
-	Duration int `json:"duration,omitempty"`
+	UnitPower int32 `json:"unit_power,omitempty"`
+	// DurationDays holds the value of the "duration_days" field.
+	DurationDays int32 `json:"duration_days,omitempty"`
 	// CoinInfoID holds the value of the "coin_info_id" field.
 	CoinInfoID uuid.UUID `json:"coin_info_id,omitempty"`
 	// Actuals holds the value of the "actuals" field.
 	Actuals bool `json:"actuals,omitempty"`
-	// DeliveryTime holds the value of the "delivery_time" field.
-	DeliveryTime int `json:"delivery_time,omitempty"`
+	// DeliveryAt holds the value of the "delivery_at" field.
+	DeliveryAt int32 `json:"delivery_at,omitempty"`
 	// InheritFromGoodID holds the value of the "inherit_from_good_id" field.
 	InheritFromGoodID uuid.UUID `json:"inherit_from_good_id,omitempty"`
 	// VendorLocationID holds the value of the "vendor_location_id" field.
 	VendorLocationID uuid.UUID `json:"vendor_location_id,omitempty"`
 	// Price holds the value of the "price" field.
-	Price int `json:"price,omitempty"`
+	Price int64 `json:"price,omitempty"`
 	// BenefitType holds the value of the "benefit_type" field.
 	BenefitType goodinfo.BenefitType `json:"benefit_type,omitempty"`
 	// Classic holds the value of the "classic" field.
 	Classic bool `json:"classic,omitempty"`
 	// SupportCoinTypeIds holds the value of the "support_coin_type_ids" field.
 	SupportCoinTypeIds []uuid.UUID `json:"support_coin_type_ids,omitempty"`
-	// ReviewerID holds the value of the "reviewer_id" field.
-	ReviewerID uuid.UUID `json:"reviewer_id,omitempty"`
-	// ReviewState holds the value of the "review_state" field.
-	ReviewState goodinfo.ReviewState `json:"review_state,omitempty"`
 	// Total holds the value of the "total" field.
-	Total int `json:"total,omitempty"`
+	Total int32 `json:"total,omitempty"`
 	// CreateAt holds the value of the "create_at" field.
 	CreateAt int64 `json:"create_at,omitempty"`
 	// UpdateAt holds the value of the "update_at" field.
@@ -68,13 +64,11 @@ func (*GoodInfo) scanValues(columns []string) ([]interface{}, error) {
 			values[i] = new([]byte)
 		case goodinfo.FieldSeparateGasFee, goodinfo.FieldActuals, goodinfo.FieldClassic:
 			values[i] = new(sql.NullBool)
-		case goodinfo.FieldUnitPower:
-			values[i] = new(sql.NullFloat64)
-		case goodinfo.FieldGasPrice, goodinfo.FieldDuration, goodinfo.FieldDeliveryTime, goodinfo.FieldPrice, goodinfo.FieldTotal, goodinfo.FieldCreateAt, goodinfo.FieldUpdateAt, goodinfo.FieldDeleteAt:
+		case goodinfo.FieldGasPrice, goodinfo.FieldUnitPower, goodinfo.FieldDurationDays, goodinfo.FieldDeliveryAt, goodinfo.FieldPrice, goodinfo.FieldTotal, goodinfo.FieldCreateAt, goodinfo.FieldUpdateAt, goodinfo.FieldDeleteAt:
 			values[i] = new(sql.NullInt64)
-		case goodinfo.FieldBenefitType, goodinfo.FieldReviewState:
+		case goodinfo.FieldBenefitType:
 			values[i] = new(sql.NullString)
-		case goodinfo.FieldID, goodinfo.FieldDeviceInfoID, goodinfo.FieldCoinInfoID, goodinfo.FieldInheritFromGoodID, goodinfo.FieldVendorLocationID, goodinfo.FieldReviewerID:
+		case goodinfo.FieldID, goodinfo.FieldDeviceInfoID, goodinfo.FieldCoinInfoID, goodinfo.FieldInheritFromGoodID, goodinfo.FieldVendorLocationID:
 			values[i] = new(uuid.UUID)
 		default:
 			return nil, fmt.Errorf("unexpected column %q for type GoodInfo", columns[i])
@@ -107,7 +101,7 @@ func (gi *GoodInfo) assignValues(columns []string, values []interface{}) error {
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field gas_price", values[i])
 			} else if value.Valid {
-				gi.GasPrice = int(value.Int64)
+				gi.GasPrice = value.Int64
 			}
 		case goodinfo.FieldSeparateGasFee:
 			if value, ok := values[i].(*sql.NullBool); !ok {
@@ -116,16 +110,16 @@ func (gi *GoodInfo) assignValues(columns []string, values []interface{}) error {
 				gi.SeparateGasFee = value.Bool
 			}
 		case goodinfo.FieldUnitPower:
-			if value, ok := values[i].(*sql.NullFloat64); !ok {
+			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field unit_power", values[i])
 			} else if value.Valid {
-				gi.UnitPower = value.Float64
+				gi.UnitPower = int32(value.Int64)
 			}
-		case goodinfo.FieldDuration:
+		case goodinfo.FieldDurationDays:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
-				return fmt.Errorf("unexpected type %T for field duration", values[i])
+				return fmt.Errorf("unexpected type %T for field duration_days", values[i])
 			} else if value.Valid {
-				gi.Duration = int(value.Int64)
+				gi.DurationDays = int32(value.Int64)
 			}
 		case goodinfo.FieldCoinInfoID:
 			if value, ok := values[i].(*uuid.UUID); !ok {
@@ -139,11 +133,11 @@ func (gi *GoodInfo) assignValues(columns []string, values []interface{}) error {
 			} else if value.Valid {
 				gi.Actuals = value.Bool
 			}
-		case goodinfo.FieldDeliveryTime:
+		case goodinfo.FieldDeliveryAt:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
-				return fmt.Errorf("unexpected type %T for field delivery_time", values[i])
+				return fmt.Errorf("unexpected type %T for field delivery_at", values[i])
 			} else if value.Valid {
-				gi.DeliveryTime = int(value.Int64)
+				gi.DeliveryAt = int32(value.Int64)
 			}
 		case goodinfo.FieldInheritFromGoodID:
 			if value, ok := values[i].(*uuid.UUID); !ok {
@@ -161,7 +155,7 @@ func (gi *GoodInfo) assignValues(columns []string, values []interface{}) error {
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field price", values[i])
 			} else if value.Valid {
-				gi.Price = int(value.Int64)
+				gi.Price = value.Int64
 			}
 		case goodinfo.FieldBenefitType:
 			if value, ok := values[i].(*sql.NullString); !ok {
@@ -183,23 +177,11 @@ func (gi *GoodInfo) assignValues(columns []string, values []interface{}) error {
 					return fmt.Errorf("unmarshal field support_coin_type_ids: %w", err)
 				}
 			}
-		case goodinfo.FieldReviewerID:
-			if value, ok := values[i].(*uuid.UUID); !ok {
-				return fmt.Errorf("unexpected type %T for field reviewer_id", values[i])
-			} else if value != nil {
-				gi.ReviewerID = *value
-			}
-		case goodinfo.FieldReviewState:
-			if value, ok := values[i].(*sql.NullString); !ok {
-				return fmt.Errorf("unexpected type %T for field review_state", values[i])
-			} else if value.Valid {
-				gi.ReviewState = goodinfo.ReviewState(value.String)
-			}
 		case goodinfo.FieldTotal:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field total", values[i])
 			} else if value.Valid {
-				gi.Total = int(value.Int64)
+				gi.Total = int32(value.Int64)
 			}
 		case goodinfo.FieldCreateAt:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
@@ -255,14 +237,14 @@ func (gi *GoodInfo) String() string {
 	builder.WriteString(fmt.Sprintf("%v", gi.SeparateGasFee))
 	builder.WriteString(", unit_power=")
 	builder.WriteString(fmt.Sprintf("%v", gi.UnitPower))
-	builder.WriteString(", duration=")
-	builder.WriteString(fmt.Sprintf("%v", gi.Duration))
+	builder.WriteString(", duration_days=")
+	builder.WriteString(fmt.Sprintf("%v", gi.DurationDays))
 	builder.WriteString(", coin_info_id=")
 	builder.WriteString(fmt.Sprintf("%v", gi.CoinInfoID))
 	builder.WriteString(", actuals=")
 	builder.WriteString(fmt.Sprintf("%v", gi.Actuals))
-	builder.WriteString(", delivery_time=")
-	builder.WriteString(fmt.Sprintf("%v", gi.DeliveryTime))
+	builder.WriteString(", delivery_at=")
+	builder.WriteString(fmt.Sprintf("%v", gi.DeliveryAt))
 	builder.WriteString(", inherit_from_good_id=")
 	builder.WriteString(fmt.Sprintf("%v", gi.InheritFromGoodID))
 	builder.WriteString(", vendor_location_id=")
@@ -275,10 +257,6 @@ func (gi *GoodInfo) String() string {
 	builder.WriteString(fmt.Sprintf("%v", gi.Classic))
 	builder.WriteString(", support_coin_type_ids=")
 	builder.WriteString(fmt.Sprintf("%v", gi.SupportCoinTypeIds))
-	builder.WriteString(", reviewer_id=")
-	builder.WriteString(fmt.Sprintf("%v", gi.ReviewerID))
-	builder.WriteString(", review_state=")
-	builder.WriteString(fmt.Sprintf("%v", gi.ReviewState))
 	builder.WriteString(", total=")
 	builder.WriteString(fmt.Sprintf("%v", gi.Total))
 	builder.WriteString(", create_at=")
