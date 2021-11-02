@@ -86,3 +86,12 @@ func TestVendorLocationCRUD(t *testing.T) { //nolint
 		assert.Equal(t, resp3.Info.Address, address)
 	}
 }
+
+func TestGetAll(t *testing.T) {
+	if runByGithubAction, err := strconv.ParseBool(os.Getenv("RUN_BY_GITHUB_ACTION")); err == nil && runByGithubAction {
+		return
+	}
+
+	_, err := GetAll(context.Background(), &npool.GetVendorLocationsRequest{})
+	assert.Nil(t, err)
+}

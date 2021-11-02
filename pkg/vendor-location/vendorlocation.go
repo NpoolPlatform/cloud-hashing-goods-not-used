@@ -2,6 +2,7 @@ package vendorlocation
 
 import (
 	"context"
+	"fmt"
 	"time"
 
 	"github.com/NpoolPlatform/cloud-hashing-goods/message/npool"
@@ -106,7 +107,7 @@ func Delete(ctx context.Context, in *npool.DeleteVendorLocationRequest) (*npool.
 		SetDeleteAt(time.Now().UnixNano()).
 		Save(ctx)
 	if err != nil {
-		return nil, xerrors.Errorf("fail to delete target area: %v", err)
+		return nil, xerrors.Errorf("fail to delete vendor location: %v", err)
 	}
 
 	return &npool.DeleteVendorLocationResponse{
@@ -121,5 +122,33 @@ func Delete(ctx context.Context, in *npool.DeleteVendorLocationRequest) (*npool.
 }
 
 func GetAll(ctx context.Context, in *npool.GetVendorLocationsRequest) (*npool.GetVendorLocationsResponse, error) {
-	return nil, xerrors.Errorf("NOT IMPLEMENTED")
+	infos, err := db.Client().
+		VendorLocation.
+		Query().
+		Where(
+			vendorlocation.Or(
+				vendorlocation.DeleteAt(0),
+			),
+		).
+		All(ctx)
+	if err != nil {
+		return nil, err
+	}
+
+	fmt.Println(infos)
+
+	locations := []*npool.VendorLocationInfo{}
+	for _, info := range infos {
+		locations = append(locations, &npool.VendorLocationInfo{
+			ID:       info.ID.String(),
+			Country:  info.Country,
+			Province: info.Province,
+			City:     info.City,
+			Address:  info.Address,
+		})
+	}
+
+	return &npool.GetVendorLocationsResponse{
+		Infos: locations,
+	}, nil
 }
