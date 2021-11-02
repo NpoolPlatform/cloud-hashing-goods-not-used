@@ -59,6 +59,37 @@ func Update(ctx context.Context, in *npool.UpdateTargetAreaRequest) (*npool.Upda
 	}, nil
 }
 
+func Get(ctx context.Context, in *npool.GetTargetAreaRequest) (*npool.GetTargetAreaResponse, error) {
+	id, err := uuid.Parse(in.GetID())
+	if err != nil {
+		return nil, xerrors.Errorf("invalid target area id: %v", err)
+	}
+
+	infos, err := db.Client().
+		TargetArea.
+		Query().
+		Where(
+			targetarea.Or(
+				targetarea.ID(id),
+			),
+		).
+		All(ctx)
+	if err != nil {
+		return nil, xerrors.Errorf("fail to query target area: %v", err)
+	}
+	if len(infos) == 0 {
+		return nil, xerrors.Errorf("empty reply of target area")
+	}
+
+	return &npool.GetTargetAreaResponse{
+		Info: &npool.TargetAreaInfo{
+			ID:        infos[0].ID.String(),
+			Continent: infos[0].Continent,
+			Country:   infos[0].Country,
+		},
+	}, nil
+}
+
 func Delete(ctx context.Context, in *npool.DeleteTargetAreaRequest) (*npool.DeleteTargetAreaResponse, error) {
 	info, err := db.Client().
 		TargetArea.

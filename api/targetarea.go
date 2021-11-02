@@ -31,6 +31,15 @@ func (s *Server) UpdateTargetArea(ctx context.Context, in *npool.UpdateTargetAre
 	return resp, nil
 }
 
+func (s *Server) GetTargetArea(ctx context.Context, in *npool.GetTargetAreaRequest) (*npool.GetTargetAreaResponse, error) {
+	resp, err := targetarea.Get(ctx, in)
+	if err != nil {
+		logger.Sugar().Errorf("get target area error: %w", err)
+		return &npool.GetTargetAreaResponse{}, status.Error(codes.Internal, "internal server error")
+	}
+	return resp, nil
+}
+
 func (s *Server) DeleteTargetArea(ctx context.Context, in *npool.DeleteTargetAreaRequest) (*npool.DeleteTargetAreaResponse, error) {
 	resp, err := targetarea.Delete(ctx, in)
 	if err != nil {

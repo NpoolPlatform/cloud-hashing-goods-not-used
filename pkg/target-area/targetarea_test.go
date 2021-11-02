@@ -92,6 +92,17 @@ func TestCRUD(t *testing.T) {
 	})
 	assert.Nil(t, err)
 
+	resp4, err := Get(context.Background(), &npool.GetTargetAreaRequest{
+		ID: resp.Info.ID,
+	})
+	if assert.Nil(t, err) {
+		if assert.NotNil(t, resp4.Info) {
+			assert.Equal(t, resp4.Info.ID, resp.Info.ID)
+			assert.Equal(t, resp4.Info.Continent, continent)
+			assert.Equal(t, resp4.Info.Country, country)
+		}
+	}
+
 	resp3, err := DeleteByContinentCountry(context.Background(), &npool.DeleteTargetAreaByContinentCountryRequest{
 		Continent: continent,
 		Country:   country,

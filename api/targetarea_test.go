@@ -140,6 +140,25 @@ func TestCreateTargetArea(t *testing.T) { //nolint
 
 	resp, err = cli.R().
 		SetHeader("Content-Type", "application/json").
+		SetBody(npool.GetTargetAreaRequest{
+			ID: info1.Info.ID,
+		}).
+		Post("http://localhost:33759/v1/get/target-area")
+	if assert.Nil(t, err) {
+		assert.Equal(t, 200, resp.StatusCode())
+		info := npool.GetTargetAreaResponse{}
+		err := json.Unmarshal(resp.Body(), &info)
+		if assert.Nil(t, err) {
+			if assert.NotNil(t, info.Info) {
+				assert.Equal(t, info1.Info.ID, info.Info.ID)
+				assert.Equal(t, info.Info.Continent, targetAreaInfo.Continent)
+				assert.Equal(t, info.Info.Country, targetAreaInfo.Country)
+			}
+		}
+	}
+
+	resp, err = cli.R().
+		SetHeader("Content-Type", "application/json").
 		SetBody(npool.DeleteTargetAreaByContinentCountryRequest{
 			Continent: targetAreaInfo.Continent,
 			Country:   targetAreaInfo.Country,
