@@ -36,7 +36,7 @@ var (
 	GoodInfosColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeUUID, Unique: true},
 		{Name: "device_info_id", Type: field.TypeUUID},
-		{Name: "gas_price", Type: field.TypeInt64},
+		{Name: "gas_price", Type: field.TypeUint64},
 		{Name: "separate_gas_fee", Type: field.TypeBool},
 		{Name: "unit_power", Type: field.TypeInt32},
 		{Name: "duration_days", Type: field.TypeInt32},
@@ -45,7 +45,7 @@ var (
 		{Name: "delivery_at", Type: field.TypeInt32},
 		{Name: "inherit_from_good_id", Type: field.TypeUUID},
 		{Name: "vendor_location_id", Type: field.TypeUUID},
-		{Name: "price", Type: field.TypeInt64},
+		{Name: "price", Type: field.TypeUint64},
 		{Name: "benefit_type", Type: field.TypeEnum, Enums: []string{"pool", "platform"}},
 		{Name: "classic", Type: field.TypeBool},
 		{Name: "support_coin_type_ids", Type: field.TypeJSON},

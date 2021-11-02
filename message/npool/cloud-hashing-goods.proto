@@ -375,7 +375,7 @@ message GetDeviceInfosResponse {
 message GoodInfo {
     string ID = 2400;
     string DeviceInfoID = 2401;
-    int64 GasPrice = 2402;
+    double GasPrice = 2402;
     bool SeparateGasFee = 2403;
     int32 UnitPower = 2404;
     int32 DurationDays = 2405;
@@ -384,7 +384,7 @@ message GoodInfo {
     int32 DeliveryAt = 2408;
     string InheritFromGoodID = 2409;
     string VendorLocationID = 2410;
-    int64 Price = 2411;
+    double Price = 2411;
     string BenefitType = 2412;
     bool Classic = 2413;
     repeated string SupportCoinTypeIDs = 2414;

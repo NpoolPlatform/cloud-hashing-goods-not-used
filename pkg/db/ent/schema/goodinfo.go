@@ -21,7 +21,7 @@ func (GoodInfo) Fields() []ent.Field {
 			Default(uuid.New).
 			Unique(),
 		field.UUID("device_info_id", uuid.UUID{}),
-		field.Int64("gas_price").
+		field.Uint64("gas_price").
 			Positive(),
 		field.Bool("separate_gas_fee"),
 		field.Int32("unit_power").
@@ -33,7 +33,7 @@ func (GoodInfo) Fields() []ent.Field {
 		field.Int32("delivery_at"),
 		field.UUID("inherit_from_good_id", uuid.UUID{}),
 		field.UUID("vendor_location_id", uuid.UUID{}),
-		field.Int64("price").
+		field.Uint64("price").
 			Positive(),
 		field.Enum("benefit_type").
 			Values("pool", "platform"),

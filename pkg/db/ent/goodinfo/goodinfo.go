@@ -88,13 +88,13 @@ func ValidColumn(column string) bool {
 
 var (
 	// GasPriceValidator is a validator for the "gas_price" field. It is called by the builders before save.
-	GasPriceValidator func(int64) error
+	GasPriceValidator func(uint64) error
 	// UnitPowerValidator is a validator for the "unit_power" field. It is called by the builders before save.
 	UnitPowerValidator func(int32) error
 	// DurationDaysValidator is a validator for the "duration_days" field. It is called by the builders before save.
 	DurationDaysValidator func(int32) error
 	// PriceValidator is a validator for the "price" field. It is called by the builders before save.
-	PriceValidator func(int64) error
+	PriceValidator func(uint64) error
 	// TotalValidator is a validator for the "total" field. It is called by the builders before save.
 	TotalValidator func(int32) error
 	// DefaultCreateAt holds the default value on creation for the "create_at" field.

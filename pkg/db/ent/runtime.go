@@ -52,7 +52,7 @@ func init() {
 	// goodinfoDescGasPrice is the schema descriptor for gas_price field.
 	goodinfoDescGasPrice := goodinfoFields[2].Descriptor()
 	// goodinfo.GasPriceValidator is a validator for the "gas_price" field. It is called by the builders before save.
-	goodinfo.GasPriceValidator = goodinfoDescGasPrice.Validators[0].(func(int64) error)
+	goodinfo.GasPriceValidator = goodinfoDescGasPrice.Validators[0].(func(uint64) error)
 	// goodinfoDescUnitPower is the schema descriptor for unit_power field.
 	goodinfoDescUnitPower := goodinfoFields[4].Descriptor()
 	// goodinfo.UnitPowerValidator is a validator for the "unit_power" field. It is called by the builders before save.
@@ -64,7 +64,7 @@ func init() {
 	// goodinfoDescPrice is the schema descriptor for price field.
 	goodinfoDescPrice := goodinfoFields[11].Descriptor()
 	// goodinfo.PriceValidator is a validator for the "price" field. It is called by the builders before save.
-	goodinfo.PriceValidator = goodinfoDescPrice.Validators[0].(func(int64) error)
+	goodinfo.PriceValidator = goodinfoDescPrice.Validators[0].(func(uint64) error)
 	// goodinfoDescTotal is the schema descriptor for total field.
 	goodinfoDescTotal := goodinfoFields[15].Descriptor()
 	// goodinfo.TotalValidator is a validator for the "total" field. It is called by the builders before save.

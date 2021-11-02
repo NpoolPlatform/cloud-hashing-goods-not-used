@@ -34,15 +34,15 @@ func (giu *GoodInfoUpdate) SetDeviceInfoID(u uuid.UUID) *GoodInfoUpdate {
 }
 
 // SetGasPrice sets the "gas_price" field.
-func (giu *GoodInfoUpdate) SetGasPrice(i int64) *GoodInfoUpdate {
+func (giu *GoodInfoUpdate) SetGasPrice(u uint64) *GoodInfoUpdate {
 	giu.mutation.ResetGasPrice()
-	giu.mutation.SetGasPrice(i)
+	giu.mutation.SetGasPrice(u)
 	return giu
 }
 
-// AddGasPrice adds i to the "gas_price" field.
-func (giu *GoodInfoUpdate) AddGasPrice(i int64) *GoodInfoUpdate {
-	giu.mutation.AddGasPrice(i)
+// AddGasPrice adds u to the "gas_price" field.
+func (giu *GoodInfoUpdate) AddGasPrice(u uint64) *GoodInfoUpdate {
+	giu.mutation.AddGasPrice(u)
 	return giu
 }
 
@@ -116,15 +116,15 @@ func (giu *GoodInfoUpdate) SetVendorLocationID(u uuid.UUID) *GoodInfoUpdate {
 }
 
 // SetPrice sets the "price" field.
-func (giu *GoodInfoUpdate) SetPrice(i int64) *GoodInfoUpdate {
+func (giu *GoodInfoUpdate) SetPrice(u uint64) *GoodInfoUpdate {
 	giu.mutation.ResetPrice()
-	giu.mutation.SetPrice(i)
+	giu.mutation.SetPrice(u)
 	return giu
 }
 
-// AddPrice adds i to the "price" field.
-func (giu *GoodInfoUpdate) AddPrice(i int64) *GoodInfoUpdate {
-	giu.mutation.AddPrice(i)
+// AddPrice adds u to the "price" field.
+func (giu *GoodInfoUpdate) AddPrice(u uint64) *GoodInfoUpdate {
+	giu.mutation.AddPrice(u)
 	return giu
 }
 
@@ -350,14 +350,14 @@ func (giu *GoodInfoUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	}
 	if value, ok := giu.mutation.GasPrice(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
+			Type:   field.TypeUint64,
 			Value:  value,
 			Column: goodinfo.FieldGasPrice,
 		})
 	}
 	if value, ok := giu.mutation.AddedGasPrice(); ok {
 		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
+			Type:   field.TypeUint64,
 			Value:  value,
 			Column: goodinfo.FieldGasPrice,
 		})
@@ -441,14 +441,14 @@ func (giu *GoodInfoUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	}
 	if value, ok := giu.mutation.Price(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
+			Type:   field.TypeUint64,
 			Value:  value,
 			Column: goodinfo.FieldPrice,
 		})
 	}
 	if value, ok := giu.mutation.AddedPrice(); ok {
 		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
+			Type:   field.TypeUint64,
 			Value:  value,
 			Column: goodinfo.FieldPrice,
 		})
@@ -556,15 +556,15 @@ func (giuo *GoodInfoUpdateOne) SetDeviceInfoID(u uuid.UUID) *GoodInfoUpdateOne {
 }
 
 // SetGasPrice sets the "gas_price" field.
-func (giuo *GoodInfoUpdateOne) SetGasPrice(i int64) *GoodInfoUpdateOne {
+func (giuo *GoodInfoUpdateOne) SetGasPrice(u uint64) *GoodInfoUpdateOne {
 	giuo.mutation.ResetGasPrice()
-	giuo.mutation.SetGasPrice(i)
+	giuo.mutation.SetGasPrice(u)
 	return giuo
 }
 
-// AddGasPrice adds i to the "gas_price" field.
-func (giuo *GoodInfoUpdateOne) AddGasPrice(i int64) *GoodInfoUpdateOne {
-	giuo.mutation.AddGasPrice(i)
+// AddGasPrice adds u to the "gas_price" field.
+func (giuo *GoodInfoUpdateOne) AddGasPrice(u uint64) *GoodInfoUpdateOne {
+	giuo.mutation.AddGasPrice(u)
 	return giuo
 }
 
@@ -638,15 +638,15 @@ func (giuo *GoodInfoUpdateOne) SetVendorLocationID(u uuid.UUID) *GoodInfoUpdateO
 }
 
 // SetPrice sets the "price" field.
-func (giuo *GoodInfoUpdateOne) SetPrice(i int64) *GoodInfoUpdateOne {
+func (giuo *GoodInfoUpdateOne) SetPrice(u uint64) *GoodInfoUpdateOne {
 	giuo.mutation.ResetPrice()
-	giuo.mutation.SetPrice(i)
+	giuo.mutation.SetPrice(u)
 	return giuo
 }
 
-// AddPrice adds i to the "price" field.
-func (giuo *GoodInfoUpdateOne) AddPrice(i int64) *GoodInfoUpdateOne {
-	giuo.mutation.AddPrice(i)
+// AddPrice adds u to the "price" field.
+func (giuo *GoodInfoUpdateOne) AddPrice(u uint64) *GoodInfoUpdateOne {
+	giuo.mutation.AddPrice(u)
 	return giuo
 }
 
@@ -896,14 +896,14 @@ func (giuo *GoodInfoUpdateOne) sqlSave(ctx context.Context) (_node *GoodInfo, er
 	}
 	if value, ok := giuo.mutation.GasPrice(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
+			Type:   field.TypeUint64,
 			Value:  value,
 			Column: goodinfo.FieldGasPrice,
 		})
 	}
 	if value, ok := giuo.mutation.AddedGasPrice(); ok {
 		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
+			Type:   field.TypeUint64,
 			Value:  value,
 			Column: goodinfo.FieldGasPrice,
 		})
@@ -987,14 +987,14 @@ func (giuo *GoodInfoUpdateOne) sqlSave(ctx context.Context) (_node *GoodInfo, er
 	}
 	if value, ok := giuo.mutation.Price(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
+			Type:   field.TypeUint64,
 			Value:  value,
 			Column: goodinfo.FieldPrice,
 		})
 	}
 	if value, ok := giuo.mutation.AddedPrice(); ok {
 		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
+			Type:   field.TypeUint64,
 			Value:  value,
 			Column: goodinfo.FieldPrice,
 		})

@@ -33,7 +33,7 @@ func TestGoodInfoCRUD(t *testing.T) { //nolint
 	}
 
 	deviceInfoID := uuid.New().String()
-	gasPrice := int64(0.13 * 1000000000)
+	gasPrice := 0.13
 	separateGasFee := true
 	unitPower := int32(100)
 	duration := int32(180)
@@ -42,7 +42,7 @@ func TestGoodInfoCRUD(t *testing.T) { //nolint
 	deliveryAt := int32(time.Now().UnixNano() / 1000000)
 	inheritFromGoodID := uuid.New().String()
 	vendorLocationID := uuid.New().String()
-	price := int64(100.8 * 1000000000)
+	price := 100.8
 	benefitType := "pool"
 	classic := true
 	supportCoinTypeIDs := []string{uuid.New().String(), uuid.New().String()}

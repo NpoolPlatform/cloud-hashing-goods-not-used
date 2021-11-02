@@ -829,8 +829,8 @@ type GoodInfoMutation struct {
 	typ                   string
 	id                    *uuid.UUID
 	device_info_id        *uuid.UUID
-	gas_price             *int64
-	addgas_price          *int64
+	gas_price             *uint64
+	addgas_price          *uint64
 	separate_gas_fee      *bool
 	unit_power            *int32
 	addunit_power         *int32
@@ -842,8 +842,8 @@ type GoodInfoMutation struct {
 	adddelivery_at        *int32
 	inherit_from_good_id  *uuid.UUID
 	vendor_location_id    *uuid.UUID
-	price                 *int64
-	addprice              *int64
+	price                 *uint64
+	addprice              *uint64
 	benefit_type          *goodinfo.BenefitType
 	classic               *bool
 	support_coin_type_ids *[]uuid.UUID
@@ -983,13 +983,13 @@ func (m *GoodInfoMutation) ResetDeviceInfoID() {
 }
 
 // SetGasPrice sets the "gas_price" field.
-func (m *GoodInfoMutation) SetGasPrice(i int64) {
-	m.gas_price = &i
+func (m *GoodInfoMutation) SetGasPrice(u uint64) {
+	m.gas_price = &u
 	m.addgas_price = nil
 }
 
 // GasPrice returns the value of the "gas_price" field in the mutation.
-func (m *GoodInfoMutation) GasPrice() (r int64, exists bool) {
+func (m *GoodInfoMutation) GasPrice() (r uint64, exists bool) {
 	v := m.gas_price
 	if v == nil {
 		return
@@ -1000,7 +1000,7 @@ func (m *GoodInfoMutation) GasPrice() (r int64, exists bool) {
 // OldGasPrice returns the old "gas_price" field's value of the GoodInfo entity.
 // If the GoodInfo object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *GoodInfoMutation) OldGasPrice(ctx context.Context) (v int64, err error) {
+func (m *GoodInfoMutation) OldGasPrice(ctx context.Context) (v uint64, err error) {
 	if !m.op.Is(OpUpdateOne) {
 		return v, fmt.Errorf("OldGasPrice is only allowed on UpdateOne operations")
 	}
@@ -1014,17 +1014,17 @@ func (m *GoodInfoMutation) OldGasPrice(ctx context.Context) (v int64, err error)
 	return oldValue.GasPrice, nil
 }
 
-// AddGasPrice adds i to the "gas_price" field.
-func (m *GoodInfoMutation) AddGasPrice(i int64) {
+// AddGasPrice adds u to the "gas_price" field.
+func (m *GoodInfoMutation) AddGasPrice(u uint64) {
 	if m.addgas_price != nil {
-		*m.addgas_price += i
+		*m.addgas_price += u
 	} else {
-		m.addgas_price = &i
+		m.addgas_price = &u
 	}
 }
 
 // AddedGasPrice returns the value that was added to the "gas_price" field in this mutation.
-func (m *GoodInfoMutation) AddedGasPrice() (r int64, exists bool) {
+func (m *GoodInfoMutation) AddedGasPrice() (r uint64, exists bool) {
 	v := m.addgas_price
 	if v == nil {
 		return
@@ -1387,13 +1387,13 @@ func (m *GoodInfoMutation) ResetVendorLocationID() {
 }
 
 // SetPrice sets the "price" field.
-func (m *GoodInfoMutation) SetPrice(i int64) {
-	m.price = &i
+func (m *GoodInfoMutation) SetPrice(u uint64) {
+	m.price = &u
 	m.addprice = nil
 }
 
 // Price returns the value of the "price" field in the mutation.
-func (m *GoodInfoMutation) Price() (r int64, exists bool) {
+func (m *GoodInfoMutation) Price() (r uint64, exists bool) {
 	v := m.price
 	if v == nil {
 		return
@@ -1404,7 +1404,7 @@ func (m *GoodInfoMutation) Price() (r int64, exists bool) {
 // OldPrice returns the old "price" field's value of the GoodInfo entity.
 // If the GoodInfo object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *GoodInfoMutation) OldPrice(ctx context.Context) (v int64, err error) {
+func (m *GoodInfoMutation) OldPrice(ctx context.Context) (v uint64, err error) {
 	if !m.op.Is(OpUpdateOne) {
 		return v, fmt.Errorf("OldPrice is only allowed on UpdateOne operations")
 	}
@@ -1418,17 +1418,17 @@ func (m *GoodInfoMutation) OldPrice(ctx context.Context) (v int64, err error) {
 	return oldValue.Price, nil
 }
 
-// AddPrice adds i to the "price" field.
-func (m *GoodInfoMutation) AddPrice(i int64) {
+// AddPrice adds u to the "price" field.
+func (m *GoodInfoMutation) AddPrice(u uint64) {
 	if m.addprice != nil {
-		*m.addprice += i
+		*m.addprice += u
 	} else {
-		m.addprice = &i
+		m.addprice = &u
 	}
 }
 
 // AddedPrice returns the value that was added to the "price" field in this mutation.
-func (m *GoodInfoMutation) AddedPrice() (r int64, exists bool) {
+func (m *GoodInfoMutation) AddedPrice() (r uint64, exists bool) {
 	v := m.addprice
 	if v == nil {
 		return
@@ -1954,7 +1954,7 @@ func (m *GoodInfoMutation) SetField(name string, value ent.Value) error {
 		m.SetDeviceInfoID(v)
 		return nil
 	case goodinfo.FieldGasPrice:
-		v, ok := value.(int64)
+		v, ok := value.(uint64)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
@@ -2017,7 +2017,7 @@ func (m *GoodInfoMutation) SetField(name string, value ent.Value) error {
 		m.SetVendorLocationID(v)
 		return nil
 	case goodinfo.FieldPrice:
-		v, ok := value.(int64)
+		v, ok := value.(uint64)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
@@ -2143,7 +2143,7 @@ func (m *GoodInfoMutation) AddedField(name string) (ent.Value, bool) {
 func (m *GoodInfoMutation) AddField(name string, value ent.Value) error {
 	switch name {
 	case goodinfo.FieldGasPrice:
-		v, ok := value.(int64)
+		v, ok := value.(uint64)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
@@ -2171,7 +2171,7 @@ func (m *GoodInfoMutation) AddField(name string, value ent.Value) error {
 		m.AddDeliveryAt(v)
 		return nil
 	case goodinfo.FieldPrice:
-		v, ok := value.(int64)
+		v, ok := value.(uint64)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}

@@ -20,7 +20,7 @@ type GoodInfo struct {
 	// DeviceInfoID holds the value of the "device_info_id" field.
 	DeviceInfoID uuid.UUID `json:"device_info_id,omitempty"`
 	// GasPrice holds the value of the "gas_price" field.
-	GasPrice int64 `json:"gas_price,omitempty"`
+	GasPrice uint64 `json:"gas_price,omitempty"`
 	// SeparateGasFee holds the value of the "separate_gas_fee" field.
 	SeparateGasFee bool `json:"separate_gas_fee,omitempty"`
 	// UnitPower holds the value of the "unit_power" field.
@@ -38,7 +38,7 @@ type GoodInfo struct {
 	// VendorLocationID holds the value of the "vendor_location_id" field.
 	VendorLocationID uuid.UUID `json:"vendor_location_id,omitempty"`
 	// Price holds the value of the "price" field.
-	Price int64 `json:"price,omitempty"`
+	Price uint64 `json:"price,omitempty"`
 	// BenefitType holds the value of the "benefit_type" field.
 	BenefitType goodinfo.BenefitType `json:"benefit_type,omitempty"`
 	// Classic holds the value of the "classic" field.
@@ -101,7 +101,7 @@ func (gi *GoodInfo) assignValues(columns []string, values []interface{}) error {
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field gas_price", values[i])
 			} else if value.Valid {
-				gi.GasPrice = value.Int64
+				gi.GasPrice = uint64(value.Int64)
 			}
 		case goodinfo.FieldSeparateGasFee:
 			if value, ok := values[i].(*sql.NullBool); !ok {
@@ -155,7 +155,7 @@ func (gi *GoodInfo) assignValues(columns []string, values []interface{}) error {
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field price", values[i])
 			} else if value.Valid {
-				gi.Price = value.Int64
+				gi.Price = uint64(value.Int64)
 			}
 		case goodinfo.FieldBenefitType:
 			if value, ok := values[i].(*sql.NullString); !ok {

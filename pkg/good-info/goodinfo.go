@@ -2,7 +2,6 @@ package goodinfo
 
 import (
 	"context"
-	_ "fmt" //nolint
 	"time"
 
 	"github.com/NpoolPlatform/cloud-hashing-goods/message/npool"
@@ -10,6 +9,8 @@ import (
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/goodinfo"
+
+	"github.com/NpoolPlatform/go-service-framework/pkg/price"
 
 	"github.com/google/uuid"
 
@@ -26,7 +27,7 @@ func dbRowToInfo(row *ent.GoodInfo) *npool.GoodInfo {
 	return &npool.GoodInfo{
 		ID:                 row.ID.String(),
 		DeviceInfoID:       row.DeviceInfoID.String(),
-		GasPrice:           row.GasPrice,
+		GasPrice:           price.DBPriceToVisualPrice(row.GasPrice),
 		SeparateGasFee:     row.SeparateGasFee,
 		UnitPower:          row.UnitPower,
 		DurationDays:       row.DurationDays,
@@ -35,7 +36,7 @@ func dbRowToInfo(row *ent.GoodInfo) *npool.GoodInfo {
 		DeliveryAt:         row.DeliveryAt,
 		InheritFromGoodID:  row.InheritFromGoodID.String(),
 		VendorLocationID:   row.VendorLocationID.String(),
-		Price:              row.Price,
+		Price:              price.DBPriceToVisualPrice(row.Price),
 		BenefitType:        string(row.BenefitType),
 		Classic:            row.Classic,
 		SupportCoinTypeIDs: ids,
@@ -82,7 +83,7 @@ func Create(ctx context.Context, in *npool.CreateGoodRequest) (*npool.CreateGood
 		GoodInfo.
 		Create().
 		SetDeviceInfoID(uuid.MustParse(in.GetInfo().GetDeviceInfoID())).
-		SetGasPrice(in.GetInfo().GetGasPrice()).
+		SetGasPrice(price.VisualPriceToDBPrice(in.GetInfo().GetGasPrice())).
 		SetSeparateGasFee(in.GetInfo().GetSeparateGasFee()).
 		SetUnitPower(in.GetInfo().GetUnitPower()).
 		SetDurationDays(in.GetInfo().GetDurationDays()).
@@ -91,7 +92,7 @@ func Create(ctx context.Context, in *npool.CreateGoodRequest) (*npool.CreateGood
 		SetDeliveryAt(in.GetInfo().GetDeliveryAt()).
 		SetInheritFromGoodID(uuid.MustParse(in.GetInfo().GetInheritFromGoodID())).
 		SetVendorLocationID(uuid.MustParse(in.GetInfo().GetVendorLocationID())).
-		SetPrice(in.GetInfo().GetPrice()).
+		SetPrice(price.VisualPriceToDBPrice(in.GetInfo().GetPrice())).
 		SetBenefitType(goodinfo.BenefitType(in.GetInfo().GetBenefitType())).
 		SetClassic(in.GetInfo().GetClassic()).
 		SetSupportCoinTypeIds(ids).
@@ -125,7 +126,7 @@ func Update(ctx context.Context, in *npool.UpdateGoodRequest) (*npool.UpdateGood
 		GoodInfo.
 		UpdateOneID(goodID).
 		SetDeviceInfoID(uuid.MustParse(in.GetInfo().GetDeviceInfoID())).
-		SetGasPrice(in.GetInfo().GetGasPrice()).
+		SetGasPrice(price.VisualPriceToDBPrice(in.GetInfo().GetGasPrice())).
 		SetSeparateGasFee(in.GetInfo().GetSeparateGasFee()).
 		SetUnitPower(in.GetInfo().GetUnitPower()).
 		SetDurationDays(in.GetInfo().GetDurationDays()).
@@ -134,7 +135,7 @@ func Update(ctx context.Context, in *npool.UpdateGoodRequest) (*npool.UpdateGood
 		SetDeliveryAt(in.GetInfo().GetDeliveryAt()).
 		SetInheritFromGoodID(uuid.MustParse(in.GetInfo().GetInheritFromGoodID())).
 		SetVendorLocationID(uuid.MustParse(in.GetInfo().GetVendorLocationID())).
-		SetPrice(in.GetInfo().GetPrice()).
+		SetPrice(price.VisualPriceToDBPrice(in.GetInfo().GetPrice())).
 		SetBenefitType(goodinfo.BenefitType(in.GetInfo().GetBenefitType())).
 		SetClassic(in.GetInfo().GetClassic()).
 		SetSupportCoinTypeIds(ids).
@@ -176,7 +177,7 @@ func Get(ctx context.Context, in *npool.GetGoodRequest) (*npool.GetGoodResponse,
 	}, nil
 }
 
-func Delete(ctx context.Context, in *npool.DeleteGoodRequest) (*npool.GetGoodResponse, error) {
+func Delete(ctx context.Context, in *npool.DeleteGoodRequest) (*npool.DeleteGoodResponse, error) {
 	id, err := uuid.Parse(in.GetID())
 	if err != nil {
 		return nil, xerrors.Errorf("invalid good id: %v", err)
@@ -191,7 +192,7 @@ func Delete(ctx context.Context, in *npool.DeleteGoodRequest) (*npool.GetGoodRes
 		return nil, xerrors.Errorf("fail to delete good info: %v", err)
 	}
 
-	return &npool.GetGoodResponse{
+	return &npool.DeleteGoodResponse{
 		Info: dbRowToInfo(info),
 	}, nil
 }

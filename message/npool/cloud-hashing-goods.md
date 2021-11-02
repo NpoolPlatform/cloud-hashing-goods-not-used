@@ -793,7 +793,7 @@
 | ----- | ---- | ----- | ----------- |
 | ID | [string](#string) |  |  |
 | DeviceInfoID | [string](#string) |  |  |
-| GasPrice | [int64](#int64) |  |  |
+| GasPrice | [double](#double) |  |  |
 | SeparateGasFee | [bool](#bool) |  |  |
 | UnitPower | [int32](#int32) |  |  |
 | DurationDays | [int32](#int32) |  |  |
@@ -802,7 +802,7 @@
 | DeliveryAt | [int32](#int32) |  |  |
 | InheritFromGoodID | [string](#string) |  |  |
 | VendorLocationID | [string](#string) |  |  |
-| Price | [int64](#int64) |  |  |
+| Price | [double](#double) |  |  |
 | BenefitType | [string](#string) |  |  |
 | Classic | [bool](#bool) |  |  |
 | SupportCoinTypeIDs | [string](#string) | repeated |  |

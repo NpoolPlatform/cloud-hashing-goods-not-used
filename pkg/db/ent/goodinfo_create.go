@@ -30,8 +30,8 @@ func (gic *GoodInfoCreate) SetDeviceInfoID(u uuid.UUID) *GoodInfoCreate {
 }
 
 // SetGasPrice sets the "gas_price" field.
-func (gic *GoodInfoCreate) SetGasPrice(i int64) *GoodInfoCreate {
-	gic.mutation.SetGasPrice(i)
+func (gic *GoodInfoCreate) SetGasPrice(u uint64) *GoodInfoCreate {
+	gic.mutation.SetGasPrice(u)
 	return gic
 }
 
@@ -84,8 +84,8 @@ func (gic *GoodInfoCreate) SetVendorLocationID(u uuid.UUID) *GoodInfoCreate {
 }
 
 // SetPrice sets the "price" field.
-func (gic *GoodInfoCreate) SetPrice(i int64) *GoodInfoCreate {
-	gic.mutation.SetPrice(i)
+func (gic *GoodInfoCreate) SetPrice(u uint64) *GoodInfoCreate {
+	gic.mutation.SetPrice(u)
 	return gic
 }
 
@@ -379,7 +379,7 @@ func (gic *GoodInfoCreate) createSpec() (*GoodInfo, *sqlgraph.CreateSpec) {
 	}
 	if value, ok := gic.mutation.GasPrice(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
+			Type:   field.TypeUint64,
 			Value:  value,
 			Column: goodinfo.FieldGasPrice,
 		})
@@ -451,7 +451,7 @@ func (gic *GoodInfoCreate) createSpec() (*GoodInfo, *sqlgraph.CreateSpec) {
 	}
 	if value, ok := gic.mutation.Price(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
+			Type:   field.TypeUint64,
 			Value:  value,
 			Column: goodinfo.FieldPrice,
 		})
@@ -580,7 +580,7 @@ func (u *GoodInfoUpsert) UpdateDeviceInfoID() *GoodInfoUpsert {
 }
 
 // SetGasPrice sets the "gas_price" field.
-func (u *GoodInfoUpsert) SetGasPrice(v int64) *GoodInfoUpsert {
+func (u *GoodInfoUpsert) SetGasPrice(v uint64) *GoodInfoUpsert {
 	u.Set(goodinfo.FieldGasPrice, v)
 	return u
 }
@@ -688,7 +688,7 @@ func (u *GoodInfoUpsert) UpdateVendorLocationID() *GoodInfoUpsert {
 }
 
 // SetPrice sets the "price" field.
-func (u *GoodInfoUpsert) SetPrice(v int64) *GoodInfoUpsert {
+func (u *GoodInfoUpsert) SetPrice(v uint64) *GoodInfoUpsert {
 	u.Set(goodinfo.FieldPrice, v)
 	return u
 }
@@ -848,7 +848,7 @@ func (u *GoodInfoUpsertOne) UpdateDeviceInfoID() *GoodInfoUpsertOne {
 }
 
 // SetGasPrice sets the "gas_price" field.
-func (u *GoodInfoUpsertOne) SetGasPrice(v int64) *GoodInfoUpsertOne {
+func (u *GoodInfoUpsertOne) SetGasPrice(v uint64) *GoodInfoUpsertOne {
 	return u.Update(func(s *GoodInfoUpsert) {
 		s.SetGasPrice(v)
 	})
@@ -974,7 +974,7 @@ func (u *GoodInfoUpsertOne) UpdateVendorLocationID() *GoodInfoUpsertOne {
 }
 
 // SetPrice sets the "price" field.
-func (u *GoodInfoUpsertOne) SetPrice(v int64) *GoodInfoUpsertOne {
+func (u *GoodInfoUpsertOne) SetPrice(v uint64) *GoodInfoUpsertOne {
 	return u.Update(func(s *GoodInfoUpsert) {
 		s.SetPrice(v)
 	})
@@ -1316,7 +1316,7 @@ func (u *GoodInfoUpsertBulk) UpdateDeviceInfoID() *GoodInfoUpsertBulk {
 }
 
 // SetGasPrice sets the "gas_price" field.
-func (u *GoodInfoUpsertBulk) SetGasPrice(v int64) *GoodInfoUpsertBulk {
+func (u *GoodInfoUpsertBulk) SetGasPrice(v uint64) *GoodInfoUpsertBulk {
 	return u.Update(func(s *GoodInfoUpsert) {
 		s.SetGasPrice(v)
 	})
@@ -1442,7 +1442,7 @@ func (u *GoodInfoUpsertBulk) UpdateVendorLocationID() *GoodInfoUpsertBulk {
 }
 
 // SetPrice sets the "price" field.
-func (u *GoodInfoUpsertBulk) SetPrice(v int64) *GoodInfoUpsertBulk {
+func (u *GoodInfoUpsertBulk) SetPrice(v uint64) *GoodInfoUpsertBulk {
 	return u.Update(func(s *GoodInfoUpsert) {
 		s.SetPrice(v)
 	})

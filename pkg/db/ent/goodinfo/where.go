@@ -99,7 +99,7 @@ func DeviceInfoID(v uuid.UUID) predicate.GoodInfo {
 }
 
 // GasPrice applies equality check predicate on the "gas_price" field. It's identical to GasPriceEQ.
-func GasPrice(v int64) predicate.GoodInfo {
+func GasPrice(v uint64) predicate.GoodInfo {
 	return predicate.GoodInfo(func(s *sql.Selector) {
 		s.Where(sql.EQ(s.C(FieldGasPrice), v))
 	})
@@ -162,7 +162,7 @@ func VendorLocationID(v uuid.UUID) predicate.GoodInfo {
 }
 
 // Price applies equality check predicate on the "price" field. It's identical to PriceEQ.
-func Price(v int64) predicate.GoodInfo {
+func Price(v uint64) predicate.GoodInfo {
 	return predicate.GoodInfo(func(s *sql.Selector) {
 		s.Where(sql.EQ(s.C(FieldPrice), v))
 	})
@@ -280,21 +280,21 @@ func DeviceInfoIDLTE(v uuid.UUID) predicate.GoodInfo {
 }
 
 // GasPriceEQ applies the EQ predicate on the "gas_price" field.
-func GasPriceEQ(v int64) predicate.GoodInfo {
+func GasPriceEQ(v uint64) predicate.GoodInfo {
 	return predicate.GoodInfo(func(s *sql.Selector) {
 		s.Where(sql.EQ(s.C(FieldGasPrice), v))
 	})
 }
 
 // GasPriceNEQ applies the NEQ predicate on the "gas_price" field.
-func GasPriceNEQ(v int64) predicate.GoodInfo {
+func GasPriceNEQ(v uint64) predicate.GoodInfo {
 	return predicate.GoodInfo(func(s *sql.Selector) {
 		s.Where(sql.NEQ(s.C(FieldGasPrice), v))
 	})
 }
 
 // GasPriceIn applies the In predicate on the "gas_price" field.
-func GasPriceIn(vs ...int64) predicate.GoodInfo {
+func GasPriceIn(vs ...uint64) predicate.GoodInfo {
 	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
@@ -311,7 +311,7 @@ func GasPriceIn(vs ...int64) predicate.GoodInfo {
 }
 
 // GasPriceNotIn applies the NotIn predicate on the "gas_price" field.
-func GasPriceNotIn(vs ...int64) predicate.GoodInfo {
+func GasPriceNotIn(vs ...uint64) predicate.GoodInfo {
 	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
@@ -328,28 +328,28 @@ func GasPriceNotIn(vs ...int64) predicate.GoodInfo {
 }
 
 // GasPriceGT applies the GT predicate on the "gas_price" field.
-func GasPriceGT(v int64) predicate.GoodInfo {
+func GasPriceGT(v uint64) predicate.GoodInfo {
 	return predicate.GoodInfo(func(s *sql.Selector) {
 		s.Where(sql.GT(s.C(FieldGasPrice), v))
 	})
 }
 
 // GasPriceGTE applies the GTE predicate on the "gas_price" field.
-func GasPriceGTE(v int64) predicate.GoodInfo {
+func GasPriceGTE(v uint64) predicate.GoodInfo {
 	return predicate.GoodInfo(func(s *sql.Selector) {
 		s.Where(sql.GTE(s.C(FieldGasPrice), v))
 	})
 }
 
 // GasPriceLT applies the LT predicate on the "gas_price" field.
-func GasPriceLT(v int64) predicate.GoodInfo {
+func GasPriceLT(v uint64) predicate.GoodInfo {
 	return predicate.GoodInfo(func(s *sql.Selector) {
 		s.Where(sql.LT(s.C(FieldGasPrice), v))
 	})
 }
 
 // GasPriceLTE applies the LTE predicate on the "gas_price" field.
-func GasPriceLTE(v int64) predicate.GoodInfo {
+func GasPriceLTE(v uint64) predicate.GoodInfo {
 	return predicate.GoodInfo(func(s *sql.Selector) {
 		s.Where(sql.LTE(s.C(FieldGasPrice), v))
 	})
@@ -840,21 +840,21 @@ func VendorLocationIDLTE(v uuid.UUID) predicate.GoodInfo {
 }
 
 // PriceEQ applies the EQ predicate on the "price" field.
-func PriceEQ(v int64) predicate.GoodInfo {
+func PriceEQ(v uint64) predicate.GoodInfo {
 	return predicate.GoodInfo(func(s *sql.Selector) {
 		s.Where(sql.EQ(s.C(FieldPrice), v))
 	})
 }
 
 // PriceNEQ applies the NEQ predicate on the "price" field.
-func PriceNEQ(v int64) predicate.GoodInfo {
+func PriceNEQ(v uint64) predicate.GoodInfo {
 	return predicate.GoodInfo(func(s *sql.Selector) {
 		s.Where(sql.NEQ(s.C(FieldPrice), v))
 	})
 }
 
 // PriceIn applies the In predicate on the "price" field.
-func PriceIn(vs ...int64) predicate.GoodInfo {
+func PriceIn(vs ...uint64) predicate.GoodInfo {
 	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
@@ -871,7 +871,7 @@ func PriceIn(vs ...int64) predicate.GoodInfo {
 }
 
 // PriceNotIn applies the NotIn predicate on the "price" field.
-func PriceNotIn(vs ...int64) predicate.GoodInfo {
+func PriceNotIn(vs ...uint64) predicate.GoodInfo {
 	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
@@ -888,28 +888,28 @@ func PriceNotIn(vs ...int64) predicate.GoodInfo {
 }
 
 // PriceGT applies the GT predicate on the "price" field.
-func PriceGT(v int64) predicate.GoodInfo {
+func PriceGT(v uint64) predicate.GoodInfo {
 	return predicate.GoodInfo(func(s *sql.Selector) {
 		s.Where(sql.GT(s.C(FieldPrice), v))
 	})
 }
 
 // PriceGTE applies the GTE predicate on the "price" field.
-func PriceGTE(v int64) predicate.GoodInfo {
+func PriceGTE(v uint64) predicate.GoodInfo {
 	return predicate.GoodInfo(func(s *sql.Selector) {
 		s.Where(sql.GTE(s.C(FieldPrice), v))
 	})
 }
 
 // PriceLT applies the LT predicate on the "price" field.
-func PriceLT(v int64) predicate.GoodInfo {
+func PriceLT(v uint64) predicate.GoodInfo {
 	return predicate.GoodInfo(func(s *sql.Selector) {
 		s.Where(sql.LT(s.C(FieldPrice), v))
 	})
 }
 
 // PriceLTE applies the LTE predicate on the "price" field.
-func PriceLTE(v int64) predicate.GoodInfo {
+func PriceLTE(v uint64) predicate.GoodInfo {
 	return predicate.GoodInfo(func(s *sql.Selector) {
 		s.Where(sql.LTE(s.C(FieldPrice), v))
 	})
