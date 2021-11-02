@@ -31,6 +31,15 @@ func (s *Server) UpdateVendorLocation(ctx context.Context, in *npool.UpdateVendo
 	return resp, nil
 }
 
+func (s *Server) GetVendorLocation(ctx context.Context, in *npool.GetVendorLocationRequest) (*npool.GetVendorLocationResponse, error) {
+	resp, err := vendorlocation.Get(ctx, in)
+	if err != nil {
+		logger.Sugar().Errorf("delete vendor location error: %w", err)
+		return &npool.GetVendorLocationResponse{}, status.Error(codes.Internal, "internal server error")
+	}
+	return resp, nil
+}
+
 func (s *Server) DeleteVendorLocation(ctx context.Context, in *npool.DeleteVendorLocationRequest) (*npool.DeleteVendorLocationResponse, error) {
 	resp, err := vendorlocation.Delete(ctx, in)
 	if err != nil {

@@ -65,4 +65,24 @@ func TestVendorLocationCRUD(t *testing.T) { //nolint
 		assert.Equal(t, resp1.Info.City, city)
 		assert.Equal(t, resp1.Info.Address, address)
 	}
+
+	resp2, err := Get(context.Background(), &npool.GetVendorLocationRequest{
+		ID: resp.Info.ID,
+	})
+	if assert.Nil(t, err) {
+		assert.Equal(t, resp2.Info.Country, country)
+		assert.Equal(t, resp2.Info.Province, province)
+		assert.Equal(t, resp2.Info.City, city)
+		assert.Equal(t, resp2.Info.Address, address)
+	}
+
+	resp3, err := Delete(context.Background(), &npool.DeleteVendorLocationRequest{
+		ID: resp.Info.ID,
+	})
+	if assert.Nil(t, err) {
+		assert.Equal(t, resp3.Info.Country, country)
+		assert.Equal(t, resp3.Info.Province, province)
+		assert.Equal(t, resp3.Info.City, city)
+		assert.Equal(t, resp3.Info.Address, address)
+	}
 }

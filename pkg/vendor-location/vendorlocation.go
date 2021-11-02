@@ -2,11 +2,12 @@ package vendorlocation
 
 import (
 	"context"
+	"time"
 
 	"github.com/NpoolPlatform/cloud-hashing-goods/message/npool"
 
-	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db"                      //nolint
-	_ "github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/vendorlocation" //nolint
+	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db"                    //nolint
+	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/vendorlocation" //nolint
 
 	"github.com/google/uuid" //nolint
 
@@ -65,8 +66,58 @@ func Update(ctx context.Context, in *npool.UpdateVendorLocationRequest) (*npool.
 	}, nil
 }
 
+func Get(ctx context.Context, in *npool.GetVendorLocationRequest) (*npool.GetVendorLocationResponse, error) {
+	id, err := uuid.Parse(in.GetID())
+	if err != nil {
+		return nil, xerrors.Errorf("invalid vendor location id: %v", err)
+	}
+
+	infos, err := db.Client().
+		VendorLocation.
+		Query().
+		Where(
+			vendorlocation.Or(
+				vendorlocation.ID(id),
+			),
+		).
+		All(ctx)
+	if err != nil {
+		return nil, xerrors.Errorf("fail to query vendor location: %v", err)
+	}
+	if len(infos) == 0 {
+		return nil, xerrors.Errorf("empty reply of vendor location: %v", err)
+	}
+
+	return &npool.GetVendorLocationResponse{
+		Info: &npool.VendorLocationInfo{
+			ID:       id.String(),
+			Country:  infos[0].Country,
+			Province: infos[0].Province,
+			City:     infos[0].City,
+			Address:  infos[0].Address,
+		},
+	}, nil
+}
+
 func Delete(ctx context.Context, in *npool.DeleteVendorLocationRequest) (*npool.DeleteVendorLocationResponse, error) {
-	return nil, xerrors.Errorf("NOT IMPLEMENTED")
+	info, err := db.Client().
+		VendorLocation.
+		UpdateOneID(uuid.MustParse(in.GetID())).
+		SetDeleteAt(time.Now().UnixNano()).
+		Save(ctx)
+	if err != nil {
+		return nil, xerrors.Errorf("fail to delete target area: %v", err)
+	}
+
+	return &npool.DeleteVendorLocationResponse{
+		Info: &npool.VendorLocationInfo{
+			ID:       info.ID.String(),
+			Country:  info.Country,
+			Province: info.Province,
+			City:     info.City,
+			Address:  info.Address,
+		},
+	}, nil
 }
 
 func GetAll(ctx context.Context, in *npool.GetVendorLocationsRequest) (*npool.GetVendorLocationsResponse, error) {
