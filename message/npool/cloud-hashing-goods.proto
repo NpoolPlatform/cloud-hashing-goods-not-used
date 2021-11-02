@@ -94,6 +94,18 @@ service CloudHashingGoods {
             body: "*"
         };
     }
+    rpc GetDeviceInfo(GetDeviceInfoRequest) returns (GetDeviceInfoResponse) {
+        option (google.api.http) = {
+            post: "/v1/get/device"
+            body: "*"
+        };
+    }
+    rpc DeleteDeviceInfo(DeleteDeviceInfoRequest) returns (DeleteDeviceInfoResponse) {
+        option (google.api.http) = {
+            post: "/v1/delete/device"
+            body: "*"
+        };
+    }
     rpc GetDeviceInfos(GetDeviceInfosRequest) returns (GetDeviceInfosResponse) {
         option (google.api.http) = {
             get: "/v1/get/devices"
@@ -310,8 +322,8 @@ message DeviceInfo {
     string ID = 1700;
     string Type = 1701;
     string Manufacturer = 1702;
-    float PowerComsuption = 1703;
-    int64 ShipmentTimestamp = 1704;
+    int32 PowerComsuption = 1703;
+    int64 ShipmentAt = 1704;
 }
 
 message CreateDeviceInfoRequest {
@@ -328,6 +340,22 @@ message UpdateDeviceInfoRequest {
 
 message UpdateDeviceInfoResponse {
     DeviceInfo Info = 2100;
+}
+
+message GetDeviceInfoRequest {
+    string ID = 2110;
+}
+
+message GetDeviceInfoResponse {
+    DeviceInfo Info = 2120;
+}
+
+message DeleteDeviceInfoRequest {
+    string ID = 2130;
+}
+
+message DeleteDeviceInfoResponse {
+    DeviceInfo Info = 2140;
 }
 
 message GetDeviceInfosRequest {

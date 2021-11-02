@@ -33,6 +33,8 @@ type CloudHashingGoodsClient interface {
 	GetTargetAreas(ctx context.Context, in *GetTargetAreasRequest, opts ...grpc.CallOption) (*GetTargetAreasResponse, error)
 	CreateDeviceInfo(ctx context.Context, in *CreateDeviceInfoRequest, opts ...grpc.CallOption) (*CreateDeviceInfoResponse, error)
 	UpdateDeviceInfo(ctx context.Context, in *UpdateDeviceInfoRequest, opts ...grpc.CallOption) (*UpdateDeviceInfoResponse, error)
+	GetDeviceInfo(ctx context.Context, in *GetDeviceInfoRequest, opts ...grpc.CallOption) (*GetDeviceInfoResponse, error)
+	DeleteDeviceInfo(ctx context.Context, in *DeleteDeviceInfoRequest, opts ...grpc.CallOption) (*DeleteDeviceInfoResponse, error)
 	GetDeviceInfos(ctx context.Context, in *GetDeviceInfosRequest, opts ...grpc.CallOption) (*GetDeviceInfosResponse, error)
 	CreateGood(ctx context.Context, in *CreateGoodRequest, opts ...grpc.CallOption) (*CreateGoodResponse, error)
 	UpdateGood(ctx context.Context, in *UpdateGoodRequest, opts ...grpc.CallOption) (*UpdateGoodResponse, error)
@@ -180,6 +182,24 @@ func (c *cloudHashingGoodsClient) CreateDeviceInfo(ctx context.Context, in *Crea
 func (c *cloudHashingGoodsClient) UpdateDeviceInfo(ctx context.Context, in *UpdateDeviceInfoRequest, opts ...grpc.CallOption) (*UpdateDeviceInfoResponse, error) {
 	out := new(UpdateDeviceInfoResponse)
 	err := c.cc.Invoke(ctx, "/cloud.hashing.goods.v1.CloudHashingGoods/UpdateDeviceInfo", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *cloudHashingGoodsClient) GetDeviceInfo(ctx context.Context, in *GetDeviceInfoRequest, opts ...grpc.CallOption) (*GetDeviceInfoResponse, error) {
+	out := new(GetDeviceInfoResponse)
+	err := c.cc.Invoke(ctx, "/cloud.hashing.goods.v1.CloudHashingGoods/GetDeviceInfo", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *cloudHashingGoodsClient) DeleteDeviceInfo(ctx context.Context, in *DeleteDeviceInfoRequest, opts ...grpc.CallOption) (*DeleteDeviceInfoResponse, error) {
+	out := new(DeleteDeviceInfoResponse)
+	err := c.cc.Invoke(ctx, "/cloud.hashing.goods.v1.CloudHashingGoods/DeleteDeviceInfo", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -339,6 +359,8 @@ type CloudHashingGoodsServer interface {
 	GetTargetAreas(context.Context, *GetTargetAreasRequest) (*GetTargetAreasResponse, error)
 	CreateDeviceInfo(context.Context, *CreateDeviceInfoRequest) (*CreateDeviceInfoResponse, error)
 	UpdateDeviceInfo(context.Context, *UpdateDeviceInfoRequest) (*UpdateDeviceInfoResponse, error)
+	GetDeviceInfo(context.Context, *GetDeviceInfoRequest) (*GetDeviceInfoResponse, error)
+	DeleteDeviceInfo(context.Context, *DeleteDeviceInfoRequest) (*DeleteDeviceInfoResponse, error)
 	GetDeviceInfos(context.Context, *GetDeviceInfosRequest) (*GetDeviceInfosResponse, error)
 	CreateGood(context.Context, *CreateGoodRequest) (*CreateGoodResponse, error)
 	UpdateGood(context.Context, *UpdateGoodRequest) (*UpdateGoodResponse, error)
@@ -404,6 +426,12 @@ func (UnimplementedCloudHashingGoodsServer) CreateDeviceInfo(context.Context, *C
 }
 func (UnimplementedCloudHashingGoodsServer) UpdateDeviceInfo(context.Context, *UpdateDeviceInfoRequest) (*UpdateDeviceInfoResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateDeviceInfo not implemented")
+}
+func (UnimplementedCloudHashingGoodsServer) GetDeviceInfo(context.Context, *GetDeviceInfoRequest) (*GetDeviceInfoResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetDeviceInfo not implemented")
+}
+func (UnimplementedCloudHashingGoodsServer) DeleteDeviceInfo(context.Context, *DeleteDeviceInfoRequest) (*DeleteDeviceInfoResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteDeviceInfo not implemented")
 }
 func (UnimplementedCloudHashingGoodsServer) GetDeviceInfos(context.Context, *GetDeviceInfosRequest) (*GetDeviceInfosResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetDeviceInfos not implemented")
@@ -711,6 +739,42 @@ func _CloudHashingGoods_UpdateDeviceInfo_Handler(srv interface{}, ctx context.Co
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(CloudHashingGoodsServer).UpdateDeviceInfo(ctx, req.(*UpdateDeviceInfoRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _CloudHashingGoods_GetDeviceInfo_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetDeviceInfoRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CloudHashingGoodsServer).GetDeviceInfo(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cloud.hashing.goods.v1.CloudHashingGoods/GetDeviceInfo",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CloudHashingGoodsServer).GetDeviceInfo(ctx, req.(*GetDeviceInfoRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _CloudHashingGoods_DeleteDeviceInfo_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteDeviceInfoRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CloudHashingGoodsServer).DeleteDeviceInfo(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cloud.hashing.goods.v1.CloudHashingGoods/DeleteDeviceInfo",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CloudHashingGoodsServer).DeleteDeviceInfo(ctx, req.(*DeleteDeviceInfoRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -1047,6 +1111,14 @@ var CloudHashingGoods_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "UpdateDeviceInfo",
 			Handler:    _CloudHashingGoods_UpdateDeviceInfo_Handler,
+		},
+		{
+			MethodName: "GetDeviceInfo",
+			Handler:    _CloudHashingGoods_GetDeviceInfo_Handler,
+		},
+		{
+			MethodName: "DeleteDeviceInfo",
+			Handler:    _CloudHashingGoods_DeleteDeviceInfo_Handler,
 		},
 		{
 			MethodName: "GetDeviceInfos",
