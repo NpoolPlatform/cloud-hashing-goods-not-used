@@ -22,10 +22,12 @@ type CloudHashingGoodsClient interface {
 	Version(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*VersionResponse, error)
 	CreateVendorLocation(ctx context.Context, in *CreateVendorLocationRequest, opts ...grpc.CallOption) (*CreateVendorLocationResponse, error)
 	UpdateVendorLocation(ctx context.Context, in *UpdateVendorLocationRequest, opts ...grpc.CallOption) (*UpdateVendorLocationResponse, error)
+	GetVendorLocation(ctx context.Context, in *GetVendorLocationRequest, opts ...grpc.CallOption) (*GetVendorLocationResponse, error)
 	DeleteVendorLocation(ctx context.Context, in *DeleteVendorLocationRequest, opts ...grpc.CallOption) (*DeleteVendorLocationResponse, error)
 	GetVendorLocations(ctx context.Context, in *GetVendorLocationsRequest, opts ...grpc.CallOption) (*GetVendorLocationsResponse, error)
 	CreateTargetArea(ctx context.Context, in *CreateTargetAreaRequest, opts ...grpc.CallOption) (*CreateTargetAreaResponse, error)
 	UpdateTargetArea(ctx context.Context, in *UpdateTargetAreaRequest, opts ...grpc.CallOption) (*UpdateTargetAreaResponse, error)
+	GetTargetArea(ctx context.Context, in *GetTargetAreaRequest, opts ...grpc.CallOption) (*GetTargetAreaResponse, error)
 	DeleteTargetArea(ctx context.Context, in *DeleteTargetAreaRequest, opts ...grpc.CallOption) (*DeleteTargetAreaResponse, error)
 	DeleteTargetAreaByContinentCountry(ctx context.Context, in *DeleteTargetAreaByContinentCountryRequest, opts ...grpc.CallOption) (*DeleteTargetAreaByContinentCountryResponse, error)
 	GetTargetAreas(ctx context.Context, in *GetTargetAreasRequest, opts ...grpc.CallOption) (*GetTargetAreasResponse, error)
@@ -85,6 +87,15 @@ func (c *cloudHashingGoodsClient) UpdateVendorLocation(ctx context.Context, in *
 	return out, nil
 }
 
+func (c *cloudHashingGoodsClient) GetVendorLocation(ctx context.Context, in *GetVendorLocationRequest, opts ...grpc.CallOption) (*GetVendorLocationResponse, error) {
+	out := new(GetVendorLocationResponse)
+	err := c.cc.Invoke(ctx, "/cloud.hashing.goods.v1.CloudHashingGoods/GetVendorLocation", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *cloudHashingGoodsClient) DeleteVendorLocation(ctx context.Context, in *DeleteVendorLocationRequest, opts ...grpc.CallOption) (*DeleteVendorLocationResponse, error) {
 	out := new(DeleteVendorLocationResponse)
 	err := c.cc.Invoke(ctx, "/cloud.hashing.goods.v1.CloudHashingGoods/DeleteVendorLocation", in, out, opts...)
@@ -115,6 +126,15 @@ func (c *cloudHashingGoodsClient) CreateTargetArea(ctx context.Context, in *Crea
 func (c *cloudHashingGoodsClient) UpdateTargetArea(ctx context.Context, in *UpdateTargetAreaRequest, opts ...grpc.CallOption) (*UpdateTargetAreaResponse, error) {
 	out := new(UpdateTargetAreaResponse)
 	err := c.cc.Invoke(ctx, "/cloud.hashing.goods.v1.CloudHashingGoods/UpdateTargetArea", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *cloudHashingGoodsClient) GetTargetArea(ctx context.Context, in *GetTargetAreaRequest, opts ...grpc.CallOption) (*GetTargetAreaResponse, error) {
+	out := new(GetTargetAreaResponse)
+	err := c.cc.Invoke(ctx, "/cloud.hashing.goods.v1.CloudHashingGoods/GetTargetArea", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -308,10 +328,12 @@ type CloudHashingGoodsServer interface {
 	Version(context.Context, *emptypb.Empty) (*VersionResponse, error)
 	CreateVendorLocation(context.Context, *CreateVendorLocationRequest) (*CreateVendorLocationResponse, error)
 	UpdateVendorLocation(context.Context, *UpdateVendorLocationRequest) (*UpdateVendorLocationResponse, error)
+	GetVendorLocation(context.Context, *GetVendorLocationRequest) (*GetVendorLocationResponse, error)
 	DeleteVendorLocation(context.Context, *DeleteVendorLocationRequest) (*DeleteVendorLocationResponse, error)
 	GetVendorLocations(context.Context, *GetVendorLocationsRequest) (*GetVendorLocationsResponse, error)
 	CreateTargetArea(context.Context, *CreateTargetAreaRequest) (*CreateTargetAreaResponse, error)
 	UpdateTargetArea(context.Context, *UpdateTargetAreaRequest) (*UpdateTargetAreaResponse, error)
+	GetTargetArea(context.Context, *GetTargetAreaRequest) (*GetTargetAreaResponse, error)
 	DeleteTargetArea(context.Context, *DeleteTargetAreaRequest) (*DeleteTargetAreaResponse, error)
 	DeleteTargetAreaByContinentCountry(context.Context, *DeleteTargetAreaByContinentCountryRequest) (*DeleteTargetAreaByContinentCountryResponse, error)
 	GetTargetAreas(context.Context, *GetTargetAreasRequest) (*GetTargetAreasResponse, error)
@@ -350,6 +372,9 @@ func (UnimplementedCloudHashingGoodsServer) CreateVendorLocation(context.Context
 func (UnimplementedCloudHashingGoodsServer) UpdateVendorLocation(context.Context, *UpdateVendorLocationRequest) (*UpdateVendorLocationResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateVendorLocation not implemented")
 }
+func (UnimplementedCloudHashingGoodsServer) GetVendorLocation(context.Context, *GetVendorLocationRequest) (*GetVendorLocationResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetVendorLocation not implemented")
+}
 func (UnimplementedCloudHashingGoodsServer) DeleteVendorLocation(context.Context, *DeleteVendorLocationRequest) (*DeleteVendorLocationResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteVendorLocation not implemented")
 }
@@ -361,6 +386,9 @@ func (UnimplementedCloudHashingGoodsServer) CreateTargetArea(context.Context, *C
 }
 func (UnimplementedCloudHashingGoodsServer) UpdateTargetArea(context.Context, *UpdateTargetAreaRequest) (*UpdateTargetAreaResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateTargetArea not implemented")
+}
+func (UnimplementedCloudHashingGoodsServer) GetTargetArea(context.Context, *GetTargetAreaRequest) (*GetTargetAreaResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetTargetArea not implemented")
 }
 func (UnimplementedCloudHashingGoodsServer) DeleteTargetArea(context.Context, *DeleteTargetAreaRequest) (*DeleteTargetAreaResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteTargetArea not implemented")
@@ -489,6 +517,24 @@ func _CloudHashingGoods_UpdateVendorLocation_Handler(srv interface{}, ctx contex
 	return interceptor(ctx, in, info, handler)
 }
 
+func _CloudHashingGoods_GetVendorLocation_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetVendorLocationRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CloudHashingGoodsServer).GetVendorLocation(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cloud.hashing.goods.v1.CloudHashingGoods/GetVendorLocation",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CloudHashingGoodsServer).GetVendorLocation(ctx, req.(*GetVendorLocationRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _CloudHashingGoods_DeleteVendorLocation_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(DeleteVendorLocationRequest)
 	if err := dec(in); err != nil {
@@ -557,6 +603,24 @@ func _CloudHashingGoods_UpdateTargetArea_Handler(srv interface{}, ctx context.Co
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(CloudHashingGoodsServer).UpdateTargetArea(ctx, req.(*UpdateTargetAreaRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _CloudHashingGoods_GetTargetArea_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetTargetAreaRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CloudHashingGoodsServer).GetTargetArea(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cloud.hashing.goods.v1.CloudHashingGoods/GetTargetArea",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CloudHashingGoodsServer).GetTargetArea(ctx, req.(*GetTargetAreaRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -941,6 +1005,10 @@ var CloudHashingGoods_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _CloudHashingGoods_UpdateVendorLocation_Handler,
 		},
 		{
+			MethodName: "GetVendorLocation",
+			Handler:    _CloudHashingGoods_GetVendorLocation_Handler,
+		},
+		{
 			MethodName: "DeleteVendorLocation",
 			Handler:    _CloudHashingGoods_DeleteVendorLocation_Handler,
 		},
@@ -955,6 +1023,10 @@ var CloudHashingGoods_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "UpdateTargetArea",
 			Handler:    _CloudHashingGoods_UpdateTargetArea_Handler,
+		},
+		{
+			MethodName: "GetTargetArea",
+			Handler:    _CloudHashingGoods_GetTargetArea_Handler,
 		},
 		{
 			MethodName: "DeleteTargetArea",

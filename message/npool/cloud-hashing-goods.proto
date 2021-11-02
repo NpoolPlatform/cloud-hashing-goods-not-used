@@ -27,6 +27,12 @@ service CloudHashingGoods {
             body: "*"
         };
     }
+    rpc GetVendorLocation(GetVendorLocationRequest) returns (GetVendorLocationResponse) {
+        option (google.api.http) = {
+            post: "/v1/get/vendor-location"
+            body: "*"
+        };
+    }
     rpc DeleteVendorLocation(DeleteVendorLocationRequest) returns (DeleteVendorLocationResponse) {
         option (google.api.http) = {
             post: "/v1/delete/vendor-location"
@@ -49,6 +55,12 @@ service CloudHashingGoods {
     rpc UpdateTargetArea(UpdateTargetAreaRequest) returns (UpdateTargetAreaResponse) {
         option (google.api.http) = {
             post: "/v1/update/target-area"
+            body: "*"
+        };
+    }
+    rpc GetTargetArea(GetTargetAreaRequest) returns (GetTargetAreaResponse) {
+        option (google.api.http) = {
+            post: "/v1/get/target-area"
             body: "*"
         };
     }
@@ -205,6 +217,14 @@ message CreateVendorLocationResponse {
     VendorLocationInfo Info = 500;
 }
 
+message GetVendorLocationRequest {
+    string ID = 510;
+}
+
+message GetVendorLocationResponse {
+    VendorLocationInfo Info = 520;
+}
+
 message UpdateVendorLocationRequest {
     VendorLocationInfo Info = 600;
 }
@@ -242,6 +262,14 @@ message CreateTargetAreaRequest {
 
 message CreateTargetAreaResponse {
     TargetAreaInfo Info = 1200;
+}
+
+message GetTargetAreaRequest {
+    string ID = 1210;
+}
+
+message GetTargetAreaResponse {
+    TargetAreaInfo Info = 1220;
 }
 
 message UpdateTargetAreaRequest {
