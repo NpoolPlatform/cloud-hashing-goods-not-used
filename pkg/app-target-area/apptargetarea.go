@@ -2,7 +2,6 @@ package apptargetarea
 
 import (
 	"context"
-	_ "fmt"
 	"time"
 
 	"github.com/NpoolPlatform/cloud-hashing-goods/message/npool"
