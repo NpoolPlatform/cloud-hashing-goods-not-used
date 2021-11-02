@@ -1,3 +1,5 @@
+// +build !codeanalysis
+
 package api
 
 import (
@@ -13,6 +15,24 @@ import (
 
 	"github.com/NpoolPlatform/cloud-hashing-goods/message/npool"
 )
+
+func assertGoodInfo(t *testing.T, actual, expected *npool.GoodInfo) {
+	assert.Equal(t, actual.DeviceInfoID, expected.DeviceInfoID)
+	assert.Equal(t, actual.GasPrice, expected.GasPrice)
+	assert.Equal(t, actual.SeparateGasFee, expected.SeparateGasFee)
+	assert.Equal(t, actual.UnitPower, expected.UnitPower)
+	assert.Equal(t, actual.DurationDays, expected.DurationDays)
+	assert.Equal(t, actual.CoinInfoID, expected.CoinInfoID)
+	assert.Equal(t, actual.DeliveryAt, expected.DeliveryAt)
+	assert.Equal(t, actual.Actuals, expected.Actuals)
+	assert.Equal(t, actual.InheritFromGoodID, expected.InheritFromGoodID)
+	assert.Equal(t, actual.VendorLocationID, expected.VendorLocationID)
+	assert.Equal(t, actual.Price, expected.Price)
+	assert.Equal(t, actual.BenefitType, expected.BenefitType)
+	assert.Equal(t, actual.Classic, expected.Classic)
+	assert.Equal(t, actual.SupportCoinTypeIDs, expected.SupportCoinTypeIDs)
+	assert.Equal(t, actual.Total, expected.Total)
+}
 
 func TestGoodCRUD(t *testing.T) { //nolint
 	if runByGithubAction, err := strconv.ParseBool(os.Getenv("RUN_BY_GITHUB_ACTION")); err == nil && runByGithubAction {
@@ -67,21 +87,7 @@ func TestGoodCRUD(t *testing.T) { //nolint
 		err := json.Unmarshal(resp.Body(), &firstCreateInfo)
 		if assert.Nil(t, err) {
 			assert.NotEqual(t, firstCreateInfo.Info.ID, uuid.New())
-			assert.Equal(t, firstCreateInfo.Info.DeviceInfoID, goodInfo.DeviceInfoID)
-			assert.Equal(t, firstCreateInfo.Info.GasPrice, goodInfo.GasPrice)
-			assert.Equal(t, firstCreateInfo.Info.SeparateGasFee, goodInfo.SeparateGasFee)
-			assert.Equal(t, firstCreateInfo.Info.UnitPower, goodInfo.UnitPower)
-			assert.Equal(t, firstCreateInfo.Info.DurationDays, goodInfo.DurationDays)
-			assert.Equal(t, firstCreateInfo.Info.CoinInfoID, goodInfo.CoinInfoID)
-			assert.Equal(t, firstCreateInfo.Info.DeliveryAt, goodInfo.DeliveryAt)
-			assert.Equal(t, firstCreateInfo.Info.Actuals, goodInfo.Actuals)
-			assert.Equal(t, firstCreateInfo.Info.InheritFromGoodID, goodInfo.InheritFromGoodID)
-			assert.Equal(t, firstCreateInfo.Info.VendorLocationID, goodInfo.VendorLocationID)
-			assert.Equal(t, firstCreateInfo.Info.Price, goodInfo.Price)
-			assert.Equal(t, firstCreateInfo.Info.BenefitType, goodInfo.BenefitType)
-			assert.Equal(t, firstCreateInfo.Info.Classic, goodInfo.Classic)
-			assert.Equal(t, firstCreateInfo.Info.SupportCoinTypeIDs, goodInfo.SupportCoinTypeIDs)
-			assert.Equal(t, firstCreateInfo.Info.Total, goodInfo.Total)
+			assertGoodInfo(t, firstCreateInfo.Info, &goodInfo)
 		}
 	}
 
@@ -100,21 +106,7 @@ func TestGoodCRUD(t *testing.T) { //nolint
 		err := json.Unmarshal(resp.Body(), &info)
 		if assert.Nil(t, err) {
 			assert.Equal(t, firstCreateInfo.Info.ID, info.Info.ID)
-			assert.Equal(t, info.Info.DeviceInfoID, goodInfo.DeviceInfoID)
-			assert.Equal(t, info.Info.GasPrice, goodInfo.GasPrice)
-			assert.Equal(t, info.Info.SeparateGasFee, goodInfo.SeparateGasFee)
-			assert.Equal(t, info.Info.UnitPower, goodInfo.UnitPower)
-			assert.Equal(t, info.Info.DurationDays, goodInfo.DurationDays)
-			assert.Equal(t, info.Info.CoinInfoID, goodInfo.CoinInfoID)
-			assert.Equal(t, info.Info.DeliveryAt, goodInfo.DeliveryAt)
-			assert.Equal(t, info.Info.Actuals, goodInfo.Actuals)
-			assert.Equal(t, info.Info.InheritFromGoodID, goodInfo.InheritFromGoodID)
-			assert.Equal(t, info.Info.VendorLocationID, goodInfo.VendorLocationID)
-			assert.Equal(t, info.Info.Price, goodInfo.Price)
-			assert.Equal(t, info.Info.BenefitType, goodInfo.BenefitType)
-			assert.Equal(t, info.Info.Classic, goodInfo.Classic)
-			assert.Equal(t, info.Info.SupportCoinTypeIDs, goodInfo.SupportCoinTypeIDs)
-			assert.Equal(t, info.Info.Total, goodInfo.Total)
+			assertGoodInfo(t, info.Info, &goodInfo)
 		}
 	}
 
@@ -130,21 +122,7 @@ func TestGoodCRUD(t *testing.T) { //nolint
 		err := json.Unmarshal(resp.Body(), &info)
 		if assert.Nil(t, err) {
 			assert.Equal(t, firstCreateInfo.Info.ID, info.Info.ID)
-			assert.Equal(t, info.Info.DeviceInfoID, goodInfo.DeviceInfoID)
-			assert.Equal(t, info.Info.GasPrice, goodInfo.GasPrice)
-			assert.Equal(t, info.Info.SeparateGasFee, goodInfo.SeparateGasFee)
-			assert.Equal(t, info.Info.UnitPower, goodInfo.UnitPower)
-			assert.Equal(t, info.Info.DurationDays, goodInfo.DurationDays)
-			assert.Equal(t, info.Info.CoinInfoID, goodInfo.CoinInfoID)
-			assert.Equal(t, info.Info.DeliveryAt, goodInfo.DeliveryAt)
-			assert.Equal(t, info.Info.Actuals, goodInfo.Actuals)
-			assert.Equal(t, info.Info.InheritFromGoodID, goodInfo.InheritFromGoodID)
-			assert.Equal(t, info.Info.VendorLocationID, goodInfo.VendorLocationID)
-			assert.Equal(t, info.Info.Price, goodInfo.Price)
-			assert.Equal(t, info.Info.BenefitType, goodInfo.BenefitType)
-			assert.Equal(t, info.Info.Classic, goodInfo.Classic)
-			assert.Equal(t, info.Info.SupportCoinTypeIDs, goodInfo.SupportCoinTypeIDs)
-			assert.Equal(t, info.Info.Total, goodInfo.Total)
+			assertGoodInfo(t, info.Info, &goodInfo)
 		}
 	}
 
@@ -160,21 +138,7 @@ func TestGoodCRUD(t *testing.T) { //nolint
 		err := json.Unmarshal(resp.Body(), &info)
 		if assert.Nil(t, err) {
 			assert.Equal(t, firstCreateInfo.Info.ID, info.Info.ID)
-			assert.Equal(t, info.Info.DeviceInfoID, goodInfo.DeviceInfoID)
-			assert.Equal(t, info.Info.GasPrice, goodInfo.GasPrice)
-			assert.Equal(t, info.Info.SeparateGasFee, goodInfo.SeparateGasFee)
-			assert.Equal(t, info.Info.UnitPower, goodInfo.UnitPower)
-			assert.Equal(t, info.Info.DurationDays, goodInfo.DurationDays)
-			assert.Equal(t, info.Info.CoinInfoID, goodInfo.CoinInfoID)
-			assert.Equal(t, info.Info.DeliveryAt, goodInfo.DeliveryAt)
-			assert.Equal(t, info.Info.Actuals, goodInfo.Actuals)
-			assert.Equal(t, info.Info.InheritFromGoodID, goodInfo.InheritFromGoodID)
-			assert.Equal(t, info.Info.VendorLocationID, goodInfo.VendorLocationID)
-			assert.Equal(t, info.Info.Price, goodInfo.Price)
-			assert.Equal(t, info.Info.BenefitType, goodInfo.BenefitType)
-			assert.Equal(t, info.Info.Classic, goodInfo.Classic)
-			assert.Equal(t, info.Info.SupportCoinTypeIDs, goodInfo.SupportCoinTypeIDs)
-			assert.Equal(t, info.Info.Total, goodInfo.Total)
+			assertGoodInfo(t, info.Info, &goodInfo)
 		}
 	}
 
