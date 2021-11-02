@@ -431,7 +431,7 @@
 | Type | [string](#string) |  |  |
 | Manufacturer | [string](#string) |  |  |
 | PowerComsuption | [int32](#int32) |  |  |
-| ShipmentAt | [int64](#int64) |  |  |
+| ShipmentAt | [int32](#int32) |  |  |
 
 
 

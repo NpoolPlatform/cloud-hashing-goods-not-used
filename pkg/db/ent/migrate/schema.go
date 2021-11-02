@@ -11,10 +11,10 @@ var (
 	// DeviceInfosColumns holds the columns for the "device_infos" table.
 	DeviceInfosColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeUUID, Unique: true},
-		{Name: "type", Type: field.TypeString, Size: 16, Default: ""},
-		{Name: "manufacturer", Type: field.TypeString, Size: 16, Default: ""},
-		{Name: "power_comsuption", Type: field.TypeInt},
-		{Name: "shipment_date", Type: field.TypeInt64},
+		{Name: "type", Type: field.TypeString, Size: 64, Default: ""},
+		{Name: "manufacturer", Type: field.TypeString, Size: 64, Default: ""},
+		{Name: "power_comsuption", Type: field.TypeInt32},
+		{Name: "shipment_at", Type: field.TypeInt32},
 		{Name: "create_at", Type: field.TypeInt64},
 		{Name: "update_at", Type: field.TypeInt64},
 		{Name: "delete_at", Type: field.TypeInt64},
@@ -26,7 +26,7 @@ var (
 		PrimaryKey: []*schema.Column{DeviceInfosColumns[0]},
 		Indexes: []*schema.Index{
 			{
-				Name:    "deviceinfo_type_manufacturer_shipment_date_power_comsuption",
+				Name:    "deviceinfo_type_manufacturer_shipment_at_power_comsuption",
 				Unique:  true,
 				Columns: []*schema.Column{DeviceInfosColumns[1], DeviceInfosColumns[2], DeviceInfosColumns[4], DeviceInfosColumns[3]},
 			},

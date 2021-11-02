@@ -52,14 +52,14 @@ func (dic *DeviceInfoCreate) SetNillableManufacturer(s *string) *DeviceInfoCreat
 }
 
 // SetPowerComsuption sets the "power_comsuption" field.
-func (dic *DeviceInfoCreate) SetPowerComsuption(i int) *DeviceInfoCreate {
+func (dic *DeviceInfoCreate) SetPowerComsuption(i int32) *DeviceInfoCreate {
 	dic.mutation.SetPowerComsuption(i)
 	return dic
 }
 
-// SetShipmentDate sets the "shipment_date" field.
-func (dic *DeviceInfoCreate) SetShipmentDate(i int64) *DeviceInfoCreate {
-	dic.mutation.SetShipmentDate(i)
+// SetShipmentAt sets the "shipment_at" field.
+func (dic *DeviceInfoCreate) SetShipmentAt(i int32) *DeviceInfoCreate {
+	dic.mutation.SetShipmentAt(i)
 	return dic
 }
 
@@ -229,8 +229,8 @@ func (dic *DeviceInfoCreate) check() error {
 	if _, ok := dic.mutation.PowerComsuption(); !ok {
 		return &ValidationError{Name: "power_comsuption", err: errors.New(`ent: missing required field "power_comsuption"`)}
 	}
-	if _, ok := dic.mutation.ShipmentDate(); !ok {
-		return &ValidationError{Name: "shipment_date", err: errors.New(`ent: missing required field "shipment_date"`)}
+	if _, ok := dic.mutation.ShipmentAt(); !ok {
+		return &ValidationError{Name: "shipment_at", err: errors.New(`ent: missing required field "shipment_at"`)}
 	}
 	if _, ok := dic.mutation.CreateAt(); !ok {
 		return &ValidationError{Name: "create_at", err: errors.New(`ent: missing required field "create_at"`)}
@@ -292,19 +292,19 @@ func (dic *DeviceInfoCreate) createSpec() (*DeviceInfo, *sqlgraph.CreateSpec) {
 	}
 	if value, ok := dic.mutation.PowerComsuption(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt,
+			Type:   field.TypeInt32,
 			Value:  value,
 			Column: deviceinfo.FieldPowerComsuption,
 		})
 		_node.PowerComsuption = value
 	}
-	if value, ok := dic.mutation.ShipmentDate(); ok {
+	if value, ok := dic.mutation.ShipmentAt(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
+			Type:   field.TypeInt32,
 			Value:  value,
-			Column: deviceinfo.FieldShipmentDate,
+			Column: deviceinfo.FieldShipmentAt,
 		})
-		_node.ShipmentDate = value
+		_node.ShipmentAt = value
 	}
 	if value, ok := dic.mutation.CreateAt(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
@@ -409,7 +409,7 @@ func (u *DeviceInfoUpsert) UpdateManufacturer() *DeviceInfoUpsert {
 }
 
 // SetPowerComsuption sets the "power_comsuption" field.
-func (u *DeviceInfoUpsert) SetPowerComsuption(v int) *DeviceInfoUpsert {
+func (u *DeviceInfoUpsert) SetPowerComsuption(v int32) *DeviceInfoUpsert {
 	u.Set(deviceinfo.FieldPowerComsuption, v)
 	return u
 }
@@ -420,15 +420,15 @@ func (u *DeviceInfoUpsert) UpdatePowerComsuption() *DeviceInfoUpsert {
 	return u
 }
 
-// SetShipmentDate sets the "shipment_date" field.
-func (u *DeviceInfoUpsert) SetShipmentDate(v int64) *DeviceInfoUpsert {
-	u.Set(deviceinfo.FieldShipmentDate, v)
+// SetShipmentAt sets the "shipment_at" field.
+func (u *DeviceInfoUpsert) SetShipmentAt(v int32) *DeviceInfoUpsert {
+	u.Set(deviceinfo.FieldShipmentAt, v)
 	return u
 }
 
-// UpdateShipmentDate sets the "shipment_date" field to the value that was provided on create.
-func (u *DeviceInfoUpsert) UpdateShipmentDate() *DeviceInfoUpsert {
-	u.SetExcluded(deviceinfo.FieldShipmentDate)
+// UpdateShipmentAt sets the "shipment_at" field to the value that was provided on create.
+func (u *DeviceInfoUpsert) UpdateShipmentAt() *DeviceInfoUpsert {
+	u.SetExcluded(deviceinfo.FieldShipmentAt)
 	return u
 }
 
@@ -547,7 +547,7 @@ func (u *DeviceInfoUpsertOne) UpdateManufacturer() *DeviceInfoUpsertOne {
 }
 
 // SetPowerComsuption sets the "power_comsuption" field.
-func (u *DeviceInfoUpsertOne) SetPowerComsuption(v int) *DeviceInfoUpsertOne {
+func (u *DeviceInfoUpsertOne) SetPowerComsuption(v int32) *DeviceInfoUpsertOne {
 	return u.Update(func(s *DeviceInfoUpsert) {
 		s.SetPowerComsuption(v)
 	})
@@ -560,17 +560,17 @@ func (u *DeviceInfoUpsertOne) UpdatePowerComsuption() *DeviceInfoUpsertOne {
 	})
 }
 
-// SetShipmentDate sets the "shipment_date" field.
-func (u *DeviceInfoUpsertOne) SetShipmentDate(v int64) *DeviceInfoUpsertOne {
+// SetShipmentAt sets the "shipment_at" field.
+func (u *DeviceInfoUpsertOne) SetShipmentAt(v int32) *DeviceInfoUpsertOne {
 	return u.Update(func(s *DeviceInfoUpsert) {
-		s.SetShipmentDate(v)
+		s.SetShipmentAt(v)
 	})
 }
 
-// UpdateShipmentDate sets the "shipment_date" field to the value that was provided on create.
-func (u *DeviceInfoUpsertOne) UpdateShipmentDate() *DeviceInfoUpsertOne {
+// UpdateShipmentAt sets the "shipment_at" field to the value that was provided on create.
+func (u *DeviceInfoUpsertOne) UpdateShipmentAt() *DeviceInfoUpsertOne {
 	return u.Update(func(s *DeviceInfoUpsert) {
-		s.UpdateShipmentDate()
+		s.UpdateShipmentAt()
 	})
 }
 
@@ -861,7 +861,7 @@ func (u *DeviceInfoUpsertBulk) UpdateManufacturer() *DeviceInfoUpsertBulk {
 }
 
 // SetPowerComsuption sets the "power_comsuption" field.
-func (u *DeviceInfoUpsertBulk) SetPowerComsuption(v int) *DeviceInfoUpsertBulk {
+func (u *DeviceInfoUpsertBulk) SetPowerComsuption(v int32) *DeviceInfoUpsertBulk {
 	return u.Update(func(s *DeviceInfoUpsert) {
 		s.SetPowerComsuption(v)
 	})
@@ -874,17 +874,17 @@ func (u *DeviceInfoUpsertBulk) UpdatePowerComsuption() *DeviceInfoUpsertBulk {
 	})
 }
 
-// SetShipmentDate sets the "shipment_date" field.
-func (u *DeviceInfoUpsertBulk) SetShipmentDate(v int64) *DeviceInfoUpsertBulk {
+// SetShipmentAt sets the "shipment_at" field.
+func (u *DeviceInfoUpsertBulk) SetShipmentAt(v int32) *DeviceInfoUpsertBulk {
 	return u.Update(func(s *DeviceInfoUpsert) {
-		s.SetShipmentDate(v)
+		s.SetShipmentAt(v)
 	})
 }
 
-// UpdateShipmentDate sets the "shipment_date" field to the value that was provided on create.
-func (u *DeviceInfoUpsertBulk) UpdateShipmentDate() *DeviceInfoUpsertBulk {
+// UpdateShipmentAt sets the "shipment_at" field to the value that was provided on create.
+func (u *DeviceInfoUpsertBulk) UpdateShipmentAt() *DeviceInfoUpsertBulk {
 	return u.Update(func(s *DeviceInfoUpsert) {
-		s.UpdateShipmentDate()
+		s.UpdateShipmentAt()
 	})
 }
 

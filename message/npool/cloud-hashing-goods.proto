@@ -323,7 +323,7 @@ message DeviceInfo {
     string Type = 1701;
     string Manufacturer = 1702;
     int32 PowerComsuption = 1703;
-    int64 ShipmentAt = 1704;
+    int32 ShipmentAt = 1704;
 }
 
 message CreateDeviceInfoRequest {

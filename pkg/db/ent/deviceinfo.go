@@ -21,9 +21,9 @@ type DeviceInfo struct {
 	// Manufacturer holds the value of the "manufacturer" field.
 	Manufacturer string `json:"manufacturer,omitempty"`
 	// PowerComsuption holds the value of the "power_comsuption" field.
-	PowerComsuption int `json:"power_comsuption,omitempty"`
-	// ShipmentDate holds the value of the "shipment_date" field.
-	ShipmentDate int64 `json:"shipment_date,omitempty"`
+	PowerComsuption int32 `json:"power_comsuption,omitempty"`
+	// ShipmentAt holds the value of the "shipment_at" field.
+	ShipmentAt int32 `json:"shipment_at,omitempty"`
 	// CreateAt holds the value of the "create_at" field.
 	CreateAt int64 `json:"create_at,omitempty"`
 	// UpdateAt holds the value of the "update_at" field.
@@ -37,7 +37,7 @@ func (*DeviceInfo) scanValues(columns []string) ([]interface{}, error) {
 	values := make([]interface{}, len(columns))
 	for i := range columns {
 		switch columns[i] {
-		case deviceinfo.FieldPowerComsuption, deviceinfo.FieldShipmentDate, deviceinfo.FieldCreateAt, deviceinfo.FieldUpdateAt, deviceinfo.FieldDeleteAt:
+		case deviceinfo.FieldPowerComsuption, deviceinfo.FieldShipmentAt, deviceinfo.FieldCreateAt, deviceinfo.FieldUpdateAt, deviceinfo.FieldDeleteAt:
 			values[i] = new(sql.NullInt64)
 		case deviceinfo.FieldType, deviceinfo.FieldManufacturer:
 			values[i] = new(sql.NullString)
@@ -80,13 +80,13 @@ func (di *DeviceInfo) assignValues(columns []string, values []interface{}) error
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field power_comsuption", values[i])
 			} else if value.Valid {
-				di.PowerComsuption = int(value.Int64)
+				di.PowerComsuption = int32(value.Int64)
 			}
-		case deviceinfo.FieldShipmentDate:
+		case deviceinfo.FieldShipmentAt:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
-				return fmt.Errorf("unexpected type %T for field shipment_date", values[i])
+				return fmt.Errorf("unexpected type %T for field shipment_at", values[i])
 			} else if value.Valid {
-				di.ShipmentDate = value.Int64
+				di.ShipmentAt = int32(value.Int64)
 			}
 		case deviceinfo.FieldCreateAt:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
@@ -140,8 +140,8 @@ func (di *DeviceInfo) String() string {
 	builder.WriteString(di.Manufacturer)
 	builder.WriteString(", power_comsuption=")
 	builder.WriteString(fmt.Sprintf("%v", di.PowerComsuption))
-	builder.WriteString(", shipment_date=")
-	builder.WriteString(fmt.Sprintf("%v", di.ShipmentDate))
+	builder.WriteString(", shipment_at=")
+	builder.WriteString(fmt.Sprintf("%v", di.ShipmentAt))
 	builder.WriteString(", create_at=")
 	builder.WriteString(fmt.Sprintf("%v", di.CreateAt))
 	builder.WriteString(", update_at=")

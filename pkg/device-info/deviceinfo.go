@@ -2,7 +2,6 @@ package deviceinfo
 
 import (
 	"context"
-	"fmt"
 	"time"
 
 	"github.com/NpoolPlatform/cloud-hashing-goods/message/npool"
@@ -15,66 +14,66 @@ import (
 	"golang.org/x/xerrors"
 )
 
-func Create(ctx context.Context, in *npool.CreateVendorLocationRequest) (*npool.CreateVendorLocationResponse, error) {
+func Create(ctx context.Context, in *npool.CreateDeviceInfoRequest) (*npool.CreateDeviceInfoResponse, error) {
 	info, err := db.Client().
-		VendorLocation.
+		DeviceInfo.
 		Create().
-		SetCountry(in.GetInfo().GetCountry()).
-		SetProvince(in.GetInfo().GetProvince()).
-		SetCity(in.GetInfo().GetCity()).
-		SetAddress(in.GetInfo().GetAddress()).
+		SetType(in.GetInfo().GetType()).
+		SetManufacturer(in.GetInfo().GetManufacturer()).
+		SetPowerComsuption(in.GetInfo().GetPowerComsuption()).
+		SetShipmentAt(in.GetInfo().GetShipmentAt()).
 		Save(ctx)
 	if err != nil {
 		return nil, err
 	}
 
-	return &npool.CreateVendorLocationResponse{
-		Info: &npool.VendorLocationInfo{
-			ID:       info.ID.String(),
-			Country:  info.Country,
-			Province: info.Province,
-			City:     info.City,
-			Address:  info.Address,
+	return &npool.CreateDeviceInfoResponse{
+		Info: &npool.DeviceInfo{
+			ID:              info.ID.String(),
+			Type:            info.Type,
+			Manufacturer:    info.Manufacturer,
+			PowerComsuption: info.PowerComsuption,
+			ShipmentAt:      info.ShipmentAt,
 		},
 	}, nil
 }
 
-func Update(ctx context.Context, in *npool.UpdateVendorLocationRequest) (*npool.UpdateVendorLocationResponse, error) {
+func Update(ctx context.Context, in *npool.UpdateDeviceInfoRequest) (*npool.UpdateDeviceInfoResponse, error) {
 	id, err := uuid.Parse(in.GetInfo().GetID())
 	if err != nil {
-		return nil, xerrors.Errorf("invalid vendor location id: %v", err)
+		return nil, xerrors.Errorf("invalid device info id: %v", err)
 	}
 
 	info, err := db.Client().
-		VendorLocation.
+		DeviceInfo.
 		UpdateOneID(id).
-		SetCountry(in.GetInfo().GetCountry()).
-		SetProvince(in.GetInfo().GetProvince()).
-		SetCity(in.GetInfo().GetCity()).
-		SetAddress(in.GetInfo().GetAddress()).
+		SetType(in.GetInfo().GetType()).
+		SetManufacturer(in.GetInfo().GetManufacturer()).
+		SetPowerComsuption(in.GetInfo().GetPowerComsuption()).
+		SetShipmentAt(in.GetInfo().GetShipmentAt()).
 		Save(ctx)
 	if err != nil {
 		return nil, err
 	}
-	return &npool.UpdateVendorLocationResponse{
-		Info: &npool.VendorLocationInfo{
-			ID:       info.ID.String(),
-			Country:  info.Country,
-			Province: info.Province,
-			City:     info.City,
-			Address:  info.Address,
+	return &npool.UpdateDeviceInfoResponse{
+		Info: &npool.DeviceInfo{
+			ID:              info.ID.String(),
+			Type:            info.Type,
+			Manufacturer:    info.Manufacturer,
+			PowerComsuption: info.PowerComsuption,
+			ShipmentAt:      info.ShipmentAt,
 		},
 	}, nil
 }
 
-func Get(ctx context.Context, in *npool.GetVendorLocationRequest) (*npool.GetVendorLocationResponse, error) {
+func Get(ctx context.Context, in *npool.GetDeviceInfoRequest) (*npool.GetDeviceInfoResponse, error) {
 	id, err := uuid.Parse(in.GetID())
 	if err != nil {
-		return nil, xerrors.Errorf("invalid vendor location id: %v", err)
+		return nil, xerrors.Errorf("invalid device info id: %v", err)
 	}
 
 	infos, err := db.Client().
-		VendorLocation.
+		DeviceInfo.
 		Query().
 		Where(
 			deviceinfo.Or(
@@ -83,47 +82,47 @@ func Get(ctx context.Context, in *npool.GetVendorLocationRequest) (*npool.GetVen
 		).
 		All(ctx)
 	if err != nil {
-		return nil, xerrors.Errorf("fail to query vendor location: %v", err)
+		return nil, xerrors.Errorf("fail to query device info: %v", err)
 	}
 	if len(infos) == 0 {
-		return nil, xerrors.Errorf("empty reply of vendor location: %v", err)
+		return nil, xerrors.Errorf("empty reply of device info: %v", err)
 	}
 
-	return &npool.GetVendorLocationResponse{
-		Info: &npool.VendorLocationInfo{
-			ID:       id.String(),
-			Country:  infos[0].Country,
-			Province: infos[0].Province,
-			City:     infos[0].City,
-			Address:  infos[0].Address,
+	return &npool.GetDeviceInfoResponse{
+		Info: &npool.DeviceInfo{
+			ID:              id.String(),
+			Type:            infos[0].Type,
+			Manufacturer:    infos[0].Manufacturer,
+			PowerComsuption: infos[0].PowerComsuption,
+			ShipmentAt:      infos[0].ShipmentAt,
 		},
 	}, nil
 }
 
-func Delete(ctx context.Context, in *npool.DeleteVendorLocationRequest) (*npool.DeleteVendorLocationResponse, error) {
+func Delete(ctx context.Context, in *npool.DeleteDeviceInfoRequest) (*npool.DeleteDeviceInfoResponse, error) {
 	info, err := db.Client().
-		VendorLocation.
+		DeviceInfo.
 		UpdateOneID(uuid.MustParse(in.GetID())).
 		SetDeleteAt(time.Now().UnixNano()).
 		Save(ctx)
 	if err != nil {
-		return nil, xerrors.Errorf("fail to delete vendor location: %v", err)
+		return nil, xerrors.Errorf("fail to delete device info: %v", err)
 	}
 
-	return &npool.DeleteVendorLocationResponse{
-		Info: &npool.VendorLocationInfo{
-			ID:       info.ID.String(),
-			Country:  info.Country,
-			Province: info.Province,
-			City:     info.City,
-			Address:  info.Address,
+	return &npool.DeleteDeviceInfoResponse{
+		Info: &npool.DeviceInfo{
+			ID:              info.ID.String(),
+			Type:            info.Type,
+			Manufacturer:    info.Manufacturer,
+			PowerComsuption: info.PowerComsuption,
+			ShipmentAt:      info.ShipmentAt,
 		},
 	}, nil
 }
 
-func GetAll(ctx context.Context, in *npool.GetVendorLocationsRequest) (*npool.GetVendorLocationsResponse, error) {
+func GetAll(ctx context.Context, in *npool.GetDeviceInfosRequest) (*npool.GetDeviceInfosResponse, error) {
 	infos, err := db.Client().
-		VendorLocation.
+		DeviceInfo.
 		Query().
 		Where(
 			deviceinfo.Or(
@@ -135,20 +134,18 @@ func GetAll(ctx context.Context, in *npool.GetVendorLocationsRequest) (*npool.Ge
 		return nil, err
 	}
 
-	fmt.Println(infos)
-
-	locations := []*npool.VendorLocationInfo{}
+	devices := []*npool.DeviceInfo{}
 	for _, info := range infos {
-		locations = append(locations, &npool.VendorLocationInfo{
-			ID:       info.ID.String(),
-			Country:  info.Country,
-			Province: info.Province,
-			City:     info.City,
-			Address:  info.Address,
+		devices = append(devices, &npool.DeviceInfo{
+			ID:              info.ID.String(),
+			Type:            info.Type,
+			Manufacturer:    info.Manufacturer,
+			PowerComsuption: info.PowerComsuption,
+			ShipmentAt:      info.ShipmentAt,
 		})
 	}
 
-	return &npool.GetVendorLocationsResponse{
-		Infos: locations,
+	return &npool.GetDeviceInfosResponse{
+		Infos: devices,
 	}, nil
 }

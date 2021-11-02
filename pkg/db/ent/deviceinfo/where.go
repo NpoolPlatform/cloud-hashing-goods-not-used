@@ -106,16 +106,16 @@ func Manufacturer(v string) predicate.DeviceInfo {
 }
 
 // PowerComsuption applies equality check predicate on the "power_comsuption" field. It's identical to PowerComsuptionEQ.
-func PowerComsuption(v int) predicate.DeviceInfo {
+func PowerComsuption(v int32) predicate.DeviceInfo {
 	return predicate.DeviceInfo(func(s *sql.Selector) {
 		s.Where(sql.EQ(s.C(FieldPowerComsuption), v))
 	})
 }
 
-// ShipmentDate applies equality check predicate on the "shipment_date" field. It's identical to ShipmentDateEQ.
-func ShipmentDate(v int64) predicate.DeviceInfo {
+// ShipmentAt applies equality check predicate on the "shipment_at" field. It's identical to ShipmentAtEQ.
+func ShipmentAt(v int32) predicate.DeviceInfo {
 	return predicate.DeviceInfo(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldShipmentDate), v))
+		s.Where(sql.EQ(s.C(FieldShipmentAt), v))
 	})
 }
 
@@ -363,21 +363,21 @@ func ManufacturerContainsFold(v string) predicate.DeviceInfo {
 }
 
 // PowerComsuptionEQ applies the EQ predicate on the "power_comsuption" field.
-func PowerComsuptionEQ(v int) predicate.DeviceInfo {
+func PowerComsuptionEQ(v int32) predicate.DeviceInfo {
 	return predicate.DeviceInfo(func(s *sql.Selector) {
 		s.Where(sql.EQ(s.C(FieldPowerComsuption), v))
 	})
 }
 
 // PowerComsuptionNEQ applies the NEQ predicate on the "power_comsuption" field.
-func PowerComsuptionNEQ(v int) predicate.DeviceInfo {
+func PowerComsuptionNEQ(v int32) predicate.DeviceInfo {
 	return predicate.DeviceInfo(func(s *sql.Selector) {
 		s.Where(sql.NEQ(s.C(FieldPowerComsuption), v))
 	})
 }
 
 // PowerComsuptionIn applies the In predicate on the "power_comsuption" field.
-func PowerComsuptionIn(vs ...int) predicate.DeviceInfo {
+func PowerComsuptionIn(vs ...int32) predicate.DeviceInfo {
 	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
@@ -394,7 +394,7 @@ func PowerComsuptionIn(vs ...int) predicate.DeviceInfo {
 }
 
 // PowerComsuptionNotIn applies the NotIn predicate on the "power_comsuption" field.
-func PowerComsuptionNotIn(vs ...int) predicate.DeviceInfo {
+func PowerComsuptionNotIn(vs ...int32) predicate.DeviceInfo {
 	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
@@ -411,49 +411,49 @@ func PowerComsuptionNotIn(vs ...int) predicate.DeviceInfo {
 }
 
 // PowerComsuptionGT applies the GT predicate on the "power_comsuption" field.
-func PowerComsuptionGT(v int) predicate.DeviceInfo {
+func PowerComsuptionGT(v int32) predicate.DeviceInfo {
 	return predicate.DeviceInfo(func(s *sql.Selector) {
 		s.Where(sql.GT(s.C(FieldPowerComsuption), v))
 	})
 }
 
 // PowerComsuptionGTE applies the GTE predicate on the "power_comsuption" field.
-func PowerComsuptionGTE(v int) predicate.DeviceInfo {
+func PowerComsuptionGTE(v int32) predicate.DeviceInfo {
 	return predicate.DeviceInfo(func(s *sql.Selector) {
 		s.Where(sql.GTE(s.C(FieldPowerComsuption), v))
 	})
 }
 
 // PowerComsuptionLT applies the LT predicate on the "power_comsuption" field.
-func PowerComsuptionLT(v int) predicate.DeviceInfo {
+func PowerComsuptionLT(v int32) predicate.DeviceInfo {
 	return predicate.DeviceInfo(func(s *sql.Selector) {
 		s.Where(sql.LT(s.C(FieldPowerComsuption), v))
 	})
 }
 
 // PowerComsuptionLTE applies the LTE predicate on the "power_comsuption" field.
-func PowerComsuptionLTE(v int) predicate.DeviceInfo {
+func PowerComsuptionLTE(v int32) predicate.DeviceInfo {
 	return predicate.DeviceInfo(func(s *sql.Selector) {
 		s.Where(sql.LTE(s.C(FieldPowerComsuption), v))
 	})
 }
 
-// ShipmentDateEQ applies the EQ predicate on the "shipment_date" field.
-func ShipmentDateEQ(v int64) predicate.DeviceInfo {
+// ShipmentAtEQ applies the EQ predicate on the "shipment_at" field.
+func ShipmentAtEQ(v int32) predicate.DeviceInfo {
 	return predicate.DeviceInfo(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldShipmentDate), v))
+		s.Where(sql.EQ(s.C(FieldShipmentAt), v))
 	})
 }
 
-// ShipmentDateNEQ applies the NEQ predicate on the "shipment_date" field.
-func ShipmentDateNEQ(v int64) predicate.DeviceInfo {
+// ShipmentAtNEQ applies the NEQ predicate on the "shipment_at" field.
+func ShipmentAtNEQ(v int32) predicate.DeviceInfo {
 	return predicate.DeviceInfo(func(s *sql.Selector) {
-		s.Where(sql.NEQ(s.C(FieldShipmentDate), v))
+		s.Where(sql.NEQ(s.C(FieldShipmentAt), v))
 	})
 }
 
-// ShipmentDateIn applies the In predicate on the "shipment_date" field.
-func ShipmentDateIn(vs ...int64) predicate.DeviceInfo {
+// ShipmentAtIn applies the In predicate on the "shipment_at" field.
+func ShipmentAtIn(vs ...int32) predicate.DeviceInfo {
 	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
@@ -465,12 +465,12 @@ func ShipmentDateIn(vs ...int64) predicate.DeviceInfo {
 			s.Where(sql.False())
 			return
 		}
-		s.Where(sql.In(s.C(FieldShipmentDate), v...))
+		s.Where(sql.In(s.C(FieldShipmentAt), v...))
 	})
 }
 
-// ShipmentDateNotIn applies the NotIn predicate on the "shipment_date" field.
-func ShipmentDateNotIn(vs ...int64) predicate.DeviceInfo {
+// ShipmentAtNotIn applies the NotIn predicate on the "shipment_at" field.
+func ShipmentAtNotIn(vs ...int32) predicate.DeviceInfo {
 	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
@@ -482,35 +482,35 @@ func ShipmentDateNotIn(vs ...int64) predicate.DeviceInfo {
 			s.Where(sql.False())
 			return
 		}
-		s.Where(sql.NotIn(s.C(FieldShipmentDate), v...))
+		s.Where(sql.NotIn(s.C(FieldShipmentAt), v...))
 	})
 }
 
-// ShipmentDateGT applies the GT predicate on the "shipment_date" field.
-func ShipmentDateGT(v int64) predicate.DeviceInfo {
+// ShipmentAtGT applies the GT predicate on the "shipment_at" field.
+func ShipmentAtGT(v int32) predicate.DeviceInfo {
 	return predicate.DeviceInfo(func(s *sql.Selector) {
-		s.Where(sql.GT(s.C(FieldShipmentDate), v))
+		s.Where(sql.GT(s.C(FieldShipmentAt), v))
 	})
 }
 
-// ShipmentDateGTE applies the GTE predicate on the "shipment_date" field.
-func ShipmentDateGTE(v int64) predicate.DeviceInfo {
+// ShipmentAtGTE applies the GTE predicate on the "shipment_at" field.
+func ShipmentAtGTE(v int32) predicate.DeviceInfo {
 	return predicate.DeviceInfo(func(s *sql.Selector) {
-		s.Where(sql.GTE(s.C(FieldShipmentDate), v))
+		s.Where(sql.GTE(s.C(FieldShipmentAt), v))
 	})
 }
 
-// ShipmentDateLT applies the LT predicate on the "shipment_date" field.
-func ShipmentDateLT(v int64) predicate.DeviceInfo {
+// ShipmentAtLT applies the LT predicate on the "shipment_at" field.
+func ShipmentAtLT(v int32) predicate.DeviceInfo {
 	return predicate.DeviceInfo(func(s *sql.Selector) {
-		s.Where(sql.LT(s.C(FieldShipmentDate), v))
+		s.Where(sql.LT(s.C(FieldShipmentAt), v))
 	})
 }
 
-// ShipmentDateLTE applies the LTE predicate on the "shipment_date" field.
-func ShipmentDateLTE(v int64) predicate.DeviceInfo {
+// ShipmentAtLTE applies the LTE predicate on the "shipment_at" field.
+func ShipmentAtLTE(v int32) predicate.DeviceInfo {
 	return predicate.DeviceInfo(func(s *sql.Selector) {
-		s.Where(sql.LTE(s.C(FieldShipmentDate), v))
+		s.Where(sql.LTE(s.C(FieldShipmentAt), v))
 	})
 }
 

@@ -17,8 +17,8 @@ const (
 	FieldManufacturer = "manufacturer"
 	// FieldPowerComsuption holds the string denoting the power_comsuption field in the database.
 	FieldPowerComsuption = "power_comsuption"
-	// FieldShipmentDate holds the string denoting the shipment_date field in the database.
-	FieldShipmentDate = "shipment_date"
+	// FieldShipmentAt holds the string denoting the shipment_at field in the database.
+	FieldShipmentAt = "shipment_at"
 	// FieldCreateAt holds the string denoting the create_at field in the database.
 	FieldCreateAt = "create_at"
 	// FieldUpdateAt holds the string denoting the update_at field in the database.
@@ -35,7 +35,7 @@ var Columns = []string{
 	FieldType,
 	FieldManufacturer,
 	FieldPowerComsuption,
-	FieldShipmentDate,
+	FieldShipmentAt,
 	FieldCreateAt,
 	FieldUpdateAt,
 	FieldDeleteAt,

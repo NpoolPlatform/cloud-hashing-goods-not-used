@@ -40,10 +40,10 @@ type DeviceInfoMutation struct {
 	id                  *uuid.UUID
 	_type               *string
 	manufacturer        *string
-	power_comsuption    *int
-	addpower_comsuption *int
-	shipment_date       *int64
-	addshipment_date    *int64
+	power_comsuption    *int32
+	addpower_comsuption *int32
+	shipment_at         *int32
+	addshipment_at      *int32
 	create_at           *int64
 	addcreate_at        *int64
 	update_at           *int64
@@ -214,13 +214,13 @@ func (m *DeviceInfoMutation) ResetManufacturer() {
 }
 
 // SetPowerComsuption sets the "power_comsuption" field.
-func (m *DeviceInfoMutation) SetPowerComsuption(i int) {
+func (m *DeviceInfoMutation) SetPowerComsuption(i int32) {
 	m.power_comsuption = &i
 	m.addpower_comsuption = nil
 }
 
 // PowerComsuption returns the value of the "power_comsuption" field in the mutation.
-func (m *DeviceInfoMutation) PowerComsuption() (r int, exists bool) {
+func (m *DeviceInfoMutation) PowerComsuption() (r int32, exists bool) {
 	v := m.power_comsuption
 	if v == nil {
 		return
@@ -231,7 +231,7 @@ func (m *DeviceInfoMutation) PowerComsuption() (r int, exists bool) {
 // OldPowerComsuption returns the old "power_comsuption" field's value of the DeviceInfo entity.
 // If the DeviceInfo object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *DeviceInfoMutation) OldPowerComsuption(ctx context.Context) (v int, err error) {
+func (m *DeviceInfoMutation) OldPowerComsuption(ctx context.Context) (v int32, err error) {
 	if !m.op.Is(OpUpdateOne) {
 		return v, fmt.Errorf("OldPowerComsuption is only allowed on UpdateOne operations")
 	}
@@ -246,7 +246,7 @@ func (m *DeviceInfoMutation) OldPowerComsuption(ctx context.Context) (v int, err
 }
 
 // AddPowerComsuption adds i to the "power_comsuption" field.
-func (m *DeviceInfoMutation) AddPowerComsuption(i int) {
+func (m *DeviceInfoMutation) AddPowerComsuption(i int32) {
 	if m.addpower_comsuption != nil {
 		*m.addpower_comsuption += i
 	} else {
@@ -255,7 +255,7 @@ func (m *DeviceInfoMutation) AddPowerComsuption(i int) {
 }
 
 // AddedPowerComsuption returns the value that was added to the "power_comsuption" field in this mutation.
-func (m *DeviceInfoMutation) AddedPowerComsuption() (r int, exists bool) {
+func (m *DeviceInfoMutation) AddedPowerComsuption() (r int32, exists bool) {
 	v := m.addpower_comsuption
 	if v == nil {
 		return
@@ -269,60 +269,60 @@ func (m *DeviceInfoMutation) ResetPowerComsuption() {
 	m.addpower_comsuption = nil
 }
 
-// SetShipmentDate sets the "shipment_date" field.
-func (m *DeviceInfoMutation) SetShipmentDate(i int64) {
-	m.shipment_date = &i
-	m.addshipment_date = nil
+// SetShipmentAt sets the "shipment_at" field.
+func (m *DeviceInfoMutation) SetShipmentAt(i int32) {
+	m.shipment_at = &i
+	m.addshipment_at = nil
 }
 
-// ShipmentDate returns the value of the "shipment_date" field in the mutation.
-func (m *DeviceInfoMutation) ShipmentDate() (r int64, exists bool) {
-	v := m.shipment_date
+// ShipmentAt returns the value of the "shipment_at" field in the mutation.
+func (m *DeviceInfoMutation) ShipmentAt() (r int32, exists bool) {
+	v := m.shipment_at
 	if v == nil {
 		return
 	}
 	return *v, true
 }
 
-// OldShipmentDate returns the old "shipment_date" field's value of the DeviceInfo entity.
+// OldShipmentAt returns the old "shipment_at" field's value of the DeviceInfo entity.
 // If the DeviceInfo object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *DeviceInfoMutation) OldShipmentDate(ctx context.Context) (v int64, err error) {
+func (m *DeviceInfoMutation) OldShipmentAt(ctx context.Context) (v int32, err error) {
 	if !m.op.Is(OpUpdateOne) {
-		return v, fmt.Errorf("OldShipmentDate is only allowed on UpdateOne operations")
+		return v, fmt.Errorf("OldShipmentAt is only allowed on UpdateOne operations")
 	}
 	if m.id == nil || m.oldValue == nil {
-		return v, fmt.Errorf("OldShipmentDate requires an ID field in the mutation")
+		return v, fmt.Errorf("OldShipmentAt requires an ID field in the mutation")
 	}
 	oldValue, err := m.oldValue(ctx)
 	if err != nil {
-		return v, fmt.Errorf("querying old value for OldShipmentDate: %w", err)
+		return v, fmt.Errorf("querying old value for OldShipmentAt: %w", err)
 	}
-	return oldValue.ShipmentDate, nil
+	return oldValue.ShipmentAt, nil
 }
 
-// AddShipmentDate adds i to the "shipment_date" field.
-func (m *DeviceInfoMutation) AddShipmentDate(i int64) {
-	if m.addshipment_date != nil {
-		*m.addshipment_date += i
+// AddShipmentAt adds i to the "shipment_at" field.
+func (m *DeviceInfoMutation) AddShipmentAt(i int32) {
+	if m.addshipment_at != nil {
+		*m.addshipment_at += i
 	} else {
-		m.addshipment_date = &i
+		m.addshipment_at = &i
 	}
 }
 
-// AddedShipmentDate returns the value that was added to the "shipment_date" field in this mutation.
-func (m *DeviceInfoMutation) AddedShipmentDate() (r int64, exists bool) {
-	v := m.addshipment_date
+// AddedShipmentAt returns the value that was added to the "shipment_at" field in this mutation.
+func (m *DeviceInfoMutation) AddedShipmentAt() (r int32, exists bool) {
+	v := m.addshipment_at
 	if v == nil {
 		return
 	}
 	return *v, true
 }
 
-// ResetShipmentDate resets all changes to the "shipment_date" field.
-func (m *DeviceInfoMutation) ResetShipmentDate() {
-	m.shipment_date = nil
-	m.addshipment_date = nil
+// ResetShipmentAt resets all changes to the "shipment_at" field.
+func (m *DeviceInfoMutation) ResetShipmentAt() {
+	m.shipment_at = nil
+	m.addshipment_at = nil
 }
 
 // SetCreateAt sets the "create_at" field.
@@ -522,8 +522,8 @@ func (m *DeviceInfoMutation) Fields() []string {
 	if m.power_comsuption != nil {
 		fields = append(fields, deviceinfo.FieldPowerComsuption)
 	}
-	if m.shipment_date != nil {
-		fields = append(fields, deviceinfo.FieldShipmentDate)
+	if m.shipment_at != nil {
+		fields = append(fields, deviceinfo.FieldShipmentAt)
 	}
 	if m.create_at != nil {
 		fields = append(fields, deviceinfo.FieldCreateAt)
@@ -548,8 +548,8 @@ func (m *DeviceInfoMutation) Field(name string) (ent.Value, bool) {
 		return m.Manufacturer()
 	case deviceinfo.FieldPowerComsuption:
 		return m.PowerComsuption()
-	case deviceinfo.FieldShipmentDate:
-		return m.ShipmentDate()
+	case deviceinfo.FieldShipmentAt:
+		return m.ShipmentAt()
 	case deviceinfo.FieldCreateAt:
 		return m.CreateAt()
 	case deviceinfo.FieldUpdateAt:
@@ -571,8 +571,8 @@ func (m *DeviceInfoMutation) OldField(ctx context.Context, name string) (ent.Val
 		return m.OldManufacturer(ctx)
 	case deviceinfo.FieldPowerComsuption:
 		return m.OldPowerComsuption(ctx)
-	case deviceinfo.FieldShipmentDate:
-		return m.OldShipmentDate(ctx)
+	case deviceinfo.FieldShipmentAt:
+		return m.OldShipmentAt(ctx)
 	case deviceinfo.FieldCreateAt:
 		return m.OldCreateAt(ctx)
 	case deviceinfo.FieldUpdateAt:
@@ -603,18 +603,18 @@ func (m *DeviceInfoMutation) SetField(name string, value ent.Value) error {
 		m.SetManufacturer(v)
 		return nil
 	case deviceinfo.FieldPowerComsuption:
-		v, ok := value.(int)
+		v, ok := value.(int32)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.SetPowerComsuption(v)
 		return nil
-	case deviceinfo.FieldShipmentDate:
-		v, ok := value.(int64)
+	case deviceinfo.FieldShipmentAt:
+		v, ok := value.(int32)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
-		m.SetShipmentDate(v)
+		m.SetShipmentAt(v)
 		return nil
 	case deviceinfo.FieldCreateAt:
 		v, ok := value.(int64)
@@ -648,8 +648,8 @@ func (m *DeviceInfoMutation) AddedFields() []string {
 	if m.addpower_comsuption != nil {
 		fields = append(fields, deviceinfo.FieldPowerComsuption)
 	}
-	if m.addshipment_date != nil {
-		fields = append(fields, deviceinfo.FieldShipmentDate)
+	if m.addshipment_at != nil {
+		fields = append(fields, deviceinfo.FieldShipmentAt)
 	}
 	if m.addcreate_at != nil {
 		fields = append(fields, deviceinfo.FieldCreateAt)
@@ -670,8 +670,8 @@ func (m *DeviceInfoMutation) AddedField(name string) (ent.Value, bool) {
 	switch name {
 	case deviceinfo.FieldPowerComsuption:
 		return m.AddedPowerComsuption()
-	case deviceinfo.FieldShipmentDate:
-		return m.AddedShipmentDate()
+	case deviceinfo.FieldShipmentAt:
+		return m.AddedShipmentAt()
 	case deviceinfo.FieldCreateAt:
 		return m.AddedCreateAt()
 	case deviceinfo.FieldUpdateAt:
@@ -688,18 +688,18 @@ func (m *DeviceInfoMutation) AddedField(name string) (ent.Value, bool) {
 func (m *DeviceInfoMutation) AddField(name string, value ent.Value) error {
 	switch name {
 	case deviceinfo.FieldPowerComsuption:
-		v, ok := value.(int)
+		v, ok := value.(int32)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.AddPowerComsuption(v)
 		return nil
-	case deviceinfo.FieldShipmentDate:
-		v, ok := value.(int64)
+	case deviceinfo.FieldShipmentAt:
+		v, ok := value.(int32)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
-		m.AddShipmentDate(v)
+		m.AddShipmentAt(v)
 		return nil
 	case deviceinfo.FieldCreateAt:
 		v, ok := value.(int64)
@@ -758,8 +758,8 @@ func (m *DeviceInfoMutation) ResetField(name string) error {
 	case deviceinfo.FieldPowerComsuption:
 		m.ResetPowerComsuption()
 		return nil
-	case deviceinfo.FieldShipmentDate:
-		m.ResetShipmentDate()
+	case deviceinfo.FieldShipmentAt:
+		m.ResetShipmentAt()
 		return nil
 	case deviceinfo.FieldCreateAt:
 		m.ResetCreateAt()

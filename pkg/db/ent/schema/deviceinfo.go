@@ -23,12 +23,12 @@ func (DeviceInfo) Fields() []ent.Field {
 			Unique(),
 		field.String("type").
 			Default("").
-			MaxLen(16),
+			MaxLen(64),
 		field.String("manufacturer").
 			Default("").
-			MaxLen(16),
-		field.Int("power_comsuption"),
-		field.Int64("shipment_date"),
+			MaxLen(64),
+		field.Int32("power_comsuption"),
+		field.Int32("shipment_at"),
 		field.Int64("create_at").
 			DefaultFunc(func() int64 {
 				return time.Now().UnixNano()
@@ -54,7 +54,7 @@ func (DeviceInfo) Edges() []ent.Edge {
 
 func (DeviceInfo) Indexes() []ent.Index {
 	return []ent.Index{
-		index.Fields("type", "manufacturer", "shipment_date", "power_comsuption").
+		index.Fields("type", "manufacturer", "shipment_at", "power_comsuption").
 			Unique(),
 	}
 }

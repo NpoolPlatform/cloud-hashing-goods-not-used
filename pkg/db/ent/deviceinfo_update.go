@@ -55,28 +55,28 @@ func (diu *DeviceInfoUpdate) SetNillableManufacturer(s *string) *DeviceInfoUpdat
 }
 
 // SetPowerComsuption sets the "power_comsuption" field.
-func (diu *DeviceInfoUpdate) SetPowerComsuption(i int) *DeviceInfoUpdate {
+func (diu *DeviceInfoUpdate) SetPowerComsuption(i int32) *DeviceInfoUpdate {
 	diu.mutation.ResetPowerComsuption()
 	diu.mutation.SetPowerComsuption(i)
 	return diu
 }
 
 // AddPowerComsuption adds i to the "power_comsuption" field.
-func (diu *DeviceInfoUpdate) AddPowerComsuption(i int) *DeviceInfoUpdate {
+func (diu *DeviceInfoUpdate) AddPowerComsuption(i int32) *DeviceInfoUpdate {
 	diu.mutation.AddPowerComsuption(i)
 	return diu
 }
 
-// SetShipmentDate sets the "shipment_date" field.
-func (diu *DeviceInfoUpdate) SetShipmentDate(i int64) *DeviceInfoUpdate {
-	diu.mutation.ResetShipmentDate()
-	diu.mutation.SetShipmentDate(i)
+// SetShipmentAt sets the "shipment_at" field.
+func (diu *DeviceInfoUpdate) SetShipmentAt(i int32) *DeviceInfoUpdate {
+	diu.mutation.ResetShipmentAt()
+	diu.mutation.SetShipmentAt(i)
 	return diu
 }
 
-// AddShipmentDate adds i to the "shipment_date" field.
-func (diu *DeviceInfoUpdate) AddShipmentDate(i int64) *DeviceInfoUpdate {
-	diu.mutation.AddShipmentDate(i)
+// AddShipmentAt adds i to the "shipment_at" field.
+func (diu *DeviceInfoUpdate) AddShipmentAt(i int32) *DeviceInfoUpdate {
+	diu.mutation.AddShipmentAt(i)
 	return diu
 }
 
@@ -258,30 +258,30 @@ func (diu *DeviceInfoUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	}
 	if value, ok := diu.mutation.PowerComsuption(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt,
+			Type:   field.TypeInt32,
 			Value:  value,
 			Column: deviceinfo.FieldPowerComsuption,
 		})
 	}
 	if value, ok := diu.mutation.AddedPowerComsuption(); ok {
 		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt,
+			Type:   field.TypeInt32,
 			Value:  value,
 			Column: deviceinfo.FieldPowerComsuption,
 		})
 	}
-	if value, ok := diu.mutation.ShipmentDate(); ok {
+	if value, ok := diu.mutation.ShipmentAt(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
+			Type:   field.TypeInt32,
 			Value:  value,
-			Column: deviceinfo.FieldShipmentDate,
+			Column: deviceinfo.FieldShipmentAt,
 		})
 	}
-	if value, ok := diu.mutation.AddedShipmentDate(); ok {
+	if value, ok := diu.mutation.AddedShipmentAt(); ok {
 		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
+			Type:   field.TypeInt32,
 			Value:  value,
-			Column: deviceinfo.FieldShipmentDate,
+			Column: deviceinfo.FieldShipmentAt,
 		})
 	}
 	if value, ok := diu.mutation.CreateAt(); ok {
@@ -374,28 +374,28 @@ func (diuo *DeviceInfoUpdateOne) SetNillableManufacturer(s *string) *DeviceInfoU
 }
 
 // SetPowerComsuption sets the "power_comsuption" field.
-func (diuo *DeviceInfoUpdateOne) SetPowerComsuption(i int) *DeviceInfoUpdateOne {
+func (diuo *DeviceInfoUpdateOne) SetPowerComsuption(i int32) *DeviceInfoUpdateOne {
 	diuo.mutation.ResetPowerComsuption()
 	diuo.mutation.SetPowerComsuption(i)
 	return diuo
 }
 
 // AddPowerComsuption adds i to the "power_comsuption" field.
-func (diuo *DeviceInfoUpdateOne) AddPowerComsuption(i int) *DeviceInfoUpdateOne {
+func (diuo *DeviceInfoUpdateOne) AddPowerComsuption(i int32) *DeviceInfoUpdateOne {
 	diuo.mutation.AddPowerComsuption(i)
 	return diuo
 }
 
-// SetShipmentDate sets the "shipment_date" field.
-func (diuo *DeviceInfoUpdateOne) SetShipmentDate(i int64) *DeviceInfoUpdateOne {
-	diuo.mutation.ResetShipmentDate()
-	diuo.mutation.SetShipmentDate(i)
+// SetShipmentAt sets the "shipment_at" field.
+func (diuo *DeviceInfoUpdateOne) SetShipmentAt(i int32) *DeviceInfoUpdateOne {
+	diuo.mutation.ResetShipmentAt()
+	diuo.mutation.SetShipmentAt(i)
 	return diuo
 }
 
-// AddShipmentDate adds i to the "shipment_date" field.
-func (diuo *DeviceInfoUpdateOne) AddShipmentDate(i int64) *DeviceInfoUpdateOne {
-	diuo.mutation.AddShipmentDate(i)
+// AddShipmentAt adds i to the "shipment_at" field.
+func (diuo *DeviceInfoUpdateOne) AddShipmentAt(i int32) *DeviceInfoUpdateOne {
+	diuo.mutation.AddShipmentAt(i)
 	return diuo
 }
 
@@ -601,30 +601,30 @@ func (diuo *DeviceInfoUpdateOne) sqlSave(ctx context.Context) (_node *DeviceInfo
 	}
 	if value, ok := diuo.mutation.PowerComsuption(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt,
+			Type:   field.TypeInt32,
 			Value:  value,
 			Column: deviceinfo.FieldPowerComsuption,
 		})
 	}
 	if value, ok := diuo.mutation.AddedPowerComsuption(); ok {
 		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt,
+			Type:   field.TypeInt32,
 			Value:  value,
 			Column: deviceinfo.FieldPowerComsuption,
 		})
 	}
-	if value, ok := diuo.mutation.ShipmentDate(); ok {
+	if value, ok := diuo.mutation.ShipmentAt(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
+			Type:   field.TypeInt32,
 			Value:  value,
-			Column: deviceinfo.FieldShipmentDate,
+			Column: deviceinfo.FieldShipmentAt,
 		})
 	}
-	if value, ok := diuo.mutation.AddedShipmentDate(); ok {
+	if value, ok := diuo.mutation.AddedShipmentAt(); ok {
 		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
+			Type:   field.TypeInt32,
 			Value:  value,
-			Column: deviceinfo.FieldShipmentDate,
+			Column: deviceinfo.FieldShipmentAt,
 		})
 	}
 	if value, ok := diuo.mutation.CreateAt(); ok {
