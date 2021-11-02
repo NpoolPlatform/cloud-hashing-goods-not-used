@@ -8,8 +8,8 @@ import (
 )
 
 var (
-	// AppAreaAuthsColumns holds the columns for the "app_area_auths" table.
-	AppAreaAuthsColumns = []*schema.Column{
+	// AppTargetAreasColumns holds the columns for the "app_target_areas" table.
+	AppTargetAreasColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeUUID, Unique: true},
 		{Name: "target_area_id", Type: field.TypeUUID},
 		{Name: "app_id", Type: field.TypeUUID},
@@ -17,16 +17,16 @@ var (
 		{Name: "update_at", Type: field.TypeInt64},
 		{Name: "delete_at", Type: field.TypeInt64},
 	}
-	// AppAreaAuthsTable holds the schema information for the "app_area_auths" table.
-	AppAreaAuthsTable = &schema.Table{
-		Name:       "app_area_auths",
-		Columns:    AppAreaAuthsColumns,
-		PrimaryKey: []*schema.Column{AppAreaAuthsColumns[0]},
+	// AppTargetAreasTable holds the schema information for the "app_target_areas" table.
+	AppTargetAreasTable = &schema.Table{
+		Name:       "app_target_areas",
+		Columns:    AppTargetAreasColumns,
+		PrimaryKey: []*schema.Column{AppTargetAreasColumns[0]},
 		Indexes: []*schema.Index{
 			{
-				Name:    "appareaauth_target_area_id_app_id",
+				Name:    "apptargetarea_target_area_id_app_id",
 				Unique:  true,
-				Columns: []*schema.Column{AppAreaAuthsColumns[1], AppAreaAuthsColumns[2]},
+				Columns: []*schema.Column{AppTargetAreasColumns[1], AppTargetAreasColumns[2]},
 			},
 		},
 	}
@@ -130,7 +130,7 @@ var (
 	}
 	// Tables holds all the tables in the schema.
 	Tables = []*schema.Table{
-		AppAreaAuthsTable,
+		AppTargetAreasTable,
 		DeviceInfosTable,
 		GoodInfosTable,
 		TargetAreasTable,

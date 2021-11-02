@@ -174,7 +174,7 @@ service CloudHashingGoods {
             body: "*"
         };
     }
-    rpc UnauthorizeAppTargetArea(UnauthorizeAppTargetAreaRequest) returns (google.protobuf.Empty) {
+    rpc UnauthorizeAppTargetArea(UnauthorizeAppTargetAreaRequest) returns (UnauthorizeAppTargetAreaResponse) {
         option (google.api.http) = {
             post: "/v1/unauthorize/app/target-area"
             body: "*"
@@ -478,8 +478,9 @@ message UnauthorizeAppGoodResponse {
 }
 
 message AppTargetAreaInfo {
-    string AppID = 4010;
-    string TargetAreaID = 4011;
+    string ID = 4010;
+    string AppID = 4011;
+    string TargetAreaID = 4012;
 }
 
 message AuthorizeAppTargetAreaRequest {
@@ -501,6 +502,11 @@ message CheckAppTargetAreaResponse {
 
 message UnauthorizeAppTargetAreaRequest {
     AppTargetAreaInfo Info = 4100;
+}
+
+message UnauthorizeAppTargetAreaResponse {
+    AppTargetAreaInfo Info = 4110;
+    bool Authorized = 4111;
 }
 
 message AuthorizeAppGoodTargetAreaRequest {

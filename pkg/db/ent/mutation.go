@@ -7,7 +7,7 @@ import (
 	"fmt"
 	"sync"
 
-	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/appareaauth"
+	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/apptargetarea"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/deviceinfo"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/goodinfo"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/predicate"
@@ -27,15 +27,15 @@ const (
 	OpUpdateOne = ent.OpUpdateOne
 
 	// Node types.
-	TypeAppAreaAuth    = "AppAreaAuth"
+	TypeAppTargetArea  = "AppTargetArea"
 	TypeDeviceInfo     = "DeviceInfo"
 	TypeGoodInfo       = "GoodInfo"
 	TypeTargetArea     = "TargetArea"
 	TypeVendorLocation = "VendorLocation"
 )
 
-// AppAreaAuthMutation represents an operation that mutates the AppAreaAuth nodes in the graph.
-type AppAreaAuthMutation struct {
+// AppTargetAreaMutation represents an operation that mutates the AppTargetArea nodes in the graph.
+type AppTargetAreaMutation struct {
 	config
 	op             Op
 	typ            string
@@ -50,21 +50,21 @@ type AppAreaAuthMutation struct {
 	adddelete_at   *int64
 	clearedFields  map[string]struct{}
 	done           bool
-	oldValue       func(context.Context) (*AppAreaAuth, error)
-	predicates     []predicate.AppAreaAuth
+	oldValue       func(context.Context) (*AppTargetArea, error)
+	predicates     []predicate.AppTargetArea
 }
 
-var _ ent.Mutation = (*AppAreaAuthMutation)(nil)
+var _ ent.Mutation = (*AppTargetAreaMutation)(nil)
 
-// appareaauthOption allows management of the mutation configuration using functional options.
-type appareaauthOption func(*AppAreaAuthMutation)
+// apptargetareaOption allows management of the mutation configuration using functional options.
+type apptargetareaOption func(*AppTargetAreaMutation)
 
-// newAppAreaAuthMutation creates new mutation for the AppAreaAuth entity.
-func newAppAreaAuthMutation(c config, op Op, opts ...appareaauthOption) *AppAreaAuthMutation {
-	m := &AppAreaAuthMutation{
+// newAppTargetAreaMutation creates new mutation for the AppTargetArea entity.
+func newAppTargetAreaMutation(c config, op Op, opts ...apptargetareaOption) *AppTargetAreaMutation {
+	m := &AppTargetAreaMutation{
 		config:        c,
 		op:            op,
-		typ:           TypeAppAreaAuth,
+		typ:           TypeAppTargetArea,
 		clearedFields: make(map[string]struct{}),
 	}
 	for _, opt := range opts {
@@ -73,20 +73,20 @@ func newAppAreaAuthMutation(c config, op Op, opts ...appareaauthOption) *AppArea
 	return m
 }
 
-// withAppAreaAuthID sets the ID field of the mutation.
-func withAppAreaAuthID(id uuid.UUID) appareaauthOption {
-	return func(m *AppAreaAuthMutation) {
+// withAppTargetAreaID sets the ID field of the mutation.
+func withAppTargetAreaID(id uuid.UUID) apptargetareaOption {
+	return func(m *AppTargetAreaMutation) {
 		var (
 			err   error
 			once  sync.Once
-			value *AppAreaAuth
+			value *AppTargetArea
 		)
-		m.oldValue = func(ctx context.Context) (*AppAreaAuth, error) {
+		m.oldValue = func(ctx context.Context) (*AppTargetArea, error) {
 			once.Do(func() {
 				if m.done {
 					err = fmt.Errorf("querying old values post mutation is not allowed")
 				} else {
-					value, err = m.Client().AppAreaAuth.Get(ctx, id)
+					value, err = m.Client().AppTargetArea.Get(ctx, id)
 				}
 			})
 			return value, err
@@ -95,10 +95,10 @@ func withAppAreaAuthID(id uuid.UUID) appareaauthOption {
 	}
 }
 
-// withAppAreaAuth sets the old AppAreaAuth of the mutation.
-func withAppAreaAuth(node *AppAreaAuth) appareaauthOption {
-	return func(m *AppAreaAuthMutation) {
-		m.oldValue = func(context.Context) (*AppAreaAuth, error) {
+// withAppTargetArea sets the old AppTargetArea of the mutation.
+func withAppTargetArea(node *AppTargetArea) apptargetareaOption {
+	return func(m *AppTargetAreaMutation) {
+		m.oldValue = func(context.Context) (*AppTargetArea, error) {
 			return node, nil
 		}
 		m.id = &node.ID
@@ -107,7 +107,7 @@ func withAppAreaAuth(node *AppAreaAuth) appareaauthOption {
 
 // Client returns a new `ent.Client` from the mutation. If the mutation was
 // executed in a transaction (ent.Tx), a transactional client is returned.
-func (m AppAreaAuthMutation) Client() *Client {
+func (m AppTargetAreaMutation) Client() *Client {
 	client := &Client{config: m.config}
 	client.init()
 	return client
@@ -115,7 +115,7 @@ func (m AppAreaAuthMutation) Client() *Client {
 
 // Tx returns an `ent.Tx` for mutations that were executed in transactions;
 // it returns an error otherwise.
-func (m AppAreaAuthMutation) Tx() (*Tx, error) {
+func (m AppTargetAreaMutation) Tx() (*Tx, error) {
 	if _, ok := m.driver.(*txDriver); !ok {
 		return nil, fmt.Errorf("ent: mutation is not running in a transaction")
 	}
@@ -125,14 +125,14 @@ func (m AppAreaAuthMutation) Tx() (*Tx, error) {
 }
 
 // SetID sets the value of the id field. Note that this
-// operation is only accepted on creation of AppAreaAuth entities.
-func (m *AppAreaAuthMutation) SetID(id uuid.UUID) {
+// operation is only accepted on creation of AppTargetArea entities.
+func (m *AppTargetAreaMutation) SetID(id uuid.UUID) {
 	m.id = &id
 }
 
 // ID returns the ID value in the mutation. Note that the ID is only available
 // if it was provided to the builder or after it was returned from the database.
-func (m *AppAreaAuthMutation) ID() (id uuid.UUID, exists bool) {
+func (m *AppTargetAreaMutation) ID() (id uuid.UUID, exists bool) {
 	if m.id == nil {
 		return
 	}
@@ -140,12 +140,12 @@ func (m *AppAreaAuthMutation) ID() (id uuid.UUID, exists bool) {
 }
 
 // SetTargetAreaID sets the "target_area_id" field.
-func (m *AppAreaAuthMutation) SetTargetAreaID(u uuid.UUID) {
+func (m *AppTargetAreaMutation) SetTargetAreaID(u uuid.UUID) {
 	m.target_area_id = &u
 }
 
 // TargetAreaID returns the value of the "target_area_id" field in the mutation.
-func (m *AppAreaAuthMutation) TargetAreaID() (r uuid.UUID, exists bool) {
+func (m *AppTargetAreaMutation) TargetAreaID() (r uuid.UUID, exists bool) {
 	v := m.target_area_id
 	if v == nil {
 		return
@@ -153,10 +153,10 @@ func (m *AppAreaAuthMutation) TargetAreaID() (r uuid.UUID, exists bool) {
 	return *v, true
 }
 
-// OldTargetAreaID returns the old "target_area_id" field's value of the AppAreaAuth entity.
-// If the AppAreaAuth object wasn't provided to the builder, the object is fetched from the database.
+// OldTargetAreaID returns the old "target_area_id" field's value of the AppTargetArea entity.
+// If the AppTargetArea object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *AppAreaAuthMutation) OldTargetAreaID(ctx context.Context) (v uuid.UUID, err error) {
+func (m *AppTargetAreaMutation) OldTargetAreaID(ctx context.Context) (v uuid.UUID, err error) {
 	if !m.op.Is(OpUpdateOne) {
 		return v, fmt.Errorf("OldTargetAreaID is only allowed on UpdateOne operations")
 	}
@@ -171,17 +171,17 @@ func (m *AppAreaAuthMutation) OldTargetAreaID(ctx context.Context) (v uuid.UUID,
 }
 
 // ResetTargetAreaID resets all changes to the "target_area_id" field.
-func (m *AppAreaAuthMutation) ResetTargetAreaID() {
+func (m *AppTargetAreaMutation) ResetTargetAreaID() {
 	m.target_area_id = nil
 }
 
 // SetAppID sets the "app_id" field.
-func (m *AppAreaAuthMutation) SetAppID(u uuid.UUID) {
+func (m *AppTargetAreaMutation) SetAppID(u uuid.UUID) {
 	m.app_id = &u
 }
 
 // AppID returns the value of the "app_id" field in the mutation.
-func (m *AppAreaAuthMutation) AppID() (r uuid.UUID, exists bool) {
+func (m *AppTargetAreaMutation) AppID() (r uuid.UUID, exists bool) {
 	v := m.app_id
 	if v == nil {
 		return
@@ -189,10 +189,10 @@ func (m *AppAreaAuthMutation) AppID() (r uuid.UUID, exists bool) {
 	return *v, true
 }
 
-// OldAppID returns the old "app_id" field's value of the AppAreaAuth entity.
-// If the AppAreaAuth object wasn't provided to the builder, the object is fetched from the database.
+// OldAppID returns the old "app_id" field's value of the AppTargetArea entity.
+// If the AppTargetArea object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *AppAreaAuthMutation) OldAppID(ctx context.Context) (v uuid.UUID, err error) {
+func (m *AppTargetAreaMutation) OldAppID(ctx context.Context) (v uuid.UUID, err error) {
 	if !m.op.Is(OpUpdateOne) {
 		return v, fmt.Errorf("OldAppID is only allowed on UpdateOne operations")
 	}
@@ -207,18 +207,18 @@ func (m *AppAreaAuthMutation) OldAppID(ctx context.Context) (v uuid.UUID, err er
 }
 
 // ResetAppID resets all changes to the "app_id" field.
-func (m *AppAreaAuthMutation) ResetAppID() {
+func (m *AppTargetAreaMutation) ResetAppID() {
 	m.app_id = nil
 }
 
 // SetCreateAt sets the "create_at" field.
-func (m *AppAreaAuthMutation) SetCreateAt(i int64) {
+func (m *AppTargetAreaMutation) SetCreateAt(i int64) {
 	m.create_at = &i
 	m.addcreate_at = nil
 }
 
 // CreateAt returns the value of the "create_at" field in the mutation.
-func (m *AppAreaAuthMutation) CreateAt() (r int64, exists bool) {
+func (m *AppTargetAreaMutation) CreateAt() (r int64, exists bool) {
 	v := m.create_at
 	if v == nil {
 		return
@@ -226,10 +226,10 @@ func (m *AppAreaAuthMutation) CreateAt() (r int64, exists bool) {
 	return *v, true
 }
 
-// OldCreateAt returns the old "create_at" field's value of the AppAreaAuth entity.
-// If the AppAreaAuth object wasn't provided to the builder, the object is fetched from the database.
+// OldCreateAt returns the old "create_at" field's value of the AppTargetArea entity.
+// If the AppTargetArea object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *AppAreaAuthMutation) OldCreateAt(ctx context.Context) (v int64, err error) {
+func (m *AppTargetAreaMutation) OldCreateAt(ctx context.Context) (v int64, err error) {
 	if !m.op.Is(OpUpdateOne) {
 		return v, fmt.Errorf("OldCreateAt is only allowed on UpdateOne operations")
 	}
@@ -244,7 +244,7 @@ func (m *AppAreaAuthMutation) OldCreateAt(ctx context.Context) (v int64, err err
 }
 
 // AddCreateAt adds i to the "create_at" field.
-func (m *AppAreaAuthMutation) AddCreateAt(i int64) {
+func (m *AppTargetAreaMutation) AddCreateAt(i int64) {
 	if m.addcreate_at != nil {
 		*m.addcreate_at += i
 	} else {
@@ -253,7 +253,7 @@ func (m *AppAreaAuthMutation) AddCreateAt(i int64) {
 }
 
 // AddedCreateAt returns the value that was added to the "create_at" field in this mutation.
-func (m *AppAreaAuthMutation) AddedCreateAt() (r int64, exists bool) {
+func (m *AppTargetAreaMutation) AddedCreateAt() (r int64, exists bool) {
 	v := m.addcreate_at
 	if v == nil {
 		return
@@ -262,19 +262,19 @@ func (m *AppAreaAuthMutation) AddedCreateAt() (r int64, exists bool) {
 }
 
 // ResetCreateAt resets all changes to the "create_at" field.
-func (m *AppAreaAuthMutation) ResetCreateAt() {
+func (m *AppTargetAreaMutation) ResetCreateAt() {
 	m.create_at = nil
 	m.addcreate_at = nil
 }
 
 // SetUpdateAt sets the "update_at" field.
-func (m *AppAreaAuthMutation) SetUpdateAt(i int64) {
+func (m *AppTargetAreaMutation) SetUpdateAt(i int64) {
 	m.update_at = &i
 	m.addupdate_at = nil
 }
 
 // UpdateAt returns the value of the "update_at" field in the mutation.
-func (m *AppAreaAuthMutation) UpdateAt() (r int64, exists bool) {
+func (m *AppTargetAreaMutation) UpdateAt() (r int64, exists bool) {
 	v := m.update_at
 	if v == nil {
 		return
@@ -282,10 +282,10 @@ func (m *AppAreaAuthMutation) UpdateAt() (r int64, exists bool) {
 	return *v, true
 }
 
-// OldUpdateAt returns the old "update_at" field's value of the AppAreaAuth entity.
-// If the AppAreaAuth object wasn't provided to the builder, the object is fetched from the database.
+// OldUpdateAt returns the old "update_at" field's value of the AppTargetArea entity.
+// If the AppTargetArea object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *AppAreaAuthMutation) OldUpdateAt(ctx context.Context) (v int64, err error) {
+func (m *AppTargetAreaMutation) OldUpdateAt(ctx context.Context) (v int64, err error) {
 	if !m.op.Is(OpUpdateOne) {
 		return v, fmt.Errorf("OldUpdateAt is only allowed on UpdateOne operations")
 	}
@@ -300,7 +300,7 @@ func (m *AppAreaAuthMutation) OldUpdateAt(ctx context.Context) (v int64, err err
 }
 
 // AddUpdateAt adds i to the "update_at" field.
-func (m *AppAreaAuthMutation) AddUpdateAt(i int64) {
+func (m *AppTargetAreaMutation) AddUpdateAt(i int64) {
 	if m.addupdate_at != nil {
 		*m.addupdate_at += i
 	} else {
@@ -309,7 +309,7 @@ func (m *AppAreaAuthMutation) AddUpdateAt(i int64) {
 }
 
 // AddedUpdateAt returns the value that was added to the "update_at" field in this mutation.
-func (m *AppAreaAuthMutation) AddedUpdateAt() (r int64, exists bool) {
+func (m *AppTargetAreaMutation) AddedUpdateAt() (r int64, exists bool) {
 	v := m.addupdate_at
 	if v == nil {
 		return
@@ -318,19 +318,19 @@ func (m *AppAreaAuthMutation) AddedUpdateAt() (r int64, exists bool) {
 }
 
 // ResetUpdateAt resets all changes to the "update_at" field.
-func (m *AppAreaAuthMutation) ResetUpdateAt() {
+func (m *AppTargetAreaMutation) ResetUpdateAt() {
 	m.update_at = nil
 	m.addupdate_at = nil
 }
 
 // SetDeleteAt sets the "delete_at" field.
-func (m *AppAreaAuthMutation) SetDeleteAt(i int64) {
+func (m *AppTargetAreaMutation) SetDeleteAt(i int64) {
 	m.delete_at = &i
 	m.adddelete_at = nil
 }
 
 // DeleteAt returns the value of the "delete_at" field in the mutation.
-func (m *AppAreaAuthMutation) DeleteAt() (r int64, exists bool) {
+func (m *AppTargetAreaMutation) DeleteAt() (r int64, exists bool) {
 	v := m.delete_at
 	if v == nil {
 		return
@@ -338,10 +338,10 @@ func (m *AppAreaAuthMutation) DeleteAt() (r int64, exists bool) {
 	return *v, true
 }
 
-// OldDeleteAt returns the old "delete_at" field's value of the AppAreaAuth entity.
-// If the AppAreaAuth object wasn't provided to the builder, the object is fetched from the database.
+// OldDeleteAt returns the old "delete_at" field's value of the AppTargetArea entity.
+// If the AppTargetArea object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *AppAreaAuthMutation) OldDeleteAt(ctx context.Context) (v int64, err error) {
+func (m *AppTargetAreaMutation) OldDeleteAt(ctx context.Context) (v int64, err error) {
 	if !m.op.Is(OpUpdateOne) {
 		return v, fmt.Errorf("OldDeleteAt is only allowed on UpdateOne operations")
 	}
@@ -356,7 +356,7 @@ func (m *AppAreaAuthMutation) OldDeleteAt(ctx context.Context) (v int64, err err
 }
 
 // AddDeleteAt adds i to the "delete_at" field.
-func (m *AppAreaAuthMutation) AddDeleteAt(i int64) {
+func (m *AppTargetAreaMutation) AddDeleteAt(i int64) {
 	if m.adddelete_at != nil {
 		*m.adddelete_at += i
 	} else {
@@ -365,7 +365,7 @@ func (m *AppAreaAuthMutation) AddDeleteAt(i int64) {
 }
 
 // AddedDeleteAt returns the value that was added to the "delete_at" field in this mutation.
-func (m *AppAreaAuthMutation) AddedDeleteAt() (r int64, exists bool) {
+func (m *AppTargetAreaMutation) AddedDeleteAt() (r int64, exists bool) {
 	v := m.adddelete_at
 	if v == nil {
 		return
@@ -374,45 +374,45 @@ func (m *AppAreaAuthMutation) AddedDeleteAt() (r int64, exists bool) {
 }
 
 // ResetDeleteAt resets all changes to the "delete_at" field.
-func (m *AppAreaAuthMutation) ResetDeleteAt() {
+func (m *AppTargetAreaMutation) ResetDeleteAt() {
 	m.delete_at = nil
 	m.adddelete_at = nil
 }
 
-// Where appends a list predicates to the AppAreaAuthMutation builder.
-func (m *AppAreaAuthMutation) Where(ps ...predicate.AppAreaAuth) {
+// Where appends a list predicates to the AppTargetAreaMutation builder.
+func (m *AppTargetAreaMutation) Where(ps ...predicate.AppTargetArea) {
 	m.predicates = append(m.predicates, ps...)
 }
 
 // Op returns the operation name.
-func (m *AppAreaAuthMutation) Op() Op {
+func (m *AppTargetAreaMutation) Op() Op {
 	return m.op
 }
 
-// Type returns the node type of this mutation (AppAreaAuth).
-func (m *AppAreaAuthMutation) Type() string {
+// Type returns the node type of this mutation (AppTargetArea).
+func (m *AppTargetAreaMutation) Type() string {
 	return m.typ
 }
 
 // Fields returns all fields that were changed during this mutation. Note that in
 // order to get all numeric fields that were incremented/decremented, call
 // AddedFields().
-func (m *AppAreaAuthMutation) Fields() []string {
+func (m *AppTargetAreaMutation) Fields() []string {
 	fields := make([]string, 0, 5)
 	if m.target_area_id != nil {
-		fields = append(fields, appareaauth.FieldTargetAreaID)
+		fields = append(fields, apptargetarea.FieldTargetAreaID)
 	}
 	if m.app_id != nil {
-		fields = append(fields, appareaauth.FieldAppID)
+		fields = append(fields, apptargetarea.FieldAppID)
 	}
 	if m.create_at != nil {
-		fields = append(fields, appareaauth.FieldCreateAt)
+		fields = append(fields, apptargetarea.FieldCreateAt)
 	}
 	if m.update_at != nil {
-		fields = append(fields, appareaauth.FieldUpdateAt)
+		fields = append(fields, apptargetarea.FieldUpdateAt)
 	}
 	if m.delete_at != nil {
-		fields = append(fields, appareaauth.FieldDeleteAt)
+		fields = append(fields, apptargetarea.FieldDeleteAt)
 	}
 	return fields
 }
@@ -420,17 +420,17 @@ func (m *AppAreaAuthMutation) Fields() []string {
 // Field returns the value of a field with the given name. The second boolean
 // return value indicates that this field was not set, or was not defined in the
 // schema.
-func (m *AppAreaAuthMutation) Field(name string) (ent.Value, bool) {
+func (m *AppTargetAreaMutation) Field(name string) (ent.Value, bool) {
 	switch name {
-	case appareaauth.FieldTargetAreaID:
+	case apptargetarea.FieldTargetAreaID:
 		return m.TargetAreaID()
-	case appareaauth.FieldAppID:
+	case apptargetarea.FieldAppID:
 		return m.AppID()
-	case appareaauth.FieldCreateAt:
+	case apptargetarea.FieldCreateAt:
 		return m.CreateAt()
-	case appareaauth.FieldUpdateAt:
+	case apptargetarea.FieldUpdateAt:
 		return m.UpdateAt()
-	case appareaauth.FieldDeleteAt:
+	case apptargetarea.FieldDeleteAt:
 		return m.DeleteAt()
 	}
 	return nil, false
@@ -439,56 +439,56 @@ func (m *AppAreaAuthMutation) Field(name string) (ent.Value, bool) {
 // OldField returns the old value of the field from the database. An error is
 // returned if the mutation operation is not UpdateOne, or the query to the
 // database failed.
-func (m *AppAreaAuthMutation) OldField(ctx context.Context, name string) (ent.Value, error) {
+func (m *AppTargetAreaMutation) OldField(ctx context.Context, name string) (ent.Value, error) {
 	switch name {
-	case appareaauth.FieldTargetAreaID:
+	case apptargetarea.FieldTargetAreaID:
 		return m.OldTargetAreaID(ctx)
-	case appareaauth.FieldAppID:
+	case apptargetarea.FieldAppID:
 		return m.OldAppID(ctx)
-	case appareaauth.FieldCreateAt:
+	case apptargetarea.FieldCreateAt:
 		return m.OldCreateAt(ctx)
-	case appareaauth.FieldUpdateAt:
+	case apptargetarea.FieldUpdateAt:
 		return m.OldUpdateAt(ctx)
-	case appareaauth.FieldDeleteAt:
+	case apptargetarea.FieldDeleteAt:
 		return m.OldDeleteAt(ctx)
 	}
-	return nil, fmt.Errorf("unknown AppAreaAuth field %s", name)
+	return nil, fmt.Errorf("unknown AppTargetArea field %s", name)
 }
 
 // SetField sets the value of a field with the given name. It returns an error if
 // the field is not defined in the schema, or if the type mismatched the field
 // type.
-func (m *AppAreaAuthMutation) SetField(name string, value ent.Value) error {
+func (m *AppTargetAreaMutation) SetField(name string, value ent.Value) error {
 	switch name {
-	case appareaauth.FieldTargetAreaID:
+	case apptargetarea.FieldTargetAreaID:
 		v, ok := value.(uuid.UUID)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.SetTargetAreaID(v)
 		return nil
-	case appareaauth.FieldAppID:
+	case apptargetarea.FieldAppID:
 		v, ok := value.(uuid.UUID)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.SetAppID(v)
 		return nil
-	case appareaauth.FieldCreateAt:
+	case apptargetarea.FieldCreateAt:
 		v, ok := value.(int64)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.SetCreateAt(v)
 		return nil
-	case appareaauth.FieldUpdateAt:
+	case apptargetarea.FieldUpdateAt:
 		v, ok := value.(int64)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.SetUpdateAt(v)
 		return nil
-	case appareaauth.FieldDeleteAt:
+	case apptargetarea.FieldDeleteAt:
 		v, ok := value.(int64)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
@@ -496,21 +496,21 @@ func (m *AppAreaAuthMutation) SetField(name string, value ent.Value) error {
 		m.SetDeleteAt(v)
 		return nil
 	}
-	return fmt.Errorf("unknown AppAreaAuth field %s", name)
+	return fmt.Errorf("unknown AppTargetArea field %s", name)
 }
 
 // AddedFields returns all numeric fields that were incremented/decremented during
 // this mutation.
-func (m *AppAreaAuthMutation) AddedFields() []string {
+func (m *AppTargetAreaMutation) AddedFields() []string {
 	var fields []string
 	if m.addcreate_at != nil {
-		fields = append(fields, appareaauth.FieldCreateAt)
+		fields = append(fields, apptargetarea.FieldCreateAt)
 	}
 	if m.addupdate_at != nil {
-		fields = append(fields, appareaauth.FieldUpdateAt)
+		fields = append(fields, apptargetarea.FieldUpdateAt)
 	}
 	if m.adddelete_at != nil {
-		fields = append(fields, appareaauth.FieldDeleteAt)
+		fields = append(fields, apptargetarea.FieldDeleteAt)
 	}
 	return fields
 }
@@ -518,13 +518,13 @@ func (m *AppAreaAuthMutation) AddedFields() []string {
 // AddedField returns the numeric value that was incremented/decremented on a field
 // with the given name. The second boolean return value indicates that this field
 // was not set, or was not defined in the schema.
-func (m *AppAreaAuthMutation) AddedField(name string) (ent.Value, bool) {
+func (m *AppTargetAreaMutation) AddedField(name string) (ent.Value, bool) {
 	switch name {
-	case appareaauth.FieldCreateAt:
+	case apptargetarea.FieldCreateAt:
 		return m.AddedCreateAt()
-	case appareaauth.FieldUpdateAt:
+	case apptargetarea.FieldUpdateAt:
 		return m.AddedUpdateAt()
-	case appareaauth.FieldDeleteAt:
+	case apptargetarea.FieldDeleteAt:
 		return m.AddedDeleteAt()
 	}
 	return nil, false
@@ -533,23 +533,23 @@ func (m *AppAreaAuthMutation) AddedField(name string) (ent.Value, bool) {
 // AddField adds the value to the field with the given name. It returns an error if
 // the field is not defined in the schema, or if the type mismatched the field
 // type.
-func (m *AppAreaAuthMutation) AddField(name string, value ent.Value) error {
+func (m *AppTargetAreaMutation) AddField(name string, value ent.Value) error {
 	switch name {
-	case appareaauth.FieldCreateAt:
+	case apptargetarea.FieldCreateAt:
 		v, ok := value.(int64)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.AddCreateAt(v)
 		return nil
-	case appareaauth.FieldUpdateAt:
+	case apptargetarea.FieldUpdateAt:
 		v, ok := value.(int64)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.AddUpdateAt(v)
 		return nil
-	case appareaauth.FieldDeleteAt:
+	case apptargetarea.FieldDeleteAt:
 		v, ok := value.(int64)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
@@ -557,97 +557,97 @@ func (m *AppAreaAuthMutation) AddField(name string, value ent.Value) error {
 		m.AddDeleteAt(v)
 		return nil
 	}
-	return fmt.Errorf("unknown AppAreaAuth numeric field %s", name)
+	return fmt.Errorf("unknown AppTargetArea numeric field %s", name)
 }
 
 // ClearedFields returns all nullable fields that were cleared during this
 // mutation.
-func (m *AppAreaAuthMutation) ClearedFields() []string {
+func (m *AppTargetAreaMutation) ClearedFields() []string {
 	return nil
 }
 
 // FieldCleared returns a boolean indicating if a field with the given name was
 // cleared in this mutation.
-func (m *AppAreaAuthMutation) FieldCleared(name string) bool {
+func (m *AppTargetAreaMutation) FieldCleared(name string) bool {
 	_, ok := m.clearedFields[name]
 	return ok
 }
 
 // ClearField clears the value of the field with the given name. It returns an
 // error if the field is not defined in the schema.
-func (m *AppAreaAuthMutation) ClearField(name string) error {
-	return fmt.Errorf("unknown AppAreaAuth nullable field %s", name)
+func (m *AppTargetAreaMutation) ClearField(name string) error {
+	return fmt.Errorf("unknown AppTargetArea nullable field %s", name)
 }
 
 // ResetField resets all changes in the mutation for the field with the given name.
 // It returns an error if the field is not defined in the schema.
-func (m *AppAreaAuthMutation) ResetField(name string) error {
+func (m *AppTargetAreaMutation) ResetField(name string) error {
 	switch name {
-	case appareaauth.FieldTargetAreaID:
+	case apptargetarea.FieldTargetAreaID:
 		m.ResetTargetAreaID()
 		return nil
-	case appareaauth.FieldAppID:
+	case apptargetarea.FieldAppID:
 		m.ResetAppID()
 		return nil
-	case appareaauth.FieldCreateAt:
+	case apptargetarea.FieldCreateAt:
 		m.ResetCreateAt()
 		return nil
-	case appareaauth.FieldUpdateAt:
+	case apptargetarea.FieldUpdateAt:
 		m.ResetUpdateAt()
 		return nil
-	case appareaauth.FieldDeleteAt:
+	case apptargetarea.FieldDeleteAt:
 		m.ResetDeleteAt()
 		return nil
 	}
-	return fmt.Errorf("unknown AppAreaAuth field %s", name)
+	return fmt.Errorf("unknown AppTargetArea field %s", name)
 }
 
 // AddedEdges returns all edge names that were set/added in this mutation.
-func (m *AppAreaAuthMutation) AddedEdges() []string {
+func (m *AppTargetAreaMutation) AddedEdges() []string {
 	edges := make([]string, 0, 0)
 	return edges
 }
 
 // AddedIDs returns all IDs (to other nodes) that were added for the given edge
 // name in this mutation.
-func (m *AppAreaAuthMutation) AddedIDs(name string) []ent.Value {
+func (m *AppTargetAreaMutation) AddedIDs(name string) []ent.Value {
 	return nil
 }
 
 // RemovedEdges returns all edge names that were removed in this mutation.
-func (m *AppAreaAuthMutation) RemovedEdges() []string {
+func (m *AppTargetAreaMutation) RemovedEdges() []string {
 	edges := make([]string, 0, 0)
 	return edges
 }
 
 // RemovedIDs returns all IDs (to other nodes) that were removed for the edge with
 // the given name in this mutation.
-func (m *AppAreaAuthMutation) RemovedIDs(name string) []ent.Value {
+func (m *AppTargetAreaMutation) RemovedIDs(name string) []ent.Value {
 	return nil
 }
 
 // ClearedEdges returns all edge names that were cleared in this mutation.
-func (m *AppAreaAuthMutation) ClearedEdges() []string {
+func (m *AppTargetAreaMutation) ClearedEdges() []string {
 	edges := make([]string, 0, 0)
 	return edges
 }
 
 // EdgeCleared returns a boolean which indicates if the edge with the given name
 // was cleared in this mutation.
-func (m *AppAreaAuthMutation) EdgeCleared(name string) bool {
+func (m *AppTargetAreaMutation) EdgeCleared(name string) bool {
 	return false
 }
 
 // ClearEdge clears the value of the edge with the given name. It returns an error
 // if that edge is not defined in the schema.
-func (m *AppAreaAuthMutation) ClearEdge(name string) error {
-	return fmt.Errorf("unknown AppAreaAuth unique edge %s", name)
+func (m *AppTargetAreaMutation) ClearEdge(name string) error {
+	return fmt.Errorf("unknown AppTargetArea unique edge %s", name)
 }
 
 // ResetEdge resets all changes to the edge with the given name in this mutation.
 // It returns an error if the edge is not defined in the schema.
-func (m *AppAreaAuthMutation) ResetEdge(name string) error {
-	return fmt.Errorf("unknown AppAreaAuth edge %s", name)
+func (m *AppTargetAreaMutation) ResetEdge(name string) error {
+	return fmt.Errorf("unknown AppTargetArea edge %s", name)
 }
 
 // DeviceInfoMutation represents an operation that mutates the DeviceInfo nodes in the graph.

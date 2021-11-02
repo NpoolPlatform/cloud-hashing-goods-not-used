@@ -3,7 +3,7 @@
 package ent
 
 import (
-	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/appareaauth"
+	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/apptargetarea"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/deviceinfo"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/goodinfo"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/schema"
@@ -16,26 +16,26 @@ import (
 // (default values, validators, hooks and policies) and stitches it
 // to their package variables.
 func init() {
-	appareaauthFields := schema.AppAreaAuth{}.Fields()
-	_ = appareaauthFields
-	// appareaauthDescCreateAt is the schema descriptor for create_at field.
-	appareaauthDescCreateAt := appareaauthFields[3].Descriptor()
-	// appareaauth.DefaultCreateAt holds the default value on creation for the create_at field.
-	appareaauth.DefaultCreateAt = appareaauthDescCreateAt.Default.(func() int64)
-	// appareaauthDescUpdateAt is the schema descriptor for update_at field.
-	appareaauthDescUpdateAt := appareaauthFields[4].Descriptor()
-	// appareaauth.DefaultUpdateAt holds the default value on creation for the update_at field.
-	appareaauth.DefaultUpdateAt = appareaauthDescUpdateAt.Default.(func() int64)
-	// appareaauth.UpdateDefaultUpdateAt holds the default value on update for the update_at field.
-	appareaauth.UpdateDefaultUpdateAt = appareaauthDescUpdateAt.UpdateDefault.(func() int64)
-	// appareaauthDescDeleteAt is the schema descriptor for delete_at field.
-	appareaauthDescDeleteAt := appareaauthFields[5].Descriptor()
-	// appareaauth.DefaultDeleteAt holds the default value on creation for the delete_at field.
-	appareaauth.DefaultDeleteAt = appareaauthDescDeleteAt.Default.(func() int64)
-	// appareaauthDescID is the schema descriptor for id field.
-	appareaauthDescID := appareaauthFields[0].Descriptor()
-	// appareaauth.DefaultID holds the default value on creation for the id field.
-	appareaauth.DefaultID = appareaauthDescID.Default.(func() uuid.UUID)
+	apptargetareaFields := schema.AppTargetArea{}.Fields()
+	_ = apptargetareaFields
+	// apptargetareaDescCreateAt is the schema descriptor for create_at field.
+	apptargetareaDescCreateAt := apptargetareaFields[3].Descriptor()
+	// apptargetarea.DefaultCreateAt holds the default value on creation for the create_at field.
+	apptargetarea.DefaultCreateAt = apptargetareaDescCreateAt.Default.(func() int64)
+	// apptargetareaDescUpdateAt is the schema descriptor for update_at field.
+	apptargetareaDescUpdateAt := apptargetareaFields[4].Descriptor()
+	// apptargetarea.DefaultUpdateAt holds the default value on creation for the update_at field.
+	apptargetarea.DefaultUpdateAt = apptargetareaDescUpdateAt.Default.(func() int64)
+	// apptargetarea.UpdateDefaultUpdateAt holds the default value on update for the update_at field.
+	apptargetarea.UpdateDefaultUpdateAt = apptargetareaDescUpdateAt.UpdateDefault.(func() int64)
+	// apptargetareaDescDeleteAt is the schema descriptor for delete_at field.
+	apptargetareaDescDeleteAt := apptargetareaFields[5].Descriptor()
+	// apptargetarea.DefaultDeleteAt holds the default value on creation for the delete_at field.
+	apptargetarea.DefaultDeleteAt = apptargetareaDescDeleteAt.Default.(func() int64)
+	// apptargetareaDescID is the schema descriptor for id field.
+	apptargetareaDescID := apptargetareaFields[0].Descriptor()
+	// apptargetarea.DefaultID holds the default value on creation for the id field.
+	apptargetarea.DefaultID = apptargetareaDescID.Default.(func() uuid.UUID)
 	deviceinfoFields := schema.DeviceInfo{}.Fields()
 	_ = deviceinfoFields
 	// deviceinfoDescType is the schema descriptor for type field.

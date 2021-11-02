@@ -24,7 +24,7 @@ type config struct {
 
 // hooks per client, for fast access.
 type hooks struct {
-	AppAreaAuth    []ent.Hook
+	AppTargetArea  []ent.Hook
 	DeviceInfo     []ent.Hook
 	GoodInfo       []ent.Hook
 	TargetArea     []ent.Hook

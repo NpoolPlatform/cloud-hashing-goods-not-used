@@ -10,13 +10,13 @@ import (
 	"github.com/google/uuid"
 )
 
-// AppAreaAuth holds the schema definition for the AppAreaAuth entity.
-type AppAreaAuth struct {
+// AppTargetArea holds the schema definition for the AppTargetArea entity.
+type AppTargetArea struct {
 	ent.Schema
 }
 
-// Fields of the AppAreaAuth.
-func (AppAreaAuth) Fields() []ent.Field {
+// Fields of the AppTargetArea.
+func (AppTargetArea) Fields() []ent.Field {
 	return []ent.Field{
 		field.UUID("id", uuid.UUID{}).
 			Default(uuid.New).
@@ -41,12 +41,12 @@ func (AppAreaAuth) Fields() []ent.Field {
 	}
 }
 
-// Edges of the AppAreaAuth.
-func (AppAreaAuth) Edges() []ent.Edge {
+// Edges of the AppTargetArea.
+func (AppTargetArea) Edges() []ent.Edge {
 	return nil
 }
 
-func (AppAreaAuth) Indexes() []ent.Index {
+func (AppTargetArea) Indexes() []ent.Index {
 	return []ent.Index{
 		index.Fields("target_area_id", "app_id").
 			Unique(),

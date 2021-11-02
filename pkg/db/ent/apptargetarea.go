@@ -7,12 +7,12 @@ import (
 	"strings"
 
 	"entgo.io/ent/dialect/sql"
-	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/appareaauth"
+	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/apptargetarea"
 	"github.com/google/uuid"
 )
 
-// AppAreaAuth is the model entity for the AppAreaAuth schema.
-type AppAreaAuth struct {
+// AppTargetArea is the model entity for the AppTargetArea schema.
+type AppTargetArea struct {
 	config `json:"-"`
 	// ID of the ent.
 	ID uuid.UUID `json:"id,omitempty"`
@@ -29,112 +29,112 @@ type AppAreaAuth struct {
 }
 
 // scanValues returns the types for scanning values from sql.Rows.
-func (*AppAreaAuth) scanValues(columns []string) ([]interface{}, error) {
+func (*AppTargetArea) scanValues(columns []string) ([]interface{}, error) {
 	values := make([]interface{}, len(columns))
 	for i := range columns {
 		switch columns[i] {
-		case appareaauth.FieldCreateAt, appareaauth.FieldUpdateAt, appareaauth.FieldDeleteAt:
+		case apptargetarea.FieldCreateAt, apptargetarea.FieldUpdateAt, apptargetarea.FieldDeleteAt:
 			values[i] = new(sql.NullInt64)
-		case appareaauth.FieldID, appareaauth.FieldTargetAreaID, appareaauth.FieldAppID:
+		case apptargetarea.FieldID, apptargetarea.FieldTargetAreaID, apptargetarea.FieldAppID:
 			values[i] = new(uuid.UUID)
 		default:
-			return nil, fmt.Errorf("unexpected column %q for type AppAreaAuth", columns[i])
+			return nil, fmt.Errorf("unexpected column %q for type AppTargetArea", columns[i])
 		}
 	}
 	return values, nil
 }
 
 // assignValues assigns the values that were returned from sql.Rows (after scanning)
-// to the AppAreaAuth fields.
-func (aaa *AppAreaAuth) assignValues(columns []string, values []interface{}) error {
+// to the AppTargetArea fields.
+func (ata *AppTargetArea) assignValues(columns []string, values []interface{}) error {
 	if m, n := len(values), len(columns); m < n {
 		return fmt.Errorf("mismatch number of scan values: %d != %d", m, n)
 	}
 	for i := range columns {
 		switch columns[i] {
-		case appareaauth.FieldID:
+		case apptargetarea.FieldID:
 			if value, ok := values[i].(*uuid.UUID); !ok {
 				return fmt.Errorf("unexpected type %T for field id", values[i])
 			} else if value != nil {
-				aaa.ID = *value
+				ata.ID = *value
 			}
-		case appareaauth.FieldTargetAreaID:
+		case apptargetarea.FieldTargetAreaID:
 			if value, ok := values[i].(*uuid.UUID); !ok {
 				return fmt.Errorf("unexpected type %T for field target_area_id", values[i])
 			} else if value != nil {
-				aaa.TargetAreaID = *value
+				ata.TargetAreaID = *value
 			}
-		case appareaauth.FieldAppID:
+		case apptargetarea.FieldAppID:
 			if value, ok := values[i].(*uuid.UUID); !ok {
 				return fmt.Errorf("unexpected type %T for field app_id", values[i])
 			} else if value != nil {
-				aaa.AppID = *value
+				ata.AppID = *value
 			}
-		case appareaauth.FieldCreateAt:
+		case apptargetarea.FieldCreateAt:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field create_at", values[i])
 			} else if value.Valid {
-				aaa.CreateAt = value.Int64
+				ata.CreateAt = value.Int64
 			}
-		case appareaauth.FieldUpdateAt:
+		case apptargetarea.FieldUpdateAt:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field update_at", values[i])
 			} else if value.Valid {
-				aaa.UpdateAt = value.Int64
+				ata.UpdateAt = value.Int64
 			}
-		case appareaauth.FieldDeleteAt:
+		case apptargetarea.FieldDeleteAt:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field delete_at", values[i])
 			} else if value.Valid {
-				aaa.DeleteAt = value.Int64
+				ata.DeleteAt = value.Int64
 			}
 		}
 	}
 	return nil
 }
 
-// Update returns a builder for updating this AppAreaAuth.
-// Note that you need to call AppAreaAuth.Unwrap() before calling this method if this AppAreaAuth
+// Update returns a builder for updating this AppTargetArea.
+// Note that you need to call AppTargetArea.Unwrap() before calling this method if this AppTargetArea
 // was returned from a transaction, and the transaction was committed or rolled back.
-func (aaa *AppAreaAuth) Update() *AppAreaAuthUpdateOne {
-	return (&AppAreaAuthClient{config: aaa.config}).UpdateOne(aaa)
+func (ata *AppTargetArea) Update() *AppTargetAreaUpdateOne {
+	return (&AppTargetAreaClient{config: ata.config}).UpdateOne(ata)
 }
 
-// Unwrap unwraps the AppAreaAuth entity that was returned from a transaction after it was closed,
+// Unwrap unwraps the AppTargetArea entity that was returned from a transaction after it was closed,
 // so that all future queries will be executed through the driver which created the transaction.
-func (aaa *AppAreaAuth) Unwrap() *AppAreaAuth {
-	tx, ok := aaa.config.driver.(*txDriver)
+func (ata *AppTargetArea) Unwrap() *AppTargetArea {
+	tx, ok := ata.config.driver.(*txDriver)
 	if !ok {
-		panic("ent: AppAreaAuth is not a transactional entity")
+		panic("ent: AppTargetArea is not a transactional entity")
 	}
-	aaa.config.driver = tx.drv
-	return aaa
+	ata.config.driver = tx.drv
+	return ata
 }
 
 // String implements the fmt.Stringer.
-func (aaa *AppAreaAuth) String() string {
+func (ata *AppTargetArea) String() string {
 	var builder strings.Builder
-	builder.WriteString("AppAreaAuth(")
-	builder.WriteString(fmt.Sprintf("id=%v", aaa.ID))
+	builder.WriteString("AppTargetArea(")
+	builder.WriteString(fmt.Sprintf("id=%v", ata.ID))
 	builder.WriteString(", target_area_id=")
-	builder.WriteString(fmt.Sprintf("%v", aaa.TargetAreaID))
+	builder.WriteString(fmt.Sprintf("%v", ata.TargetAreaID))
 	builder.WriteString(", app_id=")
-	builder.WriteString(fmt.Sprintf("%v", aaa.AppID))
+	builder.WriteString(fmt.Sprintf("%v", ata.AppID))
 	builder.WriteString(", create_at=")
-	builder.WriteString(fmt.Sprintf("%v", aaa.CreateAt))
+	builder.WriteString(fmt.Sprintf("%v", ata.CreateAt))
 	builder.WriteString(", update_at=")
-	builder.WriteString(fmt.Sprintf("%v", aaa.UpdateAt))
+	builder.WriteString(fmt.Sprintf("%v", ata.UpdateAt))
 	builder.WriteString(", delete_at=")
-	builder.WriteString(fmt.Sprintf("%v", aaa.DeleteAt))
+	builder.WriteString(fmt.Sprintf("%v", ata.DeleteAt))
 	builder.WriteByte(')')
 	return builder.String()
 }
 
-// AppAreaAuths is a parsable slice of AppAreaAuth.
-type AppAreaAuths []*AppAreaAuth
+// AppTargetAreas is a parsable slice of AppTargetArea.
+type AppTargetAreas []*AppTargetArea
 
-func (aaa AppAreaAuths) config(cfg config) {
-	for _i := range aaa {
-		aaa[_i].config = cfg
+func (ata AppTargetAreas) config(cfg config) {
+	for _i := range ata {
+		ata[_i].config = cfg
 	}
 }

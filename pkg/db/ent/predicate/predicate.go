@@ -6,8 +6,8 @@ import (
 	"entgo.io/ent/dialect/sql"
 )
 
-// AppAreaAuth is the predicate function for appareaauth builders.
-type AppAreaAuth func(*sql.Selector)
+// AppTargetArea is the predicate function for apptargetarea builders.
+type AppTargetArea func(*sql.Selector)
 
 // DeviceInfo is the predicate function for deviceinfo builders.
 type DeviceInfo func(*sql.Selector)

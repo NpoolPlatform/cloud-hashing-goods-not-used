@@ -46,7 +46,7 @@ type CloudHashingGoodsClient interface {
 	UnauthorizeAppGood(ctx context.Context, in *UnauthorizeAppGoodRequest, opts ...grpc.CallOption) (*UnauthorizeAppGoodResponse, error)
 	AuthorizeAppTargetArea(ctx context.Context, in *AuthorizeAppTargetAreaRequest, opts ...grpc.CallOption) (*AuthorizeAppTargetAreaResponse, error)
 	CheckAppTargetArea(ctx context.Context, in *CheckAppTargetAreaRequest, opts ...grpc.CallOption) (*CheckAppTargetAreaResponse, error)
-	UnauthorizeAppTargetArea(ctx context.Context, in *UnauthorizeAppTargetAreaRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	UnauthorizeAppTargetArea(ctx context.Context, in *UnauthorizeAppTargetAreaRequest, opts ...grpc.CallOption) (*UnauthorizeAppTargetAreaResponse, error)
 	AuthorizeAppGoodTargetArea(ctx context.Context, in *AuthorizeAppGoodTargetAreaRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	UnauthorizeAppGoodTargetArea(ctx context.Context, in *UnauthorizeAppGoodTargetAreaRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	CreateGoodComment(ctx context.Context, in *CreateGoodCommentRequest, opts ...grpc.CallOption) (*CreateGoodCommentResponse, error)
@@ -305,8 +305,8 @@ func (c *cloudHashingGoodsClient) CheckAppTargetArea(ctx context.Context, in *Ch
 	return out, nil
 }
 
-func (c *cloudHashingGoodsClient) UnauthorizeAppTargetArea(ctx context.Context, in *UnauthorizeAppTargetAreaRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
-	out := new(emptypb.Empty)
+func (c *cloudHashingGoodsClient) UnauthorizeAppTargetArea(ctx context.Context, in *UnauthorizeAppTargetAreaRequest, opts ...grpc.CallOption) (*UnauthorizeAppTargetAreaResponse, error) {
+	out := new(UnauthorizeAppTargetAreaResponse)
 	err := c.cc.Invoke(ctx, "/cloud.hashing.goods.v1.CloudHashingGoods/UnauthorizeAppTargetArea", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -390,7 +390,7 @@ type CloudHashingGoodsServer interface {
 	UnauthorizeAppGood(context.Context, *UnauthorizeAppGoodRequest) (*UnauthorizeAppGoodResponse, error)
 	AuthorizeAppTargetArea(context.Context, *AuthorizeAppTargetAreaRequest) (*AuthorizeAppTargetAreaResponse, error)
 	CheckAppTargetArea(context.Context, *CheckAppTargetAreaRequest) (*CheckAppTargetAreaResponse, error)
-	UnauthorizeAppTargetArea(context.Context, *UnauthorizeAppTargetAreaRequest) (*emptypb.Empty, error)
+	UnauthorizeAppTargetArea(context.Context, *UnauthorizeAppTargetAreaRequest) (*UnauthorizeAppTargetAreaResponse, error)
 	AuthorizeAppGoodTargetArea(context.Context, *AuthorizeAppGoodTargetAreaRequest) (*emptypb.Empty, error)
 	UnauthorizeAppGoodTargetArea(context.Context, *UnauthorizeAppGoodTargetAreaRequest) (*emptypb.Empty, error)
 	CreateGoodComment(context.Context, *CreateGoodCommentRequest) (*CreateGoodCommentResponse, error)
@@ -484,7 +484,7 @@ func (UnimplementedCloudHashingGoodsServer) AuthorizeAppTargetArea(context.Conte
 func (UnimplementedCloudHashingGoodsServer) CheckAppTargetArea(context.Context, *CheckAppTargetAreaRequest) (*CheckAppTargetAreaResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CheckAppTargetArea not implemented")
 }
-func (UnimplementedCloudHashingGoodsServer) UnauthorizeAppTargetArea(context.Context, *UnauthorizeAppTargetAreaRequest) (*emptypb.Empty, error) {
+func (UnimplementedCloudHashingGoodsServer) UnauthorizeAppTargetArea(context.Context, *UnauthorizeAppTargetAreaRequest) (*UnauthorizeAppTargetAreaResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UnauthorizeAppTargetArea not implemented")
 }
 func (UnimplementedCloudHashingGoodsServer) AuthorizeAppGoodTargetArea(context.Context, *AuthorizeAppGoodTargetAreaRequest) (*emptypb.Empty, error) {
