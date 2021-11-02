@@ -501,7 +501,7 @@ message CheckAppTargetAreaResponse {
 }
 
 message UnauthorizeAppTargetAreaRequest {
-    AppTargetAreaInfo Info = 4100;
+    string ID = 4100;
 }
 
 message UnauthorizeAppTargetAreaResponse {

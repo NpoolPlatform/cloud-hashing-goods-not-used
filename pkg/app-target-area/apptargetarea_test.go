@@ -1,4 +1,4 @@
-package appareaauth
+package apptargetarea
 
 import (
 	"context"
@@ -6,7 +6,6 @@ import (
 	"os"
 	"strconv"
 	"testing"
-	"time"
 
 	"github.com/NpoolPlatform/cloud-hashing-goods/message/npool"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/test-init" //nolint
@@ -36,13 +35,60 @@ func TestAppTargetAreaCRUD(t *testing.T) {
 	}
 
 	appTargetArea := npool.AppTargetAreaInfo{
-		AppID:        uuid.New(),
-		TargetAreaID: uuid.New(),
+		AppID:        uuid.New().String(),
+		TargetAreaID: uuid.New().String(),
 	}
 
-	resp, err := Authorize(context.Background(), &appTargetArea)
+	resp, err := Authorize(context.Background(), &npool.AuthorizeAppTargetAreaRequest{
+		Info: &appTargetArea,
+	})
 	if assert.Nil(t, err) {
 		assert.NotEqual(t, resp.Info.ID, uuid.UUID{})
 		assertAppTargetAreaInfo(t, resp.Info, &appTargetArea)
+	}
+
+	resp1, err := Check(context.Background(), &npool.CheckAppTargetAreaRequest{
+		Info: &appTargetArea,
+	})
+	if assert.Nil(t, err) {
+		assert.Equal(t, resp.Info.ID, resp1.Info.ID)
+		assertAppTargetAreaInfo(t, resp1.Info, &appTargetArea)
+		assert.True(t, resp1.Authorized)
+	}
+
+	resp2, err := Unauthorize(context.Background(), &npool.UnauthorizeAppTargetAreaRequest{
+		ID: resp.Info.ID,
+	})
+	if assert.Nil(t, err) {
+		assert.Equal(t, resp.Info.ID, resp2.Info.ID)
+		assertAppTargetAreaInfo(t, resp2.Info, &appTargetArea)
+		assert.False(t, resp2.Authorized)
+	}
+
+	appTargetArea.ID = resp.Info.ID
+	resp3, err := Check(context.Background(), &npool.CheckAppTargetAreaRequest{
+		Info: &appTargetArea,
+	})
+	if assert.Nil(t, err) {
+		assert.Equal(t, resp.Info.ID, resp3.Info.ID)
+		assertAppTargetAreaInfo(t, resp3.Info, &appTargetArea)
+	}
+
+	resp4, err := Check(context.Background(), &npool.CheckAppTargetAreaRequest{
+		Info: &appTargetArea,
+	})
+	if assert.Nil(t, err) {
+		assert.Equal(t, resp.Info.ID, resp4.Info.ID)
+		assertAppTargetAreaInfo(t, resp4.Info, &appTargetArea)
+		assert.True(t, resp4.Authorized)
+	}
+
+	resp5, err := Unauthorize(context.Background(), &npool.UnauthorizeAppTargetAreaRequest{
+		ID: resp.Info.ID,
+	})
+	if assert.Nil(t, err) {
+		assert.Equal(t, resp.Info.ID, resp5.Info.ID)
+		assertAppTargetAreaInfo(t, resp5.Info, &appTargetArea)
+		assert.False(t, resp5.Authorized)
 	}
 }

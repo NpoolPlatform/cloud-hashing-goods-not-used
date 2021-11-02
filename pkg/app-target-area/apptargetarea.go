@@ -2,13 +2,13 @@ package apptargetarea
 
 import (
 	"context"
-	"fmt"
+	_ "fmt"
 	"time"
 
 	"github.com/NpoolPlatform/cloud-hashing-goods/message/npool"
 
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db"
-	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/appareaauth"
+	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/apptargetarea"
 
 	"github.com/google/uuid"
 
@@ -16,12 +16,12 @@ import (
 )
 
 func validateAppTargetArea(info *npool.AppTargetAreaInfo) error {
-	appID, err := uuid.Parse(info.GetAppID())
+	_, err := uuid.Parse(info.GetAppID())
 	if err != nil {
 		return xerrors.Errorf("invalid app id: %v", err)
 	}
 
-	targetAreaID, err := uuid.Parse(info.GetTargetAreaID())
+	_, err = uuid.Parse(info.GetTargetAreaID())
 	if err != nil {
 		return xerrors.Errorf("invalid target area id: %v", err)
 	}
@@ -35,17 +35,18 @@ func Authorize(ctx context.Context, in *npool.AuthorizeAppTargetAreaRequest) (*n
 		info, err := db.Client().
 			AppTargetArea.
 			UpdateOneID(id).
-			SetAppId(uuid.MustParse(in.GetInfo().GetAppId())).
-			SetTargetAreaId(uuid.MustParse(in.GetInfo().GetTargetAreaId())).
+			SetAppID(uuid.MustParse(in.GetInfo().GetAppID())).
+			SetTargetAreaID(uuid.MustParse(in.GetInfo().GetTargetAreaID())).
 			SetDeleteAt(0).
 			Save(ctx)
 		if err != nil {
-			return nil.xerrors.Errorf("fail update app target area: %v", err)
+			return nil, xerrors.Errorf("fail update app target area: %v", err)
 		}
 		return &npool.AuthorizeAppTargetAreaResponse{
 			Info: &npool.AppTargetAreaInfo{
-				AppID:        info.AppId.String(),
-				TargetAreaID: info.TargetAreaId.String(),
+				ID:           info.ID.String(),
+				AppID:        info.AppID.String(),
+				TargetAreaID: info.TargetAreaID.String(),
 			},
 		}, nil
 	}
@@ -57,25 +58,80 @@ func Authorize(ctx context.Context, in *npool.AuthorizeAppTargetAreaRequest) (*n
 	info, err := db.Client().
 		AppTargetArea.
 		Create().
-		SetAppId(uuid.MustParse(in.GetInfo().GetAppId())).
-		SetTargetAreaId(uuid.MustParse(in.GetInfo().GetTargetAreaId())).
+		SetAppID(uuid.MustParse(in.GetInfo().GetAppID())).
+		SetTargetAreaID(uuid.MustParse(in.GetInfo().GetTargetAreaID())).
 		Save(ctx)
-	if err == nil {
+	if err != nil {
 		return nil, xerrors.Errorf("fail create app target area: %v", err)
 	}
 
 	return &npool.AuthorizeAppTargetAreaResponse{
 		Info: &npool.AppTargetAreaInfo{
-			AppID:        info.AppId.String(),
-			TargetAreaID: info.TargetAreaId.String(),
+			ID:           info.ID.String(),
+			AppID:        info.AppID.String(),
+			TargetAreaID: info.TargetAreaID.String(),
 		},
 	}, nil
 }
 
 func Check(ctx context.Context, in *npool.CheckAppTargetAreaRequest) (*npool.CheckAppTargetAreaResponse, error) {
-	return nil, nil
+	if err := validateAppTargetArea(in.GetInfo()); err != nil {
+		return nil, xerrors.Errorf("invalid parameter: %v", err)
+	}
+
+	infos, err := db.Client().
+		AppTargetArea.
+		Query().
+		Where(
+			apptargetarea.Or(
+				apptargetarea.AppID(uuid.MustParse(in.GetInfo().GetAppID())),
+				apptargetarea.TargetAreaID(uuid.MustParse(in.GetInfo().GetTargetAreaID())),
+				apptargetarea.DeleteAt(0),
+			),
+		).
+		All(ctx)
+	if err != nil {
+		return nil, xerrors.Errorf("fail query app target area: %v", err)
+	}
+
+	authorized := true
+	id := uuid.UUID{}
+
+	if len(infos) == 0 {
+		authorized = false
+	} else {
+		id = infos[0].ID
+	}
+
+	return &npool.CheckAppTargetAreaResponse{
+		Info: &npool.AppTargetAreaInfo{
+			ID:           id.String(),
+			AppID:        in.GetInfo().GetAppID(),
+			TargetAreaID: in.GetInfo().GetTargetAreaID(),
+		},
+		Authorized: authorized,
+	}, nil
 }
 
 func Unauthorize(ctx context.Context, in *npool.UnauthorizeAppTargetAreaRequest) (*npool.UnauthorizeAppTargetAreaResponse, error) {
-	return nil, nil
+	id, err := uuid.Parse(in.GetID())
+	if err != nil {
+		return nil, xerrors.Errorf("fail unauthorize app target area: %v", err)
+	}
+
+	info, err := db.Client().
+		AppTargetArea.
+		UpdateOneID(id).
+		SetDeleteAt(time.Now().UnixNano()).
+		Save(ctx)
+	if err != nil {
+		return nil, xerrors.Errorf("fail unauthorize app target area: %v", err)
+	}
+	return &npool.UnauthorizeAppTargetAreaResponse{
+		Info: &npool.AppTargetAreaInfo{
+			ID:           info.ID.String(),
+			AppID:        info.AppID.String(),
+			TargetAreaID: info.TargetAreaID.String(),
+		},
+	}, nil
 }
