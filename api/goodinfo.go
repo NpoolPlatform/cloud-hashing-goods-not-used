@@ -14,7 +14,11 @@ func (s *Server) UpdateGood(ctx context.Context, in *npool.UpdateGoodRequest) (*
 	return nil, nil
 }
 
-func (s *Server) GetAllGoods(ctx context.Context, in *npool.GetAllGoodsRequest) (*npool.GetAllGoodsResponse, error) {
+func (s *Server) GetGood(ctx context.Context, in *npool.GetGoodRequest) (*npool.GetGoodResponse, error) {
+	return nil, nil
+}
+
+func (s *Server) DeleteGood(ctx context.Context, in *npool.DeleteGoodRequest) (*npool.DeleteGoodResponse, error) {
 	return nil, nil
 }
 

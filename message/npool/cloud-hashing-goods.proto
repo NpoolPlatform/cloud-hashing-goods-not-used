@@ -136,13 +136,6 @@ service CloudHashingGoods {
             body: "*"
         };
     }
-    // Can only accessed by APP administrator and platform administrator
-    rpc GetAllGoods(GetAllGoodsRequest) returns (GetAllGoodsResponse) {
-        option (google.api.http) = {
-            get: "/v1/get/all-goods"
-        };
-    }
-    // Accessed by APP user
     rpc GetGoods(GetGoodsRequest) returns (GetGoodsResponse) {
         option (google.api.http) = {
             get: "/v1/get/goods"
@@ -430,23 +423,7 @@ message DeleteGoodResponse {
     GoodInfo Info = 2840;
 }
 
-message GetAllGoodsRequest {
-    string AppID = 2900;
-    PageInfo PageInfo = 2901;
-}
-
-message GoodAuthInfo {
-    GoodInfo Info = 3000;
-    bool AppAuthorized = 3001;
-}
-
-message GetAllGoodsResponse {
-    repeated GoodAuthInfo Infos = 3100;
-    int32 Total = 3101;
-}
-
 message GetGoodsRequest {
-    string AppID = 3200;
     PageInfo PageInfo = 3201;
 }
 
@@ -474,6 +451,11 @@ message AuthorizeAppGoodRequest {
     string AppID = 3700;
     string GoodID = 3701;
     bool AuthorizeAllTargetArea = 3702;
+}
+
+message GoodAuthInfo {
+    GoodInfo Info = 3710;
+    bool Authorized = 3711;
 }
 
 message AuthorizeAppGoodResponse {

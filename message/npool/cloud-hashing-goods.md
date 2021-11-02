@@ -29,8 +29,6 @@
     - [DeleteVendorLocationRequest](#cloud.hashing.goods.v1.DeleteVendorLocationRequest)
     - [DeleteVendorLocationResponse](#cloud.hashing.goods.v1.DeleteVendorLocationResponse)
     - [DeviceInfo](#cloud.hashing.goods.v1.DeviceInfo)
-    - [GetAllGoodsRequest](#cloud.hashing.goods.v1.GetAllGoodsRequest)
-    - [GetAllGoodsResponse](#cloud.hashing.goods.v1.GetAllGoodsResponse)
     - [GetDeviceInfoRequest](#cloud.hashing.goods.v1.GetDeviceInfoRequest)
     - [GetDeviceInfoResponse](#cloud.hashing.goods.v1.GetDeviceInfoResponse)
     - [GetDeviceInfosRequest](#cloud.hashing.goods.v1.GetDeviceInfosRequest)
@@ -472,38 +470,6 @@
 
 
 
-<a name="cloud.hashing.goods.v1.GetAllGoodsRequest"></a>
-
-### GetAllGoodsRequest
-
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| AppID | [string](#string) |  |  |
-| PageInfo | [PageInfo](#cloud.hashing.goods.v1.PageInfo) |  |  |
-
-
-
-
-
-
-<a name="cloud.hashing.goods.v1.GetAllGoodsResponse"></a>
-
-### GetAllGoodsResponse
-
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| Infos | [GoodAuthInfo](#cloud.hashing.goods.v1.GoodAuthInfo) | repeated |  |
-| Total | [int32](#int32) |  |  |
-
-
-
-
-
-
 <a name="cloud.hashing.goods.v1.GetDeviceInfoRequest"></a>
 
 ### GetDeviceInfoRequest
@@ -635,7 +601,6 @@
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| AppID | [string](#string) |  |  |
 | PageInfo | [PageInfo](#cloud.hashing.goods.v1.PageInfo) |  |  |
 
 
@@ -790,7 +755,7 @@
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
 | Info | [GoodInfo](#cloud.hashing.goods.v1.GoodInfo) |  |  |
-| AppAuthorized | [bool](#bool) |  |  |
+| Authorized | [bool](#bool) |  |  |
 
 
 
@@ -1211,8 +1176,7 @@ Cloud Hashing Goods
 | UpdateGood | [UpdateGoodRequest](#cloud.hashing.goods.v1.UpdateGoodRequest) | [UpdateGoodResponse](#cloud.hashing.goods.v1.UpdateGoodResponse) |  |
 | GetGood | [GetGoodRequest](#cloud.hashing.goods.v1.GetGoodRequest) | [GetGoodResponse](#cloud.hashing.goods.v1.GetGoodResponse) |  |
 | DeleteGood | [DeleteGoodRequest](#cloud.hashing.goods.v1.DeleteGoodRequest) | [DeleteGoodResponse](#cloud.hashing.goods.v1.DeleteGoodResponse) |  |
-| GetAllGoods | [GetAllGoodsRequest](#cloud.hashing.goods.v1.GetAllGoodsRequest) | [GetAllGoodsResponse](#cloud.hashing.goods.v1.GetAllGoodsResponse) | Can only accessed by APP administrator and platform administrator |
-| GetGoods | [GetGoodsRequest](#cloud.hashing.goods.v1.GetGoodsRequest) | [GetGoodsResponse](#cloud.hashing.goods.v1.GetGoodsResponse) | Accessed by APP user |
+| GetGoods | [GetGoodsRequest](#cloud.hashing.goods.v1.GetGoodsRequest) | [GetGoodsResponse](#cloud.hashing.goods.v1.GetGoodsResponse) |  |
 | SetAppGoodPrice | [SetAppGoodPriceRequest](#cloud.hashing.goods.v1.SetAppGoodPriceRequest) | [SetAppGoodPriceResponse](#cloud.hashing.goods.v1.SetAppGoodPriceResponse) |  |
 | AuthorizeAppGood | [AuthorizeAppGoodRequest](#cloud.hashing.goods.v1.AuthorizeAppGoodRequest) | [AuthorizeAppGoodResponse](#cloud.hashing.goods.v1.AuthorizeAppGoodResponse) |  |
 | UnauthorizeAppGood | [UnauthorizeAppGoodRequest](#cloud.hashing.goods.v1.UnauthorizeAppGoodRequest) | [UnauthorizeAppGoodResponse](#cloud.hashing.goods.v1.UnauthorizeAppGoodResponse) |  |

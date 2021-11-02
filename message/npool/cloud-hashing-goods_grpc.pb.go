@@ -40,9 +40,6 @@ type CloudHashingGoodsClient interface {
 	UpdateGood(ctx context.Context, in *UpdateGoodRequest, opts ...grpc.CallOption) (*UpdateGoodResponse, error)
 	GetGood(ctx context.Context, in *GetGoodRequest, opts ...grpc.CallOption) (*GetGoodResponse, error)
 	DeleteGood(ctx context.Context, in *DeleteGoodRequest, opts ...grpc.CallOption) (*DeleteGoodResponse, error)
-	// Can only accessed by APP administrator and platform administrator
-	GetAllGoods(ctx context.Context, in *GetAllGoodsRequest, opts ...grpc.CallOption) (*GetAllGoodsResponse, error)
-	// Accessed by APP user
 	GetGoods(ctx context.Context, in *GetGoodsRequest, opts ...grpc.CallOption) (*GetGoodsResponse, error)
 	SetAppGoodPrice(ctx context.Context, in *SetAppGoodPriceRequest, opts ...grpc.CallOption) (*SetAppGoodPriceResponse, error)
 	AuthorizeAppGood(ctx context.Context, in *AuthorizeAppGoodRequest, opts ...grpc.CallOption) (*AuthorizeAppGoodResponse, error)
@@ -253,15 +250,6 @@ func (c *cloudHashingGoodsClient) DeleteGood(ctx context.Context, in *DeleteGood
 	return out, nil
 }
 
-func (c *cloudHashingGoodsClient) GetAllGoods(ctx context.Context, in *GetAllGoodsRequest, opts ...grpc.CallOption) (*GetAllGoodsResponse, error) {
-	out := new(GetAllGoodsResponse)
-	err := c.cc.Invoke(ctx, "/cloud.hashing.goods.v1.CloudHashingGoods/GetAllGoods", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 func (c *cloudHashingGoodsClient) GetGoods(ctx context.Context, in *GetGoodsRequest, opts ...grpc.CallOption) (*GetGoodsResponse, error) {
 	out := new(GetGoodsResponse)
 	err := c.cc.Invoke(ctx, "/cloud.hashing.goods.v1.CloudHashingGoods/GetGoods", in, out, opts...)
@@ -386,9 +374,6 @@ type CloudHashingGoodsServer interface {
 	UpdateGood(context.Context, *UpdateGoodRequest) (*UpdateGoodResponse, error)
 	GetGood(context.Context, *GetGoodRequest) (*GetGoodResponse, error)
 	DeleteGood(context.Context, *DeleteGoodRequest) (*DeleteGoodResponse, error)
-	// Can only accessed by APP administrator and platform administrator
-	GetAllGoods(context.Context, *GetAllGoodsRequest) (*GetAllGoodsResponse, error)
-	// Accessed by APP user
 	GetGoods(context.Context, *GetGoodsRequest) (*GetGoodsResponse, error)
 	SetAppGoodPrice(context.Context, *SetAppGoodPriceRequest) (*SetAppGoodPriceResponse, error)
 	AuthorizeAppGood(context.Context, *AuthorizeAppGoodRequest) (*AuthorizeAppGoodResponse, error)
@@ -469,9 +454,6 @@ func (UnimplementedCloudHashingGoodsServer) GetGood(context.Context, *GetGoodReq
 }
 func (UnimplementedCloudHashingGoodsServer) DeleteGood(context.Context, *DeleteGoodRequest) (*DeleteGoodResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteGood not implemented")
-}
-func (UnimplementedCloudHashingGoodsServer) GetAllGoods(context.Context, *GetAllGoodsRequest) (*GetAllGoodsResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetAllGoods not implemented")
 }
 func (UnimplementedCloudHashingGoodsServer) GetGoods(context.Context, *GetGoodsRequest) (*GetGoodsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetGoods not implemented")
@@ -897,24 +879,6 @@ func _CloudHashingGoods_DeleteGood_Handler(srv interface{}, ctx context.Context,
 	return interceptor(ctx, in, info, handler)
 }
 
-func _CloudHashingGoods_GetAllGoods_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetAllGoodsRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(CloudHashingGoodsServer).GetAllGoods(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/cloud.hashing.goods.v1.CloudHashingGoods/GetAllGoods",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(CloudHashingGoodsServer).GetAllGoods(ctx, req.(*GetAllGoodsRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 func _CloudHashingGoods_GetGoods_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(GetGoodsRequest)
 	if err := dec(in); err != nil {
@@ -1203,10 +1167,6 @@ var CloudHashingGoods_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "DeleteGood",
 			Handler:    _CloudHashingGoods_DeleteGood_Handler,
-		},
-		{
-			MethodName: "GetAllGoods",
-			Handler:    _CloudHashingGoods_GetAllGoods_Handler,
 		},
 		{
 			MethodName: "GetGoods",
