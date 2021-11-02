@@ -119,7 +119,7 @@ func DeleteByContinentCountry(ctx context.Context, in *npool.DeleteTargetAreaByC
 		TargetArea.
 		Query().
 		Where(
-			targetarea.Or(
+			targetarea.And(
 				targetarea.Continent(in.GetContinent()),
 				targetarea.Country(in.GetCountry()),
 			),
@@ -148,7 +148,7 @@ func GetAll(ctx context.Context, in *npool.GetTargetAreasRequest) (*npool.GetTar
 		TargetArea.
 		Query().
 		Where(
-			targetarea.Or(
+			targetarea.And(
 				targetarea.DeleteAt(0),
 			),
 		).

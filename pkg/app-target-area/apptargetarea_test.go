@@ -65,30 +65,38 @@ func TestAppTargetAreaCRUD(t *testing.T) {
 		assert.False(t, resp2.Authorized)
 	}
 
-	appTargetArea.ID = resp.Info.ID
 	resp3, err := Check(context.Background(), &npool.CheckAppTargetAreaRequest{
 		Info: &appTargetArea,
 	})
 	if assert.Nil(t, err) {
-		assert.Equal(t, resp.Info.ID, resp3.Info.ID)
+		assert.Equal(t, resp3.Info.ID, uuid.UUID{}.String())
 		assertAppTargetAreaInfo(t, resp3.Info, &appTargetArea)
 	}
 
-	resp4, err := Check(context.Background(), &npool.CheckAppTargetAreaRequest{
+	appTargetArea.ID = resp.Info.ID
+	resp4, err := Authorize(context.Background(), &npool.AuthorizeAppTargetAreaRequest{
 		Info: &appTargetArea,
 	})
 	if assert.Nil(t, err) {
-		assert.Equal(t, resp.Info.ID, resp4.Info.ID)
+		assert.Equal(t, resp4.Info.ID, resp.Info.ID)
 		assertAppTargetAreaInfo(t, resp4.Info, &appTargetArea)
-		assert.True(t, resp4.Authorized)
 	}
 
-	resp5, err := Unauthorize(context.Background(), &npool.UnauthorizeAppTargetAreaRequest{
-		ID: resp.Info.ID,
+	resp5, err := Check(context.Background(), &npool.CheckAppTargetAreaRequest{
+		Info: &appTargetArea,
 	})
 	if assert.Nil(t, err) {
 		assert.Equal(t, resp.Info.ID, resp5.Info.ID)
 		assertAppTargetAreaInfo(t, resp5.Info, &appTargetArea)
-		assert.False(t, resp5.Authorized)
+		assert.True(t, resp5.Authorized)
+	}
+
+	resp6, err := Unauthorize(context.Background(), &npool.UnauthorizeAppTargetAreaRequest{
+		ID: resp.Info.ID,
+	})
+	if assert.Nil(t, err) {
+		assert.Equal(t, resp.Info.ID, resp6.Info.ID)
+		assertAppTargetAreaInfo(t, resp6.Info, &appTargetArea)
+		assert.False(t, resp6.Authorized)
 	}
 }

@@ -82,7 +82,7 @@ func Check(ctx context.Context, in *npool.CheckAppTargetAreaRequest) (*npool.Che
 		AppTargetArea.
 		Query().
 		Where(
-			apptargetarea.Or(
+			apptargetarea.And(
 				apptargetarea.AppID(uuid.MustParse(in.GetInfo().GetAppID())),
 				apptargetarea.TargetAreaID(uuid.MustParse(in.GetInfo().GetTargetAreaID())),
 				apptargetarea.DeleteAt(0),
