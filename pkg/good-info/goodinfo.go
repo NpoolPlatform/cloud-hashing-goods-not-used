@@ -2,8 +2,8 @@ package goodinfo
 
 import (
 	"context"
-	_ "fmt"
-	_ "time"
+	_ "fmt"  //nolint
+	_ "time" //nolint
 
 	"github.com/NpoolPlatform/cloud-hashing-goods/message/npool"
 
