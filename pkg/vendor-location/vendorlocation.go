@@ -8,7 +8,7 @@ import (
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db"                      //nolint
 	_ "github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/vendorlocation" //nolint
 
-	_ "github.com/google/uuid" //nolint
+	"github.com/google/uuid" //nolint
 
 	"golang.org/x/xerrors"
 )
@@ -38,7 +38,31 @@ func Create(ctx context.Context, in *npool.CreateVendorLocationRequest) (*npool.
 }
 
 func Update(ctx context.Context, in *npool.UpdateVendorLocationRequest) (*npool.UpdateVendorLocationResponse, error) {
-	return nil, xerrors.Errorf("NOT IMPLEMENTED")
+	id, err := uuid.Parse(in.GetInfo().GetID())
+	if err != nil {
+		return nil, xerrors.Errorf("invalid vendor location id: %v", err)
+	}
+
+	info, err := db.Client().
+		VendorLocation.
+		UpdateOneID(id).
+		SetCountry(in.GetInfo().GetCountry()).
+		SetProvince(in.GetInfo().GetProvince()).
+		SetCity(in.GetInfo().GetCity()).
+		SetAddress(in.GetInfo().GetAddress()).
+		Save(ctx)
+	if err != nil {
+		return nil, err
+	}
+	return &npool.UpdateVendorLocationResponse{
+		Info: &npool.VendorLocationInfo{
+			ID:       info.ID.String(),
+			Country:  info.Country,
+			Province: info.Province,
+			City:     info.City,
+			Address:  info.Address,
+		},
+	}, nil
 }
 
 func Delete(ctx context.Context, in *npool.DeleteVendorLocationRequest) (*npool.DeleteVendorLocationResponse, error) {

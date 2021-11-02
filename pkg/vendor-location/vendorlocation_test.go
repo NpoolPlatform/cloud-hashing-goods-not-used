@@ -44,4 +44,21 @@ func TestVendorLocationCRUD(t *testing.T) { //nolint
 		assert.Equal(t, resp.Info.City, city)
 		assert.Equal(t, resp.Info.Address, address)
 	}
+
+	province = fmt.Sprintf("ShanghaiVendorLocationPackageTest-%v-1", nano)
+	resp1, err := Update(context.Background(), &npool.UpdateVendorLocationRequest{
+		Info: &npool.VendorLocationInfo{
+			ID:       resp.Info.ID,
+			Country:  country,
+			Province: province,
+			City:     city,
+			Address:  address,
+		},
+	})
+	if assert.Nil(t, err) {
+		assert.Equal(t, resp1.Info.Country, country)
+		assert.Equal(t, resp1.Info.Province, province)
+		assert.Equal(t, resp1.Info.City, city)
+		assert.Equal(t, resp1.Info.Address, address)
+	}
 }
