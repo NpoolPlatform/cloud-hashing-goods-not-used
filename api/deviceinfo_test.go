@@ -23,8 +23,8 @@ func TestCreateDeviceInfo(t *testing.T) { //nolint
 	nano := time.Now().Unix()
 	deviceType := fmt.Sprintf("ChinaDeviceInfoRestfulApiTest-%v", nano)
 	manufacturer := fmt.Sprintf("ChinaDeviceInfoRestfulApiTest-%v", nano)
-	var powerComsuption int32 = 120
-	var shipmentAt int32 = int32(nano)
+	var powerComsuption int32 = 120    //nolint
+	var shipmentAt int32 = int32(nano) //nolint
 
 	vendorLocationInfo := npool.DeviceInfo{
 		Type:            deviceType,

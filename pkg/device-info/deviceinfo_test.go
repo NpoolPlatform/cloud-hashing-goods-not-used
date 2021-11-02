@@ -30,9 +30,9 @@ func TestDeviceInfoCRUD(t *testing.T) { //nolint
 
 	nano := time.Now().Unix()
 	deviceType := fmt.Sprintf("ChinaDeviceInfoPackageTest-%v", nano)
-	var powerComsuption int32 = 120
+	var powerComsuption int32 = 120 //nolint
 	manufacturer := fmt.Sprintf("ShanghaiDeviceInfoPackageTest-%v", nano)
-	var shipmentAt int32 = int32(nano)
+	var shipmentAt int32 = int32(nano) //nolint
 
 	resp, err := Create(context.Background(), &npool.CreateDeviceInfoRequest{
 		Info: &npool.DeviceInfo{
