@@ -12,6 +12,8 @@ import (
 // Tx is a transactional client that is created by calling Client.Tx().
 type Tx struct {
 	config
+	// DeviceInfo is the client for interacting with the DeviceInfo builders.
+	DeviceInfo *DeviceInfoClient
 	// GoodInfo is the client for interacting with the GoodInfo builders.
 	GoodInfo *GoodInfoClient
 	// TargetArea is the client for interacting with the TargetArea builders.
@@ -153,6 +155,7 @@ func (tx *Tx) Client() *Client {
 }
 
 func (tx *Tx) init() {
+	tx.DeviceInfo = NewDeviceInfoClient(tx.config)
 	tx.GoodInfo = NewGoodInfoClient(tx.config)
 	tx.TargetArea = NewTargetAreaClient(tx.config)
 	tx.VendorLocation = NewVendorLocationClient(tx.config)
@@ -165,7 +168,7 @@ func (tx *Tx) init() {
 // of them in order to commit or rollback the transaction.
 //
 // If a closed transaction is embedded in one of the generated entities, and the entity
-// applies a query, for example: GoodInfo.QueryXXX(), the query will be executed
+// applies a query, for example: DeviceInfo.QueryXXX(), the query will be executed
 // through the driver which created this transaction.
 //
 // Note that txDriver is not goroutine safe.

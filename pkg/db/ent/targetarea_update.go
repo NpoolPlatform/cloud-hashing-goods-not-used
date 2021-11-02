@@ -82,14 +82,6 @@ func (tau *TargetAreaUpdate) SetUpdateAt(i int64) *TargetAreaUpdate {
 	return tau
 }
 
-// SetNillableUpdateAt sets the "update_at" field if the given value is not nil.
-func (tau *TargetAreaUpdate) SetNillableUpdateAt(i *int64) *TargetAreaUpdate {
-	if i != nil {
-		tau.SetUpdateAt(*i)
-	}
-	return tau
-}
-
 // AddUpdateAt adds i to the "update_at" field.
 func (tau *TargetAreaUpdate) AddUpdateAt(i int64) *TargetAreaUpdate {
 	tau.mutation.AddUpdateAt(i)
@@ -128,6 +120,7 @@ func (tau *TargetAreaUpdate) Save(ctx context.Context) (int, error) {
 		err      error
 		affected int
 	)
+	tau.defaults()
 	if len(tau.hooks) == 0 {
 		if err = tau.check(); err != nil {
 			return 0, err
@@ -179,6 +172,14 @@ func (tau *TargetAreaUpdate) Exec(ctx context.Context) error {
 func (tau *TargetAreaUpdate) ExecX(ctx context.Context) {
 	if err := tau.Exec(ctx); err != nil {
 		panic(err)
+	}
+}
+
+// defaults sets the default values of the builder before save.
+func (tau *TargetAreaUpdate) defaults() {
+	if _, ok := tau.mutation.UpdateAt(); !ok {
+		v := targetarea.UpdateDefaultUpdateAt()
+		tau.mutation.SetUpdateAt(v)
 	}
 }
 
@@ -346,14 +347,6 @@ func (tauo *TargetAreaUpdateOne) SetUpdateAt(i int64) *TargetAreaUpdateOne {
 	return tauo
 }
 
-// SetNillableUpdateAt sets the "update_at" field if the given value is not nil.
-func (tauo *TargetAreaUpdateOne) SetNillableUpdateAt(i *int64) *TargetAreaUpdateOne {
-	if i != nil {
-		tauo.SetUpdateAt(*i)
-	}
-	return tauo
-}
-
 // AddUpdateAt adds i to the "update_at" field.
 func (tauo *TargetAreaUpdateOne) AddUpdateAt(i int64) *TargetAreaUpdateOne {
 	tauo.mutation.AddUpdateAt(i)
@@ -399,6 +392,7 @@ func (tauo *TargetAreaUpdateOne) Save(ctx context.Context) (*TargetArea, error) 
 		err  error
 		node *TargetArea
 	)
+	tauo.defaults()
 	if len(tauo.hooks) == 0 {
 		if err = tauo.check(); err != nil {
 			return nil, err
@@ -450,6 +444,14 @@ func (tauo *TargetAreaUpdateOne) Exec(ctx context.Context) error {
 func (tauo *TargetAreaUpdateOne) ExecX(ctx context.Context) {
 	if err := tauo.Exec(ctx); err != nil {
 		panic(err)
+	}
+}
+
+// defaults sets the default values of the builder before save.
+func (tauo *TargetAreaUpdateOne) defaults() {
+	if _, ok := tauo.mutation.UpdateAt(); !ok {
+		v := targetarea.UpdateDefaultUpdateAt()
+		tauo.mutation.SetUpdateAt(v)
 	}
 }
 

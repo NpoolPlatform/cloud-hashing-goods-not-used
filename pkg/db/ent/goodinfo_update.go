@@ -199,14 +199,6 @@ func (giu *GoodInfoUpdate) SetUpdateAt(i int64) *GoodInfoUpdate {
 	return giu
 }
 
-// SetNillableUpdateAt sets the "update_at" field if the given value is not nil.
-func (giu *GoodInfoUpdate) SetNillableUpdateAt(i *int64) *GoodInfoUpdate {
-	if i != nil {
-		giu.SetUpdateAt(*i)
-	}
-	return giu
-}
-
 // AddUpdateAt adds i to the "update_at" field.
 func (giu *GoodInfoUpdate) AddUpdateAt(i int64) *GoodInfoUpdate {
 	giu.mutation.AddUpdateAt(i)
@@ -245,6 +237,7 @@ func (giu *GoodInfoUpdate) Save(ctx context.Context) (int, error) {
 		err      error
 		affected int
 	)
+	giu.defaults()
 	if len(giu.hooks) == 0 {
 		if err = giu.check(); err != nil {
 			return 0, err
@@ -296,6 +289,14 @@ func (giu *GoodInfoUpdate) Exec(ctx context.Context) error {
 func (giu *GoodInfoUpdate) ExecX(ctx context.Context) {
 	if err := giu.Exec(ctx); err != nil {
 		panic(err)
+	}
+}
+
+// defaults sets the default values of the builder before save.
+func (giu *GoodInfoUpdate) defaults() {
+	if _, ok := giu.mutation.UpdateAt(); !ok {
+		v := goodinfo.UpdateDefaultUpdateAt()
+		giu.mutation.SetUpdateAt(v)
 	}
 }
 
@@ -751,14 +752,6 @@ func (giuo *GoodInfoUpdateOne) SetUpdateAt(i int64) *GoodInfoUpdateOne {
 	return giuo
 }
 
-// SetNillableUpdateAt sets the "update_at" field if the given value is not nil.
-func (giuo *GoodInfoUpdateOne) SetNillableUpdateAt(i *int64) *GoodInfoUpdateOne {
-	if i != nil {
-		giuo.SetUpdateAt(*i)
-	}
-	return giuo
-}
-
 // AddUpdateAt adds i to the "update_at" field.
 func (giuo *GoodInfoUpdateOne) AddUpdateAt(i int64) *GoodInfoUpdateOne {
 	giuo.mutation.AddUpdateAt(i)
@@ -804,6 +797,7 @@ func (giuo *GoodInfoUpdateOne) Save(ctx context.Context) (*GoodInfo, error) {
 		err  error
 		node *GoodInfo
 	)
+	giuo.defaults()
 	if len(giuo.hooks) == 0 {
 		if err = giuo.check(); err != nil {
 			return nil, err
@@ -855,6 +849,14 @@ func (giuo *GoodInfoUpdateOne) Exec(ctx context.Context) error {
 func (giuo *GoodInfoUpdateOne) ExecX(ctx context.Context) {
 	if err := giuo.Exec(ctx); err != nil {
 		panic(err)
+	}
+}
+
+// defaults sets the default values of the builder before save.
+func (giuo *GoodInfoUpdateOne) defaults() {
+	if _, ok := giuo.mutation.UpdateAt(); !ok {
+		v := goodinfo.UpdateDefaultUpdateAt()
+		giuo.mutation.SetUpdateAt(v)
 	}
 }
 

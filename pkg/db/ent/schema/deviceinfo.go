@@ -10,29 +10,25 @@ import (
 	"github.com/google/uuid"
 )
 
-// VendorLocation holds the schema definition for the VendorLocation entity.
-type VendorLocation struct {
+// DeviceInfo holds the schema definition for the DeviceInfo entity.
+type DeviceInfo struct {
 	ent.Schema
 }
 
-// Fields of the VendorLocation.
-func (VendorLocation) Fields() []ent.Field {
+// Fields of the DeviceInfo.
+func (DeviceInfo) Fields() []ent.Field {
 	return []ent.Field{
 		field.UUID("id", uuid.UUID{}).
 			Default(uuid.New).
 			Unique(),
-		field.String("country").
+		field.String("type").
 			Default("").
-			MaxLen(128),
-		field.String("province").
+			MaxLen(16),
+		field.String("manufacturer").
 			Default("").
-			MaxLen(128),
-		field.String("city").
-			Default("").
-			MaxLen(128),
-		field.String("address").
-			Default("").
-			MaxLen(256),
+			MaxLen(16),
+		field.Int("power_comsuption"),
+		field.Int64("shipment_date"),
 		field.Int64("create_at").
 			DefaultFunc(func() int64 {
 				return time.Now().UnixNano()
@@ -51,14 +47,14 @@ func (VendorLocation) Fields() []ent.Field {
 	}
 }
 
-// Edges of the VendorLocation.
-func (VendorLocation) Edges() []ent.Edge {
+// Edges of the DeviceInfo.
+func (DeviceInfo) Edges() []ent.Edge {
 	return nil
 }
 
-func (VendorLocation) Indexes() []ent.Index {
+func (DeviceInfo) Indexes() []ent.Index {
 	return []ent.Index{
-		index.Fields("country", "province", "city", "address").
+		index.Fields("type", "manufacturer", "shipment_date", "power_comsuption").
 			Unique(),
 	}
 }

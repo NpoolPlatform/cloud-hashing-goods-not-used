@@ -3,6 +3,7 @@
 package ent
 
 import (
+	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/deviceinfo"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/goodinfo"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/schema"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/targetarea"
@@ -14,6 +15,38 @@ import (
 // (default values, validators, hooks and policies) and stitches it
 // to their package variables.
 func init() {
+	deviceinfoFields := schema.DeviceInfo{}.Fields()
+	_ = deviceinfoFields
+	// deviceinfoDescType is the schema descriptor for type field.
+	deviceinfoDescType := deviceinfoFields[1].Descriptor()
+	// deviceinfo.DefaultType holds the default value on creation for the type field.
+	deviceinfo.DefaultType = deviceinfoDescType.Default.(string)
+	// deviceinfo.TypeValidator is a validator for the "type" field. It is called by the builders before save.
+	deviceinfo.TypeValidator = deviceinfoDescType.Validators[0].(func(string) error)
+	// deviceinfoDescManufacturer is the schema descriptor for manufacturer field.
+	deviceinfoDescManufacturer := deviceinfoFields[2].Descriptor()
+	// deviceinfo.DefaultManufacturer holds the default value on creation for the manufacturer field.
+	deviceinfo.DefaultManufacturer = deviceinfoDescManufacturer.Default.(string)
+	// deviceinfo.ManufacturerValidator is a validator for the "manufacturer" field. It is called by the builders before save.
+	deviceinfo.ManufacturerValidator = deviceinfoDescManufacturer.Validators[0].(func(string) error)
+	// deviceinfoDescCreateAt is the schema descriptor for create_at field.
+	deviceinfoDescCreateAt := deviceinfoFields[5].Descriptor()
+	// deviceinfo.DefaultCreateAt holds the default value on creation for the create_at field.
+	deviceinfo.DefaultCreateAt = deviceinfoDescCreateAt.Default.(func() int64)
+	// deviceinfoDescUpdateAt is the schema descriptor for update_at field.
+	deviceinfoDescUpdateAt := deviceinfoFields[6].Descriptor()
+	// deviceinfo.DefaultUpdateAt holds the default value on creation for the update_at field.
+	deviceinfo.DefaultUpdateAt = deviceinfoDescUpdateAt.Default.(func() int64)
+	// deviceinfo.UpdateDefaultUpdateAt holds the default value on update for the update_at field.
+	deviceinfo.UpdateDefaultUpdateAt = deviceinfoDescUpdateAt.UpdateDefault.(func() int64)
+	// deviceinfoDescDeleteAt is the schema descriptor for delete_at field.
+	deviceinfoDescDeleteAt := deviceinfoFields[7].Descriptor()
+	// deviceinfo.DefaultDeleteAt holds the default value on creation for the delete_at field.
+	deviceinfo.DefaultDeleteAt = deviceinfoDescDeleteAt.Default.(func() int64)
+	// deviceinfoDescID is the schema descriptor for id field.
+	deviceinfoDescID := deviceinfoFields[0].Descriptor()
+	// deviceinfo.DefaultID holds the default value on creation for the id field.
+	deviceinfo.DefaultID = deviceinfoDescID.Default.(func() uuid.UUID)
 	goodinfoFields := schema.GoodInfo{}.Fields()
 	_ = goodinfoFields
 	// goodinfoDescGasPrice is the schema descriptor for gas_price field.
@@ -44,6 +77,8 @@ func init() {
 	goodinfoDescUpdateAt := goodinfoFields[19].Descriptor()
 	// goodinfo.DefaultUpdateAt holds the default value on creation for the update_at field.
 	goodinfo.DefaultUpdateAt = goodinfoDescUpdateAt.Default.(func() int64)
+	// goodinfo.UpdateDefaultUpdateAt holds the default value on update for the update_at field.
+	goodinfo.UpdateDefaultUpdateAt = goodinfoDescUpdateAt.UpdateDefault.(func() int64)
 	// goodinfoDescDeleteAt is the schema descriptor for delete_at field.
 	goodinfoDescDeleteAt := goodinfoFields[20].Descriptor()
 	// goodinfo.DefaultDeleteAt holds the default value on creation for the delete_at field.
@@ -74,6 +109,8 @@ func init() {
 	targetareaDescUpdateAt := targetareaFields[4].Descriptor()
 	// targetarea.DefaultUpdateAt holds the default value on creation for the update_at field.
 	targetarea.DefaultUpdateAt = targetareaDescUpdateAt.Default.(func() int64)
+	// targetarea.UpdateDefaultUpdateAt holds the default value on update for the update_at field.
+	targetarea.UpdateDefaultUpdateAt = targetareaDescUpdateAt.UpdateDefault.(func() int64)
 	// targetareaDescDeleteAt is the schema descriptor for delete_at field.
 	targetareaDescDeleteAt := targetareaFields[5].Descriptor()
 	// targetarea.DefaultDeleteAt holds the default value on creation for the delete_at field.
@@ -86,18 +123,26 @@ func init() {
 	_ = vendorlocationFields
 	// vendorlocationDescCountry is the schema descriptor for country field.
 	vendorlocationDescCountry := vendorlocationFields[1].Descriptor()
+	// vendorlocation.DefaultCountry holds the default value on creation for the country field.
+	vendorlocation.DefaultCountry = vendorlocationDescCountry.Default.(string)
 	// vendorlocation.CountryValidator is a validator for the "country" field. It is called by the builders before save.
 	vendorlocation.CountryValidator = vendorlocationDescCountry.Validators[0].(func(string) error)
 	// vendorlocationDescProvince is the schema descriptor for province field.
 	vendorlocationDescProvince := vendorlocationFields[2].Descriptor()
+	// vendorlocation.DefaultProvince holds the default value on creation for the province field.
+	vendorlocation.DefaultProvince = vendorlocationDescProvince.Default.(string)
 	// vendorlocation.ProvinceValidator is a validator for the "province" field. It is called by the builders before save.
 	vendorlocation.ProvinceValidator = vendorlocationDescProvince.Validators[0].(func(string) error)
 	// vendorlocationDescCity is the schema descriptor for city field.
 	vendorlocationDescCity := vendorlocationFields[3].Descriptor()
+	// vendorlocation.DefaultCity holds the default value on creation for the city field.
+	vendorlocation.DefaultCity = vendorlocationDescCity.Default.(string)
 	// vendorlocation.CityValidator is a validator for the "city" field. It is called by the builders before save.
 	vendorlocation.CityValidator = vendorlocationDescCity.Validators[0].(func(string) error)
 	// vendorlocationDescAddress is the schema descriptor for address field.
 	vendorlocationDescAddress := vendorlocationFields[4].Descriptor()
+	// vendorlocation.DefaultAddress holds the default value on creation for the address field.
+	vendorlocation.DefaultAddress = vendorlocationDescAddress.Default.(string)
 	// vendorlocation.AddressValidator is a validator for the "address" field. It is called by the builders before save.
 	vendorlocation.AddressValidator = vendorlocationDescAddress.Validators[0].(func(string) error)
 	// vendorlocationDescCreateAt is the schema descriptor for create_at field.
@@ -108,6 +153,8 @@ func init() {
 	vendorlocationDescUpdateAt := vendorlocationFields[6].Descriptor()
 	// vendorlocation.DefaultUpdateAt holds the default value on creation for the update_at field.
 	vendorlocation.DefaultUpdateAt = vendorlocationDescUpdateAt.Default.(func() int64)
+	// vendorlocation.UpdateDefaultUpdateAt holds the default value on update for the update_at field.
+	vendorlocation.UpdateDefaultUpdateAt = vendorlocationDescUpdateAt.UpdateDefault.(func() int64)
 	// vendorlocationDescDeleteAt is the schema descriptor for delete_at field.
 	vendorlocationDescDeleteAt := vendorlocationFields[7].Descriptor()
 	// vendorlocation.DefaultDeleteAt holds the default value on creation for the delete_at field.

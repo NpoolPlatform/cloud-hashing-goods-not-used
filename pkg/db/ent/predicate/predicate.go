@@ -6,6 +6,9 @@ import (
 	"entgo.io/ent/dialect/sql"
 )
 
+// DeviceInfo is the predicate function for deviceinfo builders.
+type DeviceInfo func(*sql.Selector)
+
 // GoodInfo is the predicate function for goodinfo builders.
 type GoodInfo func(*sql.Selector)
 

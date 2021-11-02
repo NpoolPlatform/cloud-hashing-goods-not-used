@@ -9,6 +9,19 @@ import (
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent"
 )
 
+// The DeviceInfoFunc type is an adapter to allow the use of ordinary
+// function as DeviceInfo mutator.
+type DeviceInfoFunc func(context.Context, *ent.DeviceInfoMutation) (ent.Value, error)
+
+// Mutate calls f(ctx, m).
+func (f DeviceInfoFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, error) {
+	mv, ok := m.(*ent.DeviceInfoMutation)
+	if !ok {
+		return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.DeviceInfoMutation", m)
+	}
+	return f(ctx, mv)
+}
+
 // The GoodInfoFunc type is an adapter to allow the use of ordinary
 // function as GoodInfo mutator.
 type GoodInfoFunc func(context.Context, *ent.GoodInfoMutation) (ent.Value, error)

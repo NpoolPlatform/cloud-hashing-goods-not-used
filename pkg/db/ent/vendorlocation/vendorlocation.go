@@ -52,18 +52,28 @@ func ValidColumn(column string) bool {
 }
 
 var (
+	// DefaultCountry holds the default value on creation for the "country" field.
+	DefaultCountry string
 	// CountryValidator is a validator for the "country" field. It is called by the builders before save.
 	CountryValidator func(string) error
+	// DefaultProvince holds the default value on creation for the "province" field.
+	DefaultProvince string
 	// ProvinceValidator is a validator for the "province" field. It is called by the builders before save.
 	ProvinceValidator func(string) error
+	// DefaultCity holds the default value on creation for the "city" field.
+	DefaultCity string
 	// CityValidator is a validator for the "city" field. It is called by the builders before save.
 	CityValidator func(string) error
+	// DefaultAddress holds the default value on creation for the "address" field.
+	DefaultAddress string
 	// AddressValidator is a validator for the "address" field. It is called by the builders before save.
 	AddressValidator func(string) error
 	// DefaultCreateAt holds the default value on creation for the "create_at" field.
 	DefaultCreateAt func() int64
 	// DefaultUpdateAt holds the default value on creation for the "update_at" field.
 	DefaultUpdateAt func() int64
+	// UpdateDefaultUpdateAt holds the default value on update for the "update_at" field.
+	UpdateDefaultUpdateAt func() int64
 	// DefaultDeleteAt holds the default value on creation for the "delete_at" field.
 	DefaultDeleteAt func() int64
 	// DefaultID holds the default value on creation for the "id" field.

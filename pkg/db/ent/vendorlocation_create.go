@@ -29,9 +29,25 @@ func (vlc *VendorLocationCreate) SetCountry(s string) *VendorLocationCreate {
 	return vlc
 }
 
+// SetNillableCountry sets the "country" field if the given value is not nil.
+func (vlc *VendorLocationCreate) SetNillableCountry(s *string) *VendorLocationCreate {
+	if s != nil {
+		vlc.SetCountry(*s)
+	}
+	return vlc
+}
+
 // SetProvince sets the "province" field.
 func (vlc *VendorLocationCreate) SetProvince(s string) *VendorLocationCreate {
 	vlc.mutation.SetProvince(s)
+	return vlc
+}
+
+// SetNillableProvince sets the "province" field if the given value is not nil.
+func (vlc *VendorLocationCreate) SetNillableProvince(s *string) *VendorLocationCreate {
+	if s != nil {
+		vlc.SetProvince(*s)
+	}
 	return vlc
 }
 
@@ -41,9 +57,25 @@ func (vlc *VendorLocationCreate) SetCity(s string) *VendorLocationCreate {
 	return vlc
 }
 
+// SetNillableCity sets the "city" field if the given value is not nil.
+func (vlc *VendorLocationCreate) SetNillableCity(s *string) *VendorLocationCreate {
+	if s != nil {
+		vlc.SetCity(*s)
+	}
+	return vlc
+}
+
 // SetAddress sets the "address" field.
 func (vlc *VendorLocationCreate) SetAddress(s string) *VendorLocationCreate {
 	vlc.mutation.SetAddress(s)
+	return vlc
+}
+
+// SetNillableAddress sets the "address" field if the given value is not nil.
+func (vlc *VendorLocationCreate) SetNillableAddress(s *string) *VendorLocationCreate {
+	if s != nil {
+		vlc.SetAddress(*s)
+	}
 	return vlc
 }
 
@@ -166,6 +198,22 @@ func (vlc *VendorLocationCreate) ExecX(ctx context.Context) {
 
 // defaults sets the default values of the builder before save.
 func (vlc *VendorLocationCreate) defaults() {
+	if _, ok := vlc.mutation.Country(); !ok {
+		v := vendorlocation.DefaultCountry
+		vlc.mutation.SetCountry(v)
+	}
+	if _, ok := vlc.mutation.Province(); !ok {
+		v := vendorlocation.DefaultProvince
+		vlc.mutation.SetProvince(v)
+	}
+	if _, ok := vlc.mutation.City(); !ok {
+		v := vendorlocation.DefaultCity
+		vlc.mutation.SetCity(v)
+	}
+	if _, ok := vlc.mutation.Address(); !ok {
+		v := vendorlocation.DefaultAddress
+		vlc.mutation.SetAddress(v)
+	}
 	if _, ok := vlc.mutation.CreateAt(); !ok {
 		v := vendorlocation.DefaultCreateAt()
 		vlc.mutation.SetCreateAt(v)

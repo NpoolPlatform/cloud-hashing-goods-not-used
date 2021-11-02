@@ -8,6 +8,30 @@ import (
 )
 
 var (
+	// DeviceInfosColumns holds the columns for the "device_infos" table.
+	DeviceInfosColumns = []*schema.Column{
+		{Name: "id", Type: field.TypeUUID, Unique: true},
+		{Name: "type", Type: field.TypeString, Size: 16, Default: ""},
+		{Name: "manufacturer", Type: field.TypeString, Size: 16, Default: ""},
+		{Name: "power_comsuption", Type: field.TypeInt},
+		{Name: "shipment_date", Type: field.TypeInt64},
+		{Name: "create_at", Type: field.TypeInt64},
+		{Name: "update_at", Type: field.TypeInt64},
+		{Name: "delete_at", Type: field.TypeInt64},
+	}
+	// DeviceInfosTable holds the schema information for the "device_infos" table.
+	DeviceInfosTable = &schema.Table{
+		Name:       "device_infos",
+		Columns:    DeviceInfosColumns,
+		PrimaryKey: []*schema.Column{DeviceInfosColumns[0]},
+		Indexes: []*schema.Index{
+			{
+				Name:    "deviceinfo_type_manufacturer_shipment_date_power_comsuption",
+				Unique:  true,
+				Columns: []*schema.Column{DeviceInfosColumns[1], DeviceInfosColumns[2], DeviceInfosColumns[4], DeviceInfosColumns[3]},
+			},
+		},
+	}
 	// GoodInfosColumns holds the columns for the "good_infos" table.
 	GoodInfosColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeUUID, Unique: true},
@@ -63,10 +87,10 @@ var (
 	// VendorLocationsColumns holds the columns for the "vendor_locations" table.
 	VendorLocationsColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeUUID, Unique: true},
-		{Name: "country", Type: field.TypeString, Size: 128},
-		{Name: "province", Type: field.TypeString, Size: 128},
-		{Name: "city", Type: field.TypeString, Size: 128},
-		{Name: "address", Type: field.TypeString, Size: 256},
+		{Name: "country", Type: field.TypeString, Size: 128, Default: ""},
+		{Name: "province", Type: field.TypeString, Size: 128, Default: ""},
+		{Name: "city", Type: field.TypeString, Size: 128, Default: ""},
+		{Name: "address", Type: field.TypeString, Size: 256, Default: ""},
 		{Name: "create_at", Type: field.TypeInt64},
 		{Name: "update_at", Type: field.TypeInt64},
 		{Name: "delete_at", Type: field.TypeInt64},
@@ -86,6 +110,7 @@ var (
 	}
 	// Tables holds all the tables in the schema.
 	Tables = []*schema.Table{
+		DeviceInfosTable,
 		GoodInfosTable,
 		TargetAreasTable,
 		VendorLocationsTable,

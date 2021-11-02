@@ -32,9 +32,25 @@ func (vlu *VendorLocationUpdate) SetCountry(s string) *VendorLocationUpdate {
 	return vlu
 }
 
+// SetNillableCountry sets the "country" field if the given value is not nil.
+func (vlu *VendorLocationUpdate) SetNillableCountry(s *string) *VendorLocationUpdate {
+	if s != nil {
+		vlu.SetCountry(*s)
+	}
+	return vlu
+}
+
 // SetProvince sets the "province" field.
 func (vlu *VendorLocationUpdate) SetProvince(s string) *VendorLocationUpdate {
 	vlu.mutation.SetProvince(s)
+	return vlu
+}
+
+// SetNillableProvince sets the "province" field if the given value is not nil.
+func (vlu *VendorLocationUpdate) SetNillableProvince(s *string) *VendorLocationUpdate {
+	if s != nil {
+		vlu.SetProvince(*s)
+	}
 	return vlu
 }
 
@@ -44,9 +60,25 @@ func (vlu *VendorLocationUpdate) SetCity(s string) *VendorLocationUpdate {
 	return vlu
 }
 
+// SetNillableCity sets the "city" field if the given value is not nil.
+func (vlu *VendorLocationUpdate) SetNillableCity(s *string) *VendorLocationUpdate {
+	if s != nil {
+		vlu.SetCity(*s)
+	}
+	return vlu
+}
+
 // SetAddress sets the "address" field.
 func (vlu *VendorLocationUpdate) SetAddress(s string) *VendorLocationUpdate {
 	vlu.mutation.SetAddress(s)
+	return vlu
+}
+
+// SetNillableAddress sets the "address" field if the given value is not nil.
+func (vlu *VendorLocationUpdate) SetNillableAddress(s *string) *VendorLocationUpdate {
+	if s != nil {
+		vlu.SetAddress(*s)
+	}
 	return vlu
 }
 
@@ -75,14 +107,6 @@ func (vlu *VendorLocationUpdate) AddCreateAt(i int64) *VendorLocationUpdate {
 func (vlu *VendorLocationUpdate) SetUpdateAt(i int64) *VendorLocationUpdate {
 	vlu.mutation.ResetUpdateAt()
 	vlu.mutation.SetUpdateAt(i)
-	return vlu
-}
-
-// SetNillableUpdateAt sets the "update_at" field if the given value is not nil.
-func (vlu *VendorLocationUpdate) SetNillableUpdateAt(i *int64) *VendorLocationUpdate {
-	if i != nil {
-		vlu.SetUpdateAt(*i)
-	}
 	return vlu
 }
 
@@ -124,6 +148,7 @@ func (vlu *VendorLocationUpdate) Save(ctx context.Context) (int, error) {
 		err      error
 		affected int
 	)
+	vlu.defaults()
 	if len(vlu.hooks) == 0 {
 		if err = vlu.check(); err != nil {
 			return 0, err
@@ -175,6 +200,14 @@ func (vlu *VendorLocationUpdate) Exec(ctx context.Context) error {
 func (vlu *VendorLocationUpdate) ExecX(ctx context.Context) {
 	if err := vlu.Exec(ctx); err != nil {
 		panic(err)
+	}
+}
+
+// defaults sets the default values of the builder before save.
+func (vlu *VendorLocationUpdate) defaults() {
+	if _, ok := vlu.mutation.UpdateAt(); !ok {
+		v := vendorlocation.UpdateDefaultUpdateAt()
+		vlu.mutation.SetUpdateAt(v)
 	}
 }
 
@@ -316,9 +349,25 @@ func (vluo *VendorLocationUpdateOne) SetCountry(s string) *VendorLocationUpdateO
 	return vluo
 }
 
+// SetNillableCountry sets the "country" field if the given value is not nil.
+func (vluo *VendorLocationUpdateOne) SetNillableCountry(s *string) *VendorLocationUpdateOne {
+	if s != nil {
+		vluo.SetCountry(*s)
+	}
+	return vluo
+}
+
 // SetProvince sets the "province" field.
 func (vluo *VendorLocationUpdateOne) SetProvince(s string) *VendorLocationUpdateOne {
 	vluo.mutation.SetProvince(s)
+	return vluo
+}
+
+// SetNillableProvince sets the "province" field if the given value is not nil.
+func (vluo *VendorLocationUpdateOne) SetNillableProvince(s *string) *VendorLocationUpdateOne {
+	if s != nil {
+		vluo.SetProvince(*s)
+	}
 	return vluo
 }
 
@@ -328,9 +377,25 @@ func (vluo *VendorLocationUpdateOne) SetCity(s string) *VendorLocationUpdateOne 
 	return vluo
 }
 
+// SetNillableCity sets the "city" field if the given value is not nil.
+func (vluo *VendorLocationUpdateOne) SetNillableCity(s *string) *VendorLocationUpdateOne {
+	if s != nil {
+		vluo.SetCity(*s)
+	}
+	return vluo
+}
+
 // SetAddress sets the "address" field.
 func (vluo *VendorLocationUpdateOne) SetAddress(s string) *VendorLocationUpdateOne {
 	vluo.mutation.SetAddress(s)
+	return vluo
+}
+
+// SetNillableAddress sets the "address" field if the given value is not nil.
+func (vluo *VendorLocationUpdateOne) SetNillableAddress(s *string) *VendorLocationUpdateOne {
+	if s != nil {
+		vluo.SetAddress(*s)
+	}
 	return vluo
 }
 
@@ -359,14 +424,6 @@ func (vluo *VendorLocationUpdateOne) AddCreateAt(i int64) *VendorLocationUpdateO
 func (vluo *VendorLocationUpdateOne) SetUpdateAt(i int64) *VendorLocationUpdateOne {
 	vluo.mutation.ResetUpdateAt()
 	vluo.mutation.SetUpdateAt(i)
-	return vluo
-}
-
-// SetNillableUpdateAt sets the "update_at" field if the given value is not nil.
-func (vluo *VendorLocationUpdateOne) SetNillableUpdateAt(i *int64) *VendorLocationUpdateOne {
-	if i != nil {
-		vluo.SetUpdateAt(*i)
-	}
 	return vluo
 }
 
@@ -415,6 +472,7 @@ func (vluo *VendorLocationUpdateOne) Save(ctx context.Context) (*VendorLocation,
 		err  error
 		node *VendorLocation
 	)
+	vluo.defaults()
 	if len(vluo.hooks) == 0 {
 		if err = vluo.check(); err != nil {
 			return nil, err
@@ -466,6 +524,14 @@ func (vluo *VendorLocationUpdateOne) Exec(ctx context.Context) error {
 func (vluo *VendorLocationUpdateOne) ExecX(ctx context.Context) {
 	if err := vluo.Exec(ctx); err != nil {
 		panic(err)
+	}
+}
+
+// defaults sets the default values of the builder before save.
+func (vluo *VendorLocationUpdateOne) defaults() {
+	if _, ok := vluo.mutation.UpdateAt(); !ok {
+		v := vendorlocation.UpdateDefaultUpdateAt()
+		vluo.mutation.SetUpdateAt(v)
 	}
 }
 

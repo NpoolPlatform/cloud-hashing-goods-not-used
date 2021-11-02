@@ -10,6 +10,7 @@ import (
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/migrate"
 	"github.com/google/uuid"
 
+	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/deviceinfo"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/goodinfo"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/targetarea"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/vendorlocation"
@@ -23,6 +24,8 @@ type Client struct {
 	config
 	// Schema is the client for creating, migrating and dropping schema.
 	Schema *migrate.Schema
+	// DeviceInfo is the client for interacting with the DeviceInfo builders.
+	DeviceInfo *DeviceInfoClient
 	// GoodInfo is the client for interacting with the GoodInfo builders.
 	GoodInfo *GoodInfoClient
 	// TargetArea is the client for interacting with the TargetArea builders.
@@ -42,6 +45,7 @@ func NewClient(opts ...Option) *Client {
 
 func (c *Client) init() {
 	c.Schema = migrate.NewSchema(c.driver)
+	c.DeviceInfo = NewDeviceInfoClient(c.config)
 	c.GoodInfo = NewGoodInfoClient(c.config)
 	c.TargetArea = NewTargetAreaClient(c.config)
 	c.VendorLocation = NewVendorLocationClient(c.config)
@@ -78,6 +82,7 @@ func (c *Client) Tx(ctx context.Context) (*Tx, error) {
 	return &Tx{
 		ctx:            ctx,
 		config:         cfg,
+		DeviceInfo:     NewDeviceInfoClient(cfg),
 		GoodInfo:       NewGoodInfoClient(cfg),
 		TargetArea:     NewTargetAreaClient(cfg),
 		VendorLocation: NewVendorLocationClient(cfg),
@@ -99,6 +104,7 @@ func (c *Client) BeginTx(ctx context.Context, opts *sql.TxOptions) (*Tx, error) 
 	cfg.driver = &txDriver{tx: tx, drv: c.driver}
 	return &Tx{
 		config:         cfg,
+		DeviceInfo:     NewDeviceInfoClient(cfg),
 		GoodInfo:       NewGoodInfoClient(cfg),
 		TargetArea:     NewTargetAreaClient(cfg),
 		VendorLocation: NewVendorLocationClient(cfg),
@@ -108,7 +114,7 @@ func (c *Client) BeginTx(ctx context.Context, opts *sql.TxOptions) (*Tx, error) 
 // Debug returns a new debug-client. It's used to get verbose logging on specific operations.
 //
 //	client.Debug().
-//		GoodInfo.
+//		DeviceInfo.
 //		Query().
 //		Count(ctx)
 //
@@ -131,9 +137,100 @@ func (c *Client) Close() error {
 // Use adds the mutation hooks to all the entity clients.
 // In order to add hooks to a specific client, call: `client.Node.Use(...)`.
 func (c *Client) Use(hooks ...Hook) {
+	c.DeviceInfo.Use(hooks...)
 	c.GoodInfo.Use(hooks...)
 	c.TargetArea.Use(hooks...)
 	c.VendorLocation.Use(hooks...)
+}
+
+// DeviceInfoClient is a client for the DeviceInfo schema.
+type DeviceInfoClient struct {
+	config
+}
+
+// NewDeviceInfoClient returns a client for the DeviceInfo from the given config.
+func NewDeviceInfoClient(c config) *DeviceInfoClient {
+	return &DeviceInfoClient{config: c}
+}
+
+// Use adds a list of mutation hooks to the hooks stack.
+// A call to `Use(f, g, h)` equals to `deviceinfo.Hooks(f(g(h())))`.
+func (c *DeviceInfoClient) Use(hooks ...Hook) {
+	c.hooks.DeviceInfo = append(c.hooks.DeviceInfo, hooks...)
+}
+
+// Create returns a create builder for DeviceInfo.
+func (c *DeviceInfoClient) Create() *DeviceInfoCreate {
+	mutation := newDeviceInfoMutation(c.config, OpCreate)
+	return &DeviceInfoCreate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// CreateBulk returns a builder for creating a bulk of DeviceInfo entities.
+func (c *DeviceInfoClient) CreateBulk(builders ...*DeviceInfoCreate) *DeviceInfoCreateBulk {
+	return &DeviceInfoCreateBulk{config: c.config, builders: builders}
+}
+
+// Update returns an update builder for DeviceInfo.
+func (c *DeviceInfoClient) Update() *DeviceInfoUpdate {
+	mutation := newDeviceInfoMutation(c.config, OpUpdate)
+	return &DeviceInfoUpdate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOne returns an update builder for the given entity.
+func (c *DeviceInfoClient) UpdateOne(di *DeviceInfo) *DeviceInfoUpdateOne {
+	mutation := newDeviceInfoMutation(c.config, OpUpdateOne, withDeviceInfo(di))
+	return &DeviceInfoUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOneID returns an update builder for the given id.
+func (c *DeviceInfoClient) UpdateOneID(id uuid.UUID) *DeviceInfoUpdateOne {
+	mutation := newDeviceInfoMutation(c.config, OpUpdateOne, withDeviceInfoID(id))
+	return &DeviceInfoUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// Delete returns a delete builder for DeviceInfo.
+func (c *DeviceInfoClient) Delete() *DeviceInfoDelete {
+	mutation := newDeviceInfoMutation(c.config, OpDelete)
+	return &DeviceInfoDelete{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// DeleteOne returns a delete builder for the given entity.
+func (c *DeviceInfoClient) DeleteOne(di *DeviceInfo) *DeviceInfoDeleteOne {
+	return c.DeleteOneID(di.ID)
+}
+
+// DeleteOneID returns a delete builder for the given id.
+func (c *DeviceInfoClient) DeleteOneID(id uuid.UUID) *DeviceInfoDeleteOne {
+	builder := c.Delete().Where(deviceinfo.ID(id))
+	builder.mutation.id = &id
+	builder.mutation.op = OpDeleteOne
+	return &DeviceInfoDeleteOne{builder}
+}
+
+// Query returns a query builder for DeviceInfo.
+func (c *DeviceInfoClient) Query() *DeviceInfoQuery {
+	return &DeviceInfoQuery{
+		config: c.config,
+	}
+}
+
+// Get returns a DeviceInfo entity by its id.
+func (c *DeviceInfoClient) Get(ctx context.Context, id uuid.UUID) (*DeviceInfo, error) {
+	return c.Query().Where(deviceinfo.ID(id)).Only(ctx)
+}
+
+// GetX is like Get, but panics if an error occurs.
+func (c *DeviceInfoClient) GetX(ctx context.Context, id uuid.UUID) *DeviceInfo {
+	obj, err := c.Get(ctx, id)
+	if err != nil {
+		panic(err)
+	}
+	return obj
+}
+
+// Hooks returns the client hooks.
+func (c *DeviceInfoClient) Hooks() []Hook {
+	return c.hooks.DeviceInfo
 }
 
 // GoodInfoClient is a client for the GoodInfo schema.
