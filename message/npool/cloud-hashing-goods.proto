@@ -204,6 +204,12 @@ service CloudHashingGoods {
             body: "*"
         };
     }
+    rpc CheckAppGoodTargetArea(CheckAppGoodTargetAreaRequest) returns (CheckAppGoodTargetAreaResponse) {
+        option (google.api.http) = {
+            post: "/v1/check/app/good/target-area"
+            body: "*"
+        };
+    }
     rpc UnauthorizeAppGoodTargetArea(UnauthorizeAppGoodTargetAreaRequest) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/v1/unauthorize/app/good/target-area"
@@ -546,16 +552,35 @@ message UnauthorizeAppTargetAreaResponse {
     bool Authorized = 4111;
 }
 
+message AppGoodTargetAreaInfo {
+    string ID = 4120;
+    string AppID = 4121;
+    string GoodID = 4122;
+    string TargetAreaID = 4123;
+}
+
 message AuthorizeAppGoodTargetAreaRequest {
-    string AppID = 4200;
-    string GoodID = 4201;
-    string TargetAreaID = 4202;
+    AppGoodTargetAreaInfo Info = 4200;
+}
+
+message AuthorizeAppGoodTargetAreaResponse {
+    AppGoodTargetAreaInfo Info = 4210;
+}
+
+message CheckAppGoodTargetAreaRequest {
+    AppGoodTargetAreaInfo Info = 4220;
+}
+
+message CheckAppGoodTargetAreaResponse {
+    AppGoodTargetAreaInfo Info = 4230;
 }
 
 message UnauthorizeAppGoodTargetAreaRequest {
-    string AppID = 4300;
-    string GoodID = 4301;
-    string TargetAreaID = 4302;
+    AppGoodTargetAreaInfo Info = 4300;
+}
+
+message UnauthorizeAppGoodTargetAreaResponse {
+    AppGoodTargetAreaInfo Info = 4310;
 }
 
 message GoodComment {

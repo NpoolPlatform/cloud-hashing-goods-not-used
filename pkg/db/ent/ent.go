@@ -9,6 +9,7 @@ import (
 	"entgo.io/ent"
 	"entgo.io/ent/dialect/sql"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/appgood"
+	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/appgoodtargetarea"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/apptargetarea"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/deviceinfo"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/goodinfo"
@@ -34,12 +35,13 @@ type OrderFunc func(*sql.Selector)
 // columnChecker returns a function indicates if the column exists in the given column.
 func columnChecker(table string) func(string) error {
 	checks := map[string]func(string) bool{
-		appgood.Table:        appgood.ValidColumn,
-		apptargetarea.Table:  apptargetarea.ValidColumn,
-		deviceinfo.Table:     deviceinfo.ValidColumn,
-		goodinfo.Table:       goodinfo.ValidColumn,
-		targetarea.Table:     targetarea.ValidColumn,
-		vendorlocation.Table: vendorlocation.ValidColumn,
+		appgood.Table:           appgood.ValidColumn,
+		appgoodtargetarea.Table: appgoodtargetarea.ValidColumn,
+		apptargetarea.Table:     apptargetarea.ValidColumn,
+		deviceinfo.Table:        deviceinfo.ValidColumn,
+		goodinfo.Table:          goodinfo.ValidColumn,
+		targetarea.Table:        targetarea.ValidColumn,
+		vendorlocation.Table:    vendorlocation.ValidColumn,
 	}
 	check, ok := checks[table]
 	if !ok {

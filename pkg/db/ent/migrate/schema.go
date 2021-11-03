@@ -35,6 +35,29 @@ var (
 			},
 		},
 	}
+	// AppGoodTargetAreasColumns holds the columns for the "app_good_target_areas" table.
+	AppGoodTargetAreasColumns = []*schema.Column{
+		{Name: "id", Type: field.TypeUUID, Unique: true},
+		{Name: "app_id", Type: field.TypeUUID},
+		{Name: "good_id", Type: field.TypeUUID},
+		{Name: "target_area_id", Type: field.TypeUUID},
+		{Name: "create_at", Type: field.TypeInt64},
+		{Name: "update_at", Type: field.TypeInt64},
+		{Name: "delete_at", Type: field.TypeInt64},
+	}
+	// AppGoodTargetAreasTable holds the schema information for the "app_good_target_areas" table.
+	AppGoodTargetAreasTable = &schema.Table{
+		Name:       "app_good_target_areas",
+		Columns:    AppGoodTargetAreasColumns,
+		PrimaryKey: []*schema.Column{AppGoodTargetAreasColumns[0]},
+		Indexes: []*schema.Index{
+			{
+				Name:    "appgoodtargetarea_good_id_app_id_target_area_id",
+				Unique:  true,
+				Columns: []*schema.Column{AppGoodTargetAreasColumns[2], AppGoodTargetAreasColumns[1], AppGoodTargetAreasColumns[3]},
+			},
+		},
+	}
 	// AppTargetAreasColumns holds the columns for the "app_target_areas" table.
 	AppTargetAreasColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeUUID, Unique: true},
@@ -158,6 +181,7 @@ var (
 	// Tables holds all the tables in the schema.
 	Tables = []*schema.Table{
 		AppGoodsTable,
+		AppGoodTargetAreasTable,
 		AppTargetAreasTable,
 		DeviceInfosTable,
 		GoodInfosTable,

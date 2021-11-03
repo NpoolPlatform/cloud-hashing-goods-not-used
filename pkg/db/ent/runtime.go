@@ -4,6 +4,7 @@ package ent
 
 import (
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/appgood"
+	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/appgoodtargetarea"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/apptargetarea"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/deviceinfo"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/goodinfo"
@@ -45,6 +46,26 @@ func init() {
 	appgoodDescID := appgoodFields[0].Descriptor()
 	// appgood.DefaultID holds the default value on creation for the id field.
 	appgood.DefaultID = appgoodDescID.Default.(func() uuid.UUID)
+	appgoodtargetareaFields := schema.AppGoodTargetArea{}.Fields()
+	_ = appgoodtargetareaFields
+	// appgoodtargetareaDescCreateAt is the schema descriptor for create_at field.
+	appgoodtargetareaDescCreateAt := appgoodtargetareaFields[4].Descriptor()
+	// appgoodtargetarea.DefaultCreateAt holds the default value on creation for the create_at field.
+	appgoodtargetarea.DefaultCreateAt = appgoodtargetareaDescCreateAt.Default.(func() int64)
+	// appgoodtargetareaDescUpdateAt is the schema descriptor for update_at field.
+	appgoodtargetareaDescUpdateAt := appgoodtargetareaFields[5].Descriptor()
+	// appgoodtargetarea.DefaultUpdateAt holds the default value on creation for the update_at field.
+	appgoodtargetarea.DefaultUpdateAt = appgoodtargetareaDescUpdateAt.Default.(func() int64)
+	// appgoodtargetarea.UpdateDefaultUpdateAt holds the default value on update for the update_at field.
+	appgoodtargetarea.UpdateDefaultUpdateAt = appgoodtargetareaDescUpdateAt.UpdateDefault.(func() int64)
+	// appgoodtargetareaDescDeleteAt is the schema descriptor for delete_at field.
+	appgoodtargetareaDescDeleteAt := appgoodtargetareaFields[6].Descriptor()
+	// appgoodtargetarea.DefaultDeleteAt holds the default value on creation for the delete_at field.
+	appgoodtargetarea.DefaultDeleteAt = appgoodtargetareaDescDeleteAt.Default.(func() int64)
+	// appgoodtargetareaDescID is the schema descriptor for id field.
+	appgoodtargetareaDescID := appgoodtargetareaFields[0].Descriptor()
+	// appgoodtargetarea.DefaultID holds the default value on creation for the id field.
+	appgoodtargetarea.DefaultID = appgoodtargetareaDescID.Default.(func() uuid.UUID)
 	apptargetareaFields := schema.AppTargetArea{}.Fields()
 	_ = apptargetareaFields
 	// apptargetareaDescCreateAt is the schema descriptor for create_at field.

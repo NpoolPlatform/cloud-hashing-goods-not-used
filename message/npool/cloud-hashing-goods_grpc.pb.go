@@ -51,6 +51,7 @@ type CloudHashingGoodsClient interface {
 	CheckAppTargetArea(ctx context.Context, in *CheckAppTargetAreaRequest, opts ...grpc.CallOption) (*CheckAppTargetAreaResponse, error)
 	UnauthorizeAppTargetArea(ctx context.Context, in *UnauthorizeAppTargetAreaRequest, opts ...grpc.CallOption) (*UnauthorizeAppTargetAreaResponse, error)
 	AuthorizeAppGoodTargetArea(ctx context.Context, in *AuthorizeAppGoodTargetAreaRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	CheckAppGoodTargetArea(ctx context.Context, in *CheckAppGoodTargetAreaRequest, opts ...grpc.CallOption) (*CheckAppGoodTargetAreaResponse, error)
 	UnauthorizeAppGoodTargetArea(ctx context.Context, in *UnauthorizeAppGoodTargetAreaRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	CreateGoodComment(ctx context.Context, in *CreateGoodCommentRequest, opts ...grpc.CallOption) (*CreateGoodCommentResponse, error)
 	UpdateGoodComment(ctx context.Context, in *UpdateGoodCommentRequest, opts ...grpc.CallOption) (*UpdateGoodCommentResponse, error)
@@ -353,6 +354,15 @@ func (c *cloudHashingGoodsClient) AuthorizeAppGoodTargetArea(ctx context.Context
 	return out, nil
 }
 
+func (c *cloudHashingGoodsClient) CheckAppGoodTargetArea(ctx context.Context, in *CheckAppGoodTargetAreaRequest, opts ...grpc.CallOption) (*CheckAppGoodTargetAreaResponse, error) {
+	out := new(CheckAppGoodTargetAreaResponse)
+	err := c.cc.Invoke(ctx, "/cloud.hashing.goods.v1.CloudHashingGoods/CheckAppGoodTargetArea", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *cloudHashingGoodsClient) UnauthorizeAppGoodTargetArea(ctx context.Context, in *UnauthorizeAppGoodTargetAreaRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	out := new(emptypb.Empty)
 	err := c.cc.Invoke(ctx, "/cloud.hashing.goods.v1.CloudHashingGoods/UnauthorizeAppGoodTargetArea", in, out, opts...)
@@ -425,6 +435,7 @@ type CloudHashingGoodsServer interface {
 	CheckAppTargetArea(context.Context, *CheckAppTargetAreaRequest) (*CheckAppTargetAreaResponse, error)
 	UnauthorizeAppTargetArea(context.Context, *UnauthorizeAppTargetAreaRequest) (*UnauthorizeAppTargetAreaResponse, error)
 	AuthorizeAppGoodTargetArea(context.Context, *AuthorizeAppGoodTargetAreaRequest) (*emptypb.Empty, error)
+	CheckAppGoodTargetArea(context.Context, *CheckAppGoodTargetAreaRequest) (*CheckAppGoodTargetAreaResponse, error)
 	UnauthorizeAppGoodTargetArea(context.Context, *UnauthorizeAppGoodTargetAreaRequest) (*emptypb.Empty, error)
 	CreateGoodComment(context.Context, *CreateGoodCommentRequest) (*CreateGoodCommentResponse, error)
 	UpdateGoodComment(context.Context, *UpdateGoodCommentRequest) (*UpdateGoodCommentResponse, error)
@@ -531,6 +542,9 @@ func (UnimplementedCloudHashingGoodsServer) UnauthorizeAppTargetArea(context.Con
 }
 func (UnimplementedCloudHashingGoodsServer) AuthorizeAppGoodTargetArea(context.Context, *AuthorizeAppGoodTargetAreaRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AuthorizeAppGoodTargetArea not implemented")
+}
+func (UnimplementedCloudHashingGoodsServer) CheckAppGoodTargetArea(context.Context, *CheckAppGoodTargetAreaRequest) (*CheckAppGoodTargetAreaResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CheckAppGoodTargetArea not implemented")
 }
 func (UnimplementedCloudHashingGoodsServer) UnauthorizeAppGoodTargetArea(context.Context, *UnauthorizeAppGoodTargetAreaRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UnauthorizeAppGoodTargetArea not implemented")
@@ -1133,6 +1147,24 @@ func _CloudHashingGoods_AuthorizeAppGoodTargetArea_Handler(srv interface{}, ctx 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _CloudHashingGoods_CheckAppGoodTargetArea_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CheckAppGoodTargetAreaRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CloudHashingGoodsServer).CheckAppGoodTargetArea(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cloud.hashing.goods.v1.CloudHashingGoods/CheckAppGoodTargetArea",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CloudHashingGoodsServer).CheckAppGoodTargetArea(ctx, req.(*CheckAppGoodTargetAreaRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _CloudHashingGoods_UnauthorizeAppGoodTargetArea_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(UnauthorizeAppGoodTargetAreaRequest)
 	if err := dec(in); err != nil {
@@ -1339,6 +1371,10 @@ var CloudHashingGoods_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "AuthorizeAppGoodTargetArea",
 			Handler:    _CloudHashingGoods_AuthorizeAppGoodTargetArea_Handler,
+		},
+		{
+			MethodName: "CheckAppGoodTargetArea",
+			Handler:    _CloudHashingGoods_CheckAppGoodTargetArea_Handler,
 		},
 		{
 			MethodName: "UnauthorizeAppGoodTargetArea",
