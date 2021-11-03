@@ -198,7 +198,7 @@ service CloudHashingGoods {
         };
     }
 
-    rpc AuthorizeAppGoodTargetArea(AuthorizeAppGoodTargetAreaRequest) returns (google.protobuf.Empty) {
+    rpc AuthorizeAppGoodTargetArea(AuthorizeAppGoodTargetAreaRequest) returns (AuthorizeAppGoodTargetAreaResponse) {
         option (google.api.http) = {
             post: "/v1/authorize/app/good/target-area"
             body: "*"
@@ -210,7 +210,7 @@ service CloudHashingGoods {
             body: "*"
         };
     }
-    rpc UnauthorizeAppGoodTargetArea(UnauthorizeAppGoodTargetAreaRequest) returns (google.protobuf.Empty) {
+    rpc UnauthorizeAppGoodTargetArea(UnauthorizeAppGoodTargetAreaRequest) returns (UnauthorizeAppGoodTargetAreaResponse) {
         option (google.api.http) = {
             post: "/v1/unauthorize/app/good/target-area"
             body: "*"
