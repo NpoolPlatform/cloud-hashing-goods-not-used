@@ -36,7 +36,7 @@ func (s *Server) UpdateGoodReview(ctx context.Context, in *npool.UpdateGoodRevie
 func (s *Server) GetGoodReview(ctx context.Context, in *npool.GetGoodReviewRequest) (*npool.GetGoodReviewResponse, error) {
 	resp, err := goodreview.Get(ctx, in)
 	if err != nil {
-		logger.Sugar().Errorf("delete good review error: %w", err)
+		logger.Sugar().Errorf("get good reviews error: %w", err)
 		return &npool.GetGoodReviewResponse{}, status.Error(codes.Internal, "internal server error")
 	}
 	return resp, nil
