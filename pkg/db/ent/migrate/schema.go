@@ -8,6 +8,33 @@ import (
 )
 
 var (
+	// AppGoodsColumns holds the columns for the "app_goods" table.
+	AppGoodsColumns = []*schema.Column{
+		{Name: "id", Type: field.TypeUUID, Unique: true},
+		{Name: "app_id", Type: field.TypeUUID},
+		{Name: "good_id", Type: field.TypeUUID},
+		{Name: "authorized", Type: field.TypeBool, Default: false},
+		{Name: "online", Type: field.TypeBool, Default: false},
+		{Name: "init_area_strategy", Type: field.TypeEnum, Enums: []string{"all", "none"}},
+		{Name: "price", Type: field.TypeUint64},
+		{Name: "gas_price", Type: field.TypeUint64},
+		{Name: "create_at", Type: field.TypeInt64},
+		{Name: "update_at", Type: field.TypeInt64},
+		{Name: "delete_at", Type: field.TypeInt64},
+	}
+	// AppGoodsTable holds the schema information for the "app_goods" table.
+	AppGoodsTable = &schema.Table{
+		Name:       "app_goods",
+		Columns:    AppGoodsColumns,
+		PrimaryKey: []*schema.Column{AppGoodsColumns[0]},
+		Indexes: []*schema.Index{
+			{
+				Name:    "appgood_good_id_app_id",
+				Unique:  true,
+				Columns: []*schema.Column{AppGoodsColumns[2], AppGoodsColumns[1]},
+			},
+		},
+	}
 	// AppTargetAreasColumns holds the columns for the "app_target_areas" table.
 	AppTargetAreasColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeUUID, Unique: true},
@@ -130,6 +157,7 @@ var (
 	}
 	// Tables holds all the tables in the schema.
 	Tables = []*schema.Table{
+		AppGoodsTable,
 		AppTargetAreasTable,
 		DeviceInfosTable,
 		GoodInfosTable,

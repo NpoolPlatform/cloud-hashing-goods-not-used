@@ -463,7 +463,7 @@ message AppGoodInfo {
     double GasPrice = 3314;
     bool Authorized = 3315;
     bool Online = 3316;
-    bool InitAuthorizeAllTargetArea = 3317;
+    string InitAreaStrategy = 3317;
 }
 
 message SetAppGoodPriceRequest {

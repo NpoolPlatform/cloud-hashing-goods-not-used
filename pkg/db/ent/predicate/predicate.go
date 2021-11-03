@@ -6,6 +6,9 @@ import (
 	"entgo.io/ent/dialect/sql"
 )
 
+// AppGood is the predicate function for appgood builders.
+type AppGood func(*sql.Selector)
+
 // AppTargetArea is the predicate function for apptargetarea builders.
 type AppTargetArea func(*sql.Selector)
 

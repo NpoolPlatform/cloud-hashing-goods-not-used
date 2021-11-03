@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"sync"
 
+	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/appgood"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/apptargetarea"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/deviceinfo"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/goodinfo"
@@ -27,12 +28,965 @@ const (
 	OpUpdateOne = ent.OpUpdateOne
 
 	// Node types.
+	TypeAppGood        = "AppGood"
 	TypeAppTargetArea  = "AppTargetArea"
 	TypeDeviceInfo     = "DeviceInfo"
 	TypeGoodInfo       = "GoodInfo"
 	TypeTargetArea     = "TargetArea"
 	TypeVendorLocation = "VendorLocation"
 )
+
+// AppGoodMutation represents an operation that mutates the AppGood nodes in the graph.
+type AppGoodMutation struct {
+	config
+	op                 Op
+	typ                string
+	id                 *uuid.UUID
+	app_id             *uuid.UUID
+	good_id            *uuid.UUID
+	authorized         *bool
+	online             *bool
+	init_area_strategy *appgood.InitAreaStrategy
+	price              *uint64
+	addprice           *uint64
+	gas_price          *uint64
+	addgas_price       *uint64
+	create_at          *int64
+	addcreate_at       *int64
+	update_at          *int64
+	addupdate_at       *int64
+	delete_at          *int64
+	adddelete_at       *int64
+	clearedFields      map[string]struct{}
+	done               bool
+	oldValue           func(context.Context) (*AppGood, error)
+	predicates         []predicate.AppGood
+}
+
+var _ ent.Mutation = (*AppGoodMutation)(nil)
+
+// appgoodOption allows management of the mutation configuration using functional options.
+type appgoodOption func(*AppGoodMutation)
+
+// newAppGoodMutation creates new mutation for the AppGood entity.
+func newAppGoodMutation(c config, op Op, opts ...appgoodOption) *AppGoodMutation {
+	m := &AppGoodMutation{
+		config:        c,
+		op:            op,
+		typ:           TypeAppGood,
+		clearedFields: make(map[string]struct{}),
+	}
+	for _, opt := range opts {
+		opt(m)
+	}
+	return m
+}
+
+// withAppGoodID sets the ID field of the mutation.
+func withAppGoodID(id uuid.UUID) appgoodOption {
+	return func(m *AppGoodMutation) {
+		var (
+			err   error
+			once  sync.Once
+			value *AppGood
+		)
+		m.oldValue = func(ctx context.Context) (*AppGood, error) {
+			once.Do(func() {
+				if m.done {
+					err = fmt.Errorf("querying old values post mutation is not allowed")
+				} else {
+					value, err = m.Client().AppGood.Get(ctx, id)
+				}
+			})
+			return value, err
+		}
+		m.id = &id
+	}
+}
+
+// withAppGood sets the old AppGood of the mutation.
+func withAppGood(node *AppGood) appgoodOption {
+	return func(m *AppGoodMutation) {
+		m.oldValue = func(context.Context) (*AppGood, error) {
+			return node, nil
+		}
+		m.id = &node.ID
+	}
+}
+
+// Client returns a new `ent.Client` from the mutation. If the mutation was
+// executed in a transaction (ent.Tx), a transactional client is returned.
+func (m AppGoodMutation) Client() *Client {
+	client := &Client{config: m.config}
+	client.init()
+	return client
+}
+
+// Tx returns an `ent.Tx` for mutations that were executed in transactions;
+// it returns an error otherwise.
+func (m AppGoodMutation) Tx() (*Tx, error) {
+	if _, ok := m.driver.(*txDriver); !ok {
+		return nil, fmt.Errorf("ent: mutation is not running in a transaction")
+	}
+	tx := &Tx{config: m.config}
+	tx.init()
+	return tx, nil
+}
+
+// SetID sets the value of the id field. Note that this
+// operation is only accepted on creation of AppGood entities.
+func (m *AppGoodMutation) SetID(id uuid.UUID) {
+	m.id = &id
+}
+
+// ID returns the ID value in the mutation. Note that the ID is only available
+// if it was provided to the builder or after it was returned from the database.
+func (m *AppGoodMutation) ID() (id uuid.UUID, exists bool) {
+	if m.id == nil {
+		return
+	}
+	return *m.id, true
+}
+
+// SetAppID sets the "app_id" field.
+func (m *AppGoodMutation) SetAppID(u uuid.UUID) {
+	m.app_id = &u
+}
+
+// AppID returns the value of the "app_id" field in the mutation.
+func (m *AppGoodMutation) AppID() (r uuid.UUID, exists bool) {
+	v := m.app_id
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldAppID returns the old "app_id" field's value of the AppGood entity.
+// If the AppGood object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *AppGoodMutation) OldAppID(ctx context.Context) (v uuid.UUID, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, fmt.Errorf("OldAppID is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, fmt.Errorf("OldAppID requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldAppID: %w", err)
+	}
+	return oldValue.AppID, nil
+}
+
+// ResetAppID resets all changes to the "app_id" field.
+func (m *AppGoodMutation) ResetAppID() {
+	m.app_id = nil
+}
+
+// SetGoodID sets the "good_id" field.
+func (m *AppGoodMutation) SetGoodID(u uuid.UUID) {
+	m.good_id = &u
+}
+
+// GoodID returns the value of the "good_id" field in the mutation.
+func (m *AppGoodMutation) GoodID() (r uuid.UUID, exists bool) {
+	v := m.good_id
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldGoodID returns the old "good_id" field's value of the AppGood entity.
+// If the AppGood object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *AppGoodMutation) OldGoodID(ctx context.Context) (v uuid.UUID, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, fmt.Errorf("OldGoodID is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, fmt.Errorf("OldGoodID requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldGoodID: %w", err)
+	}
+	return oldValue.GoodID, nil
+}
+
+// ResetGoodID resets all changes to the "good_id" field.
+func (m *AppGoodMutation) ResetGoodID() {
+	m.good_id = nil
+}
+
+// SetAuthorized sets the "authorized" field.
+func (m *AppGoodMutation) SetAuthorized(b bool) {
+	m.authorized = &b
+}
+
+// Authorized returns the value of the "authorized" field in the mutation.
+func (m *AppGoodMutation) Authorized() (r bool, exists bool) {
+	v := m.authorized
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldAuthorized returns the old "authorized" field's value of the AppGood entity.
+// If the AppGood object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *AppGoodMutation) OldAuthorized(ctx context.Context) (v bool, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, fmt.Errorf("OldAuthorized is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, fmt.Errorf("OldAuthorized requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldAuthorized: %w", err)
+	}
+	return oldValue.Authorized, nil
+}
+
+// ResetAuthorized resets all changes to the "authorized" field.
+func (m *AppGoodMutation) ResetAuthorized() {
+	m.authorized = nil
+}
+
+// SetOnline sets the "online" field.
+func (m *AppGoodMutation) SetOnline(b bool) {
+	m.online = &b
+}
+
+// Online returns the value of the "online" field in the mutation.
+func (m *AppGoodMutation) Online() (r bool, exists bool) {
+	v := m.online
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldOnline returns the old "online" field's value of the AppGood entity.
+// If the AppGood object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *AppGoodMutation) OldOnline(ctx context.Context) (v bool, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, fmt.Errorf("OldOnline is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, fmt.Errorf("OldOnline requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldOnline: %w", err)
+	}
+	return oldValue.Online, nil
+}
+
+// ResetOnline resets all changes to the "online" field.
+func (m *AppGoodMutation) ResetOnline() {
+	m.online = nil
+}
+
+// SetInitAreaStrategy sets the "init_area_strategy" field.
+func (m *AppGoodMutation) SetInitAreaStrategy(aas appgood.InitAreaStrategy) {
+	m.init_area_strategy = &aas
+}
+
+// InitAreaStrategy returns the value of the "init_area_strategy" field in the mutation.
+func (m *AppGoodMutation) InitAreaStrategy() (r appgood.InitAreaStrategy, exists bool) {
+	v := m.init_area_strategy
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldInitAreaStrategy returns the old "init_area_strategy" field's value of the AppGood entity.
+// If the AppGood object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *AppGoodMutation) OldInitAreaStrategy(ctx context.Context) (v appgood.InitAreaStrategy, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, fmt.Errorf("OldInitAreaStrategy is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, fmt.Errorf("OldInitAreaStrategy requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldInitAreaStrategy: %w", err)
+	}
+	return oldValue.InitAreaStrategy, nil
+}
+
+// ResetInitAreaStrategy resets all changes to the "init_area_strategy" field.
+func (m *AppGoodMutation) ResetInitAreaStrategy() {
+	m.init_area_strategy = nil
+}
+
+// SetPrice sets the "price" field.
+func (m *AppGoodMutation) SetPrice(u uint64) {
+	m.price = &u
+	m.addprice = nil
+}
+
+// Price returns the value of the "price" field in the mutation.
+func (m *AppGoodMutation) Price() (r uint64, exists bool) {
+	v := m.price
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldPrice returns the old "price" field's value of the AppGood entity.
+// If the AppGood object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *AppGoodMutation) OldPrice(ctx context.Context) (v uint64, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, fmt.Errorf("OldPrice is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, fmt.Errorf("OldPrice requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldPrice: %w", err)
+	}
+	return oldValue.Price, nil
+}
+
+// AddPrice adds u to the "price" field.
+func (m *AppGoodMutation) AddPrice(u uint64) {
+	if m.addprice != nil {
+		*m.addprice += u
+	} else {
+		m.addprice = &u
+	}
+}
+
+// AddedPrice returns the value that was added to the "price" field in this mutation.
+func (m *AppGoodMutation) AddedPrice() (r uint64, exists bool) {
+	v := m.addprice
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// ResetPrice resets all changes to the "price" field.
+func (m *AppGoodMutation) ResetPrice() {
+	m.price = nil
+	m.addprice = nil
+}
+
+// SetGasPrice sets the "gas_price" field.
+func (m *AppGoodMutation) SetGasPrice(u uint64) {
+	m.gas_price = &u
+	m.addgas_price = nil
+}
+
+// GasPrice returns the value of the "gas_price" field in the mutation.
+func (m *AppGoodMutation) GasPrice() (r uint64, exists bool) {
+	v := m.gas_price
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldGasPrice returns the old "gas_price" field's value of the AppGood entity.
+// If the AppGood object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *AppGoodMutation) OldGasPrice(ctx context.Context) (v uint64, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, fmt.Errorf("OldGasPrice is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, fmt.Errorf("OldGasPrice requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldGasPrice: %w", err)
+	}
+	return oldValue.GasPrice, nil
+}
+
+// AddGasPrice adds u to the "gas_price" field.
+func (m *AppGoodMutation) AddGasPrice(u uint64) {
+	if m.addgas_price != nil {
+		*m.addgas_price += u
+	} else {
+		m.addgas_price = &u
+	}
+}
+
+// AddedGasPrice returns the value that was added to the "gas_price" field in this mutation.
+func (m *AppGoodMutation) AddedGasPrice() (r uint64, exists bool) {
+	v := m.addgas_price
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// ResetGasPrice resets all changes to the "gas_price" field.
+func (m *AppGoodMutation) ResetGasPrice() {
+	m.gas_price = nil
+	m.addgas_price = nil
+}
+
+// SetCreateAt sets the "create_at" field.
+func (m *AppGoodMutation) SetCreateAt(i int64) {
+	m.create_at = &i
+	m.addcreate_at = nil
+}
+
+// CreateAt returns the value of the "create_at" field in the mutation.
+func (m *AppGoodMutation) CreateAt() (r int64, exists bool) {
+	v := m.create_at
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldCreateAt returns the old "create_at" field's value of the AppGood entity.
+// If the AppGood object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *AppGoodMutation) OldCreateAt(ctx context.Context) (v int64, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, fmt.Errorf("OldCreateAt is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, fmt.Errorf("OldCreateAt requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldCreateAt: %w", err)
+	}
+	return oldValue.CreateAt, nil
+}
+
+// AddCreateAt adds i to the "create_at" field.
+func (m *AppGoodMutation) AddCreateAt(i int64) {
+	if m.addcreate_at != nil {
+		*m.addcreate_at += i
+	} else {
+		m.addcreate_at = &i
+	}
+}
+
+// AddedCreateAt returns the value that was added to the "create_at" field in this mutation.
+func (m *AppGoodMutation) AddedCreateAt() (r int64, exists bool) {
+	v := m.addcreate_at
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// ResetCreateAt resets all changes to the "create_at" field.
+func (m *AppGoodMutation) ResetCreateAt() {
+	m.create_at = nil
+	m.addcreate_at = nil
+}
+
+// SetUpdateAt sets the "update_at" field.
+func (m *AppGoodMutation) SetUpdateAt(i int64) {
+	m.update_at = &i
+	m.addupdate_at = nil
+}
+
+// UpdateAt returns the value of the "update_at" field in the mutation.
+func (m *AppGoodMutation) UpdateAt() (r int64, exists bool) {
+	v := m.update_at
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldUpdateAt returns the old "update_at" field's value of the AppGood entity.
+// If the AppGood object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *AppGoodMutation) OldUpdateAt(ctx context.Context) (v int64, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, fmt.Errorf("OldUpdateAt is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, fmt.Errorf("OldUpdateAt requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldUpdateAt: %w", err)
+	}
+	return oldValue.UpdateAt, nil
+}
+
+// AddUpdateAt adds i to the "update_at" field.
+func (m *AppGoodMutation) AddUpdateAt(i int64) {
+	if m.addupdate_at != nil {
+		*m.addupdate_at += i
+	} else {
+		m.addupdate_at = &i
+	}
+}
+
+// AddedUpdateAt returns the value that was added to the "update_at" field in this mutation.
+func (m *AppGoodMutation) AddedUpdateAt() (r int64, exists bool) {
+	v := m.addupdate_at
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// ResetUpdateAt resets all changes to the "update_at" field.
+func (m *AppGoodMutation) ResetUpdateAt() {
+	m.update_at = nil
+	m.addupdate_at = nil
+}
+
+// SetDeleteAt sets the "delete_at" field.
+func (m *AppGoodMutation) SetDeleteAt(i int64) {
+	m.delete_at = &i
+	m.adddelete_at = nil
+}
+
+// DeleteAt returns the value of the "delete_at" field in the mutation.
+func (m *AppGoodMutation) DeleteAt() (r int64, exists bool) {
+	v := m.delete_at
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldDeleteAt returns the old "delete_at" field's value of the AppGood entity.
+// If the AppGood object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *AppGoodMutation) OldDeleteAt(ctx context.Context) (v int64, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, fmt.Errorf("OldDeleteAt is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, fmt.Errorf("OldDeleteAt requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldDeleteAt: %w", err)
+	}
+	return oldValue.DeleteAt, nil
+}
+
+// AddDeleteAt adds i to the "delete_at" field.
+func (m *AppGoodMutation) AddDeleteAt(i int64) {
+	if m.adddelete_at != nil {
+		*m.adddelete_at += i
+	} else {
+		m.adddelete_at = &i
+	}
+}
+
+// AddedDeleteAt returns the value that was added to the "delete_at" field in this mutation.
+func (m *AppGoodMutation) AddedDeleteAt() (r int64, exists bool) {
+	v := m.adddelete_at
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// ResetDeleteAt resets all changes to the "delete_at" field.
+func (m *AppGoodMutation) ResetDeleteAt() {
+	m.delete_at = nil
+	m.adddelete_at = nil
+}
+
+// Where appends a list predicates to the AppGoodMutation builder.
+func (m *AppGoodMutation) Where(ps ...predicate.AppGood) {
+	m.predicates = append(m.predicates, ps...)
+}
+
+// Op returns the operation name.
+func (m *AppGoodMutation) Op() Op {
+	return m.op
+}
+
+// Type returns the node type of this mutation (AppGood).
+func (m *AppGoodMutation) Type() string {
+	return m.typ
+}
+
+// Fields returns all fields that were changed during this mutation. Note that in
+// order to get all numeric fields that were incremented/decremented, call
+// AddedFields().
+func (m *AppGoodMutation) Fields() []string {
+	fields := make([]string, 0, 10)
+	if m.app_id != nil {
+		fields = append(fields, appgood.FieldAppID)
+	}
+	if m.good_id != nil {
+		fields = append(fields, appgood.FieldGoodID)
+	}
+	if m.authorized != nil {
+		fields = append(fields, appgood.FieldAuthorized)
+	}
+	if m.online != nil {
+		fields = append(fields, appgood.FieldOnline)
+	}
+	if m.init_area_strategy != nil {
+		fields = append(fields, appgood.FieldInitAreaStrategy)
+	}
+	if m.price != nil {
+		fields = append(fields, appgood.FieldPrice)
+	}
+	if m.gas_price != nil {
+		fields = append(fields, appgood.FieldGasPrice)
+	}
+	if m.create_at != nil {
+		fields = append(fields, appgood.FieldCreateAt)
+	}
+	if m.update_at != nil {
+		fields = append(fields, appgood.FieldUpdateAt)
+	}
+	if m.delete_at != nil {
+		fields = append(fields, appgood.FieldDeleteAt)
+	}
+	return fields
+}
+
+// Field returns the value of a field with the given name. The second boolean
+// return value indicates that this field was not set, or was not defined in the
+// schema.
+func (m *AppGoodMutation) Field(name string) (ent.Value, bool) {
+	switch name {
+	case appgood.FieldAppID:
+		return m.AppID()
+	case appgood.FieldGoodID:
+		return m.GoodID()
+	case appgood.FieldAuthorized:
+		return m.Authorized()
+	case appgood.FieldOnline:
+		return m.Online()
+	case appgood.FieldInitAreaStrategy:
+		return m.InitAreaStrategy()
+	case appgood.FieldPrice:
+		return m.Price()
+	case appgood.FieldGasPrice:
+		return m.GasPrice()
+	case appgood.FieldCreateAt:
+		return m.CreateAt()
+	case appgood.FieldUpdateAt:
+		return m.UpdateAt()
+	case appgood.FieldDeleteAt:
+		return m.DeleteAt()
+	}
+	return nil, false
+}
+
+// OldField returns the old value of the field from the database. An error is
+// returned if the mutation operation is not UpdateOne, or the query to the
+// database failed.
+func (m *AppGoodMutation) OldField(ctx context.Context, name string) (ent.Value, error) {
+	switch name {
+	case appgood.FieldAppID:
+		return m.OldAppID(ctx)
+	case appgood.FieldGoodID:
+		return m.OldGoodID(ctx)
+	case appgood.FieldAuthorized:
+		return m.OldAuthorized(ctx)
+	case appgood.FieldOnline:
+		return m.OldOnline(ctx)
+	case appgood.FieldInitAreaStrategy:
+		return m.OldInitAreaStrategy(ctx)
+	case appgood.FieldPrice:
+		return m.OldPrice(ctx)
+	case appgood.FieldGasPrice:
+		return m.OldGasPrice(ctx)
+	case appgood.FieldCreateAt:
+		return m.OldCreateAt(ctx)
+	case appgood.FieldUpdateAt:
+		return m.OldUpdateAt(ctx)
+	case appgood.FieldDeleteAt:
+		return m.OldDeleteAt(ctx)
+	}
+	return nil, fmt.Errorf("unknown AppGood field %s", name)
+}
+
+// SetField sets the value of a field with the given name. It returns an error if
+// the field is not defined in the schema, or if the type mismatched the field
+// type.
+func (m *AppGoodMutation) SetField(name string, value ent.Value) error {
+	switch name {
+	case appgood.FieldAppID:
+		v, ok := value.(uuid.UUID)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetAppID(v)
+		return nil
+	case appgood.FieldGoodID:
+		v, ok := value.(uuid.UUID)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetGoodID(v)
+		return nil
+	case appgood.FieldAuthorized:
+		v, ok := value.(bool)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetAuthorized(v)
+		return nil
+	case appgood.FieldOnline:
+		v, ok := value.(bool)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetOnline(v)
+		return nil
+	case appgood.FieldInitAreaStrategy:
+		v, ok := value.(appgood.InitAreaStrategy)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetInitAreaStrategy(v)
+		return nil
+	case appgood.FieldPrice:
+		v, ok := value.(uint64)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetPrice(v)
+		return nil
+	case appgood.FieldGasPrice:
+		v, ok := value.(uint64)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetGasPrice(v)
+		return nil
+	case appgood.FieldCreateAt:
+		v, ok := value.(int64)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetCreateAt(v)
+		return nil
+	case appgood.FieldUpdateAt:
+		v, ok := value.(int64)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetUpdateAt(v)
+		return nil
+	case appgood.FieldDeleteAt:
+		v, ok := value.(int64)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetDeleteAt(v)
+		return nil
+	}
+	return fmt.Errorf("unknown AppGood field %s", name)
+}
+
+// AddedFields returns all numeric fields that were incremented/decremented during
+// this mutation.
+func (m *AppGoodMutation) AddedFields() []string {
+	var fields []string
+	if m.addprice != nil {
+		fields = append(fields, appgood.FieldPrice)
+	}
+	if m.addgas_price != nil {
+		fields = append(fields, appgood.FieldGasPrice)
+	}
+	if m.addcreate_at != nil {
+		fields = append(fields, appgood.FieldCreateAt)
+	}
+	if m.addupdate_at != nil {
+		fields = append(fields, appgood.FieldUpdateAt)
+	}
+	if m.adddelete_at != nil {
+		fields = append(fields, appgood.FieldDeleteAt)
+	}
+	return fields
+}
+
+// AddedField returns the numeric value that was incremented/decremented on a field
+// with the given name. The second boolean return value indicates that this field
+// was not set, or was not defined in the schema.
+func (m *AppGoodMutation) AddedField(name string) (ent.Value, bool) {
+	switch name {
+	case appgood.FieldPrice:
+		return m.AddedPrice()
+	case appgood.FieldGasPrice:
+		return m.AddedGasPrice()
+	case appgood.FieldCreateAt:
+		return m.AddedCreateAt()
+	case appgood.FieldUpdateAt:
+		return m.AddedUpdateAt()
+	case appgood.FieldDeleteAt:
+		return m.AddedDeleteAt()
+	}
+	return nil, false
+}
+
+// AddField adds the value to the field with the given name. It returns an error if
+// the field is not defined in the schema, or if the type mismatched the field
+// type.
+func (m *AppGoodMutation) AddField(name string, value ent.Value) error {
+	switch name {
+	case appgood.FieldPrice:
+		v, ok := value.(uint64)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.AddPrice(v)
+		return nil
+	case appgood.FieldGasPrice:
+		v, ok := value.(uint64)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.AddGasPrice(v)
+		return nil
+	case appgood.FieldCreateAt:
+		v, ok := value.(int64)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.AddCreateAt(v)
+		return nil
+	case appgood.FieldUpdateAt:
+		v, ok := value.(int64)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.AddUpdateAt(v)
+		return nil
+	case appgood.FieldDeleteAt:
+		v, ok := value.(int64)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.AddDeleteAt(v)
+		return nil
+	}
+	return fmt.Errorf("unknown AppGood numeric field %s", name)
+}
+
+// ClearedFields returns all nullable fields that were cleared during this
+// mutation.
+func (m *AppGoodMutation) ClearedFields() []string {
+	return nil
+}
+
+// FieldCleared returns a boolean indicating if a field with the given name was
+// cleared in this mutation.
+func (m *AppGoodMutation) FieldCleared(name string) bool {
+	_, ok := m.clearedFields[name]
+	return ok
+}
+
+// ClearField clears the value of the field with the given name. It returns an
+// error if the field is not defined in the schema.
+func (m *AppGoodMutation) ClearField(name string) error {
+	return fmt.Errorf("unknown AppGood nullable field %s", name)
+}
+
+// ResetField resets all changes in the mutation for the field with the given name.
+// It returns an error if the field is not defined in the schema.
+func (m *AppGoodMutation) ResetField(name string) error {
+	switch name {
+	case appgood.FieldAppID:
+		m.ResetAppID()
+		return nil
+	case appgood.FieldGoodID:
+		m.ResetGoodID()
+		return nil
+	case appgood.FieldAuthorized:
+		m.ResetAuthorized()
+		return nil
+	case appgood.FieldOnline:
+		m.ResetOnline()
+		return nil
+	case appgood.FieldInitAreaStrategy:
+		m.ResetInitAreaStrategy()
+		return nil
+	case appgood.FieldPrice:
+		m.ResetPrice()
+		return nil
+	case appgood.FieldGasPrice:
+		m.ResetGasPrice()
+		return nil
+	case appgood.FieldCreateAt:
+		m.ResetCreateAt()
+		return nil
+	case appgood.FieldUpdateAt:
+		m.ResetUpdateAt()
+		return nil
+	case appgood.FieldDeleteAt:
+		m.ResetDeleteAt()
+		return nil
+	}
+	return fmt.Errorf("unknown AppGood field %s", name)
+}
+
+// AddedEdges returns all edge names that were set/added in this mutation.
+func (m *AppGoodMutation) AddedEdges() []string {
+	edges := make([]string, 0, 0)
+	return edges
+}
+
+// AddedIDs returns all IDs (to other nodes) that were added for the given edge
+// name in this mutation.
+func (m *AppGoodMutation) AddedIDs(name string) []ent.Value {
+	return nil
+}
+
+// RemovedEdges returns all edge names that were removed in this mutation.
+func (m *AppGoodMutation) RemovedEdges() []string {
+	edges := make([]string, 0, 0)
+	return edges
+}
+
+// RemovedIDs returns all IDs (to other nodes) that were removed for the edge with
+// the given name in this mutation.
+func (m *AppGoodMutation) RemovedIDs(name string) []ent.Value {
+	return nil
+}
+
+// ClearedEdges returns all edge names that were cleared in this mutation.
+func (m *AppGoodMutation) ClearedEdges() []string {
+	edges := make([]string, 0, 0)
+	return edges
+}
+
+// EdgeCleared returns a boolean which indicates if the edge with the given name
+// was cleared in this mutation.
+func (m *AppGoodMutation) EdgeCleared(name string) bool {
+	return false
+}
+
+// ClearEdge clears the value of the edge with the given name. It returns an error
+// if that edge is not defined in the schema.
+func (m *AppGoodMutation) ClearEdge(name string) error {
+	return fmt.Errorf("unknown AppGood unique edge %s", name)
+}
+
+// ResetEdge resets all changes to the edge with the given name in this mutation.
+// It returns an error if the edge is not defined in the schema.
+func (m *AppGoodMutation) ResetEdge(name string) error {
+	return fmt.Errorf("unknown AppGood edge %s", name)
+}
 
 // AppTargetAreaMutation represents an operation that mutates the AppTargetArea nodes in the graph.
 type AppTargetAreaMutation struct {

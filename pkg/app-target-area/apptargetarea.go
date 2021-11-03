@@ -29,6 +29,10 @@ func validateAppTargetArea(info *npool.AppTargetAreaInfo) error {
 }
 
 func Authorize(ctx context.Context, in *npool.AuthorizeAppTargetAreaRequest) (*npool.AuthorizeAppTargetAreaResponse, error) {
+	if err := validateAppTargetArea(in.GetInfo()); err != nil {
+		return nil, xerrors.Errorf("invalid parameter: %v", err)
+	}
+
 	id, err := uuid.Parse(in.GetInfo().GetID())
 	if err == nil {
 		info, err := db.Client().
@@ -48,10 +52,6 @@ func Authorize(ctx context.Context, in *npool.AuthorizeAppTargetAreaRequest) (*n
 				TargetAreaID: info.TargetAreaID.String(),
 			},
 		}, nil
-	}
-
-	if err := validateAppTargetArea(in.GetInfo()); err != nil {
-		return nil, xerrors.Errorf("invalid parameter: %v", err)
 	}
 
 	info, err := db.Client().

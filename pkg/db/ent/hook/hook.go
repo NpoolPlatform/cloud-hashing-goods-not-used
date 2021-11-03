@@ -9,6 +9,19 @@ import (
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent"
 )
 
+// The AppGoodFunc type is an adapter to allow the use of ordinary
+// function as AppGood mutator.
+type AppGoodFunc func(context.Context, *ent.AppGoodMutation) (ent.Value, error)
+
+// Mutate calls f(ctx, m).
+func (f AppGoodFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, error) {
+	mv, ok := m.(*ent.AppGoodMutation)
+	if !ok {
+		return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.AppGoodMutation", m)
+	}
+	return f(ctx, mv)
+}
+
 // The AppTargetAreaFunc type is an adapter to allow the use of ordinary
 // function as AppTargetArea mutator.
 type AppTargetAreaFunc func(context.Context, *ent.AppTargetAreaMutation) (ent.Value, error)

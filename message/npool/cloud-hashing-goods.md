@@ -110,7 +110,7 @@
 | GasPrice | [double](#double) |  |  |
 | Authorized | [bool](#bool) |  |  |
 | Online | [bool](#bool) |  |  |
-| InitAuthorizeAllTargetArea | [bool](#bool) |  |  |
+| InitAreaStrategy | [string](#string) |  |  |
 
 
 
