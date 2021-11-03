@@ -38,8 +38,6 @@ func Authorize(ctx context.Context, in *npool.AuthorizeAppTargetAreaRequest) (*n
 		info, err := db.Client().
 			AppTargetArea.
 			UpdateOneID(id).
-			SetAppID(uuid.MustParse(in.GetInfo().GetAppID())).
-			SetTargetAreaID(uuid.MustParse(in.GetInfo().GetTargetAreaID())).
 			SetDeleteAt(0).
 			Save(ctx)
 		if err != nil {

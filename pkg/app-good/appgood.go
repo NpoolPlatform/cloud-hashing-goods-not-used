@@ -2,11 +2,12 @@ package appgood
 
 import (
 	"context"
-	_ "time" //nolint
+	"time"
 
 	"github.com/NpoolPlatform/cloud-hashing-goods/message/npool"
 
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db"
+	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/appgood"
 
 	"github.com/NpoolPlatform/go-service-framework/pkg/price"
@@ -30,6 +31,19 @@ func validateAppGood(info *npool.AppGoodInfo) error {
 	return nil
 }
 
+func dbRowToAppGood(info *ent.AppGood) *npool.AppGoodInfo {
+	return &npool.AppGoodInfo{
+		ID:               info.ID.String(),
+		AppID:            info.AppID.String(),
+		GoodID:           info.GoodID.String(),
+		Authorized:       info.Authorized,
+		Online:           info.Online,
+		InitAreaStrategy: string(info.InitAreaStrategy),
+		Price:            price.DBPriceToVisualPrice(info.Price),
+		GasPrice:         price.DBPriceToVisualPrice(info.GasPrice),
+	}
+}
+
 func Authorize(ctx context.Context, in *npool.AuthorizeAppGoodRequest) (*npool.AuthorizeAppGoodResponse, error) {
 	if err := validateAppGood(in.GetInfo()); err != nil {
 		return nil, xerrors.Errorf("invalid parameter: %v", err)
@@ -40,25 +54,14 @@ func Authorize(ctx context.Context, in *npool.AuthorizeAppGoodRequest) (*npool.A
 		info, err := db.Client().
 			AppGood.
 			UpdateOneID(id).
-			SetAppID(uuid.MustParse(in.GetInfo().GetAppID())).
-			SetGoodID(uuid.MustParse(in.GetInfo().GetGoodID())).
 			SetAuthorized(true).
 			SetDeleteAt(0).
 			Save(ctx)
 		if err != nil {
-			return nil, xerrors.Errorf("fail update app good: %v", err)
+			return nil, xerrors.Errorf("fail authorize app good: %v", err)
 		}
 		return &npool.AuthorizeAppGoodResponse{
-			Info: &npool.AppGoodInfo{
-				ID:               info.ID.String(),
-				AppID:            info.AppID.String(),
-				GoodID:           info.GoodID.String(),
-				Authorized:       info.Authorized,
-				Online:           info.Online,
-				InitAreaStrategy: string(info.InitAreaStrategy),
-				Price:            price.DBPriceToVisualPrice(info.Price),
-				GasPrice:         price.DBPriceToVisualPrice(info.GasPrice),
-			},
+			Info: dbRowToAppGood(info),
 		}, nil
 	}
 
@@ -78,25 +81,80 @@ func Authorize(ctx context.Context, in *npool.AuthorizeAppGoodRequest) (*npool.A
 	}
 
 	return &npool.AuthorizeAppGoodResponse{
-		Info: &npool.AppGoodInfo{
-			ID:               info.ID.String(),
-			AppID:            info.AppID.String(),
-			GoodID:           info.GoodID.String(),
-			Authorized:       info.Authorized,
-			Online:           info.Online,
-			InitAreaStrategy: string(info.InitAreaStrategy),
-			Price:            price.DBPriceToVisualPrice(info.Price),
-			GasPrice:         price.DBPriceToVisualPrice(info.GasPrice),
-		},
+		Info: dbRowToAppGood(info),
+	}, nil
+}
+
+func Check(ctx context.Context, in *npool.CheckAppGoodRequest) (*npool.CheckAppGoodResponse, error) {
+	if err := validateAppGood(in.GetInfo()); err != nil {
+		return nil, xerrors.Errorf("invalid parameter: %v", err)
+	}
+
+	infos, err := db.Client().
+		AppGood.
+		Query().
+		Where(
+			appgood.And(
+				appgood.AppID(uuid.MustParse(in.GetInfo().GetAppID())),
+				appgood.GoodID(uuid.MustParse(in.GetInfo().GetGoodID())),
+				appgood.DeleteAt(0),
+			),
+		).
+		All(ctx)
+	if err != nil {
+		return nil, xerrors.Errorf("fail query app good: %v", err)
+	}
+	if len(infos) == 0 {
+		return nil, xerrors.Errorf("empty app good")
+	}
+
+	return &npool.CheckAppGoodResponse{
+		Info: dbRowToAppGood(infos[0]),
 	}, nil
 }
 
 func SetAppGoodPrice(ctx context.Context, in *npool.SetAppGoodPriceRequest) (*npool.SetAppGoodPriceResponse, error) {
-	return nil, nil
-}
+	if err := validateAppGood(in.GetInfo()); err != nil {
+		return nil, xerrors.Errorf("invalid parameter: %v", err)
+	}
 
-func Check(ctx context.Context, in *npool.CheckAppGoodRequest) (*npool.CheckAppGoodResponse, error) {
-	return nil, nil
+	id, err := uuid.Parse(in.GetInfo().GetID())
+	if err != nil {
+		return nil, xerrors.Errorf("invalid app good id: %v", err)
+	}
+
+	info1, err := Check(ctx, &npool.CheckAppGoodRequest{
+		Info: in.GetInfo(),
+	})
+	if err != nil {
+		return nil, xerrors.Errorf("fail check app good: %v", err)
+	}
+
+	if !info1.Info.Authorized {
+		return nil, xerrors.Errorf("good not authorize to app")
+	}
+	if info1.Info.Online {
+		return nil, xerrors.Errorf("cannot set price to online good")
+	}
+
+	if price.VisualPriceToDBPrice(in.GetInfo().GetPrice()) == 0 ||
+		price.VisualPriceToDBPrice(in.GetInfo().GetGasPrice()) == 0 {
+		return nil, xerrors.Errorf("price should be greater than 0")
+	}
+
+	info, err := db.Client().
+		AppGood.
+		UpdateOneID(id).
+		SetPrice(price.VisualPriceToDBPrice(in.GetInfo().GetPrice())).
+		SetGasPrice(price.VisualPriceToDBPrice(in.GetInfo().GetGasPrice())).
+		Save(ctx)
+	if err != nil {
+		return nil, xerrors.Errorf("fail set price app good: %v", err)
+	}
+
+	return &npool.SetAppGoodPriceResponse{
+		Info: dbRowToAppGood(info),
+	}, nil
 }
 
 func Onsale(ctx context.Context, in *npool.OnsaleAppGoodRequest) (*npool.OnsaleAppGoodResponse, error) {
@@ -108,5 +166,27 @@ func Offsale(ctx context.Context, in *npool.OffsaleAppGoodRequest) (*npool.Offsa
 }
 
 func Unauthorize(ctx context.Context, in *npool.UnauthorizeAppGoodRequest) (*npool.UnauthorizeAppGoodResponse, error) {
-	return nil, nil
+	if err := validateAppGood(in.GetInfo()); err != nil {
+		return nil, xerrors.Errorf("invalid parameter: %v", err)
+	}
+
+	id, err := uuid.Parse(in.GetInfo().GetID())
+	if err != nil {
+		return nil, xerrors.Errorf("invalid app good id: %v", err)
+	}
+
+	info, err := db.Client().
+		AppGood.
+		UpdateOneID(id).
+		SetAuthorized(false).
+		SetOnline(false).
+		SetDeleteAt(time.Now().UnixNano()).
+		Save(ctx)
+	if err != nil {
+		return nil, xerrors.Errorf("fail unauthorize app good: %v", err)
+	}
+
+	return &npool.UnauthorizeAppGoodResponse{
+		Info: dbRowToAppGood(info),
+	}, nil
 }

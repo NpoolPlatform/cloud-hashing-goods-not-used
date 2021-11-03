@@ -56,4 +56,67 @@ func TestAppGoodCRUD(t *testing.T) {
 		assert.NotEqual(t, resp.Info.ID, uuid.UUID{})
 		assertAppGood(t, resp.Info, &appGoodInfo)
 	}
+
+	resp1, err := Check(context.Background(), &npool.CheckAppGoodRequest{
+		Info: &appGoodInfo,
+	})
+	if assert.Nil(t, err) {
+		assert.Equal(t, resp1.Info.ID, resp.Info.ID)
+		assertAppGood(t, resp1.Info, &appGoodInfo)
+	}
+
+	appGoodInfo.ID = resp.Info.ID
+	appGoodInfo.Authorized = false
+
+	resp2, err := Unauthorize(context.Background(), &npool.UnauthorizeAppGoodRequest{
+		Info: &appGoodInfo,
+	})
+	if assert.Nil(t, err) {
+		assert.Equal(t, resp2.Info.ID, resp.Info.ID)
+		assertAppGood(t, resp2.Info, &appGoodInfo)
+	}
+
+	_, err = Check(context.Background(), &npool.CheckAppGoodRequest{
+		Info: &appGoodInfo,
+	})
+	assert.NotNil(t, err)
+
+	appGoodInfo.Authorized = true
+
+	resp4, err := Authorize(context.Background(), &npool.AuthorizeAppGoodRequest{
+		Info: &appGoodInfo,
+	})
+	if assert.Nil(t, err) {
+		assert.Equal(t, resp.Info.ID, resp4.Info.ID)
+		assertAppGood(t, resp4.Info, &appGoodInfo)
+	}
+
+	resp5, err := Check(context.Background(), &npool.CheckAppGoodRequest{
+		Info: &appGoodInfo,
+	})
+	if assert.Nil(t, err) {
+		assert.Equal(t, resp5.Info.ID, resp.Info.ID)
+		assertAppGood(t, resp5.Info, &appGoodInfo)
+	}
+
+	appGoodInfo.Price = 0.13
+	appGoodInfo.GasPrice = 0.00013
+
+	resp6, err := SetAppGoodPrice(context.Background(), &npool.SetAppGoodPriceRequest{
+		Info: &appGoodInfo,
+	})
+	if assert.Nil(t, err) {
+		assert.Equal(t, resp6.Info.ID, resp.Info.ID)
+		assertAppGood(t, resp6.Info, &appGoodInfo)
+	}
+
+	appGoodInfo.Authorized = false
+
+	resp7, err := Unauthorize(context.Background(), &npool.UnauthorizeAppGoodRequest{
+		Info: &appGoodInfo,
+	})
+	if assert.Nil(t, err) {
+		assert.Equal(t, resp7.Info.ID, resp.Info.ID)
+		assertAppGood(t, resp7.Info, &appGoodInfo)
+	}
 }
