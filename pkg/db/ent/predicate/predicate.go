@@ -18,8 +18,14 @@ type AppTargetArea func(*sql.Selector)
 // DeviceInfo is the predicate function for deviceinfo builders.
 type DeviceInfo func(*sql.Selector)
 
+// GoodExtraInfo is the predicate function for goodextrainfo builders.
+type GoodExtraInfo func(*sql.Selector)
+
 // GoodInfo is the predicate function for goodinfo builders.
 type GoodInfo func(*sql.Selector)
+
+// GoodReview is the predicate function for goodreview builders.
+type GoodReview func(*sql.Selector)
 
 // TargetArea is the predicate function for targetarea builders.
 type TargetArea func(*sql.Selector)

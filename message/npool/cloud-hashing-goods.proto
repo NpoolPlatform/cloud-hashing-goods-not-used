@@ -235,6 +235,32 @@ service CloudHashingGoods {
             body: "*"
         };
     }
+
+    rpc CreateGoodExtraInfo(CreateGoodExtraInfoRequest) returns (CreateGoodExtraInfoRequest) {
+        option (google.api.http) = {
+            post: "/v1/create/good/extra"
+            body: "*"
+        };
+    }
+    rpc GetGoodExtraInfo(GetGoodExtraInfoRequest) returns (GetGoodExtraInfoRequest) {
+        option (google.api.http) = {
+            post: "/v1/get/good/extra"
+            body: "*"
+        };
+    }
+    rpc UpdateGoodExtraInfo(UpdateGoodExtraInfoRequest) returns (UpdateGoodExtraInfoRequest) {
+        option (google.api.http) = {
+            post: "/v1/update/good/extra"
+            body: "*"
+        };
+    }
+
+    rpc CreateGoodReview(CreateGoodReviewRequest) returns (CreateGoodReviewResponse) {
+        option (google.api.http) = {
+            post: "/v1/create/good/view"
+            body: "*"
+        };
+    }
 }
 
 message PageInfo {
@@ -617,4 +643,51 @@ message GetGoodCommentsRequest {
 message GetGoodCommentsResponse {
     repeated GoodComment Comments = 5000;
     int32 Total = 5001;
+}
+
+message GoodExtraInfo {
+    string ID = 5100;
+    string GoodID = 5101;
+    repeated string Posters = 5102;
+}
+
+message CreateGoodExtraInfoRequest {
+    GoodExtraInfo Info = 5200;
+}
+
+message CreateGoodExtraInfoResponse {
+    GoodExtraInfo Info = 5300;
+}
+
+message GetGoodExtraInfoRequest {
+    GoodExtraInfo Info = 5400;
+}
+
+message GetGoodExtraInfoResponse {
+    GoodExtraInfo Info = 5500;
+}
+
+message UpdateGoodExtraInfoRequest {
+    GoodExtraInfo Info = 5600;
+}
+
+message UpdateGoodExtraInfoResponse {
+    GoodExtraInfo Info = 5700;
+}
+
+message GoodReviewInfo {
+    string ID = 5800;
+    string Type = 5801;
+    string ReviewerID = 5802;
+    string State = 5803;
+    string Message = 5804;
+    string ReviewedID = 5805;
+}
+
+message CreateGoodReviewRequest {
+    GoodReviewInfo Info = 5900;
+}
+
+message CreateGoodReviewResponse {
+    GoodReviewInfo Info = 6000;
 }

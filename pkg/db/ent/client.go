@@ -14,7 +14,9 @@ import (
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/appgoodtargetarea"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/apptargetarea"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/deviceinfo"
+	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/goodextrainfo"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/goodinfo"
+	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/goodreview"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/targetarea"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/vendorlocation"
 
@@ -35,8 +37,12 @@ type Client struct {
 	AppTargetArea *AppTargetAreaClient
 	// DeviceInfo is the client for interacting with the DeviceInfo builders.
 	DeviceInfo *DeviceInfoClient
+	// GoodExtraInfo is the client for interacting with the GoodExtraInfo builders.
+	GoodExtraInfo *GoodExtraInfoClient
 	// GoodInfo is the client for interacting with the GoodInfo builders.
 	GoodInfo *GoodInfoClient
+	// GoodReview is the client for interacting with the GoodReview builders.
+	GoodReview *GoodReviewClient
 	// TargetArea is the client for interacting with the TargetArea builders.
 	TargetArea *TargetAreaClient
 	// VendorLocation is the client for interacting with the VendorLocation builders.
@@ -58,7 +64,9 @@ func (c *Client) init() {
 	c.AppGoodTargetArea = NewAppGoodTargetAreaClient(c.config)
 	c.AppTargetArea = NewAppTargetAreaClient(c.config)
 	c.DeviceInfo = NewDeviceInfoClient(c.config)
+	c.GoodExtraInfo = NewGoodExtraInfoClient(c.config)
 	c.GoodInfo = NewGoodInfoClient(c.config)
+	c.GoodReview = NewGoodReviewClient(c.config)
 	c.TargetArea = NewTargetAreaClient(c.config)
 	c.VendorLocation = NewVendorLocationClient(c.config)
 }
@@ -98,7 +106,9 @@ func (c *Client) Tx(ctx context.Context) (*Tx, error) {
 		AppGoodTargetArea: NewAppGoodTargetAreaClient(cfg),
 		AppTargetArea:     NewAppTargetAreaClient(cfg),
 		DeviceInfo:        NewDeviceInfoClient(cfg),
+		GoodExtraInfo:     NewGoodExtraInfoClient(cfg),
 		GoodInfo:          NewGoodInfoClient(cfg),
+		GoodReview:        NewGoodReviewClient(cfg),
 		TargetArea:        NewTargetAreaClient(cfg),
 		VendorLocation:    NewVendorLocationClient(cfg),
 	}, nil
@@ -123,7 +133,9 @@ func (c *Client) BeginTx(ctx context.Context, opts *sql.TxOptions) (*Tx, error) 
 		AppGoodTargetArea: NewAppGoodTargetAreaClient(cfg),
 		AppTargetArea:     NewAppTargetAreaClient(cfg),
 		DeviceInfo:        NewDeviceInfoClient(cfg),
+		GoodExtraInfo:     NewGoodExtraInfoClient(cfg),
 		GoodInfo:          NewGoodInfoClient(cfg),
+		GoodReview:        NewGoodReviewClient(cfg),
 		TargetArea:        NewTargetAreaClient(cfg),
 		VendorLocation:    NewVendorLocationClient(cfg),
 	}, nil
@@ -159,7 +171,9 @@ func (c *Client) Use(hooks ...Hook) {
 	c.AppGoodTargetArea.Use(hooks...)
 	c.AppTargetArea.Use(hooks...)
 	c.DeviceInfo.Use(hooks...)
+	c.GoodExtraInfo.Use(hooks...)
 	c.GoodInfo.Use(hooks...)
+	c.GoodReview.Use(hooks...)
 	c.TargetArea.Use(hooks...)
 	c.VendorLocation.Use(hooks...)
 }
@@ -524,6 +538,96 @@ func (c *DeviceInfoClient) Hooks() []Hook {
 	return c.hooks.DeviceInfo
 }
 
+// GoodExtraInfoClient is a client for the GoodExtraInfo schema.
+type GoodExtraInfoClient struct {
+	config
+}
+
+// NewGoodExtraInfoClient returns a client for the GoodExtraInfo from the given config.
+func NewGoodExtraInfoClient(c config) *GoodExtraInfoClient {
+	return &GoodExtraInfoClient{config: c}
+}
+
+// Use adds a list of mutation hooks to the hooks stack.
+// A call to `Use(f, g, h)` equals to `goodextrainfo.Hooks(f(g(h())))`.
+func (c *GoodExtraInfoClient) Use(hooks ...Hook) {
+	c.hooks.GoodExtraInfo = append(c.hooks.GoodExtraInfo, hooks...)
+}
+
+// Create returns a create builder for GoodExtraInfo.
+func (c *GoodExtraInfoClient) Create() *GoodExtraInfoCreate {
+	mutation := newGoodExtraInfoMutation(c.config, OpCreate)
+	return &GoodExtraInfoCreate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// CreateBulk returns a builder for creating a bulk of GoodExtraInfo entities.
+func (c *GoodExtraInfoClient) CreateBulk(builders ...*GoodExtraInfoCreate) *GoodExtraInfoCreateBulk {
+	return &GoodExtraInfoCreateBulk{config: c.config, builders: builders}
+}
+
+// Update returns an update builder for GoodExtraInfo.
+func (c *GoodExtraInfoClient) Update() *GoodExtraInfoUpdate {
+	mutation := newGoodExtraInfoMutation(c.config, OpUpdate)
+	return &GoodExtraInfoUpdate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOne returns an update builder for the given entity.
+func (c *GoodExtraInfoClient) UpdateOne(gei *GoodExtraInfo) *GoodExtraInfoUpdateOne {
+	mutation := newGoodExtraInfoMutation(c.config, OpUpdateOne, withGoodExtraInfo(gei))
+	return &GoodExtraInfoUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOneID returns an update builder for the given id.
+func (c *GoodExtraInfoClient) UpdateOneID(id uuid.UUID) *GoodExtraInfoUpdateOne {
+	mutation := newGoodExtraInfoMutation(c.config, OpUpdateOne, withGoodExtraInfoID(id))
+	return &GoodExtraInfoUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// Delete returns a delete builder for GoodExtraInfo.
+func (c *GoodExtraInfoClient) Delete() *GoodExtraInfoDelete {
+	mutation := newGoodExtraInfoMutation(c.config, OpDelete)
+	return &GoodExtraInfoDelete{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// DeleteOne returns a delete builder for the given entity.
+func (c *GoodExtraInfoClient) DeleteOne(gei *GoodExtraInfo) *GoodExtraInfoDeleteOne {
+	return c.DeleteOneID(gei.ID)
+}
+
+// DeleteOneID returns a delete builder for the given id.
+func (c *GoodExtraInfoClient) DeleteOneID(id uuid.UUID) *GoodExtraInfoDeleteOne {
+	builder := c.Delete().Where(goodextrainfo.ID(id))
+	builder.mutation.id = &id
+	builder.mutation.op = OpDeleteOne
+	return &GoodExtraInfoDeleteOne{builder}
+}
+
+// Query returns a query builder for GoodExtraInfo.
+func (c *GoodExtraInfoClient) Query() *GoodExtraInfoQuery {
+	return &GoodExtraInfoQuery{
+		config: c.config,
+	}
+}
+
+// Get returns a GoodExtraInfo entity by its id.
+func (c *GoodExtraInfoClient) Get(ctx context.Context, id uuid.UUID) (*GoodExtraInfo, error) {
+	return c.Query().Where(goodextrainfo.ID(id)).Only(ctx)
+}
+
+// GetX is like Get, but panics if an error occurs.
+func (c *GoodExtraInfoClient) GetX(ctx context.Context, id uuid.UUID) *GoodExtraInfo {
+	obj, err := c.Get(ctx, id)
+	if err != nil {
+		panic(err)
+	}
+	return obj
+}
+
+// Hooks returns the client hooks.
+func (c *GoodExtraInfoClient) Hooks() []Hook {
+	return c.hooks.GoodExtraInfo
+}
+
 // GoodInfoClient is a client for the GoodInfo schema.
 type GoodInfoClient struct {
 	config
@@ -612,6 +716,96 @@ func (c *GoodInfoClient) GetX(ctx context.Context, id uuid.UUID) *GoodInfo {
 // Hooks returns the client hooks.
 func (c *GoodInfoClient) Hooks() []Hook {
 	return c.hooks.GoodInfo
+}
+
+// GoodReviewClient is a client for the GoodReview schema.
+type GoodReviewClient struct {
+	config
+}
+
+// NewGoodReviewClient returns a client for the GoodReview from the given config.
+func NewGoodReviewClient(c config) *GoodReviewClient {
+	return &GoodReviewClient{config: c}
+}
+
+// Use adds a list of mutation hooks to the hooks stack.
+// A call to `Use(f, g, h)` equals to `goodreview.Hooks(f(g(h())))`.
+func (c *GoodReviewClient) Use(hooks ...Hook) {
+	c.hooks.GoodReview = append(c.hooks.GoodReview, hooks...)
+}
+
+// Create returns a create builder for GoodReview.
+func (c *GoodReviewClient) Create() *GoodReviewCreate {
+	mutation := newGoodReviewMutation(c.config, OpCreate)
+	return &GoodReviewCreate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// CreateBulk returns a builder for creating a bulk of GoodReview entities.
+func (c *GoodReviewClient) CreateBulk(builders ...*GoodReviewCreate) *GoodReviewCreateBulk {
+	return &GoodReviewCreateBulk{config: c.config, builders: builders}
+}
+
+// Update returns an update builder for GoodReview.
+func (c *GoodReviewClient) Update() *GoodReviewUpdate {
+	mutation := newGoodReviewMutation(c.config, OpUpdate)
+	return &GoodReviewUpdate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOne returns an update builder for the given entity.
+func (c *GoodReviewClient) UpdateOne(gr *GoodReview) *GoodReviewUpdateOne {
+	mutation := newGoodReviewMutation(c.config, OpUpdateOne, withGoodReview(gr))
+	return &GoodReviewUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOneID returns an update builder for the given id.
+func (c *GoodReviewClient) UpdateOneID(id uuid.UUID) *GoodReviewUpdateOne {
+	mutation := newGoodReviewMutation(c.config, OpUpdateOne, withGoodReviewID(id))
+	return &GoodReviewUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// Delete returns a delete builder for GoodReview.
+func (c *GoodReviewClient) Delete() *GoodReviewDelete {
+	mutation := newGoodReviewMutation(c.config, OpDelete)
+	return &GoodReviewDelete{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// DeleteOne returns a delete builder for the given entity.
+func (c *GoodReviewClient) DeleteOne(gr *GoodReview) *GoodReviewDeleteOne {
+	return c.DeleteOneID(gr.ID)
+}
+
+// DeleteOneID returns a delete builder for the given id.
+func (c *GoodReviewClient) DeleteOneID(id uuid.UUID) *GoodReviewDeleteOne {
+	builder := c.Delete().Where(goodreview.ID(id))
+	builder.mutation.id = &id
+	builder.mutation.op = OpDeleteOne
+	return &GoodReviewDeleteOne{builder}
+}
+
+// Query returns a query builder for GoodReview.
+func (c *GoodReviewClient) Query() *GoodReviewQuery {
+	return &GoodReviewQuery{
+		config: c.config,
+	}
+}
+
+// Get returns a GoodReview entity by its id.
+func (c *GoodReviewClient) Get(ctx context.Context, id uuid.UUID) (*GoodReview, error) {
+	return c.Query().Where(goodreview.ID(id)).Only(ctx)
+}
+
+// GetX is like Get, but panics if an error occurs.
+func (c *GoodReviewClient) GetX(ctx context.Context, id uuid.UUID) *GoodReview {
+	obj, err := c.Get(ctx, id)
+	if err != nil {
+		panic(err)
+	}
+	return obj
+}
+
+// Hooks returns the client hooks.
+func (c *GoodReviewClient) Hooks() []Hook {
+	return c.hooks.GoodReview
 }
 
 // TargetAreaClient is a client for the TargetArea schema.

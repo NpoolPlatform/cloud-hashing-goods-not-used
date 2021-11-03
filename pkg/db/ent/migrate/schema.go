@@ -104,6 +104,21 @@ var (
 			},
 		},
 	}
+	// GoodExtraInfosColumns holds the columns for the "good_extra_infos" table.
+	GoodExtraInfosColumns = []*schema.Column{
+		{Name: "id", Type: field.TypeUUID, Unique: true},
+		{Name: "good_id", Type: field.TypeUUID, Unique: true},
+		{Name: "posters", Type: field.TypeJSON},
+		{Name: "create_at", Type: field.TypeInt64},
+		{Name: "update_at", Type: field.TypeInt64},
+		{Name: "delete_at", Type: field.TypeInt64},
+	}
+	// GoodExtraInfosTable holds the schema information for the "good_extra_infos" table.
+	GoodExtraInfosTable = &schema.Table{
+		Name:       "good_extra_infos",
+		Columns:    GoodExtraInfosColumns,
+		PrimaryKey: []*schema.Column{GoodExtraInfosColumns[0]},
+	}
 	// GoodInfosColumns holds the columns for the "good_infos" table.
 	GoodInfosColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeUUID, Unique: true},
@@ -131,6 +146,24 @@ var (
 		Name:       "good_infos",
 		Columns:    GoodInfosColumns,
 		PrimaryKey: []*schema.Column{GoodInfosColumns[0]},
+	}
+	// GoodReviewsColumns holds the columns for the "good_reviews" table.
+	GoodReviewsColumns = []*schema.Column{
+		{Name: "id", Type: field.TypeUUID, Unique: true},
+		{Name: "type", Type: field.TypeEnum, Enums: []string{"good", "appgood", "apptargetarea", "appgoodtargetarea"}},
+		{Name: "reviewed_id", Type: field.TypeUUID, Unique: true},
+		{Name: "reviewer_id", Type: field.TypeUUID},
+		{Name: "state", Type: field.TypeEnum, Enums: []string{"approved", "rejected", "none"}, Default: "none"},
+		{Name: "message", Type: field.TypeString, Default: ""},
+		{Name: "create_at", Type: field.TypeInt64},
+		{Name: "update_at", Type: field.TypeInt64},
+		{Name: "delete_at", Type: field.TypeInt64},
+	}
+	// GoodReviewsTable holds the schema information for the "good_reviews" table.
+	GoodReviewsTable = &schema.Table{
+		Name:       "good_reviews",
+		Columns:    GoodReviewsColumns,
+		PrimaryKey: []*schema.Column{GoodReviewsColumns[0]},
 	}
 	// TargetAreasColumns holds the columns for the "target_areas" table.
 	TargetAreasColumns = []*schema.Column{
@@ -184,7 +217,9 @@ var (
 		AppGoodTargetAreasTable,
 		AppTargetAreasTable,
 		DeviceInfosTable,
+		GoodExtraInfosTable,
 		GoodInfosTable,
+		GoodReviewsTable,
 		TargetAreasTable,
 		VendorLocationsTable,
 	}

@@ -7,7 +7,9 @@ import (
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/appgoodtargetarea"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/apptargetarea"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/deviceinfo"
+	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/goodextrainfo"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/goodinfo"
+	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/goodreview"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/schema"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/targetarea"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/vendorlocation"
@@ -118,6 +120,26 @@ func init() {
 	deviceinfoDescID := deviceinfoFields[0].Descriptor()
 	// deviceinfo.DefaultID holds the default value on creation for the id field.
 	deviceinfo.DefaultID = deviceinfoDescID.Default.(func() uuid.UUID)
+	goodextrainfoFields := schema.GoodExtraInfo{}.Fields()
+	_ = goodextrainfoFields
+	// goodextrainfoDescCreateAt is the schema descriptor for create_at field.
+	goodextrainfoDescCreateAt := goodextrainfoFields[3].Descriptor()
+	// goodextrainfo.DefaultCreateAt holds the default value on creation for the create_at field.
+	goodextrainfo.DefaultCreateAt = goodextrainfoDescCreateAt.Default.(func() int64)
+	// goodextrainfoDescUpdateAt is the schema descriptor for update_at field.
+	goodextrainfoDescUpdateAt := goodextrainfoFields[4].Descriptor()
+	// goodextrainfo.DefaultUpdateAt holds the default value on creation for the update_at field.
+	goodextrainfo.DefaultUpdateAt = goodextrainfoDescUpdateAt.Default.(func() int64)
+	// goodextrainfo.UpdateDefaultUpdateAt holds the default value on update for the update_at field.
+	goodextrainfo.UpdateDefaultUpdateAt = goodextrainfoDescUpdateAt.UpdateDefault.(func() int64)
+	// goodextrainfoDescDeleteAt is the schema descriptor for delete_at field.
+	goodextrainfoDescDeleteAt := goodextrainfoFields[5].Descriptor()
+	// goodextrainfo.DefaultDeleteAt holds the default value on creation for the delete_at field.
+	goodextrainfo.DefaultDeleteAt = goodextrainfoDescDeleteAt.Default.(func() int64)
+	// goodextrainfoDescID is the schema descriptor for id field.
+	goodextrainfoDescID := goodextrainfoFields[0].Descriptor()
+	// goodextrainfo.DefaultID holds the default value on creation for the id field.
+	goodextrainfo.DefaultID = goodextrainfoDescID.Default.(func() uuid.UUID)
 	goodinfoFields := schema.GoodInfo{}.Fields()
 	_ = goodinfoFields
 	// goodinfoDescGasPrice is the schema descriptor for gas_price field.
@@ -158,6 +180,30 @@ func init() {
 	goodinfoDescID := goodinfoFields[0].Descriptor()
 	// goodinfo.DefaultID holds the default value on creation for the id field.
 	goodinfo.DefaultID = goodinfoDescID.Default.(func() uuid.UUID)
+	goodreviewFields := schema.GoodReview{}.Fields()
+	_ = goodreviewFields
+	// goodreviewDescMessage is the schema descriptor for message field.
+	goodreviewDescMessage := goodreviewFields[5].Descriptor()
+	// goodreview.DefaultMessage holds the default value on creation for the message field.
+	goodreview.DefaultMessage = goodreviewDescMessage.Default.(string)
+	// goodreviewDescCreateAt is the schema descriptor for create_at field.
+	goodreviewDescCreateAt := goodreviewFields[6].Descriptor()
+	// goodreview.DefaultCreateAt holds the default value on creation for the create_at field.
+	goodreview.DefaultCreateAt = goodreviewDescCreateAt.Default.(func() int64)
+	// goodreviewDescUpdateAt is the schema descriptor for update_at field.
+	goodreviewDescUpdateAt := goodreviewFields[7].Descriptor()
+	// goodreview.DefaultUpdateAt holds the default value on creation for the update_at field.
+	goodreview.DefaultUpdateAt = goodreviewDescUpdateAt.Default.(func() int64)
+	// goodreview.UpdateDefaultUpdateAt holds the default value on update for the update_at field.
+	goodreview.UpdateDefaultUpdateAt = goodreviewDescUpdateAt.UpdateDefault.(func() int64)
+	// goodreviewDescDeleteAt is the schema descriptor for delete_at field.
+	goodreviewDescDeleteAt := goodreviewFields[8].Descriptor()
+	// goodreview.DefaultDeleteAt holds the default value on creation for the delete_at field.
+	goodreview.DefaultDeleteAt = goodreviewDescDeleteAt.Default.(func() int64)
+	// goodreviewDescID is the schema descriptor for id field.
+	goodreviewDescID := goodreviewFields[0].Descriptor()
+	// goodreview.DefaultID holds the default value on creation for the id field.
+	goodreview.DefaultID = goodreviewDescID.Default.(func() uuid.UUID)
 	targetareaFields := schema.TargetArea{}.Fields()
 	_ = targetareaFields
 	// targetareaDescContinent is the schema descriptor for continent field.

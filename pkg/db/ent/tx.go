@@ -20,8 +20,12 @@ type Tx struct {
 	AppTargetArea *AppTargetAreaClient
 	// DeviceInfo is the client for interacting with the DeviceInfo builders.
 	DeviceInfo *DeviceInfoClient
+	// GoodExtraInfo is the client for interacting with the GoodExtraInfo builders.
+	GoodExtraInfo *GoodExtraInfoClient
 	// GoodInfo is the client for interacting with the GoodInfo builders.
 	GoodInfo *GoodInfoClient
+	// GoodReview is the client for interacting with the GoodReview builders.
+	GoodReview *GoodReviewClient
 	// TargetArea is the client for interacting with the TargetArea builders.
 	TargetArea *TargetAreaClient
 	// VendorLocation is the client for interacting with the VendorLocation builders.
@@ -165,7 +169,9 @@ func (tx *Tx) init() {
 	tx.AppGoodTargetArea = NewAppGoodTargetAreaClient(tx.config)
 	tx.AppTargetArea = NewAppTargetAreaClient(tx.config)
 	tx.DeviceInfo = NewDeviceInfoClient(tx.config)
+	tx.GoodExtraInfo = NewGoodExtraInfoClient(tx.config)
 	tx.GoodInfo = NewGoodInfoClient(tx.config)
+	tx.GoodReview = NewGoodReviewClient(tx.config)
 	tx.TargetArea = NewTargetAreaClient(tx.config)
 	tx.VendorLocation = NewVendorLocationClient(tx.config)
 }

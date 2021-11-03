@@ -23,8 +23,12 @@
     - [CreateDeviceInfoResponse](#cloud.hashing.goods.v1.CreateDeviceInfoResponse)
     - [CreateGoodCommentRequest](#cloud.hashing.goods.v1.CreateGoodCommentRequest)
     - [CreateGoodCommentResponse](#cloud.hashing.goods.v1.CreateGoodCommentResponse)
+    - [CreateGoodExtraInfoRequest](#cloud.hashing.goods.v1.CreateGoodExtraInfoRequest)
+    - [CreateGoodExtraInfoResponse](#cloud.hashing.goods.v1.CreateGoodExtraInfoResponse)
     - [CreateGoodRequest](#cloud.hashing.goods.v1.CreateGoodRequest)
     - [CreateGoodResponse](#cloud.hashing.goods.v1.CreateGoodResponse)
+    - [CreateGoodReviewRequest](#cloud.hashing.goods.v1.CreateGoodReviewRequest)
+    - [CreateGoodReviewResponse](#cloud.hashing.goods.v1.CreateGoodReviewResponse)
     - [CreateTargetAreaRequest](#cloud.hashing.goods.v1.CreateTargetAreaRequest)
     - [CreateTargetAreaResponse](#cloud.hashing.goods.v1.CreateTargetAreaResponse)
     - [CreateVendorLocationRequest](#cloud.hashing.goods.v1.CreateVendorLocationRequest)
@@ -46,6 +50,8 @@
     - [GetDeviceInfosResponse](#cloud.hashing.goods.v1.GetDeviceInfosResponse)
     - [GetGoodCommentsRequest](#cloud.hashing.goods.v1.GetGoodCommentsRequest)
     - [GetGoodCommentsResponse](#cloud.hashing.goods.v1.GetGoodCommentsResponse)
+    - [GetGoodExtraInfoRequest](#cloud.hashing.goods.v1.GetGoodExtraInfoRequest)
+    - [GetGoodExtraInfoResponse](#cloud.hashing.goods.v1.GetGoodExtraInfoResponse)
     - [GetGoodRequest](#cloud.hashing.goods.v1.GetGoodRequest)
     - [GetGoodResponse](#cloud.hashing.goods.v1.GetGoodResponse)
     - [GetGoodsRequest](#cloud.hashing.goods.v1.GetGoodsRequest)
@@ -59,7 +65,9 @@
     - [GetVendorLocationsRequest](#cloud.hashing.goods.v1.GetVendorLocationsRequest)
     - [GetVendorLocationsResponse](#cloud.hashing.goods.v1.GetVendorLocationsResponse)
     - [GoodComment](#cloud.hashing.goods.v1.GoodComment)
+    - [GoodExtraInfo](#cloud.hashing.goods.v1.GoodExtraInfo)
     - [GoodInfo](#cloud.hashing.goods.v1.GoodInfo)
+    - [GoodReviewInfo](#cloud.hashing.goods.v1.GoodReviewInfo)
     - [OffsaleAppGoodRequest](#cloud.hashing.goods.v1.OffsaleAppGoodRequest)
     - [OffsaleAppGoodResponse](#cloud.hashing.goods.v1.OffsaleAppGoodResponse)
     - [OnsaleAppGoodRequest](#cloud.hashing.goods.v1.OnsaleAppGoodRequest)
@@ -78,6 +86,8 @@
     - [UpdateDeviceInfoResponse](#cloud.hashing.goods.v1.UpdateDeviceInfoResponse)
     - [UpdateGoodCommentRequest](#cloud.hashing.goods.v1.UpdateGoodCommentRequest)
     - [UpdateGoodCommentResponse](#cloud.hashing.goods.v1.UpdateGoodCommentResponse)
+    - [UpdateGoodExtraInfoRequest](#cloud.hashing.goods.v1.UpdateGoodExtraInfoRequest)
+    - [UpdateGoodExtraInfoResponse](#cloud.hashing.goods.v1.UpdateGoodExtraInfoResponse)
     - [UpdateGoodRequest](#cloud.hashing.goods.v1.UpdateGoodRequest)
     - [UpdateGoodResponse](#cloud.hashing.goods.v1.UpdateGoodResponse)
     - [UpdateTargetAreaRequest](#cloud.hashing.goods.v1.UpdateTargetAreaRequest)
@@ -398,6 +408,36 @@
 
 
 
+<a name="cloud.hashing.goods.v1.CreateGoodExtraInfoRequest"></a>
+
+### CreateGoodExtraInfoRequest
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| Info | [GoodExtraInfo](#cloud.hashing.goods.v1.GoodExtraInfo) |  |  |
+
+
+
+
+
+
+<a name="cloud.hashing.goods.v1.CreateGoodExtraInfoResponse"></a>
+
+### CreateGoodExtraInfoResponse
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| Info | [GoodExtraInfo](#cloud.hashing.goods.v1.GoodExtraInfo) |  |  |
+
+
+
+
+
+
 <a name="cloud.hashing.goods.v1.CreateGoodRequest"></a>
 
 ### CreateGoodRequest
@@ -422,6 +462,36 @@
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
 | Info | [GoodInfo](#cloud.hashing.goods.v1.GoodInfo) |  |  |
+
+
+
+
+
+
+<a name="cloud.hashing.goods.v1.CreateGoodReviewRequest"></a>
+
+### CreateGoodReviewRequest
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| Info | [GoodReviewInfo](#cloud.hashing.goods.v1.GoodReviewInfo) |  |  |
+
+
+
+
+
+
+<a name="cloud.hashing.goods.v1.CreateGoodReviewResponse"></a>
+
+### CreateGoodReviewResponse
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| Info | [GoodReviewInfo](#cloud.hashing.goods.v1.GoodReviewInfo) |  |  |
 
 
 
@@ -751,6 +821,36 @@
 
 
 
+<a name="cloud.hashing.goods.v1.GetGoodExtraInfoRequest"></a>
+
+### GetGoodExtraInfoRequest
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| Info | [GoodExtraInfo](#cloud.hashing.goods.v1.GoodExtraInfo) |  |  |
+
+
+
+
+
+
+<a name="cloud.hashing.goods.v1.GetGoodExtraInfoResponse"></a>
+
+### GetGoodExtraInfoResponse
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| Info | [GoodExtraInfo](#cloud.hashing.goods.v1.GoodExtraInfo) |  |  |
+
+
+
+
+
+
 <a name="cloud.hashing.goods.v1.GetGoodRequest"></a>
 
 ### GetGoodRequest
@@ -955,6 +1055,23 @@
 
 
 
+<a name="cloud.hashing.goods.v1.GoodExtraInfo"></a>
+
+### GoodExtraInfo
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| ID | [string](#string) |  |  |
+| GoodID | [string](#string) |  |  |
+| Posters | [string](#string) | repeated |  |
+
+
+
+
+
+
 <a name="cloud.hashing.goods.v1.GoodInfo"></a>
 
 ### GoodInfo
@@ -979,6 +1096,26 @@
 | Classic | [bool](#bool) |  |  |
 | SupportCoinTypeIDs | [string](#string) | repeated |  |
 | Total | [int32](#int32) |  |  |
+
+
+
+
+
+
+<a name="cloud.hashing.goods.v1.GoodReviewInfo"></a>
+
+### GoodReviewInfo
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| ID | [string](#string) |  |  |
+| Type | [string](#string) |  |  |
+| ReviewerID | [string](#string) |  |  |
+| State | [string](#string) |  |  |
+| Message | [string](#string) |  |  |
+| ReviewedID | [string](#string) |  |  |
 
 
 
@@ -1259,6 +1396,36 @@
 
 
 
+<a name="cloud.hashing.goods.v1.UpdateGoodExtraInfoRequest"></a>
+
+### UpdateGoodExtraInfoRequest
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| Info | [GoodExtraInfo](#cloud.hashing.goods.v1.GoodExtraInfo) |  |  |
+
+
+
+
+
+
+<a name="cloud.hashing.goods.v1.UpdateGoodExtraInfoResponse"></a>
+
+### UpdateGoodExtraInfoResponse
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| Info | [GoodExtraInfo](#cloud.hashing.goods.v1.GoodExtraInfo) |  |  |
+
+
+
+
+
+
 <a name="cloud.hashing.goods.v1.UpdateGoodRequest"></a>
 
 ### UpdateGoodRequest
@@ -1433,6 +1600,10 @@ Cloud Hashing Goods
 | CreateGoodComment | [CreateGoodCommentRequest](#cloud.hashing.goods.v1.CreateGoodCommentRequest) | [CreateGoodCommentResponse](#cloud.hashing.goods.v1.CreateGoodCommentResponse) |  |
 | UpdateGoodComment | [UpdateGoodCommentRequest](#cloud.hashing.goods.v1.UpdateGoodCommentRequest) | [UpdateGoodCommentResponse](#cloud.hashing.goods.v1.UpdateGoodCommentResponse) |  |
 | GetGoodComments | [GetGoodCommentsRequest](#cloud.hashing.goods.v1.GetGoodCommentsRequest) | [GetGoodCommentsResponse](#cloud.hashing.goods.v1.GetGoodCommentsResponse) |  |
+| CreateGoodExtraInfo | [CreateGoodExtraInfoRequest](#cloud.hashing.goods.v1.CreateGoodExtraInfoRequest) | [CreateGoodExtraInfoRequest](#cloud.hashing.goods.v1.CreateGoodExtraInfoRequest) |  |
+| GetGoodExtraInfo | [GetGoodExtraInfoRequest](#cloud.hashing.goods.v1.GetGoodExtraInfoRequest) | [GetGoodExtraInfoRequest](#cloud.hashing.goods.v1.GetGoodExtraInfoRequest) |  |
+| UpdateGoodExtraInfo | [UpdateGoodExtraInfoRequest](#cloud.hashing.goods.v1.UpdateGoodExtraInfoRequest) | [UpdateGoodExtraInfoRequest](#cloud.hashing.goods.v1.UpdateGoodExtraInfoRequest) |  |
+| CreateGoodReview | [CreateGoodReviewRequest](#cloud.hashing.goods.v1.CreateGoodReviewRequest) | [CreateGoodReviewResponse](#cloud.hashing.goods.v1.CreateGoodReviewResponse) |  |
 
  
 

@@ -11,7 +11,9 @@ import (
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/appgoodtargetarea"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/apptargetarea"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/deviceinfo"
+	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/goodextrainfo"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/goodinfo"
+	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/goodreview"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/predicate"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/targetarea"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/vendorlocation"
@@ -33,7 +35,9 @@ const (
 	TypeAppGoodTargetArea = "AppGoodTargetArea"
 	TypeAppTargetArea     = "AppTargetArea"
 	TypeDeviceInfo        = "DeviceInfo"
+	TypeGoodExtraInfo     = "GoodExtraInfo"
 	TypeGoodInfo          = "GoodInfo"
+	TypeGoodReview        = "GoodReview"
 	TypeTargetArea        = "TargetArea"
 	TypeVendorLocation    = "VendorLocation"
 )
@@ -3066,6 +3070,622 @@ func (m *DeviceInfoMutation) ResetEdge(name string) error {
 	return fmt.Errorf("unknown DeviceInfo edge %s", name)
 }
 
+// GoodExtraInfoMutation represents an operation that mutates the GoodExtraInfo nodes in the graph.
+type GoodExtraInfoMutation struct {
+	config
+	op            Op
+	typ           string
+	id            *uuid.UUID
+	good_id       *uuid.UUID
+	posters       *[]string
+	create_at     *int64
+	addcreate_at  *int64
+	update_at     *int64
+	addupdate_at  *int64
+	delete_at     *int64
+	adddelete_at  *int64
+	clearedFields map[string]struct{}
+	done          bool
+	oldValue      func(context.Context) (*GoodExtraInfo, error)
+	predicates    []predicate.GoodExtraInfo
+}
+
+var _ ent.Mutation = (*GoodExtraInfoMutation)(nil)
+
+// goodextrainfoOption allows management of the mutation configuration using functional options.
+type goodextrainfoOption func(*GoodExtraInfoMutation)
+
+// newGoodExtraInfoMutation creates new mutation for the GoodExtraInfo entity.
+func newGoodExtraInfoMutation(c config, op Op, opts ...goodextrainfoOption) *GoodExtraInfoMutation {
+	m := &GoodExtraInfoMutation{
+		config:        c,
+		op:            op,
+		typ:           TypeGoodExtraInfo,
+		clearedFields: make(map[string]struct{}),
+	}
+	for _, opt := range opts {
+		opt(m)
+	}
+	return m
+}
+
+// withGoodExtraInfoID sets the ID field of the mutation.
+func withGoodExtraInfoID(id uuid.UUID) goodextrainfoOption {
+	return func(m *GoodExtraInfoMutation) {
+		var (
+			err   error
+			once  sync.Once
+			value *GoodExtraInfo
+		)
+		m.oldValue = func(ctx context.Context) (*GoodExtraInfo, error) {
+			once.Do(func() {
+				if m.done {
+					err = fmt.Errorf("querying old values post mutation is not allowed")
+				} else {
+					value, err = m.Client().GoodExtraInfo.Get(ctx, id)
+				}
+			})
+			return value, err
+		}
+		m.id = &id
+	}
+}
+
+// withGoodExtraInfo sets the old GoodExtraInfo of the mutation.
+func withGoodExtraInfo(node *GoodExtraInfo) goodextrainfoOption {
+	return func(m *GoodExtraInfoMutation) {
+		m.oldValue = func(context.Context) (*GoodExtraInfo, error) {
+			return node, nil
+		}
+		m.id = &node.ID
+	}
+}
+
+// Client returns a new `ent.Client` from the mutation. If the mutation was
+// executed in a transaction (ent.Tx), a transactional client is returned.
+func (m GoodExtraInfoMutation) Client() *Client {
+	client := &Client{config: m.config}
+	client.init()
+	return client
+}
+
+// Tx returns an `ent.Tx` for mutations that were executed in transactions;
+// it returns an error otherwise.
+func (m GoodExtraInfoMutation) Tx() (*Tx, error) {
+	if _, ok := m.driver.(*txDriver); !ok {
+		return nil, fmt.Errorf("ent: mutation is not running in a transaction")
+	}
+	tx := &Tx{config: m.config}
+	tx.init()
+	return tx, nil
+}
+
+// SetID sets the value of the id field. Note that this
+// operation is only accepted on creation of GoodExtraInfo entities.
+func (m *GoodExtraInfoMutation) SetID(id uuid.UUID) {
+	m.id = &id
+}
+
+// ID returns the ID value in the mutation. Note that the ID is only available
+// if it was provided to the builder or after it was returned from the database.
+func (m *GoodExtraInfoMutation) ID() (id uuid.UUID, exists bool) {
+	if m.id == nil {
+		return
+	}
+	return *m.id, true
+}
+
+// SetGoodID sets the "good_id" field.
+func (m *GoodExtraInfoMutation) SetGoodID(u uuid.UUID) {
+	m.good_id = &u
+}
+
+// GoodID returns the value of the "good_id" field in the mutation.
+func (m *GoodExtraInfoMutation) GoodID() (r uuid.UUID, exists bool) {
+	v := m.good_id
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldGoodID returns the old "good_id" field's value of the GoodExtraInfo entity.
+// If the GoodExtraInfo object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *GoodExtraInfoMutation) OldGoodID(ctx context.Context) (v uuid.UUID, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, fmt.Errorf("OldGoodID is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, fmt.Errorf("OldGoodID requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldGoodID: %w", err)
+	}
+	return oldValue.GoodID, nil
+}
+
+// ResetGoodID resets all changes to the "good_id" field.
+func (m *GoodExtraInfoMutation) ResetGoodID() {
+	m.good_id = nil
+}
+
+// SetPosters sets the "posters" field.
+func (m *GoodExtraInfoMutation) SetPosters(s []string) {
+	m.posters = &s
+}
+
+// Posters returns the value of the "posters" field in the mutation.
+func (m *GoodExtraInfoMutation) Posters() (r []string, exists bool) {
+	v := m.posters
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldPosters returns the old "posters" field's value of the GoodExtraInfo entity.
+// If the GoodExtraInfo object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *GoodExtraInfoMutation) OldPosters(ctx context.Context) (v []string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, fmt.Errorf("OldPosters is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, fmt.Errorf("OldPosters requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldPosters: %w", err)
+	}
+	return oldValue.Posters, nil
+}
+
+// ResetPosters resets all changes to the "posters" field.
+func (m *GoodExtraInfoMutation) ResetPosters() {
+	m.posters = nil
+}
+
+// SetCreateAt sets the "create_at" field.
+func (m *GoodExtraInfoMutation) SetCreateAt(i int64) {
+	m.create_at = &i
+	m.addcreate_at = nil
+}
+
+// CreateAt returns the value of the "create_at" field in the mutation.
+func (m *GoodExtraInfoMutation) CreateAt() (r int64, exists bool) {
+	v := m.create_at
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldCreateAt returns the old "create_at" field's value of the GoodExtraInfo entity.
+// If the GoodExtraInfo object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *GoodExtraInfoMutation) OldCreateAt(ctx context.Context) (v int64, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, fmt.Errorf("OldCreateAt is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, fmt.Errorf("OldCreateAt requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldCreateAt: %w", err)
+	}
+	return oldValue.CreateAt, nil
+}
+
+// AddCreateAt adds i to the "create_at" field.
+func (m *GoodExtraInfoMutation) AddCreateAt(i int64) {
+	if m.addcreate_at != nil {
+		*m.addcreate_at += i
+	} else {
+		m.addcreate_at = &i
+	}
+}
+
+// AddedCreateAt returns the value that was added to the "create_at" field in this mutation.
+func (m *GoodExtraInfoMutation) AddedCreateAt() (r int64, exists bool) {
+	v := m.addcreate_at
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// ResetCreateAt resets all changes to the "create_at" field.
+func (m *GoodExtraInfoMutation) ResetCreateAt() {
+	m.create_at = nil
+	m.addcreate_at = nil
+}
+
+// SetUpdateAt sets the "update_at" field.
+func (m *GoodExtraInfoMutation) SetUpdateAt(i int64) {
+	m.update_at = &i
+	m.addupdate_at = nil
+}
+
+// UpdateAt returns the value of the "update_at" field in the mutation.
+func (m *GoodExtraInfoMutation) UpdateAt() (r int64, exists bool) {
+	v := m.update_at
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldUpdateAt returns the old "update_at" field's value of the GoodExtraInfo entity.
+// If the GoodExtraInfo object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *GoodExtraInfoMutation) OldUpdateAt(ctx context.Context) (v int64, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, fmt.Errorf("OldUpdateAt is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, fmt.Errorf("OldUpdateAt requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldUpdateAt: %w", err)
+	}
+	return oldValue.UpdateAt, nil
+}
+
+// AddUpdateAt adds i to the "update_at" field.
+func (m *GoodExtraInfoMutation) AddUpdateAt(i int64) {
+	if m.addupdate_at != nil {
+		*m.addupdate_at += i
+	} else {
+		m.addupdate_at = &i
+	}
+}
+
+// AddedUpdateAt returns the value that was added to the "update_at" field in this mutation.
+func (m *GoodExtraInfoMutation) AddedUpdateAt() (r int64, exists bool) {
+	v := m.addupdate_at
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// ResetUpdateAt resets all changes to the "update_at" field.
+func (m *GoodExtraInfoMutation) ResetUpdateAt() {
+	m.update_at = nil
+	m.addupdate_at = nil
+}
+
+// SetDeleteAt sets the "delete_at" field.
+func (m *GoodExtraInfoMutation) SetDeleteAt(i int64) {
+	m.delete_at = &i
+	m.adddelete_at = nil
+}
+
+// DeleteAt returns the value of the "delete_at" field in the mutation.
+func (m *GoodExtraInfoMutation) DeleteAt() (r int64, exists bool) {
+	v := m.delete_at
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldDeleteAt returns the old "delete_at" field's value of the GoodExtraInfo entity.
+// If the GoodExtraInfo object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *GoodExtraInfoMutation) OldDeleteAt(ctx context.Context) (v int64, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, fmt.Errorf("OldDeleteAt is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, fmt.Errorf("OldDeleteAt requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldDeleteAt: %w", err)
+	}
+	return oldValue.DeleteAt, nil
+}
+
+// AddDeleteAt adds i to the "delete_at" field.
+func (m *GoodExtraInfoMutation) AddDeleteAt(i int64) {
+	if m.adddelete_at != nil {
+		*m.adddelete_at += i
+	} else {
+		m.adddelete_at = &i
+	}
+}
+
+// AddedDeleteAt returns the value that was added to the "delete_at" field in this mutation.
+func (m *GoodExtraInfoMutation) AddedDeleteAt() (r int64, exists bool) {
+	v := m.adddelete_at
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// ResetDeleteAt resets all changes to the "delete_at" field.
+func (m *GoodExtraInfoMutation) ResetDeleteAt() {
+	m.delete_at = nil
+	m.adddelete_at = nil
+}
+
+// Where appends a list predicates to the GoodExtraInfoMutation builder.
+func (m *GoodExtraInfoMutation) Where(ps ...predicate.GoodExtraInfo) {
+	m.predicates = append(m.predicates, ps...)
+}
+
+// Op returns the operation name.
+func (m *GoodExtraInfoMutation) Op() Op {
+	return m.op
+}
+
+// Type returns the node type of this mutation (GoodExtraInfo).
+func (m *GoodExtraInfoMutation) Type() string {
+	return m.typ
+}
+
+// Fields returns all fields that were changed during this mutation. Note that in
+// order to get all numeric fields that were incremented/decremented, call
+// AddedFields().
+func (m *GoodExtraInfoMutation) Fields() []string {
+	fields := make([]string, 0, 5)
+	if m.good_id != nil {
+		fields = append(fields, goodextrainfo.FieldGoodID)
+	}
+	if m.posters != nil {
+		fields = append(fields, goodextrainfo.FieldPosters)
+	}
+	if m.create_at != nil {
+		fields = append(fields, goodextrainfo.FieldCreateAt)
+	}
+	if m.update_at != nil {
+		fields = append(fields, goodextrainfo.FieldUpdateAt)
+	}
+	if m.delete_at != nil {
+		fields = append(fields, goodextrainfo.FieldDeleteAt)
+	}
+	return fields
+}
+
+// Field returns the value of a field with the given name. The second boolean
+// return value indicates that this field was not set, or was not defined in the
+// schema.
+func (m *GoodExtraInfoMutation) Field(name string) (ent.Value, bool) {
+	switch name {
+	case goodextrainfo.FieldGoodID:
+		return m.GoodID()
+	case goodextrainfo.FieldPosters:
+		return m.Posters()
+	case goodextrainfo.FieldCreateAt:
+		return m.CreateAt()
+	case goodextrainfo.FieldUpdateAt:
+		return m.UpdateAt()
+	case goodextrainfo.FieldDeleteAt:
+		return m.DeleteAt()
+	}
+	return nil, false
+}
+
+// OldField returns the old value of the field from the database. An error is
+// returned if the mutation operation is not UpdateOne, or the query to the
+// database failed.
+func (m *GoodExtraInfoMutation) OldField(ctx context.Context, name string) (ent.Value, error) {
+	switch name {
+	case goodextrainfo.FieldGoodID:
+		return m.OldGoodID(ctx)
+	case goodextrainfo.FieldPosters:
+		return m.OldPosters(ctx)
+	case goodextrainfo.FieldCreateAt:
+		return m.OldCreateAt(ctx)
+	case goodextrainfo.FieldUpdateAt:
+		return m.OldUpdateAt(ctx)
+	case goodextrainfo.FieldDeleteAt:
+		return m.OldDeleteAt(ctx)
+	}
+	return nil, fmt.Errorf("unknown GoodExtraInfo field %s", name)
+}
+
+// SetField sets the value of a field with the given name. It returns an error if
+// the field is not defined in the schema, or if the type mismatched the field
+// type.
+func (m *GoodExtraInfoMutation) SetField(name string, value ent.Value) error {
+	switch name {
+	case goodextrainfo.FieldGoodID:
+		v, ok := value.(uuid.UUID)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetGoodID(v)
+		return nil
+	case goodextrainfo.FieldPosters:
+		v, ok := value.([]string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetPosters(v)
+		return nil
+	case goodextrainfo.FieldCreateAt:
+		v, ok := value.(int64)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetCreateAt(v)
+		return nil
+	case goodextrainfo.FieldUpdateAt:
+		v, ok := value.(int64)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetUpdateAt(v)
+		return nil
+	case goodextrainfo.FieldDeleteAt:
+		v, ok := value.(int64)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetDeleteAt(v)
+		return nil
+	}
+	return fmt.Errorf("unknown GoodExtraInfo field %s", name)
+}
+
+// AddedFields returns all numeric fields that were incremented/decremented during
+// this mutation.
+func (m *GoodExtraInfoMutation) AddedFields() []string {
+	var fields []string
+	if m.addcreate_at != nil {
+		fields = append(fields, goodextrainfo.FieldCreateAt)
+	}
+	if m.addupdate_at != nil {
+		fields = append(fields, goodextrainfo.FieldUpdateAt)
+	}
+	if m.adddelete_at != nil {
+		fields = append(fields, goodextrainfo.FieldDeleteAt)
+	}
+	return fields
+}
+
+// AddedField returns the numeric value that was incremented/decremented on a field
+// with the given name. The second boolean return value indicates that this field
+// was not set, or was not defined in the schema.
+func (m *GoodExtraInfoMutation) AddedField(name string) (ent.Value, bool) {
+	switch name {
+	case goodextrainfo.FieldCreateAt:
+		return m.AddedCreateAt()
+	case goodextrainfo.FieldUpdateAt:
+		return m.AddedUpdateAt()
+	case goodextrainfo.FieldDeleteAt:
+		return m.AddedDeleteAt()
+	}
+	return nil, false
+}
+
+// AddField adds the value to the field with the given name. It returns an error if
+// the field is not defined in the schema, or if the type mismatched the field
+// type.
+func (m *GoodExtraInfoMutation) AddField(name string, value ent.Value) error {
+	switch name {
+	case goodextrainfo.FieldCreateAt:
+		v, ok := value.(int64)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.AddCreateAt(v)
+		return nil
+	case goodextrainfo.FieldUpdateAt:
+		v, ok := value.(int64)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.AddUpdateAt(v)
+		return nil
+	case goodextrainfo.FieldDeleteAt:
+		v, ok := value.(int64)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.AddDeleteAt(v)
+		return nil
+	}
+	return fmt.Errorf("unknown GoodExtraInfo numeric field %s", name)
+}
+
+// ClearedFields returns all nullable fields that were cleared during this
+// mutation.
+func (m *GoodExtraInfoMutation) ClearedFields() []string {
+	return nil
+}
+
+// FieldCleared returns a boolean indicating if a field with the given name was
+// cleared in this mutation.
+func (m *GoodExtraInfoMutation) FieldCleared(name string) bool {
+	_, ok := m.clearedFields[name]
+	return ok
+}
+
+// ClearField clears the value of the field with the given name. It returns an
+// error if the field is not defined in the schema.
+func (m *GoodExtraInfoMutation) ClearField(name string) error {
+	return fmt.Errorf("unknown GoodExtraInfo nullable field %s", name)
+}
+
+// ResetField resets all changes in the mutation for the field with the given name.
+// It returns an error if the field is not defined in the schema.
+func (m *GoodExtraInfoMutation) ResetField(name string) error {
+	switch name {
+	case goodextrainfo.FieldGoodID:
+		m.ResetGoodID()
+		return nil
+	case goodextrainfo.FieldPosters:
+		m.ResetPosters()
+		return nil
+	case goodextrainfo.FieldCreateAt:
+		m.ResetCreateAt()
+		return nil
+	case goodextrainfo.FieldUpdateAt:
+		m.ResetUpdateAt()
+		return nil
+	case goodextrainfo.FieldDeleteAt:
+		m.ResetDeleteAt()
+		return nil
+	}
+	return fmt.Errorf("unknown GoodExtraInfo field %s", name)
+}
+
+// AddedEdges returns all edge names that were set/added in this mutation.
+func (m *GoodExtraInfoMutation) AddedEdges() []string {
+	edges := make([]string, 0, 0)
+	return edges
+}
+
+// AddedIDs returns all IDs (to other nodes) that were added for the given edge
+// name in this mutation.
+func (m *GoodExtraInfoMutation) AddedIDs(name string) []ent.Value {
+	return nil
+}
+
+// RemovedEdges returns all edge names that were removed in this mutation.
+func (m *GoodExtraInfoMutation) RemovedEdges() []string {
+	edges := make([]string, 0, 0)
+	return edges
+}
+
+// RemovedIDs returns all IDs (to other nodes) that were removed for the edge with
+// the given name in this mutation.
+func (m *GoodExtraInfoMutation) RemovedIDs(name string) []ent.Value {
+	return nil
+}
+
+// ClearedEdges returns all edge names that were cleared in this mutation.
+func (m *GoodExtraInfoMutation) ClearedEdges() []string {
+	edges := make([]string, 0, 0)
+	return edges
+}
+
+// EdgeCleared returns a boolean which indicates if the edge with the given name
+// was cleared in this mutation.
+func (m *GoodExtraInfoMutation) EdgeCleared(name string) bool {
+	return false
+}
+
+// ClearEdge clears the value of the edge with the given name. It returns an error
+// if that edge is not defined in the schema.
+func (m *GoodExtraInfoMutation) ClearEdge(name string) error {
+	return fmt.Errorf("unknown GoodExtraInfo unique edge %s", name)
+}
+
+// ResetEdge resets all changes to the edge with the given name in this mutation.
+// It returns an error if the edge is not defined in the schema.
+func (m *GoodExtraInfoMutation) ResetEdge(name string) error {
+	return fmt.Errorf("unknown GoodExtraInfo edge %s", name)
+}
+
 // GoodInfoMutation represents an operation that mutates the GoodInfo nodes in the graph.
 type GoodInfoMutation struct {
 	config
@@ -4580,6 +5200,784 @@ func (m *GoodInfoMutation) ClearEdge(name string) error {
 // It returns an error if the edge is not defined in the schema.
 func (m *GoodInfoMutation) ResetEdge(name string) error {
 	return fmt.Errorf("unknown GoodInfo edge %s", name)
+}
+
+// GoodReviewMutation represents an operation that mutates the GoodReview nodes in the graph.
+type GoodReviewMutation struct {
+	config
+	op            Op
+	typ           string
+	id            *uuid.UUID
+	_type         *goodreview.Type
+	reviewed_id   *uuid.UUID
+	reviewer_id   *uuid.UUID
+	state         *goodreview.State
+	message       *string
+	create_at     *int64
+	addcreate_at  *int64
+	update_at     *int64
+	addupdate_at  *int64
+	delete_at     *int64
+	adddelete_at  *int64
+	clearedFields map[string]struct{}
+	done          bool
+	oldValue      func(context.Context) (*GoodReview, error)
+	predicates    []predicate.GoodReview
+}
+
+var _ ent.Mutation = (*GoodReviewMutation)(nil)
+
+// goodreviewOption allows management of the mutation configuration using functional options.
+type goodreviewOption func(*GoodReviewMutation)
+
+// newGoodReviewMutation creates new mutation for the GoodReview entity.
+func newGoodReviewMutation(c config, op Op, opts ...goodreviewOption) *GoodReviewMutation {
+	m := &GoodReviewMutation{
+		config:        c,
+		op:            op,
+		typ:           TypeGoodReview,
+		clearedFields: make(map[string]struct{}),
+	}
+	for _, opt := range opts {
+		opt(m)
+	}
+	return m
+}
+
+// withGoodReviewID sets the ID field of the mutation.
+func withGoodReviewID(id uuid.UUID) goodreviewOption {
+	return func(m *GoodReviewMutation) {
+		var (
+			err   error
+			once  sync.Once
+			value *GoodReview
+		)
+		m.oldValue = func(ctx context.Context) (*GoodReview, error) {
+			once.Do(func() {
+				if m.done {
+					err = fmt.Errorf("querying old values post mutation is not allowed")
+				} else {
+					value, err = m.Client().GoodReview.Get(ctx, id)
+				}
+			})
+			return value, err
+		}
+		m.id = &id
+	}
+}
+
+// withGoodReview sets the old GoodReview of the mutation.
+func withGoodReview(node *GoodReview) goodreviewOption {
+	return func(m *GoodReviewMutation) {
+		m.oldValue = func(context.Context) (*GoodReview, error) {
+			return node, nil
+		}
+		m.id = &node.ID
+	}
+}
+
+// Client returns a new `ent.Client` from the mutation. If the mutation was
+// executed in a transaction (ent.Tx), a transactional client is returned.
+func (m GoodReviewMutation) Client() *Client {
+	client := &Client{config: m.config}
+	client.init()
+	return client
+}
+
+// Tx returns an `ent.Tx` for mutations that were executed in transactions;
+// it returns an error otherwise.
+func (m GoodReviewMutation) Tx() (*Tx, error) {
+	if _, ok := m.driver.(*txDriver); !ok {
+		return nil, fmt.Errorf("ent: mutation is not running in a transaction")
+	}
+	tx := &Tx{config: m.config}
+	tx.init()
+	return tx, nil
+}
+
+// SetID sets the value of the id field. Note that this
+// operation is only accepted on creation of GoodReview entities.
+func (m *GoodReviewMutation) SetID(id uuid.UUID) {
+	m.id = &id
+}
+
+// ID returns the ID value in the mutation. Note that the ID is only available
+// if it was provided to the builder or after it was returned from the database.
+func (m *GoodReviewMutation) ID() (id uuid.UUID, exists bool) {
+	if m.id == nil {
+		return
+	}
+	return *m.id, true
+}
+
+// SetType sets the "type" field.
+func (m *GoodReviewMutation) SetType(_go goodreview.Type) {
+	m._type = &_go
+}
+
+// GetType returns the value of the "type" field in the mutation.
+func (m *GoodReviewMutation) GetType() (r goodreview.Type, exists bool) {
+	v := m._type
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldType returns the old "type" field's value of the GoodReview entity.
+// If the GoodReview object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *GoodReviewMutation) OldType(ctx context.Context) (v goodreview.Type, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, fmt.Errorf("OldType is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, fmt.Errorf("OldType requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldType: %w", err)
+	}
+	return oldValue.Type, nil
+}
+
+// ResetType resets all changes to the "type" field.
+func (m *GoodReviewMutation) ResetType() {
+	m._type = nil
+}
+
+// SetReviewedID sets the "reviewed_id" field.
+func (m *GoodReviewMutation) SetReviewedID(u uuid.UUID) {
+	m.reviewed_id = &u
+}
+
+// ReviewedID returns the value of the "reviewed_id" field in the mutation.
+func (m *GoodReviewMutation) ReviewedID() (r uuid.UUID, exists bool) {
+	v := m.reviewed_id
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldReviewedID returns the old "reviewed_id" field's value of the GoodReview entity.
+// If the GoodReview object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *GoodReviewMutation) OldReviewedID(ctx context.Context) (v uuid.UUID, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, fmt.Errorf("OldReviewedID is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, fmt.Errorf("OldReviewedID requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldReviewedID: %w", err)
+	}
+	return oldValue.ReviewedID, nil
+}
+
+// ResetReviewedID resets all changes to the "reviewed_id" field.
+func (m *GoodReviewMutation) ResetReviewedID() {
+	m.reviewed_id = nil
+}
+
+// SetReviewerID sets the "reviewer_id" field.
+func (m *GoodReviewMutation) SetReviewerID(u uuid.UUID) {
+	m.reviewer_id = &u
+}
+
+// ReviewerID returns the value of the "reviewer_id" field in the mutation.
+func (m *GoodReviewMutation) ReviewerID() (r uuid.UUID, exists bool) {
+	v := m.reviewer_id
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldReviewerID returns the old "reviewer_id" field's value of the GoodReview entity.
+// If the GoodReview object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *GoodReviewMutation) OldReviewerID(ctx context.Context) (v uuid.UUID, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, fmt.Errorf("OldReviewerID is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, fmt.Errorf("OldReviewerID requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldReviewerID: %w", err)
+	}
+	return oldValue.ReviewerID, nil
+}
+
+// ResetReviewerID resets all changes to the "reviewer_id" field.
+func (m *GoodReviewMutation) ResetReviewerID() {
+	m.reviewer_id = nil
+}
+
+// SetState sets the "state" field.
+func (m *GoodReviewMutation) SetState(_go goodreview.State) {
+	m.state = &_go
+}
+
+// State returns the value of the "state" field in the mutation.
+func (m *GoodReviewMutation) State() (r goodreview.State, exists bool) {
+	v := m.state
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldState returns the old "state" field's value of the GoodReview entity.
+// If the GoodReview object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *GoodReviewMutation) OldState(ctx context.Context) (v goodreview.State, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, fmt.Errorf("OldState is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, fmt.Errorf("OldState requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldState: %w", err)
+	}
+	return oldValue.State, nil
+}
+
+// ResetState resets all changes to the "state" field.
+func (m *GoodReviewMutation) ResetState() {
+	m.state = nil
+}
+
+// SetMessage sets the "message" field.
+func (m *GoodReviewMutation) SetMessage(s string) {
+	m.message = &s
+}
+
+// Message returns the value of the "message" field in the mutation.
+func (m *GoodReviewMutation) Message() (r string, exists bool) {
+	v := m.message
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldMessage returns the old "message" field's value of the GoodReview entity.
+// If the GoodReview object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *GoodReviewMutation) OldMessage(ctx context.Context) (v string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, fmt.Errorf("OldMessage is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, fmt.Errorf("OldMessage requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldMessage: %w", err)
+	}
+	return oldValue.Message, nil
+}
+
+// ResetMessage resets all changes to the "message" field.
+func (m *GoodReviewMutation) ResetMessage() {
+	m.message = nil
+}
+
+// SetCreateAt sets the "create_at" field.
+func (m *GoodReviewMutation) SetCreateAt(i int64) {
+	m.create_at = &i
+	m.addcreate_at = nil
+}
+
+// CreateAt returns the value of the "create_at" field in the mutation.
+func (m *GoodReviewMutation) CreateAt() (r int64, exists bool) {
+	v := m.create_at
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldCreateAt returns the old "create_at" field's value of the GoodReview entity.
+// If the GoodReview object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *GoodReviewMutation) OldCreateAt(ctx context.Context) (v int64, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, fmt.Errorf("OldCreateAt is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, fmt.Errorf("OldCreateAt requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldCreateAt: %w", err)
+	}
+	return oldValue.CreateAt, nil
+}
+
+// AddCreateAt adds i to the "create_at" field.
+func (m *GoodReviewMutation) AddCreateAt(i int64) {
+	if m.addcreate_at != nil {
+		*m.addcreate_at += i
+	} else {
+		m.addcreate_at = &i
+	}
+}
+
+// AddedCreateAt returns the value that was added to the "create_at" field in this mutation.
+func (m *GoodReviewMutation) AddedCreateAt() (r int64, exists bool) {
+	v := m.addcreate_at
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// ResetCreateAt resets all changes to the "create_at" field.
+func (m *GoodReviewMutation) ResetCreateAt() {
+	m.create_at = nil
+	m.addcreate_at = nil
+}
+
+// SetUpdateAt sets the "update_at" field.
+func (m *GoodReviewMutation) SetUpdateAt(i int64) {
+	m.update_at = &i
+	m.addupdate_at = nil
+}
+
+// UpdateAt returns the value of the "update_at" field in the mutation.
+func (m *GoodReviewMutation) UpdateAt() (r int64, exists bool) {
+	v := m.update_at
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldUpdateAt returns the old "update_at" field's value of the GoodReview entity.
+// If the GoodReview object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *GoodReviewMutation) OldUpdateAt(ctx context.Context) (v int64, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, fmt.Errorf("OldUpdateAt is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, fmt.Errorf("OldUpdateAt requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldUpdateAt: %w", err)
+	}
+	return oldValue.UpdateAt, nil
+}
+
+// AddUpdateAt adds i to the "update_at" field.
+func (m *GoodReviewMutation) AddUpdateAt(i int64) {
+	if m.addupdate_at != nil {
+		*m.addupdate_at += i
+	} else {
+		m.addupdate_at = &i
+	}
+}
+
+// AddedUpdateAt returns the value that was added to the "update_at" field in this mutation.
+func (m *GoodReviewMutation) AddedUpdateAt() (r int64, exists bool) {
+	v := m.addupdate_at
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// ResetUpdateAt resets all changes to the "update_at" field.
+func (m *GoodReviewMutation) ResetUpdateAt() {
+	m.update_at = nil
+	m.addupdate_at = nil
+}
+
+// SetDeleteAt sets the "delete_at" field.
+func (m *GoodReviewMutation) SetDeleteAt(i int64) {
+	m.delete_at = &i
+	m.adddelete_at = nil
+}
+
+// DeleteAt returns the value of the "delete_at" field in the mutation.
+func (m *GoodReviewMutation) DeleteAt() (r int64, exists bool) {
+	v := m.delete_at
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldDeleteAt returns the old "delete_at" field's value of the GoodReview entity.
+// If the GoodReview object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *GoodReviewMutation) OldDeleteAt(ctx context.Context) (v int64, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, fmt.Errorf("OldDeleteAt is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, fmt.Errorf("OldDeleteAt requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldDeleteAt: %w", err)
+	}
+	return oldValue.DeleteAt, nil
+}
+
+// AddDeleteAt adds i to the "delete_at" field.
+func (m *GoodReviewMutation) AddDeleteAt(i int64) {
+	if m.adddelete_at != nil {
+		*m.adddelete_at += i
+	} else {
+		m.adddelete_at = &i
+	}
+}
+
+// AddedDeleteAt returns the value that was added to the "delete_at" field in this mutation.
+func (m *GoodReviewMutation) AddedDeleteAt() (r int64, exists bool) {
+	v := m.adddelete_at
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// ResetDeleteAt resets all changes to the "delete_at" field.
+func (m *GoodReviewMutation) ResetDeleteAt() {
+	m.delete_at = nil
+	m.adddelete_at = nil
+}
+
+// Where appends a list predicates to the GoodReviewMutation builder.
+func (m *GoodReviewMutation) Where(ps ...predicate.GoodReview) {
+	m.predicates = append(m.predicates, ps...)
+}
+
+// Op returns the operation name.
+func (m *GoodReviewMutation) Op() Op {
+	return m.op
+}
+
+// Type returns the node type of this mutation (GoodReview).
+func (m *GoodReviewMutation) Type() string {
+	return m.typ
+}
+
+// Fields returns all fields that were changed during this mutation. Note that in
+// order to get all numeric fields that were incremented/decremented, call
+// AddedFields().
+func (m *GoodReviewMutation) Fields() []string {
+	fields := make([]string, 0, 8)
+	if m._type != nil {
+		fields = append(fields, goodreview.FieldType)
+	}
+	if m.reviewed_id != nil {
+		fields = append(fields, goodreview.FieldReviewedID)
+	}
+	if m.reviewer_id != nil {
+		fields = append(fields, goodreview.FieldReviewerID)
+	}
+	if m.state != nil {
+		fields = append(fields, goodreview.FieldState)
+	}
+	if m.message != nil {
+		fields = append(fields, goodreview.FieldMessage)
+	}
+	if m.create_at != nil {
+		fields = append(fields, goodreview.FieldCreateAt)
+	}
+	if m.update_at != nil {
+		fields = append(fields, goodreview.FieldUpdateAt)
+	}
+	if m.delete_at != nil {
+		fields = append(fields, goodreview.FieldDeleteAt)
+	}
+	return fields
+}
+
+// Field returns the value of a field with the given name. The second boolean
+// return value indicates that this field was not set, or was not defined in the
+// schema.
+func (m *GoodReviewMutation) Field(name string) (ent.Value, bool) {
+	switch name {
+	case goodreview.FieldType:
+		return m.GetType()
+	case goodreview.FieldReviewedID:
+		return m.ReviewedID()
+	case goodreview.FieldReviewerID:
+		return m.ReviewerID()
+	case goodreview.FieldState:
+		return m.State()
+	case goodreview.FieldMessage:
+		return m.Message()
+	case goodreview.FieldCreateAt:
+		return m.CreateAt()
+	case goodreview.FieldUpdateAt:
+		return m.UpdateAt()
+	case goodreview.FieldDeleteAt:
+		return m.DeleteAt()
+	}
+	return nil, false
+}
+
+// OldField returns the old value of the field from the database. An error is
+// returned if the mutation operation is not UpdateOne, or the query to the
+// database failed.
+func (m *GoodReviewMutation) OldField(ctx context.Context, name string) (ent.Value, error) {
+	switch name {
+	case goodreview.FieldType:
+		return m.OldType(ctx)
+	case goodreview.FieldReviewedID:
+		return m.OldReviewedID(ctx)
+	case goodreview.FieldReviewerID:
+		return m.OldReviewerID(ctx)
+	case goodreview.FieldState:
+		return m.OldState(ctx)
+	case goodreview.FieldMessage:
+		return m.OldMessage(ctx)
+	case goodreview.FieldCreateAt:
+		return m.OldCreateAt(ctx)
+	case goodreview.FieldUpdateAt:
+		return m.OldUpdateAt(ctx)
+	case goodreview.FieldDeleteAt:
+		return m.OldDeleteAt(ctx)
+	}
+	return nil, fmt.Errorf("unknown GoodReview field %s", name)
+}
+
+// SetField sets the value of a field with the given name. It returns an error if
+// the field is not defined in the schema, or if the type mismatched the field
+// type.
+func (m *GoodReviewMutation) SetField(name string, value ent.Value) error {
+	switch name {
+	case goodreview.FieldType:
+		v, ok := value.(goodreview.Type)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetType(v)
+		return nil
+	case goodreview.FieldReviewedID:
+		v, ok := value.(uuid.UUID)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetReviewedID(v)
+		return nil
+	case goodreview.FieldReviewerID:
+		v, ok := value.(uuid.UUID)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetReviewerID(v)
+		return nil
+	case goodreview.FieldState:
+		v, ok := value.(goodreview.State)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetState(v)
+		return nil
+	case goodreview.FieldMessage:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetMessage(v)
+		return nil
+	case goodreview.FieldCreateAt:
+		v, ok := value.(int64)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetCreateAt(v)
+		return nil
+	case goodreview.FieldUpdateAt:
+		v, ok := value.(int64)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetUpdateAt(v)
+		return nil
+	case goodreview.FieldDeleteAt:
+		v, ok := value.(int64)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetDeleteAt(v)
+		return nil
+	}
+	return fmt.Errorf("unknown GoodReview field %s", name)
+}
+
+// AddedFields returns all numeric fields that were incremented/decremented during
+// this mutation.
+func (m *GoodReviewMutation) AddedFields() []string {
+	var fields []string
+	if m.addcreate_at != nil {
+		fields = append(fields, goodreview.FieldCreateAt)
+	}
+	if m.addupdate_at != nil {
+		fields = append(fields, goodreview.FieldUpdateAt)
+	}
+	if m.adddelete_at != nil {
+		fields = append(fields, goodreview.FieldDeleteAt)
+	}
+	return fields
+}
+
+// AddedField returns the numeric value that was incremented/decremented on a field
+// with the given name. The second boolean return value indicates that this field
+// was not set, or was not defined in the schema.
+func (m *GoodReviewMutation) AddedField(name string) (ent.Value, bool) {
+	switch name {
+	case goodreview.FieldCreateAt:
+		return m.AddedCreateAt()
+	case goodreview.FieldUpdateAt:
+		return m.AddedUpdateAt()
+	case goodreview.FieldDeleteAt:
+		return m.AddedDeleteAt()
+	}
+	return nil, false
+}
+
+// AddField adds the value to the field with the given name. It returns an error if
+// the field is not defined in the schema, or if the type mismatched the field
+// type.
+func (m *GoodReviewMutation) AddField(name string, value ent.Value) error {
+	switch name {
+	case goodreview.FieldCreateAt:
+		v, ok := value.(int64)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.AddCreateAt(v)
+		return nil
+	case goodreview.FieldUpdateAt:
+		v, ok := value.(int64)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.AddUpdateAt(v)
+		return nil
+	case goodreview.FieldDeleteAt:
+		v, ok := value.(int64)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.AddDeleteAt(v)
+		return nil
+	}
+	return fmt.Errorf("unknown GoodReview numeric field %s", name)
+}
+
+// ClearedFields returns all nullable fields that were cleared during this
+// mutation.
+func (m *GoodReviewMutation) ClearedFields() []string {
+	return nil
+}
+
+// FieldCleared returns a boolean indicating if a field with the given name was
+// cleared in this mutation.
+func (m *GoodReviewMutation) FieldCleared(name string) bool {
+	_, ok := m.clearedFields[name]
+	return ok
+}
+
+// ClearField clears the value of the field with the given name. It returns an
+// error if the field is not defined in the schema.
+func (m *GoodReviewMutation) ClearField(name string) error {
+	return fmt.Errorf("unknown GoodReview nullable field %s", name)
+}
+
+// ResetField resets all changes in the mutation for the field with the given name.
+// It returns an error if the field is not defined in the schema.
+func (m *GoodReviewMutation) ResetField(name string) error {
+	switch name {
+	case goodreview.FieldType:
+		m.ResetType()
+		return nil
+	case goodreview.FieldReviewedID:
+		m.ResetReviewedID()
+		return nil
+	case goodreview.FieldReviewerID:
+		m.ResetReviewerID()
+		return nil
+	case goodreview.FieldState:
+		m.ResetState()
+		return nil
+	case goodreview.FieldMessage:
+		m.ResetMessage()
+		return nil
+	case goodreview.FieldCreateAt:
+		m.ResetCreateAt()
+		return nil
+	case goodreview.FieldUpdateAt:
+		m.ResetUpdateAt()
+		return nil
+	case goodreview.FieldDeleteAt:
+		m.ResetDeleteAt()
+		return nil
+	}
+	return fmt.Errorf("unknown GoodReview field %s", name)
+}
+
+// AddedEdges returns all edge names that were set/added in this mutation.
+func (m *GoodReviewMutation) AddedEdges() []string {
+	edges := make([]string, 0, 0)
+	return edges
+}
+
+// AddedIDs returns all IDs (to other nodes) that were added for the given edge
+// name in this mutation.
+func (m *GoodReviewMutation) AddedIDs(name string) []ent.Value {
+	return nil
+}
+
+// RemovedEdges returns all edge names that were removed in this mutation.
+func (m *GoodReviewMutation) RemovedEdges() []string {
+	edges := make([]string, 0, 0)
+	return edges
+}
+
+// RemovedIDs returns all IDs (to other nodes) that were removed for the edge with
+// the given name in this mutation.
+func (m *GoodReviewMutation) RemovedIDs(name string) []ent.Value {
+	return nil
+}
+
+// ClearedEdges returns all edge names that were cleared in this mutation.
+func (m *GoodReviewMutation) ClearedEdges() []string {
+	edges := make([]string, 0, 0)
+	return edges
+}
+
+// EdgeCleared returns a boolean which indicates if the edge with the given name
+// was cleared in this mutation.
+func (m *GoodReviewMutation) EdgeCleared(name string) bool {
+	return false
+}
+
+// ClearEdge clears the value of the edge with the given name. It returns an error
+// if that edge is not defined in the schema.
+func (m *GoodReviewMutation) ClearEdge(name string) error {
+	return fmt.Errorf("unknown GoodReview unique edge %s", name)
+}
+
+// ResetEdge resets all changes to the edge with the given name in this mutation.
+// It returns an error if the edge is not defined in the schema.
+func (m *GoodReviewMutation) ResetEdge(name string) error {
+	return fmt.Errorf("unknown GoodReview edge %s", name)
 }
 
 // TargetAreaMutation represents an operation that mutates the TargetArea nodes in the graph.
