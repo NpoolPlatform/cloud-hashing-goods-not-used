@@ -27,9 +27,9 @@ func (gru *GoodReviewUpdate) Where(ps ...predicate.GoodReview) *GoodReviewUpdate
 	return gru
 }
 
-// SetType sets the "type" field.
-func (gru *GoodReviewUpdate) SetType(_go goodreview.Type) *GoodReviewUpdate {
-	gru.mutation.SetType(_go)
+// SetEntityType sets the "entity_type" field.
+func (gru *GoodReviewUpdate) SetEntityType(gt goodreview.EntityType) *GoodReviewUpdate {
+	gru.mutation.SetEntityType(gt)
 	return gru
 }
 
@@ -204,9 +204,9 @@ func (gru *GoodReviewUpdate) defaults() {
 
 // check runs all checks and user-defined validators on the builder.
 func (gru *GoodReviewUpdate) check() error {
-	if v, ok := gru.mutation.GetType(); ok {
-		if err := goodreview.TypeValidator(v); err != nil {
-			return &ValidationError{Name: "type", err: fmt.Errorf("ent: validator failed for field \"type\": %w", err)}
+	if v, ok := gru.mutation.EntityType(); ok {
+		if err := goodreview.EntityTypeValidator(v); err != nil {
+			return &ValidationError{Name: "entity_type", err: fmt.Errorf("ent: validator failed for field \"entity_type\": %w", err)}
 		}
 	}
 	if v, ok := gru.mutation.State(); ok {
@@ -235,11 +235,11 @@ func (gru *GoodReviewUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			}
 		}
 	}
-	if value, ok := gru.mutation.GetType(); ok {
+	if value, ok := gru.mutation.EntityType(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeEnum,
 			Value:  value,
-			Column: goodreview.FieldType,
+			Column: goodreview.FieldEntityType,
 		})
 	}
 	if value, ok := gru.mutation.ReviewedID(); ok {
@@ -331,9 +331,9 @@ type GoodReviewUpdateOne struct {
 	mutation *GoodReviewMutation
 }
 
-// SetType sets the "type" field.
-func (gruo *GoodReviewUpdateOne) SetType(_go goodreview.Type) *GoodReviewUpdateOne {
-	gruo.mutation.SetType(_go)
+// SetEntityType sets the "entity_type" field.
+func (gruo *GoodReviewUpdateOne) SetEntityType(gt goodreview.EntityType) *GoodReviewUpdateOne {
+	gruo.mutation.SetEntityType(gt)
 	return gruo
 }
 
@@ -515,9 +515,9 @@ func (gruo *GoodReviewUpdateOne) defaults() {
 
 // check runs all checks and user-defined validators on the builder.
 func (gruo *GoodReviewUpdateOne) check() error {
-	if v, ok := gruo.mutation.GetType(); ok {
-		if err := goodreview.TypeValidator(v); err != nil {
-			return &ValidationError{Name: "type", err: fmt.Errorf("ent: validator failed for field \"type\": %w", err)}
+	if v, ok := gruo.mutation.EntityType(); ok {
+		if err := goodreview.EntityTypeValidator(v); err != nil {
+			return &ValidationError{Name: "entity_type", err: fmt.Errorf("ent: validator failed for field \"entity_type\": %w", err)}
 		}
 	}
 	if v, ok := gruo.mutation.State(); ok {
@@ -563,11 +563,11 @@ func (gruo *GoodReviewUpdateOne) sqlSave(ctx context.Context) (_node *GoodReview
 			}
 		}
 	}
-	if value, ok := gruo.mutation.GetType(); ok {
+	if value, ok := gruo.mutation.EntityType(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeEnum,
 			Value:  value,
-			Column: goodreview.FieldType,
+			Column: goodreview.FieldEntityType,
 		})
 	}
 	if value, ok := gruo.mutation.ReviewedID(); ok {

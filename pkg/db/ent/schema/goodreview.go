@@ -21,7 +21,7 @@ func (GoodReview) Fields() []ent.Field {
 		field.UUID("id", uuid.UUID{}).
 			Default(uuid.New).
 			Unique(),
-		field.Enum("type").
+		field.Enum("entity_type").
 			Values("good", "appgood", "apptargetarea", "appgoodtargetarea"),
 		field.UUID("reviewed_id", uuid.UUID{}),
 		field.UUID("reviewer_id", uuid.UUID{}),
@@ -55,7 +55,7 @@ func (GoodReview) Edges() []ent.Edge {
 
 func (GoodReview) Indexes() []ent.Index {
 	return []ent.Index{
-		index.Fields("type", "reviewed_id").
+		index.Fields("entity_type", "reviewed_id").
 			Unique(),
 	}
 }

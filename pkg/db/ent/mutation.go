@@ -5208,7 +5208,7 @@ type GoodReviewMutation struct {
 	op            Op
 	typ           string
 	id            *uuid.UUID
-	_type         *goodreview.Type
+	entity_type   *goodreview.EntityType
 	reviewed_id   *uuid.UUID
 	reviewer_id   *uuid.UUID
 	state         *goodreview.State
@@ -5310,40 +5310,40 @@ func (m *GoodReviewMutation) ID() (id uuid.UUID, exists bool) {
 	return *m.id, true
 }
 
-// SetType sets the "type" field.
-func (m *GoodReviewMutation) SetType(_go goodreview.Type) {
-	m._type = &_go
+// SetEntityType sets the "entity_type" field.
+func (m *GoodReviewMutation) SetEntityType(gt goodreview.EntityType) {
+	m.entity_type = &gt
 }
 
-// GetType returns the value of the "type" field in the mutation.
-func (m *GoodReviewMutation) GetType() (r goodreview.Type, exists bool) {
-	v := m._type
+// EntityType returns the value of the "entity_type" field in the mutation.
+func (m *GoodReviewMutation) EntityType() (r goodreview.EntityType, exists bool) {
+	v := m.entity_type
 	if v == nil {
 		return
 	}
 	return *v, true
 }
 
-// OldType returns the old "type" field's value of the GoodReview entity.
+// OldEntityType returns the old "entity_type" field's value of the GoodReview entity.
 // If the GoodReview object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *GoodReviewMutation) OldType(ctx context.Context) (v goodreview.Type, err error) {
+func (m *GoodReviewMutation) OldEntityType(ctx context.Context) (v goodreview.EntityType, err error) {
 	if !m.op.Is(OpUpdateOne) {
-		return v, fmt.Errorf("OldType is only allowed on UpdateOne operations")
+		return v, fmt.Errorf("OldEntityType is only allowed on UpdateOne operations")
 	}
 	if m.id == nil || m.oldValue == nil {
-		return v, fmt.Errorf("OldType requires an ID field in the mutation")
+		return v, fmt.Errorf("OldEntityType requires an ID field in the mutation")
 	}
 	oldValue, err := m.oldValue(ctx)
 	if err != nil {
-		return v, fmt.Errorf("querying old value for OldType: %w", err)
+		return v, fmt.Errorf("querying old value for OldEntityType: %w", err)
 	}
-	return oldValue.Type, nil
+	return oldValue.EntityType, nil
 }
 
-// ResetType resets all changes to the "type" field.
-func (m *GoodReviewMutation) ResetType() {
-	m._type = nil
+// ResetEntityType resets all changes to the "entity_type" field.
+func (m *GoodReviewMutation) ResetEntityType() {
+	m.entity_type = nil
 }
 
 // SetReviewedID sets the "reviewed_id" field.
@@ -5678,8 +5678,8 @@ func (m *GoodReviewMutation) Type() string {
 // AddedFields().
 func (m *GoodReviewMutation) Fields() []string {
 	fields := make([]string, 0, 8)
-	if m._type != nil {
-		fields = append(fields, goodreview.FieldType)
+	if m.entity_type != nil {
+		fields = append(fields, goodreview.FieldEntityType)
 	}
 	if m.reviewed_id != nil {
 		fields = append(fields, goodreview.FieldReviewedID)
@@ -5710,8 +5710,8 @@ func (m *GoodReviewMutation) Fields() []string {
 // schema.
 func (m *GoodReviewMutation) Field(name string) (ent.Value, bool) {
 	switch name {
-	case goodreview.FieldType:
-		return m.GetType()
+	case goodreview.FieldEntityType:
+		return m.EntityType()
 	case goodreview.FieldReviewedID:
 		return m.ReviewedID()
 	case goodreview.FieldReviewerID:
@@ -5735,8 +5735,8 @@ func (m *GoodReviewMutation) Field(name string) (ent.Value, bool) {
 // database failed.
 func (m *GoodReviewMutation) OldField(ctx context.Context, name string) (ent.Value, error) {
 	switch name {
-	case goodreview.FieldType:
-		return m.OldType(ctx)
+	case goodreview.FieldEntityType:
+		return m.OldEntityType(ctx)
 	case goodreview.FieldReviewedID:
 		return m.OldReviewedID(ctx)
 	case goodreview.FieldReviewerID:
@@ -5760,12 +5760,12 @@ func (m *GoodReviewMutation) OldField(ctx context.Context, name string) (ent.Val
 // type.
 func (m *GoodReviewMutation) SetField(name string, value ent.Value) error {
 	switch name {
-	case goodreview.FieldType:
-		v, ok := value.(goodreview.Type)
+	case goodreview.FieldEntityType:
+		v, ok := value.(goodreview.EntityType)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
-		m.SetType(v)
+		m.SetEntityType(v)
 		return nil
 	case goodreview.FieldReviewedID:
 		v, ok := value.(uuid.UUID)
@@ -5904,8 +5904,8 @@ func (m *GoodReviewMutation) ClearField(name string) error {
 // It returns an error if the field is not defined in the schema.
 func (m *GoodReviewMutation) ResetField(name string) error {
 	switch name {
-	case goodreview.FieldType:
-		m.ResetType()
+	case goodreview.FieldEntityType:
+		m.ResetEntityType()
 		return nil
 	case goodreview.FieldReviewedID:
 		m.ResetReviewedID()

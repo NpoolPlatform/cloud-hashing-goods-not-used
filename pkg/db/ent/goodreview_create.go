@@ -23,9 +23,9 @@ type GoodReviewCreate struct {
 	conflict []sql.ConflictOption
 }
 
-// SetType sets the "type" field.
-func (grc *GoodReviewCreate) SetType(_go goodreview.Type) *GoodReviewCreate {
-	grc.mutation.SetType(_go)
+// SetEntityType sets the "entity_type" field.
+func (grc *GoodReviewCreate) SetEntityType(gt goodreview.EntityType) *GoodReviewCreate {
+	grc.mutation.SetEntityType(gt)
 	return grc
 }
 
@@ -216,12 +216,12 @@ func (grc *GoodReviewCreate) defaults() {
 
 // check runs all checks and user-defined validators on the builder.
 func (grc *GoodReviewCreate) check() error {
-	if _, ok := grc.mutation.GetType(); !ok {
-		return &ValidationError{Name: "type", err: errors.New(`ent: missing required field "type"`)}
+	if _, ok := grc.mutation.EntityType(); !ok {
+		return &ValidationError{Name: "entity_type", err: errors.New(`ent: missing required field "entity_type"`)}
 	}
-	if v, ok := grc.mutation.GetType(); ok {
-		if err := goodreview.TypeValidator(v); err != nil {
-			return &ValidationError{Name: "type", err: fmt.Errorf(`ent: validator failed for field "type": %w`, err)}
+	if v, ok := grc.mutation.EntityType(); ok {
+		if err := goodreview.EntityTypeValidator(v); err != nil {
+			return &ValidationError{Name: "entity_type", err: fmt.Errorf(`ent: validator failed for field "entity_type": %w`, err)}
 		}
 	}
 	if _, ok := grc.mutation.ReviewedID(); !ok {
@@ -283,13 +283,13 @@ func (grc *GoodReviewCreate) createSpec() (*GoodReview, *sqlgraph.CreateSpec) {
 		_node.ID = id
 		_spec.ID.Value = id
 	}
-	if value, ok := grc.mutation.GetType(); ok {
+	if value, ok := grc.mutation.EntityType(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
 			Type:   field.TypeEnum,
 			Value:  value,
-			Column: goodreview.FieldType,
+			Column: goodreview.FieldEntityType,
 		})
-		_node.Type = value
+		_node.EntityType = value
 	}
 	if value, ok := grc.mutation.ReviewedID(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
@@ -354,7 +354,7 @@ func (grc *GoodReviewCreate) createSpec() (*GoodReview, *sqlgraph.CreateSpec) {
 // of the `INSERT` statement. For example:
 //
 //	client.GoodReview.Create().
-//		SetType(v).
+//		SetEntityType(v).
 //		OnConflict(
 //			// Update the row with the new values
 //			// the was proposed for insertion.
@@ -363,7 +363,7 @@ func (grc *GoodReviewCreate) createSpec() (*GoodReview, *sqlgraph.CreateSpec) {
 //		// Override some of the fields with custom
 //		// update values.
 //		Update(func(u *ent.GoodReviewUpsert) {
-//			SetType(v+v).
+//			SetEntityType(v+v).
 //		}).
 //		Exec(ctx)
 //
@@ -401,15 +401,15 @@ type (
 	}
 )
 
-// SetType sets the "type" field.
-func (u *GoodReviewUpsert) SetType(v goodreview.Type) *GoodReviewUpsert {
-	u.Set(goodreview.FieldType, v)
+// SetEntityType sets the "entity_type" field.
+func (u *GoodReviewUpsert) SetEntityType(v goodreview.EntityType) *GoodReviewUpsert {
+	u.Set(goodreview.FieldEntityType, v)
 	return u
 }
 
-// UpdateType sets the "type" field to the value that was provided on create.
-func (u *GoodReviewUpsert) UpdateType() *GoodReviewUpsert {
-	u.SetExcluded(goodreview.FieldType)
+// UpdateEntityType sets the "entity_type" field to the value that was provided on create.
+func (u *GoodReviewUpsert) UpdateEntityType() *GoodReviewUpsert {
+	u.SetExcluded(goodreview.FieldEntityType)
 	return u
 }
 
@@ -547,17 +547,17 @@ func (u *GoodReviewUpsertOne) Update(set func(*GoodReviewUpsert)) *GoodReviewUps
 	return u
 }
 
-// SetType sets the "type" field.
-func (u *GoodReviewUpsertOne) SetType(v goodreview.Type) *GoodReviewUpsertOne {
+// SetEntityType sets the "entity_type" field.
+func (u *GoodReviewUpsertOne) SetEntityType(v goodreview.EntityType) *GoodReviewUpsertOne {
 	return u.Update(func(s *GoodReviewUpsert) {
-		s.SetType(v)
+		s.SetEntityType(v)
 	})
 }
 
-// UpdateType sets the "type" field to the value that was provided on create.
-func (u *GoodReviewUpsertOne) UpdateType() *GoodReviewUpsertOne {
+// UpdateEntityType sets the "entity_type" field to the value that was provided on create.
+func (u *GoodReviewUpsertOne) UpdateEntityType() *GoodReviewUpsertOne {
 	return u.Update(func(s *GoodReviewUpsert) {
-		s.UpdateType()
+		s.UpdateEntityType()
 	})
 }
 
@@ -791,7 +791,7 @@ func (grcb *GoodReviewCreateBulk) ExecX(ctx context.Context) {
 //		// Override some of the fields with custom
 //		// update values.
 //		Update(func(u *ent.GoodReviewUpsert) {
-//			SetType(v+v).
+//			SetEntityType(v+v).
 //		}).
 //		Exec(ctx)
 //
@@ -875,17 +875,17 @@ func (u *GoodReviewUpsertBulk) Update(set func(*GoodReviewUpsert)) *GoodReviewUp
 	return u
 }
 
-// SetType sets the "type" field.
-func (u *GoodReviewUpsertBulk) SetType(v goodreview.Type) *GoodReviewUpsertBulk {
+// SetEntityType sets the "entity_type" field.
+func (u *GoodReviewUpsertBulk) SetEntityType(v goodreview.EntityType) *GoodReviewUpsertBulk {
 	return u.Update(func(s *GoodReviewUpsert) {
-		s.SetType(v)
+		s.SetEntityType(v)
 	})
 }
 
-// UpdateType sets the "type" field to the value that was provided on create.
-func (u *GoodReviewUpsertBulk) UpdateType() *GoodReviewUpsertBulk {
+// UpdateEntityType sets the "entity_type" field to the value that was provided on create.
+func (u *GoodReviewUpsertBulk) UpdateEntityType() *GoodReviewUpsertBulk {
 	return u.Update(func(s *GoodReviewUpsert) {
-		s.UpdateType()
+		s.UpdateEntityType()
 	})
 }
 

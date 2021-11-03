@@ -254,12 +254,12 @@ func (grq *GoodReviewQuery) Clone() *GoodReviewQuery {
 // Example:
 //
 //	var v []struct {
-//		Type goodreview.Type `json:"type,omitempty"`
+//		EntityType goodreview.EntityType `json:"entity_type,omitempty"`
 //		Count int `json:"count,omitempty"`
 //	}
 //
 //	client.GoodReview.Query().
-//		GroupBy(goodreview.FieldType).
+//		GroupBy(goodreview.FieldEntityType).
 //		Aggregate(ent.Count()).
 //		Scan(ctx, &v)
 //
@@ -281,11 +281,11 @@ func (grq *GoodReviewQuery) GroupBy(field string, fields ...string) *GoodReviewG
 // Example:
 //
 //	var v []struct {
-//		Type goodreview.Type `json:"type,omitempty"`
+//		EntityType goodreview.EntityType `json:"entity_type,omitempty"`
 //	}
 //
 //	client.GoodReview.Query().
-//		Select(goodreview.FieldType).
+//		Select(goodreview.FieldEntityType).
 //		Scan(ctx, &v)
 //
 func (grq *GoodReviewQuery) Select(fields ...string) *GoodReviewSelect {

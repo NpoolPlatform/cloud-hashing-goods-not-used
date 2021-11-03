@@ -13,8 +13,8 @@ const (
 	Label = "good_review"
 	// FieldID holds the string denoting the id field in the database.
 	FieldID = "id"
-	// FieldType holds the string denoting the type field in the database.
-	FieldType = "type"
+	// FieldEntityType holds the string denoting the entity_type field in the database.
+	FieldEntityType = "entity_type"
 	// FieldReviewedID holds the string denoting the reviewed_id field in the database.
 	FieldReviewedID = "reviewed_id"
 	// FieldReviewerID holds the string denoting the reviewer_id field in the database.
@@ -36,7 +36,7 @@ const (
 // Columns holds all SQL columns for goodreview fields.
 var Columns = []string{
 	FieldID,
-	FieldType,
+	FieldEntityType,
 	FieldReviewedID,
 	FieldReviewerID,
 	FieldState,
@@ -71,28 +71,28 @@ var (
 	DefaultID func() uuid.UUID
 )
 
-// Type defines the type for the "type" enum field.
-type Type string
+// EntityType defines the type for the "entity_type" enum field.
+type EntityType string
 
-// Type values.
+// EntityType values.
 const (
-	TypeGood              Type = "good"
-	TypeAppgood           Type = "appgood"
-	TypeApptargetarea     Type = "apptargetarea"
-	TypeAppgoodtargetarea Type = "appgoodtargetarea"
+	EntityTypeGood              EntityType = "good"
+	EntityTypeAppgood           EntityType = "appgood"
+	EntityTypeApptargetarea     EntityType = "apptargetarea"
+	EntityTypeAppgoodtargetarea EntityType = "appgoodtargetarea"
 )
 
-func (_type Type) String() string {
-	return string(_type)
+func (et EntityType) String() string {
+	return string(et)
 }
 
-// TypeValidator is a validator for the "type" field enum values. It is called by the builders before save.
-func TypeValidator(_type Type) error {
-	switch _type {
-	case TypeGood, TypeAppgood, TypeApptargetarea, TypeAppgoodtargetarea:
+// EntityTypeValidator is a validator for the "entity_type" field enum values. It is called by the builders before save.
+func EntityTypeValidator(et EntityType) error {
+	switch et {
+	case EntityTypeGood, EntityTypeAppgood, EntityTypeApptargetarea, EntityTypeAppgoodtargetarea:
 		return nil
 	default:
-		return fmt.Errorf("goodreview: invalid enum value for type field: %q", _type)
+		return fmt.Errorf("goodreview: invalid enum value for entity_type field: %q", et)
 	}
 }
 

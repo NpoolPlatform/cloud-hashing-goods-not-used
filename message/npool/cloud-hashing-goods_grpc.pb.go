@@ -61,6 +61,7 @@ type CloudHashingGoodsClient interface {
 	UpdateGoodExtraInfo(ctx context.Context, in *UpdateGoodExtraInfoRequest, opts ...grpc.CallOption) (*UpdateGoodExtraInfoRequest, error)
 	CreateGoodReview(ctx context.Context, in *CreateGoodReviewRequest, opts ...grpc.CallOption) (*CreateGoodReviewResponse, error)
 	UpdateGoodReview(ctx context.Context, in *UpdateGoodReviewRequest, opts ...grpc.CallOption) (*UpdateGoodReviewResponse, error)
+	GetGoodReview(ctx context.Context, in *GetGoodReviewRequest, opts ...grpc.CallOption) (*GetGoodReviewResponse, error)
 }
 
 type cloudHashingGoodsClient struct {
@@ -449,6 +450,15 @@ func (c *cloudHashingGoodsClient) UpdateGoodReview(ctx context.Context, in *Upda
 	return out, nil
 }
 
+func (c *cloudHashingGoodsClient) GetGoodReview(ctx context.Context, in *GetGoodReviewRequest, opts ...grpc.CallOption) (*GetGoodReviewResponse, error) {
+	out := new(GetGoodReviewResponse)
+	err := c.cc.Invoke(ctx, "/cloud.hashing.goods.v1.CloudHashingGoods/GetGoodReview", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // CloudHashingGoodsServer is the server API for CloudHashingGoods service.
 // All implementations must embed UnimplementedCloudHashingGoodsServer
 // for forward compatibility
@@ -495,6 +505,7 @@ type CloudHashingGoodsServer interface {
 	UpdateGoodExtraInfo(context.Context, *UpdateGoodExtraInfoRequest) (*UpdateGoodExtraInfoRequest, error)
 	CreateGoodReview(context.Context, *CreateGoodReviewRequest) (*CreateGoodReviewResponse, error)
 	UpdateGoodReview(context.Context, *UpdateGoodReviewRequest) (*UpdateGoodReviewResponse, error)
+	GetGoodReview(context.Context, *GetGoodReviewRequest) (*GetGoodReviewResponse, error)
 	mustEmbedUnimplementedCloudHashingGoodsServer()
 }
 
@@ -627,6 +638,9 @@ func (UnimplementedCloudHashingGoodsServer) CreateGoodReview(context.Context, *C
 }
 func (UnimplementedCloudHashingGoodsServer) UpdateGoodReview(context.Context, *UpdateGoodReviewRequest) (*UpdateGoodReviewResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateGoodReview not implemented")
+}
+func (UnimplementedCloudHashingGoodsServer) GetGoodReview(context.Context, *GetGoodReviewRequest) (*GetGoodReviewResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetGoodReview not implemented")
 }
 func (UnimplementedCloudHashingGoodsServer) mustEmbedUnimplementedCloudHashingGoodsServer() {}
 
@@ -1397,6 +1411,24 @@ func _CloudHashingGoods_UpdateGoodReview_Handler(srv interface{}, ctx context.Co
 	return interceptor(ctx, in, info, handler)
 }
 
+func _CloudHashingGoods_GetGoodReview_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetGoodReviewRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CloudHashingGoodsServer).GetGoodReview(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cloud.hashing.goods.v1.CloudHashingGoods/GetGoodReview",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CloudHashingGoodsServer).GetGoodReview(ctx, req.(*GetGoodReviewRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // CloudHashingGoods_ServiceDesc is the grpc.ServiceDesc for CloudHashingGoods service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -1571,6 +1603,10 @@ var CloudHashingGoods_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "UpdateGoodReview",
 			Handler:    _CloudHashingGoods_UpdateGoodReview_Handler,
+		},
+		{
+			MethodName: "GetGoodReview",
+			Handler:    _CloudHashingGoods_GetGoodReview_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

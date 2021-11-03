@@ -16,8 +16,8 @@ type GoodReview struct {
 	config `json:"-"`
 	// ID of the ent.
 	ID uuid.UUID `json:"id,omitempty"`
-	// Type holds the value of the "type" field.
-	Type goodreview.Type `json:"type,omitempty"`
+	// EntityType holds the value of the "entity_type" field.
+	EntityType goodreview.EntityType `json:"entity_type,omitempty"`
 	// ReviewedID holds the value of the "reviewed_id" field.
 	ReviewedID uuid.UUID `json:"reviewed_id,omitempty"`
 	// ReviewerID holds the value of the "reviewer_id" field.
@@ -41,7 +41,7 @@ func (*GoodReview) scanValues(columns []string) ([]interface{}, error) {
 		switch columns[i] {
 		case goodreview.FieldCreateAt, goodreview.FieldUpdateAt, goodreview.FieldDeleteAt:
 			values[i] = new(sql.NullInt64)
-		case goodreview.FieldType, goodreview.FieldState, goodreview.FieldMessage:
+		case goodreview.FieldEntityType, goodreview.FieldState, goodreview.FieldMessage:
 			values[i] = new(sql.NullString)
 		case goodreview.FieldID, goodreview.FieldReviewedID, goodreview.FieldReviewerID:
 			values[i] = new(uuid.UUID)
@@ -66,11 +66,11 @@ func (gr *GoodReview) assignValues(columns []string, values []interface{}) error
 			} else if value != nil {
 				gr.ID = *value
 			}
-		case goodreview.FieldType:
+		case goodreview.FieldEntityType:
 			if value, ok := values[i].(*sql.NullString); !ok {
-				return fmt.Errorf("unexpected type %T for field type", values[i])
+				return fmt.Errorf("unexpected type %T for field entity_type", values[i])
 			} else if value.Valid {
-				gr.Type = goodreview.Type(value.String)
+				gr.EntityType = goodreview.EntityType(value.String)
 			}
 		case goodreview.FieldReviewedID:
 			if value, ok := values[i].(*uuid.UUID); !ok {
@@ -142,8 +142,8 @@ func (gr *GoodReview) String() string {
 	var builder strings.Builder
 	builder.WriteString("GoodReview(")
 	builder.WriteString(fmt.Sprintf("id=%v", gr.ID))
-	builder.WriteString(", type=")
-	builder.WriteString(fmt.Sprintf("%v", gr.Type))
+	builder.WriteString(", entity_type=")
+	builder.WriteString(fmt.Sprintf("%v", gr.EntityType))
 	builder.WriteString(", reviewed_id=")
 	builder.WriteString(fmt.Sprintf("%v", gr.ReviewedID))
 	builder.WriteString(", reviewer_id=")

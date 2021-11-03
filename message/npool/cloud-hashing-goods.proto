@@ -257,13 +257,19 @@ service CloudHashingGoods {
 
     rpc CreateGoodReview(CreateGoodReviewRequest) returns (CreateGoodReviewResponse) {
         option (google.api.http) = {
-            post: "/v1/create/good/view"
+            post: "/v1/create/good/review"
             body: "*"
         };
     }
     rpc UpdateGoodReview(UpdateGoodReviewRequest) returns (UpdateGoodReviewResponse) {
         option (google.api.http) = {
-            post: "/v1/update/good/view"
+            post: "/v1/update/good/review"
+            body: "*"
+        };
+    }
+    rpc GetGoodReview(GetGoodReviewRequest) returns (GetGoodReviewResponse) {
+        option (google.api.http) = {
+            post: "/v1/get/good/review"
             body: "*"
         };
     }
@@ -704,4 +710,12 @@ message UpdateGoodReviewRequest {
 
 message UpdateGoodReviewResponse {
     GoodReviewInfo Info = 6200;
+}
+
+message GetGoodReviewRequest {
+    GoodReviewInfo Info = 6300;
+}
+
+message GetGoodReviewResponse {
+    GoodReviewInfo Info = 6400;
 }
