@@ -142,16 +142,33 @@ service CloudHashingGoods {
         };
     }
 
+    rpc AuthorizeAppGood(AuthorizeAppGoodRequest) returns (AuthorizeAppGoodResponse) {
+        option (google.api.http) = {
+            post: "/v1/authorize/app/good"
+            body: "*"
+        };
+    }
     rpc SetAppGoodPrice(SetAppGoodPriceRequest) returns (SetAppGoodPriceResponse) {
         option (google.api.http) = {
             post: "/v1/set/app/good/price"
             body: "*"
         };
     }
-
-    rpc AuthorizeAppGood(AuthorizeAppGoodRequest) returns (AuthorizeAppGoodResponse) {
+    rpc CheckAppGood(CheckAppGoodRequest) returns (CheckAppGoodResponse) {
         option (google.api.http) = {
-            post: "/v1/authorize/app/good"
+            post: "/v1/check/app/good"
+            body: "*"
+        };
+    }
+    rpc OnsaleAppGood(OnsaleAppGoodRequest) returns (OnsaleAppGoodResponse) {
+        option (google.api.http) = {
+            post: "/v1/onsale/app/good"
+            body: "*"
+        };
+    }
+    rpc OffsaleAppGood(OffsaleAppGoodRequest) returns (OffsaleAppGoodResponse) {
+        option (google.api.http) = {
+            post: "/v1/offsale/app/good"
             body: "*"
         };
     }
@@ -438,43 +455,63 @@ message GetGoodsResponse {
     int32 Total = 3301;
 }
 
-message GoodPrice {
-    float Price = 3400;
-    float GasPrice = 3401;
+message AppGoodInfo {
+    string ID = 3310;
+    string AppID = 3311;
+    string GoodID = 3312;
+    double Price = 3313;
+    double GasPrice = 3314;
+    bool Authorized = 3315;
+    bool Online = 3316;
+    bool InitAuthorizeAllTargetArea = 3317;
 }
 
 message SetAppGoodPriceRequest {
-    string GoodID = 3500;
-    GoodPrice GoodPrice = 3501;
+    AppGoodInfo Info = 3500;
 }
 
 message SetAppGoodPriceResponse {
-    GoodPrice GoodPrice = 3600;
-    GoodInfo GoodInfo = 3601;
+    AppGoodInfo Info = 3600;
+}
+
+message CheckAppGoodRequest {
+    AppGoodInfo Info = 3610;
+}
+
+message CheckAppGoodResponse {
+    AppGoodInfo Info = 3620;
+}
+
+message OnsaleAppGoodRequest {
+    AppGoodInfo Info = 3630;
+}
+
+message OnsaleAppGoodResponse {
+    AppGoodInfo Info = 3640;
+}
+
+message OffsaleAppGoodRequest {
+    AppGoodInfo Info = 3650;
+}
+
+message OffsaleAppGoodResponse {
+    AppGoodInfo Info = 3660;
 }
 
 message AuthorizeAppGoodRequest {
-    string AppID = 3700;
-    string GoodID = 3701;
-    bool AuthorizeAllTargetArea = 3702;
-}
-
-message GoodAuthInfo {
-    GoodInfo Info = 3710;
-    bool Authorized = 3711;
+    AppGoodInfo Info = 3700;
 }
 
 message AuthorizeAppGoodResponse {
-    GoodAuthInfo Info = 3800;
+    AppGoodInfo Info = 3800;
 }
 
 message UnauthorizeAppGoodRequest {
-    string AppID = 3900;
-    string GoodID = 3901;
+    AppGoodInfo Info = 3900;
 }
 
 message UnauthorizeAppGoodResponse {
-    GoodAuthInfo Info = 4000;
+    AppGoodInfo Info = 4000;
 }
 
 message AppTargetAreaInfo {
