@@ -8,7 +8,7 @@ import (
 	"github.com/NpoolPlatform/go-service-framework/pkg/logger"
 
 	"github.com/NpoolPlatform/cloud-hashing-goods/message/npool"
-	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/app-target-area" //nolint
+	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/crud/app-target-area" //nolint
 
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"

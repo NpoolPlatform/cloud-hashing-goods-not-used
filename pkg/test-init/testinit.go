@@ -14,7 +14,7 @@ import (
 )
 
 func Init() error {
-	_, myPath, _, ok := runtime.Caller(1)
+	_, myPath, _, ok := runtime.Caller(0)
 	if !ok {
 		return xerrors.Errorf("cannot get source file path")
 	}

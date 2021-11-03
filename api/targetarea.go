@@ -7,7 +7,7 @@ import (
 
 	"github.com/NpoolPlatform/cloud-hashing-goods/message/npool"
 
-	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/target-area" //nolint
+	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/crud/target-area" //nolint
 
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"

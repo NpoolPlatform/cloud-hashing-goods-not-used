@@ -9,7 +9,7 @@ import (
 
 	"github.com/NpoolPlatform/cloud-hashing-goods/message/npool"
 
-	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/device-info" //nolint
+	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/crud/device-info" //nolint
 
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
