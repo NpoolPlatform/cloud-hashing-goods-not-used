@@ -61,6 +61,19 @@ func (f DeviceInfoFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, 
 	return f(ctx, mv)
 }
 
+// The GoodCommentFunc type is an adapter to allow the use of ordinary
+// function as GoodComment mutator.
+type GoodCommentFunc func(context.Context, *ent.GoodCommentMutation) (ent.Value, error)
+
+// Mutate calls f(ctx, m).
+func (f GoodCommentFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, error) {
+	mv, ok := m.(*ent.GoodCommentMutation)
+	if !ok {
+		return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.GoodCommentMutation", m)
+	}
+	return f(ctx, mv)
+}
+
 // The GoodExtraInfoFunc type is an adapter to allow the use of ordinary
 // function as GoodExtraInfo mutator.
 type GoodExtraInfoFunc func(context.Context, *ent.GoodExtraInfoMutation) (ent.Value, error)

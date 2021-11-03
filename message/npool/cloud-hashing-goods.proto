@@ -625,7 +625,7 @@ message GoodComment {
     string ID = 4400;
     string AppID = 4401;
     string UserID = 4402;
-    string ReplyTo = 4403;
+    string ReplyToID = 4403;
     string GoodID = 4404;
     string OrderID = 4405;
     string Content = 4406;

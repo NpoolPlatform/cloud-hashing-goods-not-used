@@ -104,6 +104,25 @@ var (
 			},
 		},
 	}
+	// GoodCommentsColumns holds the columns for the "good_comments" table.
+	GoodCommentsColumns = []*schema.Column{
+		{Name: "id", Type: field.TypeUUID, Unique: true},
+		{Name: "reply_to_id", Type: field.TypeUUID, Nullable: true},
+		{Name: "user_id", Type: field.TypeUUID},
+		{Name: "app_id", Type: field.TypeUUID},
+		{Name: "good_id", Type: field.TypeUUID},
+		{Name: "order_id", Type: field.TypeUUID},
+		{Name: "content", Type: field.TypeString, Default: ""},
+		{Name: "create_at", Type: field.TypeInt64},
+		{Name: "update_at", Type: field.TypeInt64},
+		{Name: "delete_at", Type: field.TypeInt64},
+	}
+	// GoodCommentsTable holds the schema information for the "good_comments" table.
+	GoodCommentsTable = &schema.Table{
+		Name:       "good_comments",
+		Columns:    GoodCommentsColumns,
+		PrimaryKey: []*schema.Column{GoodCommentsColumns[0]},
+	}
 	// GoodExtraInfosColumns holds the columns for the "good_extra_infos" table.
 	GoodExtraInfosColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeUUID, Unique: true},
@@ -224,6 +243,7 @@ var (
 		AppGoodTargetAreasTable,
 		AppTargetAreasTable,
 		DeviceInfosTable,
+		GoodCommentsTable,
 		GoodExtraInfosTable,
 		GoodInfosTable,
 		GoodReviewsTable,

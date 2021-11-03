@@ -1079,7 +1079,7 @@
 | ID | [string](#string) |  |  |
 | AppID | [string](#string) |  |  |
 | UserID | [string](#string) |  |  |
-| ReplyTo | [string](#string) |  |  |
+| ReplyToID | [string](#string) |  |  |
 | GoodID | [string](#string) |  |  |
 | OrderID | [string](#string) |  |  |
 | Content | [string](#string) |  |  |

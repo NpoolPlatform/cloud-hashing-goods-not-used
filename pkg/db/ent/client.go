@@ -14,6 +14,7 @@ import (
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/appgoodtargetarea"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/apptargetarea"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/deviceinfo"
+	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/goodcomment"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/goodextrainfo"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/goodinfo"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/goodreview"
@@ -37,6 +38,8 @@ type Client struct {
 	AppTargetArea *AppTargetAreaClient
 	// DeviceInfo is the client for interacting with the DeviceInfo builders.
 	DeviceInfo *DeviceInfoClient
+	// GoodComment is the client for interacting with the GoodComment builders.
+	GoodComment *GoodCommentClient
 	// GoodExtraInfo is the client for interacting with the GoodExtraInfo builders.
 	GoodExtraInfo *GoodExtraInfoClient
 	// GoodInfo is the client for interacting with the GoodInfo builders.
@@ -64,6 +67,7 @@ func (c *Client) init() {
 	c.AppGoodTargetArea = NewAppGoodTargetAreaClient(c.config)
 	c.AppTargetArea = NewAppTargetAreaClient(c.config)
 	c.DeviceInfo = NewDeviceInfoClient(c.config)
+	c.GoodComment = NewGoodCommentClient(c.config)
 	c.GoodExtraInfo = NewGoodExtraInfoClient(c.config)
 	c.GoodInfo = NewGoodInfoClient(c.config)
 	c.GoodReview = NewGoodReviewClient(c.config)
@@ -106,6 +110,7 @@ func (c *Client) Tx(ctx context.Context) (*Tx, error) {
 		AppGoodTargetArea: NewAppGoodTargetAreaClient(cfg),
 		AppTargetArea:     NewAppTargetAreaClient(cfg),
 		DeviceInfo:        NewDeviceInfoClient(cfg),
+		GoodComment:       NewGoodCommentClient(cfg),
 		GoodExtraInfo:     NewGoodExtraInfoClient(cfg),
 		GoodInfo:          NewGoodInfoClient(cfg),
 		GoodReview:        NewGoodReviewClient(cfg),
@@ -133,6 +138,7 @@ func (c *Client) BeginTx(ctx context.Context, opts *sql.TxOptions) (*Tx, error) 
 		AppGoodTargetArea: NewAppGoodTargetAreaClient(cfg),
 		AppTargetArea:     NewAppTargetAreaClient(cfg),
 		DeviceInfo:        NewDeviceInfoClient(cfg),
+		GoodComment:       NewGoodCommentClient(cfg),
 		GoodExtraInfo:     NewGoodExtraInfoClient(cfg),
 		GoodInfo:          NewGoodInfoClient(cfg),
 		GoodReview:        NewGoodReviewClient(cfg),
@@ -171,6 +177,7 @@ func (c *Client) Use(hooks ...Hook) {
 	c.AppGoodTargetArea.Use(hooks...)
 	c.AppTargetArea.Use(hooks...)
 	c.DeviceInfo.Use(hooks...)
+	c.GoodComment.Use(hooks...)
 	c.GoodExtraInfo.Use(hooks...)
 	c.GoodInfo.Use(hooks...)
 	c.GoodReview.Use(hooks...)
@@ -536,6 +543,96 @@ func (c *DeviceInfoClient) GetX(ctx context.Context, id uuid.UUID) *DeviceInfo {
 // Hooks returns the client hooks.
 func (c *DeviceInfoClient) Hooks() []Hook {
 	return c.hooks.DeviceInfo
+}
+
+// GoodCommentClient is a client for the GoodComment schema.
+type GoodCommentClient struct {
+	config
+}
+
+// NewGoodCommentClient returns a client for the GoodComment from the given config.
+func NewGoodCommentClient(c config) *GoodCommentClient {
+	return &GoodCommentClient{config: c}
+}
+
+// Use adds a list of mutation hooks to the hooks stack.
+// A call to `Use(f, g, h)` equals to `goodcomment.Hooks(f(g(h())))`.
+func (c *GoodCommentClient) Use(hooks ...Hook) {
+	c.hooks.GoodComment = append(c.hooks.GoodComment, hooks...)
+}
+
+// Create returns a create builder for GoodComment.
+func (c *GoodCommentClient) Create() *GoodCommentCreate {
+	mutation := newGoodCommentMutation(c.config, OpCreate)
+	return &GoodCommentCreate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// CreateBulk returns a builder for creating a bulk of GoodComment entities.
+func (c *GoodCommentClient) CreateBulk(builders ...*GoodCommentCreate) *GoodCommentCreateBulk {
+	return &GoodCommentCreateBulk{config: c.config, builders: builders}
+}
+
+// Update returns an update builder for GoodComment.
+func (c *GoodCommentClient) Update() *GoodCommentUpdate {
+	mutation := newGoodCommentMutation(c.config, OpUpdate)
+	return &GoodCommentUpdate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOne returns an update builder for the given entity.
+func (c *GoodCommentClient) UpdateOne(gc *GoodComment) *GoodCommentUpdateOne {
+	mutation := newGoodCommentMutation(c.config, OpUpdateOne, withGoodComment(gc))
+	return &GoodCommentUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOneID returns an update builder for the given id.
+func (c *GoodCommentClient) UpdateOneID(id uuid.UUID) *GoodCommentUpdateOne {
+	mutation := newGoodCommentMutation(c.config, OpUpdateOne, withGoodCommentID(id))
+	return &GoodCommentUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// Delete returns a delete builder for GoodComment.
+func (c *GoodCommentClient) Delete() *GoodCommentDelete {
+	mutation := newGoodCommentMutation(c.config, OpDelete)
+	return &GoodCommentDelete{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// DeleteOne returns a delete builder for the given entity.
+func (c *GoodCommentClient) DeleteOne(gc *GoodComment) *GoodCommentDeleteOne {
+	return c.DeleteOneID(gc.ID)
+}
+
+// DeleteOneID returns a delete builder for the given id.
+func (c *GoodCommentClient) DeleteOneID(id uuid.UUID) *GoodCommentDeleteOne {
+	builder := c.Delete().Where(goodcomment.ID(id))
+	builder.mutation.id = &id
+	builder.mutation.op = OpDeleteOne
+	return &GoodCommentDeleteOne{builder}
+}
+
+// Query returns a query builder for GoodComment.
+func (c *GoodCommentClient) Query() *GoodCommentQuery {
+	return &GoodCommentQuery{
+		config: c.config,
+	}
+}
+
+// Get returns a GoodComment entity by its id.
+func (c *GoodCommentClient) Get(ctx context.Context, id uuid.UUID) (*GoodComment, error) {
+	return c.Query().Where(goodcomment.ID(id)).Only(ctx)
+}
+
+// GetX is like Get, but panics if an error occurs.
+func (c *GoodCommentClient) GetX(ctx context.Context, id uuid.UUID) *GoodComment {
+	obj, err := c.Get(ctx, id)
+	if err != nil {
+		panic(err)
+	}
+	return obj
+}
+
+// Hooks returns the client hooks.
+func (c *GoodCommentClient) Hooks() []Hook {
+	return c.hooks.GoodComment
 }
 
 // GoodExtraInfoClient is a client for the GoodExtraInfo schema.
