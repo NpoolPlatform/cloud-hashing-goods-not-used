@@ -261,6 +261,12 @@ service CloudHashingGoods {
             body: "*"
         };
     }
+    rpc UpdateGoodReview(UpdateGoodReviewRequest) returns (UpdateGoodReviewResponse) {
+        option (google.api.http) = {
+            post: "/v1/update/good/view"
+            body: "*"
+        };
+    }
 }
 
 message PageInfo {
@@ -690,4 +696,12 @@ message CreateGoodReviewRequest {
 
 message CreateGoodReviewResponse {
     GoodReviewInfo Info = 6000;
+}
+
+message UpdateGoodReviewRequest {
+    GoodReviewInfo Info = 6100;
+}
+
+message UpdateGoodReviewResponse {
+    GoodReviewInfo Info = 6200;
 }

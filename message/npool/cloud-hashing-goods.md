@@ -90,6 +90,8 @@
     - [UpdateGoodExtraInfoResponse](#cloud.hashing.goods.v1.UpdateGoodExtraInfoResponse)
     - [UpdateGoodRequest](#cloud.hashing.goods.v1.UpdateGoodRequest)
     - [UpdateGoodResponse](#cloud.hashing.goods.v1.UpdateGoodResponse)
+    - [UpdateGoodReviewRequest](#cloud.hashing.goods.v1.UpdateGoodReviewRequest)
+    - [UpdateGoodReviewResponse](#cloud.hashing.goods.v1.UpdateGoodReviewResponse)
     - [UpdateTargetAreaRequest](#cloud.hashing.goods.v1.UpdateTargetAreaRequest)
     - [UpdateTargetAreaResponse](#cloud.hashing.goods.v1.UpdateTargetAreaResponse)
     - [UpdateVendorLocationRequest](#cloud.hashing.goods.v1.UpdateVendorLocationRequest)
@@ -1456,6 +1458,36 @@
 
 
 
+<a name="cloud.hashing.goods.v1.UpdateGoodReviewRequest"></a>
+
+### UpdateGoodReviewRequest
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| Info | [GoodReviewInfo](#cloud.hashing.goods.v1.GoodReviewInfo) |  |  |
+
+
+
+
+
+
+<a name="cloud.hashing.goods.v1.UpdateGoodReviewResponse"></a>
+
+### UpdateGoodReviewResponse
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| Info | [GoodReviewInfo](#cloud.hashing.goods.v1.GoodReviewInfo) |  |  |
+
+
+
+
+
+
 <a name="cloud.hashing.goods.v1.UpdateTargetAreaRequest"></a>
 
 ### UpdateTargetAreaRequest
@@ -1604,6 +1636,7 @@ Cloud Hashing Goods
 | GetGoodExtraInfo | [GetGoodExtraInfoRequest](#cloud.hashing.goods.v1.GetGoodExtraInfoRequest) | [GetGoodExtraInfoRequest](#cloud.hashing.goods.v1.GetGoodExtraInfoRequest) |  |
 | UpdateGoodExtraInfo | [UpdateGoodExtraInfoRequest](#cloud.hashing.goods.v1.UpdateGoodExtraInfoRequest) | [UpdateGoodExtraInfoRequest](#cloud.hashing.goods.v1.UpdateGoodExtraInfoRequest) |  |
 | CreateGoodReview | [CreateGoodReviewRequest](#cloud.hashing.goods.v1.CreateGoodReviewRequest) | [CreateGoodReviewResponse](#cloud.hashing.goods.v1.CreateGoodReviewResponse) |  |
+| UpdateGoodReview | [UpdateGoodReviewRequest](#cloud.hashing.goods.v1.UpdateGoodReviewRequest) | [UpdateGoodReviewResponse](#cloud.hashing.goods.v1.UpdateGoodReviewResponse) |  |
 
  
 

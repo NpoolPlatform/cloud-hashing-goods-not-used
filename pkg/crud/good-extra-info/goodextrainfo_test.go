@@ -65,5 +65,4 @@ func TestGoodExtraInfoCRUD(t *testing.T) {
 		assert.Equal(t, resp2.Info.ID, resp.Info.ID)
 		assertGoodExtraInfo(t, resp2.Info, &goodExtraInfo)
 	}
-
 }
