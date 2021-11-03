@@ -151,7 +151,7 @@ var (
 	GoodReviewsColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeUUID, Unique: true},
 		{Name: "type", Type: field.TypeEnum, Enums: []string{"good", "appgood", "apptargetarea", "appgoodtargetarea"}},
-		{Name: "reviewed_id", Type: field.TypeUUID, Unique: true},
+		{Name: "reviewed_id", Type: field.TypeUUID},
 		{Name: "reviewer_id", Type: field.TypeUUID},
 		{Name: "state", Type: field.TypeEnum, Enums: []string{"approved", "rejected", "none"}, Default: "none"},
 		{Name: "message", Type: field.TypeString, Default: ""},
@@ -164,6 +164,13 @@ var (
 		Name:       "good_reviews",
 		Columns:    GoodReviewsColumns,
 		PrimaryKey: []*schema.Column{GoodReviewsColumns[0]},
+		Indexes: []*schema.Index{
+			{
+				Name:    "goodreview_type_reviewed_id",
+				Unique:  true,
+				Columns: []*schema.Column{GoodReviewsColumns[1], GoodReviewsColumns[2]},
+			},
+		},
 	}
 	// TargetAreasColumns holds the columns for the "target_areas" table.
 	TargetAreasColumns = []*schema.Column{

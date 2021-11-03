@@ -5,6 +5,7 @@ import (
 
 	"entgo.io/ent"
 	"entgo.io/ent/schema/field"
+	"entgo.io/ent/schema/index"
 
 	"github.com/google/uuid"
 )
@@ -22,8 +23,7 @@ func (GoodReview) Fields() []ent.Field {
 			Unique(),
 		field.Enum("type").
 			Values("good", "appgood", "apptargetarea", "appgoodtargetarea"),
-		field.UUID("reviewed_id", uuid.UUID{}).
-			Unique(),
+		field.UUID("reviewed_id", uuid.UUID{}),
 		field.UUID("reviewer_id", uuid.UUID{}),
 		field.Enum("state").
 			Default("none").
@@ -51,4 +51,11 @@ func (GoodReview) Fields() []ent.Field {
 // Edges of the GoodReview.
 func (GoodReview) Edges() []ent.Edge {
 	return nil
+}
+
+func (GoodReview) Indexes() []ent.Index {
+	return []ent.Index{
+		index.Fields("type", "reviewed_id").
+			Unique(),
+	}
 }
