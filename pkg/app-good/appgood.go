@@ -158,11 +158,62 @@ func SetAppGoodPrice(ctx context.Context, in *npool.SetAppGoodPriceRequest) (*np
 }
 
 func Onsale(ctx context.Context, in *npool.OnsaleAppGoodRequest) (*npool.OnsaleAppGoodResponse, error) {
-	return nil, nil
+	if err := validateAppGood(in.GetInfo()); err != nil {
+		return nil, xerrors.Errorf("invalid parameter: %v", err)
+	}
+
+	id, err := uuid.Parse(in.GetInfo().GetID())
+	if err != nil {
+		return nil, xerrors.Errorf("invalid app good id: %v", err)
+	}
+
+	info1, err := Check(ctx, &npool.CheckAppGoodRequest{
+		Info: in.GetInfo(),
+	})
+	if err != nil {
+		return nil, xerrors.Errorf("fail onsale app good: %v", err)
+	}
+
+	if !info1.Info.Authorized {
+		return nil, xerrors.Errorf("good not authorized by app")
+	}
+
+	info, err := db.Client().
+		AppGood.
+		UpdateOneID(id).
+		SetOnline(true).
+		Save(ctx)
+	if err != nil {
+		return nil, xerrors.Errorf("fail onsale app good: %v", err)
+	}
+
+	return &npool.OnsaleAppGoodResponse{
+		Info: dbRowToAppGood(info),
+	}, nil
 }
 
 func Offsale(ctx context.Context, in *npool.OffsaleAppGoodRequest) (*npool.OffsaleAppGoodResponse, error) {
-	return nil, nil
+	if err := validateAppGood(in.GetInfo()); err != nil {
+		return nil, xerrors.Errorf("invalid parameter: %v", err)
+	}
+
+	id, err := uuid.Parse(in.GetInfo().GetID())
+	if err != nil {
+		return nil, xerrors.Errorf("invalid app good id: %v", err)
+	}
+
+	info, err := db.Client().
+		AppGood.
+		UpdateOneID(id).
+		SetOnline(false).
+		Save(ctx)
+	if err != nil {
+		return nil, xerrors.Errorf("fail offsale app good: %v", err)
+	}
+
+	return &npool.OffsaleAppGoodResponse{
+		Info: dbRowToAppGood(info),
+	}, nil
 }
 
 func Unauthorize(ctx context.Context, in *npool.UnauthorizeAppGoodRequest) (*npool.UnauthorizeAppGoodResponse, error) {

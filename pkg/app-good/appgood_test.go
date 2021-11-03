@@ -110,13 +110,33 @@ func TestAppGoodCRUD(t *testing.T) {
 		assertAppGood(t, resp6.Info, &appGoodInfo)
 	}
 
-	appGoodInfo.Authorized = false
+	appGoodInfo.Online = true
 
-	resp7, err := Unauthorize(context.Background(), &npool.UnauthorizeAppGoodRequest{
+	resp7, err := Onsale(context.Background(), &npool.OnsaleAppGoodRequest{
 		Info: &appGoodInfo,
 	})
 	if assert.Nil(t, err) {
 		assert.Equal(t, resp7.Info.ID, resp.Info.ID)
 		assertAppGood(t, resp7.Info, &appGoodInfo)
+	}
+
+	appGoodInfo.Online = false
+
+	resp8, err := Offsale(context.Background(), &npool.OffsaleAppGoodRequest{
+		Info: &appGoodInfo,
+	})
+	if assert.Nil(t, err) {
+		assert.Equal(t, resp8.Info.ID, resp.Info.ID)
+		assertAppGood(t, resp8.Info, &appGoodInfo)
+	}
+
+	appGoodInfo.Authorized = false
+
+	resp9, err := Unauthorize(context.Background(), &npool.UnauthorizeAppGoodRequest{
+		Info: &appGoodInfo,
+	})
+	if assert.Nil(t, err) {
+		assert.Equal(t, resp9.Info.ID, resp.Info.ID)
+		assertAppGood(t, resp9.Info, &appGoodInfo)
 	}
 }
