@@ -31,11 +31,6 @@ func validateGoodReview(info *npool.GoodReviewInfo) error {
 		return xerrors.Errorf("invalid reviewed id: %v", err)
 	}
 
-	_, err = uuid.Parse(info.GetReviewerID())
-	if err != nil {
-		return xerrors.Errorf("invalid reviewer id: %v", err)
-	}
-
 	return nil
 }
 
@@ -102,11 +97,6 @@ func Update(ctx context.Context, in *npool.UpdateGoodReviewRequest) (*npool.Upda
 }
 
 func Get(ctx context.Context, in *npool.GetGoodReviewRequest) (*npool.GetGoodReviewResponse, error) {
-	id, err := uuid.Parse(in.GetInfo().GetID())
-	if err != nil {
-		return nil, xerrors.Errorf("invalid good extra info id: %v", err)
-	}
-
 	if err := validateGoodReview(in.GetInfo()); err != nil {
 		return nil, xerrors.Errorf("invalid parameter: %v", err)
 	}
@@ -116,7 +106,6 @@ func Get(ctx context.Context, in *npool.GetGoodReviewRequest) (*npool.GetGoodRev
 		Query().
 		Where(
 			goodreview.Or(
-				goodreview.ID(id),
 				goodreview.ReviewedID(uuid.MustParse(in.GetInfo().GetReviewedID())),
 			),
 		).
