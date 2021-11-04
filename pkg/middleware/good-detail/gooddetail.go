@@ -27,7 +27,7 @@ func Get(ctx context.Context, in *npool.GetGoodDetailRequest) (*npool.GetGoodDet
 		return nil, xerrors.Errorf("fail get good: %v", err)
 	}
 
-	var inheritGoodInfo *npool.GoodInfo = nil
+	var inheritGoodInfo *npool.GoodInfo
 
 	inheritFromGoodInfo, err := goodinfo.Get(ctx, &npool.GetGoodRequest{
 		ID: goodInfo.Info.InheritFromGoodID,
