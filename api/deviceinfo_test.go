@@ -97,7 +97,7 @@ func TestCreateDeviceInfo(t *testing.T) { //nolint
 
 	resp, err = cli.R().
 		SetHeader("Content-Type", "application/json").
-		Get("http://localhost:33759/v1/get/devices")
+		Post("http://localhost:33759/v1/get/devices")
 	if assert.Nil(t, err) {
 		assert.Equal(t, 200, resp.StatusCode())
 	}

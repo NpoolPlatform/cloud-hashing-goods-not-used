@@ -144,6 +144,6 @@ func TestGoodCRUD(t *testing.T) { //nolint
 
 	_, err = cli.R().
 		SetHeader("Content-Type", "application/json").
-		Get("http://localhost:33759/v1/get/goods")
+		Post("http://localhost:33759/v1/get/goods")
 	assert.Nil(t, err)
 }
