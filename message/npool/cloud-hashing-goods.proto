@@ -112,6 +112,7 @@ service CloudHashingGoods {
         };
     }
 
+    // Good information for CRUD
     rpc CreateGood(CreateGoodRequest) returns (CreateGoodResponse) {
         option (google.api.http) = {
             post: "/v1/create/good"
@@ -139,6 +140,13 @@ service CloudHashingGoods {
     rpc GetGoods(GetGoodsRequest) returns (GetGoodsResponse) {
         option (google.api.http) = {
             get: "/v1/get/goods"
+        };
+    }
+    // Good information for API
+    rpc GetGoodDetail(GetGoodDetailRequest) returns (GetGoodDetailResponse) {
+        option (google.api.http) = {
+            post: "/v1/get/good/detail"
+            body: "*"
         };
     }
 
@@ -475,23 +483,50 @@ message UpdateGoodResponse {
 }
 
 message GetGoodRequest {
-    string ID = 2810;
+    string ID = 2900;
 }
 
 message GetGoodResponse {
-    GoodInfo Info = 2820;
+    GoodInfo Info = 3000;
+}
+
+message GoodDetail {
+    string ID = 2400;
+    DeviceInfo DeviceInfo = 2401;
+    double GasPrice = 2402;
+    bool SeparateGasFee = 2403;
+    int32 UnitPower = 2404;
+    int32 DurationDays = 2405;
+    string CoinInfoID = 2406;
+    bool Actuals = 2407;
+    int32 DeliveryAt = 2408;
+    GoodInfo InheritFromGood = 2409;
+    VendorLocationInfo VendorLocation = 2410;
+    double Price = 2411;
+    string BenefitType = 2412;
+    bool Classic = 2413;
+    repeated string SupportCoinTypeIDs = 2414;
+    int32 Total = 2415;
+}
+
+message GetGoodDetailRequest {
+    string ID = 3200;
+}
+
+message GetGoodDetailResponse {
+    GoodDetail Detail = 3210;
 }
 
 message DeleteGoodRequest {
-    string ID = 2830;
+    string ID = 3220;
 }
 
 message DeleteGoodResponse {
-    GoodInfo Info = 2840;
+    GoodInfo Info = 3230;
 }
 
 message GetGoodsRequest {
-    PageInfo PageInfo = 3201;
+    PageInfo PageInfo = 3240;
 }
 
 message GetGoodsResponse {
