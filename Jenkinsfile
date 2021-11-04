@@ -41,6 +41,7 @@ pipeline {
         expression { BUILD_TARGET == 'true' }
       }
       steps {
+        sh 'cd tools/grpc; make install'
         sh 'cd message; make proto'
         sh 'make verify-build'
       }
