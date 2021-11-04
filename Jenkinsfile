@@ -2,6 +2,7 @@ pipeline {
   agent any
   environment {
     GOPROXY = 'https://goproxy.cn,direct'
+    PATH = '${env.HOME}/go/bin:/usr/go/bin:${env.PATH}'
   }
   tools {
     go 'go'
