@@ -27,11 +27,13 @@ func Get(ctx context.Context, in *npool.GetGoodDetailRequest) (*npool.GetGoodDet
 		return nil, xerrors.Errorf("fail get good: %v", err)
 	}
 
+	var inheritGoodInfo *npool.GoodInfo = nil
+
 	inheritFromGoodInfo, err := goodinfo.Get(ctx, &npool.GetGoodRequest{
 		ID: goodInfo.Info.InheritFromGoodID,
 	})
-	if err != nil {
-		return nil, xerrors.Errorf("fail get inherit good: %v", err)
+	if err == nil {
+		inheritGoodInfo = inheritFromGoodInfo.Info
 	}
 
 	vendorLocation, err := vendorlocation.Get(ctx, &npool.GetVendorLocationRequest{
@@ -59,7 +61,7 @@ func Get(ctx context.Context, in *npool.GetGoodDetailRequest) (*npool.GetGoodDet
 			CoinInfoID:         goodInfo.Info.CoinInfoID,
 			Actuals:            goodInfo.Info.Actuals,
 			DeliveryAt:         goodInfo.Info.DeliveryAt,
-			InheritFromGood:    inheritFromGoodInfo.Info,
+			InheritFromGood:    inheritGoodInfo,
 			VendorLocation:     vendorLocation.Info,
 			Price:              goodInfo.Info.Price,
 			BenefitType:        goodInfo.Info.BenefitType,
