@@ -82,6 +82,9 @@ pipeline {
 
           kubectl exec --namespace kube-system $devboxpod -- make -C /tmp/$servicename deps before-test test after-test
           kubectl exec --namespace kube-system $devboxpod -- rm -rf /tmp/$servicename
+
+          swaggeruipod=`kubectl get pods -A | grep swagger | awk '{print $2}'`
+          kubectl cp message/npool/*.swagger.json kube-system/$swaggeruipod:/usr/share/nginx/html
         '''.stripIndent())
       }
     }
