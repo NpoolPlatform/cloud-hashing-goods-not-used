@@ -29,6 +29,31 @@ func init() {
 	}
 }
 
+func assertGoodDetail(t *testing.T, actual *npool.GoodDetail, expectGoodInfo *npool.GoodInfo, expectDevice *npool.DeviceInfo, expectVendorLocation *npool.VendorLocationInfo) {
+	assert.Equal(t, actual.DeviceInfo.ID, expectDevice.ID)
+	assert.Equal(t, actual.DeviceInfo.Type, expectDevice.Type)
+	assert.Equal(t, actual.DeviceInfo.Manufacturer, expectDevice.Manufacturer)
+	assert.Equal(t, actual.DeviceInfo.PowerComsuption, expectDevice.PowerComsuption)
+	assert.Equal(t, actual.DeviceInfo.ShipmentAt, expectDevice.ShipmentAt)
+	assert.Equal(t, actual.GasPrice, expectGoodInfo.GasPrice)
+	assert.Equal(t, actual.SeparateGasFee, expectGoodInfo.SeparateGasFee)
+	assert.Equal(t, actual.UnitPower, expectGoodInfo.UnitPower)
+	assert.Equal(t, actual.DurationDays, expectGoodInfo.DurationDays)
+	assert.Equal(t, actual.CoinInfoID, expectGoodInfo.CoinInfoID)
+	assert.Equal(t, actual.Actuals, expectGoodInfo.Actuals)
+	assert.Equal(t, actual.DeliveryAt, expectGoodInfo.DeliveryAt)
+	assert.Equal(t, actual.VendorLocation.ID, expectVendorLocation.ID)
+	assert.Equal(t, actual.VendorLocation.Country, expectVendorLocation.Country)
+	assert.Equal(t, actual.VendorLocation.Province, expectVendorLocation.Province)
+	assert.Equal(t, actual.VendorLocation.City, expectVendorLocation.City)
+	assert.Equal(t, actual.VendorLocation.Address, expectVendorLocation.Address)
+	assert.Equal(t, actual.Price, expectGoodInfo.Price)
+	assert.Equal(t, actual.BenefitType, expectGoodInfo.BenefitType)
+	assert.Equal(t, actual.Classic, expectGoodInfo.Classic)
+	assert.Equal(t, actual.SupportCoinTypeIDs, expectGoodInfo.SupportCoinTypeIDs)
+	assert.Equal(t, actual.Total, expectGoodInfo.Total)
+}
+
 func TestGet(t *testing.T) {
 	nano := time.Now().UnixNano()
 
@@ -82,28 +107,22 @@ func TestGet(t *testing.T) {
 	})
 	if assert.Nil(t, err) {
 		assert.Equal(t, resp.Detail.ID, goodInfoResp.Info.ID)
-		assert.Equal(t, resp.Detail.DeviceInfo.ID, deviceResp.Info.ID)
-		assert.Equal(t, resp.Detail.DeviceInfo.Type, deviceResp.Info.Type)
-		assert.Equal(t, resp.Detail.DeviceInfo.Manufacturer, deviceResp.Info.Manufacturer)
-		assert.Equal(t, resp.Detail.DeviceInfo.PowerComsuption, deviceResp.Info.PowerComsuption)
-		assert.Equal(t, resp.Detail.DeviceInfo.ShipmentAt, deviceResp.Info.ShipmentAt)
-		assert.Equal(t, resp.Detail.GasPrice, goodInfoResp.Info.GasPrice)
-		assert.Equal(t, resp.Detail.SeparateGasFee, goodInfoResp.Info.SeparateGasFee)
-		assert.Equal(t, resp.Detail.UnitPower, goodInfoResp.Info.UnitPower)
-		assert.Equal(t, resp.Detail.DurationDays, goodInfoResp.Info.DurationDays)
-		assert.Equal(t, resp.Detail.CoinInfoID, goodInfoResp.Info.CoinInfoID)
-		assert.Equal(t, resp.Detail.Actuals, goodInfoResp.Info.Actuals)
-		assert.Equal(t, resp.Detail.DeliveryAt, goodInfoResp.Info.DeliveryAt)
 		assert.Nil(t, resp.Detail.InheritFromGood)
-		assert.Equal(t, resp.Detail.VendorLocation.ID, vendorLocationResp.Info.ID)
-		assert.Equal(t, resp.Detail.VendorLocation.Country, vendorLocationResp.Info.Country)
-		assert.Equal(t, resp.Detail.VendorLocation.Province, vendorLocationResp.Info.Province)
-		assert.Equal(t, resp.Detail.VendorLocation.City, vendorLocationResp.Info.City)
-		assert.Equal(t, resp.Detail.VendorLocation.Address, vendorLocationResp.Info.Address)
-		assert.Equal(t, resp.Detail.Price, goodInfoResp.Info.Price)
-		assert.Equal(t, resp.Detail.BenefitType, goodInfoResp.Info.BenefitType)
-		assert.Equal(t, resp.Detail.Classic, goodInfoResp.Info.Classic)
-		assert.Equal(t, resp.Detail.SupportCoinTypeIDs, goodInfoResp.Info.SupportCoinTypeIDs)
-		assert.Equal(t, resp.Detail.Total, goodInfoResp.Info.Total)
+		assertGoodDetail(t, resp.Detail, goodInfoResp.Info, deviceResp.Info, vendorLocationResp.Info)
+	}
+
+	goodInfo.InheritFromGoodID = goodInfoResp.Info.ID
+	goodInfoResp1, err := goodinfo.Create(context.Background(), &npool.CreateGoodRequest{
+		Info: &goodInfo,
+	})
+	assert.Nil(t, err)
+
+	resp1, err := Get(context.Background(), &npool.GetGoodDetailRequest{
+		ID: goodInfoResp1.Info.ID,
+	})
+	if assert.Nil(t, err) {
+		assert.Equal(t, resp1.Detail.ID, goodInfoResp1.Info.ID)
+		assert.Equal(t, resp1.Detail.InheritFromGood.ID, goodInfoResp.Info.ID)
+		assertGoodDetail(t, resp1.Detail, goodInfoResp.Info, deviceResp.Info, vendorLocationResp.Info)
 	}
 }
