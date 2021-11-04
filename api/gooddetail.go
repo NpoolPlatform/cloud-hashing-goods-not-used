@@ -15,7 +15,7 @@ import (
 	"google.golang.org/grpc/status"
 )
 
-func (s *Server) GetGoodDetailDetail(ctx context.Context, in *npool.GetGoodDetailRequest) (*npool.GetGoodDetailResponse, error) {
+func (s *Server) GetGoodDetail(ctx context.Context, in *npool.GetGoodDetailRequest) (*npool.GetGoodDetailResponse, error) {
 	resp, err := gooddetail.Get(ctx, in)
 	if err != nil {
 		logger.Sugar().Errorf("update good detail error: %w", err)
