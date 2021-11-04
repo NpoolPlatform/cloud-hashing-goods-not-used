@@ -41,6 +41,7 @@ pipeline {
         expression { BUILD_TARGET == 'true' }
       }
       steps {
+        sh 'cd message; make proto'
         sh 'make verify-build'
       }
     }
@@ -66,9 +67,9 @@ pipeline {
           PASSWORD=`kubectl get secret --namespace "kube-system" mysql-password-secret -o jsonpath="{.data.rootpassword}" | base64 --decode`
           kubectl -n kube-system exec mysql-0 -- mysql -h 127.0.0.1 -uroot -p$PASSWORD -P3306 -e "create database if not exists goods;"
 
-          kubectl exec --namespace kube-system $devboxpod -- make -C /tmp/$servicename after-test || true
           kubectl exec --namespace kube-system $devboxpod -- rm -rf /tmp/$servicename || true
           kubectl cp ./ kube-system/$devboxpod:/tmp/$servicename
+          kubectl exec --namespace kube-system $devboxpod -- make -C /tmp/$servicename after-test || true
 
           username=`helm status rabbitmq --namespace kube-system | grep Username | awk -F ' : ' '{print $2}' | sed 's/"//g'`
           for vhost in `cat cmd/*/*.viper.yaml | grep hostname | awk '{print $2}' | sed 's/"//g' | sed 's/\\./-/g'`; do
