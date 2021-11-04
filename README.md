@@ -1,6 +1,6 @@
-# Npool go service framework
+# Npool Cloud Hashing Goods
 
-[![Test](https://github.com/NpoolPlatform/go-service-framework/actions/workflows/main.yml/badge.svg?branch=master)](https://github.com/NpoolPlatform/go-service-framework/actions/workflows/main.yml)
+[![Test](https://github.com/NpoolPlatform/cloud-hashing-goods/actions/workflows/main.yml/badge.svg?branch=master)](https://github.com/NpoolPlatform/cloud-hashing-goods/actions/workflows/main.yml)
 
 ## 目录
 - [功能](#功能)
