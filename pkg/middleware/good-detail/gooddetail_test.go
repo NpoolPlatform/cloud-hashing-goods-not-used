@@ -55,6 +55,10 @@ func assertGoodDetail(t *testing.T, actual *npool.GoodDetail, expectGoodInfo *np
 }
 
 func TestGet(t *testing.T) {
+	if runByGithubAction, err := strconv.ParseBool(os.Getenv("RUN_BY_GITHUB_ACTION")); err == nil && runByGithubAction {
+		return
+	}
+
 	nano := time.Now().UnixNano()
 
 	deviceInfo := npool.DeviceInfo{
