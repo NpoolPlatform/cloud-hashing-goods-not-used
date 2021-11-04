@@ -562,18 +562,15 @@ func local_request_CloudHashingGoods_DeleteDeviceInfo_0(ctx context.Context, mar
 
 }
 
-var (
-	filter_CloudHashingGoods_GetDeviceInfos_0 = &utilities.DoubleArray{Encoding: map[string]int{}, Base: []int(nil), Check: []int(nil)}
-)
-
 func request_CloudHashingGoods_GetDeviceInfos_0(ctx context.Context, marshaler runtime.Marshaler, client CloudHashingGoodsClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq GetDeviceInfosRequest
 	var metadata runtime.ServerMetadata
 
-	if err := req.ParseForm(); err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	newReader, berr := utilities.IOReaderFactory(req.Body)
+	if berr != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", berr)
 	}
-	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_CloudHashingGoods_GetDeviceInfos_0); err != nil {
+	if err := marshaler.NewDecoder(newReader()).Decode(&protoReq); err != nil && err != io.EOF {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
@@ -586,10 +583,11 @@ func local_request_CloudHashingGoods_GetDeviceInfos_0(ctx context.Context, marsh
 	var protoReq GetDeviceInfosRequest
 	var metadata runtime.ServerMetadata
 
-	if err := req.ParseForm(); err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	newReader, berr := utilities.IOReaderFactory(req.Body)
+	if berr != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", berr)
 	}
-	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_CloudHashingGoods_GetDeviceInfos_0); err != nil {
+	if err := marshaler.NewDecoder(newReader()).Decode(&protoReq); err != nil && err != io.EOF {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
@@ -734,18 +732,15 @@ func local_request_CloudHashingGoods_DeleteGood_0(ctx context.Context, marshaler
 
 }
 
-var (
-	filter_CloudHashingGoods_GetGoods_0 = &utilities.DoubleArray{Encoding: map[string]int{}, Base: []int(nil), Check: []int(nil)}
-)
-
 func request_CloudHashingGoods_GetGoods_0(ctx context.Context, marshaler runtime.Marshaler, client CloudHashingGoodsClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq GetGoodsRequest
 	var metadata runtime.ServerMetadata
 
-	if err := req.ParseForm(); err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	newReader, berr := utilities.IOReaderFactory(req.Body)
+	if berr != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", berr)
 	}
-	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_CloudHashingGoods_GetGoods_0); err != nil {
+	if err := marshaler.NewDecoder(newReader()).Decode(&protoReq); err != nil && err != io.EOF {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
@@ -758,10 +753,11 @@ func local_request_CloudHashingGoods_GetGoods_0(ctx context.Context, marshaler r
 	var protoReq GetGoodsRequest
 	var metadata runtime.ServerMetadata
 
-	if err := req.ParseForm(); err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	newReader, berr := utilities.IOReaderFactory(req.Body)
+	if berr != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", berr)
 	}
-	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_CloudHashingGoods_GetGoods_0); err != nil {
+	if err := marshaler.NewDecoder(newReader()).Decode(&protoReq); err != nil && err != io.EOF {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
@@ -1892,7 +1888,7 @@ func RegisterCloudHashingGoodsHandlerServer(ctx context.Context, mux *runtime.Se
 
 	})
 
-	mux.Handle("GET", pattern_CloudHashingGoods_GetDeviceInfos_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_CloudHashingGoods_GetDeviceInfos_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		var stream runtime.ServerTransportStream
@@ -2007,7 +2003,7 @@ func RegisterCloudHashingGoodsHandlerServer(ctx context.Context, mux *runtime.Se
 
 	})
 
-	mux.Handle("GET", pattern_CloudHashingGoods_GetGoods_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_CloudHashingGoods_GetGoods_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		var stream runtime.ServerTransportStream
@@ -2897,7 +2893,7 @@ func RegisterCloudHashingGoodsHandlerClient(ctx context.Context, mux *runtime.Se
 
 	})
 
-	mux.Handle("GET", pattern_CloudHashingGoods_GetDeviceInfos_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_CloudHashingGoods_GetDeviceInfos_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -2997,7 +2993,7 @@ func RegisterCloudHashingGoodsHandlerClient(ctx context.Context, mux *runtime.Se
 
 	})
 
-	mux.Handle("GET", pattern_CloudHashingGoods_GetGoods_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_CloudHashingGoods_GetGoods_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)

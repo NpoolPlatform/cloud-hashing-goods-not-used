@@ -108,7 +108,8 @@ service CloudHashingGoods {
     }
     rpc GetDeviceInfos(GetDeviceInfosRequest) returns (GetDeviceInfosResponse) {
         option (google.api.http) = {
-            get: "/v1/get/devices"
+            post: "/v1/get/devices"
+            body: "*"
         };
     }
 
@@ -139,7 +140,8 @@ service CloudHashingGoods {
     }
     rpc GetGoods(GetGoodsRequest) returns (GetGoodsResponse) {
         option (google.api.http) = {
-            get: "/v1/get/goods"
+            post: "/v1/get/goods"
+            body: "*"
         };
     }
     // Good information for API
