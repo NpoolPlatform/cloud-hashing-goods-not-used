@@ -30,6 +30,8 @@ type AppGood struct {
 	Price uint64 `json:"price,omitempty"`
 	// GasPrice holds the value of the "gas_price" field.
 	GasPrice uint64 `json:"gas_price,omitempty"`
+	// InvitationOnly holds the value of the "invitation_only" field.
+	InvitationOnly bool `json:"invitation_only,omitempty"`
 	// CreateAt holds the value of the "create_at" field.
 	CreateAt int64 `json:"create_at,omitempty"`
 	// UpdateAt holds the value of the "update_at" field.
@@ -43,7 +45,7 @@ func (*AppGood) scanValues(columns []string) ([]interface{}, error) {
 	values := make([]interface{}, len(columns))
 	for i := range columns {
 		switch columns[i] {
-		case appgood.FieldAuthorized, appgood.FieldOnline:
+		case appgood.FieldAuthorized, appgood.FieldOnline, appgood.FieldInvitationOnly:
 			values[i] = new(sql.NullBool)
 		case appgood.FieldPrice, appgood.FieldGasPrice, appgood.FieldCreateAt, appgood.FieldUpdateAt, appgood.FieldDeleteAt:
 			values[i] = new(sql.NullInt64)
@@ -114,6 +116,12 @@ func (ag *AppGood) assignValues(columns []string, values []interface{}) error {
 			} else if value.Valid {
 				ag.GasPrice = uint64(value.Int64)
 			}
+		case appgood.FieldInvitationOnly:
+			if value, ok := values[i].(*sql.NullBool); !ok {
+				return fmt.Errorf("unexpected type %T for field invitation_only", values[i])
+			} else if value.Valid {
+				ag.InvitationOnly = value.Bool
+			}
 		case appgood.FieldCreateAt:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field create_at", values[i])
@@ -174,6 +182,8 @@ func (ag *AppGood) String() string {
 	builder.WriteString(fmt.Sprintf("%v", ag.Price))
 	builder.WriteString(", gas_price=")
 	builder.WriteString(fmt.Sprintf("%v", ag.GasPrice))
+	builder.WriteString(", invitation_only=")
+	builder.WriteString(fmt.Sprintf("%v", ag.InvitationOnly))
 	builder.WriteString(", create_at=")
 	builder.WriteString(fmt.Sprintf("%v", ag.CreateAt))
 	builder.WriteString(", update_at=")

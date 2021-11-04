@@ -59,6 +59,7 @@ type AppGoodMutation struct {
 	addprice           *uint64
 	gas_price          *uint64
 	addgas_price       *uint64
+	invitation_only    *bool
 	create_at          *int64
 	addcreate_at       *int64
 	update_at          *int64
@@ -448,6 +449,42 @@ func (m *AppGoodMutation) ResetGasPrice() {
 	m.addgas_price = nil
 }
 
+// SetInvitationOnly sets the "invitation_only" field.
+func (m *AppGoodMutation) SetInvitationOnly(b bool) {
+	m.invitation_only = &b
+}
+
+// InvitationOnly returns the value of the "invitation_only" field in the mutation.
+func (m *AppGoodMutation) InvitationOnly() (r bool, exists bool) {
+	v := m.invitation_only
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldInvitationOnly returns the old "invitation_only" field's value of the AppGood entity.
+// If the AppGood object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *AppGoodMutation) OldInvitationOnly(ctx context.Context) (v bool, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, fmt.Errorf("OldInvitationOnly is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, fmt.Errorf("OldInvitationOnly requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldInvitationOnly: %w", err)
+	}
+	return oldValue.InvitationOnly, nil
+}
+
+// ResetInvitationOnly resets all changes to the "invitation_only" field.
+func (m *AppGoodMutation) ResetInvitationOnly() {
+	m.invitation_only = nil
+}
+
 // SetCreateAt sets the "create_at" field.
 func (m *AppGoodMutation) SetCreateAt(i int64) {
 	m.create_at = &i
@@ -635,7 +672,7 @@ func (m *AppGoodMutation) Type() string {
 // order to get all numeric fields that were incremented/decremented, call
 // AddedFields().
 func (m *AppGoodMutation) Fields() []string {
-	fields := make([]string, 0, 10)
+	fields := make([]string, 0, 11)
 	if m.app_id != nil {
 		fields = append(fields, appgood.FieldAppID)
 	}
@@ -656,6 +693,9 @@ func (m *AppGoodMutation) Fields() []string {
 	}
 	if m.gas_price != nil {
 		fields = append(fields, appgood.FieldGasPrice)
+	}
+	if m.invitation_only != nil {
+		fields = append(fields, appgood.FieldInvitationOnly)
 	}
 	if m.create_at != nil {
 		fields = append(fields, appgood.FieldCreateAt)
@@ -688,6 +728,8 @@ func (m *AppGoodMutation) Field(name string) (ent.Value, bool) {
 		return m.Price()
 	case appgood.FieldGasPrice:
 		return m.GasPrice()
+	case appgood.FieldInvitationOnly:
+		return m.InvitationOnly()
 	case appgood.FieldCreateAt:
 		return m.CreateAt()
 	case appgood.FieldUpdateAt:
@@ -717,6 +759,8 @@ func (m *AppGoodMutation) OldField(ctx context.Context, name string) (ent.Value,
 		return m.OldPrice(ctx)
 	case appgood.FieldGasPrice:
 		return m.OldGasPrice(ctx)
+	case appgood.FieldInvitationOnly:
+		return m.OldInvitationOnly(ctx)
 	case appgood.FieldCreateAt:
 		return m.OldCreateAt(ctx)
 	case appgood.FieldUpdateAt:
@@ -780,6 +824,13 @@ func (m *AppGoodMutation) SetField(name string, value ent.Value) error {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.SetGasPrice(v)
+		return nil
+	case appgood.FieldInvitationOnly:
+		v, ok := value.(bool)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetInvitationOnly(v)
 		return nil
 	case appgood.FieldCreateAt:
 		v, ok := value.(int64)
@@ -934,6 +985,9 @@ func (m *AppGoodMutation) ResetField(name string) error {
 		return nil
 	case appgood.FieldGasPrice:
 		m.ResetGasPrice()
+		return nil
+	case appgood.FieldInvitationOnly:
+		m.ResetInvitationOnly()
 		return nil
 	case appgood.FieldCreateAt:
 		m.ResetCreateAt()

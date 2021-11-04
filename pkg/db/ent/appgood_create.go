@@ -81,6 +81,20 @@ func (agc *AppGoodCreate) SetGasPrice(u uint64) *AppGoodCreate {
 	return agc
 }
 
+// SetInvitationOnly sets the "invitation_only" field.
+func (agc *AppGoodCreate) SetInvitationOnly(b bool) *AppGoodCreate {
+	agc.mutation.SetInvitationOnly(b)
+	return agc
+}
+
+// SetNillableInvitationOnly sets the "invitation_only" field if the given value is not nil.
+func (agc *AppGoodCreate) SetNillableInvitationOnly(b *bool) *AppGoodCreate {
+	if b != nil {
+		agc.SetInvitationOnly(*b)
+	}
+	return agc
+}
+
 // SetCreateAt sets the "create_at" field.
 func (agc *AppGoodCreate) SetCreateAt(i int64) *AppGoodCreate {
 	agc.mutation.SetCreateAt(i)
@@ -208,6 +222,10 @@ func (agc *AppGoodCreate) defaults() {
 		v := appgood.DefaultOnline
 		agc.mutation.SetOnline(v)
 	}
+	if _, ok := agc.mutation.InvitationOnly(); !ok {
+		v := appgood.DefaultInvitationOnly
+		agc.mutation.SetInvitationOnly(v)
+	}
 	if _, ok := agc.mutation.CreateAt(); !ok {
 		v := appgood.DefaultCreateAt()
 		agc.mutation.SetCreateAt(v)
@@ -253,6 +271,9 @@ func (agc *AppGoodCreate) check() error {
 	}
 	if _, ok := agc.mutation.GasPrice(); !ok {
 		return &ValidationError{Name: "gas_price", err: errors.New(`ent: missing required field "gas_price"`)}
+	}
+	if _, ok := agc.mutation.InvitationOnly(); !ok {
+		return &ValidationError{Name: "invitation_only", err: errors.New(`ent: missing required field "invitation_only"`)}
 	}
 	if _, ok := agc.mutation.CreateAt(); !ok {
 		return &ValidationError{Name: "create_at", err: errors.New(`ent: missing required field "create_at"`)}
@@ -351,6 +372,14 @@ func (agc *AppGoodCreate) createSpec() (*AppGood, *sqlgraph.CreateSpec) {
 			Column: appgood.FieldGasPrice,
 		})
 		_node.GasPrice = value
+	}
+	if value, ok := agc.mutation.InvitationOnly(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeBool,
+			Value:  value,
+			Column: appgood.FieldInvitationOnly,
+		})
+		_node.InvitationOnly = value
 	}
 	if value, ok := agc.mutation.CreateAt(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
@@ -511,6 +540,18 @@ func (u *AppGoodUpsert) SetGasPrice(v uint64) *AppGoodUpsert {
 // UpdateGasPrice sets the "gas_price" field to the value that was provided on create.
 func (u *AppGoodUpsert) UpdateGasPrice() *AppGoodUpsert {
 	u.SetExcluded(appgood.FieldGasPrice)
+	return u
+}
+
+// SetInvitationOnly sets the "invitation_only" field.
+func (u *AppGoodUpsert) SetInvitationOnly(v bool) *AppGoodUpsert {
+	u.Set(appgood.FieldInvitationOnly, v)
+	return u
+}
+
+// UpdateInvitationOnly sets the "invitation_only" field to the value that was provided on create.
+func (u *AppGoodUpsert) UpdateInvitationOnly() *AppGoodUpsert {
+	u.SetExcluded(appgood.FieldInvitationOnly)
 	return u
 }
 
@@ -695,6 +736,20 @@ func (u *AppGoodUpsertOne) SetGasPrice(v uint64) *AppGoodUpsertOne {
 func (u *AppGoodUpsertOne) UpdateGasPrice() *AppGoodUpsertOne {
 	return u.Update(func(s *AppGoodUpsert) {
 		s.UpdateGasPrice()
+	})
+}
+
+// SetInvitationOnly sets the "invitation_only" field.
+func (u *AppGoodUpsertOne) SetInvitationOnly(v bool) *AppGoodUpsertOne {
+	return u.Update(func(s *AppGoodUpsert) {
+		s.SetInvitationOnly(v)
+	})
+}
+
+// UpdateInvitationOnly sets the "invitation_only" field to the value that was provided on create.
+func (u *AppGoodUpsertOne) UpdateInvitationOnly() *AppGoodUpsertOne {
+	return u.Update(func(s *AppGoodUpsert) {
+		s.UpdateInvitationOnly()
 	})
 }
 
@@ -1051,6 +1106,20 @@ func (u *AppGoodUpsertBulk) SetGasPrice(v uint64) *AppGoodUpsertBulk {
 func (u *AppGoodUpsertBulk) UpdateGasPrice() *AppGoodUpsertBulk {
 	return u.Update(func(s *AppGoodUpsert) {
 		s.UpdateGasPrice()
+	})
+}
+
+// SetInvitationOnly sets the "invitation_only" field.
+func (u *AppGoodUpsertBulk) SetInvitationOnly(v bool) *AppGoodUpsertBulk {
+	return u.Update(func(s *AppGoodUpsert) {
+		s.SetInvitationOnly(v)
+	})
+}
+
+// UpdateInvitationOnly sets the "invitation_only" field to the value that was provided on create.
+func (u *AppGoodUpsertBulk) UpdateInvitationOnly() *AppGoodUpsertBulk {
+	return u.Update(func(s *AppGoodUpsert) {
+		s.UpdateInvitationOnly()
 	})
 }
 

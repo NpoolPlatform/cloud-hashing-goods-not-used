@@ -31,18 +31,22 @@ func init() {
 	appgoodDescOnline := appgoodFields[4].Descriptor()
 	// appgood.DefaultOnline holds the default value on creation for the online field.
 	appgood.DefaultOnline = appgoodDescOnline.Default.(bool)
+	// appgoodDescInvitationOnly is the schema descriptor for invitation_only field.
+	appgoodDescInvitationOnly := appgoodFields[8].Descriptor()
+	// appgood.DefaultInvitationOnly holds the default value on creation for the invitation_only field.
+	appgood.DefaultInvitationOnly = appgoodDescInvitationOnly.Default.(bool)
 	// appgoodDescCreateAt is the schema descriptor for create_at field.
-	appgoodDescCreateAt := appgoodFields[8].Descriptor()
+	appgoodDescCreateAt := appgoodFields[9].Descriptor()
 	// appgood.DefaultCreateAt holds the default value on creation for the create_at field.
 	appgood.DefaultCreateAt = appgoodDescCreateAt.Default.(func() int64)
 	// appgoodDescUpdateAt is the schema descriptor for update_at field.
-	appgoodDescUpdateAt := appgoodFields[9].Descriptor()
+	appgoodDescUpdateAt := appgoodFields[10].Descriptor()
 	// appgood.DefaultUpdateAt holds the default value on creation for the update_at field.
 	appgood.DefaultUpdateAt = appgoodDescUpdateAt.Default.(func() int64)
 	// appgood.UpdateDefaultUpdateAt holds the default value on update for the update_at field.
 	appgood.UpdateDefaultUpdateAt = appgoodDescUpdateAt.UpdateDefault.(func() int64)
 	// appgoodDescDeleteAt is the schema descriptor for delete_at field.
-	appgoodDescDeleteAt := appgoodFields[10].Descriptor()
+	appgoodDescDeleteAt := appgoodFields[11].Descriptor()
 	// appgood.DefaultDeleteAt holds the default value on creation for the delete_at field.
 	appgood.DefaultDeleteAt = appgoodDescDeleteAt.Default.(func() int64)
 	// appgoodDescID is the schema descriptor for id field.

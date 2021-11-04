@@ -133,6 +133,13 @@ func GasPrice(v uint64) predicate.AppGood {
 	})
 }
 
+// InvitationOnly applies equality check predicate on the "invitation_only" field. It's identical to InvitationOnlyEQ.
+func InvitationOnly(v bool) predicate.AppGood {
+	return predicate.AppGood(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldInvitationOnly), v))
+	})
+}
+
 // CreateAt applies equality check predicate on the "create_at" field. It's identical to CreateAtEQ.
 func CreateAt(v int64) predicate.AppGood {
 	return predicate.AppGood(func(s *sql.Selector) {
@@ -531,6 +538,20 @@ func GasPriceLT(v uint64) predicate.AppGood {
 func GasPriceLTE(v uint64) predicate.AppGood {
 	return predicate.AppGood(func(s *sql.Selector) {
 		s.Where(sql.LTE(s.C(FieldGasPrice), v))
+	})
+}
+
+// InvitationOnlyEQ applies the EQ predicate on the "invitation_only" field.
+func InvitationOnlyEQ(v bool) predicate.AppGood {
+	return predicate.AppGood(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldInvitationOnly), v))
+	})
+}
+
+// InvitationOnlyNEQ applies the NEQ predicate on the "invitation_only" field.
+func InvitationOnlyNEQ(v bool) predicate.AppGood {
+	return predicate.AppGood(func(s *sql.Selector) {
+		s.Where(sql.NEQ(s.C(FieldInvitationOnly), v))
 	})
 }
 

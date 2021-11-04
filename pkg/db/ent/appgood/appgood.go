@@ -27,6 +27,8 @@ const (
 	FieldPrice = "price"
 	// FieldGasPrice holds the string denoting the gas_price field in the database.
 	FieldGasPrice = "gas_price"
+	// FieldInvitationOnly holds the string denoting the invitation_only field in the database.
+	FieldInvitationOnly = "invitation_only"
 	// FieldCreateAt holds the string denoting the create_at field in the database.
 	FieldCreateAt = "create_at"
 	// FieldUpdateAt holds the string denoting the update_at field in the database.
@@ -47,6 +49,7 @@ var Columns = []string{
 	FieldInitAreaStrategy,
 	FieldPrice,
 	FieldGasPrice,
+	FieldInvitationOnly,
 	FieldCreateAt,
 	FieldUpdateAt,
 	FieldDeleteAt,
@@ -67,6 +70,8 @@ var (
 	DefaultAuthorized bool
 	// DefaultOnline holds the default value on creation for the "online" field.
 	DefaultOnline bool
+	// DefaultInvitationOnly holds the default value on creation for the "invitation_only" field.
+	DefaultInvitationOnly bool
 	// DefaultCreateAt holds the default value on creation for the "create_at" field.
 	DefaultCreateAt func() int64
 	// DefaultUpdateAt holds the default value on creation for the "update_at" field.
