@@ -47,4 +47,7 @@ metadata:
 spec:
   ports:
   - name: api
-    port: 33759
+    port: 50020
+    targetPort: 50020
+  selector:
+    app: cloud-hashing-goods
