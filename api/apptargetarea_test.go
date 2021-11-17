@@ -36,7 +36,7 @@ func TestAppTargetAreaCRUD(t *testing.T) { //nolint
 		SetBody(npool.AuthorizeAppTargetAreaRequest{
 			Info: &appTargetArea,
 		}).
-		Post("http://localhost:33759/v1/authorize/app/target-area")
+		Post("http://localhost:50020/v1/authorize/app/target-area")
 	if assert.Nil(t, err) {
 		assert.Equal(t, 200, resp.StatusCode())
 		err := json.Unmarshal(resp.Body(), &firstCreateInfo)
@@ -51,7 +51,7 @@ func TestAppTargetAreaCRUD(t *testing.T) { //nolint
 		SetBody(npool.CheckAppTargetAreaRequest{
 			Info: &appTargetArea,
 		}).
-		Post("http://localhost:33759/v1/check/app/target-area")
+		Post("http://localhost:50020/v1/check/app/target-area")
 	if assert.Nil(t, err) {
 		assert.Equal(t, 200, resp1.StatusCode())
 		info := npool.CheckAppTargetAreaRequest{}
@@ -67,7 +67,7 @@ func TestAppTargetAreaCRUD(t *testing.T) { //nolint
 		SetBody(npool.UnauthorizeAppTargetAreaRequest{
 			ID: firstCreateInfo.Info.ID,
 		}).
-		Post("http://localhost:33759/v1/unauthorize/app/target-area")
+		Post("http://localhost:50020/v1/unauthorize/app/target-area")
 	if assert.Nil(t, err) {
 		assert.Equal(t, 200, resp2.StatusCode())
 		info := npool.CheckAppTargetAreaRequest{}

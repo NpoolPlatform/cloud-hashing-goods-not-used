@@ -81,7 +81,7 @@ func TestGoodCRUD(t *testing.T) { //nolint
 		SetBody(npool.CreateGoodRequest{
 			Info: &goodInfo,
 		}).
-		Post("http://localhost:33759/v1/create/good")
+		Post("http://localhost:50020/v1/create/good")
 	if assert.Nil(t, err) {
 		assert.Equal(t, 200, resp.StatusCode())
 		err := json.Unmarshal(resp.Body(), &firstCreateInfo)
@@ -99,7 +99,7 @@ func TestGoodCRUD(t *testing.T) { //nolint
 		SetBody(npool.UpdateGoodRequest{
 			Info: &goodInfo,
 		}).
-		Post("http://localhost:33759/v1/update/good")
+		Post("http://localhost:50020/v1/update/good")
 	if assert.Nil(t, err) {
 		assert.Equal(t, 200, resp.StatusCode())
 		info := npool.UpdateGoodResponse{}
@@ -115,7 +115,7 @@ func TestGoodCRUD(t *testing.T) { //nolint
 		SetBody(npool.GetGoodRequest{
 			ID: goodInfo.ID,
 		}).
-		Post("http://localhost:33759/v1/get/good")
+		Post("http://localhost:50020/v1/get/good")
 	if assert.Nil(t, err) {
 		assert.Equal(t, 200, resp.StatusCode())
 		info := npool.GetGoodResponse{}
@@ -131,7 +131,7 @@ func TestGoodCRUD(t *testing.T) { //nolint
 		SetBody(npool.GetGoodRequest{
 			ID: goodInfo.ID,
 		}).
-		Post("http://localhost:33759/v1/delete/good")
+		Post("http://localhost:50020/v1/delete/good")
 	if assert.Nil(t, err) {
 		assert.Equal(t, 200, resp.StatusCode())
 		info := npool.DeleteGoodResponse{}
@@ -144,6 +144,6 @@ func TestGoodCRUD(t *testing.T) { //nolint
 
 	_, err = cli.R().
 		SetHeader("Content-Type", "application/json").
-		Post("http://localhost:33759/v1/get/goods")
+		Post("http://localhost:50020/v1/get/goods")
 	assert.Nil(t, err)
 }

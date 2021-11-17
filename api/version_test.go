@@ -16,7 +16,7 @@ func TestVersion(t *testing.T) {
 
 	cli := resty.New()
 	resp, err := cli.R().
-		Get("http://localhost:33759/version")
+		Get("http://localhost:50020/version")
 	if assert.Nil(t, err) {
 		assert.Equal(t, 200, resp.StatusCode())
 		// we should compare body, but we cannot do here

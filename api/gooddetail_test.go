@@ -60,7 +60,7 @@ func TestGet(t *testing.T) { //nolint
 		SetBody(npool.CreateDeviceInfoRequest{
 			Info: &deviceInfo,
 		}).
-		Post("http://localhost:33759/v1/create/device")
+		Post("http://localhost:50020/v1/create/device")
 	if assert.Nil(t, err) {
 		assert.Equal(t, 200, deviceResp.StatusCode())
 		info := npool.CreateDeviceInfoResponse{}
@@ -82,7 +82,7 @@ func TestGet(t *testing.T) { //nolint
 		SetBody(npool.CreateVendorLocationRequest{
 			Info: &vendorLocation,
 		}).
-		Post("http://localhost:33759/v1/create/vendor-location")
+		Post("http://localhost:50020/v1/create/vendor-location")
 	if assert.Nil(t, err) {
 		assert.Equal(t, 200, vendorLocationResp.StatusCode())
 		info := npool.CreateVendorLocationResponse{}
@@ -115,7 +115,7 @@ func TestGet(t *testing.T) { //nolint
 		SetBody(npool.CreateGoodRequest{
 			Info: &goodInfo,
 		}).
-		Post("http://localhost:33759/v1/create/good")
+		Post("http://localhost:50020/v1/create/good")
 	if assert.Nil(t, err) {
 		assert.Equal(t, 200, goodInfoResp.StatusCode())
 		info := npool.CreateGoodResponse{}
@@ -130,7 +130,7 @@ func TestGet(t *testing.T) { //nolint
 		SetBody(npool.GetGoodDetailRequest{
 			ID: goodInfo.ID,
 		}).
-		Post("http://localhost:33759/v1/get/good/detail")
+		Post("http://localhost:50020/v1/get/good/detail")
 	if assert.Nil(t, err) {
 		assert.Equal(t, 200, resp.StatusCode())
 		info := npool.GetGoodDetailResponse{}
@@ -149,7 +149,7 @@ func TestGet(t *testing.T) { //nolint
 		SetBody(npool.CreateGoodRequest{
 			Info: &goodInfo,
 		}).
-		Post("http://localhost:33759/v1/create/good")
+		Post("http://localhost:50020/v1/create/good")
 	if assert.Nil(t, err) {
 		assert.Equal(t, 200, goodInfoResp1.StatusCode())
 		info := npool.CreateGoodResponse{}
@@ -164,7 +164,7 @@ func TestGet(t *testing.T) { //nolint
 		SetBody(npool.GetGoodDetailRequest{
 			ID: goodInfo.ID,
 		}).
-		Post("http://localhost:33759/v1/get/good/detail")
+		Post("http://localhost:50020/v1/get/good/detail")
 	if assert.Nil(t, err) {
 		assert.Equal(t, 200, resp.StatusCode())
 		info := npool.GetGoodDetailResponse{}

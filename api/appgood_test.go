@@ -47,7 +47,7 @@ func TestAppGoodCRUD(t *testing.T) { //nolint
 		SetBody(npool.AuthorizeAppGoodRequest{
 			Info: &appGood,
 		}).
-		Post("http://localhost:33759/v1/authorize/app/good")
+		Post("http://localhost:50020/v1/authorize/app/good")
 	if assert.Nil(t, err) {
 		assert.Equal(t, 200, resp.StatusCode())
 		err := json.Unmarshal(resp.Body(), &firstCreateInfo)
@@ -64,7 +64,7 @@ func TestAppGoodCRUD(t *testing.T) { //nolint
 		SetBody(npool.CheckAppGoodRequest{
 			Info: &appGood,
 		}).
-		Post("http://localhost:33759/v1/check/app/good")
+		Post("http://localhost:50020/v1/check/app/good")
 	if assert.Nil(t, err) {
 		assert.Equal(t, 200, resp1.StatusCode())
 		info := npool.CheckAppGoodRequest{}
@@ -83,7 +83,7 @@ func TestAppGoodCRUD(t *testing.T) { //nolint
 		SetBody(npool.SetAppGoodPriceRequest{
 			Info: &appGood,
 		}).
-		Post("http://localhost:33759/v1/set/app/good/price")
+		Post("http://localhost:50020/v1/set/app/good/price")
 	if assert.Nil(t, err) {
 		assert.Equal(t, 200, resp3.StatusCode())
 		info := npool.SetAppGoodPriceRequest{}
@@ -101,7 +101,7 @@ func TestAppGoodCRUD(t *testing.T) { //nolint
 		SetBody(npool.OnsaleAppGoodRequest{
 			Info: &appGood,
 		}).
-		Post("http://localhost:33759/v1/onsale/app/good")
+		Post("http://localhost:50020/v1/onsale/app/good")
 	if assert.Nil(t, err) {
 		assert.Equal(t, 200, resp4.StatusCode())
 		info := npool.OnsaleAppGoodRequest{}
@@ -119,7 +119,7 @@ func TestAppGoodCRUD(t *testing.T) { //nolint
 		SetBody(npool.OffsaleAppGoodRequest{
 			Info: &appGood,
 		}).
-		Post("http://localhost:33759/v1/offsale/app/good")
+		Post("http://localhost:50020/v1/offsale/app/good")
 	if assert.Nil(t, err) {
 		assert.Equal(t, 200, resp5.StatusCode())
 		info := npool.OffsaleAppGoodRequest{}
@@ -137,7 +137,7 @@ func TestAppGoodCRUD(t *testing.T) { //nolint
 		SetBody(npool.UnauthorizeAppGoodRequest{
 			Info: &appGood,
 		}).
-		Post("http://localhost:33759/v1/unauthorize/app/good")
+		Post("http://localhost:50020/v1/unauthorize/app/good")
 	if assert.Nil(t, err) {
 		assert.Equal(t, 200, resp6.StatusCode())
 		info := npool.UnauthorizeAppGoodRequest{}

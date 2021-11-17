@@ -41,7 +41,7 @@ func TestCreateDeviceInfo(t *testing.T) { //nolint
 		SetBody(npool.CreateDeviceInfoRequest{
 			Info: &vendorLocationInfo,
 		}).
-		Post("http://localhost:33759/v1/create/device")
+		Post("http://localhost:50020/v1/create/device")
 	if assert.Nil(t, err) {
 		assert.Equal(t, 200, resp.StatusCode())
 		err := json.Unmarshal(resp.Body(), &firstCreateInfo)
@@ -62,7 +62,7 @@ func TestCreateDeviceInfo(t *testing.T) { //nolint
 		SetBody(npool.UpdateDeviceInfoRequest{
 			Info: &vendorLocationInfo,
 		}).
-		Post("http://localhost:33759/v1/update/device")
+		Post("http://localhost:50020/v1/update/device")
 	if assert.Nil(t, err) {
 		assert.Equal(t, 200, resp.StatusCode())
 		info := npool.UpdateDeviceInfoResponse{}
@@ -81,7 +81,7 @@ func TestCreateDeviceInfo(t *testing.T) { //nolint
 		SetBody(npool.GetDeviceInfoRequest{
 			ID: firstCreateInfo.Info.ID,
 		}).
-		Post("http://localhost:33759/v1/get/device")
+		Post("http://localhost:50020/v1/get/device")
 	if assert.Nil(t, err) {
 		assert.Equal(t, 200, resp.StatusCode())
 		info := npool.GetDeviceInfoResponse{}
@@ -97,7 +97,7 @@ func TestCreateDeviceInfo(t *testing.T) { //nolint
 
 	resp, err = cli.R().
 		SetHeader("Content-Type", "application/json").
-		Post("http://localhost:33759/v1/get/devices")
+		Post("http://localhost:50020/v1/get/devices")
 	if assert.Nil(t, err) {
 		assert.Equal(t, 200, resp.StatusCode())
 	}
@@ -107,7 +107,7 @@ func TestCreateDeviceInfo(t *testing.T) { //nolint
 		SetBody(npool.DeleteDeviceInfoRequest{
 			ID: firstCreateInfo.Info.ID,
 		}).
-		Post("http://localhost:33759/v1/delete/device")
+		Post("http://localhost:50020/v1/delete/device")
 	if assert.Nil(t, err) {
 		assert.Equal(t, 200, resp.StatusCode())
 		info := npool.DeleteDeviceInfoResponse{}

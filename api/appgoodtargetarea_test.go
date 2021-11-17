@@ -38,7 +38,7 @@ func TestAppGoodTargetAreaCRUD(t *testing.T) { //nolint
 		SetBody(npool.AuthorizeAppGoodTargetAreaRequest{
 			Info: &appGoodTargetArea,
 		}).
-		Post("http://localhost:33759/v1/authorize/app/good/target-area")
+		Post("http://localhost:50020/v1/authorize/app/good/target-area")
 	if assert.Nil(t, err) {
 		assert.Equal(t, 200, resp.StatusCode())
 		err := json.Unmarshal(resp.Body(), &firstCreateInfo)
@@ -55,7 +55,7 @@ func TestAppGoodTargetAreaCRUD(t *testing.T) { //nolint
 		SetBody(npool.CheckAppGoodTargetAreaRequest{
 			Info: &appGoodTargetArea,
 		}).
-		Post("http://localhost:33759/v1/check/app/good/target-area")
+		Post("http://localhost:50020/v1/check/app/good/target-area")
 	if assert.Nil(t, err) {
 		assert.Equal(t, 200, resp1.StatusCode())
 		info := npool.CheckAppGoodTargetAreaRequest{}
@@ -71,7 +71,7 @@ func TestAppGoodTargetAreaCRUD(t *testing.T) { //nolint
 		SetBody(npool.UnauthorizeAppGoodTargetAreaRequest{
 			Info: &appGoodTargetArea,
 		}).
-		Post("http://localhost:33759/v1/unauthorize/app/good/target-area")
+		Post("http://localhost:50020/v1/unauthorize/app/good/target-area")
 	if assert.Nil(t, err) {
 		assert.Equal(t, 200, resp2.StatusCode())
 		info := npool.UnauthorizeAppGoodTargetAreaRequest{}

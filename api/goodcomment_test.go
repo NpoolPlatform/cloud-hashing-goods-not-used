@@ -42,7 +42,7 @@ func TestCreateGoodComment(t *testing.T) { //nolint
 		SetBody(npool.CreateGoodCommentRequest{
 			Comment: &goodComment,
 		}).
-		Post("http://localhost:33759/v1/create/good/comment")
+		Post("http://localhost:50020/v1/create/good/comment")
 	if assert.Nil(t, err) {
 		assert.Equal(t, 200, resp.StatusCode())
 		err := json.Unmarshal(resp.Body(), &firstCreateInfo)
@@ -60,7 +60,7 @@ func TestCreateGoodComment(t *testing.T) { //nolint
 		SetBody(npool.UpdateGoodCommentRequest{
 			Comment: &goodComment,
 		}).
-		Post("http://localhost:33759/v1/update/good/comment")
+		Post("http://localhost:50020/v1/update/good/comment")
 	if assert.Nil(t, err) {
 		assert.Equal(t, 200, resp.StatusCode())
 		info := npool.UpdateGoodCommentResponse{}
@@ -76,7 +76,7 @@ func TestCreateGoodComment(t *testing.T) { //nolint
 		SetBody(npool.GetGoodCommentsRequest{
 			GoodID: goodComment.GoodID,
 		}).
-		Post("http://localhost:33759/v1/get/good/comments")
+		Post("http://localhost:50020/v1/get/good/comments")
 	assert.Nil(t, err)
 	assert.Equal(t, 200, resp.StatusCode())
 }

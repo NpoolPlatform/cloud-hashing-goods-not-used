@@ -38,7 +38,7 @@ func TestCreateTargetArea(t *testing.T) { //nolint
 		SetBody(npool.CreateTargetAreaRequest{
 			Info: &targetAreaInfo,
 		}).
-		Post("http://localhost:33759/v1/create/target-area")
+		Post("http://localhost:50020/v1/create/target-area")
 	if assert.Nil(t, err) {
 		assert.Equal(t, 200, resp.StatusCode())
 		err := json.Unmarshal(resp.Body(), &firstCreateInfo)
@@ -54,7 +54,7 @@ func TestCreateTargetArea(t *testing.T) { //nolint
 		SetBody(npool.CreateTargetAreaRequest{
 			Info: &targetAreaInfo,
 		}).
-		Post("http://localhost:33759/v1/create/target-area")
+		Post("http://localhost:50020/v1/create/target-area")
 	assert.Nil(t, err)
 	assert.NotEqual(t, 200, resp.StatusCode())
 
@@ -65,7 +65,7 @@ func TestCreateTargetArea(t *testing.T) { //nolint
 		SetBody(npool.UpdateTargetAreaRequest{
 			Info: &targetAreaInfo,
 		}).
-		Post("http://localhost:33759/v1/update/target-area")
+		Post("http://localhost:50020/v1/update/target-area")
 	if assert.Nil(t, err) {
 		assert.Equal(t, 200, resp.StatusCode())
 		info := npool.CreateTargetAreaResponse{}
@@ -85,7 +85,7 @@ func TestCreateTargetArea(t *testing.T) { //nolint
 		SetBody(npool.CreateTargetAreaRequest{
 			Info: &targetAreaInfo,
 		}).
-		Post("http://localhost:33759/v1/update/target-area")
+		Post("http://localhost:50020/v1/update/target-area")
 	if assert.Nil(t, err) {
 		assert.Equal(t, 200, resp.StatusCode())
 		info := npool.CreateTargetAreaResponse{}
@@ -104,7 +104,7 @@ func TestCreateTargetArea(t *testing.T) { //nolint
 		SetBody(npool.DeleteTargetAreaRequest{
 			ID: firstCreateInfo.Info.ID,
 		}).
-		Post("http://localhost:33759/v1/delete/target-area")
+		Post("http://localhost:50020/v1/delete/target-area")
 	if assert.Nil(t, err) {
 		assert.Equal(t, 200, resp.StatusCode())
 		info := npool.DeleteTargetAreaResponse{}
@@ -132,7 +132,7 @@ func TestCreateTargetArea(t *testing.T) { //nolint
 		SetBody(npool.CreateTargetAreaRequest{
 			Info: &targetAreaInfo,
 		}).
-		Post("http://localhost:33759/v1/create/target-area")
+		Post("http://localhost:50020/v1/create/target-area")
 	assert.Nil(t, err)
 	info1 := npool.CreateTargetAreaResponse{}
 	err = json.Unmarshal(resp1.Body(), &info1)
@@ -143,7 +143,7 @@ func TestCreateTargetArea(t *testing.T) { //nolint
 		SetBody(npool.GetTargetAreaRequest{
 			ID: info1.Info.ID,
 		}).
-		Post("http://localhost:33759/v1/get/target-area")
+		Post("http://localhost:50020/v1/get/target-area")
 	if assert.Nil(t, err) {
 		assert.Equal(t, 200, resp.StatusCode())
 		info := npool.GetTargetAreaResponse{}
@@ -163,7 +163,7 @@ func TestCreateTargetArea(t *testing.T) { //nolint
 			Continent: targetAreaInfo.Continent,
 			Country:   targetAreaInfo.Country,
 		}).
-		Post("http://localhost:33759/v1/delete/target-area/continent/country")
+		Post("http://localhost:50020/v1/delete/target-area/continent/country")
 	if assert.Nil(t, err) {
 		assert.Equal(t, 200, resp.StatusCode())
 		info := npool.DeleteTargetAreaResponse{}
@@ -185,6 +185,6 @@ func TestGetTargetAreas(t *testing.T) {
 
 	cli := resty.New()
 	_, err := cli.R().
-		Get("http://localhost:33759/v1/get/target-areas")
+		Get("http://localhost:50020/v1/get/target-areas")
 	assert.Nil(t, err)
 }

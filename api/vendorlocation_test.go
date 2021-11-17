@@ -41,7 +41,7 @@ func TestCreateVendorLocation(t *testing.T) { //nolint
 		SetBody(npool.CreateVendorLocationRequest{
 			Info: &vendorLocationInfo,
 		}).
-		Post("http://localhost:33759/v1/create/vendor-location")
+		Post("http://localhost:50020/v1/create/vendor-location")
 	if assert.Nil(t, err) {
 		assert.Equal(t, 200, resp.StatusCode())
 		err := json.Unmarshal(resp.Body(), &firstCreateInfo)
@@ -62,7 +62,7 @@ func TestCreateVendorLocation(t *testing.T) { //nolint
 		SetBody(npool.UpdateVendorLocationRequest{
 			Info: &vendorLocationInfo,
 		}).
-		Post("http://localhost:33759/v1/update/vendor-location")
+		Post("http://localhost:50020/v1/update/vendor-location")
 	if assert.Nil(t, err) {
 		assert.Equal(t, 200, resp.StatusCode())
 		info := npool.UpdateVendorLocationResponse{}
@@ -81,7 +81,7 @@ func TestCreateVendorLocation(t *testing.T) { //nolint
 		SetBody(npool.GetVendorLocationRequest{
 			ID: firstCreateInfo.Info.ID,
 		}).
-		Post("http://localhost:33759/v1/get/vendor-location")
+		Post("http://localhost:50020/v1/get/vendor-location")
 	if assert.Nil(t, err) {
 		assert.Equal(t, 200, resp.StatusCode())
 		info := npool.GetVendorLocationResponse{}
@@ -98,7 +98,7 @@ func TestCreateVendorLocation(t *testing.T) { //nolint
 	resp, err = cli.R().
 		SetHeader("Content-Type", "application/json").
 		SetBody(npool.GetVendorLocationsRequest{}).
-		Post("http://localhost:33759/v1/get/vendor-locations")
+		Post("http://localhost:50020/v1/get/vendor-locations")
 	if assert.Nil(t, err) {
 		assert.Equal(t, 200, resp.StatusCode())
 	}
@@ -108,7 +108,7 @@ func TestCreateVendorLocation(t *testing.T) { //nolint
 		SetBody(npool.DeleteVendorLocationRequest{
 			ID: firstCreateInfo.Info.ID,
 		}).
-		Post("http://localhost:33759/v1/delete/vendor-location")
+		Post("http://localhost:50020/v1/delete/vendor-location")
 	if assert.Nil(t, err) {
 		assert.Equal(t, 200, resp.StatusCode())
 		info := npool.DeleteVendorLocationResponse{}
