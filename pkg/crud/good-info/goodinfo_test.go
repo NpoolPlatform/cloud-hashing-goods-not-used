@@ -86,6 +86,10 @@ func TestGoodInfoCRUD(t *testing.T) { //nolint
 		assert.Equal(t, resp.Info.Classic, classic)
 		assert.Equal(t, resp.Info.SupportCoinTypeIDs, supportCoinTypeIDs)
 		assert.Equal(t, resp.Info.Total, total)
+		assert.Equal(t, resp.Info.PriceCurrency, goodInfo.PriceCurrency)
+		assert.Equal(t, resp.Info.Title, goodInfo.Title)
+		assert.Equal(t, resp.Info.Unit, goodInfo.Unit)
+		assert.Equal(t, resp.Info.Start, goodInfo.Start)
 	}
 
 	goodInfo.BenefitType = "platform"

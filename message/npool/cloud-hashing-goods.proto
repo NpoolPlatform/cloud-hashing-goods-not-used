@@ -518,10 +518,10 @@ message GoodDetail {
     repeated string SupportCoinTypeIDs = 2414;
     int32 Total = 2415;
     GoodExtraInfo Extra = 2416;
-    string PriceCurrency = 2416;
     string Title = 2417;
     string Unit = 2418;
     uint32 Start = 2419;
+    string PriceCurrency = 2420;
 }
 
 message GetGoodDetailRequest {

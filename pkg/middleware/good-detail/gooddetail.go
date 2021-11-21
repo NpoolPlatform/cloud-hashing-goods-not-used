@@ -73,11 +73,15 @@ func Get(ctx context.Context, in *npool.GetGoodDetailRequest) (*npool.GetGoodDet
 			InheritFromGood:    inheritGoodInfo,
 			VendorLocation:     vendorLocation.Info,
 			Price:              goodInfo.Info.Price,
+			PriceCurrency:      goodInfo.Info.PriceCurrency,
 			BenefitType:        goodInfo.Info.BenefitType,
 			Classic:            goodInfo.Info.Classic,
 			SupportCoinTypeIDs: goodInfo.Info.SupportCoinTypeIDs,
 			Total:              goodInfo.Info.Total,
 			Extra:              extraInfo,
+			Start:              goodInfo.Info.Start,
+			Unit:               goodInfo.Info.Unit,
+			Title:              goodInfo.Info.Title,
 		},
 	}, nil
 }

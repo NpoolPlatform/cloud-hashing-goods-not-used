@@ -1181,6 +1181,7 @@
 | Title | [string](#string) |  |  |
 | Unit | [string](#string) |  |  |
 | Start | [uint32](#uint32) |  |  |
+| PriceCurrency | [string](#string) |  |  |
 
 
 
