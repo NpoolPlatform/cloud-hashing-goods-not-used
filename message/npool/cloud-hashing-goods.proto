@@ -515,6 +515,7 @@ message GoodDetail {
     bool Classic = 2413;
     repeated string SupportCoinTypeIDs = 2414;
     int32 Total = 2415;
+    GoodExtraInfo Extra = 2416;
 }
 
 message GetGoodDetailRequest {
@@ -725,7 +726,7 @@ message CreateGoodExtraInfoResponse {
 }
 
 message GetGoodExtraInfoRequest {
-    GoodExtraInfo Info = 5400;
+    string GoodID = 5400;
 }
 
 message GetGoodExtraInfoResponse {

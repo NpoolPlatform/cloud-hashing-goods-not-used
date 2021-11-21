@@ -6,6 +6,7 @@ import (
 	"github.com/NpoolPlatform/cloud-hashing-goods/message/npool"
 
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/crud/device-info"     //nolint
+	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/crud/good-extra-info" //nolint
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/crud/good-info"       //nolint
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/crud/vendor-location" //nolint
 
@@ -50,6 +51,15 @@ func Get(ctx context.Context, in *npool.GetGoodDetailRequest) (*npool.GetGoodDet
 		return nil, xerrors.Errorf("fail get device info: %v", err)
 	}
 
+	var extraInfo *npool.GoodExtraInfo
+
+	extra, err := goodextrainfo.Get(ctx, &npool.GetGoodExtraInfoRequest{
+		GoodID: id.String(),
+	})
+	if err == nil {
+		extraInfo = extra.Info
+	}
+
 	return &npool.GetGoodDetailResponse{
 		Detail: &npool.GoodDetail{
 			ID:                 id.String(),
@@ -68,6 +78,7 @@ func Get(ctx context.Context, in *npool.GetGoodDetailRequest) (*npool.GetGoodDet
 			Classic:            goodInfo.Info.Classic,
 			SupportCoinTypeIDs: goodInfo.Info.SupportCoinTypeIDs,
 			Total:              goodInfo.Info.Total,
+			Extra:              extraInfo,
 		},
 	}, nil
 }

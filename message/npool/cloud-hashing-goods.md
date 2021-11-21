@@ -868,7 +868,7 @@
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| Info | [GoodExtraInfo](#cloud.hashing.goods.v1.GoodExtraInfo) |  |  |
+| GoodID | [string](#string) |  |  |
 
 
 
@@ -1179,6 +1179,7 @@
 | Classic | [bool](#bool) |  |  |
 | SupportCoinTypeIDs | [string](#string) | repeated |  |
 | Total | [int32](#int32) |  |  |
+| Extra | [GoodExtraInfo](#cloud.hashing.goods.v1.GoodExtraInfo) |  |  |
 
 
 

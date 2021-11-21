@@ -18,7 +18,7 @@ spec:
           - path: /cloud-hashing-goods
             backend:
               serviceName: cloud-hashing-goods
-              servicePort: 50020
+              servicePort: 50030
     - host: api.xpool.top
       http: *http_appid_userid_rules
 
@@ -41,10 +41,18 @@ spec:
     - host: api.npool.top
       http: &http_appid_rules
         paths:
-          - path: /cloud-hashing-goods/check/app
+          - path: /cloud-hashing-goods/v1/authorize/app
             backend:
               serviceName: cloud-hashing-goods
-              servicePort: 50020
+              servicePort: 50030
+          - path: /cloud-hashing-goods/v1/check/app
+            backend:
+              serviceName: cloud-hashing-goods
+              servicePort: 50030
+          - path: /cloud-hashing-goods/v1/create/good/comment
+            backend:
+              serviceName: cloud-hashing-goods
+              servicePort: 50030
     - host: api.xpool.top
       http: *http_appid_rules
 
@@ -70,11 +78,23 @@ spec:
           - path: /cloud-hashing-goods/version
             backend:
               serviceName: cloud-hashing-goods
-              servicePort: 50020
-          - path: /cloud-hashing-goods/v1/get
+              servicePort: 50030
+          - path: /cloud-hashing-goods/v1/create
             backend:
               serviceName: cloud-hashing-goods
-              servicePort: 50020
+              servicePort: 50030
+          - path: /cloud-hashing-goods/v1/delete
+            backend:
+              serviceName: cloud-hashing-goods
+              servicePort: 50030
+          - path: /cloud-hashing-goods/v1/get/good
+            backend:
+              serviceName: cloud-hashing-goods
+              servicePort: 50030
+          - path: /cloud-hashing-goods/v1/get/goods
+            backend:
+              serviceName: cloud-hashing-goods
+              servicePort: 50030
     - host: api.xpool.top
       http: *http_rules
 

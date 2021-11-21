@@ -85,7 +85,7 @@ func Update(ctx context.Context, in *npool.UpdateGoodExtraInfoRequest) (*npool.U
 }
 
 func Get(ctx context.Context, in *npool.GetGoodExtraInfoRequest) (*npool.GetGoodExtraInfoResponse, error) {
-	goodID, err := uuid.Parse(in.GetInfo().GetGoodID())
+	goodID, err := uuid.Parse(in.GetGoodID())
 	if err != nil {
 		return nil, xerrors.Errorf("invalid good extra info id: %v", err)
 	}

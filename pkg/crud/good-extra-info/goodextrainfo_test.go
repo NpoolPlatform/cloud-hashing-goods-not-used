@@ -62,7 +62,7 @@ func TestGoodExtraInfoCRUD(t *testing.T) {
 	}
 
 	resp2, err := Get(context.Background(), &npool.GetGoodExtraInfoRequest{
-		Info: &goodExtraInfo,
+		GoodID: goodExtraInfo.GoodID,
 	})
 	if assert.Nil(t, err) {
 		assert.Equal(t, resp2.Info.ID, resp.Info.ID)
