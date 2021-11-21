@@ -151,6 +151,12 @@ service CloudHashingGoods {
             body: "*"
         };
     }
+    rpc GetGoodsDetail(GetGoodsDetailRequest) returns (GetGoodsDetailResponse) {
+        option (google.api.http) = {
+            post: "/v1/get/goods/detail"
+            body: "*"
+        };
+    }
 
     rpc AuthorizeAppGood(AuthorizeAppGoodRequest) returns (AuthorizeAppGoodResponse) {
         option (google.api.http) = {
@@ -517,6 +523,15 @@ message GetGoodDetailRequest {
 
 message GetGoodDetailResponse {
     GoodDetail Detail = 3210;
+}
+
+message GetGoodsDetailRequest {
+    PageInfo PageInfo = 3211;
+}
+
+message GetGoodsDetailResponse {
+    repeated GoodDetail Details = 3212;
+    int32 Total = 3213;
 }
 
 message DeleteGoodRequest {

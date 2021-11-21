@@ -71,3 +71,27 @@ func Get(ctx context.Context, in *npool.GetGoodDetailRequest) (*npool.GetGoodDet
 		},
 	}, nil
 }
+
+func GetAll(ctx context.Context, in *npool.GetGoodsDetailRequest) (*npool.GetGoodsDetailResponse, error) {
+	resp, err := goodinfo.GetAll(ctx, &npool.GetGoodsRequest{
+		PageInfo: in.GetPageInfo(),
+	})
+	if err != nil {
+		return nil, xerrors.Errorf("fail get goods info")
+	}
+
+	details := []*npool.GoodDetail{}
+	for _, info := range resp.Infos {
+		detail, err := Get(ctx, &npool.GetGoodDetailRequest{
+			ID: info.ID,
+		})
+		if err != nil {
+			return nil, xerrors.Errorf("fail get good detail")
+		}
+		details = append(details, detail.Detail)
+	}
+
+	return &npool.GetGoodsDetailResponse{
+		Details: details,
+	}, nil
+}
