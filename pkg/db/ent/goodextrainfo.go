@@ -21,6 +21,8 @@ type GoodExtraInfo struct {
 	GoodID uuid.UUID `json:"good_id,omitempty"`
 	// Posters holds the value of the "posters" field.
 	Posters []string `json:"posters,omitempty"`
+	// Labels holds the value of the "labels" field.
+	Labels []string `json:"labels,omitempty"`
 	// CreateAt holds the value of the "create_at" field.
 	CreateAt int64 `json:"create_at,omitempty"`
 	// UpdateAt holds the value of the "update_at" field.
@@ -34,7 +36,7 @@ func (*GoodExtraInfo) scanValues(columns []string) ([]interface{}, error) {
 	values := make([]interface{}, len(columns))
 	for i := range columns {
 		switch columns[i] {
-		case goodextrainfo.FieldPosters:
+		case goodextrainfo.FieldPosters, goodextrainfo.FieldLabels:
 			values[i] = new([]byte)
 		case goodextrainfo.FieldCreateAt, goodextrainfo.FieldUpdateAt, goodextrainfo.FieldDeleteAt:
 			values[i] = new(sql.NullInt64)
@@ -73,6 +75,14 @@ func (gei *GoodExtraInfo) assignValues(columns []string, values []interface{}) e
 			} else if value != nil && len(*value) > 0 {
 				if err := json.Unmarshal(*value, &gei.Posters); err != nil {
 					return fmt.Errorf("unmarshal field posters: %w", err)
+				}
+			}
+		case goodextrainfo.FieldLabels:
+			if value, ok := values[i].(*[]byte); !ok {
+				return fmt.Errorf("unexpected type %T for field labels", values[i])
+			} else if value != nil && len(*value) > 0 {
+				if err := json.Unmarshal(*value, &gei.Labels); err != nil {
+					return fmt.Errorf("unmarshal field labels: %w", err)
 				}
 			}
 		case goodextrainfo.FieldCreateAt:
@@ -125,6 +135,8 @@ func (gei *GoodExtraInfo) String() string {
 	builder.WriteString(fmt.Sprintf("%v", gei.GoodID))
 	builder.WriteString(", posters=")
 	builder.WriteString(fmt.Sprintf("%v", gei.Posters))
+	builder.WriteString(", labels=")
+	builder.WriteString(fmt.Sprintf("%v", gei.Labels))
 	builder.WriteString(", create_at=")
 	builder.WriteString(fmt.Sprintf("%v", gei.CreateAt))
 	builder.WriteString(", update_at=")

@@ -698,6 +698,7 @@ message GoodExtraInfo {
     string ID = 5100;
     string GoodID = 5101;
     repeated string Posters = 5102;
+    repeated string Labels = 5103;
 }
 
 message CreateGoodExtraInfoRequest {

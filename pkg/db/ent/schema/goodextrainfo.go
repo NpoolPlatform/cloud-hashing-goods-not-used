@@ -23,6 +23,7 @@ func (GoodExtraInfo) Fields() []ent.Field {
 		field.UUID("good_id", uuid.UUID{}).
 			Unique(),
 		field.JSON("posters", []string{}),
+		field.JSON("labels", []string{}),
 		field.Int64("create_at").
 			DefaultFunc(func() int64 {
 				return time.Now().UnixNano()

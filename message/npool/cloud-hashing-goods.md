@@ -1163,6 +1163,7 @@
 | ID | [string](#string) |  |  |
 | GoodID | [string](#string) |  |  |
 | Posters | [string](#string) | repeated |  |
+| Labels | [string](#string) | repeated |  |
 
 
 

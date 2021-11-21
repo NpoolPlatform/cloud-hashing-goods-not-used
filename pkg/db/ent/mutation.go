@@ -3988,6 +3988,7 @@ type GoodExtraInfoMutation struct {
 	id            *uuid.UUID
 	good_id       *uuid.UUID
 	posters       *[]string
+	labels        *[]string
 	create_at     *int64
 	addcreate_at  *int64
 	update_at     *int64
@@ -4155,6 +4156,42 @@ func (m *GoodExtraInfoMutation) OldPosters(ctx context.Context) (v []string, err
 // ResetPosters resets all changes to the "posters" field.
 func (m *GoodExtraInfoMutation) ResetPosters() {
 	m.posters = nil
+}
+
+// SetLabels sets the "labels" field.
+func (m *GoodExtraInfoMutation) SetLabels(s []string) {
+	m.labels = &s
+}
+
+// Labels returns the value of the "labels" field in the mutation.
+func (m *GoodExtraInfoMutation) Labels() (r []string, exists bool) {
+	v := m.labels
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldLabels returns the old "labels" field's value of the GoodExtraInfo entity.
+// If the GoodExtraInfo object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *GoodExtraInfoMutation) OldLabels(ctx context.Context) (v []string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, fmt.Errorf("OldLabels is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, fmt.Errorf("OldLabels requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldLabels: %w", err)
+	}
+	return oldValue.Labels, nil
+}
+
+// ResetLabels resets all changes to the "labels" field.
+func (m *GoodExtraInfoMutation) ResetLabels() {
+	m.labels = nil
 }
 
 // SetCreateAt sets the "create_at" field.
@@ -4344,12 +4381,15 @@ func (m *GoodExtraInfoMutation) Type() string {
 // order to get all numeric fields that were incremented/decremented, call
 // AddedFields().
 func (m *GoodExtraInfoMutation) Fields() []string {
-	fields := make([]string, 0, 5)
+	fields := make([]string, 0, 6)
 	if m.good_id != nil {
 		fields = append(fields, goodextrainfo.FieldGoodID)
 	}
 	if m.posters != nil {
 		fields = append(fields, goodextrainfo.FieldPosters)
+	}
+	if m.labels != nil {
+		fields = append(fields, goodextrainfo.FieldLabels)
 	}
 	if m.create_at != nil {
 		fields = append(fields, goodextrainfo.FieldCreateAt)
@@ -4372,6 +4412,8 @@ func (m *GoodExtraInfoMutation) Field(name string) (ent.Value, bool) {
 		return m.GoodID()
 	case goodextrainfo.FieldPosters:
 		return m.Posters()
+	case goodextrainfo.FieldLabels:
+		return m.Labels()
 	case goodextrainfo.FieldCreateAt:
 		return m.CreateAt()
 	case goodextrainfo.FieldUpdateAt:
@@ -4391,6 +4433,8 @@ func (m *GoodExtraInfoMutation) OldField(ctx context.Context, name string) (ent.
 		return m.OldGoodID(ctx)
 	case goodextrainfo.FieldPosters:
 		return m.OldPosters(ctx)
+	case goodextrainfo.FieldLabels:
+		return m.OldLabels(ctx)
 	case goodextrainfo.FieldCreateAt:
 		return m.OldCreateAt(ctx)
 	case goodextrainfo.FieldUpdateAt:
@@ -4419,6 +4463,13 @@ func (m *GoodExtraInfoMutation) SetField(name string, value ent.Value) error {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.SetPosters(v)
+		return nil
+	case goodextrainfo.FieldLabels:
+		v, ok := value.([]string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetLabels(v)
 		return nil
 	case goodextrainfo.FieldCreateAt:
 		v, ok := value.(int64)
@@ -4534,6 +4585,9 @@ func (m *GoodExtraInfoMutation) ResetField(name string) error {
 		return nil
 	case goodextrainfo.FieldPosters:
 		m.ResetPosters()
+		return nil
+	case goodextrainfo.FieldLabels:
+		m.ResetLabels()
 		return nil
 	case goodextrainfo.FieldCreateAt:
 		m.ResetCreateAt()

@@ -129,6 +129,7 @@ var (
 		{Name: "id", Type: field.TypeUUID, Unique: true},
 		{Name: "good_id", Type: field.TypeUUID, Unique: true},
 		{Name: "posters", Type: field.TypeJSON},
+		{Name: "labels", Type: field.TypeJSON},
 		{Name: "create_at", Type: field.TypeInt64},
 		{Name: "update_at", Type: field.TypeInt64},
 		{Name: "delete_at", Type: field.TypeInt64},

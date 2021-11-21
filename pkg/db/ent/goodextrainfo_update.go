@@ -39,6 +39,12 @@ func (geiu *GoodExtraInfoUpdate) SetPosters(s []string) *GoodExtraInfoUpdate {
 	return geiu
 }
 
+// SetLabels sets the "labels" field.
+func (geiu *GoodExtraInfoUpdate) SetLabels(s []string) *GoodExtraInfoUpdate {
+	geiu.mutation.SetLabels(s)
+	return geiu
+}
+
 // SetCreateAt sets the "create_at" field.
 func (geiu *GoodExtraInfoUpdate) SetCreateAt(i int64) *GoodExtraInfoUpdate {
 	geiu.mutation.ResetCreateAt()
@@ -194,6 +200,13 @@ func (geiu *GoodExtraInfoUpdate) sqlSave(ctx context.Context) (n int, err error)
 			Column: goodextrainfo.FieldPosters,
 		})
 	}
+	if value, ok := geiu.mutation.Labels(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeJSON,
+			Value:  value,
+			Column: goodextrainfo.FieldLabels,
+		})
+	}
 	if value, ok := geiu.mutation.CreateAt(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeInt64,
@@ -264,6 +277,12 @@ func (geiuo *GoodExtraInfoUpdateOne) SetGoodID(u uuid.UUID) *GoodExtraInfoUpdate
 // SetPosters sets the "posters" field.
 func (geiuo *GoodExtraInfoUpdateOne) SetPosters(s []string) *GoodExtraInfoUpdateOne {
 	geiuo.mutation.SetPosters(s)
+	return geiuo
+}
+
+// SetLabels sets the "labels" field.
+func (geiuo *GoodExtraInfoUpdateOne) SetLabels(s []string) *GoodExtraInfoUpdateOne {
+	geiuo.mutation.SetLabels(s)
 	return geiuo
 }
 
@@ -444,6 +463,13 @@ func (geiuo *GoodExtraInfoUpdateOne) sqlSave(ctx context.Context) (_node *GoodEx
 			Type:   field.TypeJSON,
 			Value:  value,
 			Column: goodextrainfo.FieldPosters,
+		})
+	}
+	if value, ok := geiuo.mutation.Labels(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeJSON,
+			Value:  value,
+			Column: goodextrainfo.FieldLabels,
 		})
 	}
 	if value, ok := geiuo.mutation.CreateAt(); ok {

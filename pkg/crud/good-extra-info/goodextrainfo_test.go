@@ -27,6 +27,7 @@ func init() {
 func assertGoodExtraInfo(t *testing.T, actual, expected *npool.GoodExtraInfo) {
 	assert.Equal(t, actual.GoodID, expected.GoodID)
 	assert.Equal(t, actual.Posters, expected.Posters)
+	assert.Equal(t, actual.Labels, expected.Labels)
 }
 
 func TestGoodExtraInfoCRUD(t *testing.T) {
@@ -37,6 +38,7 @@ func TestGoodExtraInfoCRUD(t *testing.T) {
 	goodExtraInfo := npool.GoodExtraInfo{
 		GoodID:  uuid.New().String(),
 		Posters: []string{"http://xxxaad.areafdsaf.info/a.img", "http://xxafda.areadfavvvv.info/b.img"},
+		Labels:  []string{"aaa", "bbbb"},
 	}
 
 	resp, err := Create(context.Background(), &npool.CreateGoodExtraInfoRequest{
@@ -48,6 +50,7 @@ func TestGoodExtraInfoCRUD(t *testing.T) {
 	}
 
 	goodExtraInfo.Posters = append(goodExtraInfo.Posters, "http://adfafdsa.aresadf.info/c.img")
+	goodExtraInfo.Labels = append(goodExtraInfo.Labels, "xxxx")
 	goodExtraInfo.ID = resp.Info.ID
 
 	resp1, err := Update(context.Background(), &npool.UpdateGoodExtraInfoRequest{

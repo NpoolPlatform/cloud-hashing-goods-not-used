@@ -35,6 +35,12 @@ func (geic *GoodExtraInfoCreate) SetPosters(s []string) *GoodExtraInfoCreate {
 	return geic
 }
 
+// SetLabels sets the "labels" field.
+func (geic *GoodExtraInfoCreate) SetLabels(s []string) *GoodExtraInfoCreate {
+	geic.mutation.SetLabels(s)
+	return geic
+}
+
 // SetCreateAt sets the "create_at" field.
 func (geic *GoodExtraInfoCreate) SetCreateAt(i int64) *GoodExtraInfoCreate {
 	geic.mutation.SetCreateAt(i)
@@ -180,6 +186,9 @@ func (geic *GoodExtraInfoCreate) check() error {
 	if _, ok := geic.mutation.Posters(); !ok {
 		return &ValidationError{Name: "posters", err: errors.New(`ent: missing required field "posters"`)}
 	}
+	if _, ok := geic.mutation.Labels(); !ok {
+		return &ValidationError{Name: "labels", err: errors.New(`ent: missing required field "labels"`)}
+	}
 	if _, ok := geic.mutation.CreateAt(); !ok {
 		return &ValidationError{Name: "create_at", err: errors.New(`ent: missing required field "create_at"`)}
 	}
@@ -237,6 +246,14 @@ func (geic *GoodExtraInfoCreate) createSpec() (*GoodExtraInfo, *sqlgraph.CreateS
 			Column: goodextrainfo.FieldPosters,
 		})
 		_node.Posters = value
+	}
+	if value, ok := geic.mutation.Labels(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeJSON,
+			Value:  value,
+			Column: goodextrainfo.FieldLabels,
+		})
+		_node.Labels = value
 	}
 	if value, ok := geic.mutation.CreateAt(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
@@ -337,6 +354,18 @@ func (u *GoodExtraInfoUpsert) SetPosters(v []string) *GoodExtraInfoUpsert {
 // UpdatePosters sets the "posters" field to the value that was provided on create.
 func (u *GoodExtraInfoUpsert) UpdatePosters() *GoodExtraInfoUpsert {
 	u.SetExcluded(goodextrainfo.FieldPosters)
+	return u
+}
+
+// SetLabels sets the "labels" field.
+func (u *GoodExtraInfoUpsert) SetLabels(v []string) *GoodExtraInfoUpsert {
+	u.Set(goodextrainfo.FieldLabels, v)
+	return u
+}
+
+// UpdateLabels sets the "labels" field to the value that was provided on create.
+func (u *GoodExtraInfoUpsert) UpdateLabels() *GoodExtraInfoUpsert {
+	u.SetExcluded(goodextrainfo.FieldLabels)
 	return u
 }
 
@@ -451,6 +480,20 @@ func (u *GoodExtraInfoUpsertOne) SetPosters(v []string) *GoodExtraInfoUpsertOne 
 func (u *GoodExtraInfoUpsertOne) UpdatePosters() *GoodExtraInfoUpsertOne {
 	return u.Update(func(s *GoodExtraInfoUpsert) {
 		s.UpdatePosters()
+	})
+}
+
+// SetLabels sets the "labels" field.
+func (u *GoodExtraInfoUpsertOne) SetLabels(v []string) *GoodExtraInfoUpsertOne {
+	return u.Update(func(s *GoodExtraInfoUpsert) {
+		s.SetLabels(v)
+	})
+}
+
+// UpdateLabels sets the "labels" field to the value that was provided on create.
+func (u *GoodExtraInfoUpsertOne) UpdateLabels() *GoodExtraInfoUpsertOne {
+	return u.Update(func(s *GoodExtraInfoUpsert) {
+		s.UpdateLabels()
 	})
 }
 
@@ -737,6 +780,20 @@ func (u *GoodExtraInfoUpsertBulk) SetPosters(v []string) *GoodExtraInfoUpsertBul
 func (u *GoodExtraInfoUpsertBulk) UpdatePosters() *GoodExtraInfoUpsertBulk {
 	return u.Update(func(s *GoodExtraInfoUpsert) {
 		s.UpdatePosters()
+	})
+}
+
+// SetLabels sets the "labels" field.
+func (u *GoodExtraInfoUpsertBulk) SetLabels(v []string) *GoodExtraInfoUpsertBulk {
+	return u.Update(func(s *GoodExtraInfoUpsert) {
+		s.SetLabels(v)
+	})
+}
+
+// UpdateLabels sets the "labels" field to the value that was provided on create.
+func (u *GoodExtraInfoUpsertBulk) UpdateLabels() *GoodExtraInfoUpsertBulk {
+	return u.Update(func(s *GoodExtraInfoUpsert) {
+		s.UpdateLabels()
 	})
 }
 
