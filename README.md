@@ -24,6 +24,9 @@
 - [x] 商品评论
 - [x] 商品审核结果
 - [x] API友好输出
+- [ ] Price Currency
+- [ ] Fee Type
+- [ ] Good Fee
 
 ### 命令
 * make init ```初始化仓库，创建go.mod```
