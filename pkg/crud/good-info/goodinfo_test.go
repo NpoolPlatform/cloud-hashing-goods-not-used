@@ -33,8 +33,7 @@ func TestGoodInfoCRUD(t *testing.T) { //nolint
 	}
 
 	deviceInfoID := uuid.New().String()
-	gasPrice := 0.13
-	separateGasFee := true
+	separateFee := true
 	unitPower := int32(100)
 	duration := int32(180)
 	coinInfoID := uuid.New().String()
@@ -50,8 +49,7 @@ func TestGoodInfoCRUD(t *testing.T) { //nolint
 
 	goodInfo := npool.GoodInfo{
 		DeviceInfoID:       deviceInfoID,
-		GasPrice:           gasPrice,
-		SeparateGasFee:     separateGasFee,
+		SeparateFee:        separateFee,
 		UnitPower:          unitPower,
 		DurationDays:       duration,
 		CoinInfoID:         coinInfoID,
@@ -60,10 +58,14 @@ func TestGoodInfoCRUD(t *testing.T) { //nolint
 		InheritFromGoodID:  inheritFromGoodID,
 		VendorLocationID:   vendorLocationID,
 		Price:              price,
+		PriceCurrency:      uuid.New().String(),
 		BenefitType:        benefitType,
 		Classic:            classic,
 		SupportCoinTypeIDs: supportCoinTypeIDs,
 		Total:              total,
+		Title:              "Ant Miner S19 Pro",
+		Unit:               "TH/s",
+		Start:              uint32(time.Now().Unix()),
 	}
 
 	resp, err := Create(context.Background(), &npool.CreateGoodRequest{
@@ -72,8 +74,7 @@ func TestGoodInfoCRUD(t *testing.T) { //nolint
 	if assert.Nil(t, err) {
 		assert.NotEqual(t, resp.Info.ID, uuid.UUID{})
 		assert.Equal(t, resp.Info.DeviceInfoID, deviceInfoID)
-		assert.Equal(t, resp.Info.GasPrice, gasPrice)
-		assert.Equal(t, resp.Info.SeparateGasFee, separateGasFee)
+		assert.Equal(t, resp.Info.SeparateFee, separateFee)
 		assert.Equal(t, resp.Info.UnitPower, unitPower)
 		assert.Equal(t, resp.Info.DurationDays, duration)
 		assert.Equal(t, resp.Info.CoinInfoID, coinInfoID)
@@ -96,8 +97,7 @@ func TestGoodInfoCRUD(t *testing.T) { //nolint
 	if assert.Nil(t, err) {
 		assert.Equal(t, resp1.Info.ID, resp.Info.ID)
 		assert.Equal(t, resp1.Info.DeviceInfoID, deviceInfoID)
-		assert.Equal(t, resp1.Info.GasPrice, gasPrice)
-		assert.Equal(t, resp1.Info.SeparateGasFee, separateGasFee)
+		assert.Equal(t, resp1.Info.SeparateFee, separateFee)
 		assert.Equal(t, resp1.Info.UnitPower, unitPower)
 		assert.Equal(t, resp1.Info.DurationDays, duration)
 		assert.Equal(t, resp1.Info.CoinInfoID, coinInfoID)
@@ -117,8 +117,7 @@ func TestGoodInfoCRUD(t *testing.T) { //nolint
 	if assert.Nil(t, err) {
 		assert.Equal(t, resp2.Info.ID, resp.Info.ID)
 		assert.Equal(t, resp2.Info.DeviceInfoID, deviceInfoID)
-		assert.Equal(t, resp2.Info.GasPrice, gasPrice)
-		assert.Equal(t, resp2.Info.SeparateGasFee, separateGasFee)
+		assert.Equal(t, resp2.Info.SeparateFee, separateFee)
 		assert.Equal(t, resp2.Info.UnitPower, unitPower)
 		assert.Equal(t, resp2.Info.DurationDays, duration)
 		assert.Equal(t, resp2.Info.CoinInfoID, coinInfoID)
@@ -138,8 +137,7 @@ func TestGoodInfoCRUD(t *testing.T) { //nolint
 	if assert.Nil(t, err) {
 		assert.Equal(t, resp3.Info.ID, resp.Info.ID)
 		assert.Equal(t, resp3.Info.DeviceInfoID, deviceInfoID)
-		assert.Equal(t, resp3.Info.GasPrice, gasPrice)
-		assert.Equal(t, resp3.Info.SeparateGasFee, separateGasFee)
+		assert.Equal(t, resp3.Info.SeparateFee, separateFee)
 		assert.Equal(t, resp3.Info.UnitPower, unitPower)
 		assert.Equal(t, resp3.Info.DurationDays, duration)
 		assert.Equal(t, resp3.Info.CoinInfoID, coinInfoID)

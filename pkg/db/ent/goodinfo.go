@@ -37,12 +37,8 @@ type GoodInfo struct {
 	VendorLocationID uuid.UUID `json:"vendor_location_id,omitempty"`
 	// Price holds the value of the "price" field.
 	Price uint64 `json:"price,omitempty"`
-	// PriceUnit holds the value of the "price_unit" field.
-	PriceUnit string `json:"price_unit,omitempty"`
 	// PriceCurrency holds the value of the "price_currency" field.
-	PriceCurrency string `json:"price_currency,omitempty"`
-	// PriceSymbol holds the value of the "price_symbol" field.
-	PriceSymbol string `json:"price_symbol,omitempty"`
+	PriceCurrency uuid.UUID `json:"price_currency,omitempty"`
 	// BenefitType holds the value of the "benefit_type" field.
 	BenefitType goodinfo.BenefitType `json:"benefit_type,omitempty"`
 	// Classic holds the value of the "classic" field.
@@ -76,9 +72,9 @@ func (*GoodInfo) scanValues(columns []string) ([]interface{}, error) {
 			values[i] = new(sql.NullBool)
 		case goodinfo.FieldUnitPower, goodinfo.FieldDurationDays, goodinfo.FieldDeliveryAt, goodinfo.FieldPrice, goodinfo.FieldStart, goodinfo.FieldTotal, goodinfo.FieldCreateAt, goodinfo.FieldUpdateAt, goodinfo.FieldDeleteAt:
 			values[i] = new(sql.NullInt64)
-		case goodinfo.FieldPriceUnit, goodinfo.FieldPriceCurrency, goodinfo.FieldPriceSymbol, goodinfo.FieldBenefitType, goodinfo.FieldTitle, goodinfo.FieldUnit:
+		case goodinfo.FieldBenefitType, goodinfo.FieldTitle, goodinfo.FieldUnit:
 			values[i] = new(sql.NullString)
-		case goodinfo.FieldID, goodinfo.FieldDeviceInfoID, goodinfo.FieldCoinInfoID, goodinfo.FieldInheritFromGoodID, goodinfo.FieldVendorLocationID:
+		case goodinfo.FieldID, goodinfo.FieldDeviceInfoID, goodinfo.FieldCoinInfoID, goodinfo.FieldInheritFromGoodID, goodinfo.FieldVendorLocationID, goodinfo.FieldPriceCurrency:
 			values[i] = new(uuid.UUID)
 		default:
 			return nil, fmt.Errorf("unexpected column %q for type GoodInfo", columns[i])
@@ -161,23 +157,11 @@ func (gi *GoodInfo) assignValues(columns []string, values []interface{}) error {
 			} else if value.Valid {
 				gi.Price = uint64(value.Int64)
 			}
-		case goodinfo.FieldPriceUnit:
-			if value, ok := values[i].(*sql.NullString); !ok {
-				return fmt.Errorf("unexpected type %T for field price_unit", values[i])
-			} else if value.Valid {
-				gi.PriceUnit = value.String
-			}
 		case goodinfo.FieldPriceCurrency:
-			if value, ok := values[i].(*sql.NullString); !ok {
+			if value, ok := values[i].(*uuid.UUID); !ok {
 				return fmt.Errorf("unexpected type %T for field price_currency", values[i])
-			} else if value.Valid {
-				gi.PriceCurrency = value.String
-			}
-		case goodinfo.FieldPriceSymbol:
-			if value, ok := values[i].(*sql.NullString); !ok {
-				return fmt.Errorf("unexpected type %T for field price_symbol", values[i])
-			} else if value.Valid {
-				gi.PriceSymbol = value.String
+			} else if value != nil {
+				gi.PriceCurrency = *value
 			}
 		case goodinfo.FieldBenefitType:
 			if value, ok := values[i].(*sql.NullString); !ok {
@@ -289,12 +273,8 @@ func (gi *GoodInfo) String() string {
 	builder.WriteString(fmt.Sprintf("%v", gi.VendorLocationID))
 	builder.WriteString(", price=")
 	builder.WriteString(fmt.Sprintf("%v", gi.Price))
-	builder.WriteString(", price_unit=")
-	builder.WriteString(gi.PriceUnit)
 	builder.WriteString(", price_currency=")
-	builder.WriteString(gi.PriceCurrency)
-	builder.WriteString(", price_symbol=")
-	builder.WriteString(gi.PriceSymbol)
+	builder.WriteString(fmt.Sprintf("%v", gi.PriceCurrency))
 	builder.WriteString(", benefit_type=")
 	builder.WriteString(fmt.Sprintf("%v", gi.BenefitType))
 	builder.WriteString(", classic=")

@@ -26,6 +26,7 @@ func dbRowToInfo(row *ent.GoodInfo) *npool.GoodInfo {
 
 	return &npool.GoodInfo{
 		ID:                 row.ID.String(),
+		Title:              row.Title,
 		DeviceInfoID:       row.DeviceInfoID.String(),
 		SeparateFee:        row.SeparateFee,
 		UnitPower:          row.UnitPower,
@@ -36,10 +37,13 @@ func dbRowToInfo(row *ent.GoodInfo) *npool.GoodInfo {
 		InheritFromGoodID:  row.InheritFromGoodID.String(),
 		VendorLocationID:   row.VendorLocationID.String(),
 		Price:              price.DBPriceToVisualPrice(row.Price),
+		PriceCurrency:      row.PriceCurrency.String(),
 		BenefitType:        string(row.BenefitType),
 		Classic:            row.Classic,
 		SupportCoinTypeIDs: ids,
 		Total:              row.Total,
+		Unit:               row.Unit,
+		Start:              row.Start,
 	}
 }
 
@@ -59,6 +63,10 @@ func validateRequestGoodInfo(info *npool.GoodInfo) error {
 	_, err = uuid.Parse(info.GetVendorLocationID())
 	if err != nil {
 		return xerrors.Errorf("invalid vendor location id: %v", err)
+	}
+	_, err = uuid.Parse(info.GetPriceCurrency())
+	if err != nil {
+		return xerrors.Errorf("invalid price currency id: %v", err)
 	}
 	for _, id := range info.GetSupportCoinTypeIDs() {
 		if _, err = uuid.Parse(id); err != nil {
@@ -81,6 +89,7 @@ func Create(ctx context.Context, in *npool.CreateGoodRequest) (*npool.CreateGood
 	info, err := db.Client().
 		GoodInfo.
 		Create().
+		SetTitle(in.GetInfo().GetTitle()).
 		SetDeviceInfoID(uuid.MustParse(in.GetInfo().GetDeviceInfoID())).
 		SetSeparateFee(in.GetInfo().GetSeparateFee()).
 		SetUnitPower(in.GetInfo().GetUnitPower()).
@@ -91,10 +100,13 @@ func Create(ctx context.Context, in *npool.CreateGoodRequest) (*npool.CreateGood
 		SetInheritFromGoodID(uuid.MustParse(in.GetInfo().GetInheritFromGoodID())).
 		SetVendorLocationID(uuid.MustParse(in.GetInfo().GetVendorLocationID())).
 		SetPrice(price.VisualPriceToDBPrice(in.GetInfo().GetPrice())).
+		SetPriceCurrency(uuid.MustParse(in.GetInfo().GetPriceCurrency())).
 		SetBenefitType(goodinfo.BenefitType(in.GetInfo().GetBenefitType())).
 		SetClassic(in.GetInfo().GetClassic()).
 		SetSupportCoinTypeIds(ids).
 		SetTotal(in.GetInfo().GetTotal()).
+		SetUnit(in.GetInfo().GetUnit()).
+		SetStart(in.GetInfo().GetStart()).
 		Save(ctx)
 	if err != nil {
 		return nil, xerrors.Errorf("fail to create good: %v", err)
@@ -123,6 +135,7 @@ func Update(ctx context.Context, in *npool.UpdateGoodRequest) (*npool.UpdateGood
 	info, err := db.Client().
 		GoodInfo.
 		UpdateOneID(goodID).
+		SetTitle(in.GetInfo().GetTitle()).
 		SetDeviceInfoID(uuid.MustParse(in.GetInfo().GetDeviceInfoID())).
 		SetSeparateFee(in.GetInfo().GetSeparateFee()).
 		SetUnitPower(in.GetInfo().GetUnitPower()).

@@ -40,7 +40,6 @@ func dbRowToAppGood(info *ent.AppGood) *npool.AppGoodInfo {
 		Online:           info.Online,
 		InitAreaStrategy: string(info.InitAreaStrategy),
 		Price:            price.DBPriceToVisualPrice(info.Price),
-		GasPrice:         price.DBPriceToVisualPrice(info.GasPrice),
 	}
 }
 
@@ -74,7 +73,6 @@ func Authorize(ctx context.Context, in *npool.AuthorizeAppGoodRequest) (*npool.A
 		SetOnline(false).
 		SetInitAreaStrategy(appgood.InitAreaStrategy(in.GetInfo().GetInitAreaStrategy())).
 		SetPrice(0).
-		SetGasPrice(0).
 		Save(ctx)
 	if err != nil {
 		return nil, xerrors.Errorf("fail create app good: %v", err)
@@ -137,8 +135,7 @@ func SetAppGoodPrice(ctx context.Context, in *npool.SetAppGoodPriceRequest) (*np
 		return nil, xerrors.Errorf("cannot set price to online good")
 	}
 
-	if price.VisualPriceToDBPrice(in.GetInfo().GetPrice()) == 0 ||
-		price.VisualPriceToDBPrice(in.GetInfo().GetGasPrice()) == 0 {
+	if price.VisualPriceToDBPrice(in.GetInfo().GetPrice()) == 0 {
 		return nil, xerrors.Errorf("price should be greater than 0")
 	}
 
@@ -146,7 +143,6 @@ func SetAppGoodPrice(ctx context.Context, in *npool.SetAppGoodPriceRequest) (*np
 		AppGood.
 		UpdateOneID(id).
 		SetPrice(price.VisualPriceToDBPrice(in.GetInfo().GetPrice())).
-		SetGasPrice(price.VisualPriceToDBPrice(in.GetInfo().GetGasPrice())).
 		Save(ctx)
 	if err != nil {
 		return nil, xerrors.Errorf("fail set price app good: %v", err)

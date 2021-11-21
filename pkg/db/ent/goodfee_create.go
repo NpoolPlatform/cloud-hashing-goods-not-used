@@ -29,9 +29,15 @@ func (gfc *GoodFeeCreate) SetGoodID(u uuid.UUID) *GoodFeeCreate {
 	return gfc
 }
 
+// SetAppID sets the "app_id" field.
+func (gfc *GoodFeeCreate) SetAppID(u uuid.UUID) *GoodFeeCreate {
+	gfc.mutation.SetAppID(u)
+	return gfc
+}
+
 // SetFeeType sets the "fee_type" field.
-func (gfc *GoodFeeCreate) SetFeeType(s string) *GoodFeeCreate {
-	gfc.mutation.SetFeeType(s)
+func (gfc *GoodFeeCreate) SetFeeType(u uuid.UUID) *GoodFeeCreate {
+	gfc.mutation.SetFeeType(u)
 	return gfc
 }
 
@@ -201,6 +207,9 @@ func (gfc *GoodFeeCreate) check() error {
 	if _, ok := gfc.mutation.GoodID(); !ok {
 		return &ValidationError{Name: "good_id", err: errors.New(`ent: missing required field "good_id"`)}
 	}
+	if _, ok := gfc.mutation.AppID(); !ok {
+		return &ValidationError{Name: "app_id", err: errors.New(`ent: missing required field "app_id"`)}
+	}
 	if _, ok := gfc.mutation.FeeType(); !ok {
 		return &ValidationError{Name: "fee_type", err: errors.New(`ent: missing required field "fee_type"`)}
 	}
@@ -271,9 +280,17 @@ func (gfc *GoodFeeCreate) createSpec() (*GoodFee, *sqlgraph.CreateSpec) {
 		})
 		_node.GoodID = value
 	}
+	if value, ok := gfc.mutation.AppID(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeUUID,
+			Value:  value,
+			Column: goodfee.FieldAppID,
+		})
+		_node.AppID = value
+	}
 	if value, ok := gfc.mutation.FeeType(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
+			Type:   field.TypeUUID,
 			Value:  value,
 			Column: goodfee.FieldFeeType,
 		})
@@ -401,8 +418,20 @@ func (u *GoodFeeUpsert) UpdateGoodID() *GoodFeeUpsert {
 	return u
 }
 
+// SetAppID sets the "app_id" field.
+func (u *GoodFeeUpsert) SetAppID(v uuid.UUID) *GoodFeeUpsert {
+	u.Set(goodfee.FieldAppID, v)
+	return u
+}
+
+// UpdateAppID sets the "app_id" field to the value that was provided on create.
+func (u *GoodFeeUpsert) UpdateAppID() *GoodFeeUpsert {
+	u.SetExcluded(goodfee.FieldAppID)
+	return u
+}
+
 // SetFeeType sets the "fee_type" field.
-func (u *GoodFeeUpsert) SetFeeType(v string) *GoodFeeUpsert {
+func (u *GoodFeeUpsert) SetFeeType(v uuid.UUID) *GoodFeeUpsert {
 	u.Set(goodfee.FieldFeeType, v)
 	return u
 }
@@ -561,8 +590,22 @@ func (u *GoodFeeUpsertOne) UpdateGoodID() *GoodFeeUpsertOne {
 	})
 }
 
+// SetAppID sets the "app_id" field.
+func (u *GoodFeeUpsertOne) SetAppID(v uuid.UUID) *GoodFeeUpsertOne {
+	return u.Update(func(s *GoodFeeUpsert) {
+		s.SetAppID(v)
+	})
+}
+
+// UpdateAppID sets the "app_id" field to the value that was provided on create.
+func (u *GoodFeeUpsertOne) UpdateAppID() *GoodFeeUpsertOne {
+	return u.Update(func(s *GoodFeeUpsert) {
+		s.UpdateAppID()
+	})
+}
+
 // SetFeeType sets the "fee_type" field.
-func (u *GoodFeeUpsertOne) SetFeeType(v string) *GoodFeeUpsertOne {
+func (u *GoodFeeUpsertOne) SetFeeType(v uuid.UUID) *GoodFeeUpsertOne {
 	return u.Update(func(s *GoodFeeUpsert) {
 		s.SetFeeType(v)
 	})
@@ -903,8 +946,22 @@ func (u *GoodFeeUpsertBulk) UpdateGoodID() *GoodFeeUpsertBulk {
 	})
 }
 
+// SetAppID sets the "app_id" field.
+func (u *GoodFeeUpsertBulk) SetAppID(v uuid.UUID) *GoodFeeUpsertBulk {
+	return u.Update(func(s *GoodFeeUpsert) {
+		s.SetAppID(v)
+	})
+}
+
+// UpdateAppID sets the "app_id" field to the value that was provided on create.
+func (u *GoodFeeUpsertBulk) UpdateAppID() *GoodFeeUpsertBulk {
+	return u.Update(func(s *GoodFeeUpsert) {
+		s.UpdateAppID()
+	})
+}
+
 // SetFeeType sets the "fee_type" field.
-func (u *GoodFeeUpsertBulk) SetFeeType(v string) *GoodFeeUpsertBulk {
+func (u *GoodFeeUpsertBulk) SetFeeType(v uuid.UUID) *GoodFeeUpsertBulk {
 	return u.Update(func(s *GoodFeeUpsert) {
 		s.SetFeeType(v)
 	})

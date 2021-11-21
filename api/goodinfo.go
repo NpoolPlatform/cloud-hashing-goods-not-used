@@ -19,7 +19,7 @@ func (s *Server) CreateGood(ctx context.Context, in *npool.CreateGoodRequest) (*
 	resp, err := goodinfo.Create(ctx, in)
 	if err != nil {
 		logger.Sugar().Errorf("update target area error: %w", err)
-		return &npool.CreateGoodResponse{}, status.Error(codes.Internal, "internal server error")
+		return &npool.CreateGoodResponse{}, status.Error(codes.Internal, err.Error())
 	}
 	return resp, nil
 }

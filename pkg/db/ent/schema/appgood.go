@@ -30,7 +30,6 @@ func (AppGood) Fields() []ent.Field {
 		field.Enum("init_area_strategy").
 			Values("all", "none"),
 		field.Uint64("price"),
-		field.Uint64("gas_price"),
 		field.Bool("invitation_only").
 			Default(false),
 		field.Int64("create_at").

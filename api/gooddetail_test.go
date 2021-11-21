@@ -102,10 +102,14 @@ func TestGet(t *testing.T) { //nolint
 		VendorLocationID:   vendorLocation.ID,
 		InheritFromGoodID:  uuid.UUID{}.String(),
 		Price:              13.0,
+		PriceCurrency:      uuid.New().String(),
 		BenefitType:        "platform",
 		Classic:            true,
 		SupportCoinTypeIDs: []string{uuid.New().String(), uuid.New().String()},
 		Total:              100,
+		Title:              "Ant Miner S19 Pro",
+		Unit:               "TH/s",
+		Start:              uint32(time.Now().Unix()),
 	}
 
 	goodInfoResp, err := cli.R().
@@ -114,6 +118,7 @@ func TestGet(t *testing.T) { //nolint
 			Info: &goodInfo,
 		}).
 		Post("http://localhost:50020/v1/create/good")
+	fmt.Printf("good info resp: %v\n", string(goodInfoResp.Body()))
 	if assert.Nil(t, err) {
 		assert.Equal(t, 200, goodInfoResp.StatusCode())
 		info := npool.CreateGoodResponse{}

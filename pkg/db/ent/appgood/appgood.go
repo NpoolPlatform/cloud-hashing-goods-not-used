@@ -25,8 +25,6 @@ const (
 	FieldInitAreaStrategy = "init_area_strategy"
 	// FieldPrice holds the string denoting the price field in the database.
 	FieldPrice = "price"
-	// FieldGasPrice holds the string denoting the gas_price field in the database.
-	FieldGasPrice = "gas_price"
 	// FieldInvitationOnly holds the string denoting the invitation_only field in the database.
 	FieldInvitationOnly = "invitation_only"
 	// FieldCreateAt holds the string denoting the create_at field in the database.
@@ -48,7 +46,6 @@ var Columns = []string{
 	FieldOnline,
 	FieldInitAreaStrategy,
 	FieldPrice,
-	FieldGasPrice,
 	FieldInvitationOnly,
 	FieldCreateAt,
 	FieldUpdateAt,

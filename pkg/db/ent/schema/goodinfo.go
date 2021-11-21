@@ -33,9 +33,7 @@ func (GoodInfo) Fields() []ent.Field {
 		field.UUID("vendor_location_id", uuid.UUID{}),
 		field.Uint64("price").
 			Positive(),
-		field.String("price_unit"),
-		field.String("price_currency"),
-		field.String("price_symbol"),
+		field.UUID("price_currency", uuid.UUID{}),
 		field.Enum("benefit_type").
 			Values("pool", "platform"),
 		field.Bool("classic"),

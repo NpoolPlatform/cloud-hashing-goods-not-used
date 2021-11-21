@@ -33,12 +33,8 @@ const (
 	FieldVendorLocationID = "vendor_location_id"
 	// FieldPrice holds the string denoting the price field in the database.
 	FieldPrice = "price"
-	// FieldPriceUnit holds the string denoting the price_unit field in the database.
-	FieldPriceUnit = "price_unit"
 	// FieldPriceCurrency holds the string denoting the price_currency field in the database.
 	FieldPriceCurrency = "price_currency"
-	// FieldPriceSymbol holds the string denoting the price_symbol field in the database.
-	FieldPriceSymbol = "price_symbol"
 	// FieldBenefitType holds the string denoting the benefit_type field in the database.
 	FieldBenefitType = "benefit_type"
 	// FieldClassic holds the string denoting the classic field in the database.
@@ -76,9 +72,7 @@ var Columns = []string{
 	FieldInheritFromGoodID,
 	FieldVendorLocationID,
 	FieldPrice,
-	FieldPriceUnit,
 	FieldPriceCurrency,
-	FieldPriceSymbol,
 	FieldBenefitType,
 	FieldClassic,
 	FieldTitle,

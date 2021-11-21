@@ -83,21 +83,9 @@ func (gic *GoodInfoCreate) SetPrice(u uint64) *GoodInfoCreate {
 	return gic
 }
 
-// SetPriceUnit sets the "price_unit" field.
-func (gic *GoodInfoCreate) SetPriceUnit(s string) *GoodInfoCreate {
-	gic.mutation.SetPriceUnit(s)
-	return gic
-}
-
 // SetPriceCurrency sets the "price_currency" field.
-func (gic *GoodInfoCreate) SetPriceCurrency(s string) *GoodInfoCreate {
-	gic.mutation.SetPriceCurrency(s)
-	return gic
-}
-
-// SetPriceSymbol sets the "price_symbol" field.
-func (gic *GoodInfoCreate) SetPriceSymbol(s string) *GoodInfoCreate {
-	gic.mutation.SetPriceSymbol(s)
+func (gic *GoodInfoCreate) SetPriceCurrency(u uuid.UUID) *GoodInfoCreate {
+	gic.mutation.SetPriceCurrency(u)
 	return gic
 }
 
@@ -327,14 +315,8 @@ func (gic *GoodInfoCreate) check() error {
 			return &ValidationError{Name: "price", err: fmt.Errorf(`ent: validator failed for field "price": %w`, err)}
 		}
 	}
-	if _, ok := gic.mutation.PriceUnit(); !ok {
-		return &ValidationError{Name: "price_unit", err: errors.New(`ent: missing required field "price_unit"`)}
-	}
 	if _, ok := gic.mutation.PriceCurrency(); !ok {
 		return &ValidationError{Name: "price_currency", err: errors.New(`ent: missing required field "price_currency"`)}
-	}
-	if _, ok := gic.mutation.PriceSymbol(); !ok {
-		return &ValidationError{Name: "price_symbol", err: errors.New(`ent: missing required field "price_symbol"`)}
 	}
 	if _, ok := gic.mutation.BenefitType(); !ok {
 		return &ValidationError{Name: "benefit_type", err: errors.New(`ent: missing required field "benefit_type"`)}
@@ -489,29 +471,13 @@ func (gic *GoodInfoCreate) createSpec() (*GoodInfo, *sqlgraph.CreateSpec) {
 		})
 		_node.Price = value
 	}
-	if value, ok := gic.mutation.PriceUnit(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: goodinfo.FieldPriceUnit,
-		})
-		_node.PriceUnit = value
-	}
 	if value, ok := gic.mutation.PriceCurrency(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
+			Type:   field.TypeUUID,
 			Value:  value,
 			Column: goodinfo.FieldPriceCurrency,
 		})
 		_node.PriceCurrency = value
-	}
-	if value, ok := gic.mutation.PriceSymbol(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: goodinfo.FieldPriceSymbol,
-		})
-		_node.PriceSymbol = value
 	}
 	if value, ok := gic.mutation.BenefitType(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
@@ -767,20 +733,8 @@ func (u *GoodInfoUpsert) UpdatePrice() *GoodInfoUpsert {
 	return u
 }
 
-// SetPriceUnit sets the "price_unit" field.
-func (u *GoodInfoUpsert) SetPriceUnit(v string) *GoodInfoUpsert {
-	u.Set(goodinfo.FieldPriceUnit, v)
-	return u
-}
-
-// UpdatePriceUnit sets the "price_unit" field to the value that was provided on create.
-func (u *GoodInfoUpsert) UpdatePriceUnit() *GoodInfoUpsert {
-	u.SetExcluded(goodinfo.FieldPriceUnit)
-	return u
-}
-
 // SetPriceCurrency sets the "price_currency" field.
-func (u *GoodInfoUpsert) SetPriceCurrency(v string) *GoodInfoUpsert {
+func (u *GoodInfoUpsert) SetPriceCurrency(v uuid.UUID) *GoodInfoUpsert {
 	u.Set(goodinfo.FieldPriceCurrency, v)
 	return u
 }
@@ -788,18 +742,6 @@ func (u *GoodInfoUpsert) SetPriceCurrency(v string) *GoodInfoUpsert {
 // UpdatePriceCurrency sets the "price_currency" field to the value that was provided on create.
 func (u *GoodInfoUpsert) UpdatePriceCurrency() *GoodInfoUpsert {
 	u.SetExcluded(goodinfo.FieldPriceCurrency)
-	return u
-}
-
-// SetPriceSymbol sets the "price_symbol" field.
-func (u *GoodInfoUpsert) SetPriceSymbol(v string) *GoodInfoUpsert {
-	u.Set(goodinfo.FieldPriceSymbol, v)
-	return u
-}
-
-// UpdatePriceSymbol sets the "price_symbol" field to the value that was provided on create.
-func (u *GoodInfoUpsert) UpdatePriceSymbol() *GoodInfoUpsert {
-	u.SetExcluded(goodinfo.FieldPriceSymbol)
 	return u
 }
 
@@ -1113,22 +1055,8 @@ func (u *GoodInfoUpsertOne) UpdatePrice() *GoodInfoUpsertOne {
 	})
 }
 
-// SetPriceUnit sets the "price_unit" field.
-func (u *GoodInfoUpsertOne) SetPriceUnit(v string) *GoodInfoUpsertOne {
-	return u.Update(func(s *GoodInfoUpsert) {
-		s.SetPriceUnit(v)
-	})
-}
-
-// UpdatePriceUnit sets the "price_unit" field to the value that was provided on create.
-func (u *GoodInfoUpsertOne) UpdatePriceUnit() *GoodInfoUpsertOne {
-	return u.Update(func(s *GoodInfoUpsert) {
-		s.UpdatePriceUnit()
-	})
-}
-
 // SetPriceCurrency sets the "price_currency" field.
-func (u *GoodInfoUpsertOne) SetPriceCurrency(v string) *GoodInfoUpsertOne {
+func (u *GoodInfoUpsertOne) SetPriceCurrency(v uuid.UUID) *GoodInfoUpsertOne {
 	return u.Update(func(s *GoodInfoUpsert) {
 		s.SetPriceCurrency(v)
 	})
@@ -1138,20 +1066,6 @@ func (u *GoodInfoUpsertOne) SetPriceCurrency(v string) *GoodInfoUpsertOne {
 func (u *GoodInfoUpsertOne) UpdatePriceCurrency() *GoodInfoUpsertOne {
 	return u.Update(func(s *GoodInfoUpsert) {
 		s.UpdatePriceCurrency()
-	})
-}
-
-// SetPriceSymbol sets the "price_symbol" field.
-func (u *GoodInfoUpsertOne) SetPriceSymbol(v string) *GoodInfoUpsertOne {
-	return u.Update(func(s *GoodInfoUpsert) {
-		s.SetPriceSymbol(v)
-	})
-}
-
-// UpdatePriceSymbol sets the "price_symbol" field to the value that was provided on create.
-func (u *GoodInfoUpsertOne) UpdatePriceSymbol() *GoodInfoUpsertOne {
-	return u.Update(func(s *GoodInfoUpsert) {
-		s.UpdatePriceSymbol()
 	})
 }
 
@@ -1651,22 +1565,8 @@ func (u *GoodInfoUpsertBulk) UpdatePrice() *GoodInfoUpsertBulk {
 	})
 }
 
-// SetPriceUnit sets the "price_unit" field.
-func (u *GoodInfoUpsertBulk) SetPriceUnit(v string) *GoodInfoUpsertBulk {
-	return u.Update(func(s *GoodInfoUpsert) {
-		s.SetPriceUnit(v)
-	})
-}
-
-// UpdatePriceUnit sets the "price_unit" field to the value that was provided on create.
-func (u *GoodInfoUpsertBulk) UpdatePriceUnit() *GoodInfoUpsertBulk {
-	return u.Update(func(s *GoodInfoUpsert) {
-		s.UpdatePriceUnit()
-	})
-}
-
 // SetPriceCurrency sets the "price_currency" field.
-func (u *GoodInfoUpsertBulk) SetPriceCurrency(v string) *GoodInfoUpsertBulk {
+func (u *GoodInfoUpsertBulk) SetPriceCurrency(v uuid.UUID) *GoodInfoUpsertBulk {
 	return u.Update(func(s *GoodInfoUpsert) {
 		s.SetPriceCurrency(v)
 	})
@@ -1676,20 +1576,6 @@ func (u *GoodInfoUpsertBulk) SetPriceCurrency(v string) *GoodInfoUpsertBulk {
 func (u *GoodInfoUpsertBulk) UpdatePriceCurrency() *GoodInfoUpsertBulk {
 	return u.Update(func(s *GoodInfoUpsert) {
 		s.UpdatePriceCurrency()
-	})
-}
-
-// SetPriceSymbol sets the "price_symbol" field.
-func (u *GoodInfoUpsertBulk) SetPriceSymbol(v string) *GoodInfoUpsertBulk {
-	return u.Update(func(s *GoodInfoUpsert) {
-		s.SetPriceSymbol(v)
-	})
-}
-
-// UpdatePriceSymbol sets the "price_symbol" field to the value that was provided on create.
-func (u *GoodInfoUpsertBulk) UpdatePriceSymbol() *GoodInfoUpsertBulk {
-	return u.Update(func(s *GoodInfoUpsert) {
-		s.UpdatePriceSymbol()
 	})
 }
 

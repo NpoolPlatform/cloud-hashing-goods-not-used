@@ -31,7 +31,6 @@ func assertAppGood(t *testing.T, actual, expected *npool.AppGoodInfo) {
 	assert.Equal(t, actual.Online, expected.Online)
 	assert.Equal(t, actual.InitAreaStrategy, expected.InitAreaStrategy)
 	assert.Equal(t, actual.Price, expected.Price)
-	assert.Equal(t, actual.GasPrice, expected.GasPrice)
 }
 
 func TestAppGoodCRUD(t *testing.T) {
@@ -47,7 +46,6 @@ func TestAppGoodCRUD(t *testing.T) {
 		Online:           false,
 		InitAreaStrategy: "none",
 		Price:            0,
-		GasPrice:         0,
 	}
 	resp, err := Authorize(context.Background(), &npool.AuthorizeAppGoodRequest{
 		Info: &appGoodInfo,
@@ -100,7 +98,6 @@ func TestAppGoodCRUD(t *testing.T) {
 	}
 
 	appGoodInfo.Price = 0.13
-	appGoodInfo.GasPrice = 0.00013
 
 	resp6, err := SetAppGoodPrice(context.Background(), &npool.SetAppGoodPriceRequest{
 		Info: &appGoodInfo,

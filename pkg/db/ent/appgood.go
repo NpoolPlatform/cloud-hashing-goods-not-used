@@ -28,8 +28,6 @@ type AppGood struct {
 	InitAreaStrategy appgood.InitAreaStrategy `json:"init_area_strategy,omitempty"`
 	// Price holds the value of the "price" field.
 	Price uint64 `json:"price,omitempty"`
-	// GasPrice holds the value of the "gas_price" field.
-	GasPrice uint64 `json:"gas_price,omitempty"`
 	// InvitationOnly holds the value of the "invitation_only" field.
 	InvitationOnly bool `json:"invitation_only,omitempty"`
 	// CreateAt holds the value of the "create_at" field.
@@ -47,7 +45,7 @@ func (*AppGood) scanValues(columns []string) ([]interface{}, error) {
 		switch columns[i] {
 		case appgood.FieldAuthorized, appgood.FieldOnline, appgood.FieldInvitationOnly:
 			values[i] = new(sql.NullBool)
-		case appgood.FieldPrice, appgood.FieldGasPrice, appgood.FieldCreateAt, appgood.FieldUpdateAt, appgood.FieldDeleteAt:
+		case appgood.FieldPrice, appgood.FieldCreateAt, appgood.FieldUpdateAt, appgood.FieldDeleteAt:
 			values[i] = new(sql.NullInt64)
 		case appgood.FieldInitAreaStrategy:
 			values[i] = new(sql.NullString)
@@ -109,12 +107,6 @@ func (ag *AppGood) assignValues(columns []string, values []interface{}) error {
 				return fmt.Errorf("unexpected type %T for field price", values[i])
 			} else if value.Valid {
 				ag.Price = uint64(value.Int64)
-			}
-		case appgood.FieldGasPrice:
-			if value, ok := values[i].(*sql.NullInt64); !ok {
-				return fmt.Errorf("unexpected type %T for field gas_price", values[i])
-			} else if value.Valid {
-				ag.GasPrice = uint64(value.Int64)
 			}
 		case appgood.FieldInvitationOnly:
 			if value, ok := values[i].(*sql.NullBool); !ok {
@@ -180,8 +172,6 @@ func (ag *AppGood) String() string {
 	builder.WriteString(fmt.Sprintf("%v", ag.InitAreaStrategy))
 	builder.WriteString(", price=")
 	builder.WriteString(fmt.Sprintf("%v", ag.Price))
-	builder.WriteString(", gas_price=")
-	builder.WriteString(fmt.Sprintf("%v", ag.GasPrice))
 	builder.WriteString(", invitation_only=")
 	builder.WriteString(fmt.Sprintf("%v", ag.InvitationOnly))
 	builder.WriteString(", create_at=")

@@ -18,8 +18,7 @@ import (
 
 func assertGoodInfo(t *testing.T, actual, expected *npool.GoodInfo) {
 	assert.Equal(t, actual.DeviceInfoID, expected.DeviceInfoID)
-	assert.Equal(t, actual.GasPrice, expected.GasPrice)
-	assert.Equal(t, actual.SeparateGasFee, expected.SeparateGasFee)
+	assert.Equal(t, actual.SeparateFee, expected.SeparateFee)
 	assert.Equal(t, actual.UnitPower, expected.UnitPower)
 	assert.Equal(t, actual.DurationDays, expected.DurationDays)
 	assert.Equal(t, actual.CoinInfoID, expected.CoinInfoID)
@@ -40,8 +39,7 @@ func TestGoodCRUD(t *testing.T) { //nolint
 	}
 
 	deviceInfoID := uuid.New().String()
-	gasPrice := 0.13
-	separateGasFee := true
+	separateFee := true
 	unitPower := int32(100)
 	duration := int32(180)
 	coinInfoID := uuid.New().String()
@@ -57,8 +55,7 @@ func TestGoodCRUD(t *testing.T) { //nolint
 
 	goodInfo := npool.GoodInfo{
 		DeviceInfoID:       deviceInfoID,
-		GasPrice:           gasPrice,
-		SeparateGasFee:     separateGasFee,
+		SeparateFee:        separateFee,
 		UnitPower:          unitPower,
 		DurationDays:       duration,
 		CoinInfoID:         coinInfoID,
@@ -67,10 +64,14 @@ func TestGoodCRUD(t *testing.T) { //nolint
 		InheritFromGoodID:  inheritFromGoodID,
 		VendorLocationID:   vendorLocationID,
 		Price:              price,
+		PriceCurrency:      uuid.New().String(),
 		BenefitType:        benefitType,
 		Classic:            classic,
 		SupportCoinTypeIDs: supportCoinTypeIDs,
 		Total:              total,
+		Title:              "Ant Miner S19 Pro",
+		Unit:               "TH/s",
+		Start:              uint32(time.Now().Unix()),
 	}
 	firstCreateInfo := npool.CreateGoodResponse{}
 

@@ -25,6 +25,8 @@ func Create(ctx context.Context, in *npool.CreateGoodExtraInfoRequest) (*npool.C
 		SetGoodID(id).
 		SetPosters(in.GetInfo().GetPosters()).
 		SetLabels(in.GetInfo().GetLabels()).
+		SetPreSale(in.GetInfo().GetPreSale()).
+		SetOutSale(in.GetInfo().GetOutSale()).
 		Save(ctx)
 	if err != nil {
 		return nil, err
@@ -36,6 +38,8 @@ func Create(ctx context.Context, in *npool.CreateGoodExtraInfoRequest) (*npool.C
 			GoodID:  info.GoodID.String(),
 			Posters: info.Posters,
 			Labels:  info.Labels,
+			OutSale: info.OutSale,
+			PreSale: info.PreSale,
 		},
 	}, nil
 }
@@ -70,6 +74,7 @@ func Update(ctx context.Context, in *npool.UpdateGoodExtraInfoRequest) (*npool.U
 		UpdateOneID(id).
 		SetPosters(in.GetInfo().GetPosters()).
 		SetLabels(in.GetInfo().GetLabels()).
+		SetOutSale(in.GetInfo().GetOutSale()).
 		Save(ctx)
 	if err != nil {
 		return nil, xerrors.Errorf("fail set poster to good extra info: %v", err)
@@ -80,6 +85,8 @@ func Update(ctx context.Context, in *npool.UpdateGoodExtraInfoRequest) (*npool.U
 			GoodID:  info.GoodID.String(),
 			Posters: info.Posters,
 			Labels:  info.Labels,
+			OutSale: info.OutSale,
+			PreSale: info.PreSale,
 		},
 	}, nil
 }
@@ -112,6 +119,8 @@ func Get(ctx context.Context, in *npool.GetGoodExtraInfoRequest) (*npool.GetGood
 			GoodID:  infos[0].GoodID.String(),
 			Posters: infos[0].Posters,
 			Labels:  infos[0].Labels,
+			OutSale: infos[0].OutSale,
+			PreSale: infos[0].PreSale,
 		},
 	}, nil
 }

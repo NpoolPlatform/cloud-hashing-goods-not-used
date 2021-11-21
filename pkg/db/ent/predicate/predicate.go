@@ -15,8 +15,14 @@ type AppGoodTargetArea func(*sql.Selector)
 // AppTargetArea is the predicate function for apptargetarea builders.
 type AppTargetArea func(*sql.Selector)
 
+// Currency is the predicate function for currency builders.
+type Currency func(*sql.Selector)
+
 // DeviceInfo is the predicate function for deviceinfo builders.
 type DeviceInfo func(*sql.Selector)
+
+// FeeType is the predicate function for feetype builders.
+type FeeType func(*sql.Selector)
 
 // GoodComment is the predicate function for goodcomment builders.
 type GoodComment func(*sql.Selector)

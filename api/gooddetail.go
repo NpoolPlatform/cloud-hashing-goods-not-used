@@ -19,7 +19,7 @@ func (s *Server) GetGoodDetail(ctx context.Context, in *npool.GetGoodDetailReque
 	resp, err := gooddetail.Get(ctx, in)
 	if err != nil {
 		logger.Sugar().Errorf("get good detail error: %w", err)
-		return &npool.GetGoodDetailResponse{}, status.Error(codes.Internal, "internal server error")
+		return &npool.GetGoodDetailResponse{}, status.Error(codes.Internal, err.Error())
 	}
 	return resp, nil
 }
@@ -28,7 +28,7 @@ func (s *Server) GetGoodsDetail(ctx context.Context, in *npool.GetGoodsDetailReq
 	resp, err := gooddetail.GetAll(ctx, in)
 	if err != nil {
 		logger.Sugar().Errorf("get good detail all error: %w", err)
-		return &npool.GetGoodsDetailResponse{}, status.Error(codes.Internal, "internal server error")
+		return &npool.GetGoodsDetailResponse{}, status.Error(codes.Internal, err.Error())
 	}
 	return resp, nil
 }

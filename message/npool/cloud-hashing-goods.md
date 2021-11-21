@@ -131,7 +131,6 @@
 | AppID | [string](#string) |  |  |
 | GoodID | [string](#string) |  |  |
 | Price | [double](#double) |  |  |
-| GasPrice | [double](#double) |  |  |
 | Authorized | [bool](#bool) |  |  |
 | Online | [bool](#bool) |  |  |
 | InitAreaStrategy | [string](#string) |  |  |
@@ -1179,6 +1178,9 @@
 | SupportCoinTypeIDs | [string](#string) | repeated |  |
 | Total | [int32](#int32) |  |  |
 | Extra | [GoodExtraInfo](#cloud.hashing.goods.v1.GoodExtraInfo) |  |  |
+| Title | [string](#string) |  |  |
+| Unit | [string](#string) |  |  |
+| Start | [uint32](#uint32) |  |  |
 
 
 
@@ -1197,6 +1199,8 @@
 | GoodID | [string](#string) |  |  |
 | Posters | [string](#string) | repeated |  |
 | Labels | [string](#string) | repeated |  |
+| OutSale | [bool](#bool) |  |  |
+| PreSale | [bool](#bool) |  |  |
 
 
 
@@ -1226,6 +1230,10 @@
 | Classic | [bool](#bool) |  |  |
 | SupportCoinTypeIDs | [string](#string) | repeated |  |
 | Total | [int32](#int32) |  |  |
+| PriceCurrency | [string](#string) |  |  |
+| Title | [string](#string) |  |  |
+| Unit | [string](#string) |  |  |
+| Start | [uint32](#uint32) |  |  |
 
 
 

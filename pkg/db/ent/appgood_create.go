@@ -75,12 +75,6 @@ func (agc *AppGoodCreate) SetPrice(u uint64) *AppGoodCreate {
 	return agc
 }
 
-// SetGasPrice sets the "gas_price" field.
-func (agc *AppGoodCreate) SetGasPrice(u uint64) *AppGoodCreate {
-	agc.mutation.SetGasPrice(u)
-	return agc
-}
-
 // SetInvitationOnly sets the "invitation_only" field.
 func (agc *AppGoodCreate) SetInvitationOnly(b bool) *AppGoodCreate {
 	agc.mutation.SetInvitationOnly(b)
@@ -269,9 +263,6 @@ func (agc *AppGoodCreate) check() error {
 	if _, ok := agc.mutation.Price(); !ok {
 		return &ValidationError{Name: "price", err: errors.New(`ent: missing required field "price"`)}
 	}
-	if _, ok := agc.mutation.GasPrice(); !ok {
-		return &ValidationError{Name: "gas_price", err: errors.New(`ent: missing required field "gas_price"`)}
-	}
 	if _, ok := agc.mutation.InvitationOnly(); !ok {
 		return &ValidationError{Name: "invitation_only", err: errors.New(`ent: missing required field "invitation_only"`)}
 	}
@@ -364,14 +355,6 @@ func (agc *AppGoodCreate) createSpec() (*AppGood, *sqlgraph.CreateSpec) {
 			Column: appgood.FieldPrice,
 		})
 		_node.Price = value
-	}
-	if value, ok := agc.mutation.GasPrice(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeUint64,
-			Value:  value,
-			Column: appgood.FieldGasPrice,
-		})
-		_node.GasPrice = value
 	}
 	if value, ok := agc.mutation.InvitationOnly(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
@@ -528,18 +511,6 @@ func (u *AppGoodUpsert) SetPrice(v uint64) *AppGoodUpsert {
 // UpdatePrice sets the "price" field to the value that was provided on create.
 func (u *AppGoodUpsert) UpdatePrice() *AppGoodUpsert {
 	u.SetExcluded(appgood.FieldPrice)
-	return u
-}
-
-// SetGasPrice sets the "gas_price" field.
-func (u *AppGoodUpsert) SetGasPrice(v uint64) *AppGoodUpsert {
-	u.Set(appgood.FieldGasPrice, v)
-	return u
-}
-
-// UpdateGasPrice sets the "gas_price" field to the value that was provided on create.
-func (u *AppGoodUpsert) UpdateGasPrice() *AppGoodUpsert {
-	u.SetExcluded(appgood.FieldGasPrice)
 	return u
 }
 
@@ -722,20 +693,6 @@ func (u *AppGoodUpsertOne) SetPrice(v uint64) *AppGoodUpsertOne {
 func (u *AppGoodUpsertOne) UpdatePrice() *AppGoodUpsertOne {
 	return u.Update(func(s *AppGoodUpsert) {
 		s.UpdatePrice()
-	})
-}
-
-// SetGasPrice sets the "gas_price" field.
-func (u *AppGoodUpsertOne) SetGasPrice(v uint64) *AppGoodUpsertOne {
-	return u.Update(func(s *AppGoodUpsert) {
-		s.SetGasPrice(v)
-	})
-}
-
-// UpdateGasPrice sets the "gas_price" field to the value that was provided on create.
-func (u *AppGoodUpsertOne) UpdateGasPrice() *AppGoodUpsertOne {
-	return u.Update(func(s *AppGoodUpsert) {
-		s.UpdateGasPrice()
 	})
 }
 
@@ -1092,20 +1049,6 @@ func (u *AppGoodUpsertBulk) SetPrice(v uint64) *AppGoodUpsertBulk {
 func (u *AppGoodUpsertBulk) UpdatePrice() *AppGoodUpsertBulk {
 	return u.Update(func(s *AppGoodUpsert) {
 		s.UpdatePrice()
-	})
-}
-
-// SetGasPrice sets the "gas_price" field.
-func (u *AppGoodUpsertBulk) SetGasPrice(v uint64) *AppGoodUpsertBulk {
-	return u.Update(func(s *AppGoodUpsert) {
-		s.SetGasPrice(v)
-	})
-}
-
-// UpdateGasPrice sets the "gas_price" field to the value that was provided on create.
-func (u *AppGoodUpsertBulk) UpdateGasPrice() *AppGoodUpsertBulk {
-	return u.Update(func(s *AppGoodUpsert) {
-		s.UpdateGasPrice()
 	})
 }
 

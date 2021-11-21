@@ -126,13 +126,6 @@ func Price(v uint64) predicate.AppGood {
 	})
 }
 
-// GasPrice applies equality check predicate on the "gas_price" field. It's identical to GasPriceEQ.
-func GasPrice(v uint64) predicate.AppGood {
-	return predicate.AppGood(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldGasPrice), v))
-	})
-}
-
 // InvitationOnly applies equality check predicate on the "invitation_only" field. It's identical to InvitationOnlyEQ.
 func InvitationOnly(v bool) predicate.AppGood {
 	return predicate.AppGood(func(s *sql.Selector) {
@@ -462,82 +455,6 @@ func PriceLT(v uint64) predicate.AppGood {
 func PriceLTE(v uint64) predicate.AppGood {
 	return predicate.AppGood(func(s *sql.Selector) {
 		s.Where(sql.LTE(s.C(FieldPrice), v))
-	})
-}
-
-// GasPriceEQ applies the EQ predicate on the "gas_price" field.
-func GasPriceEQ(v uint64) predicate.AppGood {
-	return predicate.AppGood(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldGasPrice), v))
-	})
-}
-
-// GasPriceNEQ applies the NEQ predicate on the "gas_price" field.
-func GasPriceNEQ(v uint64) predicate.AppGood {
-	return predicate.AppGood(func(s *sql.Selector) {
-		s.Where(sql.NEQ(s.C(FieldGasPrice), v))
-	})
-}
-
-// GasPriceIn applies the In predicate on the "gas_price" field.
-func GasPriceIn(vs ...uint64) predicate.AppGood {
-	v := make([]interface{}, len(vs))
-	for i := range v {
-		v[i] = vs[i]
-	}
-	return predicate.AppGood(func(s *sql.Selector) {
-		// if not arguments were provided, append the FALSE constants,
-		// since we can't apply "IN ()". This will make this predicate falsy.
-		if len(v) == 0 {
-			s.Where(sql.False())
-			return
-		}
-		s.Where(sql.In(s.C(FieldGasPrice), v...))
-	})
-}
-
-// GasPriceNotIn applies the NotIn predicate on the "gas_price" field.
-func GasPriceNotIn(vs ...uint64) predicate.AppGood {
-	v := make([]interface{}, len(vs))
-	for i := range v {
-		v[i] = vs[i]
-	}
-	return predicate.AppGood(func(s *sql.Selector) {
-		// if not arguments were provided, append the FALSE constants,
-		// since we can't apply "IN ()". This will make this predicate falsy.
-		if len(v) == 0 {
-			s.Where(sql.False())
-			return
-		}
-		s.Where(sql.NotIn(s.C(FieldGasPrice), v...))
-	})
-}
-
-// GasPriceGT applies the GT predicate on the "gas_price" field.
-func GasPriceGT(v uint64) predicate.AppGood {
-	return predicate.AppGood(func(s *sql.Selector) {
-		s.Where(sql.GT(s.C(FieldGasPrice), v))
-	})
-}
-
-// GasPriceGTE applies the GTE predicate on the "gas_price" field.
-func GasPriceGTE(v uint64) predicate.AppGood {
-	return predicate.AppGood(func(s *sql.Selector) {
-		s.Where(sql.GTE(s.C(FieldGasPrice), v))
-	})
-}
-
-// GasPriceLT applies the LT predicate on the "gas_price" field.
-func GasPriceLT(v uint64) predicate.AppGood {
-	return predicate.AppGood(func(s *sql.Selector) {
-		s.Where(sql.LT(s.C(FieldGasPrice), v))
-	})
-}
-
-// GasPriceLTE applies the LTE predicate on the "gas_price" field.
-func GasPriceLTE(v uint64) predicate.AppGood {
-	return predicate.AppGood(func(s *sql.Selector) {
-		s.Where(sql.LTE(s.C(FieldGasPrice), v))
 	})
 }
 

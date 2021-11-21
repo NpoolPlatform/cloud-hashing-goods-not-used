@@ -18,8 +18,10 @@ type GoodFee struct {
 	ID uuid.UUID `json:"id,omitempty"`
 	// GoodID holds the value of the "good_id" field.
 	GoodID uuid.UUID `json:"good_id,omitempty"`
+	// AppID holds the value of the "app_id" field.
+	AppID uuid.UUID `json:"app_id,omitempty"`
 	// FeeType holds the value of the "fee_type" field.
-	FeeType string `json:"fee_type,omitempty"`
+	FeeType uuid.UUID `json:"fee_type,omitempty"`
 	// PayType holds the value of the "pay_type" field.
 	PayType goodfee.PayType `json:"pay_type,omitempty"`
 	// PercentValue holds the value of the "percent_value" field.
@@ -43,9 +45,9 @@ func (*GoodFee) scanValues(columns []string) ([]interface{}, error) {
 		switch columns[i] {
 		case goodfee.FieldPercentValue, goodfee.FieldAmountValue, goodfee.FieldCreateAt, goodfee.FieldUpdateAt, goodfee.FieldDeleteAt:
 			values[i] = new(sql.NullInt64)
-		case goodfee.FieldFeeType, goodfee.FieldPayType, goodfee.FieldAmountUnit:
+		case goodfee.FieldPayType, goodfee.FieldAmountUnit:
 			values[i] = new(sql.NullString)
-		case goodfee.FieldID, goodfee.FieldGoodID:
+		case goodfee.FieldID, goodfee.FieldGoodID, goodfee.FieldAppID, goodfee.FieldFeeType:
 			values[i] = new(uuid.UUID)
 		default:
 			return nil, fmt.Errorf("unexpected column %q for type GoodFee", columns[i])
@@ -74,11 +76,17 @@ func (gf *GoodFee) assignValues(columns []string, values []interface{}) error {
 			} else if value != nil {
 				gf.GoodID = *value
 			}
+		case goodfee.FieldAppID:
+			if value, ok := values[i].(*uuid.UUID); !ok {
+				return fmt.Errorf("unexpected type %T for field app_id", values[i])
+			} else if value != nil {
+				gf.AppID = *value
+			}
 		case goodfee.FieldFeeType:
-			if value, ok := values[i].(*sql.NullString); !ok {
+			if value, ok := values[i].(*uuid.UUID); !ok {
 				return fmt.Errorf("unexpected type %T for field fee_type", values[i])
-			} else if value.Valid {
-				gf.FeeType = value.String
+			} else if value != nil {
+				gf.FeeType = *value
 			}
 		case goodfee.FieldPayType:
 			if value, ok := values[i].(*sql.NullString); !ok {
@@ -152,8 +160,10 @@ func (gf *GoodFee) String() string {
 	builder.WriteString(fmt.Sprintf("id=%v", gf.ID))
 	builder.WriteString(", good_id=")
 	builder.WriteString(fmt.Sprintf("%v", gf.GoodID))
+	builder.WriteString(", app_id=")
+	builder.WriteString(fmt.Sprintf("%v", gf.AppID))
 	builder.WriteString(", fee_type=")
-	builder.WriteString(gf.FeeType)
+	builder.WriteString(fmt.Sprintf("%v", gf.FeeType))
 	builder.WriteString(", pay_type=")
 	builder.WriteString(fmt.Sprintf("%v", gf.PayType))
 	builder.WriteString(", percent_value=")

@@ -11,7 +11,9 @@ import (
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/appgood"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/appgoodtargetarea"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/apptargetarea"
+	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/currency"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/deviceinfo"
+	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/feetype"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/goodcomment"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/goodextrainfo"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/goodfee"
@@ -42,7 +44,9 @@ func columnChecker(table string) func(string) error {
 		appgood.Table:           appgood.ValidColumn,
 		appgoodtargetarea.Table: appgoodtargetarea.ValidColumn,
 		apptargetarea.Table:     apptargetarea.ValidColumn,
+		currency.Table:          currency.ValidColumn,
 		deviceinfo.Table:        deviceinfo.ValidColumn,
+		feetype.Table:           feetype.ValidColumn,
 		goodcomment.Table:       goodcomment.ValidColumn,
 		goodextrainfo.Table:     goodextrainfo.ValidColumn,
 		goodfee.Table:           goodfee.ValidColumn,

@@ -33,9 +33,15 @@ func (gfu *GoodFeeUpdate) SetGoodID(u uuid.UUID) *GoodFeeUpdate {
 	return gfu
 }
 
+// SetAppID sets the "app_id" field.
+func (gfu *GoodFeeUpdate) SetAppID(u uuid.UUID) *GoodFeeUpdate {
+	gfu.mutation.SetAppID(u)
+	return gfu
+}
+
 // SetFeeType sets the "fee_type" field.
-func (gfu *GoodFeeUpdate) SetFeeType(s string) *GoodFeeUpdate {
-	gfu.mutation.SetFeeType(s)
+func (gfu *GoodFeeUpdate) SetFeeType(u uuid.UUID) *GoodFeeUpdate {
+	gfu.mutation.SetFeeType(u)
 	return gfu
 }
 
@@ -241,9 +247,16 @@ func (gfu *GoodFeeUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			Column: goodfee.FieldGoodID,
 		})
 	}
+	if value, ok := gfu.mutation.AppID(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeUUID,
+			Value:  value,
+			Column: goodfee.FieldAppID,
+		})
+	}
 	if value, ok := gfu.mutation.FeeType(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
+			Type:   field.TypeUUID,
 			Value:  value,
 			Column: goodfee.FieldFeeType,
 		})
@@ -357,9 +370,15 @@ func (gfuo *GoodFeeUpdateOne) SetGoodID(u uuid.UUID) *GoodFeeUpdateOne {
 	return gfuo
 }
 
+// SetAppID sets the "app_id" field.
+func (gfuo *GoodFeeUpdateOne) SetAppID(u uuid.UUID) *GoodFeeUpdateOne {
+	gfuo.mutation.SetAppID(u)
+	return gfuo
+}
+
 // SetFeeType sets the "fee_type" field.
-func (gfuo *GoodFeeUpdateOne) SetFeeType(s string) *GoodFeeUpdateOne {
-	gfuo.mutation.SetFeeType(s)
+func (gfuo *GoodFeeUpdateOne) SetFeeType(u uuid.UUID) *GoodFeeUpdateOne {
+	gfuo.mutation.SetFeeType(u)
 	return gfuo
 }
 
@@ -589,9 +608,16 @@ func (gfuo *GoodFeeUpdateOne) sqlSave(ctx context.Context) (_node *GoodFee, err 
 			Column: goodfee.FieldGoodID,
 		})
 	}
+	if value, ok := gfuo.mutation.AppID(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeUUID,
+			Value:  value,
+			Column: goodfee.FieldAppID,
+		})
+	}
 	if value, ok := gfuo.mutation.FeeType(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
+			Type:   field.TypeUUID,
 			Value:  value,
 			Column: goodfee.FieldFeeType,
 		})

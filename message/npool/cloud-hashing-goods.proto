@@ -471,6 +471,10 @@ message GoodInfo {
     bool Classic = 2413;
     repeated string SupportCoinTypeIDs = 2414;
     int32 Total = 2415;
+    string PriceCurrency = 2416;
+    string Title = 2417;
+    string Unit = 2418;
+    uint32 Start = 2419;
 }
 
 message CreateGoodRequest {
@@ -514,6 +518,9 @@ message GoodDetail {
     repeated string SupportCoinTypeIDs = 2414;
     int32 Total = 2415;
     GoodExtraInfo Extra = 2416;
+    string Title = 2417;
+    string Unit = 2418;
+    uint32 Start = 2419;
 }
 
 message GetGoodDetailRequest {
@@ -555,7 +562,6 @@ message AppGoodInfo {
     string AppID = 3311;
     string GoodID = 3312;
     double Price = 3313;
-    double GasPrice = 3314;
     bool Authorized = 3315;
     bool Online = 3316;
     string InitAreaStrategy = 3317;
@@ -713,6 +719,8 @@ message GoodExtraInfo {
     string GoodID = 5101;
     repeated string Posters = 5102;
     repeated string Labels = 5103;
+    bool OutSale = 5104;
+    bool PreSale = 5105;
 }
 
 message CreateGoodExtraInfoRequest {

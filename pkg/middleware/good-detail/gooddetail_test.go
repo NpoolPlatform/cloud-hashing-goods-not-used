@@ -84,6 +84,8 @@ func TestGet(t *testing.T) {
 	assert.Nil(t, err)
 
 	goodInfo := npool.GoodInfo{
+		Title:              "Ant Miner S19 Pro",
+		Unit:               "TH/s",
 		DeviceInfoID:       deviceResp.Info.ID,
 		SeparateFee:        true,
 		UnitPower:          10,
@@ -94,10 +96,12 @@ func TestGet(t *testing.T) {
 		VendorLocationID:   vendorLocationResp.Info.ID,
 		InheritFromGoodID:  uuid.UUID{}.String(),
 		Price:              13.0,
+		PriceCurrency:      uuid.New().String(),
 		BenefitType:        "platform",
 		Classic:            true,
 		SupportCoinTypeIDs: []string{uuid.New().String(), uuid.New().String()},
 		Total:              100,
+		Start:              uint32(time.Now().Unix()),
 	}
 	goodInfoResp, err := goodinfo.Create(context.Background(), &npool.CreateGoodRequest{
 		Info: &goodInfo,

@@ -98,8 +98,15 @@ func GoodID(v uuid.UUID) predicate.GoodFee {
 	})
 }
 
+// AppID applies equality check predicate on the "app_id" field. It's identical to AppIDEQ.
+func AppID(v uuid.UUID) predicate.GoodFee {
+	return predicate.GoodFee(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldAppID), v))
+	})
+}
+
 // FeeType applies equality check predicate on the "fee_type" field. It's identical to FeeTypeEQ.
-func FeeType(v string) predicate.GoodFee {
+func FeeType(v uuid.UUID) predicate.GoodFee {
 	return predicate.GoodFee(func(s *sql.Selector) {
 		s.Where(sql.EQ(s.C(FieldFeeType), v))
 	})
@@ -223,22 +230,98 @@ func GoodIDLTE(v uuid.UUID) predicate.GoodFee {
 	})
 }
 
+// AppIDEQ applies the EQ predicate on the "app_id" field.
+func AppIDEQ(v uuid.UUID) predicate.GoodFee {
+	return predicate.GoodFee(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldAppID), v))
+	})
+}
+
+// AppIDNEQ applies the NEQ predicate on the "app_id" field.
+func AppIDNEQ(v uuid.UUID) predicate.GoodFee {
+	return predicate.GoodFee(func(s *sql.Selector) {
+		s.Where(sql.NEQ(s.C(FieldAppID), v))
+	})
+}
+
+// AppIDIn applies the In predicate on the "app_id" field.
+func AppIDIn(vs ...uuid.UUID) predicate.GoodFee {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.GoodFee(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.In(s.C(FieldAppID), v...))
+	})
+}
+
+// AppIDNotIn applies the NotIn predicate on the "app_id" field.
+func AppIDNotIn(vs ...uuid.UUID) predicate.GoodFee {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.GoodFee(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.NotIn(s.C(FieldAppID), v...))
+	})
+}
+
+// AppIDGT applies the GT predicate on the "app_id" field.
+func AppIDGT(v uuid.UUID) predicate.GoodFee {
+	return predicate.GoodFee(func(s *sql.Selector) {
+		s.Where(sql.GT(s.C(FieldAppID), v))
+	})
+}
+
+// AppIDGTE applies the GTE predicate on the "app_id" field.
+func AppIDGTE(v uuid.UUID) predicate.GoodFee {
+	return predicate.GoodFee(func(s *sql.Selector) {
+		s.Where(sql.GTE(s.C(FieldAppID), v))
+	})
+}
+
+// AppIDLT applies the LT predicate on the "app_id" field.
+func AppIDLT(v uuid.UUID) predicate.GoodFee {
+	return predicate.GoodFee(func(s *sql.Selector) {
+		s.Where(sql.LT(s.C(FieldAppID), v))
+	})
+}
+
+// AppIDLTE applies the LTE predicate on the "app_id" field.
+func AppIDLTE(v uuid.UUID) predicate.GoodFee {
+	return predicate.GoodFee(func(s *sql.Selector) {
+		s.Where(sql.LTE(s.C(FieldAppID), v))
+	})
+}
+
 // FeeTypeEQ applies the EQ predicate on the "fee_type" field.
-func FeeTypeEQ(v string) predicate.GoodFee {
+func FeeTypeEQ(v uuid.UUID) predicate.GoodFee {
 	return predicate.GoodFee(func(s *sql.Selector) {
 		s.Where(sql.EQ(s.C(FieldFeeType), v))
 	})
 }
 
 // FeeTypeNEQ applies the NEQ predicate on the "fee_type" field.
-func FeeTypeNEQ(v string) predicate.GoodFee {
+func FeeTypeNEQ(v uuid.UUID) predicate.GoodFee {
 	return predicate.GoodFee(func(s *sql.Selector) {
 		s.Where(sql.NEQ(s.C(FieldFeeType), v))
 	})
 }
 
 // FeeTypeIn applies the In predicate on the "fee_type" field.
-func FeeTypeIn(vs ...string) predicate.GoodFee {
+func FeeTypeIn(vs ...uuid.UUID) predicate.GoodFee {
 	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
@@ -255,7 +338,7 @@ func FeeTypeIn(vs ...string) predicate.GoodFee {
 }
 
 // FeeTypeNotIn applies the NotIn predicate on the "fee_type" field.
-func FeeTypeNotIn(vs ...string) predicate.GoodFee {
+func FeeTypeNotIn(vs ...uuid.UUID) predicate.GoodFee {
 	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
@@ -272,65 +355,30 @@ func FeeTypeNotIn(vs ...string) predicate.GoodFee {
 }
 
 // FeeTypeGT applies the GT predicate on the "fee_type" field.
-func FeeTypeGT(v string) predicate.GoodFee {
+func FeeTypeGT(v uuid.UUID) predicate.GoodFee {
 	return predicate.GoodFee(func(s *sql.Selector) {
 		s.Where(sql.GT(s.C(FieldFeeType), v))
 	})
 }
 
 // FeeTypeGTE applies the GTE predicate on the "fee_type" field.
-func FeeTypeGTE(v string) predicate.GoodFee {
+func FeeTypeGTE(v uuid.UUID) predicate.GoodFee {
 	return predicate.GoodFee(func(s *sql.Selector) {
 		s.Where(sql.GTE(s.C(FieldFeeType), v))
 	})
 }
 
 // FeeTypeLT applies the LT predicate on the "fee_type" field.
-func FeeTypeLT(v string) predicate.GoodFee {
+func FeeTypeLT(v uuid.UUID) predicate.GoodFee {
 	return predicate.GoodFee(func(s *sql.Selector) {
 		s.Where(sql.LT(s.C(FieldFeeType), v))
 	})
 }
 
 // FeeTypeLTE applies the LTE predicate on the "fee_type" field.
-func FeeTypeLTE(v string) predicate.GoodFee {
+func FeeTypeLTE(v uuid.UUID) predicate.GoodFee {
 	return predicate.GoodFee(func(s *sql.Selector) {
 		s.Where(sql.LTE(s.C(FieldFeeType), v))
-	})
-}
-
-// FeeTypeContains applies the Contains predicate on the "fee_type" field.
-func FeeTypeContains(v string) predicate.GoodFee {
-	return predicate.GoodFee(func(s *sql.Selector) {
-		s.Where(sql.Contains(s.C(FieldFeeType), v))
-	})
-}
-
-// FeeTypeHasPrefix applies the HasPrefix predicate on the "fee_type" field.
-func FeeTypeHasPrefix(v string) predicate.GoodFee {
-	return predicate.GoodFee(func(s *sql.Selector) {
-		s.Where(sql.HasPrefix(s.C(FieldFeeType), v))
-	})
-}
-
-// FeeTypeHasSuffix applies the HasSuffix predicate on the "fee_type" field.
-func FeeTypeHasSuffix(v string) predicate.GoodFee {
-	return predicate.GoodFee(func(s *sql.Selector) {
-		s.Where(sql.HasSuffix(s.C(FieldFeeType), v))
-	})
-}
-
-// FeeTypeEqualFold applies the EqualFold predicate on the "fee_type" field.
-func FeeTypeEqualFold(v string) predicate.GoodFee {
-	return predicate.GoodFee(func(s *sql.Selector) {
-		s.Where(sql.EqualFold(s.C(FieldFeeType), v))
-	})
-}
-
-// FeeTypeContainsFold applies the ContainsFold predicate on the "fee_type" field.
-func FeeTypeContainsFold(v string) predicate.GoodFee {
-	return predicate.GoodFee(func(s *sql.Selector) {
-		s.Where(sql.ContainsFold(s.C(FieldFeeType), v))
 	})
 }
 

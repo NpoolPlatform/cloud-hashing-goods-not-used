@@ -15,6 +15,8 @@ const (
 	FieldID = "id"
 	// FieldGoodID holds the string denoting the good_id field in the database.
 	FieldGoodID = "good_id"
+	// FieldAppID holds the string denoting the app_id field in the database.
+	FieldAppID = "app_id"
 	// FieldFeeType holds the string denoting the fee_type field in the database.
 	FieldFeeType = "fee_type"
 	// FieldPayType holds the string denoting the pay_type field in the database.
@@ -39,6 +41,7 @@ const (
 var Columns = []string{
 	FieldID,
 	FieldGoodID,
+	FieldAppID,
 	FieldFeeType,
 	FieldPayType,
 	FieldPercentValue,

@@ -115,21 +115,9 @@ func (giu *GoodInfoUpdate) AddPrice(u uint64) *GoodInfoUpdate {
 	return giu
 }
 
-// SetPriceUnit sets the "price_unit" field.
-func (giu *GoodInfoUpdate) SetPriceUnit(s string) *GoodInfoUpdate {
-	giu.mutation.SetPriceUnit(s)
-	return giu
-}
-
 // SetPriceCurrency sets the "price_currency" field.
-func (giu *GoodInfoUpdate) SetPriceCurrency(s string) *GoodInfoUpdate {
-	giu.mutation.SetPriceCurrency(s)
-	return giu
-}
-
-// SetPriceSymbol sets the "price_symbol" field.
-func (giu *GoodInfoUpdate) SetPriceSymbol(s string) *GoodInfoUpdate {
-	giu.mutation.SetPriceSymbol(s)
+func (giu *GoodInfoUpdate) SetPriceCurrency(u uuid.UUID) *GoodInfoUpdate {
+	giu.mutation.SetPriceCurrency(u)
 	return giu
 }
 
@@ -464,25 +452,11 @@ func (giu *GoodInfoUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			Column: goodinfo.FieldPrice,
 		})
 	}
-	if value, ok := giu.mutation.PriceUnit(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: goodinfo.FieldPriceUnit,
-		})
-	}
 	if value, ok := giu.mutation.PriceCurrency(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
+			Type:   field.TypeUUID,
 			Value:  value,
 			Column: goodinfo.FieldPriceCurrency,
-		})
-	}
-	if value, ok := giu.mutation.PriceSymbol(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: goodinfo.FieldPriceSymbol,
 		})
 	}
 	if value, ok := giu.mutation.BenefitType(); ok {
@@ -697,21 +671,9 @@ func (giuo *GoodInfoUpdateOne) AddPrice(u uint64) *GoodInfoUpdateOne {
 	return giuo
 }
 
-// SetPriceUnit sets the "price_unit" field.
-func (giuo *GoodInfoUpdateOne) SetPriceUnit(s string) *GoodInfoUpdateOne {
-	giuo.mutation.SetPriceUnit(s)
-	return giuo
-}
-
 // SetPriceCurrency sets the "price_currency" field.
-func (giuo *GoodInfoUpdateOne) SetPriceCurrency(s string) *GoodInfoUpdateOne {
-	giuo.mutation.SetPriceCurrency(s)
-	return giuo
-}
-
-// SetPriceSymbol sets the "price_symbol" field.
-func (giuo *GoodInfoUpdateOne) SetPriceSymbol(s string) *GoodInfoUpdateOne {
-	giuo.mutation.SetPriceSymbol(s)
+func (giuo *GoodInfoUpdateOne) SetPriceCurrency(u uuid.UUID) *GoodInfoUpdateOne {
+	giuo.mutation.SetPriceCurrency(u)
 	return giuo
 }
 
@@ -1070,25 +1032,11 @@ func (giuo *GoodInfoUpdateOne) sqlSave(ctx context.Context) (_node *GoodInfo, er
 			Column: goodinfo.FieldPrice,
 		})
 	}
-	if value, ok := giuo.mutation.PriceUnit(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: goodinfo.FieldPriceUnit,
-		})
-	}
 	if value, ok := giuo.mutation.PriceCurrency(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
+			Type:   field.TypeUUID,
 			Value:  value,
 			Column: goodinfo.FieldPriceCurrency,
-		})
-	}
-	if value, ok := giuo.mutation.PriceSymbol(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: goodinfo.FieldPriceSymbol,
 		})
 	}
 	if value, ok := giuo.mutation.BenefitType(); ok {

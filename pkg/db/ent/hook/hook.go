@@ -48,6 +48,19 @@ func (f AppTargetAreaFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Valu
 	return f(ctx, mv)
 }
 
+// The CurrencyFunc type is an adapter to allow the use of ordinary
+// function as Currency mutator.
+type CurrencyFunc func(context.Context, *ent.CurrencyMutation) (ent.Value, error)
+
+// Mutate calls f(ctx, m).
+func (f CurrencyFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, error) {
+	mv, ok := m.(*ent.CurrencyMutation)
+	if !ok {
+		return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.CurrencyMutation", m)
+	}
+	return f(ctx, mv)
+}
+
 // The DeviceInfoFunc type is an adapter to allow the use of ordinary
 // function as DeviceInfo mutator.
 type DeviceInfoFunc func(context.Context, *ent.DeviceInfoMutation) (ent.Value, error)
@@ -57,6 +70,19 @@ func (f DeviceInfoFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, 
 	mv, ok := m.(*ent.DeviceInfoMutation)
 	if !ok {
 		return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.DeviceInfoMutation", m)
+	}
+	return f(ctx, mv)
+}
+
+// The FeeTypeFunc type is an adapter to allow the use of ordinary
+// function as FeeType mutator.
+type FeeTypeFunc func(context.Context, *ent.FeeTypeMutation) (ent.Value, error)
+
+// Mutate calls f(ctx, m).
+func (f FeeTypeFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, error) {
+	mv, ok := m.(*ent.FeeTypeMutation)
+	if !ok {
+		return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.FeeTypeMutation", m)
 	}
 	return f(ctx, mv)
 }

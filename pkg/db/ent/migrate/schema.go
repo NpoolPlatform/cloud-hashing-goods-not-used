@@ -17,7 +17,6 @@ var (
 		{Name: "online", Type: field.TypeBool, Default: false},
 		{Name: "init_area_strategy", Type: field.TypeEnum, Enums: []string{"all", "none"}},
 		{Name: "price", Type: field.TypeUint64},
-		{Name: "gas_price", Type: field.TypeUint64},
 		{Name: "invitation_only", Type: field.TypeBool, Default: false},
 		{Name: "create_at", Type: field.TypeInt64},
 		{Name: "update_at", Type: field.TypeInt64},
@@ -81,6 +80,22 @@ var (
 			},
 		},
 	}
+	// CurrenciesColumns holds the columns for the "currencies" table.
+	CurrenciesColumns = []*schema.Column{
+		{Name: "id", Type: field.TypeUUID, Unique: true},
+		{Name: "name", Type: field.TypeString, Unique: true},
+		{Name: "unit", Type: field.TypeString},
+		{Name: "symbol", Type: field.TypeString},
+		{Name: "create_at", Type: field.TypeUint32},
+		{Name: "update_at", Type: field.TypeUint32},
+		{Name: "delete_at", Type: field.TypeUint32},
+	}
+	// CurrenciesTable holds the schema information for the "currencies" table.
+	CurrenciesTable = &schema.Table{
+		Name:       "currencies",
+		Columns:    CurrenciesColumns,
+		PrimaryKey: []*schema.Column{CurrenciesColumns[0]},
+	}
 	// DeviceInfosColumns holds the columns for the "device_infos" table.
 	DeviceInfosColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeUUID, Unique: true},
@@ -104,6 +119,20 @@ var (
 				Columns: []*schema.Column{DeviceInfosColumns[1], DeviceInfosColumns[2], DeviceInfosColumns[4], DeviceInfosColumns[3]},
 			},
 		},
+	}
+	// FeeTypesColumns holds the columns for the "fee_types" table.
+	FeeTypesColumns = []*schema.Column{
+		{Name: "id", Type: field.TypeUUID, Unique: true},
+		{Name: "fee_type", Type: field.TypeString, Unique: true},
+		{Name: "create_at", Type: field.TypeUint32},
+		{Name: "update_at", Type: field.TypeUint32},
+		{Name: "delete_at", Type: field.TypeUint32},
+	}
+	// FeeTypesTable holds the schema information for the "fee_types" table.
+	FeeTypesTable = &schema.Table{
+		Name:       "fee_types",
+		Columns:    FeeTypesColumns,
+		PrimaryKey: []*schema.Column{FeeTypesColumns[0]},
 	}
 	// GoodCommentsColumns holds the columns for the "good_comments" table.
 	GoodCommentsColumns = []*schema.Column{
@@ -146,7 +175,8 @@ var (
 	GoodFeesColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeUUID, Unique: true},
 		{Name: "good_id", Type: field.TypeUUID},
-		{Name: "fee_type", Type: field.TypeString},
+		{Name: "app_id", Type: field.TypeUUID},
+		{Name: "fee_type", Type: field.TypeUUID},
 		{Name: "pay_type", Type: field.TypeEnum, Enums: []string{"percent", "amount"}},
 		{Name: "percent_value", Type: field.TypeInt32},
 		{Name: "amount_value", Type: field.TypeInt32},
@@ -174,9 +204,7 @@ var (
 		{Name: "inherit_from_good_id", Type: field.TypeUUID},
 		{Name: "vendor_location_id", Type: field.TypeUUID},
 		{Name: "price", Type: field.TypeUint64},
-		{Name: "price_unit", Type: field.TypeString},
-		{Name: "price_currency", Type: field.TypeString},
-		{Name: "price_symbol", Type: field.TypeString},
+		{Name: "price_currency", Type: field.TypeUUID},
 		{Name: "benefit_type", Type: field.TypeEnum, Enums: []string{"pool", "platform"}},
 		{Name: "classic", Type: field.TypeBool},
 		{Name: "title", Type: field.TypeString},
@@ -270,7 +298,9 @@ var (
 		AppGoodsTable,
 		AppGoodTargetAreasTable,
 		AppTargetAreasTable,
+		CurrenciesTable,
 		DeviceInfosTable,
+		FeeTypesTable,
 		GoodCommentsTable,
 		GoodExtraInfosTable,
 		GoodFeesTable,

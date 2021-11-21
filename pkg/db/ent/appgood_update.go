@@ -86,19 +86,6 @@ func (agu *AppGoodUpdate) AddPrice(u uint64) *AppGoodUpdate {
 	return agu
 }
 
-// SetGasPrice sets the "gas_price" field.
-func (agu *AppGoodUpdate) SetGasPrice(u uint64) *AppGoodUpdate {
-	agu.mutation.ResetGasPrice()
-	agu.mutation.SetGasPrice(u)
-	return agu
-}
-
-// AddGasPrice adds u to the "gas_price" field.
-func (agu *AppGoodUpdate) AddGasPrice(u uint64) *AppGoodUpdate {
-	agu.mutation.AddGasPrice(u)
-	return agu
-}
-
 // SetInvitationOnly sets the "invitation_only" field.
 func (agu *AppGoodUpdate) SetInvitationOnly(b bool) *AppGoodUpdate {
 	agu.mutation.SetInvitationOnly(b)
@@ -319,20 +306,6 @@ func (agu *AppGoodUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			Column: appgood.FieldPrice,
 		})
 	}
-	if value, ok := agu.mutation.GasPrice(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeUint64,
-			Value:  value,
-			Column: appgood.FieldGasPrice,
-		})
-	}
-	if value, ok := agu.mutation.AddedGasPrice(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeUint64,
-			Value:  value,
-			Column: appgood.FieldGasPrice,
-		})
-	}
 	if value, ok := agu.mutation.InvitationOnly(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeBool,
@@ -457,19 +430,6 @@ func (aguo *AppGoodUpdateOne) SetPrice(u uint64) *AppGoodUpdateOne {
 // AddPrice adds u to the "price" field.
 func (aguo *AppGoodUpdateOne) AddPrice(u uint64) *AppGoodUpdateOne {
 	aguo.mutation.AddPrice(u)
-	return aguo
-}
-
-// SetGasPrice sets the "gas_price" field.
-func (aguo *AppGoodUpdateOne) SetGasPrice(u uint64) *AppGoodUpdateOne {
-	aguo.mutation.ResetGasPrice()
-	aguo.mutation.SetGasPrice(u)
-	return aguo
-}
-
-// AddGasPrice adds u to the "gas_price" field.
-func (aguo *AppGoodUpdateOne) AddGasPrice(u uint64) *AppGoodUpdateOne {
-	aguo.mutation.AddGasPrice(u)
 	return aguo
 }
 
@@ -715,20 +675,6 @@ func (aguo *AppGoodUpdateOne) sqlSave(ctx context.Context) (_node *AppGood, err 
 			Type:   field.TypeUint64,
 			Value:  value,
 			Column: appgood.FieldPrice,
-		})
-	}
-	if value, ok := aguo.mutation.GasPrice(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeUint64,
-			Value:  value,
-			Column: appgood.FieldGasPrice,
-		})
-	}
-	if value, ok := aguo.mutation.AddedGasPrice(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeUint64,
-			Value:  value,
-			Column: appgood.FieldGasPrice,
 		})
 	}
 	if value, ok := aguo.mutation.InvitationOnly(); ok {

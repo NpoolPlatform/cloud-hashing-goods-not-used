@@ -9,25 +9,21 @@ import (
 	"github.com/google/uuid"
 )
 
-// GoodFee holds the schema definition for the GoodFee entity.
-type GoodFee struct {
+// Currency holds the schema definition for the Currency entity.
+type Currency struct {
 	ent.Schema
 }
 
-// Fields of the GoodFee.
-func (GoodFee) Fields() []ent.Field {
+// Fields of the Currency.
+func (Currency) Fields() []ent.Field {
 	return []ent.Field{
 		field.UUID("id", uuid.UUID{}).
 			Default(uuid.New).
 			Unique(),
-		field.UUID("good_id", uuid.UUID{}),
-		field.UUID("app_id", uuid.UUID{}),
-		field.UUID("fee_type", uuid.UUID{}),
-		field.Enum("pay_type").
-			Values("percent", "amount"),
-		field.Int32("percent_value"),
-		field.Int32("amount_value"),
-		field.String("amount_unit"),
+		field.String("name").
+			Unique(),
+		field.String("unit"),
+		field.String("symbol"),
 		field.Uint32("create_at").
 			DefaultFunc(func() uint32 {
 				return uint32(time.Now().Unix())
@@ -46,7 +42,7 @@ func (GoodFee) Fields() []ent.Field {
 	}
 }
 
-// Edges of the GoodFee.
-func (GoodFee) Edges() []ent.Edge {
+// Edges of the Currency.
+func (Currency) Edges() []ent.Edge {
 	return nil
 }

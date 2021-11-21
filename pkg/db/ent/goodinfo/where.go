@@ -161,24 +161,10 @@ func Price(v uint64) predicate.GoodInfo {
 	})
 }
 
-// PriceUnit applies equality check predicate on the "price_unit" field. It's identical to PriceUnitEQ.
-func PriceUnit(v string) predicate.GoodInfo {
-	return predicate.GoodInfo(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldPriceUnit), v))
-	})
-}
-
 // PriceCurrency applies equality check predicate on the "price_currency" field. It's identical to PriceCurrencyEQ.
-func PriceCurrency(v string) predicate.GoodInfo {
+func PriceCurrency(v uuid.UUID) predicate.GoodInfo {
 	return predicate.GoodInfo(func(s *sql.Selector) {
 		s.Where(sql.EQ(s.C(FieldPriceCurrency), v))
-	})
-}
-
-// PriceSymbol applies equality check predicate on the "price_symbol" field. It's identical to PriceSymbolEQ.
-func PriceSymbol(v string) predicate.GoodInfo {
-	return predicate.GoodInfo(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldPriceSymbol), v))
 	})
 }
 
@@ -874,133 +860,22 @@ func PriceLTE(v uint64) predicate.GoodInfo {
 	})
 }
 
-// PriceUnitEQ applies the EQ predicate on the "price_unit" field.
-func PriceUnitEQ(v string) predicate.GoodInfo {
-	return predicate.GoodInfo(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldPriceUnit), v))
-	})
-}
-
-// PriceUnitNEQ applies the NEQ predicate on the "price_unit" field.
-func PriceUnitNEQ(v string) predicate.GoodInfo {
-	return predicate.GoodInfo(func(s *sql.Selector) {
-		s.Where(sql.NEQ(s.C(FieldPriceUnit), v))
-	})
-}
-
-// PriceUnitIn applies the In predicate on the "price_unit" field.
-func PriceUnitIn(vs ...string) predicate.GoodInfo {
-	v := make([]interface{}, len(vs))
-	for i := range v {
-		v[i] = vs[i]
-	}
-	return predicate.GoodInfo(func(s *sql.Selector) {
-		// if not arguments were provided, append the FALSE constants,
-		// since we can't apply "IN ()". This will make this predicate falsy.
-		if len(v) == 0 {
-			s.Where(sql.False())
-			return
-		}
-		s.Where(sql.In(s.C(FieldPriceUnit), v...))
-	})
-}
-
-// PriceUnitNotIn applies the NotIn predicate on the "price_unit" field.
-func PriceUnitNotIn(vs ...string) predicate.GoodInfo {
-	v := make([]interface{}, len(vs))
-	for i := range v {
-		v[i] = vs[i]
-	}
-	return predicate.GoodInfo(func(s *sql.Selector) {
-		// if not arguments were provided, append the FALSE constants,
-		// since we can't apply "IN ()". This will make this predicate falsy.
-		if len(v) == 0 {
-			s.Where(sql.False())
-			return
-		}
-		s.Where(sql.NotIn(s.C(FieldPriceUnit), v...))
-	})
-}
-
-// PriceUnitGT applies the GT predicate on the "price_unit" field.
-func PriceUnitGT(v string) predicate.GoodInfo {
-	return predicate.GoodInfo(func(s *sql.Selector) {
-		s.Where(sql.GT(s.C(FieldPriceUnit), v))
-	})
-}
-
-// PriceUnitGTE applies the GTE predicate on the "price_unit" field.
-func PriceUnitGTE(v string) predicate.GoodInfo {
-	return predicate.GoodInfo(func(s *sql.Selector) {
-		s.Where(sql.GTE(s.C(FieldPriceUnit), v))
-	})
-}
-
-// PriceUnitLT applies the LT predicate on the "price_unit" field.
-func PriceUnitLT(v string) predicate.GoodInfo {
-	return predicate.GoodInfo(func(s *sql.Selector) {
-		s.Where(sql.LT(s.C(FieldPriceUnit), v))
-	})
-}
-
-// PriceUnitLTE applies the LTE predicate on the "price_unit" field.
-func PriceUnitLTE(v string) predicate.GoodInfo {
-	return predicate.GoodInfo(func(s *sql.Selector) {
-		s.Where(sql.LTE(s.C(FieldPriceUnit), v))
-	})
-}
-
-// PriceUnitContains applies the Contains predicate on the "price_unit" field.
-func PriceUnitContains(v string) predicate.GoodInfo {
-	return predicate.GoodInfo(func(s *sql.Selector) {
-		s.Where(sql.Contains(s.C(FieldPriceUnit), v))
-	})
-}
-
-// PriceUnitHasPrefix applies the HasPrefix predicate on the "price_unit" field.
-func PriceUnitHasPrefix(v string) predicate.GoodInfo {
-	return predicate.GoodInfo(func(s *sql.Selector) {
-		s.Where(sql.HasPrefix(s.C(FieldPriceUnit), v))
-	})
-}
-
-// PriceUnitHasSuffix applies the HasSuffix predicate on the "price_unit" field.
-func PriceUnitHasSuffix(v string) predicate.GoodInfo {
-	return predicate.GoodInfo(func(s *sql.Selector) {
-		s.Where(sql.HasSuffix(s.C(FieldPriceUnit), v))
-	})
-}
-
-// PriceUnitEqualFold applies the EqualFold predicate on the "price_unit" field.
-func PriceUnitEqualFold(v string) predicate.GoodInfo {
-	return predicate.GoodInfo(func(s *sql.Selector) {
-		s.Where(sql.EqualFold(s.C(FieldPriceUnit), v))
-	})
-}
-
-// PriceUnitContainsFold applies the ContainsFold predicate on the "price_unit" field.
-func PriceUnitContainsFold(v string) predicate.GoodInfo {
-	return predicate.GoodInfo(func(s *sql.Selector) {
-		s.Where(sql.ContainsFold(s.C(FieldPriceUnit), v))
-	})
-}
-
 // PriceCurrencyEQ applies the EQ predicate on the "price_currency" field.
-func PriceCurrencyEQ(v string) predicate.GoodInfo {
+func PriceCurrencyEQ(v uuid.UUID) predicate.GoodInfo {
 	return predicate.GoodInfo(func(s *sql.Selector) {
 		s.Where(sql.EQ(s.C(FieldPriceCurrency), v))
 	})
 }
 
 // PriceCurrencyNEQ applies the NEQ predicate on the "price_currency" field.
-func PriceCurrencyNEQ(v string) predicate.GoodInfo {
+func PriceCurrencyNEQ(v uuid.UUID) predicate.GoodInfo {
 	return predicate.GoodInfo(func(s *sql.Selector) {
 		s.Where(sql.NEQ(s.C(FieldPriceCurrency), v))
 	})
 }
 
 // PriceCurrencyIn applies the In predicate on the "price_currency" field.
-func PriceCurrencyIn(vs ...string) predicate.GoodInfo {
+func PriceCurrencyIn(vs ...uuid.UUID) predicate.GoodInfo {
 	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
@@ -1017,7 +892,7 @@ func PriceCurrencyIn(vs ...string) predicate.GoodInfo {
 }
 
 // PriceCurrencyNotIn applies the NotIn predicate on the "price_currency" field.
-func PriceCurrencyNotIn(vs ...string) predicate.GoodInfo {
+func PriceCurrencyNotIn(vs ...uuid.UUID) predicate.GoodInfo {
 	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
@@ -1034,176 +909,30 @@ func PriceCurrencyNotIn(vs ...string) predicate.GoodInfo {
 }
 
 // PriceCurrencyGT applies the GT predicate on the "price_currency" field.
-func PriceCurrencyGT(v string) predicate.GoodInfo {
+func PriceCurrencyGT(v uuid.UUID) predicate.GoodInfo {
 	return predicate.GoodInfo(func(s *sql.Selector) {
 		s.Where(sql.GT(s.C(FieldPriceCurrency), v))
 	})
 }
 
 // PriceCurrencyGTE applies the GTE predicate on the "price_currency" field.
-func PriceCurrencyGTE(v string) predicate.GoodInfo {
+func PriceCurrencyGTE(v uuid.UUID) predicate.GoodInfo {
 	return predicate.GoodInfo(func(s *sql.Selector) {
 		s.Where(sql.GTE(s.C(FieldPriceCurrency), v))
 	})
 }
 
 // PriceCurrencyLT applies the LT predicate on the "price_currency" field.
-func PriceCurrencyLT(v string) predicate.GoodInfo {
+func PriceCurrencyLT(v uuid.UUID) predicate.GoodInfo {
 	return predicate.GoodInfo(func(s *sql.Selector) {
 		s.Where(sql.LT(s.C(FieldPriceCurrency), v))
 	})
 }
 
 // PriceCurrencyLTE applies the LTE predicate on the "price_currency" field.
-func PriceCurrencyLTE(v string) predicate.GoodInfo {
+func PriceCurrencyLTE(v uuid.UUID) predicate.GoodInfo {
 	return predicate.GoodInfo(func(s *sql.Selector) {
 		s.Where(sql.LTE(s.C(FieldPriceCurrency), v))
-	})
-}
-
-// PriceCurrencyContains applies the Contains predicate on the "price_currency" field.
-func PriceCurrencyContains(v string) predicate.GoodInfo {
-	return predicate.GoodInfo(func(s *sql.Selector) {
-		s.Where(sql.Contains(s.C(FieldPriceCurrency), v))
-	})
-}
-
-// PriceCurrencyHasPrefix applies the HasPrefix predicate on the "price_currency" field.
-func PriceCurrencyHasPrefix(v string) predicate.GoodInfo {
-	return predicate.GoodInfo(func(s *sql.Selector) {
-		s.Where(sql.HasPrefix(s.C(FieldPriceCurrency), v))
-	})
-}
-
-// PriceCurrencyHasSuffix applies the HasSuffix predicate on the "price_currency" field.
-func PriceCurrencyHasSuffix(v string) predicate.GoodInfo {
-	return predicate.GoodInfo(func(s *sql.Selector) {
-		s.Where(sql.HasSuffix(s.C(FieldPriceCurrency), v))
-	})
-}
-
-// PriceCurrencyEqualFold applies the EqualFold predicate on the "price_currency" field.
-func PriceCurrencyEqualFold(v string) predicate.GoodInfo {
-	return predicate.GoodInfo(func(s *sql.Selector) {
-		s.Where(sql.EqualFold(s.C(FieldPriceCurrency), v))
-	})
-}
-
-// PriceCurrencyContainsFold applies the ContainsFold predicate on the "price_currency" field.
-func PriceCurrencyContainsFold(v string) predicate.GoodInfo {
-	return predicate.GoodInfo(func(s *sql.Selector) {
-		s.Where(sql.ContainsFold(s.C(FieldPriceCurrency), v))
-	})
-}
-
-// PriceSymbolEQ applies the EQ predicate on the "price_symbol" field.
-func PriceSymbolEQ(v string) predicate.GoodInfo {
-	return predicate.GoodInfo(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldPriceSymbol), v))
-	})
-}
-
-// PriceSymbolNEQ applies the NEQ predicate on the "price_symbol" field.
-func PriceSymbolNEQ(v string) predicate.GoodInfo {
-	return predicate.GoodInfo(func(s *sql.Selector) {
-		s.Where(sql.NEQ(s.C(FieldPriceSymbol), v))
-	})
-}
-
-// PriceSymbolIn applies the In predicate on the "price_symbol" field.
-func PriceSymbolIn(vs ...string) predicate.GoodInfo {
-	v := make([]interface{}, len(vs))
-	for i := range v {
-		v[i] = vs[i]
-	}
-	return predicate.GoodInfo(func(s *sql.Selector) {
-		// if not arguments were provided, append the FALSE constants,
-		// since we can't apply "IN ()". This will make this predicate falsy.
-		if len(v) == 0 {
-			s.Where(sql.False())
-			return
-		}
-		s.Where(sql.In(s.C(FieldPriceSymbol), v...))
-	})
-}
-
-// PriceSymbolNotIn applies the NotIn predicate on the "price_symbol" field.
-func PriceSymbolNotIn(vs ...string) predicate.GoodInfo {
-	v := make([]interface{}, len(vs))
-	for i := range v {
-		v[i] = vs[i]
-	}
-	return predicate.GoodInfo(func(s *sql.Selector) {
-		// if not arguments were provided, append the FALSE constants,
-		// since we can't apply "IN ()". This will make this predicate falsy.
-		if len(v) == 0 {
-			s.Where(sql.False())
-			return
-		}
-		s.Where(sql.NotIn(s.C(FieldPriceSymbol), v...))
-	})
-}
-
-// PriceSymbolGT applies the GT predicate on the "price_symbol" field.
-func PriceSymbolGT(v string) predicate.GoodInfo {
-	return predicate.GoodInfo(func(s *sql.Selector) {
-		s.Where(sql.GT(s.C(FieldPriceSymbol), v))
-	})
-}
-
-// PriceSymbolGTE applies the GTE predicate on the "price_symbol" field.
-func PriceSymbolGTE(v string) predicate.GoodInfo {
-	return predicate.GoodInfo(func(s *sql.Selector) {
-		s.Where(sql.GTE(s.C(FieldPriceSymbol), v))
-	})
-}
-
-// PriceSymbolLT applies the LT predicate on the "price_symbol" field.
-func PriceSymbolLT(v string) predicate.GoodInfo {
-	return predicate.GoodInfo(func(s *sql.Selector) {
-		s.Where(sql.LT(s.C(FieldPriceSymbol), v))
-	})
-}
-
-// PriceSymbolLTE applies the LTE predicate on the "price_symbol" field.
-func PriceSymbolLTE(v string) predicate.GoodInfo {
-	return predicate.GoodInfo(func(s *sql.Selector) {
-		s.Where(sql.LTE(s.C(FieldPriceSymbol), v))
-	})
-}
-
-// PriceSymbolContains applies the Contains predicate on the "price_symbol" field.
-func PriceSymbolContains(v string) predicate.GoodInfo {
-	return predicate.GoodInfo(func(s *sql.Selector) {
-		s.Where(sql.Contains(s.C(FieldPriceSymbol), v))
-	})
-}
-
-// PriceSymbolHasPrefix applies the HasPrefix predicate on the "price_symbol" field.
-func PriceSymbolHasPrefix(v string) predicate.GoodInfo {
-	return predicate.GoodInfo(func(s *sql.Selector) {
-		s.Where(sql.HasPrefix(s.C(FieldPriceSymbol), v))
-	})
-}
-
-// PriceSymbolHasSuffix applies the HasSuffix predicate on the "price_symbol" field.
-func PriceSymbolHasSuffix(v string) predicate.GoodInfo {
-	return predicate.GoodInfo(func(s *sql.Selector) {
-		s.Where(sql.HasSuffix(s.C(FieldPriceSymbol), v))
-	})
-}
-
-// PriceSymbolEqualFold applies the EqualFold predicate on the "price_symbol" field.
-func PriceSymbolEqualFold(v string) predicate.GoodInfo {
-	return predicate.GoodInfo(func(s *sql.Selector) {
-		s.Where(sql.EqualFold(s.C(FieldPriceSymbol), v))
-	})
-}
-
-// PriceSymbolContainsFold applies the ContainsFold predicate on the "price_symbol" field.
-func PriceSymbolContainsFold(v string) predicate.GoodInfo {
-	return predicate.GoodInfo(func(s *sql.Selector) {
-		s.Where(sql.ContainsFold(s.C(FieldPriceSymbol), v))
 	})
 }
 
