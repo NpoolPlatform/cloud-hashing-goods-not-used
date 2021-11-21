@@ -13,6 +13,7 @@ import (
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/deviceinfo"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/goodcomment"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/goodextrainfo"
+	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/goodfee"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/goodinfo"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/goodreview"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/predicate"
@@ -38,6 +39,7 @@ const (
 	TypeDeviceInfo        = "DeviceInfo"
 	TypeGoodComment       = "GoodComment"
 	TypeGoodExtraInfo     = "GoodExtraInfo"
+	TypeGoodFee           = "GoodFee"
 	TypeGoodInfo          = "GoodInfo"
 	TypeGoodReview        = "GoodReview"
 	TypeTargetArea        = "TargetArea"
@@ -3989,6 +3991,8 @@ type GoodExtraInfoMutation struct {
 	good_id       *uuid.UUID
 	posters       *[]string
 	labels        *[]string
+	out_sale      *bool
+	pre_sale      *bool
 	create_at     *int64
 	addcreate_at  *int64
 	update_at     *int64
@@ -4194,6 +4198,78 @@ func (m *GoodExtraInfoMutation) ResetLabels() {
 	m.labels = nil
 }
 
+// SetOutSale sets the "out_sale" field.
+func (m *GoodExtraInfoMutation) SetOutSale(b bool) {
+	m.out_sale = &b
+}
+
+// OutSale returns the value of the "out_sale" field in the mutation.
+func (m *GoodExtraInfoMutation) OutSale() (r bool, exists bool) {
+	v := m.out_sale
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldOutSale returns the old "out_sale" field's value of the GoodExtraInfo entity.
+// If the GoodExtraInfo object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *GoodExtraInfoMutation) OldOutSale(ctx context.Context) (v bool, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, fmt.Errorf("OldOutSale is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, fmt.Errorf("OldOutSale requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldOutSale: %w", err)
+	}
+	return oldValue.OutSale, nil
+}
+
+// ResetOutSale resets all changes to the "out_sale" field.
+func (m *GoodExtraInfoMutation) ResetOutSale() {
+	m.out_sale = nil
+}
+
+// SetPreSale sets the "pre_sale" field.
+func (m *GoodExtraInfoMutation) SetPreSale(b bool) {
+	m.pre_sale = &b
+}
+
+// PreSale returns the value of the "pre_sale" field in the mutation.
+func (m *GoodExtraInfoMutation) PreSale() (r bool, exists bool) {
+	v := m.pre_sale
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldPreSale returns the old "pre_sale" field's value of the GoodExtraInfo entity.
+// If the GoodExtraInfo object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *GoodExtraInfoMutation) OldPreSale(ctx context.Context) (v bool, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, fmt.Errorf("OldPreSale is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, fmt.Errorf("OldPreSale requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldPreSale: %w", err)
+	}
+	return oldValue.PreSale, nil
+}
+
+// ResetPreSale resets all changes to the "pre_sale" field.
+func (m *GoodExtraInfoMutation) ResetPreSale() {
+	m.pre_sale = nil
+}
+
 // SetCreateAt sets the "create_at" field.
 func (m *GoodExtraInfoMutation) SetCreateAt(i int64) {
 	m.create_at = &i
@@ -4381,7 +4457,7 @@ func (m *GoodExtraInfoMutation) Type() string {
 // order to get all numeric fields that were incremented/decremented, call
 // AddedFields().
 func (m *GoodExtraInfoMutation) Fields() []string {
-	fields := make([]string, 0, 6)
+	fields := make([]string, 0, 8)
 	if m.good_id != nil {
 		fields = append(fields, goodextrainfo.FieldGoodID)
 	}
@@ -4390,6 +4466,12 @@ func (m *GoodExtraInfoMutation) Fields() []string {
 	}
 	if m.labels != nil {
 		fields = append(fields, goodextrainfo.FieldLabels)
+	}
+	if m.out_sale != nil {
+		fields = append(fields, goodextrainfo.FieldOutSale)
+	}
+	if m.pre_sale != nil {
+		fields = append(fields, goodextrainfo.FieldPreSale)
 	}
 	if m.create_at != nil {
 		fields = append(fields, goodextrainfo.FieldCreateAt)
@@ -4414,6 +4496,10 @@ func (m *GoodExtraInfoMutation) Field(name string) (ent.Value, bool) {
 		return m.Posters()
 	case goodextrainfo.FieldLabels:
 		return m.Labels()
+	case goodextrainfo.FieldOutSale:
+		return m.OutSale()
+	case goodextrainfo.FieldPreSale:
+		return m.PreSale()
 	case goodextrainfo.FieldCreateAt:
 		return m.CreateAt()
 	case goodextrainfo.FieldUpdateAt:
@@ -4435,6 +4521,10 @@ func (m *GoodExtraInfoMutation) OldField(ctx context.Context, name string) (ent.
 		return m.OldPosters(ctx)
 	case goodextrainfo.FieldLabels:
 		return m.OldLabels(ctx)
+	case goodextrainfo.FieldOutSale:
+		return m.OldOutSale(ctx)
+	case goodextrainfo.FieldPreSale:
+		return m.OldPreSale(ctx)
 	case goodextrainfo.FieldCreateAt:
 		return m.OldCreateAt(ctx)
 	case goodextrainfo.FieldUpdateAt:
@@ -4470,6 +4560,20 @@ func (m *GoodExtraInfoMutation) SetField(name string, value ent.Value) error {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.SetLabels(v)
+		return nil
+	case goodextrainfo.FieldOutSale:
+		v, ok := value.(bool)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetOutSale(v)
+		return nil
+	case goodextrainfo.FieldPreSale:
+		v, ok := value.(bool)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetPreSale(v)
 		return nil
 	case goodextrainfo.FieldCreateAt:
 		v, ok := value.(int64)
@@ -4589,6 +4693,12 @@ func (m *GoodExtraInfoMutation) ResetField(name string) error {
 	case goodextrainfo.FieldLabels:
 		m.ResetLabels()
 		return nil
+	case goodextrainfo.FieldOutSale:
+		m.ResetOutSale()
+		return nil
+	case goodextrainfo.FieldPreSale:
+		m.ResetPreSale()
+		return nil
 	case goodextrainfo.FieldCreateAt:
 		m.ResetCreateAt()
 		return nil
@@ -4650,6 +4760,904 @@ func (m *GoodExtraInfoMutation) ResetEdge(name string) error {
 	return fmt.Errorf("unknown GoodExtraInfo edge %s", name)
 }
 
+// GoodFeeMutation represents an operation that mutates the GoodFee nodes in the graph.
+type GoodFeeMutation struct {
+	config
+	op               Op
+	typ              string
+	id               *uuid.UUID
+	good_id          *uuid.UUID
+	fee_type         *string
+	pay_type         *goodfee.PayType
+	percent_value    *int32
+	addpercent_value *int32
+	amount_value     *int32
+	addamount_value  *int32
+	amount_unit      *string
+	create_at        *uint32
+	addcreate_at     *uint32
+	update_at        *uint32
+	addupdate_at     *uint32
+	delete_at        *uint32
+	adddelete_at     *uint32
+	clearedFields    map[string]struct{}
+	done             bool
+	oldValue         func(context.Context) (*GoodFee, error)
+	predicates       []predicate.GoodFee
+}
+
+var _ ent.Mutation = (*GoodFeeMutation)(nil)
+
+// goodfeeOption allows management of the mutation configuration using functional options.
+type goodfeeOption func(*GoodFeeMutation)
+
+// newGoodFeeMutation creates new mutation for the GoodFee entity.
+func newGoodFeeMutation(c config, op Op, opts ...goodfeeOption) *GoodFeeMutation {
+	m := &GoodFeeMutation{
+		config:        c,
+		op:            op,
+		typ:           TypeGoodFee,
+		clearedFields: make(map[string]struct{}),
+	}
+	for _, opt := range opts {
+		opt(m)
+	}
+	return m
+}
+
+// withGoodFeeID sets the ID field of the mutation.
+func withGoodFeeID(id uuid.UUID) goodfeeOption {
+	return func(m *GoodFeeMutation) {
+		var (
+			err   error
+			once  sync.Once
+			value *GoodFee
+		)
+		m.oldValue = func(ctx context.Context) (*GoodFee, error) {
+			once.Do(func() {
+				if m.done {
+					err = fmt.Errorf("querying old values post mutation is not allowed")
+				} else {
+					value, err = m.Client().GoodFee.Get(ctx, id)
+				}
+			})
+			return value, err
+		}
+		m.id = &id
+	}
+}
+
+// withGoodFee sets the old GoodFee of the mutation.
+func withGoodFee(node *GoodFee) goodfeeOption {
+	return func(m *GoodFeeMutation) {
+		m.oldValue = func(context.Context) (*GoodFee, error) {
+			return node, nil
+		}
+		m.id = &node.ID
+	}
+}
+
+// Client returns a new `ent.Client` from the mutation. If the mutation was
+// executed in a transaction (ent.Tx), a transactional client is returned.
+func (m GoodFeeMutation) Client() *Client {
+	client := &Client{config: m.config}
+	client.init()
+	return client
+}
+
+// Tx returns an `ent.Tx` for mutations that were executed in transactions;
+// it returns an error otherwise.
+func (m GoodFeeMutation) Tx() (*Tx, error) {
+	if _, ok := m.driver.(*txDriver); !ok {
+		return nil, fmt.Errorf("ent: mutation is not running in a transaction")
+	}
+	tx := &Tx{config: m.config}
+	tx.init()
+	return tx, nil
+}
+
+// SetID sets the value of the id field. Note that this
+// operation is only accepted on creation of GoodFee entities.
+func (m *GoodFeeMutation) SetID(id uuid.UUID) {
+	m.id = &id
+}
+
+// ID returns the ID value in the mutation. Note that the ID is only available
+// if it was provided to the builder or after it was returned from the database.
+func (m *GoodFeeMutation) ID() (id uuid.UUID, exists bool) {
+	if m.id == nil {
+		return
+	}
+	return *m.id, true
+}
+
+// SetGoodID sets the "good_id" field.
+func (m *GoodFeeMutation) SetGoodID(u uuid.UUID) {
+	m.good_id = &u
+}
+
+// GoodID returns the value of the "good_id" field in the mutation.
+func (m *GoodFeeMutation) GoodID() (r uuid.UUID, exists bool) {
+	v := m.good_id
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldGoodID returns the old "good_id" field's value of the GoodFee entity.
+// If the GoodFee object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *GoodFeeMutation) OldGoodID(ctx context.Context) (v uuid.UUID, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, fmt.Errorf("OldGoodID is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, fmt.Errorf("OldGoodID requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldGoodID: %w", err)
+	}
+	return oldValue.GoodID, nil
+}
+
+// ResetGoodID resets all changes to the "good_id" field.
+func (m *GoodFeeMutation) ResetGoodID() {
+	m.good_id = nil
+}
+
+// SetFeeType sets the "fee_type" field.
+func (m *GoodFeeMutation) SetFeeType(s string) {
+	m.fee_type = &s
+}
+
+// FeeType returns the value of the "fee_type" field in the mutation.
+func (m *GoodFeeMutation) FeeType() (r string, exists bool) {
+	v := m.fee_type
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldFeeType returns the old "fee_type" field's value of the GoodFee entity.
+// If the GoodFee object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *GoodFeeMutation) OldFeeType(ctx context.Context) (v string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, fmt.Errorf("OldFeeType is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, fmt.Errorf("OldFeeType requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldFeeType: %w", err)
+	}
+	return oldValue.FeeType, nil
+}
+
+// ResetFeeType resets all changes to the "fee_type" field.
+func (m *GoodFeeMutation) ResetFeeType() {
+	m.fee_type = nil
+}
+
+// SetPayType sets the "pay_type" field.
+func (m *GoodFeeMutation) SetPayType(gt goodfee.PayType) {
+	m.pay_type = &gt
+}
+
+// PayType returns the value of the "pay_type" field in the mutation.
+func (m *GoodFeeMutation) PayType() (r goodfee.PayType, exists bool) {
+	v := m.pay_type
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldPayType returns the old "pay_type" field's value of the GoodFee entity.
+// If the GoodFee object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *GoodFeeMutation) OldPayType(ctx context.Context) (v goodfee.PayType, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, fmt.Errorf("OldPayType is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, fmt.Errorf("OldPayType requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldPayType: %w", err)
+	}
+	return oldValue.PayType, nil
+}
+
+// ResetPayType resets all changes to the "pay_type" field.
+func (m *GoodFeeMutation) ResetPayType() {
+	m.pay_type = nil
+}
+
+// SetPercentValue sets the "percent_value" field.
+func (m *GoodFeeMutation) SetPercentValue(i int32) {
+	m.percent_value = &i
+	m.addpercent_value = nil
+}
+
+// PercentValue returns the value of the "percent_value" field in the mutation.
+func (m *GoodFeeMutation) PercentValue() (r int32, exists bool) {
+	v := m.percent_value
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldPercentValue returns the old "percent_value" field's value of the GoodFee entity.
+// If the GoodFee object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *GoodFeeMutation) OldPercentValue(ctx context.Context) (v int32, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, fmt.Errorf("OldPercentValue is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, fmt.Errorf("OldPercentValue requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldPercentValue: %w", err)
+	}
+	return oldValue.PercentValue, nil
+}
+
+// AddPercentValue adds i to the "percent_value" field.
+func (m *GoodFeeMutation) AddPercentValue(i int32) {
+	if m.addpercent_value != nil {
+		*m.addpercent_value += i
+	} else {
+		m.addpercent_value = &i
+	}
+}
+
+// AddedPercentValue returns the value that was added to the "percent_value" field in this mutation.
+func (m *GoodFeeMutation) AddedPercentValue() (r int32, exists bool) {
+	v := m.addpercent_value
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// ResetPercentValue resets all changes to the "percent_value" field.
+func (m *GoodFeeMutation) ResetPercentValue() {
+	m.percent_value = nil
+	m.addpercent_value = nil
+}
+
+// SetAmountValue sets the "amount_value" field.
+func (m *GoodFeeMutation) SetAmountValue(i int32) {
+	m.amount_value = &i
+	m.addamount_value = nil
+}
+
+// AmountValue returns the value of the "amount_value" field in the mutation.
+func (m *GoodFeeMutation) AmountValue() (r int32, exists bool) {
+	v := m.amount_value
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldAmountValue returns the old "amount_value" field's value of the GoodFee entity.
+// If the GoodFee object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *GoodFeeMutation) OldAmountValue(ctx context.Context) (v int32, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, fmt.Errorf("OldAmountValue is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, fmt.Errorf("OldAmountValue requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldAmountValue: %w", err)
+	}
+	return oldValue.AmountValue, nil
+}
+
+// AddAmountValue adds i to the "amount_value" field.
+func (m *GoodFeeMutation) AddAmountValue(i int32) {
+	if m.addamount_value != nil {
+		*m.addamount_value += i
+	} else {
+		m.addamount_value = &i
+	}
+}
+
+// AddedAmountValue returns the value that was added to the "amount_value" field in this mutation.
+func (m *GoodFeeMutation) AddedAmountValue() (r int32, exists bool) {
+	v := m.addamount_value
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// ResetAmountValue resets all changes to the "amount_value" field.
+func (m *GoodFeeMutation) ResetAmountValue() {
+	m.amount_value = nil
+	m.addamount_value = nil
+}
+
+// SetAmountUnit sets the "amount_unit" field.
+func (m *GoodFeeMutation) SetAmountUnit(s string) {
+	m.amount_unit = &s
+}
+
+// AmountUnit returns the value of the "amount_unit" field in the mutation.
+func (m *GoodFeeMutation) AmountUnit() (r string, exists bool) {
+	v := m.amount_unit
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldAmountUnit returns the old "amount_unit" field's value of the GoodFee entity.
+// If the GoodFee object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *GoodFeeMutation) OldAmountUnit(ctx context.Context) (v string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, fmt.Errorf("OldAmountUnit is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, fmt.Errorf("OldAmountUnit requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldAmountUnit: %w", err)
+	}
+	return oldValue.AmountUnit, nil
+}
+
+// ResetAmountUnit resets all changes to the "amount_unit" field.
+func (m *GoodFeeMutation) ResetAmountUnit() {
+	m.amount_unit = nil
+}
+
+// SetCreateAt sets the "create_at" field.
+func (m *GoodFeeMutation) SetCreateAt(u uint32) {
+	m.create_at = &u
+	m.addcreate_at = nil
+}
+
+// CreateAt returns the value of the "create_at" field in the mutation.
+func (m *GoodFeeMutation) CreateAt() (r uint32, exists bool) {
+	v := m.create_at
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldCreateAt returns the old "create_at" field's value of the GoodFee entity.
+// If the GoodFee object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *GoodFeeMutation) OldCreateAt(ctx context.Context) (v uint32, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, fmt.Errorf("OldCreateAt is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, fmt.Errorf("OldCreateAt requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldCreateAt: %w", err)
+	}
+	return oldValue.CreateAt, nil
+}
+
+// AddCreateAt adds u to the "create_at" field.
+func (m *GoodFeeMutation) AddCreateAt(u uint32) {
+	if m.addcreate_at != nil {
+		*m.addcreate_at += u
+	} else {
+		m.addcreate_at = &u
+	}
+}
+
+// AddedCreateAt returns the value that was added to the "create_at" field in this mutation.
+func (m *GoodFeeMutation) AddedCreateAt() (r uint32, exists bool) {
+	v := m.addcreate_at
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// ResetCreateAt resets all changes to the "create_at" field.
+func (m *GoodFeeMutation) ResetCreateAt() {
+	m.create_at = nil
+	m.addcreate_at = nil
+}
+
+// SetUpdateAt sets the "update_at" field.
+func (m *GoodFeeMutation) SetUpdateAt(u uint32) {
+	m.update_at = &u
+	m.addupdate_at = nil
+}
+
+// UpdateAt returns the value of the "update_at" field in the mutation.
+func (m *GoodFeeMutation) UpdateAt() (r uint32, exists bool) {
+	v := m.update_at
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldUpdateAt returns the old "update_at" field's value of the GoodFee entity.
+// If the GoodFee object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *GoodFeeMutation) OldUpdateAt(ctx context.Context) (v uint32, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, fmt.Errorf("OldUpdateAt is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, fmt.Errorf("OldUpdateAt requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldUpdateAt: %w", err)
+	}
+	return oldValue.UpdateAt, nil
+}
+
+// AddUpdateAt adds u to the "update_at" field.
+func (m *GoodFeeMutation) AddUpdateAt(u uint32) {
+	if m.addupdate_at != nil {
+		*m.addupdate_at += u
+	} else {
+		m.addupdate_at = &u
+	}
+}
+
+// AddedUpdateAt returns the value that was added to the "update_at" field in this mutation.
+func (m *GoodFeeMutation) AddedUpdateAt() (r uint32, exists bool) {
+	v := m.addupdate_at
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// ResetUpdateAt resets all changes to the "update_at" field.
+func (m *GoodFeeMutation) ResetUpdateAt() {
+	m.update_at = nil
+	m.addupdate_at = nil
+}
+
+// SetDeleteAt sets the "delete_at" field.
+func (m *GoodFeeMutation) SetDeleteAt(u uint32) {
+	m.delete_at = &u
+	m.adddelete_at = nil
+}
+
+// DeleteAt returns the value of the "delete_at" field in the mutation.
+func (m *GoodFeeMutation) DeleteAt() (r uint32, exists bool) {
+	v := m.delete_at
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldDeleteAt returns the old "delete_at" field's value of the GoodFee entity.
+// If the GoodFee object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *GoodFeeMutation) OldDeleteAt(ctx context.Context) (v uint32, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, fmt.Errorf("OldDeleteAt is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, fmt.Errorf("OldDeleteAt requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldDeleteAt: %w", err)
+	}
+	return oldValue.DeleteAt, nil
+}
+
+// AddDeleteAt adds u to the "delete_at" field.
+func (m *GoodFeeMutation) AddDeleteAt(u uint32) {
+	if m.adddelete_at != nil {
+		*m.adddelete_at += u
+	} else {
+		m.adddelete_at = &u
+	}
+}
+
+// AddedDeleteAt returns the value that was added to the "delete_at" field in this mutation.
+func (m *GoodFeeMutation) AddedDeleteAt() (r uint32, exists bool) {
+	v := m.adddelete_at
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// ResetDeleteAt resets all changes to the "delete_at" field.
+func (m *GoodFeeMutation) ResetDeleteAt() {
+	m.delete_at = nil
+	m.adddelete_at = nil
+}
+
+// Where appends a list predicates to the GoodFeeMutation builder.
+func (m *GoodFeeMutation) Where(ps ...predicate.GoodFee) {
+	m.predicates = append(m.predicates, ps...)
+}
+
+// Op returns the operation name.
+func (m *GoodFeeMutation) Op() Op {
+	return m.op
+}
+
+// Type returns the node type of this mutation (GoodFee).
+func (m *GoodFeeMutation) Type() string {
+	return m.typ
+}
+
+// Fields returns all fields that were changed during this mutation. Note that in
+// order to get all numeric fields that were incremented/decremented, call
+// AddedFields().
+func (m *GoodFeeMutation) Fields() []string {
+	fields := make([]string, 0, 9)
+	if m.good_id != nil {
+		fields = append(fields, goodfee.FieldGoodID)
+	}
+	if m.fee_type != nil {
+		fields = append(fields, goodfee.FieldFeeType)
+	}
+	if m.pay_type != nil {
+		fields = append(fields, goodfee.FieldPayType)
+	}
+	if m.percent_value != nil {
+		fields = append(fields, goodfee.FieldPercentValue)
+	}
+	if m.amount_value != nil {
+		fields = append(fields, goodfee.FieldAmountValue)
+	}
+	if m.amount_unit != nil {
+		fields = append(fields, goodfee.FieldAmountUnit)
+	}
+	if m.create_at != nil {
+		fields = append(fields, goodfee.FieldCreateAt)
+	}
+	if m.update_at != nil {
+		fields = append(fields, goodfee.FieldUpdateAt)
+	}
+	if m.delete_at != nil {
+		fields = append(fields, goodfee.FieldDeleteAt)
+	}
+	return fields
+}
+
+// Field returns the value of a field with the given name. The second boolean
+// return value indicates that this field was not set, or was not defined in the
+// schema.
+func (m *GoodFeeMutation) Field(name string) (ent.Value, bool) {
+	switch name {
+	case goodfee.FieldGoodID:
+		return m.GoodID()
+	case goodfee.FieldFeeType:
+		return m.FeeType()
+	case goodfee.FieldPayType:
+		return m.PayType()
+	case goodfee.FieldPercentValue:
+		return m.PercentValue()
+	case goodfee.FieldAmountValue:
+		return m.AmountValue()
+	case goodfee.FieldAmountUnit:
+		return m.AmountUnit()
+	case goodfee.FieldCreateAt:
+		return m.CreateAt()
+	case goodfee.FieldUpdateAt:
+		return m.UpdateAt()
+	case goodfee.FieldDeleteAt:
+		return m.DeleteAt()
+	}
+	return nil, false
+}
+
+// OldField returns the old value of the field from the database. An error is
+// returned if the mutation operation is not UpdateOne, or the query to the
+// database failed.
+func (m *GoodFeeMutation) OldField(ctx context.Context, name string) (ent.Value, error) {
+	switch name {
+	case goodfee.FieldGoodID:
+		return m.OldGoodID(ctx)
+	case goodfee.FieldFeeType:
+		return m.OldFeeType(ctx)
+	case goodfee.FieldPayType:
+		return m.OldPayType(ctx)
+	case goodfee.FieldPercentValue:
+		return m.OldPercentValue(ctx)
+	case goodfee.FieldAmountValue:
+		return m.OldAmountValue(ctx)
+	case goodfee.FieldAmountUnit:
+		return m.OldAmountUnit(ctx)
+	case goodfee.FieldCreateAt:
+		return m.OldCreateAt(ctx)
+	case goodfee.FieldUpdateAt:
+		return m.OldUpdateAt(ctx)
+	case goodfee.FieldDeleteAt:
+		return m.OldDeleteAt(ctx)
+	}
+	return nil, fmt.Errorf("unknown GoodFee field %s", name)
+}
+
+// SetField sets the value of a field with the given name. It returns an error if
+// the field is not defined in the schema, or if the type mismatched the field
+// type.
+func (m *GoodFeeMutation) SetField(name string, value ent.Value) error {
+	switch name {
+	case goodfee.FieldGoodID:
+		v, ok := value.(uuid.UUID)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetGoodID(v)
+		return nil
+	case goodfee.FieldFeeType:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetFeeType(v)
+		return nil
+	case goodfee.FieldPayType:
+		v, ok := value.(goodfee.PayType)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetPayType(v)
+		return nil
+	case goodfee.FieldPercentValue:
+		v, ok := value.(int32)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetPercentValue(v)
+		return nil
+	case goodfee.FieldAmountValue:
+		v, ok := value.(int32)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetAmountValue(v)
+		return nil
+	case goodfee.FieldAmountUnit:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetAmountUnit(v)
+		return nil
+	case goodfee.FieldCreateAt:
+		v, ok := value.(uint32)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetCreateAt(v)
+		return nil
+	case goodfee.FieldUpdateAt:
+		v, ok := value.(uint32)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetUpdateAt(v)
+		return nil
+	case goodfee.FieldDeleteAt:
+		v, ok := value.(uint32)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetDeleteAt(v)
+		return nil
+	}
+	return fmt.Errorf("unknown GoodFee field %s", name)
+}
+
+// AddedFields returns all numeric fields that were incremented/decremented during
+// this mutation.
+func (m *GoodFeeMutation) AddedFields() []string {
+	var fields []string
+	if m.addpercent_value != nil {
+		fields = append(fields, goodfee.FieldPercentValue)
+	}
+	if m.addamount_value != nil {
+		fields = append(fields, goodfee.FieldAmountValue)
+	}
+	if m.addcreate_at != nil {
+		fields = append(fields, goodfee.FieldCreateAt)
+	}
+	if m.addupdate_at != nil {
+		fields = append(fields, goodfee.FieldUpdateAt)
+	}
+	if m.adddelete_at != nil {
+		fields = append(fields, goodfee.FieldDeleteAt)
+	}
+	return fields
+}
+
+// AddedField returns the numeric value that was incremented/decremented on a field
+// with the given name. The second boolean return value indicates that this field
+// was not set, or was not defined in the schema.
+func (m *GoodFeeMutation) AddedField(name string) (ent.Value, bool) {
+	switch name {
+	case goodfee.FieldPercentValue:
+		return m.AddedPercentValue()
+	case goodfee.FieldAmountValue:
+		return m.AddedAmountValue()
+	case goodfee.FieldCreateAt:
+		return m.AddedCreateAt()
+	case goodfee.FieldUpdateAt:
+		return m.AddedUpdateAt()
+	case goodfee.FieldDeleteAt:
+		return m.AddedDeleteAt()
+	}
+	return nil, false
+}
+
+// AddField adds the value to the field with the given name. It returns an error if
+// the field is not defined in the schema, or if the type mismatched the field
+// type.
+func (m *GoodFeeMutation) AddField(name string, value ent.Value) error {
+	switch name {
+	case goodfee.FieldPercentValue:
+		v, ok := value.(int32)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.AddPercentValue(v)
+		return nil
+	case goodfee.FieldAmountValue:
+		v, ok := value.(int32)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.AddAmountValue(v)
+		return nil
+	case goodfee.FieldCreateAt:
+		v, ok := value.(uint32)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.AddCreateAt(v)
+		return nil
+	case goodfee.FieldUpdateAt:
+		v, ok := value.(uint32)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.AddUpdateAt(v)
+		return nil
+	case goodfee.FieldDeleteAt:
+		v, ok := value.(uint32)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.AddDeleteAt(v)
+		return nil
+	}
+	return fmt.Errorf("unknown GoodFee numeric field %s", name)
+}
+
+// ClearedFields returns all nullable fields that were cleared during this
+// mutation.
+func (m *GoodFeeMutation) ClearedFields() []string {
+	return nil
+}
+
+// FieldCleared returns a boolean indicating if a field with the given name was
+// cleared in this mutation.
+func (m *GoodFeeMutation) FieldCleared(name string) bool {
+	_, ok := m.clearedFields[name]
+	return ok
+}
+
+// ClearField clears the value of the field with the given name. It returns an
+// error if the field is not defined in the schema.
+func (m *GoodFeeMutation) ClearField(name string) error {
+	return fmt.Errorf("unknown GoodFee nullable field %s", name)
+}
+
+// ResetField resets all changes in the mutation for the field with the given name.
+// It returns an error if the field is not defined in the schema.
+func (m *GoodFeeMutation) ResetField(name string) error {
+	switch name {
+	case goodfee.FieldGoodID:
+		m.ResetGoodID()
+		return nil
+	case goodfee.FieldFeeType:
+		m.ResetFeeType()
+		return nil
+	case goodfee.FieldPayType:
+		m.ResetPayType()
+		return nil
+	case goodfee.FieldPercentValue:
+		m.ResetPercentValue()
+		return nil
+	case goodfee.FieldAmountValue:
+		m.ResetAmountValue()
+		return nil
+	case goodfee.FieldAmountUnit:
+		m.ResetAmountUnit()
+		return nil
+	case goodfee.FieldCreateAt:
+		m.ResetCreateAt()
+		return nil
+	case goodfee.FieldUpdateAt:
+		m.ResetUpdateAt()
+		return nil
+	case goodfee.FieldDeleteAt:
+		m.ResetDeleteAt()
+		return nil
+	}
+	return fmt.Errorf("unknown GoodFee field %s", name)
+}
+
+// AddedEdges returns all edge names that were set/added in this mutation.
+func (m *GoodFeeMutation) AddedEdges() []string {
+	edges := make([]string, 0, 0)
+	return edges
+}
+
+// AddedIDs returns all IDs (to other nodes) that were added for the given edge
+// name in this mutation.
+func (m *GoodFeeMutation) AddedIDs(name string) []ent.Value {
+	return nil
+}
+
+// RemovedEdges returns all edge names that were removed in this mutation.
+func (m *GoodFeeMutation) RemovedEdges() []string {
+	edges := make([]string, 0, 0)
+	return edges
+}
+
+// RemovedIDs returns all IDs (to other nodes) that were removed for the edge with
+// the given name in this mutation.
+func (m *GoodFeeMutation) RemovedIDs(name string) []ent.Value {
+	return nil
+}
+
+// ClearedEdges returns all edge names that were cleared in this mutation.
+func (m *GoodFeeMutation) ClearedEdges() []string {
+	edges := make([]string, 0, 0)
+	return edges
+}
+
+// EdgeCleared returns a boolean which indicates if the edge with the given name
+// was cleared in this mutation.
+func (m *GoodFeeMutation) EdgeCleared(name string) bool {
+	return false
+}
+
+// ClearEdge clears the value of the edge with the given name. It returns an error
+// if that edge is not defined in the schema.
+func (m *GoodFeeMutation) ClearEdge(name string) error {
+	return fmt.Errorf("unknown GoodFee unique edge %s", name)
+}
+
+// ResetEdge resets all changes to the edge with the given name in this mutation.
+// It returns an error if the edge is not defined in the schema.
+func (m *GoodFeeMutation) ResetEdge(name string) error {
+	return fmt.Errorf("unknown GoodFee edge %s", name)
+}
+
 // GoodInfoMutation represents an operation that mutates the GoodInfo nodes in the graph.
 type GoodInfoMutation struct {
 	config
@@ -4657,9 +5665,7 @@ type GoodInfoMutation struct {
 	typ                   string
 	id                    *uuid.UUID
 	device_info_id        *uuid.UUID
-	gas_price             *uint64
-	addgas_price          *uint64
-	separate_gas_fee      *bool
+	separate_fee          *bool
 	unit_power            *int32
 	addunit_power         *int32
 	duration_days         *int32
@@ -4672,17 +5678,24 @@ type GoodInfoMutation struct {
 	vendor_location_id    *uuid.UUID
 	price                 *uint64
 	addprice              *uint64
+	price_unit            *string
+	price_currency        *string
+	price_symbol          *string
 	benefit_type          *goodinfo.BenefitType
 	classic               *bool
+	title                 *string
+	unit                  *string
+	start                 *uint32
+	addstart              *uint32
 	support_coin_type_ids *[]uuid.UUID
 	total                 *int32
 	addtotal              *int32
-	create_at             *int64
-	addcreate_at          *int64
-	update_at             *int64
-	addupdate_at          *int64
-	delete_at             *int64
-	adddelete_at          *int64
+	create_at             *uint32
+	addcreate_at          *uint32
+	update_at             *uint32
+	addupdate_at          *uint32
+	delete_at             *uint32
+	adddelete_at          *uint32
 	clearedFields         map[string]struct{}
 	done                  bool
 	oldValue              func(context.Context) (*GoodInfo, error)
@@ -4810,96 +5823,40 @@ func (m *GoodInfoMutation) ResetDeviceInfoID() {
 	m.device_info_id = nil
 }
 
-// SetGasPrice sets the "gas_price" field.
-func (m *GoodInfoMutation) SetGasPrice(u uint64) {
-	m.gas_price = &u
-	m.addgas_price = nil
+// SetSeparateFee sets the "separate_fee" field.
+func (m *GoodInfoMutation) SetSeparateFee(b bool) {
+	m.separate_fee = &b
 }
 
-// GasPrice returns the value of the "gas_price" field in the mutation.
-func (m *GoodInfoMutation) GasPrice() (r uint64, exists bool) {
-	v := m.gas_price
+// SeparateFee returns the value of the "separate_fee" field in the mutation.
+func (m *GoodInfoMutation) SeparateFee() (r bool, exists bool) {
+	v := m.separate_fee
 	if v == nil {
 		return
 	}
 	return *v, true
 }
 
-// OldGasPrice returns the old "gas_price" field's value of the GoodInfo entity.
+// OldSeparateFee returns the old "separate_fee" field's value of the GoodInfo entity.
 // If the GoodInfo object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *GoodInfoMutation) OldGasPrice(ctx context.Context) (v uint64, err error) {
+func (m *GoodInfoMutation) OldSeparateFee(ctx context.Context) (v bool, err error) {
 	if !m.op.Is(OpUpdateOne) {
-		return v, fmt.Errorf("OldGasPrice is only allowed on UpdateOne operations")
+		return v, fmt.Errorf("OldSeparateFee is only allowed on UpdateOne operations")
 	}
 	if m.id == nil || m.oldValue == nil {
-		return v, fmt.Errorf("OldGasPrice requires an ID field in the mutation")
+		return v, fmt.Errorf("OldSeparateFee requires an ID field in the mutation")
 	}
 	oldValue, err := m.oldValue(ctx)
 	if err != nil {
-		return v, fmt.Errorf("querying old value for OldGasPrice: %w", err)
+		return v, fmt.Errorf("querying old value for OldSeparateFee: %w", err)
 	}
-	return oldValue.GasPrice, nil
+	return oldValue.SeparateFee, nil
 }
 
-// AddGasPrice adds u to the "gas_price" field.
-func (m *GoodInfoMutation) AddGasPrice(u uint64) {
-	if m.addgas_price != nil {
-		*m.addgas_price += u
-	} else {
-		m.addgas_price = &u
-	}
-}
-
-// AddedGasPrice returns the value that was added to the "gas_price" field in this mutation.
-func (m *GoodInfoMutation) AddedGasPrice() (r uint64, exists bool) {
-	v := m.addgas_price
-	if v == nil {
-		return
-	}
-	return *v, true
-}
-
-// ResetGasPrice resets all changes to the "gas_price" field.
-func (m *GoodInfoMutation) ResetGasPrice() {
-	m.gas_price = nil
-	m.addgas_price = nil
-}
-
-// SetSeparateGasFee sets the "separate_gas_fee" field.
-func (m *GoodInfoMutation) SetSeparateGasFee(b bool) {
-	m.separate_gas_fee = &b
-}
-
-// SeparateGasFee returns the value of the "separate_gas_fee" field in the mutation.
-func (m *GoodInfoMutation) SeparateGasFee() (r bool, exists bool) {
-	v := m.separate_gas_fee
-	if v == nil {
-		return
-	}
-	return *v, true
-}
-
-// OldSeparateGasFee returns the old "separate_gas_fee" field's value of the GoodInfo entity.
-// If the GoodInfo object wasn't provided to the builder, the object is fetched from the database.
-// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *GoodInfoMutation) OldSeparateGasFee(ctx context.Context) (v bool, err error) {
-	if !m.op.Is(OpUpdateOne) {
-		return v, fmt.Errorf("OldSeparateGasFee is only allowed on UpdateOne operations")
-	}
-	if m.id == nil || m.oldValue == nil {
-		return v, fmt.Errorf("OldSeparateGasFee requires an ID field in the mutation")
-	}
-	oldValue, err := m.oldValue(ctx)
-	if err != nil {
-		return v, fmt.Errorf("querying old value for OldSeparateGasFee: %w", err)
-	}
-	return oldValue.SeparateGasFee, nil
-}
-
-// ResetSeparateGasFee resets all changes to the "separate_gas_fee" field.
-func (m *GoodInfoMutation) ResetSeparateGasFee() {
-	m.separate_gas_fee = nil
+// ResetSeparateFee resets all changes to the "separate_fee" field.
+func (m *GoodInfoMutation) ResetSeparateFee() {
+	m.separate_fee = nil
 }
 
 // SetUnitPower sets the "unit_power" field.
@@ -5270,6 +6227,114 @@ func (m *GoodInfoMutation) ResetPrice() {
 	m.addprice = nil
 }
 
+// SetPriceUnit sets the "price_unit" field.
+func (m *GoodInfoMutation) SetPriceUnit(s string) {
+	m.price_unit = &s
+}
+
+// PriceUnit returns the value of the "price_unit" field in the mutation.
+func (m *GoodInfoMutation) PriceUnit() (r string, exists bool) {
+	v := m.price_unit
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldPriceUnit returns the old "price_unit" field's value of the GoodInfo entity.
+// If the GoodInfo object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *GoodInfoMutation) OldPriceUnit(ctx context.Context) (v string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, fmt.Errorf("OldPriceUnit is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, fmt.Errorf("OldPriceUnit requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldPriceUnit: %w", err)
+	}
+	return oldValue.PriceUnit, nil
+}
+
+// ResetPriceUnit resets all changes to the "price_unit" field.
+func (m *GoodInfoMutation) ResetPriceUnit() {
+	m.price_unit = nil
+}
+
+// SetPriceCurrency sets the "price_currency" field.
+func (m *GoodInfoMutation) SetPriceCurrency(s string) {
+	m.price_currency = &s
+}
+
+// PriceCurrency returns the value of the "price_currency" field in the mutation.
+func (m *GoodInfoMutation) PriceCurrency() (r string, exists bool) {
+	v := m.price_currency
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldPriceCurrency returns the old "price_currency" field's value of the GoodInfo entity.
+// If the GoodInfo object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *GoodInfoMutation) OldPriceCurrency(ctx context.Context) (v string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, fmt.Errorf("OldPriceCurrency is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, fmt.Errorf("OldPriceCurrency requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldPriceCurrency: %w", err)
+	}
+	return oldValue.PriceCurrency, nil
+}
+
+// ResetPriceCurrency resets all changes to the "price_currency" field.
+func (m *GoodInfoMutation) ResetPriceCurrency() {
+	m.price_currency = nil
+}
+
+// SetPriceSymbol sets the "price_symbol" field.
+func (m *GoodInfoMutation) SetPriceSymbol(s string) {
+	m.price_symbol = &s
+}
+
+// PriceSymbol returns the value of the "price_symbol" field in the mutation.
+func (m *GoodInfoMutation) PriceSymbol() (r string, exists bool) {
+	v := m.price_symbol
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldPriceSymbol returns the old "price_symbol" field's value of the GoodInfo entity.
+// If the GoodInfo object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *GoodInfoMutation) OldPriceSymbol(ctx context.Context) (v string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, fmt.Errorf("OldPriceSymbol is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, fmt.Errorf("OldPriceSymbol requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldPriceSymbol: %w", err)
+	}
+	return oldValue.PriceSymbol, nil
+}
+
+// ResetPriceSymbol resets all changes to the "price_symbol" field.
+func (m *GoodInfoMutation) ResetPriceSymbol() {
+	m.price_symbol = nil
+}
+
 // SetBenefitType sets the "benefit_type" field.
 func (m *GoodInfoMutation) SetBenefitType(gt goodinfo.BenefitType) {
 	m.benefit_type = &gt
@@ -5340,6 +6405,134 @@ func (m *GoodInfoMutation) OldClassic(ctx context.Context) (v bool, err error) {
 // ResetClassic resets all changes to the "classic" field.
 func (m *GoodInfoMutation) ResetClassic() {
 	m.classic = nil
+}
+
+// SetTitle sets the "title" field.
+func (m *GoodInfoMutation) SetTitle(s string) {
+	m.title = &s
+}
+
+// Title returns the value of the "title" field in the mutation.
+func (m *GoodInfoMutation) Title() (r string, exists bool) {
+	v := m.title
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldTitle returns the old "title" field's value of the GoodInfo entity.
+// If the GoodInfo object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *GoodInfoMutation) OldTitle(ctx context.Context) (v string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, fmt.Errorf("OldTitle is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, fmt.Errorf("OldTitle requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldTitle: %w", err)
+	}
+	return oldValue.Title, nil
+}
+
+// ResetTitle resets all changes to the "title" field.
+func (m *GoodInfoMutation) ResetTitle() {
+	m.title = nil
+}
+
+// SetUnit sets the "unit" field.
+func (m *GoodInfoMutation) SetUnit(s string) {
+	m.unit = &s
+}
+
+// Unit returns the value of the "unit" field in the mutation.
+func (m *GoodInfoMutation) Unit() (r string, exists bool) {
+	v := m.unit
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldUnit returns the old "unit" field's value of the GoodInfo entity.
+// If the GoodInfo object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *GoodInfoMutation) OldUnit(ctx context.Context) (v string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, fmt.Errorf("OldUnit is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, fmt.Errorf("OldUnit requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldUnit: %w", err)
+	}
+	return oldValue.Unit, nil
+}
+
+// ResetUnit resets all changes to the "unit" field.
+func (m *GoodInfoMutation) ResetUnit() {
+	m.unit = nil
+}
+
+// SetStart sets the "start" field.
+func (m *GoodInfoMutation) SetStart(u uint32) {
+	m.start = &u
+	m.addstart = nil
+}
+
+// Start returns the value of the "start" field in the mutation.
+func (m *GoodInfoMutation) Start() (r uint32, exists bool) {
+	v := m.start
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldStart returns the old "start" field's value of the GoodInfo entity.
+// If the GoodInfo object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *GoodInfoMutation) OldStart(ctx context.Context) (v uint32, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, fmt.Errorf("OldStart is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, fmt.Errorf("OldStart requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldStart: %w", err)
+	}
+	return oldValue.Start, nil
+}
+
+// AddStart adds u to the "start" field.
+func (m *GoodInfoMutation) AddStart(u uint32) {
+	if m.addstart != nil {
+		*m.addstart += u
+	} else {
+		m.addstart = &u
+	}
+}
+
+// AddedStart returns the value that was added to the "start" field in this mutation.
+func (m *GoodInfoMutation) AddedStart() (r uint32, exists bool) {
+	v := m.addstart
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// ResetStart resets all changes to the "start" field.
+func (m *GoodInfoMutation) ResetStart() {
+	m.start = nil
+	m.addstart = nil
 }
 
 // SetSupportCoinTypeIds sets the "support_coin_type_ids" field.
@@ -5435,13 +6628,13 @@ func (m *GoodInfoMutation) ResetTotal() {
 }
 
 // SetCreateAt sets the "create_at" field.
-func (m *GoodInfoMutation) SetCreateAt(i int64) {
-	m.create_at = &i
+func (m *GoodInfoMutation) SetCreateAt(u uint32) {
+	m.create_at = &u
 	m.addcreate_at = nil
 }
 
 // CreateAt returns the value of the "create_at" field in the mutation.
-func (m *GoodInfoMutation) CreateAt() (r int64, exists bool) {
+func (m *GoodInfoMutation) CreateAt() (r uint32, exists bool) {
 	v := m.create_at
 	if v == nil {
 		return
@@ -5452,7 +6645,7 @@ func (m *GoodInfoMutation) CreateAt() (r int64, exists bool) {
 // OldCreateAt returns the old "create_at" field's value of the GoodInfo entity.
 // If the GoodInfo object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *GoodInfoMutation) OldCreateAt(ctx context.Context) (v int64, err error) {
+func (m *GoodInfoMutation) OldCreateAt(ctx context.Context) (v uint32, err error) {
 	if !m.op.Is(OpUpdateOne) {
 		return v, fmt.Errorf("OldCreateAt is only allowed on UpdateOne operations")
 	}
@@ -5466,17 +6659,17 @@ func (m *GoodInfoMutation) OldCreateAt(ctx context.Context) (v int64, err error)
 	return oldValue.CreateAt, nil
 }
 
-// AddCreateAt adds i to the "create_at" field.
-func (m *GoodInfoMutation) AddCreateAt(i int64) {
+// AddCreateAt adds u to the "create_at" field.
+func (m *GoodInfoMutation) AddCreateAt(u uint32) {
 	if m.addcreate_at != nil {
-		*m.addcreate_at += i
+		*m.addcreate_at += u
 	} else {
-		m.addcreate_at = &i
+		m.addcreate_at = &u
 	}
 }
 
 // AddedCreateAt returns the value that was added to the "create_at" field in this mutation.
-func (m *GoodInfoMutation) AddedCreateAt() (r int64, exists bool) {
+func (m *GoodInfoMutation) AddedCreateAt() (r uint32, exists bool) {
 	v := m.addcreate_at
 	if v == nil {
 		return
@@ -5491,13 +6684,13 @@ func (m *GoodInfoMutation) ResetCreateAt() {
 }
 
 // SetUpdateAt sets the "update_at" field.
-func (m *GoodInfoMutation) SetUpdateAt(i int64) {
-	m.update_at = &i
+func (m *GoodInfoMutation) SetUpdateAt(u uint32) {
+	m.update_at = &u
 	m.addupdate_at = nil
 }
 
 // UpdateAt returns the value of the "update_at" field in the mutation.
-func (m *GoodInfoMutation) UpdateAt() (r int64, exists bool) {
+func (m *GoodInfoMutation) UpdateAt() (r uint32, exists bool) {
 	v := m.update_at
 	if v == nil {
 		return
@@ -5508,7 +6701,7 @@ func (m *GoodInfoMutation) UpdateAt() (r int64, exists bool) {
 // OldUpdateAt returns the old "update_at" field's value of the GoodInfo entity.
 // If the GoodInfo object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *GoodInfoMutation) OldUpdateAt(ctx context.Context) (v int64, err error) {
+func (m *GoodInfoMutation) OldUpdateAt(ctx context.Context) (v uint32, err error) {
 	if !m.op.Is(OpUpdateOne) {
 		return v, fmt.Errorf("OldUpdateAt is only allowed on UpdateOne operations")
 	}
@@ -5522,17 +6715,17 @@ func (m *GoodInfoMutation) OldUpdateAt(ctx context.Context) (v int64, err error)
 	return oldValue.UpdateAt, nil
 }
 
-// AddUpdateAt adds i to the "update_at" field.
-func (m *GoodInfoMutation) AddUpdateAt(i int64) {
+// AddUpdateAt adds u to the "update_at" field.
+func (m *GoodInfoMutation) AddUpdateAt(u uint32) {
 	if m.addupdate_at != nil {
-		*m.addupdate_at += i
+		*m.addupdate_at += u
 	} else {
-		m.addupdate_at = &i
+		m.addupdate_at = &u
 	}
 }
 
 // AddedUpdateAt returns the value that was added to the "update_at" field in this mutation.
-func (m *GoodInfoMutation) AddedUpdateAt() (r int64, exists bool) {
+func (m *GoodInfoMutation) AddedUpdateAt() (r uint32, exists bool) {
 	v := m.addupdate_at
 	if v == nil {
 		return
@@ -5547,13 +6740,13 @@ func (m *GoodInfoMutation) ResetUpdateAt() {
 }
 
 // SetDeleteAt sets the "delete_at" field.
-func (m *GoodInfoMutation) SetDeleteAt(i int64) {
-	m.delete_at = &i
+func (m *GoodInfoMutation) SetDeleteAt(u uint32) {
+	m.delete_at = &u
 	m.adddelete_at = nil
 }
 
 // DeleteAt returns the value of the "delete_at" field in the mutation.
-func (m *GoodInfoMutation) DeleteAt() (r int64, exists bool) {
+func (m *GoodInfoMutation) DeleteAt() (r uint32, exists bool) {
 	v := m.delete_at
 	if v == nil {
 		return
@@ -5564,7 +6757,7 @@ func (m *GoodInfoMutation) DeleteAt() (r int64, exists bool) {
 // OldDeleteAt returns the old "delete_at" field's value of the GoodInfo entity.
 // If the GoodInfo object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *GoodInfoMutation) OldDeleteAt(ctx context.Context) (v int64, err error) {
+func (m *GoodInfoMutation) OldDeleteAt(ctx context.Context) (v uint32, err error) {
 	if !m.op.Is(OpUpdateOne) {
 		return v, fmt.Errorf("OldDeleteAt is only allowed on UpdateOne operations")
 	}
@@ -5578,17 +6771,17 @@ func (m *GoodInfoMutation) OldDeleteAt(ctx context.Context) (v int64, err error)
 	return oldValue.DeleteAt, nil
 }
 
-// AddDeleteAt adds i to the "delete_at" field.
-func (m *GoodInfoMutation) AddDeleteAt(i int64) {
+// AddDeleteAt adds u to the "delete_at" field.
+func (m *GoodInfoMutation) AddDeleteAt(u uint32) {
 	if m.adddelete_at != nil {
-		*m.adddelete_at += i
+		*m.adddelete_at += u
 	} else {
-		m.adddelete_at = &i
+		m.adddelete_at = &u
 	}
 }
 
 // AddedDeleteAt returns the value that was added to the "delete_at" field in this mutation.
-func (m *GoodInfoMutation) AddedDeleteAt() (r int64, exists bool) {
+func (m *GoodInfoMutation) AddedDeleteAt() (r uint32, exists bool) {
 	v := m.adddelete_at
 	if v == nil {
 		return
@@ -5621,15 +6814,12 @@ func (m *GoodInfoMutation) Type() string {
 // order to get all numeric fields that were incremented/decremented, call
 // AddedFields().
 func (m *GoodInfoMutation) Fields() []string {
-	fields := make([]string, 0, 18)
+	fields := make([]string, 0, 23)
 	if m.device_info_id != nil {
 		fields = append(fields, goodinfo.FieldDeviceInfoID)
 	}
-	if m.gas_price != nil {
-		fields = append(fields, goodinfo.FieldGasPrice)
-	}
-	if m.separate_gas_fee != nil {
-		fields = append(fields, goodinfo.FieldSeparateGasFee)
+	if m.separate_fee != nil {
+		fields = append(fields, goodinfo.FieldSeparateFee)
 	}
 	if m.unit_power != nil {
 		fields = append(fields, goodinfo.FieldUnitPower)
@@ -5655,11 +6845,29 @@ func (m *GoodInfoMutation) Fields() []string {
 	if m.price != nil {
 		fields = append(fields, goodinfo.FieldPrice)
 	}
+	if m.price_unit != nil {
+		fields = append(fields, goodinfo.FieldPriceUnit)
+	}
+	if m.price_currency != nil {
+		fields = append(fields, goodinfo.FieldPriceCurrency)
+	}
+	if m.price_symbol != nil {
+		fields = append(fields, goodinfo.FieldPriceSymbol)
+	}
 	if m.benefit_type != nil {
 		fields = append(fields, goodinfo.FieldBenefitType)
 	}
 	if m.classic != nil {
 		fields = append(fields, goodinfo.FieldClassic)
+	}
+	if m.title != nil {
+		fields = append(fields, goodinfo.FieldTitle)
+	}
+	if m.unit != nil {
+		fields = append(fields, goodinfo.FieldUnit)
+	}
+	if m.start != nil {
+		fields = append(fields, goodinfo.FieldStart)
 	}
 	if m.support_coin_type_ids != nil {
 		fields = append(fields, goodinfo.FieldSupportCoinTypeIds)
@@ -5686,10 +6894,8 @@ func (m *GoodInfoMutation) Field(name string) (ent.Value, bool) {
 	switch name {
 	case goodinfo.FieldDeviceInfoID:
 		return m.DeviceInfoID()
-	case goodinfo.FieldGasPrice:
-		return m.GasPrice()
-	case goodinfo.FieldSeparateGasFee:
-		return m.SeparateGasFee()
+	case goodinfo.FieldSeparateFee:
+		return m.SeparateFee()
 	case goodinfo.FieldUnitPower:
 		return m.UnitPower()
 	case goodinfo.FieldDurationDays:
@@ -5706,10 +6912,22 @@ func (m *GoodInfoMutation) Field(name string) (ent.Value, bool) {
 		return m.VendorLocationID()
 	case goodinfo.FieldPrice:
 		return m.Price()
+	case goodinfo.FieldPriceUnit:
+		return m.PriceUnit()
+	case goodinfo.FieldPriceCurrency:
+		return m.PriceCurrency()
+	case goodinfo.FieldPriceSymbol:
+		return m.PriceSymbol()
 	case goodinfo.FieldBenefitType:
 		return m.BenefitType()
 	case goodinfo.FieldClassic:
 		return m.Classic()
+	case goodinfo.FieldTitle:
+		return m.Title()
+	case goodinfo.FieldUnit:
+		return m.Unit()
+	case goodinfo.FieldStart:
+		return m.Start()
 	case goodinfo.FieldSupportCoinTypeIds:
 		return m.SupportCoinTypeIds()
 	case goodinfo.FieldTotal:
@@ -5731,10 +6949,8 @@ func (m *GoodInfoMutation) OldField(ctx context.Context, name string) (ent.Value
 	switch name {
 	case goodinfo.FieldDeviceInfoID:
 		return m.OldDeviceInfoID(ctx)
-	case goodinfo.FieldGasPrice:
-		return m.OldGasPrice(ctx)
-	case goodinfo.FieldSeparateGasFee:
-		return m.OldSeparateGasFee(ctx)
+	case goodinfo.FieldSeparateFee:
+		return m.OldSeparateFee(ctx)
 	case goodinfo.FieldUnitPower:
 		return m.OldUnitPower(ctx)
 	case goodinfo.FieldDurationDays:
@@ -5751,10 +6967,22 @@ func (m *GoodInfoMutation) OldField(ctx context.Context, name string) (ent.Value
 		return m.OldVendorLocationID(ctx)
 	case goodinfo.FieldPrice:
 		return m.OldPrice(ctx)
+	case goodinfo.FieldPriceUnit:
+		return m.OldPriceUnit(ctx)
+	case goodinfo.FieldPriceCurrency:
+		return m.OldPriceCurrency(ctx)
+	case goodinfo.FieldPriceSymbol:
+		return m.OldPriceSymbol(ctx)
 	case goodinfo.FieldBenefitType:
 		return m.OldBenefitType(ctx)
 	case goodinfo.FieldClassic:
 		return m.OldClassic(ctx)
+	case goodinfo.FieldTitle:
+		return m.OldTitle(ctx)
+	case goodinfo.FieldUnit:
+		return m.OldUnit(ctx)
+	case goodinfo.FieldStart:
+		return m.OldStart(ctx)
 	case goodinfo.FieldSupportCoinTypeIds:
 		return m.OldSupportCoinTypeIds(ctx)
 	case goodinfo.FieldTotal:
@@ -5781,19 +7009,12 @@ func (m *GoodInfoMutation) SetField(name string, value ent.Value) error {
 		}
 		m.SetDeviceInfoID(v)
 		return nil
-	case goodinfo.FieldGasPrice:
-		v, ok := value.(uint64)
-		if !ok {
-			return fmt.Errorf("unexpected type %T for field %s", value, name)
-		}
-		m.SetGasPrice(v)
-		return nil
-	case goodinfo.FieldSeparateGasFee:
+	case goodinfo.FieldSeparateFee:
 		v, ok := value.(bool)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
-		m.SetSeparateGasFee(v)
+		m.SetSeparateFee(v)
 		return nil
 	case goodinfo.FieldUnitPower:
 		v, ok := value.(int32)
@@ -5851,6 +7072,27 @@ func (m *GoodInfoMutation) SetField(name string, value ent.Value) error {
 		}
 		m.SetPrice(v)
 		return nil
+	case goodinfo.FieldPriceUnit:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetPriceUnit(v)
+		return nil
+	case goodinfo.FieldPriceCurrency:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetPriceCurrency(v)
+		return nil
+	case goodinfo.FieldPriceSymbol:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetPriceSymbol(v)
+		return nil
 	case goodinfo.FieldBenefitType:
 		v, ok := value.(goodinfo.BenefitType)
 		if !ok {
@@ -5864,6 +7106,27 @@ func (m *GoodInfoMutation) SetField(name string, value ent.Value) error {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.SetClassic(v)
+		return nil
+	case goodinfo.FieldTitle:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetTitle(v)
+		return nil
+	case goodinfo.FieldUnit:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetUnit(v)
+		return nil
+	case goodinfo.FieldStart:
+		v, ok := value.(uint32)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetStart(v)
 		return nil
 	case goodinfo.FieldSupportCoinTypeIds:
 		v, ok := value.([]uuid.UUID)
@@ -5880,21 +7143,21 @@ func (m *GoodInfoMutation) SetField(name string, value ent.Value) error {
 		m.SetTotal(v)
 		return nil
 	case goodinfo.FieldCreateAt:
-		v, ok := value.(int64)
+		v, ok := value.(uint32)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.SetCreateAt(v)
 		return nil
 	case goodinfo.FieldUpdateAt:
-		v, ok := value.(int64)
+		v, ok := value.(uint32)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.SetUpdateAt(v)
 		return nil
 	case goodinfo.FieldDeleteAt:
-		v, ok := value.(int64)
+		v, ok := value.(uint32)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
@@ -5908,9 +7171,6 @@ func (m *GoodInfoMutation) SetField(name string, value ent.Value) error {
 // this mutation.
 func (m *GoodInfoMutation) AddedFields() []string {
 	var fields []string
-	if m.addgas_price != nil {
-		fields = append(fields, goodinfo.FieldGasPrice)
-	}
 	if m.addunit_power != nil {
 		fields = append(fields, goodinfo.FieldUnitPower)
 	}
@@ -5922,6 +7182,9 @@ func (m *GoodInfoMutation) AddedFields() []string {
 	}
 	if m.addprice != nil {
 		fields = append(fields, goodinfo.FieldPrice)
+	}
+	if m.addstart != nil {
+		fields = append(fields, goodinfo.FieldStart)
 	}
 	if m.addtotal != nil {
 		fields = append(fields, goodinfo.FieldTotal)
@@ -5943,8 +7206,6 @@ func (m *GoodInfoMutation) AddedFields() []string {
 // was not set, or was not defined in the schema.
 func (m *GoodInfoMutation) AddedField(name string) (ent.Value, bool) {
 	switch name {
-	case goodinfo.FieldGasPrice:
-		return m.AddedGasPrice()
 	case goodinfo.FieldUnitPower:
 		return m.AddedUnitPower()
 	case goodinfo.FieldDurationDays:
@@ -5953,6 +7214,8 @@ func (m *GoodInfoMutation) AddedField(name string) (ent.Value, bool) {
 		return m.AddedDeliveryAt()
 	case goodinfo.FieldPrice:
 		return m.AddedPrice()
+	case goodinfo.FieldStart:
+		return m.AddedStart()
 	case goodinfo.FieldTotal:
 		return m.AddedTotal()
 	case goodinfo.FieldCreateAt:
@@ -5970,13 +7233,6 @@ func (m *GoodInfoMutation) AddedField(name string) (ent.Value, bool) {
 // type.
 func (m *GoodInfoMutation) AddField(name string, value ent.Value) error {
 	switch name {
-	case goodinfo.FieldGasPrice:
-		v, ok := value.(uint64)
-		if !ok {
-			return fmt.Errorf("unexpected type %T for field %s", value, name)
-		}
-		m.AddGasPrice(v)
-		return nil
 	case goodinfo.FieldUnitPower:
 		v, ok := value.(int32)
 		if !ok {
@@ -6005,6 +7261,13 @@ func (m *GoodInfoMutation) AddField(name string, value ent.Value) error {
 		}
 		m.AddPrice(v)
 		return nil
+	case goodinfo.FieldStart:
+		v, ok := value.(uint32)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.AddStart(v)
+		return nil
 	case goodinfo.FieldTotal:
 		v, ok := value.(int32)
 		if !ok {
@@ -6013,21 +7276,21 @@ func (m *GoodInfoMutation) AddField(name string, value ent.Value) error {
 		m.AddTotal(v)
 		return nil
 	case goodinfo.FieldCreateAt:
-		v, ok := value.(int64)
+		v, ok := value.(uint32)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.AddCreateAt(v)
 		return nil
 	case goodinfo.FieldUpdateAt:
-		v, ok := value.(int64)
+		v, ok := value.(uint32)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.AddUpdateAt(v)
 		return nil
 	case goodinfo.FieldDeleteAt:
-		v, ok := value.(int64)
+		v, ok := value.(uint32)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
@@ -6063,11 +7326,8 @@ func (m *GoodInfoMutation) ResetField(name string) error {
 	case goodinfo.FieldDeviceInfoID:
 		m.ResetDeviceInfoID()
 		return nil
-	case goodinfo.FieldGasPrice:
-		m.ResetGasPrice()
-		return nil
-	case goodinfo.FieldSeparateGasFee:
-		m.ResetSeparateGasFee()
+	case goodinfo.FieldSeparateFee:
+		m.ResetSeparateFee()
 		return nil
 	case goodinfo.FieldUnitPower:
 		m.ResetUnitPower()
@@ -6093,11 +7353,29 @@ func (m *GoodInfoMutation) ResetField(name string) error {
 	case goodinfo.FieldPrice:
 		m.ResetPrice()
 		return nil
+	case goodinfo.FieldPriceUnit:
+		m.ResetPriceUnit()
+		return nil
+	case goodinfo.FieldPriceCurrency:
+		m.ResetPriceCurrency()
+		return nil
+	case goodinfo.FieldPriceSymbol:
+		m.ResetPriceSymbol()
+		return nil
 	case goodinfo.FieldBenefitType:
 		m.ResetBenefitType()
 		return nil
 	case goodinfo.FieldClassic:
 		m.ResetClassic()
+		return nil
+	case goodinfo.FieldTitle:
+		m.ResetTitle()
+		return nil
+	case goodinfo.FieldUnit:
+		m.ResetUnit()
+		return nil
+	case goodinfo.FieldStart:
+		m.ResetStart()
 		return nil
 	case goodinfo.FieldSupportCoinTypeIds:
 		m.ResetSupportCoinTypeIds()

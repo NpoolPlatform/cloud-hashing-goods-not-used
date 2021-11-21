@@ -24,6 +24,8 @@ type Tx struct {
 	GoodComment *GoodCommentClient
 	// GoodExtraInfo is the client for interacting with the GoodExtraInfo builders.
 	GoodExtraInfo *GoodExtraInfoClient
+	// GoodFee is the client for interacting with the GoodFee builders.
+	GoodFee *GoodFeeClient
 	// GoodInfo is the client for interacting with the GoodInfo builders.
 	GoodInfo *GoodInfoClient
 	// GoodReview is the client for interacting with the GoodReview builders.
@@ -173,6 +175,7 @@ func (tx *Tx) init() {
 	tx.DeviceInfo = NewDeviceInfoClient(tx.config)
 	tx.GoodComment = NewGoodCommentClient(tx.config)
 	tx.GoodExtraInfo = NewGoodExtraInfoClient(tx.config)
+	tx.GoodFee = NewGoodFeeClient(tx.config)
 	tx.GoodInfo = NewGoodInfoClient(tx.config)
 	tx.GoodReview = NewGoodReviewClient(tx.config)
 	tx.TargetArea = NewTargetAreaClient(tx.config)

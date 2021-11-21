@@ -98,17 +98,10 @@ func DeviceInfoID(v uuid.UUID) predicate.GoodInfo {
 	})
 }
 
-// GasPrice applies equality check predicate on the "gas_price" field. It's identical to GasPriceEQ.
-func GasPrice(v uint64) predicate.GoodInfo {
+// SeparateFee applies equality check predicate on the "separate_fee" field. It's identical to SeparateFeeEQ.
+func SeparateFee(v bool) predicate.GoodInfo {
 	return predicate.GoodInfo(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldGasPrice), v))
-	})
-}
-
-// SeparateGasFee applies equality check predicate on the "separate_gas_fee" field. It's identical to SeparateGasFeeEQ.
-func SeparateGasFee(v bool) predicate.GoodInfo {
-	return predicate.GoodInfo(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldSeparateGasFee), v))
+		s.Where(sql.EQ(s.C(FieldSeparateFee), v))
 	})
 }
 
@@ -168,10 +161,52 @@ func Price(v uint64) predicate.GoodInfo {
 	})
 }
 
+// PriceUnit applies equality check predicate on the "price_unit" field. It's identical to PriceUnitEQ.
+func PriceUnit(v string) predicate.GoodInfo {
+	return predicate.GoodInfo(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldPriceUnit), v))
+	})
+}
+
+// PriceCurrency applies equality check predicate on the "price_currency" field. It's identical to PriceCurrencyEQ.
+func PriceCurrency(v string) predicate.GoodInfo {
+	return predicate.GoodInfo(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldPriceCurrency), v))
+	})
+}
+
+// PriceSymbol applies equality check predicate on the "price_symbol" field. It's identical to PriceSymbolEQ.
+func PriceSymbol(v string) predicate.GoodInfo {
+	return predicate.GoodInfo(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldPriceSymbol), v))
+	})
+}
+
 // Classic applies equality check predicate on the "classic" field. It's identical to ClassicEQ.
 func Classic(v bool) predicate.GoodInfo {
 	return predicate.GoodInfo(func(s *sql.Selector) {
 		s.Where(sql.EQ(s.C(FieldClassic), v))
+	})
+}
+
+// Title applies equality check predicate on the "title" field. It's identical to TitleEQ.
+func Title(v string) predicate.GoodInfo {
+	return predicate.GoodInfo(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldTitle), v))
+	})
+}
+
+// Unit applies equality check predicate on the "unit" field. It's identical to UnitEQ.
+func Unit(v string) predicate.GoodInfo {
+	return predicate.GoodInfo(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldUnit), v))
+	})
+}
+
+// Start applies equality check predicate on the "start" field. It's identical to StartEQ.
+func Start(v uint32) predicate.GoodInfo {
+	return predicate.GoodInfo(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldStart), v))
 	})
 }
 
@@ -183,21 +218,21 @@ func Total(v int32) predicate.GoodInfo {
 }
 
 // CreateAt applies equality check predicate on the "create_at" field. It's identical to CreateAtEQ.
-func CreateAt(v int64) predicate.GoodInfo {
+func CreateAt(v uint32) predicate.GoodInfo {
 	return predicate.GoodInfo(func(s *sql.Selector) {
 		s.Where(sql.EQ(s.C(FieldCreateAt), v))
 	})
 }
 
 // UpdateAt applies equality check predicate on the "update_at" field. It's identical to UpdateAtEQ.
-func UpdateAt(v int64) predicate.GoodInfo {
+func UpdateAt(v uint32) predicate.GoodInfo {
 	return predicate.GoodInfo(func(s *sql.Selector) {
 		s.Where(sql.EQ(s.C(FieldUpdateAt), v))
 	})
 }
 
 // DeleteAt applies equality check predicate on the "delete_at" field. It's identical to DeleteAtEQ.
-func DeleteAt(v int64) predicate.GoodInfo {
+func DeleteAt(v uint32) predicate.GoodInfo {
 	return predicate.GoodInfo(func(s *sql.Selector) {
 		s.Where(sql.EQ(s.C(FieldDeleteAt), v))
 	})
@@ -279,93 +314,17 @@ func DeviceInfoIDLTE(v uuid.UUID) predicate.GoodInfo {
 	})
 }
 
-// GasPriceEQ applies the EQ predicate on the "gas_price" field.
-func GasPriceEQ(v uint64) predicate.GoodInfo {
+// SeparateFeeEQ applies the EQ predicate on the "separate_fee" field.
+func SeparateFeeEQ(v bool) predicate.GoodInfo {
 	return predicate.GoodInfo(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldGasPrice), v))
+		s.Where(sql.EQ(s.C(FieldSeparateFee), v))
 	})
 }
 
-// GasPriceNEQ applies the NEQ predicate on the "gas_price" field.
-func GasPriceNEQ(v uint64) predicate.GoodInfo {
+// SeparateFeeNEQ applies the NEQ predicate on the "separate_fee" field.
+func SeparateFeeNEQ(v bool) predicate.GoodInfo {
 	return predicate.GoodInfo(func(s *sql.Selector) {
-		s.Where(sql.NEQ(s.C(FieldGasPrice), v))
-	})
-}
-
-// GasPriceIn applies the In predicate on the "gas_price" field.
-func GasPriceIn(vs ...uint64) predicate.GoodInfo {
-	v := make([]interface{}, len(vs))
-	for i := range v {
-		v[i] = vs[i]
-	}
-	return predicate.GoodInfo(func(s *sql.Selector) {
-		// if not arguments were provided, append the FALSE constants,
-		// since we can't apply "IN ()". This will make this predicate falsy.
-		if len(v) == 0 {
-			s.Where(sql.False())
-			return
-		}
-		s.Where(sql.In(s.C(FieldGasPrice), v...))
-	})
-}
-
-// GasPriceNotIn applies the NotIn predicate on the "gas_price" field.
-func GasPriceNotIn(vs ...uint64) predicate.GoodInfo {
-	v := make([]interface{}, len(vs))
-	for i := range v {
-		v[i] = vs[i]
-	}
-	return predicate.GoodInfo(func(s *sql.Selector) {
-		// if not arguments were provided, append the FALSE constants,
-		// since we can't apply "IN ()". This will make this predicate falsy.
-		if len(v) == 0 {
-			s.Where(sql.False())
-			return
-		}
-		s.Where(sql.NotIn(s.C(FieldGasPrice), v...))
-	})
-}
-
-// GasPriceGT applies the GT predicate on the "gas_price" field.
-func GasPriceGT(v uint64) predicate.GoodInfo {
-	return predicate.GoodInfo(func(s *sql.Selector) {
-		s.Where(sql.GT(s.C(FieldGasPrice), v))
-	})
-}
-
-// GasPriceGTE applies the GTE predicate on the "gas_price" field.
-func GasPriceGTE(v uint64) predicate.GoodInfo {
-	return predicate.GoodInfo(func(s *sql.Selector) {
-		s.Where(sql.GTE(s.C(FieldGasPrice), v))
-	})
-}
-
-// GasPriceLT applies the LT predicate on the "gas_price" field.
-func GasPriceLT(v uint64) predicate.GoodInfo {
-	return predicate.GoodInfo(func(s *sql.Selector) {
-		s.Where(sql.LT(s.C(FieldGasPrice), v))
-	})
-}
-
-// GasPriceLTE applies the LTE predicate on the "gas_price" field.
-func GasPriceLTE(v uint64) predicate.GoodInfo {
-	return predicate.GoodInfo(func(s *sql.Selector) {
-		s.Where(sql.LTE(s.C(FieldGasPrice), v))
-	})
-}
-
-// SeparateGasFeeEQ applies the EQ predicate on the "separate_gas_fee" field.
-func SeparateGasFeeEQ(v bool) predicate.GoodInfo {
-	return predicate.GoodInfo(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldSeparateGasFee), v))
-	})
-}
-
-// SeparateGasFeeNEQ applies the NEQ predicate on the "separate_gas_fee" field.
-func SeparateGasFeeNEQ(v bool) predicate.GoodInfo {
-	return predicate.GoodInfo(func(s *sql.Selector) {
-		s.Where(sql.NEQ(s.C(FieldSeparateGasFee), v))
+		s.Where(sql.NEQ(s.C(FieldSeparateFee), v))
 	})
 }
 
@@ -915,6 +874,339 @@ func PriceLTE(v uint64) predicate.GoodInfo {
 	})
 }
 
+// PriceUnitEQ applies the EQ predicate on the "price_unit" field.
+func PriceUnitEQ(v string) predicate.GoodInfo {
+	return predicate.GoodInfo(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldPriceUnit), v))
+	})
+}
+
+// PriceUnitNEQ applies the NEQ predicate on the "price_unit" field.
+func PriceUnitNEQ(v string) predicate.GoodInfo {
+	return predicate.GoodInfo(func(s *sql.Selector) {
+		s.Where(sql.NEQ(s.C(FieldPriceUnit), v))
+	})
+}
+
+// PriceUnitIn applies the In predicate on the "price_unit" field.
+func PriceUnitIn(vs ...string) predicate.GoodInfo {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.GoodInfo(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.In(s.C(FieldPriceUnit), v...))
+	})
+}
+
+// PriceUnitNotIn applies the NotIn predicate on the "price_unit" field.
+func PriceUnitNotIn(vs ...string) predicate.GoodInfo {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.GoodInfo(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.NotIn(s.C(FieldPriceUnit), v...))
+	})
+}
+
+// PriceUnitGT applies the GT predicate on the "price_unit" field.
+func PriceUnitGT(v string) predicate.GoodInfo {
+	return predicate.GoodInfo(func(s *sql.Selector) {
+		s.Where(sql.GT(s.C(FieldPriceUnit), v))
+	})
+}
+
+// PriceUnitGTE applies the GTE predicate on the "price_unit" field.
+func PriceUnitGTE(v string) predicate.GoodInfo {
+	return predicate.GoodInfo(func(s *sql.Selector) {
+		s.Where(sql.GTE(s.C(FieldPriceUnit), v))
+	})
+}
+
+// PriceUnitLT applies the LT predicate on the "price_unit" field.
+func PriceUnitLT(v string) predicate.GoodInfo {
+	return predicate.GoodInfo(func(s *sql.Selector) {
+		s.Where(sql.LT(s.C(FieldPriceUnit), v))
+	})
+}
+
+// PriceUnitLTE applies the LTE predicate on the "price_unit" field.
+func PriceUnitLTE(v string) predicate.GoodInfo {
+	return predicate.GoodInfo(func(s *sql.Selector) {
+		s.Where(sql.LTE(s.C(FieldPriceUnit), v))
+	})
+}
+
+// PriceUnitContains applies the Contains predicate on the "price_unit" field.
+func PriceUnitContains(v string) predicate.GoodInfo {
+	return predicate.GoodInfo(func(s *sql.Selector) {
+		s.Where(sql.Contains(s.C(FieldPriceUnit), v))
+	})
+}
+
+// PriceUnitHasPrefix applies the HasPrefix predicate on the "price_unit" field.
+func PriceUnitHasPrefix(v string) predicate.GoodInfo {
+	return predicate.GoodInfo(func(s *sql.Selector) {
+		s.Where(sql.HasPrefix(s.C(FieldPriceUnit), v))
+	})
+}
+
+// PriceUnitHasSuffix applies the HasSuffix predicate on the "price_unit" field.
+func PriceUnitHasSuffix(v string) predicate.GoodInfo {
+	return predicate.GoodInfo(func(s *sql.Selector) {
+		s.Where(sql.HasSuffix(s.C(FieldPriceUnit), v))
+	})
+}
+
+// PriceUnitEqualFold applies the EqualFold predicate on the "price_unit" field.
+func PriceUnitEqualFold(v string) predicate.GoodInfo {
+	return predicate.GoodInfo(func(s *sql.Selector) {
+		s.Where(sql.EqualFold(s.C(FieldPriceUnit), v))
+	})
+}
+
+// PriceUnitContainsFold applies the ContainsFold predicate on the "price_unit" field.
+func PriceUnitContainsFold(v string) predicate.GoodInfo {
+	return predicate.GoodInfo(func(s *sql.Selector) {
+		s.Where(sql.ContainsFold(s.C(FieldPriceUnit), v))
+	})
+}
+
+// PriceCurrencyEQ applies the EQ predicate on the "price_currency" field.
+func PriceCurrencyEQ(v string) predicate.GoodInfo {
+	return predicate.GoodInfo(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldPriceCurrency), v))
+	})
+}
+
+// PriceCurrencyNEQ applies the NEQ predicate on the "price_currency" field.
+func PriceCurrencyNEQ(v string) predicate.GoodInfo {
+	return predicate.GoodInfo(func(s *sql.Selector) {
+		s.Where(sql.NEQ(s.C(FieldPriceCurrency), v))
+	})
+}
+
+// PriceCurrencyIn applies the In predicate on the "price_currency" field.
+func PriceCurrencyIn(vs ...string) predicate.GoodInfo {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.GoodInfo(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.In(s.C(FieldPriceCurrency), v...))
+	})
+}
+
+// PriceCurrencyNotIn applies the NotIn predicate on the "price_currency" field.
+func PriceCurrencyNotIn(vs ...string) predicate.GoodInfo {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.GoodInfo(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.NotIn(s.C(FieldPriceCurrency), v...))
+	})
+}
+
+// PriceCurrencyGT applies the GT predicate on the "price_currency" field.
+func PriceCurrencyGT(v string) predicate.GoodInfo {
+	return predicate.GoodInfo(func(s *sql.Selector) {
+		s.Where(sql.GT(s.C(FieldPriceCurrency), v))
+	})
+}
+
+// PriceCurrencyGTE applies the GTE predicate on the "price_currency" field.
+func PriceCurrencyGTE(v string) predicate.GoodInfo {
+	return predicate.GoodInfo(func(s *sql.Selector) {
+		s.Where(sql.GTE(s.C(FieldPriceCurrency), v))
+	})
+}
+
+// PriceCurrencyLT applies the LT predicate on the "price_currency" field.
+func PriceCurrencyLT(v string) predicate.GoodInfo {
+	return predicate.GoodInfo(func(s *sql.Selector) {
+		s.Where(sql.LT(s.C(FieldPriceCurrency), v))
+	})
+}
+
+// PriceCurrencyLTE applies the LTE predicate on the "price_currency" field.
+func PriceCurrencyLTE(v string) predicate.GoodInfo {
+	return predicate.GoodInfo(func(s *sql.Selector) {
+		s.Where(sql.LTE(s.C(FieldPriceCurrency), v))
+	})
+}
+
+// PriceCurrencyContains applies the Contains predicate on the "price_currency" field.
+func PriceCurrencyContains(v string) predicate.GoodInfo {
+	return predicate.GoodInfo(func(s *sql.Selector) {
+		s.Where(sql.Contains(s.C(FieldPriceCurrency), v))
+	})
+}
+
+// PriceCurrencyHasPrefix applies the HasPrefix predicate on the "price_currency" field.
+func PriceCurrencyHasPrefix(v string) predicate.GoodInfo {
+	return predicate.GoodInfo(func(s *sql.Selector) {
+		s.Where(sql.HasPrefix(s.C(FieldPriceCurrency), v))
+	})
+}
+
+// PriceCurrencyHasSuffix applies the HasSuffix predicate on the "price_currency" field.
+func PriceCurrencyHasSuffix(v string) predicate.GoodInfo {
+	return predicate.GoodInfo(func(s *sql.Selector) {
+		s.Where(sql.HasSuffix(s.C(FieldPriceCurrency), v))
+	})
+}
+
+// PriceCurrencyEqualFold applies the EqualFold predicate on the "price_currency" field.
+func PriceCurrencyEqualFold(v string) predicate.GoodInfo {
+	return predicate.GoodInfo(func(s *sql.Selector) {
+		s.Where(sql.EqualFold(s.C(FieldPriceCurrency), v))
+	})
+}
+
+// PriceCurrencyContainsFold applies the ContainsFold predicate on the "price_currency" field.
+func PriceCurrencyContainsFold(v string) predicate.GoodInfo {
+	return predicate.GoodInfo(func(s *sql.Selector) {
+		s.Where(sql.ContainsFold(s.C(FieldPriceCurrency), v))
+	})
+}
+
+// PriceSymbolEQ applies the EQ predicate on the "price_symbol" field.
+func PriceSymbolEQ(v string) predicate.GoodInfo {
+	return predicate.GoodInfo(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldPriceSymbol), v))
+	})
+}
+
+// PriceSymbolNEQ applies the NEQ predicate on the "price_symbol" field.
+func PriceSymbolNEQ(v string) predicate.GoodInfo {
+	return predicate.GoodInfo(func(s *sql.Selector) {
+		s.Where(sql.NEQ(s.C(FieldPriceSymbol), v))
+	})
+}
+
+// PriceSymbolIn applies the In predicate on the "price_symbol" field.
+func PriceSymbolIn(vs ...string) predicate.GoodInfo {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.GoodInfo(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.In(s.C(FieldPriceSymbol), v...))
+	})
+}
+
+// PriceSymbolNotIn applies the NotIn predicate on the "price_symbol" field.
+func PriceSymbolNotIn(vs ...string) predicate.GoodInfo {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.GoodInfo(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.NotIn(s.C(FieldPriceSymbol), v...))
+	})
+}
+
+// PriceSymbolGT applies the GT predicate on the "price_symbol" field.
+func PriceSymbolGT(v string) predicate.GoodInfo {
+	return predicate.GoodInfo(func(s *sql.Selector) {
+		s.Where(sql.GT(s.C(FieldPriceSymbol), v))
+	})
+}
+
+// PriceSymbolGTE applies the GTE predicate on the "price_symbol" field.
+func PriceSymbolGTE(v string) predicate.GoodInfo {
+	return predicate.GoodInfo(func(s *sql.Selector) {
+		s.Where(sql.GTE(s.C(FieldPriceSymbol), v))
+	})
+}
+
+// PriceSymbolLT applies the LT predicate on the "price_symbol" field.
+func PriceSymbolLT(v string) predicate.GoodInfo {
+	return predicate.GoodInfo(func(s *sql.Selector) {
+		s.Where(sql.LT(s.C(FieldPriceSymbol), v))
+	})
+}
+
+// PriceSymbolLTE applies the LTE predicate on the "price_symbol" field.
+func PriceSymbolLTE(v string) predicate.GoodInfo {
+	return predicate.GoodInfo(func(s *sql.Selector) {
+		s.Where(sql.LTE(s.C(FieldPriceSymbol), v))
+	})
+}
+
+// PriceSymbolContains applies the Contains predicate on the "price_symbol" field.
+func PriceSymbolContains(v string) predicate.GoodInfo {
+	return predicate.GoodInfo(func(s *sql.Selector) {
+		s.Where(sql.Contains(s.C(FieldPriceSymbol), v))
+	})
+}
+
+// PriceSymbolHasPrefix applies the HasPrefix predicate on the "price_symbol" field.
+func PriceSymbolHasPrefix(v string) predicate.GoodInfo {
+	return predicate.GoodInfo(func(s *sql.Selector) {
+		s.Where(sql.HasPrefix(s.C(FieldPriceSymbol), v))
+	})
+}
+
+// PriceSymbolHasSuffix applies the HasSuffix predicate on the "price_symbol" field.
+func PriceSymbolHasSuffix(v string) predicate.GoodInfo {
+	return predicate.GoodInfo(func(s *sql.Selector) {
+		s.Where(sql.HasSuffix(s.C(FieldPriceSymbol), v))
+	})
+}
+
+// PriceSymbolEqualFold applies the EqualFold predicate on the "price_symbol" field.
+func PriceSymbolEqualFold(v string) predicate.GoodInfo {
+	return predicate.GoodInfo(func(s *sql.Selector) {
+		s.Where(sql.EqualFold(s.C(FieldPriceSymbol), v))
+	})
+}
+
+// PriceSymbolContainsFold applies the ContainsFold predicate on the "price_symbol" field.
+func PriceSymbolContainsFold(v string) predicate.GoodInfo {
+	return predicate.GoodInfo(func(s *sql.Selector) {
+		s.Where(sql.ContainsFold(s.C(FieldPriceSymbol), v))
+	})
+}
+
 // BenefitTypeEQ applies the EQ predicate on the "benefit_type" field.
 func BenefitTypeEQ(v BenefitType) predicate.GoodInfo {
 	return predicate.GoodInfo(func(s *sql.Selector) {
@@ -974,6 +1266,304 @@ func ClassicEQ(v bool) predicate.GoodInfo {
 func ClassicNEQ(v bool) predicate.GoodInfo {
 	return predicate.GoodInfo(func(s *sql.Selector) {
 		s.Where(sql.NEQ(s.C(FieldClassic), v))
+	})
+}
+
+// TitleEQ applies the EQ predicate on the "title" field.
+func TitleEQ(v string) predicate.GoodInfo {
+	return predicate.GoodInfo(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldTitle), v))
+	})
+}
+
+// TitleNEQ applies the NEQ predicate on the "title" field.
+func TitleNEQ(v string) predicate.GoodInfo {
+	return predicate.GoodInfo(func(s *sql.Selector) {
+		s.Where(sql.NEQ(s.C(FieldTitle), v))
+	})
+}
+
+// TitleIn applies the In predicate on the "title" field.
+func TitleIn(vs ...string) predicate.GoodInfo {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.GoodInfo(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.In(s.C(FieldTitle), v...))
+	})
+}
+
+// TitleNotIn applies the NotIn predicate on the "title" field.
+func TitleNotIn(vs ...string) predicate.GoodInfo {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.GoodInfo(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.NotIn(s.C(FieldTitle), v...))
+	})
+}
+
+// TitleGT applies the GT predicate on the "title" field.
+func TitleGT(v string) predicate.GoodInfo {
+	return predicate.GoodInfo(func(s *sql.Selector) {
+		s.Where(sql.GT(s.C(FieldTitle), v))
+	})
+}
+
+// TitleGTE applies the GTE predicate on the "title" field.
+func TitleGTE(v string) predicate.GoodInfo {
+	return predicate.GoodInfo(func(s *sql.Selector) {
+		s.Where(sql.GTE(s.C(FieldTitle), v))
+	})
+}
+
+// TitleLT applies the LT predicate on the "title" field.
+func TitleLT(v string) predicate.GoodInfo {
+	return predicate.GoodInfo(func(s *sql.Selector) {
+		s.Where(sql.LT(s.C(FieldTitle), v))
+	})
+}
+
+// TitleLTE applies the LTE predicate on the "title" field.
+func TitleLTE(v string) predicate.GoodInfo {
+	return predicate.GoodInfo(func(s *sql.Selector) {
+		s.Where(sql.LTE(s.C(FieldTitle), v))
+	})
+}
+
+// TitleContains applies the Contains predicate on the "title" field.
+func TitleContains(v string) predicate.GoodInfo {
+	return predicate.GoodInfo(func(s *sql.Selector) {
+		s.Where(sql.Contains(s.C(FieldTitle), v))
+	})
+}
+
+// TitleHasPrefix applies the HasPrefix predicate on the "title" field.
+func TitleHasPrefix(v string) predicate.GoodInfo {
+	return predicate.GoodInfo(func(s *sql.Selector) {
+		s.Where(sql.HasPrefix(s.C(FieldTitle), v))
+	})
+}
+
+// TitleHasSuffix applies the HasSuffix predicate on the "title" field.
+func TitleHasSuffix(v string) predicate.GoodInfo {
+	return predicate.GoodInfo(func(s *sql.Selector) {
+		s.Where(sql.HasSuffix(s.C(FieldTitle), v))
+	})
+}
+
+// TitleEqualFold applies the EqualFold predicate on the "title" field.
+func TitleEqualFold(v string) predicate.GoodInfo {
+	return predicate.GoodInfo(func(s *sql.Selector) {
+		s.Where(sql.EqualFold(s.C(FieldTitle), v))
+	})
+}
+
+// TitleContainsFold applies the ContainsFold predicate on the "title" field.
+func TitleContainsFold(v string) predicate.GoodInfo {
+	return predicate.GoodInfo(func(s *sql.Selector) {
+		s.Where(sql.ContainsFold(s.C(FieldTitle), v))
+	})
+}
+
+// UnitEQ applies the EQ predicate on the "unit" field.
+func UnitEQ(v string) predicate.GoodInfo {
+	return predicate.GoodInfo(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldUnit), v))
+	})
+}
+
+// UnitNEQ applies the NEQ predicate on the "unit" field.
+func UnitNEQ(v string) predicate.GoodInfo {
+	return predicate.GoodInfo(func(s *sql.Selector) {
+		s.Where(sql.NEQ(s.C(FieldUnit), v))
+	})
+}
+
+// UnitIn applies the In predicate on the "unit" field.
+func UnitIn(vs ...string) predicate.GoodInfo {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.GoodInfo(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.In(s.C(FieldUnit), v...))
+	})
+}
+
+// UnitNotIn applies the NotIn predicate on the "unit" field.
+func UnitNotIn(vs ...string) predicate.GoodInfo {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.GoodInfo(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.NotIn(s.C(FieldUnit), v...))
+	})
+}
+
+// UnitGT applies the GT predicate on the "unit" field.
+func UnitGT(v string) predicate.GoodInfo {
+	return predicate.GoodInfo(func(s *sql.Selector) {
+		s.Where(sql.GT(s.C(FieldUnit), v))
+	})
+}
+
+// UnitGTE applies the GTE predicate on the "unit" field.
+func UnitGTE(v string) predicate.GoodInfo {
+	return predicate.GoodInfo(func(s *sql.Selector) {
+		s.Where(sql.GTE(s.C(FieldUnit), v))
+	})
+}
+
+// UnitLT applies the LT predicate on the "unit" field.
+func UnitLT(v string) predicate.GoodInfo {
+	return predicate.GoodInfo(func(s *sql.Selector) {
+		s.Where(sql.LT(s.C(FieldUnit), v))
+	})
+}
+
+// UnitLTE applies the LTE predicate on the "unit" field.
+func UnitLTE(v string) predicate.GoodInfo {
+	return predicate.GoodInfo(func(s *sql.Selector) {
+		s.Where(sql.LTE(s.C(FieldUnit), v))
+	})
+}
+
+// UnitContains applies the Contains predicate on the "unit" field.
+func UnitContains(v string) predicate.GoodInfo {
+	return predicate.GoodInfo(func(s *sql.Selector) {
+		s.Where(sql.Contains(s.C(FieldUnit), v))
+	})
+}
+
+// UnitHasPrefix applies the HasPrefix predicate on the "unit" field.
+func UnitHasPrefix(v string) predicate.GoodInfo {
+	return predicate.GoodInfo(func(s *sql.Selector) {
+		s.Where(sql.HasPrefix(s.C(FieldUnit), v))
+	})
+}
+
+// UnitHasSuffix applies the HasSuffix predicate on the "unit" field.
+func UnitHasSuffix(v string) predicate.GoodInfo {
+	return predicate.GoodInfo(func(s *sql.Selector) {
+		s.Where(sql.HasSuffix(s.C(FieldUnit), v))
+	})
+}
+
+// UnitEqualFold applies the EqualFold predicate on the "unit" field.
+func UnitEqualFold(v string) predicate.GoodInfo {
+	return predicate.GoodInfo(func(s *sql.Selector) {
+		s.Where(sql.EqualFold(s.C(FieldUnit), v))
+	})
+}
+
+// UnitContainsFold applies the ContainsFold predicate on the "unit" field.
+func UnitContainsFold(v string) predicate.GoodInfo {
+	return predicate.GoodInfo(func(s *sql.Selector) {
+		s.Where(sql.ContainsFold(s.C(FieldUnit), v))
+	})
+}
+
+// StartEQ applies the EQ predicate on the "start" field.
+func StartEQ(v uint32) predicate.GoodInfo {
+	return predicate.GoodInfo(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldStart), v))
+	})
+}
+
+// StartNEQ applies the NEQ predicate on the "start" field.
+func StartNEQ(v uint32) predicate.GoodInfo {
+	return predicate.GoodInfo(func(s *sql.Selector) {
+		s.Where(sql.NEQ(s.C(FieldStart), v))
+	})
+}
+
+// StartIn applies the In predicate on the "start" field.
+func StartIn(vs ...uint32) predicate.GoodInfo {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.GoodInfo(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.In(s.C(FieldStart), v...))
+	})
+}
+
+// StartNotIn applies the NotIn predicate on the "start" field.
+func StartNotIn(vs ...uint32) predicate.GoodInfo {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.GoodInfo(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.NotIn(s.C(FieldStart), v...))
+	})
+}
+
+// StartGT applies the GT predicate on the "start" field.
+func StartGT(v uint32) predicate.GoodInfo {
+	return predicate.GoodInfo(func(s *sql.Selector) {
+		s.Where(sql.GT(s.C(FieldStart), v))
+	})
+}
+
+// StartGTE applies the GTE predicate on the "start" field.
+func StartGTE(v uint32) predicate.GoodInfo {
+	return predicate.GoodInfo(func(s *sql.Selector) {
+		s.Where(sql.GTE(s.C(FieldStart), v))
+	})
+}
+
+// StartLT applies the LT predicate on the "start" field.
+func StartLT(v uint32) predicate.GoodInfo {
+	return predicate.GoodInfo(func(s *sql.Selector) {
+		s.Where(sql.LT(s.C(FieldStart), v))
+	})
+}
+
+// StartLTE applies the LTE predicate on the "start" field.
+func StartLTE(v uint32) predicate.GoodInfo {
+	return predicate.GoodInfo(func(s *sql.Selector) {
+		s.Where(sql.LTE(s.C(FieldStart), v))
 	})
 }
 
@@ -1054,21 +1644,21 @@ func TotalLTE(v int32) predicate.GoodInfo {
 }
 
 // CreateAtEQ applies the EQ predicate on the "create_at" field.
-func CreateAtEQ(v int64) predicate.GoodInfo {
+func CreateAtEQ(v uint32) predicate.GoodInfo {
 	return predicate.GoodInfo(func(s *sql.Selector) {
 		s.Where(sql.EQ(s.C(FieldCreateAt), v))
 	})
 }
 
 // CreateAtNEQ applies the NEQ predicate on the "create_at" field.
-func CreateAtNEQ(v int64) predicate.GoodInfo {
+func CreateAtNEQ(v uint32) predicate.GoodInfo {
 	return predicate.GoodInfo(func(s *sql.Selector) {
 		s.Where(sql.NEQ(s.C(FieldCreateAt), v))
 	})
 }
 
 // CreateAtIn applies the In predicate on the "create_at" field.
-func CreateAtIn(vs ...int64) predicate.GoodInfo {
+func CreateAtIn(vs ...uint32) predicate.GoodInfo {
 	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
@@ -1085,7 +1675,7 @@ func CreateAtIn(vs ...int64) predicate.GoodInfo {
 }
 
 // CreateAtNotIn applies the NotIn predicate on the "create_at" field.
-func CreateAtNotIn(vs ...int64) predicate.GoodInfo {
+func CreateAtNotIn(vs ...uint32) predicate.GoodInfo {
 	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
@@ -1102,49 +1692,49 @@ func CreateAtNotIn(vs ...int64) predicate.GoodInfo {
 }
 
 // CreateAtGT applies the GT predicate on the "create_at" field.
-func CreateAtGT(v int64) predicate.GoodInfo {
+func CreateAtGT(v uint32) predicate.GoodInfo {
 	return predicate.GoodInfo(func(s *sql.Selector) {
 		s.Where(sql.GT(s.C(FieldCreateAt), v))
 	})
 }
 
 // CreateAtGTE applies the GTE predicate on the "create_at" field.
-func CreateAtGTE(v int64) predicate.GoodInfo {
+func CreateAtGTE(v uint32) predicate.GoodInfo {
 	return predicate.GoodInfo(func(s *sql.Selector) {
 		s.Where(sql.GTE(s.C(FieldCreateAt), v))
 	})
 }
 
 // CreateAtLT applies the LT predicate on the "create_at" field.
-func CreateAtLT(v int64) predicate.GoodInfo {
+func CreateAtLT(v uint32) predicate.GoodInfo {
 	return predicate.GoodInfo(func(s *sql.Selector) {
 		s.Where(sql.LT(s.C(FieldCreateAt), v))
 	})
 }
 
 // CreateAtLTE applies the LTE predicate on the "create_at" field.
-func CreateAtLTE(v int64) predicate.GoodInfo {
+func CreateAtLTE(v uint32) predicate.GoodInfo {
 	return predicate.GoodInfo(func(s *sql.Selector) {
 		s.Where(sql.LTE(s.C(FieldCreateAt), v))
 	})
 }
 
 // UpdateAtEQ applies the EQ predicate on the "update_at" field.
-func UpdateAtEQ(v int64) predicate.GoodInfo {
+func UpdateAtEQ(v uint32) predicate.GoodInfo {
 	return predicate.GoodInfo(func(s *sql.Selector) {
 		s.Where(sql.EQ(s.C(FieldUpdateAt), v))
 	})
 }
 
 // UpdateAtNEQ applies the NEQ predicate on the "update_at" field.
-func UpdateAtNEQ(v int64) predicate.GoodInfo {
+func UpdateAtNEQ(v uint32) predicate.GoodInfo {
 	return predicate.GoodInfo(func(s *sql.Selector) {
 		s.Where(sql.NEQ(s.C(FieldUpdateAt), v))
 	})
 }
 
 // UpdateAtIn applies the In predicate on the "update_at" field.
-func UpdateAtIn(vs ...int64) predicate.GoodInfo {
+func UpdateAtIn(vs ...uint32) predicate.GoodInfo {
 	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
@@ -1161,7 +1751,7 @@ func UpdateAtIn(vs ...int64) predicate.GoodInfo {
 }
 
 // UpdateAtNotIn applies the NotIn predicate on the "update_at" field.
-func UpdateAtNotIn(vs ...int64) predicate.GoodInfo {
+func UpdateAtNotIn(vs ...uint32) predicate.GoodInfo {
 	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
@@ -1178,49 +1768,49 @@ func UpdateAtNotIn(vs ...int64) predicate.GoodInfo {
 }
 
 // UpdateAtGT applies the GT predicate on the "update_at" field.
-func UpdateAtGT(v int64) predicate.GoodInfo {
+func UpdateAtGT(v uint32) predicate.GoodInfo {
 	return predicate.GoodInfo(func(s *sql.Selector) {
 		s.Where(sql.GT(s.C(FieldUpdateAt), v))
 	})
 }
 
 // UpdateAtGTE applies the GTE predicate on the "update_at" field.
-func UpdateAtGTE(v int64) predicate.GoodInfo {
+func UpdateAtGTE(v uint32) predicate.GoodInfo {
 	return predicate.GoodInfo(func(s *sql.Selector) {
 		s.Where(sql.GTE(s.C(FieldUpdateAt), v))
 	})
 }
 
 // UpdateAtLT applies the LT predicate on the "update_at" field.
-func UpdateAtLT(v int64) predicate.GoodInfo {
+func UpdateAtLT(v uint32) predicate.GoodInfo {
 	return predicate.GoodInfo(func(s *sql.Selector) {
 		s.Where(sql.LT(s.C(FieldUpdateAt), v))
 	})
 }
 
 // UpdateAtLTE applies the LTE predicate on the "update_at" field.
-func UpdateAtLTE(v int64) predicate.GoodInfo {
+func UpdateAtLTE(v uint32) predicate.GoodInfo {
 	return predicate.GoodInfo(func(s *sql.Selector) {
 		s.Where(sql.LTE(s.C(FieldUpdateAt), v))
 	})
 }
 
 // DeleteAtEQ applies the EQ predicate on the "delete_at" field.
-func DeleteAtEQ(v int64) predicate.GoodInfo {
+func DeleteAtEQ(v uint32) predicate.GoodInfo {
 	return predicate.GoodInfo(func(s *sql.Selector) {
 		s.Where(sql.EQ(s.C(FieldDeleteAt), v))
 	})
 }
 
 // DeleteAtNEQ applies the NEQ predicate on the "delete_at" field.
-func DeleteAtNEQ(v int64) predicate.GoodInfo {
+func DeleteAtNEQ(v uint32) predicate.GoodInfo {
 	return predicate.GoodInfo(func(s *sql.Selector) {
 		s.Where(sql.NEQ(s.C(FieldDeleteAt), v))
 	})
 }
 
 // DeleteAtIn applies the In predicate on the "delete_at" field.
-func DeleteAtIn(vs ...int64) predicate.GoodInfo {
+func DeleteAtIn(vs ...uint32) predicate.GoodInfo {
 	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
@@ -1237,7 +1827,7 @@ func DeleteAtIn(vs ...int64) predicate.GoodInfo {
 }
 
 // DeleteAtNotIn applies the NotIn predicate on the "delete_at" field.
-func DeleteAtNotIn(vs ...int64) predicate.GoodInfo {
+func DeleteAtNotIn(vs ...uint32) predicate.GoodInfo {
 	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
@@ -1254,28 +1844,28 @@ func DeleteAtNotIn(vs ...int64) predicate.GoodInfo {
 }
 
 // DeleteAtGT applies the GT predicate on the "delete_at" field.
-func DeleteAtGT(v int64) predicate.GoodInfo {
+func DeleteAtGT(v uint32) predicate.GoodInfo {
 	return predicate.GoodInfo(func(s *sql.Selector) {
 		s.Where(sql.GT(s.C(FieldDeleteAt), v))
 	})
 }
 
 // DeleteAtGTE applies the GTE predicate on the "delete_at" field.
-func DeleteAtGTE(v int64) predicate.GoodInfo {
+func DeleteAtGTE(v uint32) predicate.GoodInfo {
 	return predicate.GoodInfo(func(s *sql.Selector) {
 		s.Where(sql.GTE(s.C(FieldDeleteAt), v))
 	})
 }
 
 // DeleteAtLT applies the LT predicate on the "delete_at" field.
-func DeleteAtLT(v int64) predicate.GoodInfo {
+func DeleteAtLT(v uint32) predicate.GoodInfo {
 	return predicate.GoodInfo(func(s *sql.Selector) {
 		s.Where(sql.LT(s.C(FieldDeleteAt), v))
 	})
 }
 
 // DeleteAtLTE applies the LTE predicate on the "delete_at" field.
-func DeleteAtLTE(v int64) predicate.GoodInfo {
+func DeleteAtLTE(v uint32) predicate.GoodInfo {
 	return predicate.GoodInfo(func(s *sql.Selector) {
 		s.Where(sql.LTE(s.C(FieldDeleteAt), v))
 	})

@@ -1165,8 +1165,7 @@
 | ----- | ---- | ----- | ----------- |
 | ID | [string](#string) |  |  |
 | DeviceInfo | [DeviceInfo](#cloud.hashing.goods.v1.DeviceInfo) |  |  |
-| GasPrice | [double](#double) |  |  |
-| SeparateGasFee | [bool](#bool) |  |  |
+| SeparateFee | [bool](#bool) |  |  |
 | UnitPower | [int32](#int32) |  |  |
 | DurationDays | [int32](#int32) |  |  |
 | CoinInfoID | [string](#string) |  |  |
@@ -1214,8 +1213,7 @@
 | ----- | ---- | ----- | ----------- |
 | ID | [string](#string) |  |  |
 | DeviceInfoID | [string](#string) |  |  |
-| GasPrice | [double](#double) |  |  |
-| SeparateGasFee | [bool](#bool) |  |  |
+| SeparateFee | [bool](#bool) |  |  |
 | UnitPower | [int32](#int32) |  |  |
 | DurationDays | [int32](#int32) |  |  |
 | CoinInfoID | [string](#string) |  |  |

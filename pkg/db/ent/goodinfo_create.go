@@ -29,15 +29,9 @@ func (gic *GoodInfoCreate) SetDeviceInfoID(u uuid.UUID) *GoodInfoCreate {
 	return gic
 }
 
-// SetGasPrice sets the "gas_price" field.
-func (gic *GoodInfoCreate) SetGasPrice(u uint64) *GoodInfoCreate {
-	gic.mutation.SetGasPrice(u)
-	return gic
-}
-
-// SetSeparateGasFee sets the "separate_gas_fee" field.
-func (gic *GoodInfoCreate) SetSeparateGasFee(b bool) *GoodInfoCreate {
-	gic.mutation.SetSeparateGasFee(b)
+// SetSeparateFee sets the "separate_fee" field.
+func (gic *GoodInfoCreate) SetSeparateFee(b bool) *GoodInfoCreate {
+	gic.mutation.SetSeparateFee(b)
 	return gic
 }
 
@@ -89,6 +83,24 @@ func (gic *GoodInfoCreate) SetPrice(u uint64) *GoodInfoCreate {
 	return gic
 }
 
+// SetPriceUnit sets the "price_unit" field.
+func (gic *GoodInfoCreate) SetPriceUnit(s string) *GoodInfoCreate {
+	gic.mutation.SetPriceUnit(s)
+	return gic
+}
+
+// SetPriceCurrency sets the "price_currency" field.
+func (gic *GoodInfoCreate) SetPriceCurrency(s string) *GoodInfoCreate {
+	gic.mutation.SetPriceCurrency(s)
+	return gic
+}
+
+// SetPriceSymbol sets the "price_symbol" field.
+func (gic *GoodInfoCreate) SetPriceSymbol(s string) *GoodInfoCreate {
+	gic.mutation.SetPriceSymbol(s)
+	return gic
+}
+
 // SetBenefitType sets the "benefit_type" field.
 func (gic *GoodInfoCreate) SetBenefitType(gt goodinfo.BenefitType) *GoodInfoCreate {
 	gic.mutation.SetBenefitType(gt)
@@ -98,6 +110,24 @@ func (gic *GoodInfoCreate) SetBenefitType(gt goodinfo.BenefitType) *GoodInfoCrea
 // SetClassic sets the "classic" field.
 func (gic *GoodInfoCreate) SetClassic(b bool) *GoodInfoCreate {
 	gic.mutation.SetClassic(b)
+	return gic
+}
+
+// SetTitle sets the "title" field.
+func (gic *GoodInfoCreate) SetTitle(s string) *GoodInfoCreate {
+	gic.mutation.SetTitle(s)
+	return gic
+}
+
+// SetUnit sets the "unit" field.
+func (gic *GoodInfoCreate) SetUnit(s string) *GoodInfoCreate {
+	gic.mutation.SetUnit(s)
+	return gic
+}
+
+// SetStart sets the "start" field.
+func (gic *GoodInfoCreate) SetStart(u uint32) *GoodInfoCreate {
+	gic.mutation.SetStart(u)
 	return gic
 }
 
@@ -114,43 +144,43 @@ func (gic *GoodInfoCreate) SetTotal(i int32) *GoodInfoCreate {
 }
 
 // SetCreateAt sets the "create_at" field.
-func (gic *GoodInfoCreate) SetCreateAt(i int64) *GoodInfoCreate {
-	gic.mutation.SetCreateAt(i)
+func (gic *GoodInfoCreate) SetCreateAt(u uint32) *GoodInfoCreate {
+	gic.mutation.SetCreateAt(u)
 	return gic
 }
 
 // SetNillableCreateAt sets the "create_at" field if the given value is not nil.
-func (gic *GoodInfoCreate) SetNillableCreateAt(i *int64) *GoodInfoCreate {
-	if i != nil {
-		gic.SetCreateAt(*i)
+func (gic *GoodInfoCreate) SetNillableCreateAt(u *uint32) *GoodInfoCreate {
+	if u != nil {
+		gic.SetCreateAt(*u)
 	}
 	return gic
 }
 
 // SetUpdateAt sets the "update_at" field.
-func (gic *GoodInfoCreate) SetUpdateAt(i int64) *GoodInfoCreate {
-	gic.mutation.SetUpdateAt(i)
+func (gic *GoodInfoCreate) SetUpdateAt(u uint32) *GoodInfoCreate {
+	gic.mutation.SetUpdateAt(u)
 	return gic
 }
 
 // SetNillableUpdateAt sets the "update_at" field if the given value is not nil.
-func (gic *GoodInfoCreate) SetNillableUpdateAt(i *int64) *GoodInfoCreate {
-	if i != nil {
-		gic.SetUpdateAt(*i)
+func (gic *GoodInfoCreate) SetNillableUpdateAt(u *uint32) *GoodInfoCreate {
+	if u != nil {
+		gic.SetUpdateAt(*u)
 	}
 	return gic
 }
 
 // SetDeleteAt sets the "delete_at" field.
-func (gic *GoodInfoCreate) SetDeleteAt(i int64) *GoodInfoCreate {
-	gic.mutation.SetDeleteAt(i)
+func (gic *GoodInfoCreate) SetDeleteAt(u uint32) *GoodInfoCreate {
+	gic.mutation.SetDeleteAt(u)
 	return gic
 }
 
 // SetNillableDeleteAt sets the "delete_at" field if the given value is not nil.
-func (gic *GoodInfoCreate) SetNillableDeleteAt(i *int64) *GoodInfoCreate {
-	if i != nil {
-		gic.SetDeleteAt(*i)
+func (gic *GoodInfoCreate) SetNillableDeleteAt(u *uint32) *GoodInfoCreate {
+	if u != nil {
+		gic.SetDeleteAt(*u)
 	}
 	return gic
 }
@@ -255,16 +285,8 @@ func (gic *GoodInfoCreate) check() error {
 	if _, ok := gic.mutation.DeviceInfoID(); !ok {
 		return &ValidationError{Name: "device_info_id", err: errors.New(`ent: missing required field "device_info_id"`)}
 	}
-	if _, ok := gic.mutation.GasPrice(); !ok {
-		return &ValidationError{Name: "gas_price", err: errors.New(`ent: missing required field "gas_price"`)}
-	}
-	if v, ok := gic.mutation.GasPrice(); ok {
-		if err := goodinfo.GasPriceValidator(v); err != nil {
-			return &ValidationError{Name: "gas_price", err: fmt.Errorf(`ent: validator failed for field "gas_price": %w`, err)}
-		}
-	}
-	if _, ok := gic.mutation.SeparateGasFee(); !ok {
-		return &ValidationError{Name: "separate_gas_fee", err: errors.New(`ent: missing required field "separate_gas_fee"`)}
+	if _, ok := gic.mutation.SeparateFee(); !ok {
+		return &ValidationError{Name: "separate_fee", err: errors.New(`ent: missing required field "separate_fee"`)}
 	}
 	if _, ok := gic.mutation.UnitPower(); !ok {
 		return &ValidationError{Name: "unit_power", err: errors.New(`ent: missing required field "unit_power"`)}
@@ -305,6 +327,15 @@ func (gic *GoodInfoCreate) check() error {
 			return &ValidationError{Name: "price", err: fmt.Errorf(`ent: validator failed for field "price": %w`, err)}
 		}
 	}
+	if _, ok := gic.mutation.PriceUnit(); !ok {
+		return &ValidationError{Name: "price_unit", err: errors.New(`ent: missing required field "price_unit"`)}
+	}
+	if _, ok := gic.mutation.PriceCurrency(); !ok {
+		return &ValidationError{Name: "price_currency", err: errors.New(`ent: missing required field "price_currency"`)}
+	}
+	if _, ok := gic.mutation.PriceSymbol(); !ok {
+		return &ValidationError{Name: "price_symbol", err: errors.New(`ent: missing required field "price_symbol"`)}
+	}
 	if _, ok := gic.mutation.BenefitType(); !ok {
 		return &ValidationError{Name: "benefit_type", err: errors.New(`ent: missing required field "benefit_type"`)}
 	}
@@ -315,6 +346,15 @@ func (gic *GoodInfoCreate) check() error {
 	}
 	if _, ok := gic.mutation.Classic(); !ok {
 		return &ValidationError{Name: "classic", err: errors.New(`ent: missing required field "classic"`)}
+	}
+	if _, ok := gic.mutation.Title(); !ok {
+		return &ValidationError{Name: "title", err: errors.New(`ent: missing required field "title"`)}
+	}
+	if _, ok := gic.mutation.Unit(); !ok {
+		return &ValidationError{Name: "unit", err: errors.New(`ent: missing required field "unit"`)}
+	}
+	if _, ok := gic.mutation.Start(); !ok {
+		return &ValidationError{Name: "start", err: errors.New(`ent: missing required field "start"`)}
 	}
 	if _, ok := gic.mutation.SupportCoinTypeIds(); !ok {
 		return &ValidationError{Name: "support_coin_type_ids", err: errors.New(`ent: missing required field "support_coin_type_ids"`)}
@@ -377,21 +417,13 @@ func (gic *GoodInfoCreate) createSpec() (*GoodInfo, *sqlgraph.CreateSpec) {
 		})
 		_node.DeviceInfoID = value
 	}
-	if value, ok := gic.mutation.GasPrice(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeUint64,
-			Value:  value,
-			Column: goodinfo.FieldGasPrice,
-		})
-		_node.GasPrice = value
-	}
-	if value, ok := gic.mutation.SeparateGasFee(); ok {
+	if value, ok := gic.mutation.SeparateFee(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
 			Type:   field.TypeBool,
 			Value:  value,
-			Column: goodinfo.FieldSeparateGasFee,
+			Column: goodinfo.FieldSeparateFee,
 		})
-		_node.SeparateGasFee = value
+		_node.SeparateFee = value
 	}
 	if value, ok := gic.mutation.UnitPower(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
@@ -457,6 +489,30 @@ func (gic *GoodInfoCreate) createSpec() (*GoodInfo, *sqlgraph.CreateSpec) {
 		})
 		_node.Price = value
 	}
+	if value, ok := gic.mutation.PriceUnit(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: goodinfo.FieldPriceUnit,
+		})
+		_node.PriceUnit = value
+	}
+	if value, ok := gic.mutation.PriceCurrency(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: goodinfo.FieldPriceCurrency,
+		})
+		_node.PriceCurrency = value
+	}
+	if value, ok := gic.mutation.PriceSymbol(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: goodinfo.FieldPriceSymbol,
+		})
+		_node.PriceSymbol = value
+	}
 	if value, ok := gic.mutation.BenefitType(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
 			Type:   field.TypeEnum,
@@ -472,6 +528,30 @@ func (gic *GoodInfoCreate) createSpec() (*GoodInfo, *sqlgraph.CreateSpec) {
 			Column: goodinfo.FieldClassic,
 		})
 		_node.Classic = value
+	}
+	if value, ok := gic.mutation.Title(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: goodinfo.FieldTitle,
+		})
+		_node.Title = value
+	}
+	if value, ok := gic.mutation.Unit(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: goodinfo.FieldUnit,
+		})
+		_node.Unit = value
+	}
+	if value, ok := gic.mutation.Start(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeUint32,
+			Value:  value,
+			Column: goodinfo.FieldStart,
+		})
+		_node.Start = value
 	}
 	if value, ok := gic.mutation.SupportCoinTypeIds(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
@@ -491,7 +571,7 @@ func (gic *GoodInfoCreate) createSpec() (*GoodInfo, *sqlgraph.CreateSpec) {
 	}
 	if value, ok := gic.mutation.CreateAt(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
+			Type:   field.TypeUint32,
 			Value:  value,
 			Column: goodinfo.FieldCreateAt,
 		})
@@ -499,7 +579,7 @@ func (gic *GoodInfoCreate) createSpec() (*GoodInfo, *sqlgraph.CreateSpec) {
 	}
 	if value, ok := gic.mutation.UpdateAt(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
+			Type:   field.TypeUint32,
 			Value:  value,
 			Column: goodinfo.FieldUpdateAt,
 		})
@@ -507,7 +587,7 @@ func (gic *GoodInfoCreate) createSpec() (*GoodInfo, *sqlgraph.CreateSpec) {
 	}
 	if value, ok := gic.mutation.DeleteAt(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
+			Type:   field.TypeUint32,
 			Value:  value,
 			Column: goodinfo.FieldDeleteAt,
 		})
@@ -579,27 +659,15 @@ func (u *GoodInfoUpsert) UpdateDeviceInfoID() *GoodInfoUpsert {
 	return u
 }
 
-// SetGasPrice sets the "gas_price" field.
-func (u *GoodInfoUpsert) SetGasPrice(v uint64) *GoodInfoUpsert {
-	u.Set(goodinfo.FieldGasPrice, v)
+// SetSeparateFee sets the "separate_fee" field.
+func (u *GoodInfoUpsert) SetSeparateFee(v bool) *GoodInfoUpsert {
+	u.Set(goodinfo.FieldSeparateFee, v)
 	return u
 }
 
-// UpdateGasPrice sets the "gas_price" field to the value that was provided on create.
-func (u *GoodInfoUpsert) UpdateGasPrice() *GoodInfoUpsert {
-	u.SetExcluded(goodinfo.FieldGasPrice)
-	return u
-}
-
-// SetSeparateGasFee sets the "separate_gas_fee" field.
-func (u *GoodInfoUpsert) SetSeparateGasFee(v bool) *GoodInfoUpsert {
-	u.Set(goodinfo.FieldSeparateGasFee, v)
-	return u
-}
-
-// UpdateSeparateGasFee sets the "separate_gas_fee" field to the value that was provided on create.
-func (u *GoodInfoUpsert) UpdateSeparateGasFee() *GoodInfoUpsert {
-	u.SetExcluded(goodinfo.FieldSeparateGasFee)
+// UpdateSeparateFee sets the "separate_fee" field to the value that was provided on create.
+func (u *GoodInfoUpsert) UpdateSeparateFee() *GoodInfoUpsert {
+	u.SetExcluded(goodinfo.FieldSeparateFee)
 	return u
 }
 
@@ -699,6 +767,42 @@ func (u *GoodInfoUpsert) UpdatePrice() *GoodInfoUpsert {
 	return u
 }
 
+// SetPriceUnit sets the "price_unit" field.
+func (u *GoodInfoUpsert) SetPriceUnit(v string) *GoodInfoUpsert {
+	u.Set(goodinfo.FieldPriceUnit, v)
+	return u
+}
+
+// UpdatePriceUnit sets the "price_unit" field to the value that was provided on create.
+func (u *GoodInfoUpsert) UpdatePriceUnit() *GoodInfoUpsert {
+	u.SetExcluded(goodinfo.FieldPriceUnit)
+	return u
+}
+
+// SetPriceCurrency sets the "price_currency" field.
+func (u *GoodInfoUpsert) SetPriceCurrency(v string) *GoodInfoUpsert {
+	u.Set(goodinfo.FieldPriceCurrency, v)
+	return u
+}
+
+// UpdatePriceCurrency sets the "price_currency" field to the value that was provided on create.
+func (u *GoodInfoUpsert) UpdatePriceCurrency() *GoodInfoUpsert {
+	u.SetExcluded(goodinfo.FieldPriceCurrency)
+	return u
+}
+
+// SetPriceSymbol sets the "price_symbol" field.
+func (u *GoodInfoUpsert) SetPriceSymbol(v string) *GoodInfoUpsert {
+	u.Set(goodinfo.FieldPriceSymbol, v)
+	return u
+}
+
+// UpdatePriceSymbol sets the "price_symbol" field to the value that was provided on create.
+func (u *GoodInfoUpsert) UpdatePriceSymbol() *GoodInfoUpsert {
+	u.SetExcluded(goodinfo.FieldPriceSymbol)
+	return u
+}
+
 // SetBenefitType sets the "benefit_type" field.
 func (u *GoodInfoUpsert) SetBenefitType(v goodinfo.BenefitType) *GoodInfoUpsert {
 	u.Set(goodinfo.FieldBenefitType, v)
@@ -720,6 +824,42 @@ func (u *GoodInfoUpsert) SetClassic(v bool) *GoodInfoUpsert {
 // UpdateClassic sets the "classic" field to the value that was provided on create.
 func (u *GoodInfoUpsert) UpdateClassic() *GoodInfoUpsert {
 	u.SetExcluded(goodinfo.FieldClassic)
+	return u
+}
+
+// SetTitle sets the "title" field.
+func (u *GoodInfoUpsert) SetTitle(v string) *GoodInfoUpsert {
+	u.Set(goodinfo.FieldTitle, v)
+	return u
+}
+
+// UpdateTitle sets the "title" field to the value that was provided on create.
+func (u *GoodInfoUpsert) UpdateTitle() *GoodInfoUpsert {
+	u.SetExcluded(goodinfo.FieldTitle)
+	return u
+}
+
+// SetUnit sets the "unit" field.
+func (u *GoodInfoUpsert) SetUnit(v string) *GoodInfoUpsert {
+	u.Set(goodinfo.FieldUnit, v)
+	return u
+}
+
+// UpdateUnit sets the "unit" field to the value that was provided on create.
+func (u *GoodInfoUpsert) UpdateUnit() *GoodInfoUpsert {
+	u.SetExcluded(goodinfo.FieldUnit)
+	return u
+}
+
+// SetStart sets the "start" field.
+func (u *GoodInfoUpsert) SetStart(v uint32) *GoodInfoUpsert {
+	u.Set(goodinfo.FieldStart, v)
+	return u
+}
+
+// UpdateStart sets the "start" field to the value that was provided on create.
+func (u *GoodInfoUpsert) UpdateStart() *GoodInfoUpsert {
+	u.SetExcluded(goodinfo.FieldStart)
 	return u
 }
 
@@ -748,7 +888,7 @@ func (u *GoodInfoUpsert) UpdateTotal() *GoodInfoUpsert {
 }
 
 // SetCreateAt sets the "create_at" field.
-func (u *GoodInfoUpsert) SetCreateAt(v int64) *GoodInfoUpsert {
+func (u *GoodInfoUpsert) SetCreateAt(v uint32) *GoodInfoUpsert {
 	u.Set(goodinfo.FieldCreateAt, v)
 	return u
 }
@@ -760,7 +900,7 @@ func (u *GoodInfoUpsert) UpdateCreateAt() *GoodInfoUpsert {
 }
 
 // SetUpdateAt sets the "update_at" field.
-func (u *GoodInfoUpsert) SetUpdateAt(v int64) *GoodInfoUpsert {
+func (u *GoodInfoUpsert) SetUpdateAt(v uint32) *GoodInfoUpsert {
 	u.Set(goodinfo.FieldUpdateAt, v)
 	return u
 }
@@ -772,7 +912,7 @@ func (u *GoodInfoUpsert) UpdateUpdateAt() *GoodInfoUpsert {
 }
 
 // SetDeleteAt sets the "delete_at" field.
-func (u *GoodInfoUpsert) SetDeleteAt(v int64) *GoodInfoUpsert {
+func (u *GoodInfoUpsert) SetDeleteAt(v uint32) *GoodInfoUpsert {
 	u.Set(goodinfo.FieldDeleteAt, v)
 	return u
 }
@@ -847,31 +987,17 @@ func (u *GoodInfoUpsertOne) UpdateDeviceInfoID() *GoodInfoUpsertOne {
 	})
 }
 
-// SetGasPrice sets the "gas_price" field.
-func (u *GoodInfoUpsertOne) SetGasPrice(v uint64) *GoodInfoUpsertOne {
+// SetSeparateFee sets the "separate_fee" field.
+func (u *GoodInfoUpsertOne) SetSeparateFee(v bool) *GoodInfoUpsertOne {
 	return u.Update(func(s *GoodInfoUpsert) {
-		s.SetGasPrice(v)
+		s.SetSeparateFee(v)
 	})
 }
 
-// UpdateGasPrice sets the "gas_price" field to the value that was provided on create.
-func (u *GoodInfoUpsertOne) UpdateGasPrice() *GoodInfoUpsertOne {
+// UpdateSeparateFee sets the "separate_fee" field to the value that was provided on create.
+func (u *GoodInfoUpsertOne) UpdateSeparateFee() *GoodInfoUpsertOne {
 	return u.Update(func(s *GoodInfoUpsert) {
-		s.UpdateGasPrice()
-	})
-}
-
-// SetSeparateGasFee sets the "separate_gas_fee" field.
-func (u *GoodInfoUpsertOne) SetSeparateGasFee(v bool) *GoodInfoUpsertOne {
-	return u.Update(func(s *GoodInfoUpsert) {
-		s.SetSeparateGasFee(v)
-	})
-}
-
-// UpdateSeparateGasFee sets the "separate_gas_fee" field to the value that was provided on create.
-func (u *GoodInfoUpsertOne) UpdateSeparateGasFee() *GoodInfoUpsertOne {
-	return u.Update(func(s *GoodInfoUpsert) {
-		s.UpdateSeparateGasFee()
+		s.UpdateSeparateFee()
 	})
 }
 
@@ -987,6 +1113,48 @@ func (u *GoodInfoUpsertOne) UpdatePrice() *GoodInfoUpsertOne {
 	})
 }
 
+// SetPriceUnit sets the "price_unit" field.
+func (u *GoodInfoUpsertOne) SetPriceUnit(v string) *GoodInfoUpsertOne {
+	return u.Update(func(s *GoodInfoUpsert) {
+		s.SetPriceUnit(v)
+	})
+}
+
+// UpdatePriceUnit sets the "price_unit" field to the value that was provided on create.
+func (u *GoodInfoUpsertOne) UpdatePriceUnit() *GoodInfoUpsertOne {
+	return u.Update(func(s *GoodInfoUpsert) {
+		s.UpdatePriceUnit()
+	})
+}
+
+// SetPriceCurrency sets the "price_currency" field.
+func (u *GoodInfoUpsertOne) SetPriceCurrency(v string) *GoodInfoUpsertOne {
+	return u.Update(func(s *GoodInfoUpsert) {
+		s.SetPriceCurrency(v)
+	})
+}
+
+// UpdatePriceCurrency sets the "price_currency" field to the value that was provided on create.
+func (u *GoodInfoUpsertOne) UpdatePriceCurrency() *GoodInfoUpsertOne {
+	return u.Update(func(s *GoodInfoUpsert) {
+		s.UpdatePriceCurrency()
+	})
+}
+
+// SetPriceSymbol sets the "price_symbol" field.
+func (u *GoodInfoUpsertOne) SetPriceSymbol(v string) *GoodInfoUpsertOne {
+	return u.Update(func(s *GoodInfoUpsert) {
+		s.SetPriceSymbol(v)
+	})
+}
+
+// UpdatePriceSymbol sets the "price_symbol" field to the value that was provided on create.
+func (u *GoodInfoUpsertOne) UpdatePriceSymbol() *GoodInfoUpsertOne {
+	return u.Update(func(s *GoodInfoUpsert) {
+		s.UpdatePriceSymbol()
+	})
+}
+
 // SetBenefitType sets the "benefit_type" field.
 func (u *GoodInfoUpsertOne) SetBenefitType(v goodinfo.BenefitType) *GoodInfoUpsertOne {
 	return u.Update(func(s *GoodInfoUpsert) {
@@ -1012,6 +1180,48 @@ func (u *GoodInfoUpsertOne) SetClassic(v bool) *GoodInfoUpsertOne {
 func (u *GoodInfoUpsertOne) UpdateClassic() *GoodInfoUpsertOne {
 	return u.Update(func(s *GoodInfoUpsert) {
 		s.UpdateClassic()
+	})
+}
+
+// SetTitle sets the "title" field.
+func (u *GoodInfoUpsertOne) SetTitle(v string) *GoodInfoUpsertOne {
+	return u.Update(func(s *GoodInfoUpsert) {
+		s.SetTitle(v)
+	})
+}
+
+// UpdateTitle sets the "title" field to the value that was provided on create.
+func (u *GoodInfoUpsertOne) UpdateTitle() *GoodInfoUpsertOne {
+	return u.Update(func(s *GoodInfoUpsert) {
+		s.UpdateTitle()
+	})
+}
+
+// SetUnit sets the "unit" field.
+func (u *GoodInfoUpsertOne) SetUnit(v string) *GoodInfoUpsertOne {
+	return u.Update(func(s *GoodInfoUpsert) {
+		s.SetUnit(v)
+	})
+}
+
+// UpdateUnit sets the "unit" field to the value that was provided on create.
+func (u *GoodInfoUpsertOne) UpdateUnit() *GoodInfoUpsertOne {
+	return u.Update(func(s *GoodInfoUpsert) {
+		s.UpdateUnit()
+	})
+}
+
+// SetStart sets the "start" field.
+func (u *GoodInfoUpsertOne) SetStart(v uint32) *GoodInfoUpsertOne {
+	return u.Update(func(s *GoodInfoUpsert) {
+		s.SetStart(v)
+	})
+}
+
+// UpdateStart sets the "start" field to the value that was provided on create.
+func (u *GoodInfoUpsertOne) UpdateStart() *GoodInfoUpsertOne {
+	return u.Update(func(s *GoodInfoUpsert) {
+		s.UpdateStart()
 	})
 }
 
@@ -1044,7 +1254,7 @@ func (u *GoodInfoUpsertOne) UpdateTotal() *GoodInfoUpsertOne {
 }
 
 // SetCreateAt sets the "create_at" field.
-func (u *GoodInfoUpsertOne) SetCreateAt(v int64) *GoodInfoUpsertOne {
+func (u *GoodInfoUpsertOne) SetCreateAt(v uint32) *GoodInfoUpsertOne {
 	return u.Update(func(s *GoodInfoUpsert) {
 		s.SetCreateAt(v)
 	})
@@ -1058,7 +1268,7 @@ func (u *GoodInfoUpsertOne) UpdateCreateAt() *GoodInfoUpsertOne {
 }
 
 // SetUpdateAt sets the "update_at" field.
-func (u *GoodInfoUpsertOne) SetUpdateAt(v int64) *GoodInfoUpsertOne {
+func (u *GoodInfoUpsertOne) SetUpdateAt(v uint32) *GoodInfoUpsertOne {
 	return u.Update(func(s *GoodInfoUpsert) {
 		s.SetUpdateAt(v)
 	})
@@ -1072,7 +1282,7 @@ func (u *GoodInfoUpsertOne) UpdateUpdateAt() *GoodInfoUpsertOne {
 }
 
 // SetDeleteAt sets the "delete_at" field.
-func (u *GoodInfoUpsertOne) SetDeleteAt(v int64) *GoodInfoUpsertOne {
+func (u *GoodInfoUpsertOne) SetDeleteAt(v uint32) *GoodInfoUpsertOne {
 	return u.Update(func(s *GoodInfoUpsert) {
 		s.SetDeleteAt(v)
 	})
@@ -1315,31 +1525,17 @@ func (u *GoodInfoUpsertBulk) UpdateDeviceInfoID() *GoodInfoUpsertBulk {
 	})
 }
 
-// SetGasPrice sets the "gas_price" field.
-func (u *GoodInfoUpsertBulk) SetGasPrice(v uint64) *GoodInfoUpsertBulk {
+// SetSeparateFee sets the "separate_fee" field.
+func (u *GoodInfoUpsertBulk) SetSeparateFee(v bool) *GoodInfoUpsertBulk {
 	return u.Update(func(s *GoodInfoUpsert) {
-		s.SetGasPrice(v)
+		s.SetSeparateFee(v)
 	})
 }
 
-// UpdateGasPrice sets the "gas_price" field to the value that was provided on create.
-func (u *GoodInfoUpsertBulk) UpdateGasPrice() *GoodInfoUpsertBulk {
+// UpdateSeparateFee sets the "separate_fee" field to the value that was provided on create.
+func (u *GoodInfoUpsertBulk) UpdateSeparateFee() *GoodInfoUpsertBulk {
 	return u.Update(func(s *GoodInfoUpsert) {
-		s.UpdateGasPrice()
-	})
-}
-
-// SetSeparateGasFee sets the "separate_gas_fee" field.
-func (u *GoodInfoUpsertBulk) SetSeparateGasFee(v bool) *GoodInfoUpsertBulk {
-	return u.Update(func(s *GoodInfoUpsert) {
-		s.SetSeparateGasFee(v)
-	})
-}
-
-// UpdateSeparateGasFee sets the "separate_gas_fee" field to the value that was provided on create.
-func (u *GoodInfoUpsertBulk) UpdateSeparateGasFee() *GoodInfoUpsertBulk {
-	return u.Update(func(s *GoodInfoUpsert) {
-		s.UpdateSeparateGasFee()
+		s.UpdateSeparateFee()
 	})
 }
 
@@ -1455,6 +1651,48 @@ func (u *GoodInfoUpsertBulk) UpdatePrice() *GoodInfoUpsertBulk {
 	})
 }
 
+// SetPriceUnit sets the "price_unit" field.
+func (u *GoodInfoUpsertBulk) SetPriceUnit(v string) *GoodInfoUpsertBulk {
+	return u.Update(func(s *GoodInfoUpsert) {
+		s.SetPriceUnit(v)
+	})
+}
+
+// UpdatePriceUnit sets the "price_unit" field to the value that was provided on create.
+func (u *GoodInfoUpsertBulk) UpdatePriceUnit() *GoodInfoUpsertBulk {
+	return u.Update(func(s *GoodInfoUpsert) {
+		s.UpdatePriceUnit()
+	})
+}
+
+// SetPriceCurrency sets the "price_currency" field.
+func (u *GoodInfoUpsertBulk) SetPriceCurrency(v string) *GoodInfoUpsertBulk {
+	return u.Update(func(s *GoodInfoUpsert) {
+		s.SetPriceCurrency(v)
+	})
+}
+
+// UpdatePriceCurrency sets the "price_currency" field to the value that was provided on create.
+func (u *GoodInfoUpsertBulk) UpdatePriceCurrency() *GoodInfoUpsertBulk {
+	return u.Update(func(s *GoodInfoUpsert) {
+		s.UpdatePriceCurrency()
+	})
+}
+
+// SetPriceSymbol sets the "price_symbol" field.
+func (u *GoodInfoUpsertBulk) SetPriceSymbol(v string) *GoodInfoUpsertBulk {
+	return u.Update(func(s *GoodInfoUpsert) {
+		s.SetPriceSymbol(v)
+	})
+}
+
+// UpdatePriceSymbol sets the "price_symbol" field to the value that was provided on create.
+func (u *GoodInfoUpsertBulk) UpdatePriceSymbol() *GoodInfoUpsertBulk {
+	return u.Update(func(s *GoodInfoUpsert) {
+		s.UpdatePriceSymbol()
+	})
+}
+
 // SetBenefitType sets the "benefit_type" field.
 func (u *GoodInfoUpsertBulk) SetBenefitType(v goodinfo.BenefitType) *GoodInfoUpsertBulk {
 	return u.Update(func(s *GoodInfoUpsert) {
@@ -1480,6 +1718,48 @@ func (u *GoodInfoUpsertBulk) SetClassic(v bool) *GoodInfoUpsertBulk {
 func (u *GoodInfoUpsertBulk) UpdateClassic() *GoodInfoUpsertBulk {
 	return u.Update(func(s *GoodInfoUpsert) {
 		s.UpdateClassic()
+	})
+}
+
+// SetTitle sets the "title" field.
+func (u *GoodInfoUpsertBulk) SetTitle(v string) *GoodInfoUpsertBulk {
+	return u.Update(func(s *GoodInfoUpsert) {
+		s.SetTitle(v)
+	})
+}
+
+// UpdateTitle sets the "title" field to the value that was provided on create.
+func (u *GoodInfoUpsertBulk) UpdateTitle() *GoodInfoUpsertBulk {
+	return u.Update(func(s *GoodInfoUpsert) {
+		s.UpdateTitle()
+	})
+}
+
+// SetUnit sets the "unit" field.
+func (u *GoodInfoUpsertBulk) SetUnit(v string) *GoodInfoUpsertBulk {
+	return u.Update(func(s *GoodInfoUpsert) {
+		s.SetUnit(v)
+	})
+}
+
+// UpdateUnit sets the "unit" field to the value that was provided on create.
+func (u *GoodInfoUpsertBulk) UpdateUnit() *GoodInfoUpsertBulk {
+	return u.Update(func(s *GoodInfoUpsert) {
+		s.UpdateUnit()
+	})
+}
+
+// SetStart sets the "start" field.
+func (u *GoodInfoUpsertBulk) SetStart(v uint32) *GoodInfoUpsertBulk {
+	return u.Update(func(s *GoodInfoUpsert) {
+		s.SetStart(v)
+	})
+}
+
+// UpdateStart sets the "start" field to the value that was provided on create.
+func (u *GoodInfoUpsertBulk) UpdateStart() *GoodInfoUpsertBulk {
+	return u.Update(func(s *GoodInfoUpsert) {
+		s.UpdateStart()
 	})
 }
 
@@ -1512,7 +1792,7 @@ func (u *GoodInfoUpsertBulk) UpdateTotal() *GoodInfoUpsertBulk {
 }
 
 // SetCreateAt sets the "create_at" field.
-func (u *GoodInfoUpsertBulk) SetCreateAt(v int64) *GoodInfoUpsertBulk {
+func (u *GoodInfoUpsertBulk) SetCreateAt(v uint32) *GoodInfoUpsertBulk {
 	return u.Update(func(s *GoodInfoUpsert) {
 		s.SetCreateAt(v)
 	})
@@ -1526,7 +1806,7 @@ func (u *GoodInfoUpsertBulk) UpdateCreateAt() *GoodInfoUpsertBulk {
 }
 
 // SetUpdateAt sets the "update_at" field.
-func (u *GoodInfoUpsertBulk) SetUpdateAt(v int64) *GoodInfoUpsertBulk {
+func (u *GoodInfoUpsertBulk) SetUpdateAt(v uint32) *GoodInfoUpsertBulk {
 	return u.Update(func(s *GoodInfoUpsert) {
 		s.SetUpdateAt(v)
 	})
@@ -1540,7 +1820,7 @@ func (u *GoodInfoUpsertBulk) UpdateUpdateAt() *GoodInfoUpsertBulk {
 }
 
 // SetDeleteAt sets the "delete_at" field.
-func (u *GoodInfoUpsertBulk) SetDeleteAt(v int64) *GoodInfoUpsertBulk {
+func (u *GoodInfoUpsertBulk) SetDeleteAt(v uint32) *GoodInfoUpsertBulk {
 	return u.Update(func(s *GoodInfoUpsert) {
 		s.SetDeleteAt(v)
 	})

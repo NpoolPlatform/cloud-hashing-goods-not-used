@@ -21,9 +21,7 @@ func (GoodInfo) Fields() []ent.Field {
 			Default(uuid.New).
 			Unique(),
 		field.UUID("device_info_id", uuid.UUID{}),
-		field.Uint64("gas_price").
-			Positive(),
-		field.Bool("separate_gas_fee"),
+		field.Bool("separate_fee"),
 		field.Int32("unit_power").
 			Positive(),
 		field.Int32("duration_days").
@@ -35,25 +33,31 @@ func (GoodInfo) Fields() []ent.Field {
 		field.UUID("vendor_location_id", uuid.UUID{}),
 		field.Uint64("price").
 			Positive(),
+		field.String("price_unit"),
+		field.String("price_currency"),
+		field.String("price_symbol"),
 		field.Enum("benefit_type").
 			Values("pool", "platform"),
 		field.Bool("classic"),
+		field.String("title"),
+		field.String("unit"),
+		field.Uint32("start"),
 		field.JSON("support_coin_type_ids", []uuid.UUID{}),
 		field.Int32("total").
 			Positive(),
-		field.Int64("create_at").
-			DefaultFunc(func() int64 {
-				return time.Now().UnixNano()
+		field.Uint32("create_at").
+			DefaultFunc(func() uint32 {
+				return uint32(time.Now().Unix())
 			}),
-		field.Int64("update_at").
-			DefaultFunc(func() int64 {
-				return time.Now().UnixNano()
+		field.Uint32("update_at").
+			DefaultFunc(func() uint32 {
+				return uint32(time.Now().Unix())
 			}).
-			UpdateDefault(func() int64 {
-				return time.Now().UnixNano()
+			UpdateDefault(func() uint32 {
+				return uint32(time.Now().Unix())
 			}),
-		field.Int64("delete_at").
-			DefaultFunc(func() int64 {
+		field.Uint32("delete_at").
+			DefaultFunc(func() uint32 {
 				return 0
 			}),
 	}

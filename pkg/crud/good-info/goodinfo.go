@@ -27,8 +27,7 @@ func dbRowToInfo(row *ent.GoodInfo) *npool.GoodInfo {
 	return &npool.GoodInfo{
 		ID:                 row.ID.String(),
 		DeviceInfoID:       row.DeviceInfoID.String(),
-		GasPrice:           price.DBPriceToVisualPrice(row.GasPrice),
-		SeparateGasFee:     row.SeparateGasFee,
+		SeparateFee:        row.SeparateFee,
 		UnitPower:          row.UnitPower,
 		DurationDays:       row.DurationDays,
 		CoinInfoID:         row.CoinInfoID.String(),
@@ -83,8 +82,7 @@ func Create(ctx context.Context, in *npool.CreateGoodRequest) (*npool.CreateGood
 		GoodInfo.
 		Create().
 		SetDeviceInfoID(uuid.MustParse(in.GetInfo().GetDeviceInfoID())).
-		SetGasPrice(price.VisualPriceToDBPrice(in.GetInfo().GetGasPrice())).
-		SetSeparateGasFee(in.GetInfo().GetSeparateGasFee()).
+		SetSeparateFee(in.GetInfo().GetSeparateFee()).
 		SetUnitPower(in.GetInfo().GetUnitPower()).
 		SetDurationDays(in.GetInfo().GetDurationDays()).
 		SetCoinInfoID(uuid.MustParse(in.GetInfo().GetCoinInfoID())).
@@ -126,8 +124,7 @@ func Update(ctx context.Context, in *npool.UpdateGoodRequest) (*npool.UpdateGood
 		GoodInfo.
 		UpdateOneID(goodID).
 		SetDeviceInfoID(uuid.MustParse(in.GetInfo().GetDeviceInfoID())).
-		SetGasPrice(price.VisualPriceToDBPrice(in.GetInfo().GetGasPrice())).
-		SetSeparateGasFee(in.GetInfo().GetSeparateGasFee()).
+		SetSeparateFee(in.GetInfo().GetSeparateFee()).
 		SetUnitPower(in.GetInfo().GetUnitPower()).
 		SetDurationDays(in.GetInfo().GetDurationDays()).
 		SetCoinInfoID(uuid.MustParse(in.GetInfo().GetCoinInfoID())).
@@ -186,7 +183,7 @@ func Delete(ctx context.Context, in *npool.DeleteGoodRequest) (*npool.DeleteGood
 	info, err := db.Client().
 		GoodInfo.
 		UpdateOneID(id).
-		SetDeleteAt(time.Now().UnixNano()).
+		SetDeleteAt(uint32(time.Now().Unix())).
 		Save(ctx)
 	if err != nil {
 		return nil, xerrors.Errorf("fail to delete good info: %v", err)

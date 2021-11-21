@@ -35,8 +35,7 @@ func assertGoodDetail(t *testing.T, actual *npool.GoodDetail, expectGoodInfo *np
 	assert.Equal(t, actual.DeviceInfo.Manufacturer, expectDevice.Manufacturer)
 	assert.Equal(t, actual.DeviceInfo.PowerComsuption, expectDevice.PowerComsuption)
 	assert.Equal(t, actual.DeviceInfo.ShipmentAt, expectDevice.ShipmentAt)
-	assert.Equal(t, actual.GasPrice, expectGoodInfo.GasPrice)
-	assert.Equal(t, actual.SeparateGasFee, expectGoodInfo.SeparateGasFee)
+	assert.Equal(t, actual.SeparateFee, expectGoodInfo.SeparateFee)
 	assert.Equal(t, actual.UnitPower, expectGoodInfo.UnitPower)
 	assert.Equal(t, actual.DurationDays, expectGoodInfo.DurationDays)
 	assert.Equal(t, actual.CoinInfoID, expectGoodInfo.CoinInfoID)
@@ -86,8 +85,7 @@ func TestGet(t *testing.T) {
 
 	goodInfo := npool.GoodInfo{
 		DeviceInfoID:       deviceResp.Info.ID,
-		GasPrice:           0.13,
-		SeparateGasFee:     true,
+		SeparateFee:        true,
 		UnitPower:          10,
 		DurationDays:       180,
 		CoinInfoID:         uuid.New().String(),

@@ -41,6 +41,18 @@ func (geic *GoodExtraInfoCreate) SetLabels(s []string) *GoodExtraInfoCreate {
 	return geic
 }
 
+// SetOutSale sets the "out_sale" field.
+func (geic *GoodExtraInfoCreate) SetOutSale(b bool) *GoodExtraInfoCreate {
+	geic.mutation.SetOutSale(b)
+	return geic
+}
+
+// SetPreSale sets the "pre_sale" field.
+func (geic *GoodExtraInfoCreate) SetPreSale(b bool) *GoodExtraInfoCreate {
+	geic.mutation.SetPreSale(b)
+	return geic
+}
+
 // SetCreateAt sets the "create_at" field.
 func (geic *GoodExtraInfoCreate) SetCreateAt(i int64) *GoodExtraInfoCreate {
 	geic.mutation.SetCreateAt(i)
@@ -189,6 +201,12 @@ func (geic *GoodExtraInfoCreate) check() error {
 	if _, ok := geic.mutation.Labels(); !ok {
 		return &ValidationError{Name: "labels", err: errors.New(`ent: missing required field "labels"`)}
 	}
+	if _, ok := geic.mutation.OutSale(); !ok {
+		return &ValidationError{Name: "out_sale", err: errors.New(`ent: missing required field "out_sale"`)}
+	}
+	if _, ok := geic.mutation.PreSale(); !ok {
+		return &ValidationError{Name: "pre_sale", err: errors.New(`ent: missing required field "pre_sale"`)}
+	}
 	if _, ok := geic.mutation.CreateAt(); !ok {
 		return &ValidationError{Name: "create_at", err: errors.New(`ent: missing required field "create_at"`)}
 	}
@@ -254,6 +272,22 @@ func (geic *GoodExtraInfoCreate) createSpec() (*GoodExtraInfo, *sqlgraph.CreateS
 			Column: goodextrainfo.FieldLabels,
 		})
 		_node.Labels = value
+	}
+	if value, ok := geic.mutation.OutSale(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeBool,
+			Value:  value,
+			Column: goodextrainfo.FieldOutSale,
+		})
+		_node.OutSale = value
+	}
+	if value, ok := geic.mutation.PreSale(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeBool,
+			Value:  value,
+			Column: goodextrainfo.FieldPreSale,
+		})
+		_node.PreSale = value
 	}
 	if value, ok := geic.mutation.CreateAt(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
@@ -366,6 +400,30 @@ func (u *GoodExtraInfoUpsert) SetLabels(v []string) *GoodExtraInfoUpsert {
 // UpdateLabels sets the "labels" field to the value that was provided on create.
 func (u *GoodExtraInfoUpsert) UpdateLabels() *GoodExtraInfoUpsert {
 	u.SetExcluded(goodextrainfo.FieldLabels)
+	return u
+}
+
+// SetOutSale sets the "out_sale" field.
+func (u *GoodExtraInfoUpsert) SetOutSale(v bool) *GoodExtraInfoUpsert {
+	u.Set(goodextrainfo.FieldOutSale, v)
+	return u
+}
+
+// UpdateOutSale sets the "out_sale" field to the value that was provided on create.
+func (u *GoodExtraInfoUpsert) UpdateOutSale() *GoodExtraInfoUpsert {
+	u.SetExcluded(goodextrainfo.FieldOutSale)
+	return u
+}
+
+// SetPreSale sets the "pre_sale" field.
+func (u *GoodExtraInfoUpsert) SetPreSale(v bool) *GoodExtraInfoUpsert {
+	u.Set(goodextrainfo.FieldPreSale, v)
+	return u
+}
+
+// UpdatePreSale sets the "pre_sale" field to the value that was provided on create.
+func (u *GoodExtraInfoUpsert) UpdatePreSale() *GoodExtraInfoUpsert {
+	u.SetExcluded(goodextrainfo.FieldPreSale)
 	return u
 }
 
@@ -494,6 +552,34 @@ func (u *GoodExtraInfoUpsertOne) SetLabels(v []string) *GoodExtraInfoUpsertOne {
 func (u *GoodExtraInfoUpsertOne) UpdateLabels() *GoodExtraInfoUpsertOne {
 	return u.Update(func(s *GoodExtraInfoUpsert) {
 		s.UpdateLabels()
+	})
+}
+
+// SetOutSale sets the "out_sale" field.
+func (u *GoodExtraInfoUpsertOne) SetOutSale(v bool) *GoodExtraInfoUpsertOne {
+	return u.Update(func(s *GoodExtraInfoUpsert) {
+		s.SetOutSale(v)
+	})
+}
+
+// UpdateOutSale sets the "out_sale" field to the value that was provided on create.
+func (u *GoodExtraInfoUpsertOne) UpdateOutSale() *GoodExtraInfoUpsertOne {
+	return u.Update(func(s *GoodExtraInfoUpsert) {
+		s.UpdateOutSale()
+	})
+}
+
+// SetPreSale sets the "pre_sale" field.
+func (u *GoodExtraInfoUpsertOne) SetPreSale(v bool) *GoodExtraInfoUpsertOne {
+	return u.Update(func(s *GoodExtraInfoUpsert) {
+		s.SetPreSale(v)
+	})
+}
+
+// UpdatePreSale sets the "pre_sale" field to the value that was provided on create.
+func (u *GoodExtraInfoUpsertOne) UpdatePreSale() *GoodExtraInfoUpsertOne {
+	return u.Update(func(s *GoodExtraInfoUpsert) {
+		s.UpdatePreSale()
 	})
 }
 
@@ -794,6 +880,34 @@ func (u *GoodExtraInfoUpsertBulk) SetLabels(v []string) *GoodExtraInfoUpsertBulk
 func (u *GoodExtraInfoUpsertBulk) UpdateLabels() *GoodExtraInfoUpsertBulk {
 	return u.Update(func(s *GoodExtraInfoUpsert) {
 		s.UpdateLabels()
+	})
+}
+
+// SetOutSale sets the "out_sale" field.
+func (u *GoodExtraInfoUpsertBulk) SetOutSale(v bool) *GoodExtraInfoUpsertBulk {
+	return u.Update(func(s *GoodExtraInfoUpsert) {
+		s.SetOutSale(v)
+	})
+}
+
+// UpdateOutSale sets the "out_sale" field to the value that was provided on create.
+func (u *GoodExtraInfoUpsertBulk) UpdateOutSale() *GoodExtraInfoUpsertBulk {
+	return u.Update(func(s *GoodExtraInfoUpsert) {
+		s.UpdateOutSale()
+	})
+}
+
+// SetPreSale sets the "pre_sale" field.
+func (u *GoodExtraInfoUpsertBulk) SetPreSale(v bool) *GoodExtraInfoUpsertBulk {
+	return u.Update(func(s *GoodExtraInfoUpsert) {
+		s.SetPreSale(v)
+	})
+}
+
+// UpdatePreSale sets the "pre_sale" field to the value that was provided on create.
+func (u *GoodExtraInfoUpsertBulk) UpdatePreSale() *GoodExtraInfoUpsertBulk {
+	return u.Update(func(s *GoodExtraInfoUpsert) {
+		s.UpdatePreSale()
 	})
 }
 

@@ -15,10 +15,8 @@ const (
 	FieldID = "id"
 	// FieldDeviceInfoID holds the string denoting the device_info_id field in the database.
 	FieldDeviceInfoID = "device_info_id"
-	// FieldGasPrice holds the string denoting the gas_price field in the database.
-	FieldGasPrice = "gas_price"
-	// FieldSeparateGasFee holds the string denoting the separate_gas_fee field in the database.
-	FieldSeparateGasFee = "separate_gas_fee"
+	// FieldSeparateFee holds the string denoting the separate_fee field in the database.
+	FieldSeparateFee = "separate_fee"
 	// FieldUnitPower holds the string denoting the unit_power field in the database.
 	FieldUnitPower = "unit_power"
 	// FieldDurationDays holds the string denoting the duration_days field in the database.
@@ -35,10 +33,22 @@ const (
 	FieldVendorLocationID = "vendor_location_id"
 	// FieldPrice holds the string denoting the price field in the database.
 	FieldPrice = "price"
+	// FieldPriceUnit holds the string denoting the price_unit field in the database.
+	FieldPriceUnit = "price_unit"
+	// FieldPriceCurrency holds the string denoting the price_currency field in the database.
+	FieldPriceCurrency = "price_currency"
+	// FieldPriceSymbol holds the string denoting the price_symbol field in the database.
+	FieldPriceSymbol = "price_symbol"
 	// FieldBenefitType holds the string denoting the benefit_type field in the database.
 	FieldBenefitType = "benefit_type"
 	// FieldClassic holds the string denoting the classic field in the database.
 	FieldClassic = "classic"
+	// FieldTitle holds the string denoting the title field in the database.
+	FieldTitle = "title"
+	// FieldUnit holds the string denoting the unit field in the database.
+	FieldUnit = "unit"
+	// FieldStart holds the string denoting the start field in the database.
+	FieldStart = "start"
 	// FieldSupportCoinTypeIds holds the string denoting the support_coin_type_ids field in the database.
 	FieldSupportCoinTypeIds = "support_coin_type_ids"
 	// FieldTotal holds the string denoting the total field in the database.
@@ -57,8 +67,7 @@ const (
 var Columns = []string{
 	FieldID,
 	FieldDeviceInfoID,
-	FieldGasPrice,
-	FieldSeparateGasFee,
+	FieldSeparateFee,
 	FieldUnitPower,
 	FieldDurationDays,
 	FieldCoinInfoID,
@@ -67,8 +76,14 @@ var Columns = []string{
 	FieldInheritFromGoodID,
 	FieldVendorLocationID,
 	FieldPrice,
+	FieldPriceUnit,
+	FieldPriceCurrency,
+	FieldPriceSymbol,
 	FieldBenefitType,
 	FieldClassic,
+	FieldTitle,
+	FieldUnit,
+	FieldStart,
 	FieldSupportCoinTypeIds,
 	FieldTotal,
 	FieldCreateAt,
@@ -87,8 +102,6 @@ func ValidColumn(column string) bool {
 }
 
 var (
-	// GasPriceValidator is a validator for the "gas_price" field. It is called by the builders before save.
-	GasPriceValidator func(uint64) error
 	// UnitPowerValidator is a validator for the "unit_power" field. It is called by the builders before save.
 	UnitPowerValidator func(int32) error
 	// DurationDaysValidator is a validator for the "duration_days" field. It is called by the builders before save.
@@ -98,13 +111,13 @@ var (
 	// TotalValidator is a validator for the "total" field. It is called by the builders before save.
 	TotalValidator func(int32) error
 	// DefaultCreateAt holds the default value on creation for the "create_at" field.
-	DefaultCreateAt func() int64
+	DefaultCreateAt func() uint32
 	// DefaultUpdateAt holds the default value on creation for the "update_at" field.
-	DefaultUpdateAt func() int64
+	DefaultUpdateAt func() uint32
 	// UpdateDefaultUpdateAt holds the default value on update for the "update_at" field.
-	UpdateDefaultUpdateAt func() int64
+	UpdateDefaultUpdateAt func() uint32
 	// DefaultDeleteAt holds the default value on creation for the "delete_at" field.
-	DefaultDeleteAt func() int64
+	DefaultDeleteAt func() uint32
 	// DefaultID holds the default value on creation for the "id" field.
 	DefaultID func() uuid.UUID
 )

@@ -33,22 +33,9 @@ func (giu *GoodInfoUpdate) SetDeviceInfoID(u uuid.UUID) *GoodInfoUpdate {
 	return giu
 }
 
-// SetGasPrice sets the "gas_price" field.
-func (giu *GoodInfoUpdate) SetGasPrice(u uint64) *GoodInfoUpdate {
-	giu.mutation.ResetGasPrice()
-	giu.mutation.SetGasPrice(u)
-	return giu
-}
-
-// AddGasPrice adds u to the "gas_price" field.
-func (giu *GoodInfoUpdate) AddGasPrice(u uint64) *GoodInfoUpdate {
-	giu.mutation.AddGasPrice(u)
-	return giu
-}
-
-// SetSeparateGasFee sets the "separate_gas_fee" field.
-func (giu *GoodInfoUpdate) SetSeparateGasFee(b bool) *GoodInfoUpdate {
-	giu.mutation.SetSeparateGasFee(b)
+// SetSeparateFee sets the "separate_fee" field.
+func (giu *GoodInfoUpdate) SetSeparateFee(b bool) *GoodInfoUpdate {
+	giu.mutation.SetSeparateFee(b)
 	return giu
 }
 
@@ -128,6 +115,24 @@ func (giu *GoodInfoUpdate) AddPrice(u uint64) *GoodInfoUpdate {
 	return giu
 }
 
+// SetPriceUnit sets the "price_unit" field.
+func (giu *GoodInfoUpdate) SetPriceUnit(s string) *GoodInfoUpdate {
+	giu.mutation.SetPriceUnit(s)
+	return giu
+}
+
+// SetPriceCurrency sets the "price_currency" field.
+func (giu *GoodInfoUpdate) SetPriceCurrency(s string) *GoodInfoUpdate {
+	giu.mutation.SetPriceCurrency(s)
+	return giu
+}
+
+// SetPriceSymbol sets the "price_symbol" field.
+func (giu *GoodInfoUpdate) SetPriceSymbol(s string) *GoodInfoUpdate {
+	giu.mutation.SetPriceSymbol(s)
+	return giu
+}
+
 // SetBenefitType sets the "benefit_type" field.
 func (giu *GoodInfoUpdate) SetBenefitType(gt goodinfo.BenefitType) *GoodInfoUpdate {
 	giu.mutation.SetBenefitType(gt)
@@ -137,6 +142,31 @@ func (giu *GoodInfoUpdate) SetBenefitType(gt goodinfo.BenefitType) *GoodInfoUpda
 // SetClassic sets the "classic" field.
 func (giu *GoodInfoUpdate) SetClassic(b bool) *GoodInfoUpdate {
 	giu.mutation.SetClassic(b)
+	return giu
+}
+
+// SetTitle sets the "title" field.
+func (giu *GoodInfoUpdate) SetTitle(s string) *GoodInfoUpdate {
+	giu.mutation.SetTitle(s)
+	return giu
+}
+
+// SetUnit sets the "unit" field.
+func (giu *GoodInfoUpdate) SetUnit(s string) *GoodInfoUpdate {
+	giu.mutation.SetUnit(s)
+	return giu
+}
+
+// SetStart sets the "start" field.
+func (giu *GoodInfoUpdate) SetStart(u uint32) *GoodInfoUpdate {
+	giu.mutation.ResetStart()
+	giu.mutation.SetStart(u)
+	return giu
+}
+
+// AddStart adds u to the "start" field.
+func (giu *GoodInfoUpdate) AddStart(u uint32) *GoodInfoUpdate {
+	giu.mutation.AddStart(u)
 	return giu
 }
 
@@ -160,57 +190,57 @@ func (giu *GoodInfoUpdate) AddTotal(i int32) *GoodInfoUpdate {
 }
 
 // SetCreateAt sets the "create_at" field.
-func (giu *GoodInfoUpdate) SetCreateAt(i int64) *GoodInfoUpdate {
+func (giu *GoodInfoUpdate) SetCreateAt(u uint32) *GoodInfoUpdate {
 	giu.mutation.ResetCreateAt()
-	giu.mutation.SetCreateAt(i)
+	giu.mutation.SetCreateAt(u)
 	return giu
 }
 
 // SetNillableCreateAt sets the "create_at" field if the given value is not nil.
-func (giu *GoodInfoUpdate) SetNillableCreateAt(i *int64) *GoodInfoUpdate {
-	if i != nil {
-		giu.SetCreateAt(*i)
+func (giu *GoodInfoUpdate) SetNillableCreateAt(u *uint32) *GoodInfoUpdate {
+	if u != nil {
+		giu.SetCreateAt(*u)
 	}
 	return giu
 }
 
-// AddCreateAt adds i to the "create_at" field.
-func (giu *GoodInfoUpdate) AddCreateAt(i int64) *GoodInfoUpdate {
-	giu.mutation.AddCreateAt(i)
+// AddCreateAt adds u to the "create_at" field.
+func (giu *GoodInfoUpdate) AddCreateAt(u uint32) *GoodInfoUpdate {
+	giu.mutation.AddCreateAt(u)
 	return giu
 }
 
 // SetUpdateAt sets the "update_at" field.
-func (giu *GoodInfoUpdate) SetUpdateAt(i int64) *GoodInfoUpdate {
+func (giu *GoodInfoUpdate) SetUpdateAt(u uint32) *GoodInfoUpdate {
 	giu.mutation.ResetUpdateAt()
-	giu.mutation.SetUpdateAt(i)
+	giu.mutation.SetUpdateAt(u)
 	return giu
 }
 
-// AddUpdateAt adds i to the "update_at" field.
-func (giu *GoodInfoUpdate) AddUpdateAt(i int64) *GoodInfoUpdate {
-	giu.mutation.AddUpdateAt(i)
+// AddUpdateAt adds u to the "update_at" field.
+func (giu *GoodInfoUpdate) AddUpdateAt(u uint32) *GoodInfoUpdate {
+	giu.mutation.AddUpdateAt(u)
 	return giu
 }
 
 // SetDeleteAt sets the "delete_at" field.
-func (giu *GoodInfoUpdate) SetDeleteAt(i int64) *GoodInfoUpdate {
+func (giu *GoodInfoUpdate) SetDeleteAt(u uint32) *GoodInfoUpdate {
 	giu.mutation.ResetDeleteAt()
-	giu.mutation.SetDeleteAt(i)
+	giu.mutation.SetDeleteAt(u)
 	return giu
 }
 
 // SetNillableDeleteAt sets the "delete_at" field if the given value is not nil.
-func (giu *GoodInfoUpdate) SetNillableDeleteAt(i *int64) *GoodInfoUpdate {
-	if i != nil {
-		giu.SetDeleteAt(*i)
+func (giu *GoodInfoUpdate) SetNillableDeleteAt(u *uint32) *GoodInfoUpdate {
+	if u != nil {
+		giu.SetDeleteAt(*u)
 	}
 	return giu
 }
 
-// AddDeleteAt adds i to the "delete_at" field.
-func (giu *GoodInfoUpdate) AddDeleteAt(i int64) *GoodInfoUpdate {
-	giu.mutation.AddDeleteAt(i)
+// AddDeleteAt adds u to the "delete_at" field.
+func (giu *GoodInfoUpdate) AddDeleteAt(u uint32) *GoodInfoUpdate {
+	giu.mutation.AddDeleteAt(u)
 	return giu
 }
 
@@ -290,11 +320,6 @@ func (giu *GoodInfoUpdate) defaults() {
 
 // check runs all checks and user-defined validators on the builder.
 func (giu *GoodInfoUpdate) check() error {
-	if v, ok := giu.mutation.GasPrice(); ok {
-		if err := goodinfo.GasPriceValidator(v); err != nil {
-			return &ValidationError{Name: "gas_price", err: fmt.Errorf("ent: validator failed for field \"gas_price\": %w", err)}
-		}
-	}
 	if v, ok := giu.mutation.UnitPower(); ok {
 		if err := goodinfo.UnitPowerValidator(v); err != nil {
 			return &ValidationError{Name: "unit_power", err: fmt.Errorf("ent: validator failed for field \"unit_power\": %w", err)}
@@ -348,25 +373,11 @@ func (giu *GoodInfoUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			Column: goodinfo.FieldDeviceInfoID,
 		})
 	}
-	if value, ok := giu.mutation.GasPrice(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeUint64,
-			Value:  value,
-			Column: goodinfo.FieldGasPrice,
-		})
-	}
-	if value, ok := giu.mutation.AddedGasPrice(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeUint64,
-			Value:  value,
-			Column: goodinfo.FieldGasPrice,
-		})
-	}
-	if value, ok := giu.mutation.SeparateGasFee(); ok {
+	if value, ok := giu.mutation.SeparateFee(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeBool,
 			Value:  value,
-			Column: goodinfo.FieldSeparateGasFee,
+			Column: goodinfo.FieldSeparateFee,
 		})
 	}
 	if value, ok := giu.mutation.UnitPower(); ok {
@@ -453,6 +464,27 @@ func (giu *GoodInfoUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			Column: goodinfo.FieldPrice,
 		})
 	}
+	if value, ok := giu.mutation.PriceUnit(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: goodinfo.FieldPriceUnit,
+		})
+	}
+	if value, ok := giu.mutation.PriceCurrency(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: goodinfo.FieldPriceCurrency,
+		})
+	}
+	if value, ok := giu.mutation.PriceSymbol(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: goodinfo.FieldPriceSymbol,
+		})
+	}
 	if value, ok := giu.mutation.BenefitType(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeEnum,
@@ -465,6 +497,34 @@ func (giu *GoodInfoUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			Type:   field.TypeBool,
 			Value:  value,
 			Column: goodinfo.FieldClassic,
+		})
+	}
+	if value, ok := giu.mutation.Title(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: goodinfo.FieldTitle,
+		})
+	}
+	if value, ok := giu.mutation.Unit(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: goodinfo.FieldUnit,
+		})
+	}
+	if value, ok := giu.mutation.Start(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeUint32,
+			Value:  value,
+			Column: goodinfo.FieldStart,
+		})
+	}
+	if value, ok := giu.mutation.AddedStart(); ok {
+		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
+			Type:   field.TypeUint32,
+			Value:  value,
+			Column: goodinfo.FieldStart,
 		})
 	}
 	if value, ok := giu.mutation.SupportCoinTypeIds(); ok {
@@ -490,42 +550,42 @@ func (giu *GoodInfoUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	}
 	if value, ok := giu.mutation.CreateAt(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
+			Type:   field.TypeUint32,
 			Value:  value,
 			Column: goodinfo.FieldCreateAt,
 		})
 	}
 	if value, ok := giu.mutation.AddedCreateAt(); ok {
 		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
+			Type:   field.TypeUint32,
 			Value:  value,
 			Column: goodinfo.FieldCreateAt,
 		})
 	}
 	if value, ok := giu.mutation.UpdateAt(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
+			Type:   field.TypeUint32,
 			Value:  value,
 			Column: goodinfo.FieldUpdateAt,
 		})
 	}
 	if value, ok := giu.mutation.AddedUpdateAt(); ok {
 		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
+			Type:   field.TypeUint32,
 			Value:  value,
 			Column: goodinfo.FieldUpdateAt,
 		})
 	}
 	if value, ok := giu.mutation.DeleteAt(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
+			Type:   field.TypeUint32,
 			Value:  value,
 			Column: goodinfo.FieldDeleteAt,
 		})
 	}
 	if value, ok := giu.mutation.AddedDeleteAt(); ok {
 		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
+			Type:   field.TypeUint32,
 			Value:  value,
 			Column: goodinfo.FieldDeleteAt,
 		})
@@ -555,22 +615,9 @@ func (giuo *GoodInfoUpdateOne) SetDeviceInfoID(u uuid.UUID) *GoodInfoUpdateOne {
 	return giuo
 }
 
-// SetGasPrice sets the "gas_price" field.
-func (giuo *GoodInfoUpdateOne) SetGasPrice(u uint64) *GoodInfoUpdateOne {
-	giuo.mutation.ResetGasPrice()
-	giuo.mutation.SetGasPrice(u)
-	return giuo
-}
-
-// AddGasPrice adds u to the "gas_price" field.
-func (giuo *GoodInfoUpdateOne) AddGasPrice(u uint64) *GoodInfoUpdateOne {
-	giuo.mutation.AddGasPrice(u)
-	return giuo
-}
-
-// SetSeparateGasFee sets the "separate_gas_fee" field.
-func (giuo *GoodInfoUpdateOne) SetSeparateGasFee(b bool) *GoodInfoUpdateOne {
-	giuo.mutation.SetSeparateGasFee(b)
+// SetSeparateFee sets the "separate_fee" field.
+func (giuo *GoodInfoUpdateOne) SetSeparateFee(b bool) *GoodInfoUpdateOne {
+	giuo.mutation.SetSeparateFee(b)
 	return giuo
 }
 
@@ -650,6 +697,24 @@ func (giuo *GoodInfoUpdateOne) AddPrice(u uint64) *GoodInfoUpdateOne {
 	return giuo
 }
 
+// SetPriceUnit sets the "price_unit" field.
+func (giuo *GoodInfoUpdateOne) SetPriceUnit(s string) *GoodInfoUpdateOne {
+	giuo.mutation.SetPriceUnit(s)
+	return giuo
+}
+
+// SetPriceCurrency sets the "price_currency" field.
+func (giuo *GoodInfoUpdateOne) SetPriceCurrency(s string) *GoodInfoUpdateOne {
+	giuo.mutation.SetPriceCurrency(s)
+	return giuo
+}
+
+// SetPriceSymbol sets the "price_symbol" field.
+func (giuo *GoodInfoUpdateOne) SetPriceSymbol(s string) *GoodInfoUpdateOne {
+	giuo.mutation.SetPriceSymbol(s)
+	return giuo
+}
+
 // SetBenefitType sets the "benefit_type" field.
 func (giuo *GoodInfoUpdateOne) SetBenefitType(gt goodinfo.BenefitType) *GoodInfoUpdateOne {
 	giuo.mutation.SetBenefitType(gt)
@@ -659,6 +724,31 @@ func (giuo *GoodInfoUpdateOne) SetBenefitType(gt goodinfo.BenefitType) *GoodInfo
 // SetClassic sets the "classic" field.
 func (giuo *GoodInfoUpdateOne) SetClassic(b bool) *GoodInfoUpdateOne {
 	giuo.mutation.SetClassic(b)
+	return giuo
+}
+
+// SetTitle sets the "title" field.
+func (giuo *GoodInfoUpdateOne) SetTitle(s string) *GoodInfoUpdateOne {
+	giuo.mutation.SetTitle(s)
+	return giuo
+}
+
+// SetUnit sets the "unit" field.
+func (giuo *GoodInfoUpdateOne) SetUnit(s string) *GoodInfoUpdateOne {
+	giuo.mutation.SetUnit(s)
+	return giuo
+}
+
+// SetStart sets the "start" field.
+func (giuo *GoodInfoUpdateOne) SetStart(u uint32) *GoodInfoUpdateOne {
+	giuo.mutation.ResetStart()
+	giuo.mutation.SetStart(u)
+	return giuo
+}
+
+// AddStart adds u to the "start" field.
+func (giuo *GoodInfoUpdateOne) AddStart(u uint32) *GoodInfoUpdateOne {
+	giuo.mutation.AddStart(u)
 	return giuo
 }
 
@@ -682,57 +772,57 @@ func (giuo *GoodInfoUpdateOne) AddTotal(i int32) *GoodInfoUpdateOne {
 }
 
 // SetCreateAt sets the "create_at" field.
-func (giuo *GoodInfoUpdateOne) SetCreateAt(i int64) *GoodInfoUpdateOne {
+func (giuo *GoodInfoUpdateOne) SetCreateAt(u uint32) *GoodInfoUpdateOne {
 	giuo.mutation.ResetCreateAt()
-	giuo.mutation.SetCreateAt(i)
+	giuo.mutation.SetCreateAt(u)
 	return giuo
 }
 
 // SetNillableCreateAt sets the "create_at" field if the given value is not nil.
-func (giuo *GoodInfoUpdateOne) SetNillableCreateAt(i *int64) *GoodInfoUpdateOne {
-	if i != nil {
-		giuo.SetCreateAt(*i)
+func (giuo *GoodInfoUpdateOne) SetNillableCreateAt(u *uint32) *GoodInfoUpdateOne {
+	if u != nil {
+		giuo.SetCreateAt(*u)
 	}
 	return giuo
 }
 
-// AddCreateAt adds i to the "create_at" field.
-func (giuo *GoodInfoUpdateOne) AddCreateAt(i int64) *GoodInfoUpdateOne {
-	giuo.mutation.AddCreateAt(i)
+// AddCreateAt adds u to the "create_at" field.
+func (giuo *GoodInfoUpdateOne) AddCreateAt(u uint32) *GoodInfoUpdateOne {
+	giuo.mutation.AddCreateAt(u)
 	return giuo
 }
 
 // SetUpdateAt sets the "update_at" field.
-func (giuo *GoodInfoUpdateOne) SetUpdateAt(i int64) *GoodInfoUpdateOne {
+func (giuo *GoodInfoUpdateOne) SetUpdateAt(u uint32) *GoodInfoUpdateOne {
 	giuo.mutation.ResetUpdateAt()
-	giuo.mutation.SetUpdateAt(i)
+	giuo.mutation.SetUpdateAt(u)
 	return giuo
 }
 
-// AddUpdateAt adds i to the "update_at" field.
-func (giuo *GoodInfoUpdateOne) AddUpdateAt(i int64) *GoodInfoUpdateOne {
-	giuo.mutation.AddUpdateAt(i)
+// AddUpdateAt adds u to the "update_at" field.
+func (giuo *GoodInfoUpdateOne) AddUpdateAt(u uint32) *GoodInfoUpdateOne {
+	giuo.mutation.AddUpdateAt(u)
 	return giuo
 }
 
 // SetDeleteAt sets the "delete_at" field.
-func (giuo *GoodInfoUpdateOne) SetDeleteAt(i int64) *GoodInfoUpdateOne {
+func (giuo *GoodInfoUpdateOne) SetDeleteAt(u uint32) *GoodInfoUpdateOne {
 	giuo.mutation.ResetDeleteAt()
-	giuo.mutation.SetDeleteAt(i)
+	giuo.mutation.SetDeleteAt(u)
 	return giuo
 }
 
 // SetNillableDeleteAt sets the "delete_at" field if the given value is not nil.
-func (giuo *GoodInfoUpdateOne) SetNillableDeleteAt(i *int64) *GoodInfoUpdateOne {
-	if i != nil {
-		giuo.SetDeleteAt(*i)
+func (giuo *GoodInfoUpdateOne) SetNillableDeleteAt(u *uint32) *GoodInfoUpdateOne {
+	if u != nil {
+		giuo.SetDeleteAt(*u)
 	}
 	return giuo
 }
 
-// AddDeleteAt adds i to the "delete_at" field.
-func (giuo *GoodInfoUpdateOne) AddDeleteAt(i int64) *GoodInfoUpdateOne {
-	giuo.mutation.AddDeleteAt(i)
+// AddDeleteAt adds u to the "delete_at" field.
+func (giuo *GoodInfoUpdateOne) AddDeleteAt(u uint32) *GoodInfoUpdateOne {
+	giuo.mutation.AddDeleteAt(u)
 	return giuo
 }
 
@@ -819,11 +909,6 @@ func (giuo *GoodInfoUpdateOne) defaults() {
 
 // check runs all checks and user-defined validators on the builder.
 func (giuo *GoodInfoUpdateOne) check() error {
-	if v, ok := giuo.mutation.GasPrice(); ok {
-		if err := goodinfo.GasPriceValidator(v); err != nil {
-			return &ValidationError{Name: "gas_price", err: fmt.Errorf("ent: validator failed for field \"gas_price\": %w", err)}
-		}
-	}
 	if v, ok := giuo.mutation.UnitPower(); ok {
 		if err := goodinfo.UnitPowerValidator(v); err != nil {
 			return &ValidationError{Name: "unit_power", err: fmt.Errorf("ent: validator failed for field \"unit_power\": %w", err)}
@@ -894,25 +979,11 @@ func (giuo *GoodInfoUpdateOne) sqlSave(ctx context.Context) (_node *GoodInfo, er
 			Column: goodinfo.FieldDeviceInfoID,
 		})
 	}
-	if value, ok := giuo.mutation.GasPrice(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeUint64,
-			Value:  value,
-			Column: goodinfo.FieldGasPrice,
-		})
-	}
-	if value, ok := giuo.mutation.AddedGasPrice(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeUint64,
-			Value:  value,
-			Column: goodinfo.FieldGasPrice,
-		})
-	}
-	if value, ok := giuo.mutation.SeparateGasFee(); ok {
+	if value, ok := giuo.mutation.SeparateFee(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeBool,
 			Value:  value,
-			Column: goodinfo.FieldSeparateGasFee,
+			Column: goodinfo.FieldSeparateFee,
 		})
 	}
 	if value, ok := giuo.mutation.UnitPower(); ok {
@@ -999,6 +1070,27 @@ func (giuo *GoodInfoUpdateOne) sqlSave(ctx context.Context) (_node *GoodInfo, er
 			Column: goodinfo.FieldPrice,
 		})
 	}
+	if value, ok := giuo.mutation.PriceUnit(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: goodinfo.FieldPriceUnit,
+		})
+	}
+	if value, ok := giuo.mutation.PriceCurrency(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: goodinfo.FieldPriceCurrency,
+		})
+	}
+	if value, ok := giuo.mutation.PriceSymbol(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: goodinfo.FieldPriceSymbol,
+		})
+	}
 	if value, ok := giuo.mutation.BenefitType(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeEnum,
@@ -1011,6 +1103,34 @@ func (giuo *GoodInfoUpdateOne) sqlSave(ctx context.Context) (_node *GoodInfo, er
 			Type:   field.TypeBool,
 			Value:  value,
 			Column: goodinfo.FieldClassic,
+		})
+	}
+	if value, ok := giuo.mutation.Title(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: goodinfo.FieldTitle,
+		})
+	}
+	if value, ok := giuo.mutation.Unit(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: goodinfo.FieldUnit,
+		})
+	}
+	if value, ok := giuo.mutation.Start(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeUint32,
+			Value:  value,
+			Column: goodinfo.FieldStart,
+		})
+	}
+	if value, ok := giuo.mutation.AddedStart(); ok {
+		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
+			Type:   field.TypeUint32,
+			Value:  value,
+			Column: goodinfo.FieldStart,
 		})
 	}
 	if value, ok := giuo.mutation.SupportCoinTypeIds(); ok {
@@ -1036,42 +1156,42 @@ func (giuo *GoodInfoUpdateOne) sqlSave(ctx context.Context) (_node *GoodInfo, er
 	}
 	if value, ok := giuo.mutation.CreateAt(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
+			Type:   field.TypeUint32,
 			Value:  value,
 			Column: goodinfo.FieldCreateAt,
 		})
 	}
 	if value, ok := giuo.mutation.AddedCreateAt(); ok {
 		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
+			Type:   field.TypeUint32,
 			Value:  value,
 			Column: goodinfo.FieldCreateAt,
 		})
 	}
 	if value, ok := giuo.mutation.UpdateAt(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
+			Type:   field.TypeUint32,
 			Value:  value,
 			Column: goodinfo.FieldUpdateAt,
 		})
 	}
 	if value, ok := giuo.mutation.AddedUpdateAt(); ok {
 		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
+			Type:   field.TypeUint32,
 			Value:  value,
 			Column: goodinfo.FieldUpdateAt,
 		})
 	}
 	if value, ok := giuo.mutation.DeleteAt(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
+			Type:   field.TypeUint32,
 			Value:  value,
 			Column: goodinfo.FieldDeleteAt,
 		})
 	}
 	if value, ok := giuo.mutation.AddedDeleteAt(); ok {
 		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
+			Type:   field.TypeUint32,
 			Value:  value,
 			Column: goodinfo.FieldDeleteAt,
 		})

@@ -30,6 +30,7 @@ type hooks struct {
 	DeviceInfo        []ent.Hook
 	GoodComment       []ent.Hook
 	GoodExtraInfo     []ent.Hook
+	GoodFee           []ent.Hook
 	GoodInfo          []ent.Hook
 	GoodReview        []ent.Hook
 	TargetArea        []ent.Hook

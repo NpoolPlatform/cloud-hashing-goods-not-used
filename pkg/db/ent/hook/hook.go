@@ -87,6 +87,19 @@ func (f GoodExtraInfoFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Valu
 	return f(ctx, mv)
 }
 
+// The GoodFeeFunc type is an adapter to allow the use of ordinary
+// function as GoodFee mutator.
+type GoodFeeFunc func(context.Context, *ent.GoodFeeMutation) (ent.Value, error)
+
+// Mutate calls f(ctx, m).
+func (f GoodFeeFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, error) {
+	mv, ok := m.(*ent.GoodFeeMutation)
+	if !ok {
+		return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.GoodFeeMutation", m)
+	}
+	return f(ctx, mv)
+}
+
 // The GoodInfoFunc type is an adapter to allow the use of ordinary
 // function as GoodInfo mutator.
 type GoodInfoFunc func(context.Context, *ent.GoodInfoMutation) (ent.Value, error)

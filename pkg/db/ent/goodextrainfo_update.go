@@ -45,6 +45,18 @@ func (geiu *GoodExtraInfoUpdate) SetLabels(s []string) *GoodExtraInfoUpdate {
 	return geiu
 }
 
+// SetOutSale sets the "out_sale" field.
+func (geiu *GoodExtraInfoUpdate) SetOutSale(b bool) *GoodExtraInfoUpdate {
+	geiu.mutation.SetOutSale(b)
+	return geiu
+}
+
+// SetPreSale sets the "pre_sale" field.
+func (geiu *GoodExtraInfoUpdate) SetPreSale(b bool) *GoodExtraInfoUpdate {
+	geiu.mutation.SetPreSale(b)
+	return geiu
+}
+
 // SetCreateAt sets the "create_at" field.
 func (geiu *GoodExtraInfoUpdate) SetCreateAt(i int64) *GoodExtraInfoUpdate {
 	geiu.mutation.ResetCreateAt()
@@ -207,6 +219,20 @@ func (geiu *GoodExtraInfoUpdate) sqlSave(ctx context.Context) (n int, err error)
 			Column: goodextrainfo.FieldLabels,
 		})
 	}
+	if value, ok := geiu.mutation.OutSale(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeBool,
+			Value:  value,
+			Column: goodextrainfo.FieldOutSale,
+		})
+	}
+	if value, ok := geiu.mutation.PreSale(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeBool,
+			Value:  value,
+			Column: goodextrainfo.FieldPreSale,
+		})
+	}
 	if value, ok := geiu.mutation.CreateAt(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeInt64,
@@ -283,6 +309,18 @@ func (geiuo *GoodExtraInfoUpdateOne) SetPosters(s []string) *GoodExtraInfoUpdate
 // SetLabels sets the "labels" field.
 func (geiuo *GoodExtraInfoUpdateOne) SetLabels(s []string) *GoodExtraInfoUpdateOne {
 	geiuo.mutation.SetLabels(s)
+	return geiuo
+}
+
+// SetOutSale sets the "out_sale" field.
+func (geiuo *GoodExtraInfoUpdateOne) SetOutSale(b bool) *GoodExtraInfoUpdateOne {
+	geiuo.mutation.SetOutSale(b)
+	return geiuo
+}
+
+// SetPreSale sets the "pre_sale" field.
+func (geiuo *GoodExtraInfoUpdateOne) SetPreSale(b bool) *GoodExtraInfoUpdateOne {
+	geiuo.mutation.SetPreSale(b)
 	return geiuo
 }
 
@@ -470,6 +508,20 @@ func (geiuo *GoodExtraInfoUpdateOne) sqlSave(ctx context.Context) (_node *GoodEx
 			Type:   field.TypeJSON,
 			Value:  value,
 			Column: goodextrainfo.FieldLabels,
+		})
+	}
+	if value, ok := geiuo.mutation.OutSale(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeBool,
+			Value:  value,
+			Column: goodextrainfo.FieldOutSale,
+		})
+	}
+	if value, ok := geiuo.mutation.PreSale(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeBool,
+			Value:  value,
+			Column: goodextrainfo.FieldPreSale,
 		})
 	}
 	if value, ok := geiuo.mutation.CreateAt(); ok {

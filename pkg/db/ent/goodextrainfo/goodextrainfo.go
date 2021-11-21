@@ -17,6 +17,10 @@ const (
 	FieldPosters = "posters"
 	// FieldLabels holds the string denoting the labels field in the database.
 	FieldLabels = "labels"
+	// FieldOutSale holds the string denoting the out_sale field in the database.
+	FieldOutSale = "out_sale"
+	// FieldPreSale holds the string denoting the pre_sale field in the database.
+	FieldPreSale = "pre_sale"
 	// FieldCreateAt holds the string denoting the create_at field in the database.
 	FieldCreateAt = "create_at"
 	// FieldUpdateAt holds the string denoting the update_at field in the database.
@@ -33,6 +37,8 @@ var Columns = []string{
 	FieldGoodID,
 	FieldPosters,
 	FieldLabels,
+	FieldOutSale,
+	FieldPreSale,
 	FieldCreateAt,
 	FieldUpdateAt,
 	FieldDeleteAt,

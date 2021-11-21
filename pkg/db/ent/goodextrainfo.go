@@ -23,6 +23,10 @@ type GoodExtraInfo struct {
 	Posters []string `json:"posters,omitempty"`
 	// Labels holds the value of the "labels" field.
 	Labels []string `json:"labels,omitempty"`
+	// OutSale holds the value of the "out_sale" field.
+	OutSale bool `json:"out_sale,omitempty"`
+	// PreSale holds the value of the "pre_sale" field.
+	PreSale bool `json:"pre_sale,omitempty"`
 	// CreateAt holds the value of the "create_at" field.
 	CreateAt int64 `json:"create_at,omitempty"`
 	// UpdateAt holds the value of the "update_at" field.
@@ -38,6 +42,8 @@ func (*GoodExtraInfo) scanValues(columns []string) ([]interface{}, error) {
 		switch columns[i] {
 		case goodextrainfo.FieldPosters, goodextrainfo.FieldLabels:
 			values[i] = new([]byte)
+		case goodextrainfo.FieldOutSale, goodextrainfo.FieldPreSale:
+			values[i] = new(sql.NullBool)
 		case goodextrainfo.FieldCreateAt, goodextrainfo.FieldUpdateAt, goodextrainfo.FieldDeleteAt:
 			values[i] = new(sql.NullInt64)
 		case goodextrainfo.FieldID, goodextrainfo.FieldGoodID:
@@ -84,6 +90,18 @@ func (gei *GoodExtraInfo) assignValues(columns []string, values []interface{}) e
 				if err := json.Unmarshal(*value, &gei.Labels); err != nil {
 					return fmt.Errorf("unmarshal field labels: %w", err)
 				}
+			}
+		case goodextrainfo.FieldOutSale:
+			if value, ok := values[i].(*sql.NullBool); !ok {
+				return fmt.Errorf("unexpected type %T for field out_sale", values[i])
+			} else if value.Valid {
+				gei.OutSale = value.Bool
+			}
+		case goodextrainfo.FieldPreSale:
+			if value, ok := values[i].(*sql.NullBool); !ok {
+				return fmt.Errorf("unexpected type %T for field pre_sale", values[i])
+			} else if value.Valid {
+				gei.PreSale = value.Bool
 			}
 		case goodextrainfo.FieldCreateAt:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
@@ -137,6 +155,10 @@ func (gei *GoodExtraInfo) String() string {
 	builder.WriteString(fmt.Sprintf("%v", gei.Posters))
 	builder.WriteString(", labels=")
 	builder.WriteString(fmt.Sprintf("%v", gei.Labels))
+	builder.WriteString(", out_sale=")
+	builder.WriteString(fmt.Sprintf("%v", gei.OutSale))
+	builder.WriteString(", pre_sale=")
+	builder.WriteString(fmt.Sprintf("%v", gei.PreSale))
 	builder.WriteString(", create_at=")
 	builder.WriteString(fmt.Sprintf("%v", gei.CreateAt))
 	builder.WriteString(", update_at=")

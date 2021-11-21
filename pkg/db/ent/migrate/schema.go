@@ -130,6 +130,8 @@ var (
 		{Name: "good_id", Type: field.TypeUUID, Unique: true},
 		{Name: "posters", Type: field.TypeJSON},
 		{Name: "labels", Type: field.TypeJSON},
+		{Name: "out_sale", Type: field.TypeBool},
+		{Name: "pre_sale", Type: field.TypeBool},
 		{Name: "create_at", Type: field.TypeInt64},
 		{Name: "update_at", Type: field.TypeInt64},
 		{Name: "delete_at", Type: field.TypeInt64},
@@ -140,12 +142,30 @@ var (
 		Columns:    GoodExtraInfosColumns,
 		PrimaryKey: []*schema.Column{GoodExtraInfosColumns[0]},
 	}
+	// GoodFeesColumns holds the columns for the "good_fees" table.
+	GoodFeesColumns = []*schema.Column{
+		{Name: "id", Type: field.TypeUUID, Unique: true},
+		{Name: "good_id", Type: field.TypeUUID},
+		{Name: "fee_type", Type: field.TypeString},
+		{Name: "pay_type", Type: field.TypeEnum, Enums: []string{"percent", "amount"}},
+		{Name: "percent_value", Type: field.TypeInt32},
+		{Name: "amount_value", Type: field.TypeInt32},
+		{Name: "amount_unit", Type: field.TypeString},
+		{Name: "create_at", Type: field.TypeUint32},
+		{Name: "update_at", Type: field.TypeUint32},
+		{Name: "delete_at", Type: field.TypeUint32},
+	}
+	// GoodFeesTable holds the schema information for the "good_fees" table.
+	GoodFeesTable = &schema.Table{
+		Name:       "good_fees",
+		Columns:    GoodFeesColumns,
+		PrimaryKey: []*schema.Column{GoodFeesColumns[0]},
+	}
 	// GoodInfosColumns holds the columns for the "good_infos" table.
 	GoodInfosColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeUUID, Unique: true},
 		{Name: "device_info_id", Type: field.TypeUUID},
-		{Name: "gas_price", Type: field.TypeUint64},
-		{Name: "separate_gas_fee", Type: field.TypeBool},
+		{Name: "separate_fee", Type: field.TypeBool},
 		{Name: "unit_power", Type: field.TypeInt32},
 		{Name: "duration_days", Type: field.TypeInt32},
 		{Name: "coin_info_id", Type: field.TypeUUID},
@@ -154,13 +174,19 @@ var (
 		{Name: "inherit_from_good_id", Type: field.TypeUUID},
 		{Name: "vendor_location_id", Type: field.TypeUUID},
 		{Name: "price", Type: field.TypeUint64},
+		{Name: "price_unit", Type: field.TypeString},
+		{Name: "price_currency", Type: field.TypeString},
+		{Name: "price_symbol", Type: field.TypeString},
 		{Name: "benefit_type", Type: field.TypeEnum, Enums: []string{"pool", "platform"}},
 		{Name: "classic", Type: field.TypeBool},
+		{Name: "title", Type: field.TypeString},
+		{Name: "unit", Type: field.TypeString},
+		{Name: "start", Type: field.TypeUint32},
 		{Name: "support_coin_type_ids", Type: field.TypeJSON},
 		{Name: "total", Type: field.TypeInt32},
-		{Name: "create_at", Type: field.TypeInt64},
-		{Name: "update_at", Type: field.TypeInt64},
-		{Name: "delete_at", Type: field.TypeInt64},
+		{Name: "create_at", Type: field.TypeUint32},
+		{Name: "update_at", Type: field.TypeUint32},
+		{Name: "delete_at", Type: field.TypeUint32},
 	}
 	// GoodInfosTable holds the schema information for the "good_infos" table.
 	GoodInfosTable = &schema.Table{
@@ -247,6 +273,7 @@ var (
 		DeviceInfosTable,
 		GoodCommentsTable,
 		GoodExtraInfosTable,
+		GoodFeesTable,
 		GoodInfosTable,
 		GoodReviewsTable,
 		TargetAreasTable,

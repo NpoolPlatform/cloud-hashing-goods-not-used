@@ -24,6 +24,9 @@ type GoodComment func(*sql.Selector)
 // GoodExtraInfo is the predicate function for goodextrainfo builders.
 type GoodExtraInfo func(*sql.Selector)
 
+// GoodFee is the predicate function for goodfee builders.
+type GoodFee func(*sql.Selector)
+
 // GoodInfo is the predicate function for goodinfo builders.
 type GoodInfo func(*sql.Selector)
 

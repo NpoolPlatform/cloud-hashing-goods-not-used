@@ -98,6 +98,20 @@ func GoodID(v uuid.UUID) predicate.GoodExtraInfo {
 	})
 }
 
+// OutSale applies equality check predicate on the "out_sale" field. It's identical to OutSaleEQ.
+func OutSale(v bool) predicate.GoodExtraInfo {
+	return predicate.GoodExtraInfo(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldOutSale), v))
+	})
+}
+
+// PreSale applies equality check predicate on the "pre_sale" field. It's identical to PreSaleEQ.
+func PreSale(v bool) predicate.GoodExtraInfo {
+	return predicate.GoodExtraInfo(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldPreSale), v))
+	})
+}
+
 // CreateAt applies equality check predicate on the "create_at" field. It's identical to CreateAtEQ.
 func CreateAt(v int64) predicate.GoodExtraInfo {
 	return predicate.GoodExtraInfo(func(s *sql.Selector) {
@@ -192,6 +206,34 @@ func GoodIDLT(v uuid.UUID) predicate.GoodExtraInfo {
 func GoodIDLTE(v uuid.UUID) predicate.GoodExtraInfo {
 	return predicate.GoodExtraInfo(func(s *sql.Selector) {
 		s.Where(sql.LTE(s.C(FieldGoodID), v))
+	})
+}
+
+// OutSaleEQ applies the EQ predicate on the "out_sale" field.
+func OutSaleEQ(v bool) predicate.GoodExtraInfo {
+	return predicate.GoodExtraInfo(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldOutSale), v))
+	})
+}
+
+// OutSaleNEQ applies the NEQ predicate on the "out_sale" field.
+func OutSaleNEQ(v bool) predicate.GoodExtraInfo {
+	return predicate.GoodExtraInfo(func(s *sql.Selector) {
+		s.Where(sql.NEQ(s.C(FieldOutSale), v))
+	})
+}
+
+// PreSaleEQ applies the EQ predicate on the "pre_sale" field.
+func PreSaleEQ(v bool) predicate.GoodExtraInfo {
+	return predicate.GoodExtraInfo(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldPreSale), v))
+	})
+}
+
+// PreSaleNEQ applies the NEQ predicate on the "pre_sale" field.
+func PreSaleNEQ(v bool) predicate.GoodExtraInfo {
+	return predicate.GoodExtraInfo(func(s *sql.Selector) {
+		s.Where(sql.NEQ(s.C(FieldPreSale), v))
 	})
 }
 

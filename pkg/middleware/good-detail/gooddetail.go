@@ -64,8 +64,7 @@ func Get(ctx context.Context, in *npool.GetGoodDetailRequest) (*npool.GetGoodDet
 		Detail: &npool.GoodDetail{
 			ID:                 id.String(),
 			DeviceInfo:         deviceInfo.Info,
-			GasPrice:           goodInfo.Info.GasPrice,
-			SeparateGasFee:     goodInfo.Info.SeparateGasFee,
+			SeparateFee:        goodInfo.Info.SeparateFee,
 			UnitPower:          goodInfo.Info.UnitPower,
 			DurationDays:       goodInfo.Info.DurationDays,
 			CoinInfoID:         goodInfo.Info.CoinInfoID,
