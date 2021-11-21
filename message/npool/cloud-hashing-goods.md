@@ -1202,6 +1202,8 @@
 | Labels | [string](#string) | repeated |  |
 | OutSale | [bool](#bool) |  |  |
 | PreSale | [bool](#bool) |  |  |
+| VoteCount | [uint32](#uint32) |  |  |
+| Rating | [float](#float) |  |  |
 
 
 

@@ -53,6 +53,18 @@ func (geic *GoodExtraInfoCreate) SetPreSale(b bool) *GoodExtraInfoCreate {
 	return geic
 }
 
+// SetVoteCount sets the "vote_count" field.
+func (geic *GoodExtraInfoCreate) SetVoteCount(u uint32) *GoodExtraInfoCreate {
+	geic.mutation.SetVoteCount(u)
+	return geic
+}
+
+// SetRating sets the "rating" field.
+func (geic *GoodExtraInfoCreate) SetRating(f float32) *GoodExtraInfoCreate {
+	geic.mutation.SetRating(f)
+	return geic
+}
+
 // SetCreateAt sets the "create_at" field.
 func (geic *GoodExtraInfoCreate) SetCreateAt(i int64) *GoodExtraInfoCreate {
 	geic.mutation.SetCreateAt(i)
@@ -207,6 +219,12 @@ func (geic *GoodExtraInfoCreate) check() error {
 	if _, ok := geic.mutation.PreSale(); !ok {
 		return &ValidationError{Name: "pre_sale", err: errors.New(`ent: missing required field "pre_sale"`)}
 	}
+	if _, ok := geic.mutation.VoteCount(); !ok {
+		return &ValidationError{Name: "vote_count", err: errors.New(`ent: missing required field "vote_count"`)}
+	}
+	if _, ok := geic.mutation.Rating(); !ok {
+		return &ValidationError{Name: "rating", err: errors.New(`ent: missing required field "rating"`)}
+	}
 	if _, ok := geic.mutation.CreateAt(); !ok {
 		return &ValidationError{Name: "create_at", err: errors.New(`ent: missing required field "create_at"`)}
 	}
@@ -288,6 +306,22 @@ func (geic *GoodExtraInfoCreate) createSpec() (*GoodExtraInfo, *sqlgraph.CreateS
 			Column: goodextrainfo.FieldPreSale,
 		})
 		_node.PreSale = value
+	}
+	if value, ok := geic.mutation.VoteCount(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeUint32,
+			Value:  value,
+			Column: goodextrainfo.FieldVoteCount,
+		})
+		_node.VoteCount = value
+	}
+	if value, ok := geic.mutation.Rating(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeFloat32,
+			Value:  value,
+			Column: goodextrainfo.FieldRating,
+		})
+		_node.Rating = value
 	}
 	if value, ok := geic.mutation.CreateAt(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
@@ -424,6 +458,30 @@ func (u *GoodExtraInfoUpsert) SetPreSale(v bool) *GoodExtraInfoUpsert {
 // UpdatePreSale sets the "pre_sale" field to the value that was provided on create.
 func (u *GoodExtraInfoUpsert) UpdatePreSale() *GoodExtraInfoUpsert {
 	u.SetExcluded(goodextrainfo.FieldPreSale)
+	return u
+}
+
+// SetVoteCount sets the "vote_count" field.
+func (u *GoodExtraInfoUpsert) SetVoteCount(v uint32) *GoodExtraInfoUpsert {
+	u.Set(goodextrainfo.FieldVoteCount, v)
+	return u
+}
+
+// UpdateVoteCount sets the "vote_count" field to the value that was provided on create.
+func (u *GoodExtraInfoUpsert) UpdateVoteCount() *GoodExtraInfoUpsert {
+	u.SetExcluded(goodextrainfo.FieldVoteCount)
+	return u
+}
+
+// SetRating sets the "rating" field.
+func (u *GoodExtraInfoUpsert) SetRating(v float32) *GoodExtraInfoUpsert {
+	u.Set(goodextrainfo.FieldRating, v)
+	return u
+}
+
+// UpdateRating sets the "rating" field to the value that was provided on create.
+func (u *GoodExtraInfoUpsert) UpdateRating() *GoodExtraInfoUpsert {
+	u.SetExcluded(goodextrainfo.FieldRating)
 	return u
 }
 
@@ -580,6 +638,34 @@ func (u *GoodExtraInfoUpsertOne) SetPreSale(v bool) *GoodExtraInfoUpsertOne {
 func (u *GoodExtraInfoUpsertOne) UpdatePreSale() *GoodExtraInfoUpsertOne {
 	return u.Update(func(s *GoodExtraInfoUpsert) {
 		s.UpdatePreSale()
+	})
+}
+
+// SetVoteCount sets the "vote_count" field.
+func (u *GoodExtraInfoUpsertOne) SetVoteCount(v uint32) *GoodExtraInfoUpsertOne {
+	return u.Update(func(s *GoodExtraInfoUpsert) {
+		s.SetVoteCount(v)
+	})
+}
+
+// UpdateVoteCount sets the "vote_count" field to the value that was provided on create.
+func (u *GoodExtraInfoUpsertOne) UpdateVoteCount() *GoodExtraInfoUpsertOne {
+	return u.Update(func(s *GoodExtraInfoUpsert) {
+		s.UpdateVoteCount()
+	})
+}
+
+// SetRating sets the "rating" field.
+func (u *GoodExtraInfoUpsertOne) SetRating(v float32) *GoodExtraInfoUpsertOne {
+	return u.Update(func(s *GoodExtraInfoUpsert) {
+		s.SetRating(v)
+	})
+}
+
+// UpdateRating sets the "rating" field to the value that was provided on create.
+func (u *GoodExtraInfoUpsertOne) UpdateRating() *GoodExtraInfoUpsertOne {
+	return u.Update(func(s *GoodExtraInfoUpsert) {
+		s.UpdateRating()
 	})
 }
 
@@ -908,6 +994,34 @@ func (u *GoodExtraInfoUpsertBulk) SetPreSale(v bool) *GoodExtraInfoUpsertBulk {
 func (u *GoodExtraInfoUpsertBulk) UpdatePreSale() *GoodExtraInfoUpsertBulk {
 	return u.Update(func(s *GoodExtraInfoUpsert) {
 		s.UpdatePreSale()
+	})
+}
+
+// SetVoteCount sets the "vote_count" field.
+func (u *GoodExtraInfoUpsertBulk) SetVoteCount(v uint32) *GoodExtraInfoUpsertBulk {
+	return u.Update(func(s *GoodExtraInfoUpsert) {
+		s.SetVoteCount(v)
+	})
+}
+
+// UpdateVoteCount sets the "vote_count" field to the value that was provided on create.
+func (u *GoodExtraInfoUpsertBulk) UpdateVoteCount() *GoodExtraInfoUpsertBulk {
+	return u.Update(func(s *GoodExtraInfoUpsert) {
+		s.UpdateVoteCount()
+	})
+}
+
+// SetRating sets the "rating" field.
+func (u *GoodExtraInfoUpsertBulk) SetRating(v float32) *GoodExtraInfoUpsertBulk {
+	return u.Update(func(s *GoodExtraInfoUpsert) {
+		s.SetRating(v)
+	})
+}
+
+// UpdateRating sets the "rating" field to the value that was provided on create.
+func (u *GoodExtraInfoUpsertBulk) UpdateRating() *GoodExtraInfoUpsertBulk {
+	return u.Update(func(s *GoodExtraInfoUpsert) {
+		s.UpdateRating()
 	})
 }
 

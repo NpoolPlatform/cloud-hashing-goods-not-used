@@ -21,6 +21,10 @@ const (
 	FieldOutSale = "out_sale"
 	// FieldPreSale holds the string denoting the pre_sale field in the database.
 	FieldPreSale = "pre_sale"
+	// FieldVoteCount holds the string denoting the vote_count field in the database.
+	FieldVoteCount = "vote_count"
+	// FieldRating holds the string denoting the rating field in the database.
+	FieldRating = "rating"
 	// FieldCreateAt holds the string denoting the create_at field in the database.
 	FieldCreateAt = "create_at"
 	// FieldUpdateAt holds the string denoting the update_at field in the database.
@@ -39,6 +43,8 @@ var Columns = []string{
 	FieldLabels,
 	FieldOutSale,
 	FieldPreSale,
+	FieldVoteCount,
+	FieldRating,
 	FieldCreateAt,
 	FieldUpdateAt,
 	FieldDeleteAt,

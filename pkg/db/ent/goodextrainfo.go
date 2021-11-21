@@ -27,6 +27,10 @@ type GoodExtraInfo struct {
 	OutSale bool `json:"out_sale,omitempty"`
 	// PreSale holds the value of the "pre_sale" field.
 	PreSale bool `json:"pre_sale,omitempty"`
+	// VoteCount holds the value of the "vote_count" field.
+	VoteCount uint32 `json:"vote_count,omitempty"`
+	// Rating holds the value of the "rating" field.
+	Rating float32 `json:"rating,omitempty"`
 	// CreateAt holds the value of the "create_at" field.
 	CreateAt int64 `json:"create_at,omitempty"`
 	// UpdateAt holds the value of the "update_at" field.
@@ -44,7 +48,9 @@ func (*GoodExtraInfo) scanValues(columns []string) ([]interface{}, error) {
 			values[i] = new([]byte)
 		case goodextrainfo.FieldOutSale, goodextrainfo.FieldPreSale:
 			values[i] = new(sql.NullBool)
-		case goodextrainfo.FieldCreateAt, goodextrainfo.FieldUpdateAt, goodextrainfo.FieldDeleteAt:
+		case goodextrainfo.FieldRating:
+			values[i] = new(sql.NullFloat64)
+		case goodextrainfo.FieldVoteCount, goodextrainfo.FieldCreateAt, goodextrainfo.FieldUpdateAt, goodextrainfo.FieldDeleteAt:
 			values[i] = new(sql.NullInt64)
 		case goodextrainfo.FieldID, goodextrainfo.FieldGoodID:
 			values[i] = new(uuid.UUID)
@@ -103,6 +109,18 @@ func (gei *GoodExtraInfo) assignValues(columns []string, values []interface{}) e
 			} else if value.Valid {
 				gei.PreSale = value.Bool
 			}
+		case goodextrainfo.FieldVoteCount:
+			if value, ok := values[i].(*sql.NullInt64); !ok {
+				return fmt.Errorf("unexpected type %T for field vote_count", values[i])
+			} else if value.Valid {
+				gei.VoteCount = uint32(value.Int64)
+			}
+		case goodextrainfo.FieldRating:
+			if value, ok := values[i].(*sql.NullFloat64); !ok {
+				return fmt.Errorf("unexpected type %T for field rating", values[i])
+			} else if value.Valid {
+				gei.Rating = float32(value.Float64)
+			}
 		case goodextrainfo.FieldCreateAt:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field create_at", values[i])
@@ -159,6 +177,10 @@ func (gei *GoodExtraInfo) String() string {
 	builder.WriteString(fmt.Sprintf("%v", gei.OutSale))
 	builder.WriteString(", pre_sale=")
 	builder.WriteString(fmt.Sprintf("%v", gei.PreSale))
+	builder.WriteString(", vote_count=")
+	builder.WriteString(fmt.Sprintf("%v", gei.VoteCount))
+	builder.WriteString(", rating=")
+	builder.WriteString(fmt.Sprintf("%v", gei.Rating))
 	builder.WriteString(", create_at=")
 	builder.WriteString(fmt.Sprintf("%v", gei.CreateAt))
 	builder.WriteString(", update_at=")

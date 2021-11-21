@@ -27,6 +27,8 @@ func Create(ctx context.Context, in *npool.CreateGoodExtraInfoRequest) (*npool.C
 		SetLabels(in.GetInfo().GetLabels()).
 		SetPreSale(in.GetInfo().GetPreSale()).
 		SetOutSale(in.GetInfo().GetOutSale()).
+		SetVoteCount(in.GetInfo().GetVoteCount()).
+		SetRating(in.GetInfo().GetRating()).
 		Save(ctx)
 	if err != nil {
 		return nil, err
@@ -34,12 +36,14 @@ func Create(ctx context.Context, in *npool.CreateGoodExtraInfoRequest) (*npool.C
 
 	return &npool.CreateGoodExtraInfoResponse{
 		Info: &npool.GoodExtraInfo{
-			ID:      info.ID.String(),
-			GoodID:  info.GoodID.String(),
-			Posters: info.Posters,
-			Labels:  info.Labels,
-			OutSale: info.OutSale,
-			PreSale: info.PreSale,
+			ID:        info.ID.String(),
+			GoodID:    info.GoodID.String(),
+			Posters:   info.Posters,
+			Labels:    info.Labels,
+			OutSale:   info.OutSale,
+			PreSale:   info.PreSale,
+			VoteCount: info.VoteCount,
+			Rating:    info.Rating,
 		},
 	}, nil
 }
@@ -75,18 +79,22 @@ func Update(ctx context.Context, in *npool.UpdateGoodExtraInfoRequest) (*npool.U
 		SetPosters(in.GetInfo().GetPosters()).
 		SetLabels(in.GetInfo().GetLabels()).
 		SetOutSale(in.GetInfo().GetOutSale()).
+		SetVoteCount(in.GetInfo().GetVoteCount()).
+		SetRating(in.GetInfo().GetRating()).
 		Save(ctx)
 	if err != nil {
 		return nil, xerrors.Errorf("fail set poster to good extra info: %v", err)
 	}
 	return &npool.UpdateGoodExtraInfoResponse{
 		Info: &npool.GoodExtraInfo{
-			ID:      info.ID.String(),
-			GoodID:  info.GoodID.String(),
-			Posters: info.Posters,
-			Labels:  info.Labels,
-			OutSale: info.OutSale,
-			PreSale: info.PreSale,
+			ID:        info.ID.String(),
+			GoodID:    info.GoodID.String(),
+			Posters:   info.Posters,
+			Labels:    info.Labels,
+			OutSale:   info.OutSale,
+			PreSale:   info.PreSale,
+			VoteCount: info.VoteCount,
+			Rating:    info.Rating,
 		},
 	}, nil
 }
@@ -115,12 +123,14 @@ func Get(ctx context.Context, in *npool.GetGoodExtraInfoRequest) (*npool.GetGood
 
 	return &npool.GetGoodExtraInfoResponse{
 		Info: &npool.GoodExtraInfo{
-			ID:      infos[0].ID.String(),
-			GoodID:  infos[0].GoodID.String(),
-			Posters: infos[0].Posters,
-			Labels:  infos[0].Labels,
-			OutSale: infos[0].OutSale,
-			PreSale: infos[0].PreSale,
+			ID:        infos[0].ID.String(),
+			GoodID:    infos[0].GoodID.String(),
+			Posters:   infos[0].Posters,
+			Labels:    infos[0].Labels,
+			OutSale:   infos[0].OutSale,
+			PreSale:   infos[0].PreSale,
+			VoteCount: infos[0].VoteCount,
+			Rating:    infos[0].Rating,
 		},
 	}, nil
 }

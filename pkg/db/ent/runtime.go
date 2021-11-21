@@ -195,17 +195,17 @@ func init() {
 	goodextrainfoFields := schema.GoodExtraInfo{}.Fields()
 	_ = goodextrainfoFields
 	// goodextrainfoDescCreateAt is the schema descriptor for create_at field.
-	goodextrainfoDescCreateAt := goodextrainfoFields[6].Descriptor()
+	goodextrainfoDescCreateAt := goodextrainfoFields[8].Descriptor()
 	// goodextrainfo.DefaultCreateAt holds the default value on creation for the create_at field.
 	goodextrainfo.DefaultCreateAt = goodextrainfoDescCreateAt.Default.(func() int64)
 	// goodextrainfoDescUpdateAt is the schema descriptor for update_at field.
-	goodextrainfoDescUpdateAt := goodextrainfoFields[7].Descriptor()
+	goodextrainfoDescUpdateAt := goodextrainfoFields[9].Descriptor()
 	// goodextrainfo.DefaultUpdateAt holds the default value on creation for the update_at field.
 	goodextrainfo.DefaultUpdateAt = goodextrainfoDescUpdateAt.Default.(func() int64)
 	// goodextrainfo.UpdateDefaultUpdateAt holds the default value on update for the update_at field.
 	goodextrainfo.UpdateDefaultUpdateAt = goodextrainfoDescUpdateAt.UpdateDefault.(func() int64)
 	// goodextrainfoDescDeleteAt is the schema descriptor for delete_at field.
-	goodextrainfoDescDeleteAt := goodextrainfoFields[8].Descriptor()
+	goodextrainfoDescDeleteAt := goodextrainfoFields[10].Descriptor()
 	// goodextrainfo.DefaultDeleteAt holds the default value on creation for the delete_at field.
 	goodextrainfo.DefaultDeleteAt = goodextrainfoDescDeleteAt.Default.(func() int64)
 	// goodextrainfoDescID is the schema descriptor for id field.

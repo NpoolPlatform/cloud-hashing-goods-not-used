@@ -2,6 +2,7 @@ package gooddetail
 
 import (
 	"context"
+	"math/rand"
 
 	"github.com/NpoolPlatform/cloud-hashing-goods/message/npool"
 
@@ -51,7 +52,10 @@ func Get(ctx context.Context, in *npool.GetGoodDetailRequest) (*npool.GetGoodDet
 		return nil, xerrors.Errorf("fail get device info: %v", err)
 	}
 
-	var extraInfo *npool.GoodExtraInfo
+	extraInfo := &npool.GoodExtraInfo{
+		Rating:    4.6,
+		VoteCount: uint32(rand.Intn(140)),
+	}
 
 	extra, err := goodextrainfo.Get(ctx, &npool.GetGoodExtraInfoRequest{
 		GoodID: id.String(),

@@ -26,6 +26,8 @@ func (GoodExtraInfo) Fields() []ent.Field {
 		field.JSON("labels", []string{}),
 		field.Bool("out_sale"),
 		field.Bool("pre_sale"),
+		field.Uint32("vote_count"),
+		field.Float32("rating"),
 		field.Int64("create_at").
 			DefaultFunc(func() int64 {
 				return time.Now().UnixNano()

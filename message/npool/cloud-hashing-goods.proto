@@ -722,6 +722,8 @@ message GoodExtraInfo {
     repeated string Labels = 5103;
     bool OutSale = 5104;
     bool PreSale = 5105;
+    uint32 VoteCount = 5106;
+    float Rating = 5107;
 }
 
 message CreateGoodExtraInfoRequest {

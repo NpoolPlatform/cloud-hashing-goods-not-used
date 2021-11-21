@@ -161,6 +161,8 @@ var (
 		{Name: "labels", Type: field.TypeJSON},
 		{Name: "out_sale", Type: field.TypeBool},
 		{Name: "pre_sale", Type: field.TypeBool},
+		{Name: "vote_count", Type: field.TypeUint32},
+		{Name: "rating", Type: field.TypeFloat32},
 		{Name: "create_at", Type: field.TypeInt64},
 		{Name: "update_at", Type: field.TypeInt64},
 		{Name: "delete_at", Type: field.TypeInt64},

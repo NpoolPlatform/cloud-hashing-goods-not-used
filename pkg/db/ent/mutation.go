@@ -5142,6 +5142,10 @@ type GoodExtraInfoMutation struct {
 	labels        *[]string
 	out_sale      *bool
 	pre_sale      *bool
+	vote_count    *uint32
+	addvote_count *uint32
+	rating        *float32
+	addrating     *float32
 	create_at     *int64
 	addcreate_at  *int64
 	update_at     *int64
@@ -5419,6 +5423,118 @@ func (m *GoodExtraInfoMutation) ResetPreSale() {
 	m.pre_sale = nil
 }
 
+// SetVoteCount sets the "vote_count" field.
+func (m *GoodExtraInfoMutation) SetVoteCount(u uint32) {
+	m.vote_count = &u
+	m.addvote_count = nil
+}
+
+// VoteCount returns the value of the "vote_count" field in the mutation.
+func (m *GoodExtraInfoMutation) VoteCount() (r uint32, exists bool) {
+	v := m.vote_count
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldVoteCount returns the old "vote_count" field's value of the GoodExtraInfo entity.
+// If the GoodExtraInfo object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *GoodExtraInfoMutation) OldVoteCount(ctx context.Context) (v uint32, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, fmt.Errorf("OldVoteCount is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, fmt.Errorf("OldVoteCount requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldVoteCount: %w", err)
+	}
+	return oldValue.VoteCount, nil
+}
+
+// AddVoteCount adds u to the "vote_count" field.
+func (m *GoodExtraInfoMutation) AddVoteCount(u uint32) {
+	if m.addvote_count != nil {
+		*m.addvote_count += u
+	} else {
+		m.addvote_count = &u
+	}
+}
+
+// AddedVoteCount returns the value that was added to the "vote_count" field in this mutation.
+func (m *GoodExtraInfoMutation) AddedVoteCount() (r uint32, exists bool) {
+	v := m.addvote_count
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// ResetVoteCount resets all changes to the "vote_count" field.
+func (m *GoodExtraInfoMutation) ResetVoteCount() {
+	m.vote_count = nil
+	m.addvote_count = nil
+}
+
+// SetRating sets the "rating" field.
+func (m *GoodExtraInfoMutation) SetRating(f float32) {
+	m.rating = &f
+	m.addrating = nil
+}
+
+// Rating returns the value of the "rating" field in the mutation.
+func (m *GoodExtraInfoMutation) Rating() (r float32, exists bool) {
+	v := m.rating
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldRating returns the old "rating" field's value of the GoodExtraInfo entity.
+// If the GoodExtraInfo object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *GoodExtraInfoMutation) OldRating(ctx context.Context) (v float32, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, fmt.Errorf("OldRating is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, fmt.Errorf("OldRating requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldRating: %w", err)
+	}
+	return oldValue.Rating, nil
+}
+
+// AddRating adds f to the "rating" field.
+func (m *GoodExtraInfoMutation) AddRating(f float32) {
+	if m.addrating != nil {
+		*m.addrating += f
+	} else {
+		m.addrating = &f
+	}
+}
+
+// AddedRating returns the value that was added to the "rating" field in this mutation.
+func (m *GoodExtraInfoMutation) AddedRating() (r float32, exists bool) {
+	v := m.addrating
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// ResetRating resets all changes to the "rating" field.
+func (m *GoodExtraInfoMutation) ResetRating() {
+	m.rating = nil
+	m.addrating = nil
+}
+
 // SetCreateAt sets the "create_at" field.
 func (m *GoodExtraInfoMutation) SetCreateAt(i int64) {
 	m.create_at = &i
@@ -5606,7 +5722,7 @@ func (m *GoodExtraInfoMutation) Type() string {
 // order to get all numeric fields that were incremented/decremented, call
 // AddedFields().
 func (m *GoodExtraInfoMutation) Fields() []string {
-	fields := make([]string, 0, 8)
+	fields := make([]string, 0, 10)
 	if m.good_id != nil {
 		fields = append(fields, goodextrainfo.FieldGoodID)
 	}
@@ -5621,6 +5737,12 @@ func (m *GoodExtraInfoMutation) Fields() []string {
 	}
 	if m.pre_sale != nil {
 		fields = append(fields, goodextrainfo.FieldPreSale)
+	}
+	if m.vote_count != nil {
+		fields = append(fields, goodextrainfo.FieldVoteCount)
+	}
+	if m.rating != nil {
+		fields = append(fields, goodextrainfo.FieldRating)
 	}
 	if m.create_at != nil {
 		fields = append(fields, goodextrainfo.FieldCreateAt)
@@ -5649,6 +5771,10 @@ func (m *GoodExtraInfoMutation) Field(name string) (ent.Value, bool) {
 		return m.OutSale()
 	case goodextrainfo.FieldPreSale:
 		return m.PreSale()
+	case goodextrainfo.FieldVoteCount:
+		return m.VoteCount()
+	case goodextrainfo.FieldRating:
+		return m.Rating()
 	case goodextrainfo.FieldCreateAt:
 		return m.CreateAt()
 	case goodextrainfo.FieldUpdateAt:
@@ -5674,6 +5800,10 @@ func (m *GoodExtraInfoMutation) OldField(ctx context.Context, name string) (ent.
 		return m.OldOutSale(ctx)
 	case goodextrainfo.FieldPreSale:
 		return m.OldPreSale(ctx)
+	case goodextrainfo.FieldVoteCount:
+		return m.OldVoteCount(ctx)
+	case goodextrainfo.FieldRating:
+		return m.OldRating(ctx)
 	case goodextrainfo.FieldCreateAt:
 		return m.OldCreateAt(ctx)
 	case goodextrainfo.FieldUpdateAt:
@@ -5724,6 +5854,20 @@ func (m *GoodExtraInfoMutation) SetField(name string, value ent.Value) error {
 		}
 		m.SetPreSale(v)
 		return nil
+	case goodextrainfo.FieldVoteCount:
+		v, ok := value.(uint32)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetVoteCount(v)
+		return nil
+	case goodextrainfo.FieldRating:
+		v, ok := value.(float32)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetRating(v)
+		return nil
 	case goodextrainfo.FieldCreateAt:
 		v, ok := value.(int64)
 		if !ok {
@@ -5753,6 +5897,12 @@ func (m *GoodExtraInfoMutation) SetField(name string, value ent.Value) error {
 // this mutation.
 func (m *GoodExtraInfoMutation) AddedFields() []string {
 	var fields []string
+	if m.addvote_count != nil {
+		fields = append(fields, goodextrainfo.FieldVoteCount)
+	}
+	if m.addrating != nil {
+		fields = append(fields, goodextrainfo.FieldRating)
+	}
 	if m.addcreate_at != nil {
 		fields = append(fields, goodextrainfo.FieldCreateAt)
 	}
@@ -5770,6 +5920,10 @@ func (m *GoodExtraInfoMutation) AddedFields() []string {
 // was not set, or was not defined in the schema.
 func (m *GoodExtraInfoMutation) AddedField(name string) (ent.Value, bool) {
 	switch name {
+	case goodextrainfo.FieldVoteCount:
+		return m.AddedVoteCount()
+	case goodextrainfo.FieldRating:
+		return m.AddedRating()
 	case goodextrainfo.FieldCreateAt:
 		return m.AddedCreateAt()
 	case goodextrainfo.FieldUpdateAt:
@@ -5785,6 +5939,20 @@ func (m *GoodExtraInfoMutation) AddedField(name string) (ent.Value, bool) {
 // type.
 func (m *GoodExtraInfoMutation) AddField(name string, value ent.Value) error {
 	switch name {
+	case goodextrainfo.FieldVoteCount:
+		v, ok := value.(uint32)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.AddVoteCount(v)
+		return nil
+	case goodextrainfo.FieldRating:
+		v, ok := value.(float32)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.AddRating(v)
+		return nil
 	case goodextrainfo.FieldCreateAt:
 		v, ok := value.(int64)
 		if !ok {
@@ -5847,6 +6015,12 @@ func (m *GoodExtraInfoMutation) ResetField(name string) error {
 		return nil
 	case goodextrainfo.FieldPreSale:
 		m.ResetPreSale()
+		return nil
+	case goodextrainfo.FieldVoteCount:
+		m.ResetVoteCount()
+		return nil
+	case goodextrainfo.FieldRating:
+		m.ResetRating()
 		return nil
 	case goodextrainfo.FieldCreateAt:
 		m.ResetCreateAt()

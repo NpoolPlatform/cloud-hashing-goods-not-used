@@ -112,6 +112,20 @@ func PreSale(v bool) predicate.GoodExtraInfo {
 	})
 }
 
+// VoteCount applies equality check predicate on the "vote_count" field. It's identical to VoteCountEQ.
+func VoteCount(v uint32) predicate.GoodExtraInfo {
+	return predicate.GoodExtraInfo(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldVoteCount), v))
+	})
+}
+
+// Rating applies equality check predicate on the "rating" field. It's identical to RatingEQ.
+func Rating(v float32) predicate.GoodExtraInfo {
+	return predicate.GoodExtraInfo(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldRating), v))
+	})
+}
+
 // CreateAt applies equality check predicate on the "create_at" field. It's identical to CreateAtEQ.
 func CreateAt(v int64) predicate.GoodExtraInfo {
 	return predicate.GoodExtraInfo(func(s *sql.Selector) {
@@ -234,6 +248,158 @@ func PreSaleEQ(v bool) predicate.GoodExtraInfo {
 func PreSaleNEQ(v bool) predicate.GoodExtraInfo {
 	return predicate.GoodExtraInfo(func(s *sql.Selector) {
 		s.Where(sql.NEQ(s.C(FieldPreSale), v))
+	})
+}
+
+// VoteCountEQ applies the EQ predicate on the "vote_count" field.
+func VoteCountEQ(v uint32) predicate.GoodExtraInfo {
+	return predicate.GoodExtraInfo(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldVoteCount), v))
+	})
+}
+
+// VoteCountNEQ applies the NEQ predicate on the "vote_count" field.
+func VoteCountNEQ(v uint32) predicate.GoodExtraInfo {
+	return predicate.GoodExtraInfo(func(s *sql.Selector) {
+		s.Where(sql.NEQ(s.C(FieldVoteCount), v))
+	})
+}
+
+// VoteCountIn applies the In predicate on the "vote_count" field.
+func VoteCountIn(vs ...uint32) predicate.GoodExtraInfo {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.GoodExtraInfo(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.In(s.C(FieldVoteCount), v...))
+	})
+}
+
+// VoteCountNotIn applies the NotIn predicate on the "vote_count" field.
+func VoteCountNotIn(vs ...uint32) predicate.GoodExtraInfo {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.GoodExtraInfo(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.NotIn(s.C(FieldVoteCount), v...))
+	})
+}
+
+// VoteCountGT applies the GT predicate on the "vote_count" field.
+func VoteCountGT(v uint32) predicate.GoodExtraInfo {
+	return predicate.GoodExtraInfo(func(s *sql.Selector) {
+		s.Where(sql.GT(s.C(FieldVoteCount), v))
+	})
+}
+
+// VoteCountGTE applies the GTE predicate on the "vote_count" field.
+func VoteCountGTE(v uint32) predicate.GoodExtraInfo {
+	return predicate.GoodExtraInfo(func(s *sql.Selector) {
+		s.Where(sql.GTE(s.C(FieldVoteCount), v))
+	})
+}
+
+// VoteCountLT applies the LT predicate on the "vote_count" field.
+func VoteCountLT(v uint32) predicate.GoodExtraInfo {
+	return predicate.GoodExtraInfo(func(s *sql.Selector) {
+		s.Where(sql.LT(s.C(FieldVoteCount), v))
+	})
+}
+
+// VoteCountLTE applies the LTE predicate on the "vote_count" field.
+func VoteCountLTE(v uint32) predicate.GoodExtraInfo {
+	return predicate.GoodExtraInfo(func(s *sql.Selector) {
+		s.Where(sql.LTE(s.C(FieldVoteCount), v))
+	})
+}
+
+// RatingEQ applies the EQ predicate on the "rating" field.
+func RatingEQ(v float32) predicate.GoodExtraInfo {
+	return predicate.GoodExtraInfo(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldRating), v))
+	})
+}
+
+// RatingNEQ applies the NEQ predicate on the "rating" field.
+func RatingNEQ(v float32) predicate.GoodExtraInfo {
+	return predicate.GoodExtraInfo(func(s *sql.Selector) {
+		s.Where(sql.NEQ(s.C(FieldRating), v))
+	})
+}
+
+// RatingIn applies the In predicate on the "rating" field.
+func RatingIn(vs ...float32) predicate.GoodExtraInfo {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.GoodExtraInfo(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.In(s.C(FieldRating), v...))
+	})
+}
+
+// RatingNotIn applies the NotIn predicate on the "rating" field.
+func RatingNotIn(vs ...float32) predicate.GoodExtraInfo {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.GoodExtraInfo(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.NotIn(s.C(FieldRating), v...))
+	})
+}
+
+// RatingGT applies the GT predicate on the "rating" field.
+func RatingGT(v float32) predicate.GoodExtraInfo {
+	return predicate.GoodExtraInfo(func(s *sql.Selector) {
+		s.Where(sql.GT(s.C(FieldRating), v))
+	})
+}
+
+// RatingGTE applies the GTE predicate on the "rating" field.
+func RatingGTE(v float32) predicate.GoodExtraInfo {
+	return predicate.GoodExtraInfo(func(s *sql.Selector) {
+		s.Where(sql.GTE(s.C(FieldRating), v))
+	})
+}
+
+// RatingLT applies the LT predicate on the "rating" field.
+func RatingLT(v float32) predicate.GoodExtraInfo {
+	return predicate.GoodExtraInfo(func(s *sql.Selector) {
+		s.Where(sql.LT(s.C(FieldRating), v))
+	})
+}
+
+// RatingLTE applies the LTE predicate on the "rating" field.
+func RatingLTE(v float32) predicate.GoodExtraInfo {
+	return predicate.GoodExtraInfo(func(s *sql.Selector) {
+		s.Where(sql.LTE(s.C(FieldRating), v))
 	})
 }
 

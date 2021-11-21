@@ -57,6 +57,32 @@ func (geiu *GoodExtraInfoUpdate) SetPreSale(b bool) *GoodExtraInfoUpdate {
 	return geiu
 }
 
+// SetVoteCount sets the "vote_count" field.
+func (geiu *GoodExtraInfoUpdate) SetVoteCount(u uint32) *GoodExtraInfoUpdate {
+	geiu.mutation.ResetVoteCount()
+	geiu.mutation.SetVoteCount(u)
+	return geiu
+}
+
+// AddVoteCount adds u to the "vote_count" field.
+func (geiu *GoodExtraInfoUpdate) AddVoteCount(u uint32) *GoodExtraInfoUpdate {
+	geiu.mutation.AddVoteCount(u)
+	return geiu
+}
+
+// SetRating sets the "rating" field.
+func (geiu *GoodExtraInfoUpdate) SetRating(f float32) *GoodExtraInfoUpdate {
+	geiu.mutation.ResetRating()
+	geiu.mutation.SetRating(f)
+	return geiu
+}
+
+// AddRating adds f to the "rating" field.
+func (geiu *GoodExtraInfoUpdate) AddRating(f float32) *GoodExtraInfoUpdate {
+	geiu.mutation.AddRating(f)
+	return geiu
+}
+
 // SetCreateAt sets the "create_at" field.
 func (geiu *GoodExtraInfoUpdate) SetCreateAt(i int64) *GoodExtraInfoUpdate {
 	geiu.mutation.ResetCreateAt()
@@ -233,6 +259,34 @@ func (geiu *GoodExtraInfoUpdate) sqlSave(ctx context.Context) (n int, err error)
 			Column: goodextrainfo.FieldPreSale,
 		})
 	}
+	if value, ok := geiu.mutation.VoteCount(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeUint32,
+			Value:  value,
+			Column: goodextrainfo.FieldVoteCount,
+		})
+	}
+	if value, ok := geiu.mutation.AddedVoteCount(); ok {
+		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
+			Type:   field.TypeUint32,
+			Value:  value,
+			Column: goodextrainfo.FieldVoteCount,
+		})
+	}
+	if value, ok := geiu.mutation.Rating(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeFloat32,
+			Value:  value,
+			Column: goodextrainfo.FieldRating,
+		})
+	}
+	if value, ok := geiu.mutation.AddedRating(); ok {
+		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
+			Type:   field.TypeFloat32,
+			Value:  value,
+			Column: goodextrainfo.FieldRating,
+		})
+	}
 	if value, ok := geiu.mutation.CreateAt(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeInt64,
@@ -321,6 +375,32 @@ func (geiuo *GoodExtraInfoUpdateOne) SetOutSale(b bool) *GoodExtraInfoUpdateOne 
 // SetPreSale sets the "pre_sale" field.
 func (geiuo *GoodExtraInfoUpdateOne) SetPreSale(b bool) *GoodExtraInfoUpdateOne {
 	geiuo.mutation.SetPreSale(b)
+	return geiuo
+}
+
+// SetVoteCount sets the "vote_count" field.
+func (geiuo *GoodExtraInfoUpdateOne) SetVoteCount(u uint32) *GoodExtraInfoUpdateOne {
+	geiuo.mutation.ResetVoteCount()
+	geiuo.mutation.SetVoteCount(u)
+	return geiuo
+}
+
+// AddVoteCount adds u to the "vote_count" field.
+func (geiuo *GoodExtraInfoUpdateOne) AddVoteCount(u uint32) *GoodExtraInfoUpdateOne {
+	geiuo.mutation.AddVoteCount(u)
+	return geiuo
+}
+
+// SetRating sets the "rating" field.
+func (geiuo *GoodExtraInfoUpdateOne) SetRating(f float32) *GoodExtraInfoUpdateOne {
+	geiuo.mutation.ResetRating()
+	geiuo.mutation.SetRating(f)
+	return geiuo
+}
+
+// AddRating adds f to the "rating" field.
+func (geiuo *GoodExtraInfoUpdateOne) AddRating(f float32) *GoodExtraInfoUpdateOne {
+	geiuo.mutation.AddRating(f)
 	return geiuo
 }
 
@@ -522,6 +602,34 @@ func (geiuo *GoodExtraInfoUpdateOne) sqlSave(ctx context.Context) (_node *GoodEx
 			Type:   field.TypeBool,
 			Value:  value,
 			Column: goodextrainfo.FieldPreSale,
+		})
+	}
+	if value, ok := geiuo.mutation.VoteCount(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeUint32,
+			Value:  value,
+			Column: goodextrainfo.FieldVoteCount,
+		})
+	}
+	if value, ok := geiuo.mutation.AddedVoteCount(); ok {
+		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
+			Type:   field.TypeUint32,
+			Value:  value,
+			Column: goodextrainfo.FieldVoteCount,
+		})
+	}
+	if value, ok := geiuo.mutation.Rating(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeFloat32,
+			Value:  value,
+			Column: goodextrainfo.FieldRating,
+		})
+	}
+	if value, ok := geiuo.mutation.AddedRating(); ok {
+		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
+			Type:   field.TypeFloat32,
+			Value:  value,
+			Column: goodextrainfo.FieldRating,
 		})
 	}
 	if value, ok := geiuo.mutation.CreateAt(); ok {
