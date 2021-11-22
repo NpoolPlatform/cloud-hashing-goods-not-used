@@ -4,6 +4,8 @@ import (
 	"context"
 	"math/rand"
 
+	"github.com/NpoolPlatform/go-service-framework/pkg/logger"
+
 	"github.com/NpoolPlatform/cloud-hashing-goods/message/npool"
 
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/crud/device-info"     //nolint
@@ -103,7 +105,7 @@ func GetAll(ctx context.Context, in *npool.GetGoodsDetailRequest) (*npool.GetGoo
 		PageInfo: in.GetPageInfo(),
 	})
 	if err != nil {
-		return nil, xerrors.Errorf("fail get goods info")
+		return nil, xerrors.Errorf("fail get goods info: %v", err)
 	}
 
 	details := []*npool.GoodDetail{}
@@ -112,7 +114,8 @@ func GetAll(ctx context.Context, in *npool.GetGoodsDetailRequest) (*npool.GetGoo
 			ID: info.ID,
 		})
 		if err != nil {
-			return nil, xerrors.Errorf("fail get good detail")
+			logger.Sugar().Errorf("fail get good detail: %v", err)
+			continue
 		}
 		details = append(details, detail.Detail)
 	}

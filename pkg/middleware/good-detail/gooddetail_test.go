@@ -143,4 +143,9 @@ func TestGet(t *testing.T) {
 		assert.Equal(t, resp1.Detail.InheritFromGood.ID, goodInfoResp.Info.ID)
 		assertGoodDetail(t, resp1.Detail, goodInfoResp.Info, deviceResp.Info, vendorLocationResp.Info)
 	}
+
+	resp2, err := GetAll(context.Background(), &npool.GetGoodsDetailRequest{})
+	if assert.Nil(t, err) {
+		assert.NotNil(t, resp2.Details)
+	}
 }
