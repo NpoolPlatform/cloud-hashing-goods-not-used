@@ -9,6 +9,10 @@ import (
 	"github.com/NpoolPlatform/go-service-framework/pkg/app"
 	"github.com/NpoolPlatform/go-service-framework/pkg/logger"
 
+	mysqlconst "github.com/NpoolPlatform/go-service-framework/pkg/mysql/const"
+	rabbitmqconst "github.com/NpoolPlatform/go-service-framework/pkg/rabbitmq/const"
+	redisconst "github.com/NpoolPlatform/go-service-framework/pkg/redis/const"
+
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/service-name" //nolint
 
 	cli "github.com/urfave/cli/v2"
@@ -29,7 +33,18 @@ func main() {
 		logger.Sugar().Errorf("cannot get path of main.go")
 		return
 	}
-	err := app.Init(serviceName, description, "", "", path.Dir(mainPath), nil, commands)
+	err := app.Init(
+		serviceName,
+		description,
+		"",
+		"",
+		path.Dir(mainPath),
+		nil,
+		commands,
+		mysqlconst.MysqlServiceName,
+		rabbitmqconst.RabbitMQServiceName,
+		redisconst.RedisServiceName,
+	)
 	if err != nil {
 		logger.Sugar().Errorf("fail to create %v: %v", serviceName, err)
 		return
