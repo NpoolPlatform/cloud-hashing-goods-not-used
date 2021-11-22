@@ -25,6 +25,10 @@ type CloudHashingGoodsClient interface {
 	GetVendorLocation(ctx context.Context, in *GetVendorLocationRequest, opts ...grpc.CallOption) (*GetVendorLocationResponse, error)
 	DeleteVendorLocation(ctx context.Context, in *DeleteVendorLocationRequest, opts ...grpc.CallOption) (*DeleteVendorLocationResponse, error)
 	GetVendorLocations(ctx context.Context, in *GetVendorLocationsRequest, opts ...grpc.CallOption) (*GetVendorLocationsResponse, error)
+	CreatePriceCurrency(ctx context.Context, in *CreatePriceCurrencyRequest, opts ...grpc.CallOption) (*CreatePriceCurrencyResponse, error)
+	UpdatePriceCurrency(ctx context.Context, in *UpdatePriceCurrencyRequest, opts ...grpc.CallOption) (*UpdatePriceCurrencyResponse, error)
+	GetPriceCurrency(ctx context.Context, in *GetPriceCurrencyRequest, opts ...grpc.CallOption) (*GetPriceCurrencyResponse, error)
+	GetPriceCurrencys(ctx context.Context, in *GetPriceCurrencysRequest, opts ...grpc.CallOption) (*GetPriceCurrencysResponse, error)
 	CreateTargetArea(ctx context.Context, in *CreateTargetAreaRequest, opts ...grpc.CallOption) (*CreateTargetAreaResponse, error)
 	UpdateTargetArea(ctx context.Context, in *UpdateTargetAreaRequest, opts ...grpc.CallOption) (*UpdateTargetAreaResponse, error)
 	GetTargetArea(ctx context.Context, in *GetTargetAreaRequest, opts ...grpc.CallOption) (*GetTargetAreaResponse, error)
@@ -124,6 +128,42 @@ func (c *cloudHashingGoodsClient) DeleteVendorLocation(ctx context.Context, in *
 func (c *cloudHashingGoodsClient) GetVendorLocations(ctx context.Context, in *GetVendorLocationsRequest, opts ...grpc.CallOption) (*GetVendorLocationsResponse, error) {
 	out := new(GetVendorLocationsResponse)
 	err := c.cc.Invoke(ctx, "/cloud.hashing.goods.v1.CloudHashingGoods/GetVendorLocations", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *cloudHashingGoodsClient) CreatePriceCurrency(ctx context.Context, in *CreatePriceCurrencyRequest, opts ...grpc.CallOption) (*CreatePriceCurrencyResponse, error) {
+	out := new(CreatePriceCurrencyResponse)
+	err := c.cc.Invoke(ctx, "/cloud.hashing.goods.v1.CloudHashingGoods/CreatePriceCurrency", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *cloudHashingGoodsClient) UpdatePriceCurrency(ctx context.Context, in *UpdatePriceCurrencyRequest, opts ...grpc.CallOption) (*UpdatePriceCurrencyResponse, error) {
+	out := new(UpdatePriceCurrencyResponse)
+	err := c.cc.Invoke(ctx, "/cloud.hashing.goods.v1.CloudHashingGoods/UpdatePriceCurrency", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *cloudHashingGoodsClient) GetPriceCurrency(ctx context.Context, in *GetPriceCurrencyRequest, opts ...grpc.CallOption) (*GetPriceCurrencyResponse, error) {
+	out := new(GetPriceCurrencyResponse)
+	err := c.cc.Invoke(ctx, "/cloud.hashing.goods.v1.CloudHashingGoods/GetPriceCurrency", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *cloudHashingGoodsClient) GetPriceCurrencys(ctx context.Context, in *GetPriceCurrencysRequest, opts ...grpc.CallOption) (*GetPriceCurrencysResponse, error) {
+	out := new(GetPriceCurrencysResponse)
+	err := c.cc.Invoke(ctx, "/cloud.hashing.goods.v1.CloudHashingGoods/GetPriceCurrencys", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -491,6 +531,10 @@ type CloudHashingGoodsServer interface {
 	GetVendorLocation(context.Context, *GetVendorLocationRequest) (*GetVendorLocationResponse, error)
 	DeleteVendorLocation(context.Context, *DeleteVendorLocationRequest) (*DeleteVendorLocationResponse, error)
 	GetVendorLocations(context.Context, *GetVendorLocationsRequest) (*GetVendorLocationsResponse, error)
+	CreatePriceCurrency(context.Context, *CreatePriceCurrencyRequest) (*CreatePriceCurrencyResponse, error)
+	UpdatePriceCurrency(context.Context, *UpdatePriceCurrencyRequest) (*UpdatePriceCurrencyResponse, error)
+	GetPriceCurrency(context.Context, *GetPriceCurrencyRequest) (*GetPriceCurrencyResponse, error)
+	GetPriceCurrencys(context.Context, *GetPriceCurrencysRequest) (*GetPriceCurrencysResponse, error)
 	CreateTargetArea(context.Context, *CreateTargetAreaRequest) (*CreateTargetAreaResponse, error)
 	UpdateTargetArea(context.Context, *UpdateTargetAreaRequest) (*UpdateTargetAreaResponse, error)
 	GetTargetArea(context.Context, *GetTargetAreaRequest) (*GetTargetAreaResponse, error)
@@ -556,6 +600,18 @@ func (UnimplementedCloudHashingGoodsServer) DeleteVendorLocation(context.Context
 }
 func (UnimplementedCloudHashingGoodsServer) GetVendorLocations(context.Context, *GetVendorLocationsRequest) (*GetVendorLocationsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetVendorLocations not implemented")
+}
+func (UnimplementedCloudHashingGoodsServer) CreatePriceCurrency(context.Context, *CreatePriceCurrencyRequest) (*CreatePriceCurrencyResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreatePriceCurrency not implemented")
+}
+func (UnimplementedCloudHashingGoodsServer) UpdatePriceCurrency(context.Context, *UpdatePriceCurrencyRequest) (*UpdatePriceCurrencyResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdatePriceCurrency not implemented")
+}
+func (UnimplementedCloudHashingGoodsServer) GetPriceCurrency(context.Context, *GetPriceCurrencyRequest) (*GetPriceCurrencyResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetPriceCurrency not implemented")
+}
+func (UnimplementedCloudHashingGoodsServer) GetPriceCurrencys(context.Context, *GetPriceCurrencysRequest) (*GetPriceCurrencysResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetPriceCurrencys not implemented")
 }
 func (UnimplementedCloudHashingGoodsServer) CreateTargetArea(context.Context, *CreateTargetAreaRequest) (*CreateTargetAreaResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateTargetArea not implemented")
@@ -791,6 +847,78 @@ func _CloudHashingGoods_GetVendorLocations_Handler(srv interface{}, ctx context.
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(CloudHashingGoodsServer).GetVendorLocations(ctx, req.(*GetVendorLocationsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _CloudHashingGoods_CreatePriceCurrency_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreatePriceCurrencyRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CloudHashingGoodsServer).CreatePriceCurrency(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cloud.hashing.goods.v1.CloudHashingGoods/CreatePriceCurrency",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CloudHashingGoodsServer).CreatePriceCurrency(ctx, req.(*CreatePriceCurrencyRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _CloudHashingGoods_UpdatePriceCurrency_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdatePriceCurrencyRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CloudHashingGoodsServer).UpdatePriceCurrency(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cloud.hashing.goods.v1.CloudHashingGoods/UpdatePriceCurrency",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CloudHashingGoodsServer).UpdatePriceCurrency(ctx, req.(*UpdatePriceCurrencyRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _CloudHashingGoods_GetPriceCurrency_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetPriceCurrencyRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CloudHashingGoodsServer).GetPriceCurrency(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cloud.hashing.goods.v1.CloudHashingGoods/GetPriceCurrency",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CloudHashingGoodsServer).GetPriceCurrency(ctx, req.(*GetPriceCurrencyRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _CloudHashingGoods_GetPriceCurrencys_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetPriceCurrencysRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CloudHashingGoodsServer).GetPriceCurrencys(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cloud.hashing.goods.v1.CloudHashingGoods/GetPriceCurrencys",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CloudHashingGoodsServer).GetPriceCurrencys(ctx, req.(*GetPriceCurrencysRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -1527,6 +1655,22 @@ var CloudHashingGoods_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetVendorLocations",
 			Handler:    _CloudHashingGoods_GetVendorLocations_Handler,
+		},
+		{
+			MethodName: "CreatePriceCurrency",
+			Handler:    _CloudHashingGoods_CreatePriceCurrency_Handler,
+		},
+		{
+			MethodName: "UpdatePriceCurrency",
+			Handler:    _CloudHashingGoods_UpdatePriceCurrency_Handler,
+		},
+		{
+			MethodName: "GetPriceCurrency",
+			Handler:    _CloudHashingGoods_GetPriceCurrency_Handler,
+		},
+		{
+			MethodName: "GetPriceCurrencys",
+			Handler:    _CloudHashingGoods_GetPriceCurrencys_Handler,
 		},
 		{
 			MethodName: "CreateTargetArea",

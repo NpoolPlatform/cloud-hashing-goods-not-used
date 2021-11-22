@@ -29,6 +29,8 @@
     - [CreateGoodResponse](#cloud.hashing.goods.v1.CreateGoodResponse)
     - [CreateGoodReviewRequest](#cloud.hashing.goods.v1.CreateGoodReviewRequest)
     - [CreateGoodReviewResponse](#cloud.hashing.goods.v1.CreateGoodReviewResponse)
+    - [CreatePriceCurrencyRequest](#cloud.hashing.goods.v1.CreatePriceCurrencyRequest)
+    - [CreatePriceCurrencyResponse](#cloud.hashing.goods.v1.CreatePriceCurrencyResponse)
     - [CreateTargetAreaRequest](#cloud.hashing.goods.v1.CreateTargetAreaRequest)
     - [CreateTargetAreaResponse](#cloud.hashing.goods.v1.CreateTargetAreaResponse)
     - [CreateVendorLocationRequest](#cloud.hashing.goods.v1.CreateVendorLocationRequest)
@@ -62,6 +64,10 @@
     - [GetGoodsDetailResponse](#cloud.hashing.goods.v1.GetGoodsDetailResponse)
     - [GetGoodsRequest](#cloud.hashing.goods.v1.GetGoodsRequest)
     - [GetGoodsResponse](#cloud.hashing.goods.v1.GetGoodsResponse)
+    - [GetPriceCurrencyRequest](#cloud.hashing.goods.v1.GetPriceCurrencyRequest)
+    - [GetPriceCurrencyResponse](#cloud.hashing.goods.v1.GetPriceCurrencyResponse)
+    - [GetPriceCurrencysRequest](#cloud.hashing.goods.v1.GetPriceCurrencysRequest)
+    - [GetPriceCurrencysResponse](#cloud.hashing.goods.v1.GetPriceCurrencysResponse)
     - [GetTargetAreaRequest](#cloud.hashing.goods.v1.GetTargetAreaRequest)
     - [GetTargetAreaResponse](#cloud.hashing.goods.v1.GetTargetAreaResponse)
     - [GetTargetAreasRequest](#cloud.hashing.goods.v1.GetTargetAreasRequest)
@@ -80,6 +86,7 @@
     - [OnsaleAppGoodRequest](#cloud.hashing.goods.v1.OnsaleAppGoodRequest)
     - [OnsaleAppGoodResponse](#cloud.hashing.goods.v1.OnsaleAppGoodResponse)
     - [PageInfo](#cloud.hashing.goods.v1.PageInfo)
+    - [PriceCurrency](#cloud.hashing.goods.v1.PriceCurrency)
     - [SetAppGoodPriceRequest](#cloud.hashing.goods.v1.SetAppGoodPriceRequest)
     - [SetAppGoodPriceResponse](#cloud.hashing.goods.v1.SetAppGoodPriceResponse)
     - [TargetAreaInfo](#cloud.hashing.goods.v1.TargetAreaInfo)
@@ -99,6 +106,8 @@
     - [UpdateGoodResponse](#cloud.hashing.goods.v1.UpdateGoodResponse)
     - [UpdateGoodReviewRequest](#cloud.hashing.goods.v1.UpdateGoodReviewRequest)
     - [UpdateGoodReviewResponse](#cloud.hashing.goods.v1.UpdateGoodReviewResponse)
+    - [UpdatePriceCurrencyRequest](#cloud.hashing.goods.v1.UpdatePriceCurrencyRequest)
+    - [UpdatePriceCurrencyResponse](#cloud.hashing.goods.v1.UpdatePriceCurrencyResponse)
     - [UpdateTargetAreaRequest](#cloud.hashing.goods.v1.UpdateTargetAreaRequest)
     - [UpdateTargetAreaResponse](#cloud.hashing.goods.v1.UpdateTargetAreaResponse)
     - [UpdateVendorLocationRequest](#cloud.hashing.goods.v1.UpdateVendorLocationRequest)
@@ -500,6 +509,36 @@
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
 | Info | [GoodReviewInfo](#cloud.hashing.goods.v1.GoodReviewInfo) |  |  |
+
+
+
+
+
+
+<a name="cloud.hashing.goods.v1.CreatePriceCurrencyRequest"></a>
+
+### CreatePriceCurrencyRequest
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| Info | [PriceCurrency](#cloud.hashing.goods.v1.PriceCurrency) |  |  |
+
+
+
+
+
+
+<a name="cloud.hashing.goods.v1.CreatePriceCurrencyResponse"></a>
+
+### CreatePriceCurrencyResponse
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| Info | [PriceCurrency](#cloud.hashing.goods.v1.PriceCurrency) |  |  |
 
 
 
@@ -1011,6 +1050,66 @@
 
 
 
+<a name="cloud.hashing.goods.v1.GetPriceCurrencyRequest"></a>
+
+### GetPriceCurrencyRequest
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| ID | [string](#string) |  |  |
+
+
+
+
+
+
+<a name="cloud.hashing.goods.v1.GetPriceCurrencyResponse"></a>
+
+### GetPriceCurrencyResponse
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| Info | [PriceCurrency](#cloud.hashing.goods.v1.PriceCurrency) |  |  |
+
+
+
+
+
+
+<a name="cloud.hashing.goods.v1.GetPriceCurrencysRequest"></a>
+
+### GetPriceCurrencysRequest
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| PageInfo | [PageInfo](#cloud.hashing.goods.v1.PageInfo) |  |  |
+
+
+
+
+
+
+<a name="cloud.hashing.goods.v1.GetPriceCurrencysResponse"></a>
+
+### GetPriceCurrencysResponse
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| Infos | [PriceCurrency](#cloud.hashing.goods.v1.PriceCurrency) | repeated |  |
+
+
+
+
+
+
 <a name="cloud.hashing.goods.v1.GetTargetAreaRequest"></a>
 
 ### GetTargetAreaRequest
@@ -1181,7 +1280,7 @@
 | Title | [string](#string) |  |  |
 | Unit | [string](#string) |  |  |
 | Start | [uint32](#uint32) |  |  |
-| PriceCurrency | [string](#string) |  |  |
+| PriceCurrency | [PriceCurrency](#cloud.hashing.goods.v1.PriceCurrency) |  |  |
 
 
 
@@ -1333,6 +1432,24 @@
 | ----- | ---- | ----- | ----------- |
 | PageIndex | [int32](#int32) |  |  |
 | PageSize | [int32](#int32) |  |  |
+
+
+
+
+
+
+<a name="cloud.hashing.goods.v1.PriceCurrency"></a>
+
+### PriceCurrency
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| ID | [string](#string) |  |  |
+| Name | [string](#string) |  |  |
+| Unit | [string](#string) |  |  |
+| Symbol | [string](#string) |  |  |
 
 
 
@@ -1627,6 +1744,36 @@
 
 
 
+<a name="cloud.hashing.goods.v1.UpdatePriceCurrencyRequest"></a>
+
+### UpdatePriceCurrencyRequest
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| Info | [PriceCurrency](#cloud.hashing.goods.v1.PriceCurrency) |  |  |
+
+
+
+
+
+
+<a name="cloud.hashing.goods.v1.UpdatePriceCurrencyResponse"></a>
+
+### UpdatePriceCurrencyResponse
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| Info | [PriceCurrency](#cloud.hashing.goods.v1.PriceCurrency) |  |  |
+
+
+
+
+
+
 <a name="cloud.hashing.goods.v1.UpdateTargetAreaRequest"></a>
 
 ### UpdateTargetAreaRequest
@@ -1740,6 +1887,10 @@ Cloud Hashing Goods
 | GetVendorLocation | [GetVendorLocationRequest](#cloud.hashing.goods.v1.GetVendorLocationRequest) | [GetVendorLocationResponse](#cloud.hashing.goods.v1.GetVendorLocationResponse) |  |
 | DeleteVendorLocation | [DeleteVendorLocationRequest](#cloud.hashing.goods.v1.DeleteVendorLocationRequest) | [DeleteVendorLocationResponse](#cloud.hashing.goods.v1.DeleteVendorLocationResponse) |  |
 | GetVendorLocations | [GetVendorLocationsRequest](#cloud.hashing.goods.v1.GetVendorLocationsRequest) | [GetVendorLocationsResponse](#cloud.hashing.goods.v1.GetVendorLocationsResponse) |  |
+| CreatePriceCurrency | [CreatePriceCurrencyRequest](#cloud.hashing.goods.v1.CreatePriceCurrencyRequest) | [CreatePriceCurrencyResponse](#cloud.hashing.goods.v1.CreatePriceCurrencyResponse) |  |
+| UpdatePriceCurrency | [UpdatePriceCurrencyRequest](#cloud.hashing.goods.v1.UpdatePriceCurrencyRequest) | [UpdatePriceCurrencyResponse](#cloud.hashing.goods.v1.UpdatePriceCurrencyResponse) |  |
+| GetPriceCurrency | [GetPriceCurrencyRequest](#cloud.hashing.goods.v1.GetPriceCurrencyRequest) | [GetPriceCurrencyResponse](#cloud.hashing.goods.v1.GetPriceCurrencyResponse) |  |
+| GetPriceCurrencys | [GetPriceCurrencysRequest](#cloud.hashing.goods.v1.GetPriceCurrencysRequest) | [GetPriceCurrencysResponse](#cloud.hashing.goods.v1.GetPriceCurrencysResponse) |  |
 | CreateTargetArea | [CreateTargetAreaRequest](#cloud.hashing.goods.v1.CreateTargetAreaRequest) | [CreateTargetAreaResponse](#cloud.hashing.goods.v1.CreateTargetAreaResponse) |  |
 | UpdateTargetArea | [UpdateTargetAreaRequest](#cloud.hashing.goods.v1.UpdateTargetAreaRequest) | [UpdateTargetAreaResponse](#cloud.hashing.goods.v1.UpdateTargetAreaResponse) |  |
 | GetTargetArea | [GetTargetAreaRequest](#cloud.hashing.goods.v1.GetTargetAreaRequest) | [GetTargetAreaResponse](#cloud.hashing.goods.v1.GetTargetAreaResponse) |  |

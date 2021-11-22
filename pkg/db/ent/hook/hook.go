@@ -48,19 +48,6 @@ func (f AppTargetAreaFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Valu
 	return f(ctx, mv)
 }
 
-// The CurrencyFunc type is an adapter to allow the use of ordinary
-// function as Currency mutator.
-type CurrencyFunc func(context.Context, *ent.CurrencyMutation) (ent.Value, error)
-
-// Mutate calls f(ctx, m).
-func (f CurrencyFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, error) {
-	mv, ok := m.(*ent.CurrencyMutation)
-	if !ok {
-		return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.CurrencyMutation", m)
-	}
-	return f(ctx, mv)
-}
-
 // The DeviceInfoFunc type is an adapter to allow the use of ordinary
 // function as DeviceInfo mutator.
 type DeviceInfoFunc func(context.Context, *ent.DeviceInfoMutation) (ent.Value, error)
@@ -148,6 +135,19 @@ func (f GoodReviewFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, 
 	mv, ok := m.(*ent.GoodReviewMutation)
 	if !ok {
 		return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.GoodReviewMutation", m)
+	}
+	return f(ctx, mv)
+}
+
+// The PriceCurrencyFunc type is an adapter to allow the use of ordinary
+// function as PriceCurrency mutator.
+type PriceCurrencyFunc func(context.Context, *ent.PriceCurrencyMutation) (ent.Value, error)
+
+// Mutate calls f(ctx, m).
+func (f PriceCurrencyFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, error) {
+	mv, ok := m.(*ent.PriceCurrencyMutation)
+	if !ok {
+		return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.PriceCurrencyMutation", m)
 	}
 	return f(ctx, mv)
 }

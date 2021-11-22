@@ -10,7 +10,6 @@ import (
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/appgood"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/appgoodtargetarea"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/apptargetarea"
-	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/currency"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/deviceinfo"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/feetype"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/goodcomment"
@@ -19,6 +18,7 @@ import (
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/goodinfo"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/goodreview"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/predicate"
+	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/pricecurrency"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/targetarea"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/vendorlocation"
 	"github.com/google/uuid"
@@ -38,7 +38,6 @@ const (
 	TypeAppGood           = "AppGood"
 	TypeAppGoodTargetArea = "AppGoodTargetArea"
 	TypeAppTargetArea     = "AppTargetArea"
-	TypeCurrency          = "Currency"
 	TypeDeviceInfo        = "DeviceInfo"
 	TypeFeeType           = "FeeType"
 	TypeGoodComment       = "GoodComment"
@@ -46,6 +45,7 @@ const (
 	TypeGoodFee           = "GoodFee"
 	TypeGoodInfo          = "GoodInfo"
 	TypeGoodReview        = "GoodReview"
+	TypePriceCurrency     = "PriceCurrency"
 	TypeTargetArea        = "TargetArea"
 	TypeVendorLocation    = "VendorLocation"
 )
@@ -2253,676 +2253,6 @@ func (m *AppTargetAreaMutation) ClearEdge(name string) error {
 // It returns an error if the edge is not defined in the schema.
 func (m *AppTargetAreaMutation) ResetEdge(name string) error {
 	return fmt.Errorf("unknown AppTargetArea edge %s", name)
-}
-
-// CurrencyMutation represents an operation that mutates the Currency nodes in the graph.
-type CurrencyMutation struct {
-	config
-	op            Op
-	typ           string
-	id            *uuid.UUID
-	name          *string
-	unit          *string
-	symbol        *string
-	create_at     *uint32
-	addcreate_at  *uint32
-	update_at     *uint32
-	addupdate_at  *uint32
-	delete_at     *uint32
-	adddelete_at  *uint32
-	clearedFields map[string]struct{}
-	done          bool
-	oldValue      func(context.Context) (*Currency, error)
-	predicates    []predicate.Currency
-}
-
-var _ ent.Mutation = (*CurrencyMutation)(nil)
-
-// currencyOption allows management of the mutation configuration using functional options.
-type currencyOption func(*CurrencyMutation)
-
-// newCurrencyMutation creates new mutation for the Currency entity.
-func newCurrencyMutation(c config, op Op, opts ...currencyOption) *CurrencyMutation {
-	m := &CurrencyMutation{
-		config:        c,
-		op:            op,
-		typ:           TypeCurrency,
-		clearedFields: make(map[string]struct{}),
-	}
-	for _, opt := range opts {
-		opt(m)
-	}
-	return m
-}
-
-// withCurrencyID sets the ID field of the mutation.
-func withCurrencyID(id uuid.UUID) currencyOption {
-	return func(m *CurrencyMutation) {
-		var (
-			err   error
-			once  sync.Once
-			value *Currency
-		)
-		m.oldValue = func(ctx context.Context) (*Currency, error) {
-			once.Do(func() {
-				if m.done {
-					err = fmt.Errorf("querying old values post mutation is not allowed")
-				} else {
-					value, err = m.Client().Currency.Get(ctx, id)
-				}
-			})
-			return value, err
-		}
-		m.id = &id
-	}
-}
-
-// withCurrency sets the old Currency of the mutation.
-func withCurrency(node *Currency) currencyOption {
-	return func(m *CurrencyMutation) {
-		m.oldValue = func(context.Context) (*Currency, error) {
-			return node, nil
-		}
-		m.id = &node.ID
-	}
-}
-
-// Client returns a new `ent.Client` from the mutation. If the mutation was
-// executed in a transaction (ent.Tx), a transactional client is returned.
-func (m CurrencyMutation) Client() *Client {
-	client := &Client{config: m.config}
-	client.init()
-	return client
-}
-
-// Tx returns an `ent.Tx` for mutations that were executed in transactions;
-// it returns an error otherwise.
-func (m CurrencyMutation) Tx() (*Tx, error) {
-	if _, ok := m.driver.(*txDriver); !ok {
-		return nil, fmt.Errorf("ent: mutation is not running in a transaction")
-	}
-	tx := &Tx{config: m.config}
-	tx.init()
-	return tx, nil
-}
-
-// SetID sets the value of the id field. Note that this
-// operation is only accepted on creation of Currency entities.
-func (m *CurrencyMutation) SetID(id uuid.UUID) {
-	m.id = &id
-}
-
-// ID returns the ID value in the mutation. Note that the ID is only available
-// if it was provided to the builder or after it was returned from the database.
-func (m *CurrencyMutation) ID() (id uuid.UUID, exists bool) {
-	if m.id == nil {
-		return
-	}
-	return *m.id, true
-}
-
-// SetName sets the "name" field.
-func (m *CurrencyMutation) SetName(s string) {
-	m.name = &s
-}
-
-// Name returns the value of the "name" field in the mutation.
-func (m *CurrencyMutation) Name() (r string, exists bool) {
-	v := m.name
-	if v == nil {
-		return
-	}
-	return *v, true
-}
-
-// OldName returns the old "name" field's value of the Currency entity.
-// If the Currency object wasn't provided to the builder, the object is fetched from the database.
-// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *CurrencyMutation) OldName(ctx context.Context) (v string, err error) {
-	if !m.op.Is(OpUpdateOne) {
-		return v, fmt.Errorf("OldName is only allowed on UpdateOne operations")
-	}
-	if m.id == nil || m.oldValue == nil {
-		return v, fmt.Errorf("OldName requires an ID field in the mutation")
-	}
-	oldValue, err := m.oldValue(ctx)
-	if err != nil {
-		return v, fmt.Errorf("querying old value for OldName: %w", err)
-	}
-	return oldValue.Name, nil
-}
-
-// ResetName resets all changes to the "name" field.
-func (m *CurrencyMutation) ResetName() {
-	m.name = nil
-}
-
-// SetUnit sets the "unit" field.
-func (m *CurrencyMutation) SetUnit(s string) {
-	m.unit = &s
-}
-
-// Unit returns the value of the "unit" field in the mutation.
-func (m *CurrencyMutation) Unit() (r string, exists bool) {
-	v := m.unit
-	if v == nil {
-		return
-	}
-	return *v, true
-}
-
-// OldUnit returns the old "unit" field's value of the Currency entity.
-// If the Currency object wasn't provided to the builder, the object is fetched from the database.
-// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *CurrencyMutation) OldUnit(ctx context.Context) (v string, err error) {
-	if !m.op.Is(OpUpdateOne) {
-		return v, fmt.Errorf("OldUnit is only allowed on UpdateOne operations")
-	}
-	if m.id == nil || m.oldValue == nil {
-		return v, fmt.Errorf("OldUnit requires an ID field in the mutation")
-	}
-	oldValue, err := m.oldValue(ctx)
-	if err != nil {
-		return v, fmt.Errorf("querying old value for OldUnit: %w", err)
-	}
-	return oldValue.Unit, nil
-}
-
-// ResetUnit resets all changes to the "unit" field.
-func (m *CurrencyMutation) ResetUnit() {
-	m.unit = nil
-}
-
-// SetSymbol sets the "symbol" field.
-func (m *CurrencyMutation) SetSymbol(s string) {
-	m.symbol = &s
-}
-
-// Symbol returns the value of the "symbol" field in the mutation.
-func (m *CurrencyMutation) Symbol() (r string, exists bool) {
-	v := m.symbol
-	if v == nil {
-		return
-	}
-	return *v, true
-}
-
-// OldSymbol returns the old "symbol" field's value of the Currency entity.
-// If the Currency object wasn't provided to the builder, the object is fetched from the database.
-// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *CurrencyMutation) OldSymbol(ctx context.Context) (v string, err error) {
-	if !m.op.Is(OpUpdateOne) {
-		return v, fmt.Errorf("OldSymbol is only allowed on UpdateOne operations")
-	}
-	if m.id == nil || m.oldValue == nil {
-		return v, fmt.Errorf("OldSymbol requires an ID field in the mutation")
-	}
-	oldValue, err := m.oldValue(ctx)
-	if err != nil {
-		return v, fmt.Errorf("querying old value for OldSymbol: %w", err)
-	}
-	return oldValue.Symbol, nil
-}
-
-// ResetSymbol resets all changes to the "symbol" field.
-func (m *CurrencyMutation) ResetSymbol() {
-	m.symbol = nil
-}
-
-// SetCreateAt sets the "create_at" field.
-func (m *CurrencyMutation) SetCreateAt(u uint32) {
-	m.create_at = &u
-	m.addcreate_at = nil
-}
-
-// CreateAt returns the value of the "create_at" field in the mutation.
-func (m *CurrencyMutation) CreateAt() (r uint32, exists bool) {
-	v := m.create_at
-	if v == nil {
-		return
-	}
-	return *v, true
-}
-
-// OldCreateAt returns the old "create_at" field's value of the Currency entity.
-// If the Currency object wasn't provided to the builder, the object is fetched from the database.
-// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *CurrencyMutation) OldCreateAt(ctx context.Context) (v uint32, err error) {
-	if !m.op.Is(OpUpdateOne) {
-		return v, fmt.Errorf("OldCreateAt is only allowed on UpdateOne operations")
-	}
-	if m.id == nil || m.oldValue == nil {
-		return v, fmt.Errorf("OldCreateAt requires an ID field in the mutation")
-	}
-	oldValue, err := m.oldValue(ctx)
-	if err != nil {
-		return v, fmt.Errorf("querying old value for OldCreateAt: %w", err)
-	}
-	return oldValue.CreateAt, nil
-}
-
-// AddCreateAt adds u to the "create_at" field.
-func (m *CurrencyMutation) AddCreateAt(u uint32) {
-	if m.addcreate_at != nil {
-		*m.addcreate_at += u
-	} else {
-		m.addcreate_at = &u
-	}
-}
-
-// AddedCreateAt returns the value that was added to the "create_at" field in this mutation.
-func (m *CurrencyMutation) AddedCreateAt() (r uint32, exists bool) {
-	v := m.addcreate_at
-	if v == nil {
-		return
-	}
-	return *v, true
-}
-
-// ResetCreateAt resets all changes to the "create_at" field.
-func (m *CurrencyMutation) ResetCreateAt() {
-	m.create_at = nil
-	m.addcreate_at = nil
-}
-
-// SetUpdateAt sets the "update_at" field.
-func (m *CurrencyMutation) SetUpdateAt(u uint32) {
-	m.update_at = &u
-	m.addupdate_at = nil
-}
-
-// UpdateAt returns the value of the "update_at" field in the mutation.
-func (m *CurrencyMutation) UpdateAt() (r uint32, exists bool) {
-	v := m.update_at
-	if v == nil {
-		return
-	}
-	return *v, true
-}
-
-// OldUpdateAt returns the old "update_at" field's value of the Currency entity.
-// If the Currency object wasn't provided to the builder, the object is fetched from the database.
-// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *CurrencyMutation) OldUpdateAt(ctx context.Context) (v uint32, err error) {
-	if !m.op.Is(OpUpdateOne) {
-		return v, fmt.Errorf("OldUpdateAt is only allowed on UpdateOne operations")
-	}
-	if m.id == nil || m.oldValue == nil {
-		return v, fmt.Errorf("OldUpdateAt requires an ID field in the mutation")
-	}
-	oldValue, err := m.oldValue(ctx)
-	if err != nil {
-		return v, fmt.Errorf("querying old value for OldUpdateAt: %w", err)
-	}
-	return oldValue.UpdateAt, nil
-}
-
-// AddUpdateAt adds u to the "update_at" field.
-func (m *CurrencyMutation) AddUpdateAt(u uint32) {
-	if m.addupdate_at != nil {
-		*m.addupdate_at += u
-	} else {
-		m.addupdate_at = &u
-	}
-}
-
-// AddedUpdateAt returns the value that was added to the "update_at" field in this mutation.
-func (m *CurrencyMutation) AddedUpdateAt() (r uint32, exists bool) {
-	v := m.addupdate_at
-	if v == nil {
-		return
-	}
-	return *v, true
-}
-
-// ResetUpdateAt resets all changes to the "update_at" field.
-func (m *CurrencyMutation) ResetUpdateAt() {
-	m.update_at = nil
-	m.addupdate_at = nil
-}
-
-// SetDeleteAt sets the "delete_at" field.
-func (m *CurrencyMutation) SetDeleteAt(u uint32) {
-	m.delete_at = &u
-	m.adddelete_at = nil
-}
-
-// DeleteAt returns the value of the "delete_at" field in the mutation.
-func (m *CurrencyMutation) DeleteAt() (r uint32, exists bool) {
-	v := m.delete_at
-	if v == nil {
-		return
-	}
-	return *v, true
-}
-
-// OldDeleteAt returns the old "delete_at" field's value of the Currency entity.
-// If the Currency object wasn't provided to the builder, the object is fetched from the database.
-// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *CurrencyMutation) OldDeleteAt(ctx context.Context) (v uint32, err error) {
-	if !m.op.Is(OpUpdateOne) {
-		return v, fmt.Errorf("OldDeleteAt is only allowed on UpdateOne operations")
-	}
-	if m.id == nil || m.oldValue == nil {
-		return v, fmt.Errorf("OldDeleteAt requires an ID field in the mutation")
-	}
-	oldValue, err := m.oldValue(ctx)
-	if err != nil {
-		return v, fmt.Errorf("querying old value for OldDeleteAt: %w", err)
-	}
-	return oldValue.DeleteAt, nil
-}
-
-// AddDeleteAt adds u to the "delete_at" field.
-func (m *CurrencyMutation) AddDeleteAt(u uint32) {
-	if m.adddelete_at != nil {
-		*m.adddelete_at += u
-	} else {
-		m.adddelete_at = &u
-	}
-}
-
-// AddedDeleteAt returns the value that was added to the "delete_at" field in this mutation.
-func (m *CurrencyMutation) AddedDeleteAt() (r uint32, exists bool) {
-	v := m.adddelete_at
-	if v == nil {
-		return
-	}
-	return *v, true
-}
-
-// ResetDeleteAt resets all changes to the "delete_at" field.
-func (m *CurrencyMutation) ResetDeleteAt() {
-	m.delete_at = nil
-	m.adddelete_at = nil
-}
-
-// Where appends a list predicates to the CurrencyMutation builder.
-func (m *CurrencyMutation) Where(ps ...predicate.Currency) {
-	m.predicates = append(m.predicates, ps...)
-}
-
-// Op returns the operation name.
-func (m *CurrencyMutation) Op() Op {
-	return m.op
-}
-
-// Type returns the node type of this mutation (Currency).
-func (m *CurrencyMutation) Type() string {
-	return m.typ
-}
-
-// Fields returns all fields that were changed during this mutation. Note that in
-// order to get all numeric fields that were incremented/decremented, call
-// AddedFields().
-func (m *CurrencyMutation) Fields() []string {
-	fields := make([]string, 0, 6)
-	if m.name != nil {
-		fields = append(fields, currency.FieldName)
-	}
-	if m.unit != nil {
-		fields = append(fields, currency.FieldUnit)
-	}
-	if m.symbol != nil {
-		fields = append(fields, currency.FieldSymbol)
-	}
-	if m.create_at != nil {
-		fields = append(fields, currency.FieldCreateAt)
-	}
-	if m.update_at != nil {
-		fields = append(fields, currency.FieldUpdateAt)
-	}
-	if m.delete_at != nil {
-		fields = append(fields, currency.FieldDeleteAt)
-	}
-	return fields
-}
-
-// Field returns the value of a field with the given name. The second boolean
-// return value indicates that this field was not set, or was not defined in the
-// schema.
-func (m *CurrencyMutation) Field(name string) (ent.Value, bool) {
-	switch name {
-	case currency.FieldName:
-		return m.Name()
-	case currency.FieldUnit:
-		return m.Unit()
-	case currency.FieldSymbol:
-		return m.Symbol()
-	case currency.FieldCreateAt:
-		return m.CreateAt()
-	case currency.FieldUpdateAt:
-		return m.UpdateAt()
-	case currency.FieldDeleteAt:
-		return m.DeleteAt()
-	}
-	return nil, false
-}
-
-// OldField returns the old value of the field from the database. An error is
-// returned if the mutation operation is not UpdateOne, or the query to the
-// database failed.
-func (m *CurrencyMutation) OldField(ctx context.Context, name string) (ent.Value, error) {
-	switch name {
-	case currency.FieldName:
-		return m.OldName(ctx)
-	case currency.FieldUnit:
-		return m.OldUnit(ctx)
-	case currency.FieldSymbol:
-		return m.OldSymbol(ctx)
-	case currency.FieldCreateAt:
-		return m.OldCreateAt(ctx)
-	case currency.FieldUpdateAt:
-		return m.OldUpdateAt(ctx)
-	case currency.FieldDeleteAt:
-		return m.OldDeleteAt(ctx)
-	}
-	return nil, fmt.Errorf("unknown Currency field %s", name)
-}
-
-// SetField sets the value of a field with the given name. It returns an error if
-// the field is not defined in the schema, or if the type mismatched the field
-// type.
-func (m *CurrencyMutation) SetField(name string, value ent.Value) error {
-	switch name {
-	case currency.FieldName:
-		v, ok := value.(string)
-		if !ok {
-			return fmt.Errorf("unexpected type %T for field %s", value, name)
-		}
-		m.SetName(v)
-		return nil
-	case currency.FieldUnit:
-		v, ok := value.(string)
-		if !ok {
-			return fmt.Errorf("unexpected type %T for field %s", value, name)
-		}
-		m.SetUnit(v)
-		return nil
-	case currency.FieldSymbol:
-		v, ok := value.(string)
-		if !ok {
-			return fmt.Errorf("unexpected type %T for field %s", value, name)
-		}
-		m.SetSymbol(v)
-		return nil
-	case currency.FieldCreateAt:
-		v, ok := value.(uint32)
-		if !ok {
-			return fmt.Errorf("unexpected type %T for field %s", value, name)
-		}
-		m.SetCreateAt(v)
-		return nil
-	case currency.FieldUpdateAt:
-		v, ok := value.(uint32)
-		if !ok {
-			return fmt.Errorf("unexpected type %T for field %s", value, name)
-		}
-		m.SetUpdateAt(v)
-		return nil
-	case currency.FieldDeleteAt:
-		v, ok := value.(uint32)
-		if !ok {
-			return fmt.Errorf("unexpected type %T for field %s", value, name)
-		}
-		m.SetDeleteAt(v)
-		return nil
-	}
-	return fmt.Errorf("unknown Currency field %s", name)
-}
-
-// AddedFields returns all numeric fields that were incremented/decremented during
-// this mutation.
-func (m *CurrencyMutation) AddedFields() []string {
-	var fields []string
-	if m.addcreate_at != nil {
-		fields = append(fields, currency.FieldCreateAt)
-	}
-	if m.addupdate_at != nil {
-		fields = append(fields, currency.FieldUpdateAt)
-	}
-	if m.adddelete_at != nil {
-		fields = append(fields, currency.FieldDeleteAt)
-	}
-	return fields
-}
-
-// AddedField returns the numeric value that was incremented/decremented on a field
-// with the given name. The second boolean return value indicates that this field
-// was not set, or was not defined in the schema.
-func (m *CurrencyMutation) AddedField(name string) (ent.Value, bool) {
-	switch name {
-	case currency.FieldCreateAt:
-		return m.AddedCreateAt()
-	case currency.FieldUpdateAt:
-		return m.AddedUpdateAt()
-	case currency.FieldDeleteAt:
-		return m.AddedDeleteAt()
-	}
-	return nil, false
-}
-
-// AddField adds the value to the field with the given name. It returns an error if
-// the field is not defined in the schema, or if the type mismatched the field
-// type.
-func (m *CurrencyMutation) AddField(name string, value ent.Value) error {
-	switch name {
-	case currency.FieldCreateAt:
-		v, ok := value.(uint32)
-		if !ok {
-			return fmt.Errorf("unexpected type %T for field %s", value, name)
-		}
-		m.AddCreateAt(v)
-		return nil
-	case currency.FieldUpdateAt:
-		v, ok := value.(uint32)
-		if !ok {
-			return fmt.Errorf("unexpected type %T for field %s", value, name)
-		}
-		m.AddUpdateAt(v)
-		return nil
-	case currency.FieldDeleteAt:
-		v, ok := value.(uint32)
-		if !ok {
-			return fmt.Errorf("unexpected type %T for field %s", value, name)
-		}
-		m.AddDeleteAt(v)
-		return nil
-	}
-	return fmt.Errorf("unknown Currency numeric field %s", name)
-}
-
-// ClearedFields returns all nullable fields that were cleared during this
-// mutation.
-func (m *CurrencyMutation) ClearedFields() []string {
-	return nil
-}
-
-// FieldCleared returns a boolean indicating if a field with the given name was
-// cleared in this mutation.
-func (m *CurrencyMutation) FieldCleared(name string) bool {
-	_, ok := m.clearedFields[name]
-	return ok
-}
-
-// ClearField clears the value of the field with the given name. It returns an
-// error if the field is not defined in the schema.
-func (m *CurrencyMutation) ClearField(name string) error {
-	return fmt.Errorf("unknown Currency nullable field %s", name)
-}
-
-// ResetField resets all changes in the mutation for the field with the given name.
-// It returns an error if the field is not defined in the schema.
-func (m *CurrencyMutation) ResetField(name string) error {
-	switch name {
-	case currency.FieldName:
-		m.ResetName()
-		return nil
-	case currency.FieldUnit:
-		m.ResetUnit()
-		return nil
-	case currency.FieldSymbol:
-		m.ResetSymbol()
-		return nil
-	case currency.FieldCreateAt:
-		m.ResetCreateAt()
-		return nil
-	case currency.FieldUpdateAt:
-		m.ResetUpdateAt()
-		return nil
-	case currency.FieldDeleteAt:
-		m.ResetDeleteAt()
-		return nil
-	}
-	return fmt.Errorf("unknown Currency field %s", name)
-}
-
-// AddedEdges returns all edge names that were set/added in this mutation.
-func (m *CurrencyMutation) AddedEdges() []string {
-	edges := make([]string, 0, 0)
-	return edges
-}
-
-// AddedIDs returns all IDs (to other nodes) that were added for the given edge
-// name in this mutation.
-func (m *CurrencyMutation) AddedIDs(name string) []ent.Value {
-	return nil
-}
-
-// RemovedEdges returns all edge names that were removed in this mutation.
-func (m *CurrencyMutation) RemovedEdges() []string {
-	edges := make([]string, 0, 0)
-	return edges
-}
-
-// RemovedIDs returns all IDs (to other nodes) that were removed for the edge with
-// the given name in this mutation.
-func (m *CurrencyMutation) RemovedIDs(name string) []ent.Value {
-	return nil
-}
-
-// ClearedEdges returns all edge names that were cleared in this mutation.
-func (m *CurrencyMutation) ClearedEdges() []string {
-	edges := make([]string, 0, 0)
-	return edges
-}
-
-// EdgeCleared returns a boolean which indicates if the edge with the given name
-// was cleared in this mutation.
-func (m *CurrencyMutation) EdgeCleared(name string) bool {
-	return false
-}
-
-// ClearEdge clears the value of the edge with the given name. It returns an error
-// if that edge is not defined in the schema.
-func (m *CurrencyMutation) ClearEdge(name string) error {
-	return fmt.Errorf("unknown Currency unique edge %s", name)
-}
-
-// ResetEdge resets all changes to the edge with the given name in this mutation.
-// It returns an error if the edge is not defined in the schema.
-func (m *CurrencyMutation) ResetEdge(name string) error {
-	return fmt.Errorf("unknown Currency edge %s", name)
 }
 
 // DeviceInfoMutation represents an operation that mutates the DeviceInfo nodes in the graph.
@@ -9489,6 +8819,676 @@ func (m *GoodReviewMutation) ClearEdge(name string) error {
 // It returns an error if the edge is not defined in the schema.
 func (m *GoodReviewMutation) ResetEdge(name string) error {
 	return fmt.Errorf("unknown GoodReview edge %s", name)
+}
+
+// PriceCurrencyMutation represents an operation that mutates the PriceCurrency nodes in the graph.
+type PriceCurrencyMutation struct {
+	config
+	op            Op
+	typ           string
+	id            *uuid.UUID
+	name          *string
+	unit          *string
+	symbol        *string
+	create_at     *uint32
+	addcreate_at  *uint32
+	update_at     *uint32
+	addupdate_at  *uint32
+	delete_at     *uint32
+	adddelete_at  *uint32
+	clearedFields map[string]struct{}
+	done          bool
+	oldValue      func(context.Context) (*PriceCurrency, error)
+	predicates    []predicate.PriceCurrency
+}
+
+var _ ent.Mutation = (*PriceCurrencyMutation)(nil)
+
+// pricecurrencyOption allows management of the mutation configuration using functional options.
+type pricecurrencyOption func(*PriceCurrencyMutation)
+
+// newPriceCurrencyMutation creates new mutation for the PriceCurrency entity.
+func newPriceCurrencyMutation(c config, op Op, opts ...pricecurrencyOption) *PriceCurrencyMutation {
+	m := &PriceCurrencyMutation{
+		config:        c,
+		op:            op,
+		typ:           TypePriceCurrency,
+		clearedFields: make(map[string]struct{}),
+	}
+	for _, opt := range opts {
+		opt(m)
+	}
+	return m
+}
+
+// withPriceCurrencyID sets the ID field of the mutation.
+func withPriceCurrencyID(id uuid.UUID) pricecurrencyOption {
+	return func(m *PriceCurrencyMutation) {
+		var (
+			err   error
+			once  sync.Once
+			value *PriceCurrency
+		)
+		m.oldValue = func(ctx context.Context) (*PriceCurrency, error) {
+			once.Do(func() {
+				if m.done {
+					err = fmt.Errorf("querying old values post mutation is not allowed")
+				} else {
+					value, err = m.Client().PriceCurrency.Get(ctx, id)
+				}
+			})
+			return value, err
+		}
+		m.id = &id
+	}
+}
+
+// withPriceCurrency sets the old PriceCurrency of the mutation.
+func withPriceCurrency(node *PriceCurrency) pricecurrencyOption {
+	return func(m *PriceCurrencyMutation) {
+		m.oldValue = func(context.Context) (*PriceCurrency, error) {
+			return node, nil
+		}
+		m.id = &node.ID
+	}
+}
+
+// Client returns a new `ent.Client` from the mutation. If the mutation was
+// executed in a transaction (ent.Tx), a transactional client is returned.
+func (m PriceCurrencyMutation) Client() *Client {
+	client := &Client{config: m.config}
+	client.init()
+	return client
+}
+
+// Tx returns an `ent.Tx` for mutations that were executed in transactions;
+// it returns an error otherwise.
+func (m PriceCurrencyMutation) Tx() (*Tx, error) {
+	if _, ok := m.driver.(*txDriver); !ok {
+		return nil, fmt.Errorf("ent: mutation is not running in a transaction")
+	}
+	tx := &Tx{config: m.config}
+	tx.init()
+	return tx, nil
+}
+
+// SetID sets the value of the id field. Note that this
+// operation is only accepted on creation of PriceCurrency entities.
+func (m *PriceCurrencyMutation) SetID(id uuid.UUID) {
+	m.id = &id
+}
+
+// ID returns the ID value in the mutation. Note that the ID is only available
+// if it was provided to the builder or after it was returned from the database.
+func (m *PriceCurrencyMutation) ID() (id uuid.UUID, exists bool) {
+	if m.id == nil {
+		return
+	}
+	return *m.id, true
+}
+
+// SetName sets the "name" field.
+func (m *PriceCurrencyMutation) SetName(s string) {
+	m.name = &s
+}
+
+// Name returns the value of the "name" field in the mutation.
+func (m *PriceCurrencyMutation) Name() (r string, exists bool) {
+	v := m.name
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldName returns the old "name" field's value of the PriceCurrency entity.
+// If the PriceCurrency object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *PriceCurrencyMutation) OldName(ctx context.Context) (v string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, fmt.Errorf("OldName is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, fmt.Errorf("OldName requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldName: %w", err)
+	}
+	return oldValue.Name, nil
+}
+
+// ResetName resets all changes to the "name" field.
+func (m *PriceCurrencyMutation) ResetName() {
+	m.name = nil
+}
+
+// SetUnit sets the "unit" field.
+func (m *PriceCurrencyMutation) SetUnit(s string) {
+	m.unit = &s
+}
+
+// Unit returns the value of the "unit" field in the mutation.
+func (m *PriceCurrencyMutation) Unit() (r string, exists bool) {
+	v := m.unit
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldUnit returns the old "unit" field's value of the PriceCurrency entity.
+// If the PriceCurrency object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *PriceCurrencyMutation) OldUnit(ctx context.Context) (v string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, fmt.Errorf("OldUnit is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, fmt.Errorf("OldUnit requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldUnit: %w", err)
+	}
+	return oldValue.Unit, nil
+}
+
+// ResetUnit resets all changes to the "unit" field.
+func (m *PriceCurrencyMutation) ResetUnit() {
+	m.unit = nil
+}
+
+// SetSymbol sets the "symbol" field.
+func (m *PriceCurrencyMutation) SetSymbol(s string) {
+	m.symbol = &s
+}
+
+// Symbol returns the value of the "symbol" field in the mutation.
+func (m *PriceCurrencyMutation) Symbol() (r string, exists bool) {
+	v := m.symbol
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldSymbol returns the old "symbol" field's value of the PriceCurrency entity.
+// If the PriceCurrency object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *PriceCurrencyMutation) OldSymbol(ctx context.Context) (v string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, fmt.Errorf("OldSymbol is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, fmt.Errorf("OldSymbol requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldSymbol: %w", err)
+	}
+	return oldValue.Symbol, nil
+}
+
+// ResetSymbol resets all changes to the "symbol" field.
+func (m *PriceCurrencyMutation) ResetSymbol() {
+	m.symbol = nil
+}
+
+// SetCreateAt sets the "create_at" field.
+func (m *PriceCurrencyMutation) SetCreateAt(u uint32) {
+	m.create_at = &u
+	m.addcreate_at = nil
+}
+
+// CreateAt returns the value of the "create_at" field in the mutation.
+func (m *PriceCurrencyMutation) CreateAt() (r uint32, exists bool) {
+	v := m.create_at
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldCreateAt returns the old "create_at" field's value of the PriceCurrency entity.
+// If the PriceCurrency object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *PriceCurrencyMutation) OldCreateAt(ctx context.Context) (v uint32, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, fmt.Errorf("OldCreateAt is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, fmt.Errorf("OldCreateAt requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldCreateAt: %w", err)
+	}
+	return oldValue.CreateAt, nil
+}
+
+// AddCreateAt adds u to the "create_at" field.
+func (m *PriceCurrencyMutation) AddCreateAt(u uint32) {
+	if m.addcreate_at != nil {
+		*m.addcreate_at += u
+	} else {
+		m.addcreate_at = &u
+	}
+}
+
+// AddedCreateAt returns the value that was added to the "create_at" field in this mutation.
+func (m *PriceCurrencyMutation) AddedCreateAt() (r uint32, exists bool) {
+	v := m.addcreate_at
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// ResetCreateAt resets all changes to the "create_at" field.
+func (m *PriceCurrencyMutation) ResetCreateAt() {
+	m.create_at = nil
+	m.addcreate_at = nil
+}
+
+// SetUpdateAt sets the "update_at" field.
+func (m *PriceCurrencyMutation) SetUpdateAt(u uint32) {
+	m.update_at = &u
+	m.addupdate_at = nil
+}
+
+// UpdateAt returns the value of the "update_at" field in the mutation.
+func (m *PriceCurrencyMutation) UpdateAt() (r uint32, exists bool) {
+	v := m.update_at
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldUpdateAt returns the old "update_at" field's value of the PriceCurrency entity.
+// If the PriceCurrency object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *PriceCurrencyMutation) OldUpdateAt(ctx context.Context) (v uint32, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, fmt.Errorf("OldUpdateAt is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, fmt.Errorf("OldUpdateAt requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldUpdateAt: %w", err)
+	}
+	return oldValue.UpdateAt, nil
+}
+
+// AddUpdateAt adds u to the "update_at" field.
+func (m *PriceCurrencyMutation) AddUpdateAt(u uint32) {
+	if m.addupdate_at != nil {
+		*m.addupdate_at += u
+	} else {
+		m.addupdate_at = &u
+	}
+}
+
+// AddedUpdateAt returns the value that was added to the "update_at" field in this mutation.
+func (m *PriceCurrencyMutation) AddedUpdateAt() (r uint32, exists bool) {
+	v := m.addupdate_at
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// ResetUpdateAt resets all changes to the "update_at" field.
+func (m *PriceCurrencyMutation) ResetUpdateAt() {
+	m.update_at = nil
+	m.addupdate_at = nil
+}
+
+// SetDeleteAt sets the "delete_at" field.
+func (m *PriceCurrencyMutation) SetDeleteAt(u uint32) {
+	m.delete_at = &u
+	m.adddelete_at = nil
+}
+
+// DeleteAt returns the value of the "delete_at" field in the mutation.
+func (m *PriceCurrencyMutation) DeleteAt() (r uint32, exists bool) {
+	v := m.delete_at
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldDeleteAt returns the old "delete_at" field's value of the PriceCurrency entity.
+// If the PriceCurrency object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *PriceCurrencyMutation) OldDeleteAt(ctx context.Context) (v uint32, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, fmt.Errorf("OldDeleteAt is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, fmt.Errorf("OldDeleteAt requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldDeleteAt: %w", err)
+	}
+	return oldValue.DeleteAt, nil
+}
+
+// AddDeleteAt adds u to the "delete_at" field.
+func (m *PriceCurrencyMutation) AddDeleteAt(u uint32) {
+	if m.adddelete_at != nil {
+		*m.adddelete_at += u
+	} else {
+		m.adddelete_at = &u
+	}
+}
+
+// AddedDeleteAt returns the value that was added to the "delete_at" field in this mutation.
+func (m *PriceCurrencyMutation) AddedDeleteAt() (r uint32, exists bool) {
+	v := m.adddelete_at
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// ResetDeleteAt resets all changes to the "delete_at" field.
+func (m *PriceCurrencyMutation) ResetDeleteAt() {
+	m.delete_at = nil
+	m.adddelete_at = nil
+}
+
+// Where appends a list predicates to the PriceCurrencyMutation builder.
+func (m *PriceCurrencyMutation) Where(ps ...predicate.PriceCurrency) {
+	m.predicates = append(m.predicates, ps...)
+}
+
+// Op returns the operation name.
+func (m *PriceCurrencyMutation) Op() Op {
+	return m.op
+}
+
+// Type returns the node type of this mutation (PriceCurrency).
+func (m *PriceCurrencyMutation) Type() string {
+	return m.typ
+}
+
+// Fields returns all fields that were changed during this mutation. Note that in
+// order to get all numeric fields that were incremented/decremented, call
+// AddedFields().
+func (m *PriceCurrencyMutation) Fields() []string {
+	fields := make([]string, 0, 6)
+	if m.name != nil {
+		fields = append(fields, pricecurrency.FieldName)
+	}
+	if m.unit != nil {
+		fields = append(fields, pricecurrency.FieldUnit)
+	}
+	if m.symbol != nil {
+		fields = append(fields, pricecurrency.FieldSymbol)
+	}
+	if m.create_at != nil {
+		fields = append(fields, pricecurrency.FieldCreateAt)
+	}
+	if m.update_at != nil {
+		fields = append(fields, pricecurrency.FieldUpdateAt)
+	}
+	if m.delete_at != nil {
+		fields = append(fields, pricecurrency.FieldDeleteAt)
+	}
+	return fields
+}
+
+// Field returns the value of a field with the given name. The second boolean
+// return value indicates that this field was not set, or was not defined in the
+// schema.
+func (m *PriceCurrencyMutation) Field(name string) (ent.Value, bool) {
+	switch name {
+	case pricecurrency.FieldName:
+		return m.Name()
+	case pricecurrency.FieldUnit:
+		return m.Unit()
+	case pricecurrency.FieldSymbol:
+		return m.Symbol()
+	case pricecurrency.FieldCreateAt:
+		return m.CreateAt()
+	case pricecurrency.FieldUpdateAt:
+		return m.UpdateAt()
+	case pricecurrency.FieldDeleteAt:
+		return m.DeleteAt()
+	}
+	return nil, false
+}
+
+// OldField returns the old value of the field from the database. An error is
+// returned if the mutation operation is not UpdateOne, or the query to the
+// database failed.
+func (m *PriceCurrencyMutation) OldField(ctx context.Context, name string) (ent.Value, error) {
+	switch name {
+	case pricecurrency.FieldName:
+		return m.OldName(ctx)
+	case pricecurrency.FieldUnit:
+		return m.OldUnit(ctx)
+	case pricecurrency.FieldSymbol:
+		return m.OldSymbol(ctx)
+	case pricecurrency.FieldCreateAt:
+		return m.OldCreateAt(ctx)
+	case pricecurrency.FieldUpdateAt:
+		return m.OldUpdateAt(ctx)
+	case pricecurrency.FieldDeleteAt:
+		return m.OldDeleteAt(ctx)
+	}
+	return nil, fmt.Errorf("unknown PriceCurrency field %s", name)
+}
+
+// SetField sets the value of a field with the given name. It returns an error if
+// the field is not defined in the schema, or if the type mismatched the field
+// type.
+func (m *PriceCurrencyMutation) SetField(name string, value ent.Value) error {
+	switch name {
+	case pricecurrency.FieldName:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetName(v)
+		return nil
+	case pricecurrency.FieldUnit:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetUnit(v)
+		return nil
+	case pricecurrency.FieldSymbol:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetSymbol(v)
+		return nil
+	case pricecurrency.FieldCreateAt:
+		v, ok := value.(uint32)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetCreateAt(v)
+		return nil
+	case pricecurrency.FieldUpdateAt:
+		v, ok := value.(uint32)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetUpdateAt(v)
+		return nil
+	case pricecurrency.FieldDeleteAt:
+		v, ok := value.(uint32)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetDeleteAt(v)
+		return nil
+	}
+	return fmt.Errorf("unknown PriceCurrency field %s", name)
+}
+
+// AddedFields returns all numeric fields that were incremented/decremented during
+// this mutation.
+func (m *PriceCurrencyMutation) AddedFields() []string {
+	var fields []string
+	if m.addcreate_at != nil {
+		fields = append(fields, pricecurrency.FieldCreateAt)
+	}
+	if m.addupdate_at != nil {
+		fields = append(fields, pricecurrency.FieldUpdateAt)
+	}
+	if m.adddelete_at != nil {
+		fields = append(fields, pricecurrency.FieldDeleteAt)
+	}
+	return fields
+}
+
+// AddedField returns the numeric value that was incremented/decremented on a field
+// with the given name. The second boolean return value indicates that this field
+// was not set, or was not defined in the schema.
+func (m *PriceCurrencyMutation) AddedField(name string) (ent.Value, bool) {
+	switch name {
+	case pricecurrency.FieldCreateAt:
+		return m.AddedCreateAt()
+	case pricecurrency.FieldUpdateAt:
+		return m.AddedUpdateAt()
+	case pricecurrency.FieldDeleteAt:
+		return m.AddedDeleteAt()
+	}
+	return nil, false
+}
+
+// AddField adds the value to the field with the given name. It returns an error if
+// the field is not defined in the schema, or if the type mismatched the field
+// type.
+func (m *PriceCurrencyMutation) AddField(name string, value ent.Value) error {
+	switch name {
+	case pricecurrency.FieldCreateAt:
+		v, ok := value.(uint32)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.AddCreateAt(v)
+		return nil
+	case pricecurrency.FieldUpdateAt:
+		v, ok := value.(uint32)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.AddUpdateAt(v)
+		return nil
+	case pricecurrency.FieldDeleteAt:
+		v, ok := value.(uint32)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.AddDeleteAt(v)
+		return nil
+	}
+	return fmt.Errorf("unknown PriceCurrency numeric field %s", name)
+}
+
+// ClearedFields returns all nullable fields that were cleared during this
+// mutation.
+func (m *PriceCurrencyMutation) ClearedFields() []string {
+	return nil
+}
+
+// FieldCleared returns a boolean indicating if a field with the given name was
+// cleared in this mutation.
+func (m *PriceCurrencyMutation) FieldCleared(name string) bool {
+	_, ok := m.clearedFields[name]
+	return ok
+}
+
+// ClearField clears the value of the field with the given name. It returns an
+// error if the field is not defined in the schema.
+func (m *PriceCurrencyMutation) ClearField(name string) error {
+	return fmt.Errorf("unknown PriceCurrency nullable field %s", name)
+}
+
+// ResetField resets all changes in the mutation for the field with the given name.
+// It returns an error if the field is not defined in the schema.
+func (m *PriceCurrencyMutation) ResetField(name string) error {
+	switch name {
+	case pricecurrency.FieldName:
+		m.ResetName()
+		return nil
+	case pricecurrency.FieldUnit:
+		m.ResetUnit()
+		return nil
+	case pricecurrency.FieldSymbol:
+		m.ResetSymbol()
+		return nil
+	case pricecurrency.FieldCreateAt:
+		m.ResetCreateAt()
+		return nil
+	case pricecurrency.FieldUpdateAt:
+		m.ResetUpdateAt()
+		return nil
+	case pricecurrency.FieldDeleteAt:
+		m.ResetDeleteAt()
+		return nil
+	}
+	return fmt.Errorf("unknown PriceCurrency field %s", name)
+}
+
+// AddedEdges returns all edge names that were set/added in this mutation.
+func (m *PriceCurrencyMutation) AddedEdges() []string {
+	edges := make([]string, 0, 0)
+	return edges
+}
+
+// AddedIDs returns all IDs (to other nodes) that were added for the given edge
+// name in this mutation.
+func (m *PriceCurrencyMutation) AddedIDs(name string) []ent.Value {
+	return nil
+}
+
+// RemovedEdges returns all edge names that were removed in this mutation.
+func (m *PriceCurrencyMutation) RemovedEdges() []string {
+	edges := make([]string, 0, 0)
+	return edges
+}
+
+// RemovedIDs returns all IDs (to other nodes) that were removed for the edge with
+// the given name in this mutation.
+func (m *PriceCurrencyMutation) RemovedIDs(name string) []ent.Value {
+	return nil
+}
+
+// ClearedEdges returns all edge names that were cleared in this mutation.
+func (m *PriceCurrencyMutation) ClearedEdges() []string {
+	edges := make([]string, 0, 0)
+	return edges
+}
+
+// EdgeCleared returns a boolean which indicates if the edge with the given name
+// was cleared in this mutation.
+func (m *PriceCurrencyMutation) EdgeCleared(name string) bool {
+	return false
+}
+
+// ClearEdge clears the value of the edge with the given name. It returns an error
+// if that edge is not defined in the schema.
+func (m *PriceCurrencyMutation) ClearEdge(name string) error {
+	return fmt.Errorf("unknown PriceCurrency unique edge %s", name)
+}
+
+// ResetEdge resets all changes to the edge with the given name in this mutation.
+// It returns an error if the edge is not defined in the schema.
+func (m *PriceCurrencyMutation) ResetEdge(name string) error {
+	return fmt.Errorf("unknown PriceCurrency edge %s", name)
 }
 
 // TargetAreaMutation represents an operation that mutates the TargetArea nodes in the graph.

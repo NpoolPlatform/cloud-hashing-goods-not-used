@@ -15,9 +15,6 @@ type AppGoodTargetArea func(*sql.Selector)
 // AppTargetArea is the predicate function for apptargetarea builders.
 type AppTargetArea func(*sql.Selector)
 
-// Currency is the predicate function for currency builders.
-type Currency func(*sql.Selector)
-
 // DeviceInfo is the predicate function for deviceinfo builders.
 type DeviceInfo func(*sql.Selector)
 
@@ -38,6 +35,9 @@ type GoodInfo func(*sql.Selector)
 
 // GoodReview is the predicate function for goodreview builders.
 type GoodReview func(*sql.Selector)
+
+// PriceCurrency is the predicate function for pricecurrency builders.
+type PriceCurrency func(*sql.Selector)
 
 // TargetArea is the predicate function for targetarea builders.
 type TargetArea func(*sql.Selector)

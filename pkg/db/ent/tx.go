@@ -18,8 +18,6 @@ type Tx struct {
 	AppGoodTargetArea *AppGoodTargetAreaClient
 	// AppTargetArea is the client for interacting with the AppTargetArea builders.
 	AppTargetArea *AppTargetAreaClient
-	// Currency is the client for interacting with the Currency builders.
-	Currency *CurrencyClient
 	// DeviceInfo is the client for interacting with the DeviceInfo builders.
 	DeviceInfo *DeviceInfoClient
 	// FeeType is the client for interacting with the FeeType builders.
@@ -34,6 +32,8 @@ type Tx struct {
 	GoodInfo *GoodInfoClient
 	// GoodReview is the client for interacting with the GoodReview builders.
 	GoodReview *GoodReviewClient
+	// PriceCurrency is the client for interacting with the PriceCurrency builders.
+	PriceCurrency *PriceCurrencyClient
 	// TargetArea is the client for interacting with the TargetArea builders.
 	TargetArea *TargetAreaClient
 	// VendorLocation is the client for interacting with the VendorLocation builders.
@@ -176,7 +176,6 @@ func (tx *Tx) init() {
 	tx.AppGood = NewAppGoodClient(tx.config)
 	tx.AppGoodTargetArea = NewAppGoodTargetAreaClient(tx.config)
 	tx.AppTargetArea = NewAppTargetAreaClient(tx.config)
-	tx.Currency = NewCurrencyClient(tx.config)
 	tx.DeviceInfo = NewDeviceInfoClient(tx.config)
 	tx.FeeType = NewFeeTypeClient(tx.config)
 	tx.GoodComment = NewGoodCommentClient(tx.config)
@@ -184,6 +183,7 @@ func (tx *Tx) init() {
 	tx.GoodFee = NewGoodFeeClient(tx.config)
 	tx.GoodInfo = NewGoodInfoClient(tx.config)
 	tx.GoodReview = NewGoodReviewClient(tx.config)
+	tx.PriceCurrency = NewPriceCurrencyClient(tx.config)
 	tx.TargetArea = NewTargetAreaClient(tx.config)
 	tx.VendorLocation = NewVendorLocationClient(tx.config)
 }

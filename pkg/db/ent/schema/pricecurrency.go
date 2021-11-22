@@ -9,13 +9,13 @@ import (
 	"github.com/google/uuid"
 )
 
-// Currency holds the schema definition for the Currency entity.
-type Currency struct {
+// PriceCurrency holds the schema definition for the PriceCurrency entity.
+type PriceCurrency struct {
 	ent.Schema
 }
 
-// Fields of the Currency.
-func (Currency) Fields() []ent.Field {
+// Fields of the PriceCurrency.
+func (PriceCurrency) Fields() []ent.Field {
 	return []ent.Field{
 		field.UUID("id", uuid.UUID{}).
 			Default(uuid.New).
@@ -42,7 +42,7 @@ func (Currency) Fields() []ent.Field {
 	}
 }
 
-// Edges of the Currency.
-func (Currency) Edges() []ent.Edge {
+// Edges of the PriceCurrency.
+func (PriceCurrency) Edges() []ent.Edge {
 	return nil
 }

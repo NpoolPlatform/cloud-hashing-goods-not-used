@@ -13,6 +13,7 @@ import (
 
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/crud/device-info"     //nolint
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/crud/good-info"       //nolint
+	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/crud/price-currency"  //nolint
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/crud/vendor-location" //nolint
 
 	"github.com/stretchr/testify/assert"
@@ -83,6 +84,17 @@ func TestGet(t *testing.T) {
 	})
 	assert.Nil(t, err)
 
+	currency := npool.PriceCurrency{
+		Name:   fmt.Sprintf("USDT-%v", nano),
+		Unit:   "USDT",
+		Symbol: "$",
+	}
+
+	currencyResp, err := pricecurrency.Create(context.Background(), &npool.CreatePriceCurrencyRequest{
+		Info: &currency,
+	})
+	assert.Nil(t, err)
+
 	goodInfo := npool.GoodInfo{
 		Title:              "Ant Miner S19 Pro",
 		Unit:               "TH/s",
@@ -96,7 +108,7 @@ func TestGet(t *testing.T) {
 		VendorLocationID:   vendorLocationResp.Info.ID,
 		InheritFromGoodID:  uuid.UUID{}.String(),
 		Price:              13.0,
-		PriceCurrency:      uuid.New().String(),
+		PriceCurrency:      currencyResp.Info.ID,
 		BenefitType:        "platform",
 		Classic:            true,
 		SupportCoinTypeIDs: []string{uuid.New().String(), uuid.New().String()},

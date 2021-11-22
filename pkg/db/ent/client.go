@@ -13,7 +13,6 @@ import (
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/appgood"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/appgoodtargetarea"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/apptargetarea"
-	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/currency"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/deviceinfo"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/feetype"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/goodcomment"
@@ -21,6 +20,7 @@ import (
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/goodfee"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/goodinfo"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/goodreview"
+	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/pricecurrency"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/targetarea"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/vendorlocation"
 
@@ -39,8 +39,6 @@ type Client struct {
 	AppGoodTargetArea *AppGoodTargetAreaClient
 	// AppTargetArea is the client for interacting with the AppTargetArea builders.
 	AppTargetArea *AppTargetAreaClient
-	// Currency is the client for interacting with the Currency builders.
-	Currency *CurrencyClient
 	// DeviceInfo is the client for interacting with the DeviceInfo builders.
 	DeviceInfo *DeviceInfoClient
 	// FeeType is the client for interacting with the FeeType builders.
@@ -55,6 +53,8 @@ type Client struct {
 	GoodInfo *GoodInfoClient
 	// GoodReview is the client for interacting with the GoodReview builders.
 	GoodReview *GoodReviewClient
+	// PriceCurrency is the client for interacting with the PriceCurrency builders.
+	PriceCurrency *PriceCurrencyClient
 	// TargetArea is the client for interacting with the TargetArea builders.
 	TargetArea *TargetAreaClient
 	// VendorLocation is the client for interacting with the VendorLocation builders.
@@ -75,7 +75,6 @@ func (c *Client) init() {
 	c.AppGood = NewAppGoodClient(c.config)
 	c.AppGoodTargetArea = NewAppGoodTargetAreaClient(c.config)
 	c.AppTargetArea = NewAppTargetAreaClient(c.config)
-	c.Currency = NewCurrencyClient(c.config)
 	c.DeviceInfo = NewDeviceInfoClient(c.config)
 	c.FeeType = NewFeeTypeClient(c.config)
 	c.GoodComment = NewGoodCommentClient(c.config)
@@ -83,6 +82,7 @@ func (c *Client) init() {
 	c.GoodFee = NewGoodFeeClient(c.config)
 	c.GoodInfo = NewGoodInfoClient(c.config)
 	c.GoodReview = NewGoodReviewClient(c.config)
+	c.PriceCurrency = NewPriceCurrencyClient(c.config)
 	c.TargetArea = NewTargetAreaClient(c.config)
 	c.VendorLocation = NewVendorLocationClient(c.config)
 }
@@ -121,7 +121,6 @@ func (c *Client) Tx(ctx context.Context) (*Tx, error) {
 		AppGood:           NewAppGoodClient(cfg),
 		AppGoodTargetArea: NewAppGoodTargetAreaClient(cfg),
 		AppTargetArea:     NewAppTargetAreaClient(cfg),
-		Currency:          NewCurrencyClient(cfg),
 		DeviceInfo:        NewDeviceInfoClient(cfg),
 		FeeType:           NewFeeTypeClient(cfg),
 		GoodComment:       NewGoodCommentClient(cfg),
@@ -129,6 +128,7 @@ func (c *Client) Tx(ctx context.Context) (*Tx, error) {
 		GoodFee:           NewGoodFeeClient(cfg),
 		GoodInfo:          NewGoodInfoClient(cfg),
 		GoodReview:        NewGoodReviewClient(cfg),
+		PriceCurrency:     NewPriceCurrencyClient(cfg),
 		TargetArea:        NewTargetAreaClient(cfg),
 		VendorLocation:    NewVendorLocationClient(cfg),
 	}, nil
@@ -152,7 +152,6 @@ func (c *Client) BeginTx(ctx context.Context, opts *sql.TxOptions) (*Tx, error) 
 		AppGood:           NewAppGoodClient(cfg),
 		AppGoodTargetArea: NewAppGoodTargetAreaClient(cfg),
 		AppTargetArea:     NewAppTargetAreaClient(cfg),
-		Currency:          NewCurrencyClient(cfg),
 		DeviceInfo:        NewDeviceInfoClient(cfg),
 		FeeType:           NewFeeTypeClient(cfg),
 		GoodComment:       NewGoodCommentClient(cfg),
@@ -160,6 +159,7 @@ func (c *Client) BeginTx(ctx context.Context, opts *sql.TxOptions) (*Tx, error) 
 		GoodFee:           NewGoodFeeClient(cfg),
 		GoodInfo:          NewGoodInfoClient(cfg),
 		GoodReview:        NewGoodReviewClient(cfg),
+		PriceCurrency:     NewPriceCurrencyClient(cfg),
 		TargetArea:        NewTargetAreaClient(cfg),
 		VendorLocation:    NewVendorLocationClient(cfg),
 	}, nil
@@ -194,7 +194,6 @@ func (c *Client) Use(hooks ...Hook) {
 	c.AppGood.Use(hooks...)
 	c.AppGoodTargetArea.Use(hooks...)
 	c.AppTargetArea.Use(hooks...)
-	c.Currency.Use(hooks...)
 	c.DeviceInfo.Use(hooks...)
 	c.FeeType.Use(hooks...)
 	c.GoodComment.Use(hooks...)
@@ -202,6 +201,7 @@ func (c *Client) Use(hooks ...Hook) {
 	c.GoodFee.Use(hooks...)
 	c.GoodInfo.Use(hooks...)
 	c.GoodReview.Use(hooks...)
+	c.PriceCurrency.Use(hooks...)
 	c.TargetArea.Use(hooks...)
 	c.VendorLocation.Use(hooks...)
 }
@@ -474,96 +474,6 @@ func (c *AppTargetAreaClient) GetX(ctx context.Context, id uuid.UUID) *AppTarget
 // Hooks returns the client hooks.
 func (c *AppTargetAreaClient) Hooks() []Hook {
 	return c.hooks.AppTargetArea
-}
-
-// CurrencyClient is a client for the Currency schema.
-type CurrencyClient struct {
-	config
-}
-
-// NewCurrencyClient returns a client for the Currency from the given config.
-func NewCurrencyClient(c config) *CurrencyClient {
-	return &CurrencyClient{config: c}
-}
-
-// Use adds a list of mutation hooks to the hooks stack.
-// A call to `Use(f, g, h)` equals to `currency.Hooks(f(g(h())))`.
-func (c *CurrencyClient) Use(hooks ...Hook) {
-	c.hooks.Currency = append(c.hooks.Currency, hooks...)
-}
-
-// Create returns a create builder for Currency.
-func (c *CurrencyClient) Create() *CurrencyCreate {
-	mutation := newCurrencyMutation(c.config, OpCreate)
-	return &CurrencyCreate{config: c.config, hooks: c.Hooks(), mutation: mutation}
-}
-
-// CreateBulk returns a builder for creating a bulk of Currency entities.
-func (c *CurrencyClient) CreateBulk(builders ...*CurrencyCreate) *CurrencyCreateBulk {
-	return &CurrencyCreateBulk{config: c.config, builders: builders}
-}
-
-// Update returns an update builder for Currency.
-func (c *CurrencyClient) Update() *CurrencyUpdate {
-	mutation := newCurrencyMutation(c.config, OpUpdate)
-	return &CurrencyUpdate{config: c.config, hooks: c.Hooks(), mutation: mutation}
-}
-
-// UpdateOne returns an update builder for the given entity.
-func (c *CurrencyClient) UpdateOne(cu *Currency) *CurrencyUpdateOne {
-	mutation := newCurrencyMutation(c.config, OpUpdateOne, withCurrency(cu))
-	return &CurrencyUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
-}
-
-// UpdateOneID returns an update builder for the given id.
-func (c *CurrencyClient) UpdateOneID(id uuid.UUID) *CurrencyUpdateOne {
-	mutation := newCurrencyMutation(c.config, OpUpdateOne, withCurrencyID(id))
-	return &CurrencyUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
-}
-
-// Delete returns a delete builder for Currency.
-func (c *CurrencyClient) Delete() *CurrencyDelete {
-	mutation := newCurrencyMutation(c.config, OpDelete)
-	return &CurrencyDelete{config: c.config, hooks: c.Hooks(), mutation: mutation}
-}
-
-// DeleteOne returns a delete builder for the given entity.
-func (c *CurrencyClient) DeleteOne(cu *Currency) *CurrencyDeleteOne {
-	return c.DeleteOneID(cu.ID)
-}
-
-// DeleteOneID returns a delete builder for the given id.
-func (c *CurrencyClient) DeleteOneID(id uuid.UUID) *CurrencyDeleteOne {
-	builder := c.Delete().Where(currency.ID(id))
-	builder.mutation.id = &id
-	builder.mutation.op = OpDeleteOne
-	return &CurrencyDeleteOne{builder}
-}
-
-// Query returns a query builder for Currency.
-func (c *CurrencyClient) Query() *CurrencyQuery {
-	return &CurrencyQuery{
-		config: c.config,
-	}
-}
-
-// Get returns a Currency entity by its id.
-func (c *CurrencyClient) Get(ctx context.Context, id uuid.UUID) (*Currency, error) {
-	return c.Query().Where(currency.ID(id)).Only(ctx)
-}
-
-// GetX is like Get, but panics if an error occurs.
-func (c *CurrencyClient) GetX(ctx context.Context, id uuid.UUID) *Currency {
-	obj, err := c.Get(ctx, id)
-	if err != nil {
-		panic(err)
-	}
-	return obj
-}
-
-// Hooks returns the client hooks.
-func (c *CurrencyClient) Hooks() []Hook {
-	return c.hooks.Currency
 }
 
 // DeviceInfoClient is a client for the DeviceInfo schema.
@@ -1194,6 +1104,96 @@ func (c *GoodReviewClient) GetX(ctx context.Context, id uuid.UUID) *GoodReview {
 // Hooks returns the client hooks.
 func (c *GoodReviewClient) Hooks() []Hook {
 	return c.hooks.GoodReview
+}
+
+// PriceCurrencyClient is a client for the PriceCurrency schema.
+type PriceCurrencyClient struct {
+	config
+}
+
+// NewPriceCurrencyClient returns a client for the PriceCurrency from the given config.
+func NewPriceCurrencyClient(c config) *PriceCurrencyClient {
+	return &PriceCurrencyClient{config: c}
+}
+
+// Use adds a list of mutation hooks to the hooks stack.
+// A call to `Use(f, g, h)` equals to `pricecurrency.Hooks(f(g(h())))`.
+func (c *PriceCurrencyClient) Use(hooks ...Hook) {
+	c.hooks.PriceCurrency = append(c.hooks.PriceCurrency, hooks...)
+}
+
+// Create returns a create builder for PriceCurrency.
+func (c *PriceCurrencyClient) Create() *PriceCurrencyCreate {
+	mutation := newPriceCurrencyMutation(c.config, OpCreate)
+	return &PriceCurrencyCreate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// CreateBulk returns a builder for creating a bulk of PriceCurrency entities.
+func (c *PriceCurrencyClient) CreateBulk(builders ...*PriceCurrencyCreate) *PriceCurrencyCreateBulk {
+	return &PriceCurrencyCreateBulk{config: c.config, builders: builders}
+}
+
+// Update returns an update builder for PriceCurrency.
+func (c *PriceCurrencyClient) Update() *PriceCurrencyUpdate {
+	mutation := newPriceCurrencyMutation(c.config, OpUpdate)
+	return &PriceCurrencyUpdate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOne returns an update builder for the given entity.
+func (c *PriceCurrencyClient) UpdateOne(pc *PriceCurrency) *PriceCurrencyUpdateOne {
+	mutation := newPriceCurrencyMutation(c.config, OpUpdateOne, withPriceCurrency(pc))
+	return &PriceCurrencyUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOneID returns an update builder for the given id.
+func (c *PriceCurrencyClient) UpdateOneID(id uuid.UUID) *PriceCurrencyUpdateOne {
+	mutation := newPriceCurrencyMutation(c.config, OpUpdateOne, withPriceCurrencyID(id))
+	return &PriceCurrencyUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// Delete returns a delete builder for PriceCurrency.
+func (c *PriceCurrencyClient) Delete() *PriceCurrencyDelete {
+	mutation := newPriceCurrencyMutation(c.config, OpDelete)
+	return &PriceCurrencyDelete{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// DeleteOne returns a delete builder for the given entity.
+func (c *PriceCurrencyClient) DeleteOne(pc *PriceCurrency) *PriceCurrencyDeleteOne {
+	return c.DeleteOneID(pc.ID)
+}
+
+// DeleteOneID returns a delete builder for the given id.
+func (c *PriceCurrencyClient) DeleteOneID(id uuid.UUID) *PriceCurrencyDeleteOne {
+	builder := c.Delete().Where(pricecurrency.ID(id))
+	builder.mutation.id = &id
+	builder.mutation.op = OpDeleteOne
+	return &PriceCurrencyDeleteOne{builder}
+}
+
+// Query returns a query builder for PriceCurrency.
+func (c *PriceCurrencyClient) Query() *PriceCurrencyQuery {
+	return &PriceCurrencyQuery{
+		config: c.config,
+	}
+}
+
+// Get returns a PriceCurrency entity by its id.
+func (c *PriceCurrencyClient) Get(ctx context.Context, id uuid.UUID) (*PriceCurrency, error) {
+	return c.Query().Where(pricecurrency.ID(id)).Only(ctx)
+}
+
+// GetX is like Get, but panics if an error occurs.
+func (c *PriceCurrencyClient) GetX(ctx context.Context, id uuid.UUID) *PriceCurrency {
+	obj, err := c.Get(ctx, id)
+	if err != nil {
+		panic(err)
+	}
+	return obj
+}
+
+// Hooks returns the client hooks.
+func (c *PriceCurrencyClient) Hooks() []Hook {
+	return c.hooks.PriceCurrency
 }
 
 // TargetAreaClient is a client for the TargetArea schema.

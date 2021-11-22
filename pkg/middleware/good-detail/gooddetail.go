@@ -9,6 +9,7 @@ import (
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/crud/device-info"     //nolint
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/crud/good-extra-info" //nolint
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/crud/good-info"       //nolint
+	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/crud/price-currency"  //nolint
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/crud/vendor-location" //nolint
 
 	"github.com/google/uuid"
@@ -64,6 +65,13 @@ func Get(ctx context.Context, in *npool.GetGoodDetailRequest) (*npool.GetGoodDet
 		extraInfo = extra.Info
 	}
 
+	priceCurrency, err := pricecurrency.Get(ctx, &npool.GetPriceCurrencyRequest{
+		ID: goodInfo.Info.PriceCurrency,
+	})
+	if err != nil {
+		return nil, xerrors.Errorf("fail get price currency %v: %v", goodInfo.Info.PriceCurrency, err)
+	}
+
 	return &npool.GetGoodDetailResponse{
 		Detail: &npool.GoodDetail{
 			ID:                 id.String(),
@@ -77,7 +85,7 @@ func Get(ctx context.Context, in *npool.GetGoodDetailRequest) (*npool.GetGoodDet
 			InheritFromGood:    inheritGoodInfo,
 			VendorLocation:     vendorLocation.Info,
 			Price:              goodInfo.Info.Price,
-			PriceCurrency:      goodInfo.Info.PriceCurrency,
+			PriceCurrency:      priceCurrency.Info,
 			BenefitType:        goodInfo.Info.BenefitType,
 			Classic:            goodInfo.Info.Classic,
 			SupportCoinTypeIDs: goodInfo.Info.SupportCoinTypeIDs,

@@ -80,22 +80,6 @@ var (
 			},
 		},
 	}
-	// CurrenciesColumns holds the columns for the "currencies" table.
-	CurrenciesColumns = []*schema.Column{
-		{Name: "id", Type: field.TypeUUID, Unique: true},
-		{Name: "name", Type: field.TypeString, Unique: true},
-		{Name: "unit", Type: field.TypeString},
-		{Name: "symbol", Type: field.TypeString},
-		{Name: "create_at", Type: field.TypeUint32},
-		{Name: "update_at", Type: field.TypeUint32},
-		{Name: "delete_at", Type: field.TypeUint32},
-	}
-	// CurrenciesTable holds the schema information for the "currencies" table.
-	CurrenciesTable = &schema.Table{
-		Name:       "currencies",
-		Columns:    CurrenciesColumns,
-		PrimaryKey: []*schema.Column{CurrenciesColumns[0]},
-	}
 	// DeviceInfosColumns holds the columns for the "device_infos" table.
 	DeviceInfosColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeUUID, Unique: true},
@@ -249,6 +233,22 @@ var (
 			},
 		},
 	}
+	// PriceCurrenciesColumns holds the columns for the "price_currencies" table.
+	PriceCurrenciesColumns = []*schema.Column{
+		{Name: "id", Type: field.TypeUUID, Unique: true},
+		{Name: "name", Type: field.TypeString, Unique: true},
+		{Name: "unit", Type: field.TypeString},
+		{Name: "symbol", Type: field.TypeString},
+		{Name: "create_at", Type: field.TypeUint32},
+		{Name: "update_at", Type: field.TypeUint32},
+		{Name: "delete_at", Type: field.TypeUint32},
+	}
+	// PriceCurrenciesTable holds the schema information for the "price_currencies" table.
+	PriceCurrenciesTable = &schema.Table{
+		Name:       "price_currencies",
+		Columns:    PriceCurrenciesColumns,
+		PrimaryKey: []*schema.Column{PriceCurrenciesColumns[0]},
+	}
 	// TargetAreasColumns holds the columns for the "target_areas" table.
 	TargetAreasColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeUUID, Unique: true},
@@ -300,7 +300,6 @@ var (
 		AppGoodsTable,
 		AppGoodTargetAreasTable,
 		AppTargetAreasTable,
-		CurrenciesTable,
 		DeviceInfosTable,
 		FeeTypesTable,
 		GoodCommentsTable,
@@ -308,6 +307,7 @@ var (
 		GoodFeesTable,
 		GoodInfosTable,
 		GoodReviewsTable,
+		PriceCurrenciesTable,
 		TargetAreasTable,
 		VendorLocationsTable,
 	}

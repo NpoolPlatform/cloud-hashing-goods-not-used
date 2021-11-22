@@ -91,6 +91,26 @@ func TestGet(t *testing.T) { //nolint
 		}
 	}
 
+	currency := npool.PriceCurrency{
+		Name:   fmt.Sprintf("USDT-%v", nano),
+		Unit:   "USDT",
+		Symbol: "$",
+	}
+	currencyResp, err := cli.R().
+		SetHeader("Content-Type", "application/json").
+		SetBody(npool.CreatePriceCurrencyRequest{
+			Info: &currency,
+		}).
+		Post("http://localhost:50020/v1/create/price-currency")
+	if assert.Nil(t, err) {
+		assert.Equal(t, 200, currencyResp.StatusCode())
+		info := npool.CreatePriceCurrencyResponse{}
+		err := json.Unmarshal(currencyResp.Body(), &info)
+		if assert.Nil(t, err) {
+			currency.ID = info.Info.ID
+		}
+	}
+
 	goodInfo := npool.GoodInfo{
 		DeviceInfoID:       deviceInfo.ID,
 		SeparateFee:        true,
@@ -102,7 +122,7 @@ func TestGet(t *testing.T) { //nolint
 		VendorLocationID:   vendorLocation.ID,
 		InheritFromGoodID:  uuid.UUID{}.String(),
 		Price:              13.0,
-		PriceCurrency:      uuid.New().String(),
+		PriceCurrency:      currency.ID,
 		BenefitType:        "platform",
 		Classic:            true,
 		SupportCoinTypeIDs: []string{uuid.New().String(), uuid.New().String()},
@@ -118,7 +138,6 @@ func TestGet(t *testing.T) { //nolint
 			Info: &goodInfo,
 		}).
 		Post("http://localhost:50020/v1/create/good")
-	fmt.Printf("good info resp: %v\n", string(goodInfoResp.Body()))
 	if assert.Nil(t, err) {
 		assert.Equal(t, 200, goodInfoResp.StatusCode())
 		info := npool.CreateGoodResponse{}

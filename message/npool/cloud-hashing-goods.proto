@@ -46,6 +46,30 @@ service CloudHashingGoods {
         };
     }
 
+    rpc CreatePriceCurrency(CreatePriceCurrencyRequest) returns (CreatePriceCurrencyResponse) {
+        option (google.api.http) = {
+            post: "/v1/create/price-currency"
+            body: "*"
+        };
+    }
+    rpc UpdatePriceCurrency(UpdatePriceCurrencyRequest) returns (UpdatePriceCurrencyResponse) {
+        option (google.api.http) = {
+            post: "/v1/update/price-currency"
+            body: "*"
+        };
+    }
+    rpc GetPriceCurrency(GetPriceCurrencyRequest) returns (GetPriceCurrencyResponse) {
+        option (google.api.http) = {
+            post: "/v1/get/price-currency"
+            body: "*"
+        };
+    }
+    rpc GetPriceCurrencys(GetPriceCurrencysRequest) returns (GetPriceCurrencysResponse) {
+        option (google.api.http) = {
+            post: "/v1/get/price-currencys"
+        };
+    }
+
     rpc CreateTargetArea(CreateTargetAreaRequest) returns (CreateTargetAreaResponse) {
         option (google.api.http) = {
             post: "/v1/create/target-area"
@@ -501,6 +525,45 @@ message GetGoodResponse {
     GoodInfo Info = 3000;
 }
 
+message PriceCurrency {
+    string ID = 3010;
+    string Name = 3011;
+    string Unit = 3012;
+    string Symbol = 3013;
+}
+
+message CreatePriceCurrencyRequest {
+    PriceCurrency Info = 3020;
+}
+
+message CreatePriceCurrencyResponse {
+    PriceCurrency Info = 3030;
+}
+
+message UpdatePriceCurrencyRequest {
+    PriceCurrency Info = 3040;
+}
+
+message UpdatePriceCurrencyResponse {
+    PriceCurrency Info = 3050;
+}
+
+message GetPriceCurrencyRequest {
+    string ID = 3060;
+}
+
+message GetPriceCurrencyResponse {
+    PriceCurrency Info = 3070;
+}
+
+message GetPriceCurrencysRequest {
+    PageInfo PageInfo = 3080;
+}
+
+message GetPriceCurrencysResponse {
+    repeated PriceCurrency Infos = 3090;
+}
+
 message GoodDetail {
     string ID = 2400;
     DeviceInfo DeviceInfo = 2401;
@@ -521,7 +584,7 @@ message GoodDetail {
     string Title = 2417;
     string Unit = 2418;
     uint32 Start = 2419;
-    string PriceCurrency = 2420;
+    PriceCurrency PriceCurrency = 2420;
 }
 
 message GetGoodDetailRequest {

@@ -7,12 +7,12 @@ import (
 	"strings"
 
 	"entgo.io/ent/dialect/sql"
-	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/currency"
+	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/pricecurrency"
 	"github.com/google/uuid"
 )
 
-// Currency is the model entity for the Currency schema.
-type Currency struct {
+// PriceCurrency is the model entity for the PriceCurrency schema.
+type PriceCurrency struct {
 	config `json:"-"`
 	// ID of the ent.
 	ID uuid.UUID `json:"id,omitempty"`
@@ -31,122 +31,122 @@ type Currency struct {
 }
 
 // scanValues returns the types for scanning values from sql.Rows.
-func (*Currency) scanValues(columns []string) ([]interface{}, error) {
+func (*PriceCurrency) scanValues(columns []string) ([]interface{}, error) {
 	values := make([]interface{}, len(columns))
 	for i := range columns {
 		switch columns[i] {
-		case currency.FieldCreateAt, currency.FieldUpdateAt, currency.FieldDeleteAt:
+		case pricecurrency.FieldCreateAt, pricecurrency.FieldUpdateAt, pricecurrency.FieldDeleteAt:
 			values[i] = new(sql.NullInt64)
-		case currency.FieldName, currency.FieldUnit, currency.FieldSymbol:
+		case pricecurrency.FieldName, pricecurrency.FieldUnit, pricecurrency.FieldSymbol:
 			values[i] = new(sql.NullString)
-		case currency.FieldID:
+		case pricecurrency.FieldID:
 			values[i] = new(uuid.UUID)
 		default:
-			return nil, fmt.Errorf("unexpected column %q for type Currency", columns[i])
+			return nil, fmt.Errorf("unexpected column %q for type PriceCurrency", columns[i])
 		}
 	}
 	return values, nil
 }
 
 // assignValues assigns the values that were returned from sql.Rows (after scanning)
-// to the Currency fields.
-func (c *Currency) assignValues(columns []string, values []interface{}) error {
+// to the PriceCurrency fields.
+func (pc *PriceCurrency) assignValues(columns []string, values []interface{}) error {
 	if m, n := len(values), len(columns); m < n {
 		return fmt.Errorf("mismatch number of scan values: %d != %d", m, n)
 	}
 	for i := range columns {
 		switch columns[i] {
-		case currency.FieldID:
+		case pricecurrency.FieldID:
 			if value, ok := values[i].(*uuid.UUID); !ok {
 				return fmt.Errorf("unexpected type %T for field id", values[i])
 			} else if value != nil {
-				c.ID = *value
+				pc.ID = *value
 			}
-		case currency.FieldName:
+		case pricecurrency.FieldName:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field name", values[i])
 			} else if value.Valid {
-				c.Name = value.String
+				pc.Name = value.String
 			}
-		case currency.FieldUnit:
+		case pricecurrency.FieldUnit:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field unit", values[i])
 			} else if value.Valid {
-				c.Unit = value.String
+				pc.Unit = value.String
 			}
-		case currency.FieldSymbol:
+		case pricecurrency.FieldSymbol:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field symbol", values[i])
 			} else if value.Valid {
-				c.Symbol = value.String
+				pc.Symbol = value.String
 			}
-		case currency.FieldCreateAt:
+		case pricecurrency.FieldCreateAt:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field create_at", values[i])
 			} else if value.Valid {
-				c.CreateAt = uint32(value.Int64)
+				pc.CreateAt = uint32(value.Int64)
 			}
-		case currency.FieldUpdateAt:
+		case pricecurrency.FieldUpdateAt:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field update_at", values[i])
 			} else if value.Valid {
-				c.UpdateAt = uint32(value.Int64)
+				pc.UpdateAt = uint32(value.Int64)
 			}
-		case currency.FieldDeleteAt:
+		case pricecurrency.FieldDeleteAt:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field delete_at", values[i])
 			} else if value.Valid {
-				c.DeleteAt = uint32(value.Int64)
+				pc.DeleteAt = uint32(value.Int64)
 			}
 		}
 	}
 	return nil
 }
 
-// Update returns a builder for updating this Currency.
-// Note that you need to call Currency.Unwrap() before calling this method if this Currency
+// Update returns a builder for updating this PriceCurrency.
+// Note that you need to call PriceCurrency.Unwrap() before calling this method if this PriceCurrency
 // was returned from a transaction, and the transaction was committed or rolled back.
-func (c *Currency) Update() *CurrencyUpdateOne {
-	return (&CurrencyClient{config: c.config}).UpdateOne(c)
+func (pc *PriceCurrency) Update() *PriceCurrencyUpdateOne {
+	return (&PriceCurrencyClient{config: pc.config}).UpdateOne(pc)
 }
 
-// Unwrap unwraps the Currency entity that was returned from a transaction after it was closed,
+// Unwrap unwraps the PriceCurrency entity that was returned from a transaction after it was closed,
 // so that all future queries will be executed through the driver which created the transaction.
-func (c *Currency) Unwrap() *Currency {
-	tx, ok := c.config.driver.(*txDriver)
+func (pc *PriceCurrency) Unwrap() *PriceCurrency {
+	tx, ok := pc.config.driver.(*txDriver)
 	if !ok {
-		panic("ent: Currency is not a transactional entity")
+		panic("ent: PriceCurrency is not a transactional entity")
 	}
-	c.config.driver = tx.drv
-	return c
+	pc.config.driver = tx.drv
+	return pc
 }
 
 // String implements the fmt.Stringer.
-func (c *Currency) String() string {
+func (pc *PriceCurrency) String() string {
 	var builder strings.Builder
-	builder.WriteString("Currency(")
-	builder.WriteString(fmt.Sprintf("id=%v", c.ID))
+	builder.WriteString("PriceCurrency(")
+	builder.WriteString(fmt.Sprintf("id=%v", pc.ID))
 	builder.WriteString(", name=")
-	builder.WriteString(c.Name)
+	builder.WriteString(pc.Name)
 	builder.WriteString(", unit=")
-	builder.WriteString(c.Unit)
+	builder.WriteString(pc.Unit)
 	builder.WriteString(", symbol=")
-	builder.WriteString(c.Symbol)
+	builder.WriteString(pc.Symbol)
 	builder.WriteString(", create_at=")
-	builder.WriteString(fmt.Sprintf("%v", c.CreateAt))
+	builder.WriteString(fmt.Sprintf("%v", pc.CreateAt))
 	builder.WriteString(", update_at=")
-	builder.WriteString(fmt.Sprintf("%v", c.UpdateAt))
+	builder.WriteString(fmt.Sprintf("%v", pc.UpdateAt))
 	builder.WriteString(", delete_at=")
-	builder.WriteString(fmt.Sprintf("%v", c.DeleteAt))
+	builder.WriteString(fmt.Sprintf("%v", pc.DeleteAt))
 	builder.WriteByte(')')
 	return builder.String()
 }
 
-// Currencies is a parsable slice of Currency.
-type Currencies []*Currency
+// PriceCurrencies is a parsable slice of PriceCurrency.
+type PriceCurrencies []*PriceCurrency
 
-func (c Currencies) config(cfg config) {
-	for _i := range c {
-		c[_i].config = cfg
+func (pc PriceCurrencies) config(cfg config) {
+	for _i := range pc {
+		pc[_i].config = cfg
 	}
 }

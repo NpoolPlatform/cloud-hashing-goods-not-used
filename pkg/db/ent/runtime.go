@@ -6,7 +6,6 @@ import (
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/appgood"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/appgoodtargetarea"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/apptargetarea"
-	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/currency"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/deviceinfo"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/feetype"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/goodcomment"
@@ -14,6 +13,7 @@ import (
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/goodfee"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/goodinfo"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/goodreview"
+	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/pricecurrency"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/schema"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/targetarea"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/vendorlocation"
@@ -96,26 +96,6 @@ func init() {
 	apptargetareaDescID := apptargetareaFields[0].Descriptor()
 	// apptargetarea.DefaultID holds the default value on creation for the id field.
 	apptargetarea.DefaultID = apptargetareaDescID.Default.(func() uuid.UUID)
-	currencyFields := schema.Currency{}.Fields()
-	_ = currencyFields
-	// currencyDescCreateAt is the schema descriptor for create_at field.
-	currencyDescCreateAt := currencyFields[4].Descriptor()
-	// currency.DefaultCreateAt holds the default value on creation for the create_at field.
-	currency.DefaultCreateAt = currencyDescCreateAt.Default.(func() uint32)
-	// currencyDescUpdateAt is the schema descriptor for update_at field.
-	currencyDescUpdateAt := currencyFields[5].Descriptor()
-	// currency.DefaultUpdateAt holds the default value on creation for the update_at field.
-	currency.DefaultUpdateAt = currencyDescUpdateAt.Default.(func() uint32)
-	// currency.UpdateDefaultUpdateAt holds the default value on update for the update_at field.
-	currency.UpdateDefaultUpdateAt = currencyDescUpdateAt.UpdateDefault.(func() uint32)
-	// currencyDescDeleteAt is the schema descriptor for delete_at field.
-	currencyDescDeleteAt := currencyFields[6].Descriptor()
-	// currency.DefaultDeleteAt holds the default value on creation for the delete_at field.
-	currency.DefaultDeleteAt = currencyDescDeleteAt.Default.(func() uint32)
-	// currencyDescID is the schema descriptor for id field.
-	currencyDescID := currencyFields[0].Descriptor()
-	// currency.DefaultID holds the default value on creation for the id field.
-	currency.DefaultID = currencyDescID.Default.(func() uuid.UUID)
 	deviceinfoFields := schema.DeviceInfo{}.Fields()
 	_ = deviceinfoFields
 	// deviceinfoDescType is the schema descriptor for type field.
@@ -292,6 +272,26 @@ func init() {
 	goodreviewDescID := goodreviewFields[0].Descriptor()
 	// goodreview.DefaultID holds the default value on creation for the id field.
 	goodreview.DefaultID = goodreviewDescID.Default.(func() uuid.UUID)
+	pricecurrencyFields := schema.PriceCurrency{}.Fields()
+	_ = pricecurrencyFields
+	// pricecurrencyDescCreateAt is the schema descriptor for create_at field.
+	pricecurrencyDescCreateAt := pricecurrencyFields[4].Descriptor()
+	// pricecurrency.DefaultCreateAt holds the default value on creation for the create_at field.
+	pricecurrency.DefaultCreateAt = pricecurrencyDescCreateAt.Default.(func() uint32)
+	// pricecurrencyDescUpdateAt is the schema descriptor for update_at field.
+	pricecurrencyDescUpdateAt := pricecurrencyFields[5].Descriptor()
+	// pricecurrency.DefaultUpdateAt holds the default value on creation for the update_at field.
+	pricecurrency.DefaultUpdateAt = pricecurrencyDescUpdateAt.Default.(func() uint32)
+	// pricecurrency.UpdateDefaultUpdateAt holds the default value on update for the update_at field.
+	pricecurrency.UpdateDefaultUpdateAt = pricecurrencyDescUpdateAt.UpdateDefault.(func() uint32)
+	// pricecurrencyDescDeleteAt is the schema descriptor for delete_at field.
+	pricecurrencyDescDeleteAt := pricecurrencyFields[6].Descriptor()
+	// pricecurrency.DefaultDeleteAt holds the default value on creation for the delete_at field.
+	pricecurrency.DefaultDeleteAt = pricecurrencyDescDeleteAt.Default.(func() uint32)
+	// pricecurrencyDescID is the schema descriptor for id field.
+	pricecurrencyDescID := pricecurrencyFields[0].Descriptor()
+	// pricecurrency.DefaultID holds the default value on creation for the id field.
+	pricecurrency.DefaultID = pricecurrencyDescID.Default.(func() uuid.UUID)
 	targetareaFields := schema.TargetArea{}.Fields()
 	_ = targetareaFields
 	// targetareaDescContinent is the schema descriptor for continent field.

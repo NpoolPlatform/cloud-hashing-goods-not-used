@@ -27,7 +27,6 @@ type hooks struct {
 	AppGood           []ent.Hook
 	AppGoodTargetArea []ent.Hook
 	AppTargetArea     []ent.Hook
-	Currency          []ent.Hook
 	DeviceInfo        []ent.Hook
 	FeeType           []ent.Hook
 	GoodComment       []ent.Hook
@@ -35,6 +34,7 @@ type hooks struct {
 	GoodFee           []ent.Hook
 	GoodInfo          []ent.Hook
 	GoodReview        []ent.Hook
+	PriceCurrency     []ent.Hook
 	TargetArea        []ent.Hook
 	VendorLocation    []ent.Hook
 }
