@@ -70,6 +70,8 @@ type CloudHashingGoodsClient interface {
 	CreateGoodReview(ctx context.Context, in *CreateGoodReviewRequest, opts ...grpc.CallOption) (*CreateGoodReviewResponse, error)
 	UpdateGoodReview(ctx context.Context, in *UpdateGoodReviewRequest, opts ...grpc.CallOption) (*UpdateGoodReviewResponse, error)
 	GetGoodReview(ctx context.Context, in *GetGoodReviewRequest, opts ...grpc.CallOption) (*GetGoodReviewResponse, error)
+	CreateFee(ctx context.Context, in *CreateFeeRequest, opts ...grpc.CallOption) (*CreateFeeResponse, error)
+	GetFee(ctx context.Context, in *GetFeeRequest, opts ...grpc.CallOption) (*GetFeeResponse, error)
 	CreateGoodFee(ctx context.Context, in *CreateGoodFeeRequest, opts ...grpc.CallOption) (*CreateGoodFeeResponse, error)
 	UpdateGoodFee(ctx context.Context, in *UpdateGoodFeeRequest, opts ...grpc.CallOption) (*UpdateGoodFeeResponse, error)
 	GetGoodFee(ctx context.Context, in *GetGoodFeeRequest, opts ...grpc.CallOption) (*GetGoodFeeResponse, error)
@@ -525,6 +527,24 @@ func (c *cloudHashingGoodsClient) GetGoodReview(ctx context.Context, in *GetGood
 	return out, nil
 }
 
+func (c *cloudHashingGoodsClient) CreateFee(ctx context.Context, in *CreateFeeRequest, opts ...grpc.CallOption) (*CreateFeeResponse, error) {
+	out := new(CreateFeeResponse)
+	err := c.cc.Invoke(ctx, "/cloud.hashing.goods.v1.CloudHashingGoods/CreateFee", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *cloudHashingGoodsClient) GetFee(ctx context.Context, in *GetFeeRequest, opts ...grpc.CallOption) (*GetFeeResponse, error) {
+	out := new(GetFeeResponse)
+	err := c.cc.Invoke(ctx, "/cloud.hashing.goods.v1.CloudHashingGoods/GetFee", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *cloudHashingGoodsClient) CreateGoodFee(ctx context.Context, in *CreateGoodFeeRequest, opts ...grpc.CallOption) (*CreateGoodFeeResponse, error) {
 	out := new(CreateGoodFeeResponse)
 	err := c.cc.Invoke(ctx, "/cloud.hashing.goods.v1.CloudHashingGoods/CreateGoodFee", in, out, opts...)
@@ -616,6 +636,8 @@ type CloudHashingGoodsServer interface {
 	CreateGoodReview(context.Context, *CreateGoodReviewRequest) (*CreateGoodReviewResponse, error)
 	UpdateGoodReview(context.Context, *UpdateGoodReviewRequest) (*UpdateGoodReviewResponse, error)
 	GetGoodReview(context.Context, *GetGoodReviewRequest) (*GetGoodReviewResponse, error)
+	CreateFee(context.Context, *CreateFeeRequest) (*CreateFeeResponse, error)
+	GetFee(context.Context, *GetFeeRequest) (*GetFeeResponse, error)
 	CreateGoodFee(context.Context, *CreateGoodFeeRequest) (*CreateGoodFeeResponse, error)
 	UpdateGoodFee(context.Context, *UpdateGoodFeeRequest) (*UpdateGoodFeeResponse, error)
 	GetGoodFee(context.Context, *GetGoodFeeRequest) (*GetGoodFeeResponse, error)
@@ -773,6 +795,12 @@ func (UnimplementedCloudHashingGoodsServer) UpdateGoodReview(context.Context, *U
 }
 func (UnimplementedCloudHashingGoodsServer) GetGoodReview(context.Context, *GetGoodReviewRequest) (*GetGoodReviewResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetGoodReview not implemented")
+}
+func (UnimplementedCloudHashingGoodsServer) CreateFee(context.Context, *CreateFeeRequest) (*CreateFeeResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateFee not implemented")
+}
+func (UnimplementedCloudHashingGoodsServer) GetFee(context.Context, *GetFeeRequest) (*GetFeeResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetFee not implemented")
 }
 func (UnimplementedCloudHashingGoodsServer) CreateGoodFee(context.Context, *CreateGoodFeeRequest) (*CreateGoodFeeResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateGoodFee not implemented")
@@ -1681,6 +1709,42 @@ func _CloudHashingGoods_GetGoodReview_Handler(srv interface{}, ctx context.Conte
 	return interceptor(ctx, in, info, handler)
 }
 
+func _CloudHashingGoods_CreateFee_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateFeeRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CloudHashingGoodsServer).CreateFee(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cloud.hashing.goods.v1.CloudHashingGoods/CreateFee",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CloudHashingGoodsServer).CreateFee(ctx, req.(*CreateFeeRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _CloudHashingGoods_GetFee_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetFeeRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CloudHashingGoodsServer).GetFee(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cloud.hashing.goods.v1.CloudHashingGoods/GetFee",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CloudHashingGoodsServer).GetFee(ctx, req.(*GetFeeRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _CloudHashingGoods_CreateGoodFee_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(CreateGoodFeeRequest)
 	if err := dec(in); err != nil {
@@ -1955,6 +2019,14 @@ var CloudHashingGoods_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetGoodReview",
 			Handler:    _CloudHashingGoods_GetGoodReview_Handler,
+		},
+		{
+			MethodName: "CreateFee",
+			Handler:    _CloudHashingGoods_CreateFee_Handler,
+		},
+		{
+			MethodName: "GetFee",
+			Handler:    _CloudHashingGoods_GetFee_Handler,
 		},
 		{
 			MethodName: "CreateGoodFee",

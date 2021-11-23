@@ -7,6 +7,7 @@ import (
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/appgoodtargetarea"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/apptargetarea"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/deviceinfo"
+	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/fee"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/goodcomment"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/goodextrainfo"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/goodfee"
@@ -127,6 +128,26 @@ func init() {
 	deviceinfoDescID := deviceinfoFields[0].Descriptor()
 	// deviceinfo.DefaultID holds the default value on creation for the id field.
 	deviceinfo.DefaultID = deviceinfoDescID.Default.(func() uuid.UUID)
+	feeFields := schema.Fee{}.Fields()
+	_ = feeFields
+	// feeDescCreateAt is the schema descriptor for create_at field.
+	feeDescCreateAt := feeFields[4].Descriptor()
+	// fee.DefaultCreateAt holds the default value on creation for the create_at field.
+	fee.DefaultCreateAt = feeDescCreateAt.Default.(func() uint32)
+	// feeDescUpdateAt is the schema descriptor for update_at field.
+	feeDescUpdateAt := feeFields[5].Descriptor()
+	// fee.DefaultUpdateAt holds the default value on creation for the update_at field.
+	fee.DefaultUpdateAt = feeDescUpdateAt.Default.(func() uint32)
+	// fee.UpdateDefaultUpdateAt holds the default value on update for the update_at field.
+	fee.UpdateDefaultUpdateAt = feeDescUpdateAt.UpdateDefault.(func() uint32)
+	// feeDescDeleteAt is the schema descriptor for delete_at field.
+	feeDescDeleteAt := feeFields[6].Descriptor()
+	// fee.DefaultDeleteAt holds the default value on creation for the delete_at field.
+	fee.DefaultDeleteAt = feeDescDeleteAt.Default.(func() uint32)
+	// feeDescID is the schema descriptor for id field.
+	feeDescID := feeFields[0].Descriptor()
+	// fee.DefaultID holds the default value on creation for the id field.
+	fee.DefaultID = feeDescID.Default.(func() uuid.UUID)
 	goodcommentFields := schema.GoodComment{}.Fields()
 	_ = goodcommentFields
 	// goodcommentDescContent is the schema descriptor for content field.

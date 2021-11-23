@@ -9,6 +9,7 @@ import (
 	"github.com/NpoolPlatform/cloud-hashing-goods/message/npool"
 
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/crud/device-info"     //nolint
+	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/crud/fee"             //nolint
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/crud/good-extra-info" //nolint
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/crud/good-fee"        //nolint
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/crud/good-info"       //nolint
@@ -75,15 +76,25 @@ func Get(ctx context.Context, in *npool.GetGoodDetailRequest) (*npool.GetGoodDet
 		return nil, xerrors.Errorf("fail get price currency %v: %v", goodInfo.Info.PriceCurrency, err)
 	}
 
-	fees := []*npool.GoodFee{}
+	fees := []*npool.FeeDetail{}
 	for _, id := range goodInfo.Info.FeeIDs {
-		fee, err := goodfee.Get(ctx, &npool.GetGoodFeeRequest{
+		myFee, err := fee.Get(ctx, &npool.GetFeeRequest{
 			ID: id,
+		})
+		if err != nil {
+			return nil, xerrors.Errorf("fail get fee: %v", err)
+		}
+
+		myGoodFee, err := goodfee.Get(ctx, &npool.GetGoodFeeRequest{
+			ID: myFee.Info.FeeTypeID,
 		})
 		if err != nil {
 			return nil, xerrors.Errorf("fail get good fee: %v", err)
 		}
-		fees = append(fees, fee.Info)
+		fees = append(fees, &npool.FeeDetail{
+			Fee:   myGoodFee.Info,
+			Value: myFee.Info.Value,
+		})
 	}
 
 	return &npool.GetGoodDetailResponse{

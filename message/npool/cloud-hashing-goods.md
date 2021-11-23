@@ -21,6 +21,8 @@
     - [CheckAppTargetAreaResponse](#cloud.hashing.goods.v1.CheckAppTargetAreaResponse)
     - [CreateDeviceInfoRequest](#cloud.hashing.goods.v1.CreateDeviceInfoRequest)
     - [CreateDeviceInfoResponse](#cloud.hashing.goods.v1.CreateDeviceInfoResponse)
+    - [CreateFeeRequest](#cloud.hashing.goods.v1.CreateFeeRequest)
+    - [CreateFeeResponse](#cloud.hashing.goods.v1.CreateFeeResponse)
     - [CreateGoodCommentRequest](#cloud.hashing.goods.v1.CreateGoodCommentRequest)
     - [CreateGoodCommentResponse](#cloud.hashing.goods.v1.CreateGoodCommentResponse)
     - [CreateGoodExtraInfoRequest](#cloud.hashing.goods.v1.CreateGoodExtraInfoRequest)
@@ -48,10 +50,14 @@
     - [DeleteVendorLocationRequest](#cloud.hashing.goods.v1.DeleteVendorLocationRequest)
     - [DeleteVendorLocationResponse](#cloud.hashing.goods.v1.DeleteVendorLocationResponse)
     - [DeviceInfo](#cloud.hashing.goods.v1.DeviceInfo)
+    - [Fee](#cloud.hashing.goods.v1.Fee)
+    - [FeeDetail](#cloud.hashing.goods.v1.FeeDetail)
     - [GetDeviceInfoRequest](#cloud.hashing.goods.v1.GetDeviceInfoRequest)
     - [GetDeviceInfoResponse](#cloud.hashing.goods.v1.GetDeviceInfoResponse)
     - [GetDeviceInfosRequest](#cloud.hashing.goods.v1.GetDeviceInfosRequest)
     - [GetDeviceInfosResponse](#cloud.hashing.goods.v1.GetDeviceInfosResponse)
+    - [GetFeeRequest](#cloud.hashing.goods.v1.GetFeeRequest)
+    - [GetFeeResponse](#cloud.hashing.goods.v1.GetFeeResponse)
     - [GetGoodCommentsRequest](#cloud.hashing.goods.v1.GetGoodCommentsRequest)
     - [GetGoodCommentsResponse](#cloud.hashing.goods.v1.GetGoodCommentsResponse)
     - [GetGoodDetailRequest](#cloud.hashing.goods.v1.GetGoodDetailRequest)
@@ -398,6 +404,36 @@
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
 | Info | [DeviceInfo](#cloud.hashing.goods.v1.DeviceInfo) |  |  |
+
+
+
+
+
+
+<a name="cloud.hashing.goods.v1.CreateFeeRequest"></a>
+
+### CreateFeeRequest
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| Info | [Fee](#cloud.hashing.goods.v1.Fee) |  |  |
+
+
+
+
+
+
+<a name="cloud.hashing.goods.v1.CreateFeeResponse"></a>
+
+### CreateFeeResponse
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| Info | [Fee](#cloud.hashing.goods.v1.Fee) |  |  |
 
 
 
@@ -814,6 +850,40 @@
 
 
 
+<a name="cloud.hashing.goods.v1.Fee"></a>
+
+### Fee
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| ID | [string](#string) |  |  |
+| AppID | [string](#string) |  |  |
+| FeeTypeID | [string](#string) |  |  |
+| Value | [double](#double) |  |  |
+
+
+
+
+
+
+<a name="cloud.hashing.goods.v1.FeeDetail"></a>
+
+### FeeDetail
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| Fee | [GoodFee](#cloud.hashing.goods.v1.GoodFee) |  |  |
+| Value | [double](#double) |  |  |
+
+
+
+
+
+
 <a name="cloud.hashing.goods.v1.GetDeviceInfoRequest"></a>
 
 ### GetDeviceInfoRequest
@@ -869,6 +939,36 @@
 | ----- | ---- | ----- | ----------- |
 | Infos | [DeviceInfo](#cloud.hashing.goods.v1.DeviceInfo) | repeated |  |
 | Total | [int32](#int32) |  |  |
+
+
+
+
+
+
+<a name="cloud.hashing.goods.v1.GetFeeRequest"></a>
+
+### GetFeeRequest
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| ID | [string](#string) |  |  |
+
+
+
+
+
+
+<a name="cloud.hashing.goods.v1.GetFeeResponse"></a>
+
+### GetFeeResponse
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| Info | [Fee](#cloud.hashing.goods.v1.Fee) |  |  |
 
 
 
@@ -1380,7 +1480,7 @@
 | Unit | [string](#string) |  |  |
 | Start | [uint32](#uint32) |  |  |
 | PriceCurrency | [PriceCurrency](#cloud.hashing.goods.v1.PriceCurrency) |  |  |
-| Fees | [GoodFee](#cloud.hashing.goods.v1.GoodFee) | repeated |  |
+| Fees | [FeeDetail](#cloud.hashing.goods.v1.FeeDetail) | repeated |  |
 
 
 
@@ -2080,6 +2180,8 @@ Cloud Hashing Goods
 | CreateGoodReview | [CreateGoodReviewRequest](#cloud.hashing.goods.v1.CreateGoodReviewRequest) | [CreateGoodReviewResponse](#cloud.hashing.goods.v1.CreateGoodReviewResponse) |  |
 | UpdateGoodReview | [UpdateGoodReviewRequest](#cloud.hashing.goods.v1.UpdateGoodReviewRequest) | [UpdateGoodReviewResponse](#cloud.hashing.goods.v1.UpdateGoodReviewResponse) |  |
 | GetGoodReview | [GetGoodReviewRequest](#cloud.hashing.goods.v1.GetGoodReviewRequest) | [GetGoodReviewResponse](#cloud.hashing.goods.v1.GetGoodReviewResponse) |  |
+| CreateFee | [CreateFeeRequest](#cloud.hashing.goods.v1.CreateFeeRequest) | [CreateFeeResponse](#cloud.hashing.goods.v1.CreateFeeResponse) |  |
+| GetFee | [GetFeeRequest](#cloud.hashing.goods.v1.GetFeeRequest) | [GetFeeResponse](#cloud.hashing.goods.v1.GetFeeResponse) |  |
 | CreateGoodFee | [CreateGoodFeeRequest](#cloud.hashing.goods.v1.CreateGoodFeeRequest) | [CreateGoodFeeResponse](#cloud.hashing.goods.v1.CreateGoodFeeResponse) |  |
 | UpdateGoodFee | [UpdateGoodFeeRequest](#cloud.hashing.goods.v1.UpdateGoodFeeRequest) | [UpdateGoodFeeResponse](#cloud.hashing.goods.v1.UpdateGoodFeeResponse) |  |
 | GetGoodFee | [GetGoodFeeRequest](#cloud.hashing.goods.v1.GetGoodFeeRequest) | [GetGoodFeeResponse](#cloud.hashing.goods.v1.GetGoodFeeResponse) |  |

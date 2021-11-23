@@ -314,6 +314,19 @@ service CloudHashingGoods {
         };
     }
 
+    rpc CreateFee(CreateFeeRequest) returns (CreateFeeResponse) {
+        option (google.api.http) = {
+            post: "/v1/create/fee"
+            body: "*"
+        };
+    }
+    rpc GetFee(GetFeeRequest) returns (GetFeeResponse) {
+        option (google.api.http) = {
+            post: "/v1/get/fee"
+            body: "*"
+        };
+    }
+
     rpc CreateGoodFee(CreateGoodFeeRequest) returns (CreateGoodFeeResponse) {
         option (google.api.http) = {
             post: "/v1/create/good/fee"
@@ -590,6 +603,11 @@ message GetPriceCurrencysResponse {
     repeated PriceCurrency Infos = 3090;
 }
 
+message FeeDetail {
+    GoodFee Fee = 1;
+    double Value = 2;
+}
+
 message GoodDetail {
     string ID = 2400;
     DeviceInfo DeviceInfo = 2401;
@@ -611,7 +629,7 @@ message GoodDetail {
     string Unit = 2418;
     uint32 Start = 2419;
     PriceCurrency PriceCurrency = 2420;
-    repeated GoodFee Fees = 2421;
+    repeated FeeDetail Fees = 2421;
 }
 
 message GetGoodDetailRequest {
@@ -911,4 +929,27 @@ message GetGoodFeesRequest {
 
 message GetGoodFeesResponse {
     repeated GoodFee Infos = 1;
+}
+
+message Fee {
+    string ID = 1;
+    string AppID = 2;
+    string FeeTypeID = 3;
+    double Value = 4;
+}
+
+message CreateFeeRequest {
+    Fee Info = 1;
+}
+
+message CreateFeeResponse {
+    Fee Info = 1;
+}
+
+message GetFeeRequest {
+    string ID = 1;
+}
+
+message GetFeeResponse {
+    Fee Info = 1;
 }

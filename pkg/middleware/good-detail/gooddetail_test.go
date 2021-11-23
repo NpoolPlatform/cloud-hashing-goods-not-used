@@ -98,7 +98,7 @@ func TestGet(t *testing.T) {
 
 	fee1 := npool.GoodFee{
 		AppID:   uuid.New().String(),
-		FeeType: "Gas Fee",
+		FeeType: fmt.Sprintf("Gas Fee-%v", nano),
 		PayType: "amount",
 	}
 	feeResp1, err := goodfee.Create(context.Background(), &npool.CreateGoodFeeRequest{
@@ -108,7 +108,7 @@ func TestGet(t *testing.T) {
 
 	fee2 := npool.GoodFee{
 		AppID:   uuid.New().String(),
-		FeeType: "Gas Fee 1",
+		FeeType: fmt.Sprintf("Gas Fee 1-%v", nano),
 		PayType: "amount",
 	}
 	feeResp2, err := goodfee.Create(context.Background(), &npool.CreateGoodFeeRequest{

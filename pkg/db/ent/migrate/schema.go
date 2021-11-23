@@ -104,6 +104,22 @@ var (
 			},
 		},
 	}
+	// FeesColumns holds the columns for the "fees" table.
+	FeesColumns = []*schema.Column{
+		{Name: "id", Type: field.TypeUUID, Unique: true},
+		{Name: "app_id", Type: field.TypeUUID},
+		{Name: "fee_type_id", Type: field.TypeUUID},
+		{Name: "value", Type: field.TypeUint64},
+		{Name: "create_at", Type: field.TypeUint32},
+		{Name: "update_at", Type: field.TypeUint32},
+		{Name: "delete_at", Type: field.TypeUint32},
+	}
+	// FeesTable holds the schema information for the "fees" table.
+	FeesTable = &schema.Table{
+		Name:       "fees",
+		Columns:    FeesColumns,
+		PrimaryKey: []*schema.Column{FeesColumns[0]},
+	}
 	// GoodCommentsColumns holds the columns for the "good_comments" table.
 	GoodCommentsColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeUUID, Unique: true},
@@ -284,6 +300,7 @@ var (
 		AppGoodTargetAreasTable,
 		AppTargetAreasTable,
 		DeviceInfosTable,
+		FeesTable,
 		GoodCommentsTable,
 		GoodExtraInfosTable,
 		GoodFeesTable,
