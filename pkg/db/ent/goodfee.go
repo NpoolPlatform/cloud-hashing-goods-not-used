@@ -21,15 +21,11 @@ type GoodFee struct {
 	// AppID holds the value of the "app_id" field.
 	AppID uuid.UUID `json:"app_id,omitempty"`
 	// FeeType holds the value of the "fee_type" field.
-	FeeType uuid.UUID `json:"fee_type,omitempty"`
+	FeeType string `json:"fee_type,omitempty"`
+	// FeeDescription holds the value of the "fee_description" field.
+	FeeDescription string `json:"fee_description,omitempty"`
 	// PayType holds the value of the "pay_type" field.
 	PayType goodfee.PayType `json:"pay_type,omitempty"`
-	// PercentValue holds the value of the "percent_value" field.
-	PercentValue int32 `json:"percent_value,omitempty"`
-	// AmountValue holds the value of the "amount_value" field.
-	AmountValue int32 `json:"amount_value,omitempty"`
-	// AmountUnit holds the value of the "amount_unit" field.
-	AmountUnit string `json:"amount_unit,omitempty"`
 	// CreateAt holds the value of the "create_at" field.
 	CreateAt uint32 `json:"create_at,omitempty"`
 	// UpdateAt holds the value of the "update_at" field.
@@ -43,11 +39,11 @@ func (*GoodFee) scanValues(columns []string) ([]interface{}, error) {
 	values := make([]interface{}, len(columns))
 	for i := range columns {
 		switch columns[i] {
-		case goodfee.FieldPercentValue, goodfee.FieldAmountValue, goodfee.FieldCreateAt, goodfee.FieldUpdateAt, goodfee.FieldDeleteAt:
+		case goodfee.FieldCreateAt, goodfee.FieldUpdateAt, goodfee.FieldDeleteAt:
 			values[i] = new(sql.NullInt64)
-		case goodfee.FieldPayType, goodfee.FieldAmountUnit:
+		case goodfee.FieldFeeType, goodfee.FieldFeeDescription, goodfee.FieldPayType:
 			values[i] = new(sql.NullString)
-		case goodfee.FieldID, goodfee.FieldGoodID, goodfee.FieldAppID, goodfee.FieldFeeType:
+		case goodfee.FieldID, goodfee.FieldGoodID, goodfee.FieldAppID:
 			values[i] = new(uuid.UUID)
 		default:
 			return nil, fmt.Errorf("unexpected column %q for type GoodFee", columns[i])
@@ -83,34 +79,22 @@ func (gf *GoodFee) assignValues(columns []string, values []interface{}) error {
 				gf.AppID = *value
 			}
 		case goodfee.FieldFeeType:
-			if value, ok := values[i].(*uuid.UUID); !ok {
+			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field fee_type", values[i])
-			} else if value != nil {
-				gf.FeeType = *value
+			} else if value.Valid {
+				gf.FeeType = value.String
+			}
+		case goodfee.FieldFeeDescription:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field fee_description", values[i])
+			} else if value.Valid {
+				gf.FeeDescription = value.String
 			}
 		case goodfee.FieldPayType:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field pay_type", values[i])
 			} else if value.Valid {
 				gf.PayType = goodfee.PayType(value.String)
-			}
-		case goodfee.FieldPercentValue:
-			if value, ok := values[i].(*sql.NullInt64); !ok {
-				return fmt.Errorf("unexpected type %T for field percent_value", values[i])
-			} else if value.Valid {
-				gf.PercentValue = int32(value.Int64)
-			}
-		case goodfee.FieldAmountValue:
-			if value, ok := values[i].(*sql.NullInt64); !ok {
-				return fmt.Errorf("unexpected type %T for field amount_value", values[i])
-			} else if value.Valid {
-				gf.AmountValue = int32(value.Int64)
-			}
-		case goodfee.FieldAmountUnit:
-			if value, ok := values[i].(*sql.NullString); !ok {
-				return fmt.Errorf("unexpected type %T for field amount_unit", values[i])
-			} else if value.Valid {
-				gf.AmountUnit = value.String
 			}
 		case goodfee.FieldCreateAt:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
@@ -163,15 +147,11 @@ func (gf *GoodFee) String() string {
 	builder.WriteString(", app_id=")
 	builder.WriteString(fmt.Sprintf("%v", gf.AppID))
 	builder.WriteString(", fee_type=")
-	builder.WriteString(fmt.Sprintf("%v", gf.FeeType))
+	builder.WriteString(gf.FeeType)
+	builder.WriteString(", fee_description=")
+	builder.WriteString(gf.FeeDescription)
 	builder.WriteString(", pay_type=")
 	builder.WriteString(fmt.Sprintf("%v", gf.PayType))
-	builder.WriteString(", percent_value=")
-	builder.WriteString(fmt.Sprintf("%v", gf.PercentValue))
-	builder.WriteString(", amount_value=")
-	builder.WriteString(fmt.Sprintf("%v", gf.AmountValue))
-	builder.WriteString(", amount_unit=")
-	builder.WriteString(gf.AmountUnit)
 	builder.WriteString(", create_at=")
 	builder.WriteString(fmt.Sprintf("%v", gf.CreateAt))
 	builder.WriteString(", update_at=")

@@ -19,14 +19,10 @@ const (
 	FieldAppID = "app_id"
 	// FieldFeeType holds the string denoting the fee_type field in the database.
 	FieldFeeType = "fee_type"
+	// FieldFeeDescription holds the string denoting the fee_description field in the database.
+	FieldFeeDescription = "fee_description"
 	// FieldPayType holds the string denoting the pay_type field in the database.
 	FieldPayType = "pay_type"
-	// FieldPercentValue holds the string denoting the percent_value field in the database.
-	FieldPercentValue = "percent_value"
-	// FieldAmountValue holds the string denoting the amount_value field in the database.
-	FieldAmountValue = "amount_value"
-	// FieldAmountUnit holds the string denoting the amount_unit field in the database.
-	FieldAmountUnit = "amount_unit"
 	// FieldCreateAt holds the string denoting the create_at field in the database.
 	FieldCreateAt = "create_at"
 	// FieldUpdateAt holds the string denoting the update_at field in the database.
@@ -43,10 +39,8 @@ var Columns = []string{
 	FieldGoodID,
 	FieldAppID,
 	FieldFeeType,
+	FieldFeeDescription,
 	FieldPayType,
-	FieldPercentValue,
-	FieldAmountValue,
-	FieldAmountUnit,
 	FieldCreateAt,
 	FieldUpdateAt,
 	FieldDeleteAt,
@@ -63,6 +57,8 @@ func ValidColumn(column string) bool {
 }
 
 var (
+	// FeeDescriptionValidator is a validator for the "fee_description" field. It is called by the builders before save.
+	FeeDescriptionValidator func(string) error
 	// DefaultCreateAt holds the default value on creation for the "create_at" field.
 	DefaultCreateAt func() uint32
 	// DefaultUpdateAt holds the default value on creation for the "update_at" field.

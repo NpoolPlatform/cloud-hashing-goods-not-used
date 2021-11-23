@@ -11,7 +11,6 @@ import (
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/appgoodtargetarea"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/apptargetarea"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/deviceinfo"
-	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/feetype"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/goodcomment"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/goodextrainfo"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/goodfee"
@@ -39,7 +38,6 @@ const (
 	TypeAppGoodTargetArea = "AppGoodTargetArea"
 	TypeAppTargetArea     = "AppTargetArea"
 	TypeDeviceInfo        = "DeviceInfo"
-	TypeFeeType           = "FeeType"
 	TypeGoodComment       = "GoodComment"
 	TypeGoodExtraInfo     = "GoodExtraInfo"
 	TypeGoodFee           = "GoodFee"
@@ -3045,568 +3043,6 @@ func (m *DeviceInfoMutation) ResetEdge(name string) error {
 	return fmt.Errorf("unknown DeviceInfo edge %s", name)
 }
 
-// FeeTypeMutation represents an operation that mutates the FeeType nodes in the graph.
-type FeeTypeMutation struct {
-	config
-	op            Op
-	typ           string
-	id            *uuid.UUID
-	fee_type      *string
-	create_at     *uint32
-	addcreate_at  *uint32
-	update_at     *uint32
-	addupdate_at  *uint32
-	delete_at     *uint32
-	adddelete_at  *uint32
-	clearedFields map[string]struct{}
-	done          bool
-	oldValue      func(context.Context) (*FeeType, error)
-	predicates    []predicate.FeeType
-}
-
-var _ ent.Mutation = (*FeeTypeMutation)(nil)
-
-// feetypeOption allows management of the mutation configuration using functional options.
-type feetypeOption func(*FeeTypeMutation)
-
-// newFeeTypeMutation creates new mutation for the FeeType entity.
-func newFeeTypeMutation(c config, op Op, opts ...feetypeOption) *FeeTypeMutation {
-	m := &FeeTypeMutation{
-		config:        c,
-		op:            op,
-		typ:           TypeFeeType,
-		clearedFields: make(map[string]struct{}),
-	}
-	for _, opt := range opts {
-		opt(m)
-	}
-	return m
-}
-
-// withFeeTypeID sets the ID field of the mutation.
-func withFeeTypeID(id uuid.UUID) feetypeOption {
-	return func(m *FeeTypeMutation) {
-		var (
-			err   error
-			once  sync.Once
-			value *FeeType
-		)
-		m.oldValue = func(ctx context.Context) (*FeeType, error) {
-			once.Do(func() {
-				if m.done {
-					err = fmt.Errorf("querying old values post mutation is not allowed")
-				} else {
-					value, err = m.Client().FeeType.Get(ctx, id)
-				}
-			})
-			return value, err
-		}
-		m.id = &id
-	}
-}
-
-// withFeeType sets the old FeeType of the mutation.
-func withFeeType(node *FeeType) feetypeOption {
-	return func(m *FeeTypeMutation) {
-		m.oldValue = func(context.Context) (*FeeType, error) {
-			return node, nil
-		}
-		m.id = &node.ID
-	}
-}
-
-// Client returns a new `ent.Client` from the mutation. If the mutation was
-// executed in a transaction (ent.Tx), a transactional client is returned.
-func (m FeeTypeMutation) Client() *Client {
-	client := &Client{config: m.config}
-	client.init()
-	return client
-}
-
-// Tx returns an `ent.Tx` for mutations that were executed in transactions;
-// it returns an error otherwise.
-func (m FeeTypeMutation) Tx() (*Tx, error) {
-	if _, ok := m.driver.(*txDriver); !ok {
-		return nil, fmt.Errorf("ent: mutation is not running in a transaction")
-	}
-	tx := &Tx{config: m.config}
-	tx.init()
-	return tx, nil
-}
-
-// SetID sets the value of the id field. Note that this
-// operation is only accepted on creation of FeeType entities.
-func (m *FeeTypeMutation) SetID(id uuid.UUID) {
-	m.id = &id
-}
-
-// ID returns the ID value in the mutation. Note that the ID is only available
-// if it was provided to the builder or after it was returned from the database.
-func (m *FeeTypeMutation) ID() (id uuid.UUID, exists bool) {
-	if m.id == nil {
-		return
-	}
-	return *m.id, true
-}
-
-// SetFeeType sets the "fee_type" field.
-func (m *FeeTypeMutation) SetFeeType(s string) {
-	m.fee_type = &s
-}
-
-// FeeType returns the value of the "fee_type" field in the mutation.
-func (m *FeeTypeMutation) FeeType() (r string, exists bool) {
-	v := m.fee_type
-	if v == nil {
-		return
-	}
-	return *v, true
-}
-
-// OldFeeType returns the old "fee_type" field's value of the FeeType entity.
-// If the FeeType object wasn't provided to the builder, the object is fetched from the database.
-// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *FeeTypeMutation) OldFeeType(ctx context.Context) (v string, err error) {
-	if !m.op.Is(OpUpdateOne) {
-		return v, fmt.Errorf("OldFeeType is only allowed on UpdateOne operations")
-	}
-	if m.id == nil || m.oldValue == nil {
-		return v, fmt.Errorf("OldFeeType requires an ID field in the mutation")
-	}
-	oldValue, err := m.oldValue(ctx)
-	if err != nil {
-		return v, fmt.Errorf("querying old value for OldFeeType: %w", err)
-	}
-	return oldValue.FeeType, nil
-}
-
-// ResetFeeType resets all changes to the "fee_type" field.
-func (m *FeeTypeMutation) ResetFeeType() {
-	m.fee_type = nil
-}
-
-// SetCreateAt sets the "create_at" field.
-func (m *FeeTypeMutation) SetCreateAt(u uint32) {
-	m.create_at = &u
-	m.addcreate_at = nil
-}
-
-// CreateAt returns the value of the "create_at" field in the mutation.
-func (m *FeeTypeMutation) CreateAt() (r uint32, exists bool) {
-	v := m.create_at
-	if v == nil {
-		return
-	}
-	return *v, true
-}
-
-// OldCreateAt returns the old "create_at" field's value of the FeeType entity.
-// If the FeeType object wasn't provided to the builder, the object is fetched from the database.
-// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *FeeTypeMutation) OldCreateAt(ctx context.Context) (v uint32, err error) {
-	if !m.op.Is(OpUpdateOne) {
-		return v, fmt.Errorf("OldCreateAt is only allowed on UpdateOne operations")
-	}
-	if m.id == nil || m.oldValue == nil {
-		return v, fmt.Errorf("OldCreateAt requires an ID field in the mutation")
-	}
-	oldValue, err := m.oldValue(ctx)
-	if err != nil {
-		return v, fmt.Errorf("querying old value for OldCreateAt: %w", err)
-	}
-	return oldValue.CreateAt, nil
-}
-
-// AddCreateAt adds u to the "create_at" field.
-func (m *FeeTypeMutation) AddCreateAt(u uint32) {
-	if m.addcreate_at != nil {
-		*m.addcreate_at += u
-	} else {
-		m.addcreate_at = &u
-	}
-}
-
-// AddedCreateAt returns the value that was added to the "create_at" field in this mutation.
-func (m *FeeTypeMutation) AddedCreateAt() (r uint32, exists bool) {
-	v := m.addcreate_at
-	if v == nil {
-		return
-	}
-	return *v, true
-}
-
-// ResetCreateAt resets all changes to the "create_at" field.
-func (m *FeeTypeMutation) ResetCreateAt() {
-	m.create_at = nil
-	m.addcreate_at = nil
-}
-
-// SetUpdateAt sets the "update_at" field.
-func (m *FeeTypeMutation) SetUpdateAt(u uint32) {
-	m.update_at = &u
-	m.addupdate_at = nil
-}
-
-// UpdateAt returns the value of the "update_at" field in the mutation.
-func (m *FeeTypeMutation) UpdateAt() (r uint32, exists bool) {
-	v := m.update_at
-	if v == nil {
-		return
-	}
-	return *v, true
-}
-
-// OldUpdateAt returns the old "update_at" field's value of the FeeType entity.
-// If the FeeType object wasn't provided to the builder, the object is fetched from the database.
-// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *FeeTypeMutation) OldUpdateAt(ctx context.Context) (v uint32, err error) {
-	if !m.op.Is(OpUpdateOne) {
-		return v, fmt.Errorf("OldUpdateAt is only allowed on UpdateOne operations")
-	}
-	if m.id == nil || m.oldValue == nil {
-		return v, fmt.Errorf("OldUpdateAt requires an ID field in the mutation")
-	}
-	oldValue, err := m.oldValue(ctx)
-	if err != nil {
-		return v, fmt.Errorf("querying old value for OldUpdateAt: %w", err)
-	}
-	return oldValue.UpdateAt, nil
-}
-
-// AddUpdateAt adds u to the "update_at" field.
-func (m *FeeTypeMutation) AddUpdateAt(u uint32) {
-	if m.addupdate_at != nil {
-		*m.addupdate_at += u
-	} else {
-		m.addupdate_at = &u
-	}
-}
-
-// AddedUpdateAt returns the value that was added to the "update_at" field in this mutation.
-func (m *FeeTypeMutation) AddedUpdateAt() (r uint32, exists bool) {
-	v := m.addupdate_at
-	if v == nil {
-		return
-	}
-	return *v, true
-}
-
-// ResetUpdateAt resets all changes to the "update_at" field.
-func (m *FeeTypeMutation) ResetUpdateAt() {
-	m.update_at = nil
-	m.addupdate_at = nil
-}
-
-// SetDeleteAt sets the "delete_at" field.
-func (m *FeeTypeMutation) SetDeleteAt(u uint32) {
-	m.delete_at = &u
-	m.adddelete_at = nil
-}
-
-// DeleteAt returns the value of the "delete_at" field in the mutation.
-func (m *FeeTypeMutation) DeleteAt() (r uint32, exists bool) {
-	v := m.delete_at
-	if v == nil {
-		return
-	}
-	return *v, true
-}
-
-// OldDeleteAt returns the old "delete_at" field's value of the FeeType entity.
-// If the FeeType object wasn't provided to the builder, the object is fetched from the database.
-// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *FeeTypeMutation) OldDeleteAt(ctx context.Context) (v uint32, err error) {
-	if !m.op.Is(OpUpdateOne) {
-		return v, fmt.Errorf("OldDeleteAt is only allowed on UpdateOne operations")
-	}
-	if m.id == nil || m.oldValue == nil {
-		return v, fmt.Errorf("OldDeleteAt requires an ID field in the mutation")
-	}
-	oldValue, err := m.oldValue(ctx)
-	if err != nil {
-		return v, fmt.Errorf("querying old value for OldDeleteAt: %w", err)
-	}
-	return oldValue.DeleteAt, nil
-}
-
-// AddDeleteAt adds u to the "delete_at" field.
-func (m *FeeTypeMutation) AddDeleteAt(u uint32) {
-	if m.adddelete_at != nil {
-		*m.adddelete_at += u
-	} else {
-		m.adddelete_at = &u
-	}
-}
-
-// AddedDeleteAt returns the value that was added to the "delete_at" field in this mutation.
-func (m *FeeTypeMutation) AddedDeleteAt() (r uint32, exists bool) {
-	v := m.adddelete_at
-	if v == nil {
-		return
-	}
-	return *v, true
-}
-
-// ResetDeleteAt resets all changes to the "delete_at" field.
-func (m *FeeTypeMutation) ResetDeleteAt() {
-	m.delete_at = nil
-	m.adddelete_at = nil
-}
-
-// Where appends a list predicates to the FeeTypeMutation builder.
-func (m *FeeTypeMutation) Where(ps ...predicate.FeeType) {
-	m.predicates = append(m.predicates, ps...)
-}
-
-// Op returns the operation name.
-func (m *FeeTypeMutation) Op() Op {
-	return m.op
-}
-
-// Type returns the node type of this mutation (FeeType).
-func (m *FeeTypeMutation) Type() string {
-	return m.typ
-}
-
-// Fields returns all fields that were changed during this mutation. Note that in
-// order to get all numeric fields that were incremented/decremented, call
-// AddedFields().
-func (m *FeeTypeMutation) Fields() []string {
-	fields := make([]string, 0, 4)
-	if m.fee_type != nil {
-		fields = append(fields, feetype.FieldFeeType)
-	}
-	if m.create_at != nil {
-		fields = append(fields, feetype.FieldCreateAt)
-	}
-	if m.update_at != nil {
-		fields = append(fields, feetype.FieldUpdateAt)
-	}
-	if m.delete_at != nil {
-		fields = append(fields, feetype.FieldDeleteAt)
-	}
-	return fields
-}
-
-// Field returns the value of a field with the given name. The second boolean
-// return value indicates that this field was not set, or was not defined in the
-// schema.
-func (m *FeeTypeMutation) Field(name string) (ent.Value, bool) {
-	switch name {
-	case feetype.FieldFeeType:
-		return m.FeeType()
-	case feetype.FieldCreateAt:
-		return m.CreateAt()
-	case feetype.FieldUpdateAt:
-		return m.UpdateAt()
-	case feetype.FieldDeleteAt:
-		return m.DeleteAt()
-	}
-	return nil, false
-}
-
-// OldField returns the old value of the field from the database. An error is
-// returned if the mutation operation is not UpdateOne, or the query to the
-// database failed.
-func (m *FeeTypeMutation) OldField(ctx context.Context, name string) (ent.Value, error) {
-	switch name {
-	case feetype.FieldFeeType:
-		return m.OldFeeType(ctx)
-	case feetype.FieldCreateAt:
-		return m.OldCreateAt(ctx)
-	case feetype.FieldUpdateAt:
-		return m.OldUpdateAt(ctx)
-	case feetype.FieldDeleteAt:
-		return m.OldDeleteAt(ctx)
-	}
-	return nil, fmt.Errorf("unknown FeeType field %s", name)
-}
-
-// SetField sets the value of a field with the given name. It returns an error if
-// the field is not defined in the schema, or if the type mismatched the field
-// type.
-func (m *FeeTypeMutation) SetField(name string, value ent.Value) error {
-	switch name {
-	case feetype.FieldFeeType:
-		v, ok := value.(string)
-		if !ok {
-			return fmt.Errorf("unexpected type %T for field %s", value, name)
-		}
-		m.SetFeeType(v)
-		return nil
-	case feetype.FieldCreateAt:
-		v, ok := value.(uint32)
-		if !ok {
-			return fmt.Errorf("unexpected type %T for field %s", value, name)
-		}
-		m.SetCreateAt(v)
-		return nil
-	case feetype.FieldUpdateAt:
-		v, ok := value.(uint32)
-		if !ok {
-			return fmt.Errorf("unexpected type %T for field %s", value, name)
-		}
-		m.SetUpdateAt(v)
-		return nil
-	case feetype.FieldDeleteAt:
-		v, ok := value.(uint32)
-		if !ok {
-			return fmt.Errorf("unexpected type %T for field %s", value, name)
-		}
-		m.SetDeleteAt(v)
-		return nil
-	}
-	return fmt.Errorf("unknown FeeType field %s", name)
-}
-
-// AddedFields returns all numeric fields that were incremented/decremented during
-// this mutation.
-func (m *FeeTypeMutation) AddedFields() []string {
-	var fields []string
-	if m.addcreate_at != nil {
-		fields = append(fields, feetype.FieldCreateAt)
-	}
-	if m.addupdate_at != nil {
-		fields = append(fields, feetype.FieldUpdateAt)
-	}
-	if m.adddelete_at != nil {
-		fields = append(fields, feetype.FieldDeleteAt)
-	}
-	return fields
-}
-
-// AddedField returns the numeric value that was incremented/decremented on a field
-// with the given name. The second boolean return value indicates that this field
-// was not set, or was not defined in the schema.
-func (m *FeeTypeMutation) AddedField(name string) (ent.Value, bool) {
-	switch name {
-	case feetype.FieldCreateAt:
-		return m.AddedCreateAt()
-	case feetype.FieldUpdateAt:
-		return m.AddedUpdateAt()
-	case feetype.FieldDeleteAt:
-		return m.AddedDeleteAt()
-	}
-	return nil, false
-}
-
-// AddField adds the value to the field with the given name. It returns an error if
-// the field is not defined in the schema, or if the type mismatched the field
-// type.
-func (m *FeeTypeMutation) AddField(name string, value ent.Value) error {
-	switch name {
-	case feetype.FieldCreateAt:
-		v, ok := value.(uint32)
-		if !ok {
-			return fmt.Errorf("unexpected type %T for field %s", value, name)
-		}
-		m.AddCreateAt(v)
-		return nil
-	case feetype.FieldUpdateAt:
-		v, ok := value.(uint32)
-		if !ok {
-			return fmt.Errorf("unexpected type %T for field %s", value, name)
-		}
-		m.AddUpdateAt(v)
-		return nil
-	case feetype.FieldDeleteAt:
-		v, ok := value.(uint32)
-		if !ok {
-			return fmt.Errorf("unexpected type %T for field %s", value, name)
-		}
-		m.AddDeleteAt(v)
-		return nil
-	}
-	return fmt.Errorf("unknown FeeType numeric field %s", name)
-}
-
-// ClearedFields returns all nullable fields that were cleared during this
-// mutation.
-func (m *FeeTypeMutation) ClearedFields() []string {
-	return nil
-}
-
-// FieldCleared returns a boolean indicating if a field with the given name was
-// cleared in this mutation.
-func (m *FeeTypeMutation) FieldCleared(name string) bool {
-	_, ok := m.clearedFields[name]
-	return ok
-}
-
-// ClearField clears the value of the field with the given name. It returns an
-// error if the field is not defined in the schema.
-func (m *FeeTypeMutation) ClearField(name string) error {
-	return fmt.Errorf("unknown FeeType nullable field %s", name)
-}
-
-// ResetField resets all changes in the mutation for the field with the given name.
-// It returns an error if the field is not defined in the schema.
-func (m *FeeTypeMutation) ResetField(name string) error {
-	switch name {
-	case feetype.FieldFeeType:
-		m.ResetFeeType()
-		return nil
-	case feetype.FieldCreateAt:
-		m.ResetCreateAt()
-		return nil
-	case feetype.FieldUpdateAt:
-		m.ResetUpdateAt()
-		return nil
-	case feetype.FieldDeleteAt:
-		m.ResetDeleteAt()
-		return nil
-	}
-	return fmt.Errorf("unknown FeeType field %s", name)
-}
-
-// AddedEdges returns all edge names that were set/added in this mutation.
-func (m *FeeTypeMutation) AddedEdges() []string {
-	edges := make([]string, 0, 0)
-	return edges
-}
-
-// AddedIDs returns all IDs (to other nodes) that were added for the given edge
-// name in this mutation.
-func (m *FeeTypeMutation) AddedIDs(name string) []ent.Value {
-	return nil
-}
-
-// RemovedEdges returns all edge names that were removed in this mutation.
-func (m *FeeTypeMutation) RemovedEdges() []string {
-	edges := make([]string, 0, 0)
-	return edges
-}
-
-// RemovedIDs returns all IDs (to other nodes) that were removed for the edge with
-// the given name in this mutation.
-func (m *FeeTypeMutation) RemovedIDs(name string) []ent.Value {
-	return nil
-}
-
-// ClearedEdges returns all edge names that were cleared in this mutation.
-func (m *FeeTypeMutation) ClearedEdges() []string {
-	edges := make([]string, 0, 0)
-	return edges
-}
-
-// EdgeCleared returns a boolean which indicates if the edge with the given name
-// was cleared in this mutation.
-func (m *FeeTypeMutation) EdgeCleared(name string) bool {
-	return false
-}
-
-// ClearEdge clears the value of the edge with the given name. It returns an error
-// if that edge is not defined in the schema.
-func (m *FeeTypeMutation) ClearEdge(name string) error {
-	return fmt.Errorf("unknown FeeType unique edge %s", name)
-}
-
-// ResetEdge resets all changes to the edge with the given name in this mutation.
-// It returns an error if the edge is not defined in the schema.
-func (m *FeeTypeMutation) ResetEdge(name string) error {
-	return fmt.Errorf("unknown FeeType edge %s", name)
-}
-
 // GoodCommentMutation represents an operation that mutates the GoodComment nodes in the graph.
 type GoodCommentMutation struct {
 	config
@@ -5416,28 +4852,24 @@ func (m *GoodExtraInfoMutation) ResetEdge(name string) error {
 // GoodFeeMutation represents an operation that mutates the GoodFee nodes in the graph.
 type GoodFeeMutation struct {
 	config
-	op               Op
-	typ              string
-	id               *uuid.UUID
-	good_id          *uuid.UUID
-	app_id           *uuid.UUID
-	fee_type         *uuid.UUID
-	pay_type         *goodfee.PayType
-	percent_value    *int32
-	addpercent_value *int32
-	amount_value     *int32
-	addamount_value  *int32
-	amount_unit      *string
-	create_at        *uint32
-	addcreate_at     *uint32
-	update_at        *uint32
-	addupdate_at     *uint32
-	delete_at        *uint32
-	adddelete_at     *uint32
-	clearedFields    map[string]struct{}
-	done             bool
-	oldValue         func(context.Context) (*GoodFee, error)
-	predicates       []predicate.GoodFee
+	op              Op
+	typ             string
+	id              *uuid.UUID
+	good_id         *uuid.UUID
+	app_id          *uuid.UUID
+	fee_type        *string
+	fee_description *string
+	pay_type        *goodfee.PayType
+	create_at       *uint32
+	addcreate_at    *uint32
+	update_at       *uint32
+	addupdate_at    *uint32
+	delete_at       *uint32
+	adddelete_at    *uint32
+	clearedFields   map[string]struct{}
+	done            bool
+	oldValue        func(context.Context) (*GoodFee, error)
+	predicates      []predicate.GoodFee
 }
 
 var _ ent.Mutation = (*GoodFeeMutation)(nil)
@@ -5598,12 +5030,12 @@ func (m *GoodFeeMutation) ResetAppID() {
 }
 
 // SetFeeType sets the "fee_type" field.
-func (m *GoodFeeMutation) SetFeeType(u uuid.UUID) {
-	m.fee_type = &u
+func (m *GoodFeeMutation) SetFeeType(s string) {
+	m.fee_type = &s
 }
 
 // FeeType returns the value of the "fee_type" field in the mutation.
-func (m *GoodFeeMutation) FeeType() (r uuid.UUID, exists bool) {
+func (m *GoodFeeMutation) FeeType() (r string, exists bool) {
 	v := m.fee_type
 	if v == nil {
 		return
@@ -5614,7 +5046,7 @@ func (m *GoodFeeMutation) FeeType() (r uuid.UUID, exists bool) {
 // OldFeeType returns the old "fee_type" field's value of the GoodFee entity.
 // If the GoodFee object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *GoodFeeMutation) OldFeeType(ctx context.Context) (v uuid.UUID, err error) {
+func (m *GoodFeeMutation) OldFeeType(ctx context.Context) (v string, err error) {
 	if !m.op.Is(OpUpdateOne) {
 		return v, fmt.Errorf("OldFeeType is only allowed on UpdateOne operations")
 	}
@@ -5631,6 +5063,42 @@ func (m *GoodFeeMutation) OldFeeType(ctx context.Context) (v uuid.UUID, err erro
 // ResetFeeType resets all changes to the "fee_type" field.
 func (m *GoodFeeMutation) ResetFeeType() {
 	m.fee_type = nil
+}
+
+// SetFeeDescription sets the "fee_description" field.
+func (m *GoodFeeMutation) SetFeeDescription(s string) {
+	m.fee_description = &s
+}
+
+// FeeDescription returns the value of the "fee_description" field in the mutation.
+func (m *GoodFeeMutation) FeeDescription() (r string, exists bool) {
+	v := m.fee_description
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldFeeDescription returns the old "fee_description" field's value of the GoodFee entity.
+// If the GoodFee object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *GoodFeeMutation) OldFeeDescription(ctx context.Context) (v string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, fmt.Errorf("OldFeeDescription is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, fmt.Errorf("OldFeeDescription requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldFeeDescription: %w", err)
+	}
+	return oldValue.FeeDescription, nil
+}
+
+// ResetFeeDescription resets all changes to the "fee_description" field.
+func (m *GoodFeeMutation) ResetFeeDescription() {
+	m.fee_description = nil
 }
 
 // SetPayType sets the "pay_type" field.
@@ -5667,154 +5135,6 @@ func (m *GoodFeeMutation) OldPayType(ctx context.Context) (v goodfee.PayType, er
 // ResetPayType resets all changes to the "pay_type" field.
 func (m *GoodFeeMutation) ResetPayType() {
 	m.pay_type = nil
-}
-
-// SetPercentValue sets the "percent_value" field.
-func (m *GoodFeeMutation) SetPercentValue(i int32) {
-	m.percent_value = &i
-	m.addpercent_value = nil
-}
-
-// PercentValue returns the value of the "percent_value" field in the mutation.
-func (m *GoodFeeMutation) PercentValue() (r int32, exists bool) {
-	v := m.percent_value
-	if v == nil {
-		return
-	}
-	return *v, true
-}
-
-// OldPercentValue returns the old "percent_value" field's value of the GoodFee entity.
-// If the GoodFee object wasn't provided to the builder, the object is fetched from the database.
-// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *GoodFeeMutation) OldPercentValue(ctx context.Context) (v int32, err error) {
-	if !m.op.Is(OpUpdateOne) {
-		return v, fmt.Errorf("OldPercentValue is only allowed on UpdateOne operations")
-	}
-	if m.id == nil || m.oldValue == nil {
-		return v, fmt.Errorf("OldPercentValue requires an ID field in the mutation")
-	}
-	oldValue, err := m.oldValue(ctx)
-	if err != nil {
-		return v, fmt.Errorf("querying old value for OldPercentValue: %w", err)
-	}
-	return oldValue.PercentValue, nil
-}
-
-// AddPercentValue adds i to the "percent_value" field.
-func (m *GoodFeeMutation) AddPercentValue(i int32) {
-	if m.addpercent_value != nil {
-		*m.addpercent_value += i
-	} else {
-		m.addpercent_value = &i
-	}
-}
-
-// AddedPercentValue returns the value that was added to the "percent_value" field in this mutation.
-func (m *GoodFeeMutation) AddedPercentValue() (r int32, exists bool) {
-	v := m.addpercent_value
-	if v == nil {
-		return
-	}
-	return *v, true
-}
-
-// ResetPercentValue resets all changes to the "percent_value" field.
-func (m *GoodFeeMutation) ResetPercentValue() {
-	m.percent_value = nil
-	m.addpercent_value = nil
-}
-
-// SetAmountValue sets the "amount_value" field.
-func (m *GoodFeeMutation) SetAmountValue(i int32) {
-	m.amount_value = &i
-	m.addamount_value = nil
-}
-
-// AmountValue returns the value of the "amount_value" field in the mutation.
-func (m *GoodFeeMutation) AmountValue() (r int32, exists bool) {
-	v := m.amount_value
-	if v == nil {
-		return
-	}
-	return *v, true
-}
-
-// OldAmountValue returns the old "amount_value" field's value of the GoodFee entity.
-// If the GoodFee object wasn't provided to the builder, the object is fetched from the database.
-// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *GoodFeeMutation) OldAmountValue(ctx context.Context) (v int32, err error) {
-	if !m.op.Is(OpUpdateOne) {
-		return v, fmt.Errorf("OldAmountValue is only allowed on UpdateOne operations")
-	}
-	if m.id == nil || m.oldValue == nil {
-		return v, fmt.Errorf("OldAmountValue requires an ID field in the mutation")
-	}
-	oldValue, err := m.oldValue(ctx)
-	if err != nil {
-		return v, fmt.Errorf("querying old value for OldAmountValue: %w", err)
-	}
-	return oldValue.AmountValue, nil
-}
-
-// AddAmountValue adds i to the "amount_value" field.
-func (m *GoodFeeMutation) AddAmountValue(i int32) {
-	if m.addamount_value != nil {
-		*m.addamount_value += i
-	} else {
-		m.addamount_value = &i
-	}
-}
-
-// AddedAmountValue returns the value that was added to the "amount_value" field in this mutation.
-func (m *GoodFeeMutation) AddedAmountValue() (r int32, exists bool) {
-	v := m.addamount_value
-	if v == nil {
-		return
-	}
-	return *v, true
-}
-
-// ResetAmountValue resets all changes to the "amount_value" field.
-func (m *GoodFeeMutation) ResetAmountValue() {
-	m.amount_value = nil
-	m.addamount_value = nil
-}
-
-// SetAmountUnit sets the "amount_unit" field.
-func (m *GoodFeeMutation) SetAmountUnit(s string) {
-	m.amount_unit = &s
-}
-
-// AmountUnit returns the value of the "amount_unit" field in the mutation.
-func (m *GoodFeeMutation) AmountUnit() (r string, exists bool) {
-	v := m.amount_unit
-	if v == nil {
-		return
-	}
-	return *v, true
-}
-
-// OldAmountUnit returns the old "amount_unit" field's value of the GoodFee entity.
-// If the GoodFee object wasn't provided to the builder, the object is fetched from the database.
-// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *GoodFeeMutation) OldAmountUnit(ctx context.Context) (v string, err error) {
-	if !m.op.Is(OpUpdateOne) {
-		return v, fmt.Errorf("OldAmountUnit is only allowed on UpdateOne operations")
-	}
-	if m.id == nil || m.oldValue == nil {
-		return v, fmt.Errorf("OldAmountUnit requires an ID field in the mutation")
-	}
-	oldValue, err := m.oldValue(ctx)
-	if err != nil {
-		return v, fmt.Errorf("querying old value for OldAmountUnit: %w", err)
-	}
-	return oldValue.AmountUnit, nil
-}
-
-// ResetAmountUnit resets all changes to the "amount_unit" field.
-func (m *GoodFeeMutation) ResetAmountUnit() {
-	m.amount_unit = nil
 }
 
 // SetCreateAt sets the "create_at" field.
@@ -6004,7 +5324,7 @@ func (m *GoodFeeMutation) Type() string {
 // order to get all numeric fields that were incremented/decremented, call
 // AddedFields().
 func (m *GoodFeeMutation) Fields() []string {
-	fields := make([]string, 0, 10)
+	fields := make([]string, 0, 8)
 	if m.good_id != nil {
 		fields = append(fields, goodfee.FieldGoodID)
 	}
@@ -6014,17 +5334,11 @@ func (m *GoodFeeMutation) Fields() []string {
 	if m.fee_type != nil {
 		fields = append(fields, goodfee.FieldFeeType)
 	}
+	if m.fee_description != nil {
+		fields = append(fields, goodfee.FieldFeeDescription)
+	}
 	if m.pay_type != nil {
 		fields = append(fields, goodfee.FieldPayType)
-	}
-	if m.percent_value != nil {
-		fields = append(fields, goodfee.FieldPercentValue)
-	}
-	if m.amount_value != nil {
-		fields = append(fields, goodfee.FieldAmountValue)
-	}
-	if m.amount_unit != nil {
-		fields = append(fields, goodfee.FieldAmountUnit)
 	}
 	if m.create_at != nil {
 		fields = append(fields, goodfee.FieldCreateAt)
@@ -6049,14 +5363,10 @@ func (m *GoodFeeMutation) Field(name string) (ent.Value, bool) {
 		return m.AppID()
 	case goodfee.FieldFeeType:
 		return m.FeeType()
+	case goodfee.FieldFeeDescription:
+		return m.FeeDescription()
 	case goodfee.FieldPayType:
 		return m.PayType()
-	case goodfee.FieldPercentValue:
-		return m.PercentValue()
-	case goodfee.FieldAmountValue:
-		return m.AmountValue()
-	case goodfee.FieldAmountUnit:
-		return m.AmountUnit()
 	case goodfee.FieldCreateAt:
 		return m.CreateAt()
 	case goodfee.FieldUpdateAt:
@@ -6078,14 +5388,10 @@ func (m *GoodFeeMutation) OldField(ctx context.Context, name string) (ent.Value,
 		return m.OldAppID(ctx)
 	case goodfee.FieldFeeType:
 		return m.OldFeeType(ctx)
+	case goodfee.FieldFeeDescription:
+		return m.OldFeeDescription(ctx)
 	case goodfee.FieldPayType:
 		return m.OldPayType(ctx)
-	case goodfee.FieldPercentValue:
-		return m.OldPercentValue(ctx)
-	case goodfee.FieldAmountValue:
-		return m.OldAmountValue(ctx)
-	case goodfee.FieldAmountUnit:
-		return m.OldAmountUnit(ctx)
 	case goodfee.FieldCreateAt:
 		return m.OldCreateAt(ctx)
 	case goodfee.FieldUpdateAt:
@@ -6116,11 +5422,18 @@ func (m *GoodFeeMutation) SetField(name string, value ent.Value) error {
 		m.SetAppID(v)
 		return nil
 	case goodfee.FieldFeeType:
-		v, ok := value.(uuid.UUID)
+		v, ok := value.(string)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.SetFeeType(v)
+		return nil
+	case goodfee.FieldFeeDescription:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetFeeDescription(v)
 		return nil
 	case goodfee.FieldPayType:
 		v, ok := value.(goodfee.PayType)
@@ -6128,27 +5441,6 @@ func (m *GoodFeeMutation) SetField(name string, value ent.Value) error {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.SetPayType(v)
-		return nil
-	case goodfee.FieldPercentValue:
-		v, ok := value.(int32)
-		if !ok {
-			return fmt.Errorf("unexpected type %T for field %s", value, name)
-		}
-		m.SetPercentValue(v)
-		return nil
-	case goodfee.FieldAmountValue:
-		v, ok := value.(int32)
-		if !ok {
-			return fmt.Errorf("unexpected type %T for field %s", value, name)
-		}
-		m.SetAmountValue(v)
-		return nil
-	case goodfee.FieldAmountUnit:
-		v, ok := value.(string)
-		if !ok {
-			return fmt.Errorf("unexpected type %T for field %s", value, name)
-		}
-		m.SetAmountUnit(v)
 		return nil
 	case goodfee.FieldCreateAt:
 		v, ok := value.(uint32)
@@ -6179,12 +5471,6 @@ func (m *GoodFeeMutation) SetField(name string, value ent.Value) error {
 // this mutation.
 func (m *GoodFeeMutation) AddedFields() []string {
 	var fields []string
-	if m.addpercent_value != nil {
-		fields = append(fields, goodfee.FieldPercentValue)
-	}
-	if m.addamount_value != nil {
-		fields = append(fields, goodfee.FieldAmountValue)
-	}
 	if m.addcreate_at != nil {
 		fields = append(fields, goodfee.FieldCreateAt)
 	}
@@ -6202,10 +5488,6 @@ func (m *GoodFeeMutation) AddedFields() []string {
 // was not set, or was not defined in the schema.
 func (m *GoodFeeMutation) AddedField(name string) (ent.Value, bool) {
 	switch name {
-	case goodfee.FieldPercentValue:
-		return m.AddedPercentValue()
-	case goodfee.FieldAmountValue:
-		return m.AddedAmountValue()
 	case goodfee.FieldCreateAt:
 		return m.AddedCreateAt()
 	case goodfee.FieldUpdateAt:
@@ -6221,20 +5503,6 @@ func (m *GoodFeeMutation) AddedField(name string) (ent.Value, bool) {
 // type.
 func (m *GoodFeeMutation) AddField(name string, value ent.Value) error {
 	switch name {
-	case goodfee.FieldPercentValue:
-		v, ok := value.(int32)
-		if !ok {
-			return fmt.Errorf("unexpected type %T for field %s", value, name)
-		}
-		m.AddPercentValue(v)
-		return nil
-	case goodfee.FieldAmountValue:
-		v, ok := value.(int32)
-		if !ok {
-			return fmt.Errorf("unexpected type %T for field %s", value, name)
-		}
-		m.AddAmountValue(v)
-		return nil
 	case goodfee.FieldCreateAt:
 		v, ok := value.(uint32)
 		if !ok {
@@ -6292,17 +5560,11 @@ func (m *GoodFeeMutation) ResetField(name string) error {
 	case goodfee.FieldFeeType:
 		m.ResetFeeType()
 		return nil
+	case goodfee.FieldFeeDescription:
+		m.ResetFeeDescription()
+		return nil
 	case goodfee.FieldPayType:
 		m.ResetPayType()
-		return nil
-	case goodfee.FieldPercentValue:
-		m.ResetPercentValue()
-		return nil
-	case goodfee.FieldAmountValue:
-		m.ResetAmountValue()
-		return nil
-	case goodfee.FieldAmountUnit:
-		m.ResetAmountUnit()
 		return nil
 	case goodfee.FieldCreateAt:
 		m.ResetCreateAt()

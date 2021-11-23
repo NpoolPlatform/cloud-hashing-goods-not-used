@@ -40,46 +40,20 @@ func (gfu *GoodFeeUpdate) SetAppID(u uuid.UUID) *GoodFeeUpdate {
 }
 
 // SetFeeType sets the "fee_type" field.
-func (gfu *GoodFeeUpdate) SetFeeType(u uuid.UUID) *GoodFeeUpdate {
-	gfu.mutation.SetFeeType(u)
+func (gfu *GoodFeeUpdate) SetFeeType(s string) *GoodFeeUpdate {
+	gfu.mutation.SetFeeType(s)
+	return gfu
+}
+
+// SetFeeDescription sets the "fee_description" field.
+func (gfu *GoodFeeUpdate) SetFeeDescription(s string) *GoodFeeUpdate {
+	gfu.mutation.SetFeeDescription(s)
 	return gfu
 }
 
 // SetPayType sets the "pay_type" field.
 func (gfu *GoodFeeUpdate) SetPayType(gt goodfee.PayType) *GoodFeeUpdate {
 	gfu.mutation.SetPayType(gt)
-	return gfu
-}
-
-// SetPercentValue sets the "percent_value" field.
-func (gfu *GoodFeeUpdate) SetPercentValue(i int32) *GoodFeeUpdate {
-	gfu.mutation.ResetPercentValue()
-	gfu.mutation.SetPercentValue(i)
-	return gfu
-}
-
-// AddPercentValue adds i to the "percent_value" field.
-func (gfu *GoodFeeUpdate) AddPercentValue(i int32) *GoodFeeUpdate {
-	gfu.mutation.AddPercentValue(i)
-	return gfu
-}
-
-// SetAmountValue sets the "amount_value" field.
-func (gfu *GoodFeeUpdate) SetAmountValue(i int32) *GoodFeeUpdate {
-	gfu.mutation.ResetAmountValue()
-	gfu.mutation.SetAmountValue(i)
-	return gfu
-}
-
-// AddAmountValue adds i to the "amount_value" field.
-func (gfu *GoodFeeUpdate) AddAmountValue(i int32) *GoodFeeUpdate {
-	gfu.mutation.AddAmountValue(i)
-	return gfu
-}
-
-// SetAmountUnit sets the "amount_unit" field.
-func (gfu *GoodFeeUpdate) SetAmountUnit(s string) *GoodFeeUpdate {
-	gfu.mutation.SetAmountUnit(s)
 	return gfu
 }
 
@@ -214,6 +188,11 @@ func (gfu *GoodFeeUpdate) defaults() {
 
 // check runs all checks and user-defined validators on the builder.
 func (gfu *GoodFeeUpdate) check() error {
+	if v, ok := gfu.mutation.FeeDescription(); ok {
+		if err := goodfee.FeeDescriptionValidator(v); err != nil {
+			return &ValidationError{Name: "fee_description", err: fmt.Errorf("ent: validator failed for field \"fee_description\": %w", err)}
+		}
+	}
 	if v, ok := gfu.mutation.PayType(); ok {
 		if err := goodfee.PayTypeValidator(v); err != nil {
 			return &ValidationError{Name: "pay_type", err: fmt.Errorf("ent: validator failed for field \"pay_type\": %w", err)}
@@ -256,9 +235,16 @@ func (gfu *GoodFeeUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	}
 	if value, ok := gfu.mutation.FeeType(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeUUID,
+			Type:   field.TypeString,
 			Value:  value,
 			Column: goodfee.FieldFeeType,
+		})
+	}
+	if value, ok := gfu.mutation.FeeDescription(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: goodfee.FieldFeeDescription,
 		})
 	}
 	if value, ok := gfu.mutation.PayType(); ok {
@@ -266,41 +252,6 @@ func (gfu *GoodFeeUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			Type:   field.TypeEnum,
 			Value:  value,
 			Column: goodfee.FieldPayType,
-		})
-	}
-	if value, ok := gfu.mutation.PercentValue(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Value:  value,
-			Column: goodfee.FieldPercentValue,
-		})
-	}
-	if value, ok := gfu.mutation.AddedPercentValue(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Value:  value,
-			Column: goodfee.FieldPercentValue,
-		})
-	}
-	if value, ok := gfu.mutation.AmountValue(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Value:  value,
-			Column: goodfee.FieldAmountValue,
-		})
-	}
-	if value, ok := gfu.mutation.AddedAmountValue(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Value:  value,
-			Column: goodfee.FieldAmountValue,
-		})
-	}
-	if value, ok := gfu.mutation.AmountUnit(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: goodfee.FieldAmountUnit,
 		})
 	}
 	if value, ok := gfu.mutation.CreateAt(); ok {
@@ -377,46 +328,20 @@ func (gfuo *GoodFeeUpdateOne) SetAppID(u uuid.UUID) *GoodFeeUpdateOne {
 }
 
 // SetFeeType sets the "fee_type" field.
-func (gfuo *GoodFeeUpdateOne) SetFeeType(u uuid.UUID) *GoodFeeUpdateOne {
-	gfuo.mutation.SetFeeType(u)
+func (gfuo *GoodFeeUpdateOne) SetFeeType(s string) *GoodFeeUpdateOne {
+	gfuo.mutation.SetFeeType(s)
+	return gfuo
+}
+
+// SetFeeDescription sets the "fee_description" field.
+func (gfuo *GoodFeeUpdateOne) SetFeeDescription(s string) *GoodFeeUpdateOne {
+	gfuo.mutation.SetFeeDescription(s)
 	return gfuo
 }
 
 // SetPayType sets the "pay_type" field.
 func (gfuo *GoodFeeUpdateOne) SetPayType(gt goodfee.PayType) *GoodFeeUpdateOne {
 	gfuo.mutation.SetPayType(gt)
-	return gfuo
-}
-
-// SetPercentValue sets the "percent_value" field.
-func (gfuo *GoodFeeUpdateOne) SetPercentValue(i int32) *GoodFeeUpdateOne {
-	gfuo.mutation.ResetPercentValue()
-	gfuo.mutation.SetPercentValue(i)
-	return gfuo
-}
-
-// AddPercentValue adds i to the "percent_value" field.
-func (gfuo *GoodFeeUpdateOne) AddPercentValue(i int32) *GoodFeeUpdateOne {
-	gfuo.mutation.AddPercentValue(i)
-	return gfuo
-}
-
-// SetAmountValue sets the "amount_value" field.
-func (gfuo *GoodFeeUpdateOne) SetAmountValue(i int32) *GoodFeeUpdateOne {
-	gfuo.mutation.ResetAmountValue()
-	gfuo.mutation.SetAmountValue(i)
-	return gfuo
-}
-
-// AddAmountValue adds i to the "amount_value" field.
-func (gfuo *GoodFeeUpdateOne) AddAmountValue(i int32) *GoodFeeUpdateOne {
-	gfuo.mutation.AddAmountValue(i)
-	return gfuo
-}
-
-// SetAmountUnit sets the "amount_unit" field.
-func (gfuo *GoodFeeUpdateOne) SetAmountUnit(s string) *GoodFeeUpdateOne {
-	gfuo.mutation.SetAmountUnit(s)
 	return gfuo
 }
 
@@ -558,6 +483,11 @@ func (gfuo *GoodFeeUpdateOne) defaults() {
 
 // check runs all checks and user-defined validators on the builder.
 func (gfuo *GoodFeeUpdateOne) check() error {
+	if v, ok := gfuo.mutation.FeeDescription(); ok {
+		if err := goodfee.FeeDescriptionValidator(v); err != nil {
+			return &ValidationError{Name: "fee_description", err: fmt.Errorf("ent: validator failed for field \"fee_description\": %w", err)}
+		}
+	}
 	if v, ok := gfuo.mutation.PayType(); ok {
 		if err := goodfee.PayTypeValidator(v); err != nil {
 			return &ValidationError{Name: "pay_type", err: fmt.Errorf("ent: validator failed for field \"pay_type\": %w", err)}
@@ -617,9 +547,16 @@ func (gfuo *GoodFeeUpdateOne) sqlSave(ctx context.Context) (_node *GoodFee, err 
 	}
 	if value, ok := gfuo.mutation.FeeType(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeUUID,
+			Type:   field.TypeString,
 			Value:  value,
 			Column: goodfee.FieldFeeType,
+		})
+	}
+	if value, ok := gfuo.mutation.FeeDescription(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: goodfee.FieldFeeDescription,
 		})
 	}
 	if value, ok := gfuo.mutation.PayType(); ok {
@@ -627,41 +564,6 @@ func (gfuo *GoodFeeUpdateOne) sqlSave(ctx context.Context) (_node *GoodFee, err 
 			Type:   field.TypeEnum,
 			Value:  value,
 			Column: goodfee.FieldPayType,
-		})
-	}
-	if value, ok := gfuo.mutation.PercentValue(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Value:  value,
-			Column: goodfee.FieldPercentValue,
-		})
-	}
-	if value, ok := gfuo.mutation.AddedPercentValue(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Value:  value,
-			Column: goodfee.FieldPercentValue,
-		})
-	}
-	if value, ok := gfuo.mutation.AmountValue(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Value:  value,
-			Column: goodfee.FieldAmountValue,
-		})
-	}
-	if value, ok := gfuo.mutation.AddedAmountValue(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Value:  value,
-			Column: goodfee.FieldAmountValue,
-		})
-	}
-	if value, ok := gfuo.mutation.AmountUnit(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: goodfee.FieldAmountUnit,
 		})
 	}
 	if value, ok := gfuo.mutation.CreateAt(); ok {

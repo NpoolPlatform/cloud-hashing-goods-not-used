@@ -313,6 +313,31 @@ service CloudHashingGoods {
             body: "*"
         };
     }
+
+    rpc CreateGoodFee(CreateGoodFeeRequest) returns (CreateGoodFeeResponse) {
+        option (google.api.http) = {
+            post: "/v1/create/good/fee"
+            body: "*"
+        };
+    }
+    rpc UpdateGoodFee(UpdateGoodFeeRequest) returns (UpdateGoodFeeResponse) {
+        option (google.api.http) = {
+            post: "/v1/update/good/fee"
+            body: "*"
+        };
+    }
+    rpc GetGoodFee(GetGoodFeeRequest) returns (GetGoodFeeResponse) {
+        option (google.api.http) = {
+            post: "/v1/get/good/fee"
+            body: "*"
+        };
+    }
+    rpc GetGoodFees(GetGoodFeesRequest) returns (GetGoodFeesResponse) {
+        option (google.api.http) = {
+            post: "/v1/get/good/fees"
+            body: "*"
+        };
+    }
 }
 
 message PageInfo {
@@ -499,6 +524,7 @@ message GoodInfo {
     string Title = 2417;
     string Unit = 2418;
     uint32 Start = 2419;
+    repeated string FeeIDs = 2420;
 }
 
 message CreateGoodRequest {
@@ -585,6 +611,7 @@ message GoodDetail {
     string Unit = 2418;
     uint32 Start = 2419;
     PriceCurrency PriceCurrency = 2420;
+    repeated GoodFee Fees = 2421;
 }
 
 message GetGoodDetailRequest {
@@ -844,4 +871,45 @@ message GetGoodReviewRequest {
 
 message GetGoodReviewResponse {
     GoodReviewInfo Info = 6400;
+}
+
+message GoodFee {
+    string ID = 1;
+    string GoodID = 2;
+    string AppID = 3;
+    string FeeType = 4;
+    string FeeDescription = 5;
+    string PayType = 6;
+}
+
+message CreateGoodFeeRequest {
+    GoodFee Info = 1;
+}
+
+message CreateGoodFeeResponse {
+    GoodFee Info = 1;
+}
+
+message UpdateGoodFeeRequest {
+    GoodFee Info = 1;
+}
+
+message UpdateGoodFeeResponse {
+    GoodFee Info = 1;
+}
+
+message GetGoodFeeRequest {
+    string ID = 1;
+}
+
+message GetGoodFeeResponse {
+    GoodFee Info = 1;
+}
+
+message GetGoodFeesRequest {
+    PageInfo PageInfo = 1;
+}
+
+message GetGoodFeesResponse {
+    repeated GoodFee Infos = 1;
 }

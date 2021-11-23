@@ -22,12 +22,12 @@ func (GoodFee) Fields() []ent.Field {
 			Unique(),
 		field.UUID("good_id", uuid.UUID{}),
 		field.UUID("app_id", uuid.UUID{}),
-		field.UUID("fee_type", uuid.UUID{}),
+		field.String("fee_type").
+			Unique(),
+		field.String("fee_description").
+			MaxLen(256),
 		field.Enum("pay_type").
 			Values("percent", "amount"),
-		field.Int32("percent_value"),
-		field.Int32("amount_value"),
-		field.String("amount_unit"),
 		field.Uint32("create_at").
 			DefaultFunc(func() uint32 {
 				return uint32(time.Now().Unix())

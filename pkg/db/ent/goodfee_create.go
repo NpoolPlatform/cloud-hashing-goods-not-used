@@ -36,32 +36,20 @@ func (gfc *GoodFeeCreate) SetAppID(u uuid.UUID) *GoodFeeCreate {
 }
 
 // SetFeeType sets the "fee_type" field.
-func (gfc *GoodFeeCreate) SetFeeType(u uuid.UUID) *GoodFeeCreate {
-	gfc.mutation.SetFeeType(u)
+func (gfc *GoodFeeCreate) SetFeeType(s string) *GoodFeeCreate {
+	gfc.mutation.SetFeeType(s)
+	return gfc
+}
+
+// SetFeeDescription sets the "fee_description" field.
+func (gfc *GoodFeeCreate) SetFeeDescription(s string) *GoodFeeCreate {
+	gfc.mutation.SetFeeDescription(s)
 	return gfc
 }
 
 // SetPayType sets the "pay_type" field.
 func (gfc *GoodFeeCreate) SetPayType(gt goodfee.PayType) *GoodFeeCreate {
 	gfc.mutation.SetPayType(gt)
-	return gfc
-}
-
-// SetPercentValue sets the "percent_value" field.
-func (gfc *GoodFeeCreate) SetPercentValue(i int32) *GoodFeeCreate {
-	gfc.mutation.SetPercentValue(i)
-	return gfc
-}
-
-// SetAmountValue sets the "amount_value" field.
-func (gfc *GoodFeeCreate) SetAmountValue(i int32) *GoodFeeCreate {
-	gfc.mutation.SetAmountValue(i)
-	return gfc
-}
-
-// SetAmountUnit sets the "amount_unit" field.
-func (gfc *GoodFeeCreate) SetAmountUnit(s string) *GoodFeeCreate {
-	gfc.mutation.SetAmountUnit(s)
 	return gfc
 }
 
@@ -213,6 +201,14 @@ func (gfc *GoodFeeCreate) check() error {
 	if _, ok := gfc.mutation.FeeType(); !ok {
 		return &ValidationError{Name: "fee_type", err: errors.New(`ent: missing required field "fee_type"`)}
 	}
+	if _, ok := gfc.mutation.FeeDescription(); !ok {
+		return &ValidationError{Name: "fee_description", err: errors.New(`ent: missing required field "fee_description"`)}
+	}
+	if v, ok := gfc.mutation.FeeDescription(); ok {
+		if err := goodfee.FeeDescriptionValidator(v); err != nil {
+			return &ValidationError{Name: "fee_description", err: fmt.Errorf(`ent: validator failed for field "fee_description": %w`, err)}
+		}
+	}
 	if _, ok := gfc.mutation.PayType(); !ok {
 		return &ValidationError{Name: "pay_type", err: errors.New(`ent: missing required field "pay_type"`)}
 	}
@@ -220,15 +216,6 @@ func (gfc *GoodFeeCreate) check() error {
 		if err := goodfee.PayTypeValidator(v); err != nil {
 			return &ValidationError{Name: "pay_type", err: fmt.Errorf(`ent: validator failed for field "pay_type": %w`, err)}
 		}
-	}
-	if _, ok := gfc.mutation.PercentValue(); !ok {
-		return &ValidationError{Name: "percent_value", err: errors.New(`ent: missing required field "percent_value"`)}
-	}
-	if _, ok := gfc.mutation.AmountValue(); !ok {
-		return &ValidationError{Name: "amount_value", err: errors.New(`ent: missing required field "amount_value"`)}
-	}
-	if _, ok := gfc.mutation.AmountUnit(); !ok {
-		return &ValidationError{Name: "amount_unit", err: errors.New(`ent: missing required field "amount_unit"`)}
 	}
 	if _, ok := gfc.mutation.CreateAt(); !ok {
 		return &ValidationError{Name: "create_at", err: errors.New(`ent: missing required field "create_at"`)}
@@ -290,11 +277,19 @@ func (gfc *GoodFeeCreate) createSpec() (*GoodFee, *sqlgraph.CreateSpec) {
 	}
 	if value, ok := gfc.mutation.FeeType(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeUUID,
+			Type:   field.TypeString,
 			Value:  value,
 			Column: goodfee.FieldFeeType,
 		})
 		_node.FeeType = value
+	}
+	if value, ok := gfc.mutation.FeeDescription(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: goodfee.FieldFeeDescription,
+		})
+		_node.FeeDescription = value
 	}
 	if value, ok := gfc.mutation.PayType(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
@@ -303,30 +298,6 @@ func (gfc *GoodFeeCreate) createSpec() (*GoodFee, *sqlgraph.CreateSpec) {
 			Column: goodfee.FieldPayType,
 		})
 		_node.PayType = value
-	}
-	if value, ok := gfc.mutation.PercentValue(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Value:  value,
-			Column: goodfee.FieldPercentValue,
-		})
-		_node.PercentValue = value
-	}
-	if value, ok := gfc.mutation.AmountValue(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Value:  value,
-			Column: goodfee.FieldAmountValue,
-		})
-		_node.AmountValue = value
-	}
-	if value, ok := gfc.mutation.AmountUnit(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: goodfee.FieldAmountUnit,
-		})
-		_node.AmountUnit = value
 	}
 	if value, ok := gfc.mutation.CreateAt(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
@@ -431,7 +402,7 @@ func (u *GoodFeeUpsert) UpdateAppID() *GoodFeeUpsert {
 }
 
 // SetFeeType sets the "fee_type" field.
-func (u *GoodFeeUpsert) SetFeeType(v uuid.UUID) *GoodFeeUpsert {
+func (u *GoodFeeUpsert) SetFeeType(v string) *GoodFeeUpsert {
 	u.Set(goodfee.FieldFeeType, v)
 	return u
 }
@@ -439,6 +410,18 @@ func (u *GoodFeeUpsert) SetFeeType(v uuid.UUID) *GoodFeeUpsert {
 // UpdateFeeType sets the "fee_type" field to the value that was provided on create.
 func (u *GoodFeeUpsert) UpdateFeeType() *GoodFeeUpsert {
 	u.SetExcluded(goodfee.FieldFeeType)
+	return u
+}
+
+// SetFeeDescription sets the "fee_description" field.
+func (u *GoodFeeUpsert) SetFeeDescription(v string) *GoodFeeUpsert {
+	u.Set(goodfee.FieldFeeDescription, v)
+	return u
+}
+
+// UpdateFeeDescription sets the "fee_description" field to the value that was provided on create.
+func (u *GoodFeeUpsert) UpdateFeeDescription() *GoodFeeUpsert {
+	u.SetExcluded(goodfee.FieldFeeDescription)
 	return u
 }
 
@@ -451,42 +434,6 @@ func (u *GoodFeeUpsert) SetPayType(v goodfee.PayType) *GoodFeeUpsert {
 // UpdatePayType sets the "pay_type" field to the value that was provided on create.
 func (u *GoodFeeUpsert) UpdatePayType() *GoodFeeUpsert {
 	u.SetExcluded(goodfee.FieldPayType)
-	return u
-}
-
-// SetPercentValue sets the "percent_value" field.
-func (u *GoodFeeUpsert) SetPercentValue(v int32) *GoodFeeUpsert {
-	u.Set(goodfee.FieldPercentValue, v)
-	return u
-}
-
-// UpdatePercentValue sets the "percent_value" field to the value that was provided on create.
-func (u *GoodFeeUpsert) UpdatePercentValue() *GoodFeeUpsert {
-	u.SetExcluded(goodfee.FieldPercentValue)
-	return u
-}
-
-// SetAmountValue sets the "amount_value" field.
-func (u *GoodFeeUpsert) SetAmountValue(v int32) *GoodFeeUpsert {
-	u.Set(goodfee.FieldAmountValue, v)
-	return u
-}
-
-// UpdateAmountValue sets the "amount_value" field to the value that was provided on create.
-func (u *GoodFeeUpsert) UpdateAmountValue() *GoodFeeUpsert {
-	u.SetExcluded(goodfee.FieldAmountValue)
-	return u
-}
-
-// SetAmountUnit sets the "amount_unit" field.
-func (u *GoodFeeUpsert) SetAmountUnit(v string) *GoodFeeUpsert {
-	u.Set(goodfee.FieldAmountUnit, v)
-	return u
-}
-
-// UpdateAmountUnit sets the "amount_unit" field to the value that was provided on create.
-func (u *GoodFeeUpsert) UpdateAmountUnit() *GoodFeeUpsert {
-	u.SetExcluded(goodfee.FieldAmountUnit)
 	return u
 }
 
@@ -605,7 +552,7 @@ func (u *GoodFeeUpsertOne) UpdateAppID() *GoodFeeUpsertOne {
 }
 
 // SetFeeType sets the "fee_type" field.
-func (u *GoodFeeUpsertOne) SetFeeType(v uuid.UUID) *GoodFeeUpsertOne {
+func (u *GoodFeeUpsertOne) SetFeeType(v string) *GoodFeeUpsertOne {
 	return u.Update(func(s *GoodFeeUpsert) {
 		s.SetFeeType(v)
 	})
@@ -615,6 +562,20 @@ func (u *GoodFeeUpsertOne) SetFeeType(v uuid.UUID) *GoodFeeUpsertOne {
 func (u *GoodFeeUpsertOne) UpdateFeeType() *GoodFeeUpsertOne {
 	return u.Update(func(s *GoodFeeUpsert) {
 		s.UpdateFeeType()
+	})
+}
+
+// SetFeeDescription sets the "fee_description" field.
+func (u *GoodFeeUpsertOne) SetFeeDescription(v string) *GoodFeeUpsertOne {
+	return u.Update(func(s *GoodFeeUpsert) {
+		s.SetFeeDescription(v)
+	})
+}
+
+// UpdateFeeDescription sets the "fee_description" field to the value that was provided on create.
+func (u *GoodFeeUpsertOne) UpdateFeeDescription() *GoodFeeUpsertOne {
+	return u.Update(func(s *GoodFeeUpsert) {
+		s.UpdateFeeDescription()
 	})
 }
 
@@ -629,48 +590,6 @@ func (u *GoodFeeUpsertOne) SetPayType(v goodfee.PayType) *GoodFeeUpsertOne {
 func (u *GoodFeeUpsertOne) UpdatePayType() *GoodFeeUpsertOne {
 	return u.Update(func(s *GoodFeeUpsert) {
 		s.UpdatePayType()
-	})
-}
-
-// SetPercentValue sets the "percent_value" field.
-func (u *GoodFeeUpsertOne) SetPercentValue(v int32) *GoodFeeUpsertOne {
-	return u.Update(func(s *GoodFeeUpsert) {
-		s.SetPercentValue(v)
-	})
-}
-
-// UpdatePercentValue sets the "percent_value" field to the value that was provided on create.
-func (u *GoodFeeUpsertOne) UpdatePercentValue() *GoodFeeUpsertOne {
-	return u.Update(func(s *GoodFeeUpsert) {
-		s.UpdatePercentValue()
-	})
-}
-
-// SetAmountValue sets the "amount_value" field.
-func (u *GoodFeeUpsertOne) SetAmountValue(v int32) *GoodFeeUpsertOne {
-	return u.Update(func(s *GoodFeeUpsert) {
-		s.SetAmountValue(v)
-	})
-}
-
-// UpdateAmountValue sets the "amount_value" field to the value that was provided on create.
-func (u *GoodFeeUpsertOne) UpdateAmountValue() *GoodFeeUpsertOne {
-	return u.Update(func(s *GoodFeeUpsert) {
-		s.UpdateAmountValue()
-	})
-}
-
-// SetAmountUnit sets the "amount_unit" field.
-func (u *GoodFeeUpsertOne) SetAmountUnit(v string) *GoodFeeUpsertOne {
-	return u.Update(func(s *GoodFeeUpsert) {
-		s.SetAmountUnit(v)
-	})
-}
-
-// UpdateAmountUnit sets the "amount_unit" field to the value that was provided on create.
-func (u *GoodFeeUpsertOne) UpdateAmountUnit() *GoodFeeUpsertOne {
-	return u.Update(func(s *GoodFeeUpsert) {
-		s.UpdateAmountUnit()
 	})
 }
 
@@ -961,7 +880,7 @@ func (u *GoodFeeUpsertBulk) UpdateAppID() *GoodFeeUpsertBulk {
 }
 
 // SetFeeType sets the "fee_type" field.
-func (u *GoodFeeUpsertBulk) SetFeeType(v uuid.UUID) *GoodFeeUpsertBulk {
+func (u *GoodFeeUpsertBulk) SetFeeType(v string) *GoodFeeUpsertBulk {
 	return u.Update(func(s *GoodFeeUpsert) {
 		s.SetFeeType(v)
 	})
@@ -971,6 +890,20 @@ func (u *GoodFeeUpsertBulk) SetFeeType(v uuid.UUID) *GoodFeeUpsertBulk {
 func (u *GoodFeeUpsertBulk) UpdateFeeType() *GoodFeeUpsertBulk {
 	return u.Update(func(s *GoodFeeUpsert) {
 		s.UpdateFeeType()
+	})
+}
+
+// SetFeeDescription sets the "fee_description" field.
+func (u *GoodFeeUpsertBulk) SetFeeDescription(v string) *GoodFeeUpsertBulk {
+	return u.Update(func(s *GoodFeeUpsert) {
+		s.SetFeeDescription(v)
+	})
+}
+
+// UpdateFeeDescription sets the "fee_description" field to the value that was provided on create.
+func (u *GoodFeeUpsertBulk) UpdateFeeDescription() *GoodFeeUpsertBulk {
+	return u.Update(func(s *GoodFeeUpsert) {
+		s.UpdateFeeDescription()
 	})
 }
 
@@ -985,48 +918,6 @@ func (u *GoodFeeUpsertBulk) SetPayType(v goodfee.PayType) *GoodFeeUpsertBulk {
 func (u *GoodFeeUpsertBulk) UpdatePayType() *GoodFeeUpsertBulk {
 	return u.Update(func(s *GoodFeeUpsert) {
 		s.UpdatePayType()
-	})
-}
-
-// SetPercentValue sets the "percent_value" field.
-func (u *GoodFeeUpsertBulk) SetPercentValue(v int32) *GoodFeeUpsertBulk {
-	return u.Update(func(s *GoodFeeUpsert) {
-		s.SetPercentValue(v)
-	})
-}
-
-// UpdatePercentValue sets the "percent_value" field to the value that was provided on create.
-func (u *GoodFeeUpsertBulk) UpdatePercentValue() *GoodFeeUpsertBulk {
-	return u.Update(func(s *GoodFeeUpsert) {
-		s.UpdatePercentValue()
-	})
-}
-
-// SetAmountValue sets the "amount_value" field.
-func (u *GoodFeeUpsertBulk) SetAmountValue(v int32) *GoodFeeUpsertBulk {
-	return u.Update(func(s *GoodFeeUpsert) {
-		s.SetAmountValue(v)
-	})
-}
-
-// UpdateAmountValue sets the "amount_value" field to the value that was provided on create.
-func (u *GoodFeeUpsertBulk) UpdateAmountValue() *GoodFeeUpsertBulk {
-	return u.Update(func(s *GoodFeeUpsert) {
-		s.UpdateAmountValue()
-	})
-}
-
-// SetAmountUnit sets the "amount_unit" field.
-func (u *GoodFeeUpsertBulk) SetAmountUnit(v string) *GoodFeeUpsertBulk {
-	return u.Update(func(s *GoodFeeUpsert) {
-		s.SetAmountUnit(v)
-	})
-}
-
-// UpdateAmountUnit sets the "amount_unit" field to the value that was provided on create.
-func (u *GoodFeeUpsertBulk) UpdateAmountUnit() *GoodFeeUpsertBulk {
-	return u.Update(func(s *GoodFeeUpsert) {
-		s.UpdateAmountUnit()
 	})
 }
 

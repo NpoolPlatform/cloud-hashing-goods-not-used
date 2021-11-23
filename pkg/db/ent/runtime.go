@@ -7,7 +7,6 @@ import (
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/appgoodtargetarea"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/apptargetarea"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/deviceinfo"
-	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/feetype"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/goodcomment"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/goodextrainfo"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/goodfee"
@@ -128,26 +127,6 @@ func init() {
 	deviceinfoDescID := deviceinfoFields[0].Descriptor()
 	// deviceinfo.DefaultID holds the default value on creation for the id field.
 	deviceinfo.DefaultID = deviceinfoDescID.Default.(func() uuid.UUID)
-	feetypeFields := schema.FeeType{}.Fields()
-	_ = feetypeFields
-	// feetypeDescCreateAt is the schema descriptor for create_at field.
-	feetypeDescCreateAt := feetypeFields[2].Descriptor()
-	// feetype.DefaultCreateAt holds the default value on creation for the create_at field.
-	feetype.DefaultCreateAt = feetypeDescCreateAt.Default.(func() uint32)
-	// feetypeDescUpdateAt is the schema descriptor for update_at field.
-	feetypeDescUpdateAt := feetypeFields[3].Descriptor()
-	// feetype.DefaultUpdateAt holds the default value on creation for the update_at field.
-	feetype.DefaultUpdateAt = feetypeDescUpdateAt.Default.(func() uint32)
-	// feetype.UpdateDefaultUpdateAt holds the default value on update for the update_at field.
-	feetype.UpdateDefaultUpdateAt = feetypeDescUpdateAt.UpdateDefault.(func() uint32)
-	// feetypeDescDeleteAt is the schema descriptor for delete_at field.
-	feetypeDescDeleteAt := feetypeFields[4].Descriptor()
-	// feetype.DefaultDeleteAt holds the default value on creation for the delete_at field.
-	feetype.DefaultDeleteAt = feetypeDescDeleteAt.Default.(func() uint32)
-	// feetypeDescID is the schema descriptor for id field.
-	feetypeDescID := feetypeFields[0].Descriptor()
-	// feetype.DefaultID holds the default value on creation for the id field.
-	feetype.DefaultID = feetypeDescID.Default.(func() uuid.UUID)
 	goodcommentFields := schema.GoodComment{}.Fields()
 	_ = goodcommentFields
 	// goodcommentDescContent is the schema descriptor for content field.
@@ -194,18 +173,22 @@ func init() {
 	goodextrainfo.DefaultID = goodextrainfoDescID.Default.(func() uuid.UUID)
 	goodfeeFields := schema.GoodFee{}.Fields()
 	_ = goodfeeFields
+	// goodfeeDescFeeDescription is the schema descriptor for fee_description field.
+	goodfeeDescFeeDescription := goodfeeFields[4].Descriptor()
+	// goodfee.FeeDescriptionValidator is a validator for the "fee_description" field. It is called by the builders before save.
+	goodfee.FeeDescriptionValidator = goodfeeDescFeeDescription.Validators[0].(func(string) error)
 	// goodfeeDescCreateAt is the schema descriptor for create_at field.
-	goodfeeDescCreateAt := goodfeeFields[8].Descriptor()
+	goodfeeDescCreateAt := goodfeeFields[6].Descriptor()
 	// goodfee.DefaultCreateAt holds the default value on creation for the create_at field.
 	goodfee.DefaultCreateAt = goodfeeDescCreateAt.Default.(func() uint32)
 	// goodfeeDescUpdateAt is the schema descriptor for update_at field.
-	goodfeeDescUpdateAt := goodfeeFields[9].Descriptor()
+	goodfeeDescUpdateAt := goodfeeFields[7].Descriptor()
 	// goodfee.DefaultUpdateAt holds the default value on creation for the update_at field.
 	goodfee.DefaultUpdateAt = goodfeeDescUpdateAt.Default.(func() uint32)
 	// goodfee.UpdateDefaultUpdateAt holds the default value on update for the update_at field.
 	goodfee.UpdateDefaultUpdateAt = goodfeeDescUpdateAt.UpdateDefault.(func() uint32)
 	// goodfeeDescDeleteAt is the schema descriptor for delete_at field.
-	goodfeeDescDeleteAt := goodfeeFields[10].Descriptor()
+	goodfeeDescDeleteAt := goodfeeFields[8].Descriptor()
 	// goodfee.DefaultDeleteAt holds the default value on creation for the delete_at field.
 	goodfee.DefaultDeleteAt = goodfeeDescDeleteAt.Default.(func() uint32)
 	// goodfeeDescID is the schema descriptor for id field.

@@ -104,20 +104,6 @@ var (
 			},
 		},
 	}
-	// FeeTypesColumns holds the columns for the "fee_types" table.
-	FeeTypesColumns = []*schema.Column{
-		{Name: "id", Type: field.TypeUUID, Unique: true},
-		{Name: "fee_type", Type: field.TypeString, Unique: true},
-		{Name: "create_at", Type: field.TypeUint32},
-		{Name: "update_at", Type: field.TypeUint32},
-		{Name: "delete_at", Type: field.TypeUint32},
-	}
-	// FeeTypesTable holds the schema information for the "fee_types" table.
-	FeeTypesTable = &schema.Table{
-		Name:       "fee_types",
-		Columns:    FeeTypesColumns,
-		PrimaryKey: []*schema.Column{FeeTypesColumns[0]},
-	}
 	// GoodCommentsColumns holds the columns for the "good_comments" table.
 	GoodCommentsColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeUUID, Unique: true},
@@ -162,11 +148,9 @@ var (
 		{Name: "id", Type: field.TypeUUID, Unique: true},
 		{Name: "good_id", Type: field.TypeUUID},
 		{Name: "app_id", Type: field.TypeUUID},
-		{Name: "fee_type", Type: field.TypeUUID},
+		{Name: "fee_type", Type: field.TypeString, Unique: true},
+		{Name: "fee_description", Type: field.TypeString, Size: 256},
 		{Name: "pay_type", Type: field.TypeEnum, Enums: []string{"percent", "amount"}},
-		{Name: "percent_value", Type: field.TypeInt32},
-		{Name: "amount_value", Type: field.TypeInt32},
-		{Name: "amount_unit", Type: field.TypeString},
 		{Name: "create_at", Type: field.TypeUint32},
 		{Name: "update_at", Type: field.TypeUint32},
 		{Name: "delete_at", Type: field.TypeUint32},
@@ -301,7 +285,6 @@ var (
 		AppGoodTargetAreasTable,
 		AppTargetAreasTable,
 		DeviceInfosTable,
-		FeeTypesTable,
 		GoodCommentsTable,
 		GoodExtraInfosTable,
 		GoodFeesTable,

@@ -106,30 +106,16 @@ func AppID(v uuid.UUID) predicate.GoodFee {
 }
 
 // FeeType applies equality check predicate on the "fee_type" field. It's identical to FeeTypeEQ.
-func FeeType(v uuid.UUID) predicate.GoodFee {
+func FeeType(v string) predicate.GoodFee {
 	return predicate.GoodFee(func(s *sql.Selector) {
 		s.Where(sql.EQ(s.C(FieldFeeType), v))
 	})
 }
 
-// PercentValue applies equality check predicate on the "percent_value" field. It's identical to PercentValueEQ.
-func PercentValue(v int32) predicate.GoodFee {
+// FeeDescription applies equality check predicate on the "fee_description" field. It's identical to FeeDescriptionEQ.
+func FeeDescription(v string) predicate.GoodFee {
 	return predicate.GoodFee(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldPercentValue), v))
-	})
-}
-
-// AmountValue applies equality check predicate on the "amount_value" field. It's identical to AmountValueEQ.
-func AmountValue(v int32) predicate.GoodFee {
-	return predicate.GoodFee(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldAmountValue), v))
-	})
-}
-
-// AmountUnit applies equality check predicate on the "amount_unit" field. It's identical to AmountUnitEQ.
-func AmountUnit(v string) predicate.GoodFee {
-	return predicate.GoodFee(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldAmountUnit), v))
+		s.Where(sql.EQ(s.C(FieldFeeDescription), v))
 	})
 }
 
@@ -307,21 +293,21 @@ func AppIDLTE(v uuid.UUID) predicate.GoodFee {
 }
 
 // FeeTypeEQ applies the EQ predicate on the "fee_type" field.
-func FeeTypeEQ(v uuid.UUID) predicate.GoodFee {
+func FeeTypeEQ(v string) predicate.GoodFee {
 	return predicate.GoodFee(func(s *sql.Selector) {
 		s.Where(sql.EQ(s.C(FieldFeeType), v))
 	})
 }
 
 // FeeTypeNEQ applies the NEQ predicate on the "fee_type" field.
-func FeeTypeNEQ(v uuid.UUID) predicate.GoodFee {
+func FeeTypeNEQ(v string) predicate.GoodFee {
 	return predicate.GoodFee(func(s *sql.Selector) {
 		s.Where(sql.NEQ(s.C(FieldFeeType), v))
 	})
 }
 
 // FeeTypeIn applies the In predicate on the "fee_type" field.
-func FeeTypeIn(vs ...uuid.UUID) predicate.GoodFee {
+func FeeTypeIn(vs ...string) predicate.GoodFee {
 	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
@@ -338,7 +324,7 @@ func FeeTypeIn(vs ...uuid.UUID) predicate.GoodFee {
 }
 
 // FeeTypeNotIn applies the NotIn predicate on the "fee_type" field.
-func FeeTypeNotIn(vs ...uuid.UUID) predicate.GoodFee {
+func FeeTypeNotIn(vs ...string) predicate.GoodFee {
 	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
@@ -355,30 +341,176 @@ func FeeTypeNotIn(vs ...uuid.UUID) predicate.GoodFee {
 }
 
 // FeeTypeGT applies the GT predicate on the "fee_type" field.
-func FeeTypeGT(v uuid.UUID) predicate.GoodFee {
+func FeeTypeGT(v string) predicate.GoodFee {
 	return predicate.GoodFee(func(s *sql.Selector) {
 		s.Where(sql.GT(s.C(FieldFeeType), v))
 	})
 }
 
 // FeeTypeGTE applies the GTE predicate on the "fee_type" field.
-func FeeTypeGTE(v uuid.UUID) predicate.GoodFee {
+func FeeTypeGTE(v string) predicate.GoodFee {
 	return predicate.GoodFee(func(s *sql.Selector) {
 		s.Where(sql.GTE(s.C(FieldFeeType), v))
 	})
 }
 
 // FeeTypeLT applies the LT predicate on the "fee_type" field.
-func FeeTypeLT(v uuid.UUID) predicate.GoodFee {
+func FeeTypeLT(v string) predicate.GoodFee {
 	return predicate.GoodFee(func(s *sql.Selector) {
 		s.Where(sql.LT(s.C(FieldFeeType), v))
 	})
 }
 
 // FeeTypeLTE applies the LTE predicate on the "fee_type" field.
-func FeeTypeLTE(v uuid.UUID) predicate.GoodFee {
+func FeeTypeLTE(v string) predicate.GoodFee {
 	return predicate.GoodFee(func(s *sql.Selector) {
 		s.Where(sql.LTE(s.C(FieldFeeType), v))
+	})
+}
+
+// FeeTypeContains applies the Contains predicate on the "fee_type" field.
+func FeeTypeContains(v string) predicate.GoodFee {
+	return predicate.GoodFee(func(s *sql.Selector) {
+		s.Where(sql.Contains(s.C(FieldFeeType), v))
+	})
+}
+
+// FeeTypeHasPrefix applies the HasPrefix predicate on the "fee_type" field.
+func FeeTypeHasPrefix(v string) predicate.GoodFee {
+	return predicate.GoodFee(func(s *sql.Selector) {
+		s.Where(sql.HasPrefix(s.C(FieldFeeType), v))
+	})
+}
+
+// FeeTypeHasSuffix applies the HasSuffix predicate on the "fee_type" field.
+func FeeTypeHasSuffix(v string) predicate.GoodFee {
+	return predicate.GoodFee(func(s *sql.Selector) {
+		s.Where(sql.HasSuffix(s.C(FieldFeeType), v))
+	})
+}
+
+// FeeTypeEqualFold applies the EqualFold predicate on the "fee_type" field.
+func FeeTypeEqualFold(v string) predicate.GoodFee {
+	return predicate.GoodFee(func(s *sql.Selector) {
+		s.Where(sql.EqualFold(s.C(FieldFeeType), v))
+	})
+}
+
+// FeeTypeContainsFold applies the ContainsFold predicate on the "fee_type" field.
+func FeeTypeContainsFold(v string) predicate.GoodFee {
+	return predicate.GoodFee(func(s *sql.Selector) {
+		s.Where(sql.ContainsFold(s.C(FieldFeeType), v))
+	})
+}
+
+// FeeDescriptionEQ applies the EQ predicate on the "fee_description" field.
+func FeeDescriptionEQ(v string) predicate.GoodFee {
+	return predicate.GoodFee(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldFeeDescription), v))
+	})
+}
+
+// FeeDescriptionNEQ applies the NEQ predicate on the "fee_description" field.
+func FeeDescriptionNEQ(v string) predicate.GoodFee {
+	return predicate.GoodFee(func(s *sql.Selector) {
+		s.Where(sql.NEQ(s.C(FieldFeeDescription), v))
+	})
+}
+
+// FeeDescriptionIn applies the In predicate on the "fee_description" field.
+func FeeDescriptionIn(vs ...string) predicate.GoodFee {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.GoodFee(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.In(s.C(FieldFeeDescription), v...))
+	})
+}
+
+// FeeDescriptionNotIn applies the NotIn predicate on the "fee_description" field.
+func FeeDescriptionNotIn(vs ...string) predicate.GoodFee {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.GoodFee(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.NotIn(s.C(FieldFeeDescription), v...))
+	})
+}
+
+// FeeDescriptionGT applies the GT predicate on the "fee_description" field.
+func FeeDescriptionGT(v string) predicate.GoodFee {
+	return predicate.GoodFee(func(s *sql.Selector) {
+		s.Where(sql.GT(s.C(FieldFeeDescription), v))
+	})
+}
+
+// FeeDescriptionGTE applies the GTE predicate on the "fee_description" field.
+func FeeDescriptionGTE(v string) predicate.GoodFee {
+	return predicate.GoodFee(func(s *sql.Selector) {
+		s.Where(sql.GTE(s.C(FieldFeeDescription), v))
+	})
+}
+
+// FeeDescriptionLT applies the LT predicate on the "fee_description" field.
+func FeeDescriptionLT(v string) predicate.GoodFee {
+	return predicate.GoodFee(func(s *sql.Selector) {
+		s.Where(sql.LT(s.C(FieldFeeDescription), v))
+	})
+}
+
+// FeeDescriptionLTE applies the LTE predicate on the "fee_description" field.
+func FeeDescriptionLTE(v string) predicate.GoodFee {
+	return predicate.GoodFee(func(s *sql.Selector) {
+		s.Where(sql.LTE(s.C(FieldFeeDescription), v))
+	})
+}
+
+// FeeDescriptionContains applies the Contains predicate on the "fee_description" field.
+func FeeDescriptionContains(v string) predicate.GoodFee {
+	return predicate.GoodFee(func(s *sql.Selector) {
+		s.Where(sql.Contains(s.C(FieldFeeDescription), v))
+	})
+}
+
+// FeeDescriptionHasPrefix applies the HasPrefix predicate on the "fee_description" field.
+func FeeDescriptionHasPrefix(v string) predicate.GoodFee {
+	return predicate.GoodFee(func(s *sql.Selector) {
+		s.Where(sql.HasPrefix(s.C(FieldFeeDescription), v))
+	})
+}
+
+// FeeDescriptionHasSuffix applies the HasSuffix predicate on the "fee_description" field.
+func FeeDescriptionHasSuffix(v string) predicate.GoodFee {
+	return predicate.GoodFee(func(s *sql.Selector) {
+		s.Where(sql.HasSuffix(s.C(FieldFeeDescription), v))
+	})
+}
+
+// FeeDescriptionEqualFold applies the EqualFold predicate on the "fee_description" field.
+func FeeDescriptionEqualFold(v string) predicate.GoodFee {
+	return predicate.GoodFee(func(s *sql.Selector) {
+		s.Where(sql.EqualFold(s.C(FieldFeeDescription), v))
+	})
+}
+
+// FeeDescriptionContainsFold applies the ContainsFold predicate on the "fee_description" field.
+func FeeDescriptionContainsFold(v string) predicate.GoodFee {
+	return predicate.GoodFee(func(s *sql.Selector) {
+		s.Where(sql.ContainsFold(s.C(FieldFeeDescription), v))
 	})
 }
 
@@ -427,269 +559,6 @@ func PayTypeNotIn(vs ...PayType) predicate.GoodFee {
 			return
 		}
 		s.Where(sql.NotIn(s.C(FieldPayType), v...))
-	})
-}
-
-// PercentValueEQ applies the EQ predicate on the "percent_value" field.
-func PercentValueEQ(v int32) predicate.GoodFee {
-	return predicate.GoodFee(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldPercentValue), v))
-	})
-}
-
-// PercentValueNEQ applies the NEQ predicate on the "percent_value" field.
-func PercentValueNEQ(v int32) predicate.GoodFee {
-	return predicate.GoodFee(func(s *sql.Selector) {
-		s.Where(sql.NEQ(s.C(FieldPercentValue), v))
-	})
-}
-
-// PercentValueIn applies the In predicate on the "percent_value" field.
-func PercentValueIn(vs ...int32) predicate.GoodFee {
-	v := make([]interface{}, len(vs))
-	for i := range v {
-		v[i] = vs[i]
-	}
-	return predicate.GoodFee(func(s *sql.Selector) {
-		// if not arguments were provided, append the FALSE constants,
-		// since we can't apply "IN ()". This will make this predicate falsy.
-		if len(v) == 0 {
-			s.Where(sql.False())
-			return
-		}
-		s.Where(sql.In(s.C(FieldPercentValue), v...))
-	})
-}
-
-// PercentValueNotIn applies the NotIn predicate on the "percent_value" field.
-func PercentValueNotIn(vs ...int32) predicate.GoodFee {
-	v := make([]interface{}, len(vs))
-	for i := range v {
-		v[i] = vs[i]
-	}
-	return predicate.GoodFee(func(s *sql.Selector) {
-		// if not arguments were provided, append the FALSE constants,
-		// since we can't apply "IN ()". This will make this predicate falsy.
-		if len(v) == 0 {
-			s.Where(sql.False())
-			return
-		}
-		s.Where(sql.NotIn(s.C(FieldPercentValue), v...))
-	})
-}
-
-// PercentValueGT applies the GT predicate on the "percent_value" field.
-func PercentValueGT(v int32) predicate.GoodFee {
-	return predicate.GoodFee(func(s *sql.Selector) {
-		s.Where(sql.GT(s.C(FieldPercentValue), v))
-	})
-}
-
-// PercentValueGTE applies the GTE predicate on the "percent_value" field.
-func PercentValueGTE(v int32) predicate.GoodFee {
-	return predicate.GoodFee(func(s *sql.Selector) {
-		s.Where(sql.GTE(s.C(FieldPercentValue), v))
-	})
-}
-
-// PercentValueLT applies the LT predicate on the "percent_value" field.
-func PercentValueLT(v int32) predicate.GoodFee {
-	return predicate.GoodFee(func(s *sql.Selector) {
-		s.Where(sql.LT(s.C(FieldPercentValue), v))
-	})
-}
-
-// PercentValueLTE applies the LTE predicate on the "percent_value" field.
-func PercentValueLTE(v int32) predicate.GoodFee {
-	return predicate.GoodFee(func(s *sql.Selector) {
-		s.Where(sql.LTE(s.C(FieldPercentValue), v))
-	})
-}
-
-// AmountValueEQ applies the EQ predicate on the "amount_value" field.
-func AmountValueEQ(v int32) predicate.GoodFee {
-	return predicate.GoodFee(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldAmountValue), v))
-	})
-}
-
-// AmountValueNEQ applies the NEQ predicate on the "amount_value" field.
-func AmountValueNEQ(v int32) predicate.GoodFee {
-	return predicate.GoodFee(func(s *sql.Selector) {
-		s.Where(sql.NEQ(s.C(FieldAmountValue), v))
-	})
-}
-
-// AmountValueIn applies the In predicate on the "amount_value" field.
-func AmountValueIn(vs ...int32) predicate.GoodFee {
-	v := make([]interface{}, len(vs))
-	for i := range v {
-		v[i] = vs[i]
-	}
-	return predicate.GoodFee(func(s *sql.Selector) {
-		// if not arguments were provided, append the FALSE constants,
-		// since we can't apply "IN ()". This will make this predicate falsy.
-		if len(v) == 0 {
-			s.Where(sql.False())
-			return
-		}
-		s.Where(sql.In(s.C(FieldAmountValue), v...))
-	})
-}
-
-// AmountValueNotIn applies the NotIn predicate on the "amount_value" field.
-func AmountValueNotIn(vs ...int32) predicate.GoodFee {
-	v := make([]interface{}, len(vs))
-	for i := range v {
-		v[i] = vs[i]
-	}
-	return predicate.GoodFee(func(s *sql.Selector) {
-		// if not arguments were provided, append the FALSE constants,
-		// since we can't apply "IN ()". This will make this predicate falsy.
-		if len(v) == 0 {
-			s.Where(sql.False())
-			return
-		}
-		s.Where(sql.NotIn(s.C(FieldAmountValue), v...))
-	})
-}
-
-// AmountValueGT applies the GT predicate on the "amount_value" field.
-func AmountValueGT(v int32) predicate.GoodFee {
-	return predicate.GoodFee(func(s *sql.Selector) {
-		s.Where(sql.GT(s.C(FieldAmountValue), v))
-	})
-}
-
-// AmountValueGTE applies the GTE predicate on the "amount_value" field.
-func AmountValueGTE(v int32) predicate.GoodFee {
-	return predicate.GoodFee(func(s *sql.Selector) {
-		s.Where(sql.GTE(s.C(FieldAmountValue), v))
-	})
-}
-
-// AmountValueLT applies the LT predicate on the "amount_value" field.
-func AmountValueLT(v int32) predicate.GoodFee {
-	return predicate.GoodFee(func(s *sql.Selector) {
-		s.Where(sql.LT(s.C(FieldAmountValue), v))
-	})
-}
-
-// AmountValueLTE applies the LTE predicate on the "amount_value" field.
-func AmountValueLTE(v int32) predicate.GoodFee {
-	return predicate.GoodFee(func(s *sql.Selector) {
-		s.Where(sql.LTE(s.C(FieldAmountValue), v))
-	})
-}
-
-// AmountUnitEQ applies the EQ predicate on the "amount_unit" field.
-func AmountUnitEQ(v string) predicate.GoodFee {
-	return predicate.GoodFee(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldAmountUnit), v))
-	})
-}
-
-// AmountUnitNEQ applies the NEQ predicate on the "amount_unit" field.
-func AmountUnitNEQ(v string) predicate.GoodFee {
-	return predicate.GoodFee(func(s *sql.Selector) {
-		s.Where(sql.NEQ(s.C(FieldAmountUnit), v))
-	})
-}
-
-// AmountUnitIn applies the In predicate on the "amount_unit" field.
-func AmountUnitIn(vs ...string) predicate.GoodFee {
-	v := make([]interface{}, len(vs))
-	for i := range v {
-		v[i] = vs[i]
-	}
-	return predicate.GoodFee(func(s *sql.Selector) {
-		// if not arguments were provided, append the FALSE constants,
-		// since we can't apply "IN ()". This will make this predicate falsy.
-		if len(v) == 0 {
-			s.Where(sql.False())
-			return
-		}
-		s.Where(sql.In(s.C(FieldAmountUnit), v...))
-	})
-}
-
-// AmountUnitNotIn applies the NotIn predicate on the "amount_unit" field.
-func AmountUnitNotIn(vs ...string) predicate.GoodFee {
-	v := make([]interface{}, len(vs))
-	for i := range v {
-		v[i] = vs[i]
-	}
-	return predicate.GoodFee(func(s *sql.Selector) {
-		// if not arguments were provided, append the FALSE constants,
-		// since we can't apply "IN ()". This will make this predicate falsy.
-		if len(v) == 0 {
-			s.Where(sql.False())
-			return
-		}
-		s.Where(sql.NotIn(s.C(FieldAmountUnit), v...))
-	})
-}
-
-// AmountUnitGT applies the GT predicate on the "amount_unit" field.
-func AmountUnitGT(v string) predicate.GoodFee {
-	return predicate.GoodFee(func(s *sql.Selector) {
-		s.Where(sql.GT(s.C(FieldAmountUnit), v))
-	})
-}
-
-// AmountUnitGTE applies the GTE predicate on the "amount_unit" field.
-func AmountUnitGTE(v string) predicate.GoodFee {
-	return predicate.GoodFee(func(s *sql.Selector) {
-		s.Where(sql.GTE(s.C(FieldAmountUnit), v))
-	})
-}
-
-// AmountUnitLT applies the LT predicate on the "amount_unit" field.
-func AmountUnitLT(v string) predicate.GoodFee {
-	return predicate.GoodFee(func(s *sql.Selector) {
-		s.Where(sql.LT(s.C(FieldAmountUnit), v))
-	})
-}
-
-// AmountUnitLTE applies the LTE predicate on the "amount_unit" field.
-func AmountUnitLTE(v string) predicate.GoodFee {
-	return predicate.GoodFee(func(s *sql.Selector) {
-		s.Where(sql.LTE(s.C(FieldAmountUnit), v))
-	})
-}
-
-// AmountUnitContains applies the Contains predicate on the "amount_unit" field.
-func AmountUnitContains(v string) predicate.GoodFee {
-	return predicate.GoodFee(func(s *sql.Selector) {
-		s.Where(sql.Contains(s.C(FieldAmountUnit), v))
-	})
-}
-
-// AmountUnitHasPrefix applies the HasPrefix predicate on the "amount_unit" field.
-func AmountUnitHasPrefix(v string) predicate.GoodFee {
-	return predicate.GoodFee(func(s *sql.Selector) {
-		s.Where(sql.HasPrefix(s.C(FieldAmountUnit), v))
-	})
-}
-
-// AmountUnitHasSuffix applies the HasSuffix predicate on the "amount_unit" field.
-func AmountUnitHasSuffix(v string) predicate.GoodFee {
-	return predicate.GoodFee(func(s *sql.Selector) {
-		s.Where(sql.HasSuffix(s.C(FieldAmountUnit), v))
-	})
-}
-
-// AmountUnitEqualFold applies the EqualFold predicate on the "amount_unit" field.
-func AmountUnitEqualFold(v string) predicate.GoodFee {
-	return predicate.GoodFee(func(s *sql.Selector) {
-		s.Where(sql.EqualFold(s.C(FieldAmountUnit), v))
-	})
-}
-
-// AmountUnitContainsFold applies the ContainsFold predicate on the "amount_unit" field.
-func AmountUnitContainsFold(v string) predicate.GoodFee {
-	return predicate.GoodFee(func(s *sql.Selector) {
-		s.Where(sql.ContainsFold(s.C(FieldAmountUnit), v))
 	})
 }
 
