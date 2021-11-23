@@ -23,12 +23,6 @@ type GoodFeeCreate struct {
 	conflict []sql.ConflictOption
 }
 
-// SetGoodID sets the "good_id" field.
-func (gfc *GoodFeeCreate) SetGoodID(u uuid.UUID) *GoodFeeCreate {
-	gfc.mutation.SetGoodID(u)
-	return gfc
-}
-
 // SetAppID sets the "app_id" field.
 func (gfc *GoodFeeCreate) SetAppID(u uuid.UUID) *GoodFeeCreate {
 	gfc.mutation.SetAppID(u)
@@ -192,9 +186,6 @@ func (gfc *GoodFeeCreate) defaults() {
 
 // check runs all checks and user-defined validators on the builder.
 func (gfc *GoodFeeCreate) check() error {
-	if _, ok := gfc.mutation.GoodID(); !ok {
-		return &ValidationError{Name: "good_id", err: errors.New(`ent: missing required field "good_id"`)}
-	}
 	if _, ok := gfc.mutation.AppID(); !ok {
 		return &ValidationError{Name: "app_id", err: errors.New(`ent: missing required field "app_id"`)}
 	}
@@ -259,14 +250,6 @@ func (gfc *GoodFeeCreate) createSpec() (*GoodFee, *sqlgraph.CreateSpec) {
 		_node.ID = id
 		_spec.ID.Value = id
 	}
-	if value, ok := gfc.mutation.GoodID(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeUUID,
-			Value:  value,
-			Column: goodfee.FieldGoodID,
-		})
-		_node.GoodID = value
-	}
 	if value, ok := gfc.mutation.AppID(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
 			Type:   field.TypeUUID,
@@ -330,7 +313,7 @@ func (gfc *GoodFeeCreate) createSpec() (*GoodFee, *sqlgraph.CreateSpec) {
 // of the `INSERT` statement. For example:
 //
 //	client.GoodFee.Create().
-//		SetGoodID(v).
+//		SetAppID(v).
 //		OnConflict(
 //			// Update the row with the new values
 //			// the was proposed for insertion.
@@ -339,7 +322,7 @@ func (gfc *GoodFeeCreate) createSpec() (*GoodFee, *sqlgraph.CreateSpec) {
 //		// Override some of the fields with custom
 //		// update values.
 //		Update(func(u *ent.GoodFeeUpsert) {
-//			SetGoodID(v+v).
+//			SetAppID(v+v).
 //		}).
 //		Exec(ctx)
 //
@@ -376,18 +359,6 @@ type (
 		*sql.UpdateSet
 	}
 )
-
-// SetGoodID sets the "good_id" field.
-func (u *GoodFeeUpsert) SetGoodID(v uuid.UUID) *GoodFeeUpsert {
-	u.Set(goodfee.FieldGoodID, v)
-	return u
-}
-
-// UpdateGoodID sets the "good_id" field to the value that was provided on create.
-func (u *GoodFeeUpsert) UpdateGoodID() *GoodFeeUpsert {
-	u.SetExcluded(goodfee.FieldGoodID)
-	return u
-}
 
 // SetAppID sets the "app_id" field.
 func (u *GoodFeeUpsert) SetAppID(v uuid.UUID) *GoodFeeUpsert {
@@ -521,20 +492,6 @@ func (u *GoodFeeUpsertOne) Update(set func(*GoodFeeUpsert)) *GoodFeeUpsertOne {
 		set(&GoodFeeUpsert{UpdateSet: update})
 	}))
 	return u
-}
-
-// SetGoodID sets the "good_id" field.
-func (u *GoodFeeUpsertOne) SetGoodID(v uuid.UUID) *GoodFeeUpsertOne {
-	return u.Update(func(s *GoodFeeUpsert) {
-		s.SetGoodID(v)
-	})
-}
-
-// UpdateGoodID sets the "good_id" field to the value that was provided on create.
-func (u *GoodFeeUpsertOne) UpdateGoodID() *GoodFeeUpsertOne {
-	return u.Update(func(s *GoodFeeUpsert) {
-		s.UpdateGoodID()
-	})
 }
 
 // SetAppID sets the "app_id" field.
@@ -767,7 +724,7 @@ func (gfcb *GoodFeeCreateBulk) ExecX(ctx context.Context) {
 //		// Override some of the fields with custom
 //		// update values.
 //		Update(func(u *ent.GoodFeeUpsert) {
-//			SetGoodID(v+v).
+//			SetAppID(v+v).
 //		}).
 //		Exec(ctx)
 //
@@ -849,20 +806,6 @@ func (u *GoodFeeUpsertBulk) Update(set func(*GoodFeeUpsert)) *GoodFeeUpsertBulk 
 		set(&GoodFeeUpsert{UpdateSet: update})
 	}))
 	return u
-}
-
-// SetGoodID sets the "good_id" field.
-func (u *GoodFeeUpsertBulk) SetGoodID(v uuid.UUID) *GoodFeeUpsertBulk {
-	return u.Update(func(s *GoodFeeUpsert) {
-		s.SetGoodID(v)
-	})
-}
-
-// UpdateGoodID sets the "good_id" field to the value that was provided on create.
-func (u *GoodFeeUpsertBulk) UpdateGoodID() *GoodFeeUpsertBulk {
-	return u.Update(func(s *GoodFeeUpsert) {
-		s.UpdateGoodID()
-	})
 }
 
 // SetAppID sets the "app_id" field.

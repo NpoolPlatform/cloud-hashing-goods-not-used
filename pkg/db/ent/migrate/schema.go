@@ -146,7 +146,6 @@ var (
 	// GoodFeesColumns holds the columns for the "good_fees" table.
 	GoodFeesColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeUUID, Unique: true},
-		{Name: "good_id", Type: field.TypeUUID},
 		{Name: "app_id", Type: field.TypeUUID},
 		{Name: "fee_type", Type: field.TypeString, Unique: true},
 		{Name: "fee_description", Type: field.TypeString, Size: 256},

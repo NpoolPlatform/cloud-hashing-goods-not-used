@@ -20,7 +20,6 @@ func (GoodFee) Fields() []ent.Field {
 		field.UUID("id", uuid.UUID{}).
 			Default(uuid.New).
 			Unique(),
-		field.UUID("good_id", uuid.UUID{}),
 		field.UUID("app_id", uuid.UUID{}),
 		field.String("fee_type").
 			Unique(),

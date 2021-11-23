@@ -27,12 +27,6 @@ func (gfu *GoodFeeUpdate) Where(ps ...predicate.GoodFee) *GoodFeeUpdate {
 	return gfu
 }
 
-// SetGoodID sets the "good_id" field.
-func (gfu *GoodFeeUpdate) SetGoodID(u uuid.UUID) *GoodFeeUpdate {
-	gfu.mutation.SetGoodID(u)
-	return gfu
-}
-
 // SetAppID sets the "app_id" field.
 func (gfu *GoodFeeUpdate) SetAppID(u uuid.UUID) *GoodFeeUpdate {
 	gfu.mutation.SetAppID(u)
@@ -219,13 +213,6 @@ func (gfu *GoodFeeUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			}
 		}
 	}
-	if value, ok := gfu.mutation.GoodID(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeUUID,
-			Value:  value,
-			Column: goodfee.FieldGoodID,
-		})
-	}
 	if value, ok := gfu.mutation.AppID(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeUUID,
@@ -313,12 +300,6 @@ type GoodFeeUpdateOne struct {
 	fields   []string
 	hooks    []Hook
 	mutation *GoodFeeMutation
-}
-
-// SetGoodID sets the "good_id" field.
-func (gfuo *GoodFeeUpdateOne) SetGoodID(u uuid.UUID) *GoodFeeUpdateOne {
-	gfuo.mutation.SetGoodID(u)
-	return gfuo
 }
 
 // SetAppID sets the "app_id" field.
@@ -530,13 +511,6 @@ func (gfuo *GoodFeeUpdateOne) sqlSave(ctx context.Context) (_node *GoodFee, err 
 				ps[i](selector)
 			}
 		}
-	}
-	if value, ok := gfuo.mutation.GoodID(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeUUID,
-			Value:  value,
-			Column: goodfee.FieldGoodID,
-		})
 	}
 	if value, ok := gfuo.mutation.AppID(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{

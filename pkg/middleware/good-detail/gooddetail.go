@@ -10,6 +10,7 @@ import (
 
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/crud/device-info"     //nolint
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/crud/good-extra-info" //nolint
+	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/crud/good-fee"        //nolint
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/crud/good-info"       //nolint
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/crud/price-currency"  //nolint
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/crud/vendor-location" //nolint
@@ -74,6 +75,17 @@ func Get(ctx context.Context, in *npool.GetGoodDetailRequest) (*npool.GetGoodDet
 		return nil, xerrors.Errorf("fail get price currency %v: %v", goodInfo.Info.PriceCurrency, err)
 	}
 
+	fees := []*npool.GoodFee{}
+	for _, id := range goodInfo.Info.FeeIDs {
+		fee, err := goodfee.Get(ctx, &npool.GetGoodFeeRequest{
+			ID: id,
+		})
+		if err != nil {
+			return nil, xerrors.Errorf("fail get good fee: %v", err)
+		}
+		fees = append(fees, fee.Info)
+	}
+
 	return &npool.GetGoodDetailResponse{
 		Detail: &npool.GoodDetail{
 			ID:                 id.String(),
@@ -96,6 +108,7 @@ func Get(ctx context.Context, in *npool.GetGoodDetailRequest) (*npool.GetGoodDet
 			Start:              goodInfo.Info.Start,
 			Unit:               goodInfo.Info.Unit,
 			Title:              goodInfo.Info.Title,
+			Fees:               fees,
 		},
 	}, nil
 }

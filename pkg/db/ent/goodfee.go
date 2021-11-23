@@ -16,8 +16,6 @@ type GoodFee struct {
 	config `json:"-"`
 	// ID of the ent.
 	ID uuid.UUID `json:"id,omitempty"`
-	// GoodID holds the value of the "good_id" field.
-	GoodID uuid.UUID `json:"good_id,omitempty"`
 	// AppID holds the value of the "app_id" field.
 	AppID uuid.UUID `json:"app_id,omitempty"`
 	// FeeType holds the value of the "fee_type" field.
@@ -43,7 +41,7 @@ func (*GoodFee) scanValues(columns []string) ([]interface{}, error) {
 			values[i] = new(sql.NullInt64)
 		case goodfee.FieldFeeType, goodfee.FieldFeeDescription, goodfee.FieldPayType:
 			values[i] = new(sql.NullString)
-		case goodfee.FieldID, goodfee.FieldGoodID, goodfee.FieldAppID:
+		case goodfee.FieldID, goodfee.FieldAppID:
 			values[i] = new(uuid.UUID)
 		default:
 			return nil, fmt.Errorf("unexpected column %q for type GoodFee", columns[i])
@@ -65,12 +63,6 @@ func (gf *GoodFee) assignValues(columns []string, values []interface{}) error {
 				return fmt.Errorf("unexpected type %T for field id", values[i])
 			} else if value != nil {
 				gf.ID = *value
-			}
-		case goodfee.FieldGoodID:
-			if value, ok := values[i].(*uuid.UUID); !ok {
-				return fmt.Errorf("unexpected type %T for field good_id", values[i])
-			} else if value != nil {
-				gf.GoodID = *value
 			}
 		case goodfee.FieldAppID:
 			if value, ok := values[i].(*uuid.UUID); !ok {
@@ -142,8 +134,6 @@ func (gf *GoodFee) String() string {
 	var builder strings.Builder
 	builder.WriteString("GoodFee(")
 	builder.WriteString(fmt.Sprintf("id=%v", gf.ID))
-	builder.WriteString(", good_id=")
-	builder.WriteString(fmt.Sprintf("%v", gf.GoodID))
 	builder.WriteString(", app_id=")
 	builder.WriteString(fmt.Sprintf("%v", gf.AppID))
 	builder.WriteString(", fee_type=")

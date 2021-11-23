@@ -1418,7 +1418,6 @@
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
 | ID | [string](#string) |  |  |
-| GoodID | [string](#string) |  |  |
 | AppID | [string](#string) |  |  |
 | FeeType | [string](#string) |  |  |
 | FeeDescription | [string](#string) |  |  |

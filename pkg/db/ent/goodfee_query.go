@@ -254,12 +254,12 @@ func (gfq *GoodFeeQuery) Clone() *GoodFeeQuery {
 // Example:
 //
 //	var v []struct {
-//		GoodID uuid.UUID `json:"good_id,omitempty"`
+//		AppID uuid.UUID `json:"app_id,omitempty"`
 //		Count int `json:"count,omitempty"`
 //	}
 //
 //	client.GoodFee.Query().
-//		GroupBy(goodfee.FieldGoodID).
+//		GroupBy(goodfee.FieldAppID).
 //		Aggregate(ent.Count()).
 //		Scan(ctx, &v)
 //
@@ -281,11 +281,11 @@ func (gfq *GoodFeeQuery) GroupBy(field string, fields ...string) *GoodFeeGroupBy
 // Example:
 //
 //	var v []struct {
-//		GoodID uuid.UUID `json:"good_id,omitempty"`
+//		AppID uuid.UUID `json:"app_id,omitempty"`
 //	}
 //
 //	client.GoodFee.Query().
-//		Select(goodfee.FieldGoodID).
+//		Select(goodfee.FieldAppID).
 //		Scan(ctx, &v)
 //
 func (gfq *GoodFeeQuery) Select(fields ...string) *GoodFeeSelect {

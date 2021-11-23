@@ -12,6 +12,7 @@ import (
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/test-init" //nolint
 
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/crud/device-info"     //nolint
+	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/crud/good-fee"        //nolint
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/crud/good-info"       //nolint
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/crud/price-currency"  //nolint
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/crud/vendor-location" //nolint
@@ -95,6 +96,26 @@ func TestGet(t *testing.T) {
 	})
 	assert.Nil(t, err)
 
+	fee1 := npool.GoodFee{
+		AppID:   uuid.New().String(),
+		FeeType: "Gas Fee",
+		PayType: "amount",
+	}
+	feeResp1, err := goodfee.Create(context.Background(), &npool.CreateGoodFeeRequest{
+		Info: &fee1,
+	})
+	assert.Nil(t, err)
+
+	fee2 := npool.GoodFee{
+		AppID:   uuid.New().String(),
+		FeeType: "Gas Fee 1",
+		PayType: "amount",
+	}
+	feeResp2, err := goodfee.Create(context.Background(), &npool.CreateGoodFeeRequest{
+		Info: &fee2,
+	})
+	assert.Nil(t, err)
+
 	goodInfo := npool.GoodInfo{
 		Title:              "Ant Miner S19 Pro",
 		Unit:               "TH/s",
@@ -114,6 +135,7 @@ func TestGet(t *testing.T) {
 		SupportCoinTypeIDs: []string{uuid.New().String(), uuid.New().String()},
 		Total:              100,
 		Start:              uint32(time.Now().Unix()),
+		FeeIDs:             []string{feeResp1.Info.ID, feeResp2.Info.ID},
 	}
 	goodInfoResp, err := goodinfo.Create(context.Background(), &npool.CreateGoodRequest{
 		Info: &goodInfo,

@@ -875,7 +875,6 @@ message GetGoodReviewResponse {
 
 message GoodFee {
     string ID = 1;
-    string GoodID = 2;
     string AppID = 3;
     string FeeType = 4;
     string FeeDescription = 5;

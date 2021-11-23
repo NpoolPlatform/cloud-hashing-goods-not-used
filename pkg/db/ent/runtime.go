@@ -174,21 +174,21 @@ func init() {
 	goodfeeFields := schema.GoodFee{}.Fields()
 	_ = goodfeeFields
 	// goodfeeDescFeeDescription is the schema descriptor for fee_description field.
-	goodfeeDescFeeDescription := goodfeeFields[4].Descriptor()
+	goodfeeDescFeeDescription := goodfeeFields[3].Descriptor()
 	// goodfee.FeeDescriptionValidator is a validator for the "fee_description" field. It is called by the builders before save.
 	goodfee.FeeDescriptionValidator = goodfeeDescFeeDescription.Validators[0].(func(string) error)
 	// goodfeeDescCreateAt is the schema descriptor for create_at field.
-	goodfeeDescCreateAt := goodfeeFields[6].Descriptor()
+	goodfeeDescCreateAt := goodfeeFields[5].Descriptor()
 	// goodfee.DefaultCreateAt holds the default value on creation for the create_at field.
 	goodfee.DefaultCreateAt = goodfeeDescCreateAt.Default.(func() uint32)
 	// goodfeeDescUpdateAt is the schema descriptor for update_at field.
-	goodfeeDescUpdateAt := goodfeeFields[7].Descriptor()
+	goodfeeDescUpdateAt := goodfeeFields[6].Descriptor()
 	// goodfee.DefaultUpdateAt holds the default value on creation for the update_at field.
 	goodfee.DefaultUpdateAt = goodfeeDescUpdateAt.Default.(func() uint32)
 	// goodfee.UpdateDefaultUpdateAt holds the default value on update for the update_at field.
 	goodfee.UpdateDefaultUpdateAt = goodfeeDescUpdateAt.UpdateDefault.(func() uint32)
 	// goodfeeDescDeleteAt is the schema descriptor for delete_at field.
-	goodfeeDescDeleteAt := goodfeeFields[8].Descriptor()
+	goodfeeDescDeleteAt := goodfeeFields[7].Descriptor()
 	// goodfee.DefaultDeleteAt holds the default value on creation for the delete_at field.
 	goodfee.DefaultDeleteAt = goodfeeDescDeleteAt.Default.(func() uint32)
 	// goodfeeDescID is the schema descriptor for id field.
