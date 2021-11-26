@@ -15,7 +15,7 @@ spec:
     - host: api.npool.top
       http: &http_appid_userid_rules
         paths:
-          - path: /cloud-hashing-goods
+          - path: /api/cloud-hashing-goods
             backend:
               serviceName: cloud-hashing-goods
               servicePort: 50030
@@ -41,15 +41,15 @@ spec:
     - host: api.npool.top
       http: &http_appid_rules
         paths:
-          - path: /cloud-hashing-goods/v1/authorize/app
+          - path: /api/cloud-hashing-goods/v1/authorize/app
             backend:
               serviceName: cloud-hashing-goods
               servicePort: 50030
-          - path: /cloud-hashing-goods/v1/check/app
+          - path: /api/cloud-hashing-goods/v1/check/app
             backend:
               serviceName: cloud-hashing-goods
               servicePort: 50030
-          - path: /cloud-hashing-goods/v1/create/good/comment
+          - path: /api/cloud-hashing-goods/v1/create/good/comment
             backend:
               serviceName: cloud-hashing-goods
               servicePort: 50030
@@ -75,23 +75,23 @@ spec:
     - host: api.npool.top
       http: &http_rules
         paths:
-          - path: /cloud-hashing-goods/version
+          - path: /api/cloud-hashing-goods/version
             backend:
               serviceName: cloud-hashing-goods
               servicePort: 50030
-          - path: /cloud-hashing-goods/v1/create
+          - path: /api/cloud-hashing-goods/v1/create
             backend:
               serviceName: cloud-hashing-goods
               servicePort: 50030
-          - path: /cloud-hashing-goods/v1/delete
+          - path: /api/cloud-hashing-goods/v1/delete
             backend:
               serviceName: cloud-hashing-goods
               servicePort: 50030
-          - path: /cloud-hashing-goods/v1/get/good
+          - path: /api/cloud-hashing-goods/v1/get/good
             backend:
               serviceName: cloud-hashing-goods
               servicePort: 50030
-          - path: /cloud-hashing-goods/v1/get/goods
+          - path: /api/cloud-hashing-goods/v1/get/goods
             backend:
               serviceName: cloud-hashing-goods
               servicePort: 50030
@@ -108,4 +108,4 @@ metadata:
 spec:
   stripPrefix:
     prefixes:
-      - /cloud-hashing-goods
+      - /api/cloud-hashing-goods
