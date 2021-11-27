@@ -18,7 +18,7 @@ spec:
           - path: /api/cloud-hashing-goods
             backend:
               serviceName: cloud-hashing-goods
-              servicePort: 50030
+              servicePort: 50020
     - host: api.xpool.top
       http: *http_appid_userid_rules
     - host: www.npool.top
@@ -48,15 +48,15 @@ spec:
           - path: /api/cloud-hashing-goods/v1/authorize/app
             backend:
               serviceName: cloud-hashing-goods
-              servicePort: 50030
+              servicePort: 50020
           - path: /api/cloud-hashing-goods/v1/check/app
             backend:
               serviceName: cloud-hashing-goods
-              servicePort: 50030
+              servicePort: 50020
           - path: /api/cloud-hashing-goods/v1/create/good/comment
             backend:
               serviceName: cloud-hashing-goods
-              servicePort: 50030
+              servicePort: 50020
     - host: api.xpool.top
       http: *http_appid_rules
     - host: www.npool.top
@@ -86,23 +86,23 @@ spec:
           - path: /api/cloud-hashing-goods/version
             backend:
               serviceName: cloud-hashing-goods
-              servicePort: 50030
+              servicePort: 50020
           - path: /api/cloud-hashing-goods/v1/create
             backend:
               serviceName: cloud-hashing-goods
-              servicePort: 50030
+              servicePort: 50020
           - path: /api/cloud-hashing-goods/v1/delete
             backend:
               serviceName: cloud-hashing-goods
-              servicePort: 50030
+              servicePort: 50020
           - path: /api/cloud-hashing-goods/v1/get/good
             backend:
               serviceName: cloud-hashing-goods
-              servicePort: 50030
+              servicePort: 50020
           - path: /api/cloud-hashing-goods/v1/get/goods
             backend:
               serviceName: cloud-hashing-goods
-              servicePort: 50030
+              servicePort: 50020
     - host: api.xpool.top
       http: *http_rules
     - host: www.npool.top
