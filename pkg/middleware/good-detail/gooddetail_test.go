@@ -125,7 +125,7 @@ func TestGet(t *testing.T) {
 		DurationDays:       180,
 		CoinInfoID:         uuid.New().String(),
 		Actuals:            true,
-		DeliveryAt:         int32(time.Now().Unix()),
+		DeliveryAt:         uint32(time.Now().Unix()),
 		VendorLocationID:   vendorLocationResp.Info.ID,
 		InheritFromGoodID:  uuid.UUID{}.String(),
 		Price:              13.0,
