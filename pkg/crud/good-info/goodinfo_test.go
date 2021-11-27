@@ -38,7 +38,7 @@ func TestGoodInfoCRUD(t *testing.T) { //nolint
 	duration := int32(180)
 	coinInfoID := uuid.New().String()
 	actuals := true
-	deliveryAt := int32(time.Now().UnixNano() / 1000000)
+	deliveryAt := uint32(time.Now().Unix())
 	inheritFromGoodID := uuid.New().String()
 	vendorLocationID := uuid.New().String()
 	price := 100.8
