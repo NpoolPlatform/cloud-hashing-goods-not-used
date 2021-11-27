@@ -229,21 +229,21 @@ func init() {
 	// goodinfo.PriceValidator is a validator for the "price" field. It is called by the builders before save.
 	goodinfo.PriceValidator = goodinfoDescPrice.Validators[0].(func(uint64) error)
 	// goodinfoDescTotal is the schema descriptor for total field.
-	goodinfoDescTotal := goodinfoFields[18].Descriptor()
+	goodinfoDescTotal := goodinfoFields[17].Descriptor()
 	// goodinfo.TotalValidator is a validator for the "total" field. It is called by the builders before save.
 	goodinfo.TotalValidator = goodinfoDescTotal.Validators[0].(func(int32) error)
 	// goodinfoDescCreateAt is the schema descriptor for create_at field.
-	goodinfoDescCreateAt := goodinfoFields[19].Descriptor()
+	goodinfoDescCreateAt := goodinfoFields[18].Descriptor()
 	// goodinfo.DefaultCreateAt holds the default value on creation for the create_at field.
 	goodinfo.DefaultCreateAt = goodinfoDescCreateAt.Default.(func() uint32)
 	// goodinfoDescUpdateAt is the schema descriptor for update_at field.
-	goodinfoDescUpdateAt := goodinfoFields[20].Descriptor()
+	goodinfoDescUpdateAt := goodinfoFields[19].Descriptor()
 	// goodinfo.DefaultUpdateAt holds the default value on creation for the update_at field.
 	goodinfo.DefaultUpdateAt = goodinfoDescUpdateAt.Default.(func() uint32)
 	// goodinfo.UpdateDefaultUpdateAt holds the default value on update for the update_at field.
 	goodinfo.UpdateDefaultUpdateAt = goodinfoDescUpdateAt.UpdateDefault.(func() uint32)
 	// goodinfoDescDeleteAt is the schema descriptor for delete_at field.
-	goodinfoDescDeleteAt := goodinfoFields[21].Descriptor()
+	goodinfoDescDeleteAt := goodinfoFields[20].Descriptor()
 	// goodinfo.DefaultDeleteAt holds the default value on creation for the delete_at field.
 	goodinfo.DefaultDeleteAt = goodinfoDescDeleteAt.Default.(func() uint32)
 	// goodinfoDescID is the schema descriptor for id field.

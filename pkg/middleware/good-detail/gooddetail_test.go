@@ -134,7 +134,6 @@ func TestGet(t *testing.T) {
 		Classic:            true,
 		SupportCoinTypeIDs: []string{uuid.New().String(), uuid.New().String()},
 		Total:              100,
-		Start:              uint32(time.Now().Unix()),
 		FeeIDs:             []string{feeResp1.Info.ID, feeResp2.Info.ID},
 	}
 	goodInfoResp, err := goodinfo.Create(context.Background(), &npool.CreateGoodRequest{

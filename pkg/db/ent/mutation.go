@@ -6292,8 +6292,8 @@ type GoodInfoMutation struct {
 	addduration_days      *int32
 	coin_info_id          *uuid.UUID
 	actuals               *bool
-	delivery_at           *int32
-	adddelivery_at        *int32
+	delivery_at           *uint32
+	adddelivery_at        *uint32
 	inherit_from_good_id  *uuid.UUID
 	vendor_location_id    *uuid.UUID
 	price                 *uint64
@@ -6303,8 +6303,6 @@ type GoodInfoMutation struct {
 	classic               *bool
 	title                 *string
 	unit                  *string
-	start                 *uint32
-	addstart              *uint32
 	support_coin_type_ids *[]uuid.UUID
 	total                 *int32
 	addtotal              *int32
@@ -6662,13 +6660,13 @@ func (m *GoodInfoMutation) ResetActuals() {
 }
 
 // SetDeliveryAt sets the "delivery_at" field.
-func (m *GoodInfoMutation) SetDeliveryAt(i int32) {
-	m.delivery_at = &i
+func (m *GoodInfoMutation) SetDeliveryAt(u uint32) {
+	m.delivery_at = &u
 	m.adddelivery_at = nil
 }
 
 // DeliveryAt returns the value of the "delivery_at" field in the mutation.
-func (m *GoodInfoMutation) DeliveryAt() (r int32, exists bool) {
+func (m *GoodInfoMutation) DeliveryAt() (r uint32, exists bool) {
 	v := m.delivery_at
 	if v == nil {
 		return
@@ -6679,7 +6677,7 @@ func (m *GoodInfoMutation) DeliveryAt() (r int32, exists bool) {
 // OldDeliveryAt returns the old "delivery_at" field's value of the GoodInfo entity.
 // If the GoodInfo object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *GoodInfoMutation) OldDeliveryAt(ctx context.Context) (v int32, err error) {
+func (m *GoodInfoMutation) OldDeliveryAt(ctx context.Context) (v uint32, err error) {
 	if !m.op.Is(OpUpdateOne) {
 		return v, fmt.Errorf("OldDeliveryAt is only allowed on UpdateOne operations")
 	}
@@ -6693,17 +6691,17 @@ func (m *GoodInfoMutation) OldDeliveryAt(ctx context.Context) (v int32, err erro
 	return oldValue.DeliveryAt, nil
 }
 
-// AddDeliveryAt adds i to the "delivery_at" field.
-func (m *GoodInfoMutation) AddDeliveryAt(i int32) {
+// AddDeliveryAt adds u to the "delivery_at" field.
+func (m *GoodInfoMutation) AddDeliveryAt(u uint32) {
 	if m.adddelivery_at != nil {
-		*m.adddelivery_at += i
+		*m.adddelivery_at += u
 	} else {
-		m.adddelivery_at = &i
+		m.adddelivery_at = &u
 	}
 }
 
 // AddedDeliveryAt returns the value that was added to the "delivery_at" field in this mutation.
-func (m *GoodInfoMutation) AddedDeliveryAt() (r int32, exists bool) {
+func (m *GoodInfoMutation) AddedDeliveryAt() (r uint32, exists bool) {
 	v := m.adddelivery_at
 	if v == nil {
 		return
@@ -7025,62 +7023,6 @@ func (m *GoodInfoMutation) ResetUnit() {
 	m.unit = nil
 }
 
-// SetStart sets the "start" field.
-func (m *GoodInfoMutation) SetStart(u uint32) {
-	m.start = &u
-	m.addstart = nil
-}
-
-// Start returns the value of the "start" field in the mutation.
-func (m *GoodInfoMutation) Start() (r uint32, exists bool) {
-	v := m.start
-	if v == nil {
-		return
-	}
-	return *v, true
-}
-
-// OldStart returns the old "start" field's value of the GoodInfo entity.
-// If the GoodInfo object wasn't provided to the builder, the object is fetched from the database.
-// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *GoodInfoMutation) OldStart(ctx context.Context) (v uint32, err error) {
-	if !m.op.Is(OpUpdateOne) {
-		return v, fmt.Errorf("OldStart is only allowed on UpdateOne operations")
-	}
-	if m.id == nil || m.oldValue == nil {
-		return v, fmt.Errorf("OldStart requires an ID field in the mutation")
-	}
-	oldValue, err := m.oldValue(ctx)
-	if err != nil {
-		return v, fmt.Errorf("querying old value for OldStart: %w", err)
-	}
-	return oldValue.Start, nil
-}
-
-// AddStart adds u to the "start" field.
-func (m *GoodInfoMutation) AddStart(u uint32) {
-	if m.addstart != nil {
-		*m.addstart += u
-	} else {
-		m.addstart = &u
-	}
-}
-
-// AddedStart returns the value that was added to the "start" field in this mutation.
-func (m *GoodInfoMutation) AddedStart() (r uint32, exists bool) {
-	v := m.addstart
-	if v == nil {
-		return
-	}
-	return *v, true
-}
-
-// ResetStart resets all changes to the "start" field.
-func (m *GoodInfoMutation) ResetStart() {
-	m.start = nil
-	m.addstart = nil
-}
-
 // SetSupportCoinTypeIds sets the "support_coin_type_ids" field.
 func (m *GoodInfoMutation) SetSupportCoinTypeIds(u []uuid.UUID) {
 	m.support_coin_type_ids = &u
@@ -7360,7 +7302,7 @@ func (m *GoodInfoMutation) Type() string {
 // order to get all numeric fields that were incremented/decremented, call
 // AddedFields().
 func (m *GoodInfoMutation) Fields() []string {
-	fields := make([]string, 0, 21)
+	fields := make([]string, 0, 20)
 	if m.device_info_id != nil {
 		fields = append(fields, goodinfo.FieldDeviceInfoID)
 	}
@@ -7405,9 +7347,6 @@ func (m *GoodInfoMutation) Fields() []string {
 	}
 	if m.unit != nil {
 		fields = append(fields, goodinfo.FieldUnit)
-	}
-	if m.start != nil {
-		fields = append(fields, goodinfo.FieldStart)
 	}
 	if m.support_coin_type_ids != nil {
 		fields = append(fields, goodinfo.FieldSupportCoinTypeIds)
@@ -7462,8 +7401,6 @@ func (m *GoodInfoMutation) Field(name string) (ent.Value, bool) {
 		return m.Title()
 	case goodinfo.FieldUnit:
 		return m.Unit()
-	case goodinfo.FieldStart:
-		return m.Start()
 	case goodinfo.FieldSupportCoinTypeIds:
 		return m.SupportCoinTypeIds()
 	case goodinfo.FieldTotal:
@@ -7513,8 +7450,6 @@ func (m *GoodInfoMutation) OldField(ctx context.Context, name string) (ent.Value
 		return m.OldTitle(ctx)
 	case goodinfo.FieldUnit:
 		return m.OldUnit(ctx)
-	case goodinfo.FieldStart:
-		return m.OldStart(ctx)
 	case goodinfo.FieldSupportCoinTypeIds:
 		return m.OldSupportCoinTypeIds(ctx)
 	case goodinfo.FieldTotal:
@@ -7577,7 +7512,7 @@ func (m *GoodInfoMutation) SetField(name string, value ent.Value) error {
 		m.SetActuals(v)
 		return nil
 	case goodinfo.FieldDeliveryAt:
-		v, ok := value.(int32)
+		v, ok := value.(uint32)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
@@ -7639,13 +7574,6 @@ func (m *GoodInfoMutation) SetField(name string, value ent.Value) error {
 		}
 		m.SetUnit(v)
 		return nil
-	case goodinfo.FieldStart:
-		v, ok := value.(uint32)
-		if !ok {
-			return fmt.Errorf("unexpected type %T for field %s", value, name)
-		}
-		m.SetStart(v)
-		return nil
 	case goodinfo.FieldSupportCoinTypeIds:
 		v, ok := value.([]uuid.UUID)
 		if !ok {
@@ -7701,9 +7629,6 @@ func (m *GoodInfoMutation) AddedFields() []string {
 	if m.addprice != nil {
 		fields = append(fields, goodinfo.FieldPrice)
 	}
-	if m.addstart != nil {
-		fields = append(fields, goodinfo.FieldStart)
-	}
 	if m.addtotal != nil {
 		fields = append(fields, goodinfo.FieldTotal)
 	}
@@ -7732,8 +7657,6 @@ func (m *GoodInfoMutation) AddedField(name string) (ent.Value, bool) {
 		return m.AddedDeliveryAt()
 	case goodinfo.FieldPrice:
 		return m.AddedPrice()
-	case goodinfo.FieldStart:
-		return m.AddedStart()
 	case goodinfo.FieldTotal:
 		return m.AddedTotal()
 	case goodinfo.FieldCreateAt:
@@ -7766,7 +7689,7 @@ func (m *GoodInfoMutation) AddField(name string, value ent.Value) error {
 		m.AddDurationDays(v)
 		return nil
 	case goodinfo.FieldDeliveryAt:
-		v, ok := value.(int32)
+		v, ok := value.(uint32)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
@@ -7778,13 +7701,6 @@ func (m *GoodInfoMutation) AddField(name string, value ent.Value) error {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.AddPrice(v)
-		return nil
-	case goodinfo.FieldStart:
-		v, ok := value.(uint32)
-		if !ok {
-			return fmt.Errorf("unexpected type %T for field %s", value, name)
-		}
-		m.AddStart(v)
 		return nil
 	case goodinfo.FieldTotal:
 		v, ok := value.(int32)
@@ -7885,9 +7801,6 @@ func (m *GoodInfoMutation) ResetField(name string) error {
 		return nil
 	case goodinfo.FieldUnit:
 		m.ResetUnit()
-		return nil
-	case goodinfo.FieldStart:
-		m.ResetStart()
 		return nil
 	case goodinfo.FieldSupportCoinTypeIds:
 		m.ResetSupportCoinTypeIds()

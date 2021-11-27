@@ -129,7 +129,6 @@ func TestGet(t *testing.T) { //nolint
 		Total:              100,
 		Title:              "Ant Miner S19 Pro",
 		Unit:               "TH/s",
-		Start:              uint32(time.Now().Unix()),
 	}
 
 	goodInfoResp, err := cli.R().

@@ -78,15 +78,15 @@ func (giu *GoodInfoUpdate) SetActuals(b bool) *GoodInfoUpdate {
 }
 
 // SetDeliveryAt sets the "delivery_at" field.
-func (giu *GoodInfoUpdate) SetDeliveryAt(i int32) *GoodInfoUpdate {
+func (giu *GoodInfoUpdate) SetDeliveryAt(u uint32) *GoodInfoUpdate {
 	giu.mutation.ResetDeliveryAt()
-	giu.mutation.SetDeliveryAt(i)
+	giu.mutation.SetDeliveryAt(u)
 	return giu
 }
 
-// AddDeliveryAt adds i to the "delivery_at" field.
-func (giu *GoodInfoUpdate) AddDeliveryAt(i int32) *GoodInfoUpdate {
-	giu.mutation.AddDeliveryAt(i)
+// AddDeliveryAt adds u to the "delivery_at" field.
+func (giu *GoodInfoUpdate) AddDeliveryAt(u uint32) *GoodInfoUpdate {
+	giu.mutation.AddDeliveryAt(u)
 	return giu
 }
 
@@ -142,19 +142,6 @@ func (giu *GoodInfoUpdate) SetTitle(s string) *GoodInfoUpdate {
 // SetUnit sets the "unit" field.
 func (giu *GoodInfoUpdate) SetUnit(s string) *GoodInfoUpdate {
 	giu.mutation.SetUnit(s)
-	return giu
-}
-
-// SetStart sets the "start" field.
-func (giu *GoodInfoUpdate) SetStart(u uint32) *GoodInfoUpdate {
-	giu.mutation.ResetStart()
-	giu.mutation.SetStart(u)
-	return giu
-}
-
-// AddStart adds u to the "start" field.
-func (giu *GoodInfoUpdate) AddStart(u uint32) *GoodInfoUpdate {
-	giu.mutation.AddStart(u)
 	return giu
 }
 
@@ -412,14 +399,14 @@ func (giu *GoodInfoUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	}
 	if value, ok := giu.mutation.DeliveryAt(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
+			Type:   field.TypeUint32,
 			Value:  value,
 			Column: goodinfo.FieldDeliveryAt,
 		})
 	}
 	if value, ok := giu.mutation.AddedDeliveryAt(); ok {
 		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
+			Type:   field.TypeUint32,
 			Value:  value,
 			Column: goodinfo.FieldDeliveryAt,
 		})
@@ -485,20 +472,6 @@ func (giu *GoodInfoUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			Type:   field.TypeString,
 			Value:  value,
 			Column: goodinfo.FieldUnit,
-		})
-	}
-	if value, ok := giu.mutation.Start(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeUint32,
-			Value:  value,
-			Column: goodinfo.FieldStart,
-		})
-	}
-	if value, ok := giu.mutation.AddedStart(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeUint32,
-			Value:  value,
-			Column: goodinfo.FieldStart,
 		})
 	}
 	if value, ok := giu.mutation.SupportCoinTypeIds(); ok {
@@ -634,15 +607,15 @@ func (giuo *GoodInfoUpdateOne) SetActuals(b bool) *GoodInfoUpdateOne {
 }
 
 // SetDeliveryAt sets the "delivery_at" field.
-func (giuo *GoodInfoUpdateOne) SetDeliveryAt(i int32) *GoodInfoUpdateOne {
+func (giuo *GoodInfoUpdateOne) SetDeliveryAt(u uint32) *GoodInfoUpdateOne {
 	giuo.mutation.ResetDeliveryAt()
-	giuo.mutation.SetDeliveryAt(i)
+	giuo.mutation.SetDeliveryAt(u)
 	return giuo
 }
 
-// AddDeliveryAt adds i to the "delivery_at" field.
-func (giuo *GoodInfoUpdateOne) AddDeliveryAt(i int32) *GoodInfoUpdateOne {
-	giuo.mutation.AddDeliveryAt(i)
+// AddDeliveryAt adds u to the "delivery_at" field.
+func (giuo *GoodInfoUpdateOne) AddDeliveryAt(u uint32) *GoodInfoUpdateOne {
+	giuo.mutation.AddDeliveryAt(u)
 	return giuo
 }
 
@@ -698,19 +671,6 @@ func (giuo *GoodInfoUpdateOne) SetTitle(s string) *GoodInfoUpdateOne {
 // SetUnit sets the "unit" field.
 func (giuo *GoodInfoUpdateOne) SetUnit(s string) *GoodInfoUpdateOne {
 	giuo.mutation.SetUnit(s)
-	return giuo
-}
-
-// SetStart sets the "start" field.
-func (giuo *GoodInfoUpdateOne) SetStart(u uint32) *GoodInfoUpdateOne {
-	giuo.mutation.ResetStart()
-	giuo.mutation.SetStart(u)
-	return giuo
-}
-
-// AddStart adds u to the "start" field.
-func (giuo *GoodInfoUpdateOne) AddStart(u uint32) *GoodInfoUpdateOne {
-	giuo.mutation.AddStart(u)
 	return giuo
 }
 
@@ -992,14 +952,14 @@ func (giuo *GoodInfoUpdateOne) sqlSave(ctx context.Context) (_node *GoodInfo, er
 	}
 	if value, ok := giuo.mutation.DeliveryAt(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
+			Type:   field.TypeUint32,
 			Value:  value,
 			Column: goodinfo.FieldDeliveryAt,
 		})
 	}
 	if value, ok := giuo.mutation.AddedDeliveryAt(); ok {
 		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
+			Type:   field.TypeUint32,
 			Value:  value,
 			Column: goodinfo.FieldDeliveryAt,
 		})
@@ -1065,20 +1025,6 @@ func (giuo *GoodInfoUpdateOne) sqlSave(ctx context.Context) (_node *GoodInfo, er
 			Type:   field.TypeString,
 			Value:  value,
 			Column: goodinfo.FieldUnit,
-		})
-	}
-	if value, ok := giuo.mutation.Start(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeUint32,
-			Value:  value,
-			Column: goodinfo.FieldStart,
-		})
-	}
-	if value, ok := giuo.mutation.AddedStart(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeUint32,
-			Value:  value,
-			Column: goodinfo.FieldStart,
 		})
 	}
 	if value, ok := giuo.mutation.SupportCoinTypeIds(); ok {

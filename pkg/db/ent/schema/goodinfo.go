@@ -28,7 +28,7 @@ func (GoodInfo) Fields() []ent.Field {
 			Positive(),
 		field.UUID("coin_info_id", uuid.UUID{}),
 		field.Bool("actuals"),
-		field.Int32("delivery_at"),
+		field.Uint32("delivery_at"),
 		field.UUID("inherit_from_good_id", uuid.UUID{}),
 		field.UUID("vendor_location_id", uuid.UUID{}),
 		field.Uint64("price").
@@ -39,7 +39,6 @@ func (GoodInfo) Fields() []ent.Field {
 		field.Bool("classic"),
 		field.String("title"),
 		field.String("unit"),
-		field.Uint32("start"),
 		field.JSON("support_coin_type_ids", []uuid.UUID{}),
 		field.Int32("total").
 			Positive(),

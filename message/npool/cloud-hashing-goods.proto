@@ -525,7 +525,7 @@ message GoodInfo {
     int32 DurationDays = 2405;
     string CoinInfoID = 2406;
     bool Actuals = 2407;
-    int32 DeliveryAt = 2408;
+    uint32 DeliveryAt = 2408;
     string InheritFromGoodID = 2409;
     string VendorLocationID = 2410;
     double Price = 2411;
@@ -536,7 +536,6 @@ message GoodInfo {
     string PriceCurrency = 2416;
     string Title = 2417;
     string Unit = 2418;
-    uint32 Start = 2419;
     repeated string FeeIDs = 2420;
 }
 
@@ -616,7 +615,7 @@ message GoodDetail {
     int32 DurationDays = 2405;
     string CoinInfoID = 2406;
     bool Actuals = 2407;
-    int32 DeliveryAt = 2408;
+    uint32 DeliveryAt = 2408;
     GoodInfo InheritFromGood = 2409;
     VendorLocationInfo VendorLocation = 2410;
     double Price = 2411;
@@ -627,7 +626,6 @@ message GoodDetail {
     GoodExtraInfo Extra = 2416;
     string Title = 2417;
     string Unit = 2418;
-    uint32 Start = 2419;
     PriceCurrency PriceCurrency = 2420;
     repeated FeeDetail Fees = 2421;
 }

@@ -65,7 +65,6 @@ func TestGoodInfoCRUD(t *testing.T) { //nolint
 		Total:              total,
 		Title:              "Ant Miner S19 Pro",
 		Unit:               "TH/s",
-		Start:              uint32(time.Now().Unix()),
 	}
 
 	resp, err := Create(context.Background(), &npool.CreateGoodRequest{
@@ -89,7 +88,6 @@ func TestGoodInfoCRUD(t *testing.T) { //nolint
 		assert.Equal(t, resp.Info.PriceCurrency, goodInfo.PriceCurrency)
 		assert.Equal(t, resp.Info.Title, goodInfo.Title)
 		assert.Equal(t, resp.Info.Unit, goodInfo.Unit)
-		assert.Equal(t, resp.Info.Start, goodInfo.Start)
 	}
 
 	goodInfo.BenefitType = "platform"

@@ -1467,7 +1467,7 @@
 | DurationDays | [int32](#int32) |  |  |
 | CoinInfoID | [string](#string) |  |  |
 | Actuals | [bool](#bool) |  |  |
-| DeliveryAt | [int32](#int32) |  |  |
+| DeliveryAt | [uint32](#uint32) |  |  |
 | InheritFromGood | [GoodInfo](#cloud.hashing.goods.v1.GoodInfo) |  |  |
 | VendorLocation | [VendorLocationInfo](#cloud.hashing.goods.v1.VendorLocationInfo) |  |  |
 | Price | [double](#double) |  |  |
@@ -1478,7 +1478,6 @@
 | Extra | [GoodExtraInfo](#cloud.hashing.goods.v1.GoodExtraInfo) |  |  |
 | Title | [string](#string) |  |  |
 | Unit | [string](#string) |  |  |
-| Start | [uint32](#uint32) |  |  |
 | PriceCurrency | [PriceCurrency](#cloud.hashing.goods.v1.PriceCurrency) |  |  |
 | Fees | [FeeDetail](#cloud.hashing.goods.v1.FeeDetail) | repeated |  |
 
@@ -1543,7 +1542,7 @@
 | DurationDays | [int32](#int32) |  |  |
 | CoinInfoID | [string](#string) |  |  |
 | Actuals | [bool](#bool) |  |  |
-| DeliveryAt | [int32](#int32) |  |  |
+| DeliveryAt | [uint32](#uint32) |  |  |
 | InheritFromGoodID | [string](#string) |  |  |
 | VendorLocationID | [string](#string) |  |  |
 | Price | [double](#double) |  |  |
@@ -1554,7 +1553,6 @@
 | PriceCurrency | [string](#string) |  |  |
 | Title | [string](#string) |  |  |
 | Unit | [string](#string) |  |  |
-| Start | [uint32](#uint32) |  |  |
 | FeeIDs | [string](#string) | repeated |  |
 
 

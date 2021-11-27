@@ -43,7 +43,6 @@ func dbRowToInfo(row *ent.GoodInfo) *npool.GoodInfo {
 		SupportCoinTypeIDs: ids,
 		Total:              row.Total,
 		Unit:               row.Unit,
-		Start:              row.Start,
 	}
 }
 
@@ -106,7 +105,6 @@ func Create(ctx context.Context, in *npool.CreateGoodRequest) (*npool.CreateGood
 		SetSupportCoinTypeIds(ids).
 		SetTotal(in.GetInfo().GetTotal()).
 		SetUnit(in.GetInfo().GetUnit()).
-		SetStart(in.GetInfo().GetStart()).
 		Save(ctx)
 	if err != nil {
 		return nil, xerrors.Errorf("fail to create good: %v", err)

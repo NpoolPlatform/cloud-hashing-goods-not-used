@@ -30,7 +30,7 @@ type GoodInfo struct {
 	// Actuals holds the value of the "actuals" field.
 	Actuals bool `json:"actuals,omitempty"`
 	// DeliveryAt holds the value of the "delivery_at" field.
-	DeliveryAt int32 `json:"delivery_at,omitempty"`
+	DeliveryAt uint32 `json:"delivery_at,omitempty"`
 	// InheritFromGoodID holds the value of the "inherit_from_good_id" field.
 	InheritFromGoodID uuid.UUID `json:"inherit_from_good_id,omitempty"`
 	// VendorLocationID holds the value of the "vendor_location_id" field.
@@ -47,8 +47,6 @@ type GoodInfo struct {
 	Title string `json:"title,omitempty"`
 	// Unit holds the value of the "unit" field.
 	Unit string `json:"unit,omitempty"`
-	// Start holds the value of the "start" field.
-	Start uint32 `json:"start,omitempty"`
 	// SupportCoinTypeIds holds the value of the "support_coin_type_ids" field.
 	SupportCoinTypeIds []uuid.UUID `json:"support_coin_type_ids,omitempty"`
 	// Total holds the value of the "total" field.
@@ -70,7 +68,7 @@ func (*GoodInfo) scanValues(columns []string) ([]interface{}, error) {
 			values[i] = new([]byte)
 		case goodinfo.FieldSeparateFee, goodinfo.FieldActuals, goodinfo.FieldClassic:
 			values[i] = new(sql.NullBool)
-		case goodinfo.FieldUnitPower, goodinfo.FieldDurationDays, goodinfo.FieldDeliveryAt, goodinfo.FieldPrice, goodinfo.FieldStart, goodinfo.FieldTotal, goodinfo.FieldCreateAt, goodinfo.FieldUpdateAt, goodinfo.FieldDeleteAt:
+		case goodinfo.FieldUnitPower, goodinfo.FieldDurationDays, goodinfo.FieldDeliveryAt, goodinfo.FieldPrice, goodinfo.FieldTotal, goodinfo.FieldCreateAt, goodinfo.FieldUpdateAt, goodinfo.FieldDeleteAt:
 			values[i] = new(sql.NullInt64)
 		case goodinfo.FieldBenefitType, goodinfo.FieldTitle, goodinfo.FieldUnit:
 			values[i] = new(sql.NullString)
@@ -137,7 +135,7 @@ func (gi *GoodInfo) assignValues(columns []string, values []interface{}) error {
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field delivery_at", values[i])
 			} else if value.Valid {
-				gi.DeliveryAt = int32(value.Int64)
+				gi.DeliveryAt = uint32(value.Int64)
 			}
 		case goodinfo.FieldInheritFromGoodID:
 			if value, ok := values[i].(*uuid.UUID); !ok {
@@ -186,12 +184,6 @@ func (gi *GoodInfo) assignValues(columns []string, values []interface{}) error {
 				return fmt.Errorf("unexpected type %T for field unit", values[i])
 			} else if value.Valid {
 				gi.Unit = value.String
-			}
-		case goodinfo.FieldStart:
-			if value, ok := values[i].(*sql.NullInt64); !ok {
-				return fmt.Errorf("unexpected type %T for field start", values[i])
-			} else if value.Valid {
-				gi.Start = uint32(value.Int64)
 			}
 		case goodinfo.FieldSupportCoinTypeIds:
 			if value, ok := values[i].(*[]byte); !ok {
@@ -283,8 +275,6 @@ func (gi *GoodInfo) String() string {
 	builder.WriteString(gi.Title)
 	builder.WriteString(", unit=")
 	builder.WriteString(gi.Unit)
-	builder.WriteString(", start=")
-	builder.WriteString(fmt.Sprintf("%v", gi.Start))
 	builder.WriteString(", support_coin_type_ids=")
 	builder.WriteString(fmt.Sprintf("%v", gi.SupportCoinTypeIds))
 	builder.WriteString(", total=")

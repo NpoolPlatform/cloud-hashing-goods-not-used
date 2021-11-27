@@ -43,8 +43,6 @@ const (
 	FieldTitle = "title"
 	// FieldUnit holds the string denoting the unit field in the database.
 	FieldUnit = "unit"
-	// FieldStart holds the string denoting the start field in the database.
-	FieldStart = "start"
 	// FieldSupportCoinTypeIds holds the string denoting the support_coin_type_ids field in the database.
 	FieldSupportCoinTypeIds = "support_coin_type_ids"
 	// FieldTotal holds the string denoting the total field in the database.
@@ -77,7 +75,6 @@ var Columns = []string{
 	FieldClassic,
 	FieldTitle,
 	FieldUnit,
-	FieldStart,
 	FieldSupportCoinTypeIds,
 	FieldTotal,
 	FieldCreateAt,

@@ -116,7 +116,6 @@ func Get(ctx context.Context, in *npool.GetGoodDetailRequest) (*npool.GetGoodDet
 			SupportCoinTypeIDs: goodInfo.Info.SupportCoinTypeIDs,
 			Total:              goodInfo.Info.Total,
 			Extra:              extraInfo,
-			Start:              goodInfo.Info.Start,
 			Unit:               goodInfo.Info.Unit,
 			Title:              goodInfo.Info.Title,
 			Fees:               fees,

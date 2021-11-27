@@ -60,8 +60,8 @@ func (gic *GoodInfoCreate) SetActuals(b bool) *GoodInfoCreate {
 }
 
 // SetDeliveryAt sets the "delivery_at" field.
-func (gic *GoodInfoCreate) SetDeliveryAt(i int32) *GoodInfoCreate {
-	gic.mutation.SetDeliveryAt(i)
+func (gic *GoodInfoCreate) SetDeliveryAt(u uint32) *GoodInfoCreate {
+	gic.mutation.SetDeliveryAt(u)
 	return gic
 }
 
@@ -110,12 +110,6 @@ func (gic *GoodInfoCreate) SetTitle(s string) *GoodInfoCreate {
 // SetUnit sets the "unit" field.
 func (gic *GoodInfoCreate) SetUnit(s string) *GoodInfoCreate {
 	gic.mutation.SetUnit(s)
-	return gic
-}
-
-// SetStart sets the "start" field.
-func (gic *GoodInfoCreate) SetStart(u uint32) *GoodInfoCreate {
-	gic.mutation.SetStart(u)
 	return gic
 }
 
@@ -335,9 +329,6 @@ func (gic *GoodInfoCreate) check() error {
 	if _, ok := gic.mutation.Unit(); !ok {
 		return &ValidationError{Name: "unit", err: errors.New(`ent: missing required field "unit"`)}
 	}
-	if _, ok := gic.mutation.Start(); !ok {
-		return &ValidationError{Name: "start", err: errors.New(`ent: missing required field "start"`)}
-	}
 	if _, ok := gic.mutation.SupportCoinTypeIds(); !ok {
 		return &ValidationError{Name: "support_coin_type_ids", err: errors.New(`ent: missing required field "support_coin_type_ids"`)}
 	}
@@ -441,7 +432,7 @@ func (gic *GoodInfoCreate) createSpec() (*GoodInfo, *sqlgraph.CreateSpec) {
 	}
 	if value, ok := gic.mutation.DeliveryAt(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
+			Type:   field.TypeUint32,
 			Value:  value,
 			Column: goodinfo.FieldDeliveryAt,
 		})
@@ -510,14 +501,6 @@ func (gic *GoodInfoCreate) createSpec() (*GoodInfo, *sqlgraph.CreateSpec) {
 			Column: goodinfo.FieldUnit,
 		})
 		_node.Unit = value
-	}
-	if value, ok := gic.mutation.Start(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeUint32,
-			Value:  value,
-			Column: goodinfo.FieldStart,
-		})
-		_node.Start = value
 	}
 	if value, ok := gic.mutation.SupportCoinTypeIds(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
@@ -686,7 +669,7 @@ func (u *GoodInfoUpsert) UpdateActuals() *GoodInfoUpsert {
 }
 
 // SetDeliveryAt sets the "delivery_at" field.
-func (u *GoodInfoUpsert) SetDeliveryAt(v int32) *GoodInfoUpsert {
+func (u *GoodInfoUpsert) SetDeliveryAt(v uint32) *GoodInfoUpsert {
 	u.Set(goodinfo.FieldDeliveryAt, v)
 	return u
 }
@@ -790,18 +773,6 @@ func (u *GoodInfoUpsert) SetUnit(v string) *GoodInfoUpsert {
 // UpdateUnit sets the "unit" field to the value that was provided on create.
 func (u *GoodInfoUpsert) UpdateUnit() *GoodInfoUpsert {
 	u.SetExcluded(goodinfo.FieldUnit)
-	return u
-}
-
-// SetStart sets the "start" field.
-func (u *GoodInfoUpsert) SetStart(v uint32) *GoodInfoUpsert {
-	u.Set(goodinfo.FieldStart, v)
-	return u
-}
-
-// UpdateStart sets the "start" field to the value that was provided on create.
-func (u *GoodInfoUpsert) UpdateStart() *GoodInfoUpsert {
-	u.SetExcluded(goodinfo.FieldStart)
 	return u
 }
 
@@ -1000,7 +971,7 @@ func (u *GoodInfoUpsertOne) UpdateActuals() *GoodInfoUpsertOne {
 }
 
 // SetDeliveryAt sets the "delivery_at" field.
-func (u *GoodInfoUpsertOne) SetDeliveryAt(v int32) *GoodInfoUpsertOne {
+func (u *GoodInfoUpsertOne) SetDeliveryAt(v uint32) *GoodInfoUpsertOne {
 	return u.Update(func(s *GoodInfoUpsert) {
 		s.SetDeliveryAt(v)
 	})
@@ -1122,20 +1093,6 @@ func (u *GoodInfoUpsertOne) SetUnit(v string) *GoodInfoUpsertOne {
 func (u *GoodInfoUpsertOne) UpdateUnit() *GoodInfoUpsertOne {
 	return u.Update(func(s *GoodInfoUpsert) {
 		s.UpdateUnit()
-	})
-}
-
-// SetStart sets the "start" field.
-func (u *GoodInfoUpsertOne) SetStart(v uint32) *GoodInfoUpsertOne {
-	return u.Update(func(s *GoodInfoUpsert) {
-		s.SetStart(v)
-	})
-}
-
-// UpdateStart sets the "start" field to the value that was provided on create.
-func (u *GoodInfoUpsertOne) UpdateStart() *GoodInfoUpsertOne {
-	return u.Update(func(s *GoodInfoUpsert) {
-		s.UpdateStart()
 	})
 }
 
@@ -1510,7 +1467,7 @@ func (u *GoodInfoUpsertBulk) UpdateActuals() *GoodInfoUpsertBulk {
 }
 
 // SetDeliveryAt sets the "delivery_at" field.
-func (u *GoodInfoUpsertBulk) SetDeliveryAt(v int32) *GoodInfoUpsertBulk {
+func (u *GoodInfoUpsertBulk) SetDeliveryAt(v uint32) *GoodInfoUpsertBulk {
 	return u.Update(func(s *GoodInfoUpsert) {
 		s.SetDeliveryAt(v)
 	})
@@ -1632,20 +1589,6 @@ func (u *GoodInfoUpsertBulk) SetUnit(v string) *GoodInfoUpsertBulk {
 func (u *GoodInfoUpsertBulk) UpdateUnit() *GoodInfoUpsertBulk {
 	return u.Update(func(s *GoodInfoUpsert) {
 		s.UpdateUnit()
-	})
-}
-
-// SetStart sets the "start" field.
-func (u *GoodInfoUpsertBulk) SetStart(v uint32) *GoodInfoUpsertBulk {
-	return u.Update(func(s *GoodInfoUpsert) {
-		s.SetStart(v)
-	})
-}
-
-// UpdateStart sets the "start" field to the value that was provided on create.
-func (u *GoodInfoUpsertBulk) UpdateStart() *GoodInfoUpsertBulk {
-	return u.Update(func(s *GoodInfoUpsert) {
-		s.UpdateStart()
 	})
 }
 
