@@ -83,7 +83,7 @@ var (
 	// DeviceInfosColumns holds the columns for the "device_infos" table.
 	DeviceInfosColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeUUID, Unique: true},
-		{Name: "type", Type: field.TypeString, Size: 64, Default: ""},
+		{Name: "type", Type: field.TypeString, Unique: true, Size: 64},
 		{Name: "manufacturer", Type: field.TypeString, Size: 64, Default: ""},
 		{Name: "power_comsuption", Type: field.TypeInt32},
 		{Name: "shipment_at", Type: field.TypeInt32},

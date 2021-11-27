@@ -100,8 +100,6 @@ func init() {
 	_ = deviceinfoFields
 	// deviceinfoDescType is the schema descriptor for type field.
 	deviceinfoDescType := deviceinfoFields[1].Descriptor()
-	// deviceinfo.DefaultType holds the default value on creation for the type field.
-	deviceinfo.DefaultType = deviceinfoDescType.Default.(string)
 	// deviceinfo.TypeValidator is a validator for the "type" field. It is called by the builders before save.
 	deviceinfo.TypeValidator = deviceinfoDescType.Validators[0].(func(string) error)
 	// deviceinfoDescManufacturer is the schema descriptor for manufacturer field.

@@ -32,14 +32,6 @@ func (diu *DeviceInfoUpdate) SetType(s string) *DeviceInfoUpdate {
 	return diu
 }
 
-// SetNillableType sets the "type" field if the given value is not nil.
-func (diu *DeviceInfoUpdate) SetNillableType(s *string) *DeviceInfoUpdate {
-	if s != nil {
-		diu.SetType(*s)
-	}
-	return diu
-}
-
 // SetManufacturer sets the "manufacturer" field.
 func (diu *DeviceInfoUpdate) SetManufacturer(s string) *DeviceInfoUpdate {
 	diu.mutation.SetManufacturer(s)
@@ -348,14 +340,6 @@ type DeviceInfoUpdateOne struct {
 // SetType sets the "type" field.
 func (diuo *DeviceInfoUpdateOne) SetType(s string) *DeviceInfoUpdateOne {
 	diuo.mutation.SetType(s)
-	return diuo
-}
-
-// SetNillableType sets the "type" field if the given value is not nil.
-func (diuo *DeviceInfoUpdateOne) SetNillableType(s *string) *DeviceInfoUpdateOne {
-	if s != nil {
-		diuo.SetType(*s)
-	}
 	return diuo
 }
 

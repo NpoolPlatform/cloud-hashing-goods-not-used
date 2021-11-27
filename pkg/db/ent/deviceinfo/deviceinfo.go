@@ -52,8 +52,6 @@ func ValidColumn(column string) bool {
 }
 
 var (
-	// DefaultType holds the default value on creation for the "type" field.
-	DefaultType string
 	// TypeValidator is a validator for the "type" field. It is called by the builders before save.
 	TypeValidator func(string) error
 	// DefaultManufacturer holds the default value on creation for the "manufacturer" field.

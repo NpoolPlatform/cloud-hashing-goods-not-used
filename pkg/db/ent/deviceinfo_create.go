@@ -29,14 +29,6 @@ func (dic *DeviceInfoCreate) SetType(s string) *DeviceInfoCreate {
 	return dic
 }
 
-// SetNillableType sets the "type" field if the given value is not nil.
-func (dic *DeviceInfoCreate) SetNillableType(s *string) *DeviceInfoCreate {
-	if s != nil {
-		dic.SetType(*s)
-	}
-	return dic
-}
-
 // SetManufacturer sets the "manufacturer" field.
 func (dic *DeviceInfoCreate) SetManufacturer(s string) *DeviceInfoCreate {
 	dic.mutation.SetManufacturer(s)
@@ -182,10 +174,6 @@ func (dic *DeviceInfoCreate) ExecX(ctx context.Context) {
 
 // defaults sets the default values of the builder before save.
 func (dic *DeviceInfoCreate) defaults() {
-	if _, ok := dic.mutation.GetType(); !ok {
-		v := deviceinfo.DefaultType
-		dic.mutation.SetType(v)
-	}
 	if _, ok := dic.mutation.Manufacturer(); !ok {
 		v := deviceinfo.DefaultManufacturer
 		dic.mutation.SetManufacturer(v)

@@ -22,7 +22,7 @@ func (DeviceInfo) Fields() []ent.Field {
 			Default(uuid.New).
 			Unique(),
 		field.String("type").
-			Default("").
+			Unique().
 			MaxLen(64),
 		field.String("manufacturer").
 			Default("").
