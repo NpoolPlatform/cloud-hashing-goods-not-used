@@ -119,6 +119,13 @@ var (
 		Name:       "fees",
 		Columns:    FeesColumns,
 		PrimaryKey: []*schema.Column{FeesColumns[0]},
+		Indexes: []*schema.Index{
+			{
+				Name:    "fee_app_id_fee_type_id_value",
+				Unique:  true,
+				Columns: []*schema.Column{FeesColumns[1], FeesColumns[2], FeesColumns[3]},
+			},
+		},
 	}
 	// GoodCommentsColumns holds the columns for the "good_comments" table.
 	GoodCommentsColumns = []*schema.Column{
