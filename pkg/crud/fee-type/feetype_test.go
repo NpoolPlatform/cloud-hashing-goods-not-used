@@ -1,4 +1,4 @@
-package goodfee
+package feetype
 
 import (
 	"context"
@@ -31,14 +31,14 @@ func TestCRUD(t *testing.T) {
 	}
 
 	nano := time.Now().UnixNano()
-	fee := npool.GoodFee{
+	fee := npool.FeeType{
 		AppID:          uuid.New().String(),
 		FeeType:        fmt.Sprintf("GasFee-%v", nano),
 		FeeDescription: "jkjdsajlkfdlsajfdlksajlkfdjsal;fjdsa",
 		PayType:        "amount",
 	}
 
-	resp, err := Create(context.Background(), &npool.CreateGoodFeeRequest{
+	resp, err := Create(context.Background(), &npool.CreateFeeTypeRequest{
 		Info: &fee,
 	})
 	if assert.Nil(t, err) {
@@ -49,7 +49,7 @@ func TestCRUD(t *testing.T) {
 		assert.Equal(t, resp.Info.PayType, fee.PayType)
 	}
 
-	resp1, err := Get(context.Background(), &npool.GetGoodFeeRequest{
+	resp1, err := Get(context.Background(), &npool.GetFeeTypeRequest{
 		ID: resp.Info.ID,
 	})
 	if assert.Nil(t, err) {
@@ -65,7 +65,7 @@ func TestGetAll(t *testing.T) {
 	if runByGithubAction, err := strconv.ParseBool(os.Getenv("RUN_BY_GITHUB_ACTION")); err == nil && runByGithubAction {
 		return
 	}
-	resp, err := GetAll(context.Background(), &npool.GetGoodFeesRequest{})
+	resp, err := GetAll(context.Background(), &npool.GetFeeTypesRequest{})
 	assert.NotNil(t, resp)
 	assert.Nil(t, err)
 }

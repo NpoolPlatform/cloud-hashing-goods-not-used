@@ -1,4 +1,4 @@
-package goodfee
+package feetype
 
 import (
 	"context"
@@ -6,14 +6,14 @@ import (
 	"github.com/NpoolPlatform/cloud-hashing-goods/message/npool"
 
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db"
-	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/goodfee"
+	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/feetype"
 
 	"github.com/google/uuid"
 
 	"golang.org/x/xerrors"
 )
 
-func validateGoodFee(info *npool.GoodFee) error {
+func validateFeeType(info *npool.FeeType) error {
 	if _, err := uuid.Parse(info.GetAppID()); err != nil {
 		return xerrors.Errorf("invalid app id: %v", err)
 	}
@@ -21,24 +21,24 @@ func validateGoodFee(info *npool.GoodFee) error {
 	return nil
 }
 
-func Create(ctx context.Context, in *npool.CreateGoodFeeRequest) (*npool.CreateGoodFeeResponse, error) {
-	if err := validateGoodFee(in.GetInfo()); err != nil {
+func Create(ctx context.Context, in *npool.CreateFeeTypeRequest) (*npool.CreateFeeTypeResponse, error) {
+	if err := validateFeeType(in.GetInfo()); err != nil {
 		return nil, xerrors.Errorf("invalid parameter: %v", err)
 	}
 
 	info, err := db.Client().
-		GoodFee.
+		FeeType.
 		Create().
 		SetFeeType(in.GetInfo().GetFeeType()).
 		SetFeeDescription(in.GetInfo().GetFeeDescription()).
-		SetPayType(goodfee.PayType(in.GetInfo().GetPayType())).
+		SetPayType(feetype.PayType(in.GetInfo().GetPayType())).
 		Save(ctx)
 	if err != nil {
 		return nil, err
 	}
 
-	return &npool.CreateGoodFeeResponse{
-		Info: &npool.GoodFee{
+	return &npool.CreateFeeTypeResponse{
+		Info: &npool.FeeType{
 			ID:             info.ID.String(),
 			FeeType:        info.FeeType,
 			FeeDescription: info.FeeDescription,
@@ -47,28 +47,28 @@ func Create(ctx context.Context, in *npool.CreateGoodFeeRequest) (*npool.CreateG
 	}, nil
 }
 
-func Update(ctx context.Context, in *npool.UpdateGoodFeeRequest) (*npool.UpdateGoodFeeResponse, error) {
+func Update(ctx context.Context, in *npool.UpdateFeeTypeRequest) (*npool.UpdateFeeTypeResponse, error) {
 	id, err := uuid.Parse(in.GetInfo().GetID())
 	if err != nil {
 		return nil, xerrors.Errorf("invalid good fee id: %v", err)
 	}
 
-	if err := validateGoodFee(in.GetInfo()); err != nil {
+	if err := validateFeeType(in.GetInfo()); err != nil {
 		return nil, xerrors.Errorf("invalid parameter: %v", err)
 	}
 
 	info, err := db.Client().
-		GoodFee.
+		FeeType.
 		UpdateOneID(id).
 		SetFeeType(in.GetInfo().GetFeeType()).
 		SetFeeDescription(in.GetInfo().GetFeeDescription()).
-		SetPayType(goodfee.PayType(in.GetInfo().GetPayType())).
+		SetPayType(feetype.PayType(in.GetInfo().GetPayType())).
 		Save(ctx)
 	if err != nil {
 		return nil, err
 	}
-	return &npool.UpdateGoodFeeResponse{
-		Info: &npool.GoodFee{
+	return &npool.UpdateFeeTypeResponse{
+		Info: &npool.FeeType{
 			ID:             info.ID.String(),
 			FeeType:        info.FeeType,
 			FeeDescription: info.FeeDescription,
@@ -77,18 +77,18 @@ func Update(ctx context.Context, in *npool.UpdateGoodFeeRequest) (*npool.UpdateG
 	}, nil
 }
 
-func Get(ctx context.Context, in *npool.GetGoodFeeRequest) (*npool.GetGoodFeeResponse, error) {
+func Get(ctx context.Context, in *npool.GetFeeTypeRequest) (*npool.GetFeeTypeResponse, error) {
 	id, err := uuid.Parse(in.GetID())
 	if err != nil {
 		return nil, xerrors.Errorf("invalid good fee id: %v", err)
 	}
 
 	infos, err := db.Client().
-		GoodFee.
+		FeeType.
 		Query().
 		Where(
-			goodfee.Or(
-				goodfee.ID(id),
+			FeeType.Or(
+				FeeType.ID(id),
 			),
 		).
 		All(ctx)
@@ -99,8 +99,8 @@ func Get(ctx context.Context, in *npool.GetGoodFeeRequest) (*npool.GetGoodFeeRes
 		return nil, xerrors.Errorf("empty reply of good fee")
 	}
 
-	return &npool.GetGoodFeeResponse{
-		Info: &npool.GoodFee{
+	return &npool.GetFeeTypeResponse{
+		Info: &npool.FeeType{
 			ID:             infos[0].ID.String(),
 			FeeType:        infos[0].FeeType,
 			FeeDescription: infos[0].FeeDescription,
@@ -109,13 +109,13 @@ func Get(ctx context.Context, in *npool.GetGoodFeeRequest) (*npool.GetGoodFeeRes
 	}, nil
 }
 
-func GetAll(ctx context.Context, in *npool.GetGoodFeesRequest) (*npool.GetGoodFeesResponse, error) {
+func GetAll(ctx context.Context, in *npool.GetFeeTypesRequest) (*npool.GetFeeTypesResponse, error) {
 	infos, err := db.Client().
-		GoodFee.
+		FeeType.
 		Query().
 		Where(
-			goodfee.And(
-				goodfee.DeleteAt(0),
+			FeeType.And(
+				FeeType.DeleteAt(0),
 			),
 		).
 		All(ctx)
@@ -123,9 +123,9 @@ func GetAll(ctx context.Context, in *npool.GetGoodFeesRequest) (*npool.GetGoodFe
 		return nil, err
 	}
 
-	fees := []*npool.GoodFee{}
+	fees := []*npool.FeeType{}
 	for _, info := range infos {
-		fees = append(fees, &npool.GoodFee{
+		fees = append(fees, &npool.FeeType{
 			ID:             info.ID.String(),
 			FeeType:        info.FeeType,
 			FeeDescription: info.FeeDescription,
@@ -133,7 +133,7 @@ func GetAll(ctx context.Context, in *npool.GetGoodFeesRequest) (*npool.GetGoodFe
 		})
 	}
 
-	return &npool.GetGoodFeesResponse{
+	return &npool.GetFeeTypesResponse{
 		Infos: fees,
 	}, nil
 }

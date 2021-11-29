@@ -11,11 +11,11 @@ import (
 	"github.com/NpoolPlatform/cloud-hashing-goods/message/npool"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/test-init" //nolint
 
-	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/crud/device-info"      //nolint
-	goodfee "github.com/NpoolPlatform/cloud-hashing-goods/pkg/crud/good-fee" //nolint
-	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/crud/good-info"        //nolint
-	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/crud/price-currency"   //nolint
-	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/crud/vendor-location"  //nolint
+	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/crud/device-info"     //nolint
+	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/crud/fee-type"        //nolint
+	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/crud/good-info"       //nolint
+	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/crud/price-currency"  //nolint
+	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/crud/vendor-location" //nolint
 
 	"github.com/stretchr/testify/assert"
 
@@ -96,22 +96,22 @@ func TestGet(t *testing.T) {
 	})
 	assert.Nil(t, err)
 
-	fee1 := npool.GoodFee{
+	fee1 := npool.FeeType{
 		AppID:   uuid.New().String(),
 		FeeType: fmt.Sprintf("Gas Fee-%v", nano),
 		PayType: "amount",
 	}
-	feeResp1, err := goodfee.Create(context.Background(), &npool.CreateGoodFeeRequest{
+	feeResp1, err := feetype.Create(context.Background(), &npool.CreateFeeTypeRequest{
 		Info: &fee1,
 	})
 	assert.Nil(t, err)
 
-	fee2 := npool.GoodFee{
+	fee2 := npool.FeeType{
 		AppID:   uuid.New().String(),
 		FeeType: fmt.Sprintf("Gas Fee 1-%v", nano),
 		PayType: "amount",
 	}
-	feeResp2, err := goodfee.Create(context.Background(), &npool.CreateGoodFeeRequest{
+	feeResp2, err := feetype.Create(context.Background(), &npool.CreateFeeTypeRequest{
 		Info: &fee2,
 	})
 	assert.Nil(t, err)

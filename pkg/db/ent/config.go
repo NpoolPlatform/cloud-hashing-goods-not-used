@@ -29,9 +29,10 @@ type hooks struct {
 	AppTargetArea     []ent.Hook
 	DeviceInfo        []ent.Hook
 	Fee               []ent.Hook
+	FeeDuration       []ent.Hook
+	FeeType           []ent.Hook
 	GoodComment       []ent.Hook
 	GoodExtraInfo     []ent.Hook
-	GoodFee           []ent.Hook
 	GoodInfo          []ent.Hook
 	GoodReview        []ent.Hook
 	PriceCurrency     []ent.Hook

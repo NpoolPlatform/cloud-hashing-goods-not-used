@@ -7,12 +7,12 @@ import (
 	"strings"
 
 	"entgo.io/ent/dialect/sql"
-	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/goodfee"
+	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/feetype"
 	"github.com/google/uuid"
 )
 
-// GoodFee is the model entity for the GoodFee schema.
-type GoodFee struct {
+// FeeType is the model entity for the FeeType schema.
+type FeeType struct {
 	config `json:"-"`
 	// ID of the ent.
 	ID uuid.UUID `json:"id,omitempty"`
@@ -21,7 +21,7 @@ type GoodFee struct {
 	// FeeDescription holds the value of the "fee_description" field.
 	FeeDescription string `json:"fee_description,omitempty"`
 	// PayType holds the value of the "pay_type" field.
-	PayType goodfee.PayType `json:"pay_type,omitempty"`
+	PayType feetype.PayType `json:"pay_type,omitempty"`
 	// CreateAt holds the value of the "create_at" field.
 	CreateAt uint32 `json:"create_at,omitempty"`
 	// UpdateAt holds the value of the "update_at" field.
@@ -31,122 +31,122 @@ type GoodFee struct {
 }
 
 // scanValues returns the types for scanning values from sql.Rows.
-func (*GoodFee) scanValues(columns []string) ([]interface{}, error) {
+func (*FeeType) scanValues(columns []string) ([]interface{}, error) {
 	values := make([]interface{}, len(columns))
 	for i := range columns {
 		switch columns[i] {
-		case goodfee.FieldCreateAt, goodfee.FieldUpdateAt, goodfee.FieldDeleteAt:
+		case feetype.FieldCreateAt, feetype.FieldUpdateAt, feetype.FieldDeleteAt:
 			values[i] = new(sql.NullInt64)
-		case goodfee.FieldFeeType, goodfee.FieldFeeDescription, goodfee.FieldPayType:
+		case feetype.FieldFeeType, feetype.FieldFeeDescription, feetype.FieldPayType:
 			values[i] = new(sql.NullString)
-		case goodfee.FieldID:
+		case feetype.FieldID:
 			values[i] = new(uuid.UUID)
 		default:
-			return nil, fmt.Errorf("unexpected column %q for type GoodFee", columns[i])
+			return nil, fmt.Errorf("unexpected column %q for type FeeType", columns[i])
 		}
 	}
 	return values, nil
 }
 
 // assignValues assigns the values that were returned from sql.Rows (after scanning)
-// to the GoodFee fields.
-func (gf *GoodFee) assignValues(columns []string, values []interface{}) error {
+// to the FeeType fields.
+func (ft *FeeType) assignValues(columns []string, values []interface{}) error {
 	if m, n := len(values), len(columns); m < n {
 		return fmt.Errorf("mismatch number of scan values: %d != %d", m, n)
 	}
 	for i := range columns {
 		switch columns[i] {
-		case goodfee.FieldID:
+		case feetype.FieldID:
 			if value, ok := values[i].(*uuid.UUID); !ok {
 				return fmt.Errorf("unexpected type %T for field id", values[i])
 			} else if value != nil {
-				gf.ID = *value
+				ft.ID = *value
 			}
-		case goodfee.FieldFeeType:
+		case feetype.FieldFeeType:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field fee_type", values[i])
 			} else if value.Valid {
-				gf.FeeType = value.String
+				ft.FeeType = value.String
 			}
-		case goodfee.FieldFeeDescription:
+		case feetype.FieldFeeDescription:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field fee_description", values[i])
 			} else if value.Valid {
-				gf.FeeDescription = value.String
+				ft.FeeDescription = value.String
 			}
-		case goodfee.FieldPayType:
+		case feetype.FieldPayType:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field pay_type", values[i])
 			} else if value.Valid {
-				gf.PayType = goodfee.PayType(value.String)
+				ft.PayType = feetype.PayType(value.String)
 			}
-		case goodfee.FieldCreateAt:
+		case feetype.FieldCreateAt:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field create_at", values[i])
 			} else if value.Valid {
-				gf.CreateAt = uint32(value.Int64)
+				ft.CreateAt = uint32(value.Int64)
 			}
-		case goodfee.FieldUpdateAt:
+		case feetype.FieldUpdateAt:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field update_at", values[i])
 			} else if value.Valid {
-				gf.UpdateAt = uint32(value.Int64)
+				ft.UpdateAt = uint32(value.Int64)
 			}
-		case goodfee.FieldDeleteAt:
+		case feetype.FieldDeleteAt:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field delete_at", values[i])
 			} else if value.Valid {
-				gf.DeleteAt = uint32(value.Int64)
+				ft.DeleteAt = uint32(value.Int64)
 			}
 		}
 	}
 	return nil
 }
 
-// Update returns a builder for updating this GoodFee.
-// Note that you need to call GoodFee.Unwrap() before calling this method if this GoodFee
+// Update returns a builder for updating this FeeType.
+// Note that you need to call FeeType.Unwrap() before calling this method if this FeeType
 // was returned from a transaction, and the transaction was committed or rolled back.
-func (gf *GoodFee) Update() *GoodFeeUpdateOne {
-	return (&GoodFeeClient{config: gf.config}).UpdateOne(gf)
+func (ft *FeeType) Update() *FeeTypeUpdateOne {
+	return (&FeeTypeClient{config: ft.config}).UpdateOne(ft)
 }
 
-// Unwrap unwraps the GoodFee entity that was returned from a transaction after it was closed,
+// Unwrap unwraps the FeeType entity that was returned from a transaction after it was closed,
 // so that all future queries will be executed through the driver which created the transaction.
-func (gf *GoodFee) Unwrap() *GoodFee {
-	tx, ok := gf.config.driver.(*txDriver)
+func (ft *FeeType) Unwrap() *FeeType {
+	tx, ok := ft.config.driver.(*txDriver)
 	if !ok {
-		panic("ent: GoodFee is not a transactional entity")
+		panic("ent: FeeType is not a transactional entity")
 	}
-	gf.config.driver = tx.drv
-	return gf
+	ft.config.driver = tx.drv
+	return ft
 }
 
 // String implements the fmt.Stringer.
-func (gf *GoodFee) String() string {
+func (ft *FeeType) String() string {
 	var builder strings.Builder
-	builder.WriteString("GoodFee(")
-	builder.WriteString(fmt.Sprintf("id=%v", gf.ID))
+	builder.WriteString("FeeType(")
+	builder.WriteString(fmt.Sprintf("id=%v", ft.ID))
 	builder.WriteString(", fee_type=")
-	builder.WriteString(gf.FeeType)
+	builder.WriteString(ft.FeeType)
 	builder.WriteString(", fee_description=")
-	builder.WriteString(gf.FeeDescription)
+	builder.WriteString(ft.FeeDescription)
 	builder.WriteString(", pay_type=")
-	builder.WriteString(fmt.Sprintf("%v", gf.PayType))
+	builder.WriteString(fmt.Sprintf("%v", ft.PayType))
 	builder.WriteString(", create_at=")
-	builder.WriteString(fmt.Sprintf("%v", gf.CreateAt))
+	builder.WriteString(fmt.Sprintf("%v", ft.CreateAt))
 	builder.WriteString(", update_at=")
-	builder.WriteString(fmt.Sprintf("%v", gf.UpdateAt))
+	builder.WriteString(fmt.Sprintf("%v", ft.UpdateAt))
 	builder.WriteString(", delete_at=")
-	builder.WriteString(fmt.Sprintf("%v", gf.DeleteAt))
+	builder.WriteString(fmt.Sprintf("%v", ft.DeleteAt))
 	builder.WriteByte(')')
 	return builder.String()
 }
 
-// GoodFees is a parsable slice of GoodFee.
-type GoodFees []*GoodFee
+// FeeTypes is a parsable slice of FeeType.
+type FeeTypes []*FeeType
 
-func (gf GoodFees) config(cfg config) {
-	for _i := range gf {
-		gf[_i].config = cfg
+func (ft FeeTypes) config(cfg config) {
+	for _i := range ft {
+		ft[_i].config = cfg
 	}
 }

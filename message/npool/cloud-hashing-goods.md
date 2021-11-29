@@ -23,12 +23,12 @@
     - [CreateDeviceInfoResponse](#cloud.hashing.goods.v1.CreateDeviceInfoResponse)
     - [CreateFeeRequest](#cloud.hashing.goods.v1.CreateFeeRequest)
     - [CreateFeeResponse](#cloud.hashing.goods.v1.CreateFeeResponse)
+    - [CreateFeeTypeRequest](#cloud.hashing.goods.v1.CreateFeeTypeRequest)
+    - [CreateFeeTypeResponse](#cloud.hashing.goods.v1.CreateFeeTypeResponse)
     - [CreateGoodCommentRequest](#cloud.hashing.goods.v1.CreateGoodCommentRequest)
     - [CreateGoodCommentResponse](#cloud.hashing.goods.v1.CreateGoodCommentResponse)
     - [CreateGoodExtraInfoRequest](#cloud.hashing.goods.v1.CreateGoodExtraInfoRequest)
     - [CreateGoodExtraInfoResponse](#cloud.hashing.goods.v1.CreateGoodExtraInfoResponse)
-    - [CreateGoodFeeRequest](#cloud.hashing.goods.v1.CreateGoodFeeRequest)
-    - [CreateGoodFeeResponse](#cloud.hashing.goods.v1.CreateGoodFeeResponse)
     - [CreateGoodRequest](#cloud.hashing.goods.v1.CreateGoodRequest)
     - [CreateGoodResponse](#cloud.hashing.goods.v1.CreateGoodResponse)
     - [CreateGoodReviewRequest](#cloud.hashing.goods.v1.CreateGoodReviewRequest)
@@ -52,22 +52,23 @@
     - [DeviceInfo](#cloud.hashing.goods.v1.DeviceInfo)
     - [Fee](#cloud.hashing.goods.v1.Fee)
     - [FeeDetail](#cloud.hashing.goods.v1.FeeDetail)
+    - [FeeType](#cloud.hashing.goods.v1.FeeType)
     - [GetDeviceInfoRequest](#cloud.hashing.goods.v1.GetDeviceInfoRequest)
     - [GetDeviceInfoResponse](#cloud.hashing.goods.v1.GetDeviceInfoResponse)
     - [GetDeviceInfosRequest](#cloud.hashing.goods.v1.GetDeviceInfosRequest)
     - [GetDeviceInfosResponse](#cloud.hashing.goods.v1.GetDeviceInfosResponse)
     - [GetFeeRequest](#cloud.hashing.goods.v1.GetFeeRequest)
     - [GetFeeResponse](#cloud.hashing.goods.v1.GetFeeResponse)
+    - [GetFeeTypeRequest](#cloud.hashing.goods.v1.GetFeeTypeRequest)
+    - [GetFeeTypeResponse](#cloud.hashing.goods.v1.GetFeeTypeResponse)
+    - [GetFeeTypesRequest](#cloud.hashing.goods.v1.GetFeeTypesRequest)
+    - [GetFeeTypesResponse](#cloud.hashing.goods.v1.GetFeeTypesResponse)
     - [GetGoodCommentsRequest](#cloud.hashing.goods.v1.GetGoodCommentsRequest)
     - [GetGoodCommentsResponse](#cloud.hashing.goods.v1.GetGoodCommentsResponse)
     - [GetGoodDetailRequest](#cloud.hashing.goods.v1.GetGoodDetailRequest)
     - [GetGoodDetailResponse](#cloud.hashing.goods.v1.GetGoodDetailResponse)
     - [GetGoodExtraInfoRequest](#cloud.hashing.goods.v1.GetGoodExtraInfoRequest)
     - [GetGoodExtraInfoResponse](#cloud.hashing.goods.v1.GetGoodExtraInfoResponse)
-    - [GetGoodFeeRequest](#cloud.hashing.goods.v1.GetGoodFeeRequest)
-    - [GetGoodFeeResponse](#cloud.hashing.goods.v1.GetGoodFeeResponse)
-    - [GetGoodFeesRequest](#cloud.hashing.goods.v1.GetGoodFeesRequest)
-    - [GetGoodFeesResponse](#cloud.hashing.goods.v1.GetGoodFeesResponse)
     - [GetGoodRequest](#cloud.hashing.goods.v1.GetGoodRequest)
     - [GetGoodResponse](#cloud.hashing.goods.v1.GetGoodResponse)
     - [GetGoodReviewRequest](#cloud.hashing.goods.v1.GetGoodReviewRequest)
@@ -91,7 +92,6 @@
     - [GoodComment](#cloud.hashing.goods.v1.GoodComment)
     - [GoodDetail](#cloud.hashing.goods.v1.GoodDetail)
     - [GoodExtraInfo](#cloud.hashing.goods.v1.GoodExtraInfo)
-    - [GoodFee](#cloud.hashing.goods.v1.GoodFee)
     - [GoodInfo](#cloud.hashing.goods.v1.GoodInfo)
     - [GoodReviewInfo](#cloud.hashing.goods.v1.GoodReviewInfo)
     - [OffsaleAppGoodRequest](#cloud.hashing.goods.v1.OffsaleAppGoodRequest)
@@ -111,12 +111,12 @@
     - [UnauthorizeAppTargetAreaResponse](#cloud.hashing.goods.v1.UnauthorizeAppTargetAreaResponse)
     - [UpdateDeviceInfoRequest](#cloud.hashing.goods.v1.UpdateDeviceInfoRequest)
     - [UpdateDeviceInfoResponse](#cloud.hashing.goods.v1.UpdateDeviceInfoResponse)
+    - [UpdateFeeTypeRequest](#cloud.hashing.goods.v1.UpdateFeeTypeRequest)
+    - [UpdateFeeTypeResponse](#cloud.hashing.goods.v1.UpdateFeeTypeResponse)
     - [UpdateGoodCommentRequest](#cloud.hashing.goods.v1.UpdateGoodCommentRequest)
     - [UpdateGoodCommentResponse](#cloud.hashing.goods.v1.UpdateGoodCommentResponse)
     - [UpdateGoodExtraInfoRequest](#cloud.hashing.goods.v1.UpdateGoodExtraInfoRequest)
     - [UpdateGoodExtraInfoResponse](#cloud.hashing.goods.v1.UpdateGoodExtraInfoResponse)
-    - [UpdateGoodFeeRequest](#cloud.hashing.goods.v1.UpdateGoodFeeRequest)
-    - [UpdateGoodFeeResponse](#cloud.hashing.goods.v1.UpdateGoodFeeResponse)
     - [UpdateGoodRequest](#cloud.hashing.goods.v1.UpdateGoodRequest)
     - [UpdateGoodResponse](#cloud.hashing.goods.v1.UpdateGoodResponse)
     - [UpdateGoodReviewRequest](#cloud.hashing.goods.v1.UpdateGoodReviewRequest)
@@ -440,6 +440,36 @@
 
 
 
+<a name="cloud.hashing.goods.v1.CreateFeeTypeRequest"></a>
+
+### CreateFeeTypeRequest
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| Info | [FeeType](#cloud.hashing.goods.v1.FeeType) |  |  |
+
+
+
+
+
+
+<a name="cloud.hashing.goods.v1.CreateFeeTypeResponse"></a>
+
+### CreateFeeTypeResponse
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| Info | [FeeType](#cloud.hashing.goods.v1.FeeType) |  |  |
+
+
+
+
+
+
 <a name="cloud.hashing.goods.v1.CreateGoodCommentRequest"></a>
 
 ### CreateGoodCommentRequest
@@ -494,36 +524,6 @@
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
 | Info | [GoodExtraInfo](#cloud.hashing.goods.v1.GoodExtraInfo) |  |  |
-
-
-
-
-
-
-<a name="cloud.hashing.goods.v1.CreateGoodFeeRequest"></a>
-
-### CreateGoodFeeRequest
-
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| Info | [GoodFee](#cloud.hashing.goods.v1.GoodFee) |  |  |
-
-
-
-
-
-
-<a name="cloud.hashing.goods.v1.CreateGoodFeeResponse"></a>
-
-### CreateGoodFeeResponse
-
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| Info | [GoodFee](#cloud.hashing.goods.v1.GoodFee) |  |  |
 
 
 
@@ -876,8 +876,27 @@
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| Fee | [GoodFee](#cloud.hashing.goods.v1.GoodFee) |  |  |
+| Fee | [FeeType](#cloud.hashing.goods.v1.FeeType) |  |  |
 | Value | [double](#double) |  |  |
+
+
+
+
+
+
+<a name="cloud.hashing.goods.v1.FeeType"></a>
+
+### FeeType
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| ID | [string](#string) |  |  |
+| AppID | [string](#string) |  |  |
+| FeeType | [string](#string) |  |  |
+| FeeDescription | [string](#string) |  |  |
+| PayType | [string](#string) |  |  |
 
 
 
@@ -975,6 +994,66 @@
 
 
 
+<a name="cloud.hashing.goods.v1.GetFeeTypeRequest"></a>
+
+### GetFeeTypeRequest
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| ID | [string](#string) |  |  |
+
+
+
+
+
+
+<a name="cloud.hashing.goods.v1.GetFeeTypeResponse"></a>
+
+### GetFeeTypeResponse
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| Info | [FeeType](#cloud.hashing.goods.v1.FeeType) |  |  |
+
+
+
+
+
+
+<a name="cloud.hashing.goods.v1.GetFeeTypesRequest"></a>
+
+### GetFeeTypesRequest
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| PageInfo | [PageInfo](#cloud.hashing.goods.v1.PageInfo) |  |  |
+
+
+
+
+
+
+<a name="cloud.hashing.goods.v1.GetFeeTypesResponse"></a>
+
+### GetFeeTypesResponse
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| Infos | [FeeType](#cloud.hashing.goods.v1.FeeType) | repeated |  |
+
+
+
+
+
+
 <a name="cloud.hashing.goods.v1.GetGoodCommentsRequest"></a>
 
 ### GetGoodCommentsRequest
@@ -1061,66 +1140,6 @@
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
 | Info | [GoodExtraInfo](#cloud.hashing.goods.v1.GoodExtraInfo) |  |  |
-
-
-
-
-
-
-<a name="cloud.hashing.goods.v1.GetGoodFeeRequest"></a>
-
-### GetGoodFeeRequest
-
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| ID | [string](#string) |  |  |
-
-
-
-
-
-
-<a name="cloud.hashing.goods.v1.GetGoodFeeResponse"></a>
-
-### GetGoodFeeResponse
-
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| Info | [GoodFee](#cloud.hashing.goods.v1.GoodFee) |  |  |
-
-
-
-
-
-
-<a name="cloud.hashing.goods.v1.GetGoodFeesRequest"></a>
-
-### GetGoodFeesRequest
-
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| PageInfo | [PageInfo](#cloud.hashing.goods.v1.PageInfo) |  |  |
-
-
-
-
-
-
-<a name="cloud.hashing.goods.v1.GetGoodFeesResponse"></a>
-
-### GetGoodFeesResponse
-
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| Infos | [GoodFee](#cloud.hashing.goods.v1.GoodFee) | repeated |  |
 
 
 
@@ -1508,25 +1527,6 @@
 
 
 
-<a name="cloud.hashing.goods.v1.GoodFee"></a>
-
-### GoodFee
-
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| ID | [string](#string) |  |  |
-| AppID | [string](#string) |  |  |
-| FeeType | [string](#string) |  |  |
-| FeeDescription | [string](#string) |  |  |
-| PayType | [string](#string) |  |  |
-
-
-
-
-
-
 <a name="cloud.hashing.goods.v1.GoodInfo"></a>
 
 ### GoodInfo
@@ -1842,6 +1842,36 @@
 
 
 
+<a name="cloud.hashing.goods.v1.UpdateFeeTypeRequest"></a>
+
+### UpdateFeeTypeRequest
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| Info | [FeeType](#cloud.hashing.goods.v1.FeeType) |  |  |
+
+
+
+
+
+
+<a name="cloud.hashing.goods.v1.UpdateFeeTypeResponse"></a>
+
+### UpdateFeeTypeResponse
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| Info | [FeeType](#cloud.hashing.goods.v1.FeeType) |  |  |
+
+
+
+
+
+
 <a name="cloud.hashing.goods.v1.UpdateGoodCommentRequest"></a>
 
 ### UpdateGoodCommentRequest
@@ -1896,36 +1926,6 @@
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
 | Info | [GoodExtraInfo](#cloud.hashing.goods.v1.GoodExtraInfo) |  |  |
-
-
-
-
-
-
-<a name="cloud.hashing.goods.v1.UpdateGoodFeeRequest"></a>
-
-### UpdateGoodFeeRequest
-
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| Info | [GoodFee](#cloud.hashing.goods.v1.GoodFee) |  |  |
-
-
-
-
-
-
-<a name="cloud.hashing.goods.v1.UpdateGoodFeeResponse"></a>
-
-### UpdateGoodFeeResponse
-
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| Info | [GoodFee](#cloud.hashing.goods.v1.GoodFee) |  |  |
 
 
 
@@ -2180,10 +2180,10 @@ Cloud Hashing Goods
 | GetGoodReview | [GetGoodReviewRequest](#cloud.hashing.goods.v1.GetGoodReviewRequest) | [GetGoodReviewResponse](#cloud.hashing.goods.v1.GetGoodReviewResponse) |  |
 | CreateFee | [CreateFeeRequest](#cloud.hashing.goods.v1.CreateFeeRequest) | [CreateFeeResponse](#cloud.hashing.goods.v1.CreateFeeResponse) |  |
 | GetFee | [GetFeeRequest](#cloud.hashing.goods.v1.GetFeeRequest) | [GetFeeResponse](#cloud.hashing.goods.v1.GetFeeResponse) |  |
-| CreateGoodFee | [CreateGoodFeeRequest](#cloud.hashing.goods.v1.CreateGoodFeeRequest) | [CreateGoodFeeResponse](#cloud.hashing.goods.v1.CreateGoodFeeResponse) |  |
-| UpdateGoodFee | [UpdateGoodFeeRequest](#cloud.hashing.goods.v1.UpdateGoodFeeRequest) | [UpdateGoodFeeResponse](#cloud.hashing.goods.v1.UpdateGoodFeeResponse) |  |
-| GetGoodFee | [GetGoodFeeRequest](#cloud.hashing.goods.v1.GetGoodFeeRequest) | [GetGoodFeeResponse](#cloud.hashing.goods.v1.GetGoodFeeResponse) |  |
-| GetGoodFees | [GetGoodFeesRequest](#cloud.hashing.goods.v1.GetGoodFeesRequest) | [GetGoodFeesResponse](#cloud.hashing.goods.v1.GetGoodFeesResponse) |  |
+| CreateFeeType | [CreateFeeTypeRequest](#cloud.hashing.goods.v1.CreateFeeTypeRequest) | [CreateFeeTypeResponse](#cloud.hashing.goods.v1.CreateFeeTypeResponse) |  |
+| UpdateFeeType | [UpdateFeeTypeRequest](#cloud.hashing.goods.v1.UpdateFeeTypeRequest) | [UpdateFeeTypeResponse](#cloud.hashing.goods.v1.UpdateFeeTypeResponse) |  |
+| GetFeeType | [GetFeeTypeRequest](#cloud.hashing.goods.v1.GetFeeTypeRequest) | [GetFeeTypeResponse](#cloud.hashing.goods.v1.GetFeeTypeResponse) |  |
+| GetFeeTypes | [GetFeeTypesRequest](#cloud.hashing.goods.v1.GetFeeTypesRequest) | [GetFeeTypesResponse](#cloud.hashing.goods.v1.GetFeeTypesResponse) |  |
 
  
 

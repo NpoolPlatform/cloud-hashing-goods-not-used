@@ -8,9 +8,10 @@ import (
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/apptargetarea"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/deviceinfo"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/fee"
+	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/feeduration"
+	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/feetype"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/goodcomment"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/goodextrainfo"
-	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/goodfee"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/goodinfo"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/goodreview"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/pricecurrency"
@@ -146,6 +147,50 @@ func init() {
 	feeDescID := feeFields[0].Descriptor()
 	// fee.DefaultID holds the default value on creation for the id field.
 	fee.DefaultID = feeDescID.Default.(func() uuid.UUID)
+	feedurationFields := schema.FeeDuration{}.Fields()
+	_ = feedurationFields
+	// feedurationDescCreateAt is the schema descriptor for create_at field.
+	feedurationDescCreateAt := feedurationFields[3].Descriptor()
+	// feeduration.DefaultCreateAt holds the default value on creation for the create_at field.
+	feeduration.DefaultCreateAt = feedurationDescCreateAt.Default.(func() uint32)
+	// feedurationDescUpdateAt is the schema descriptor for update_at field.
+	feedurationDescUpdateAt := feedurationFields[4].Descriptor()
+	// feeduration.DefaultUpdateAt holds the default value on creation for the update_at field.
+	feeduration.DefaultUpdateAt = feedurationDescUpdateAt.Default.(func() uint32)
+	// feeduration.UpdateDefaultUpdateAt holds the default value on update for the update_at field.
+	feeduration.UpdateDefaultUpdateAt = feedurationDescUpdateAt.UpdateDefault.(func() uint32)
+	// feedurationDescDeleteAt is the schema descriptor for delete_at field.
+	feedurationDescDeleteAt := feedurationFields[5].Descriptor()
+	// feeduration.DefaultDeleteAt holds the default value on creation for the delete_at field.
+	feeduration.DefaultDeleteAt = feedurationDescDeleteAt.Default.(func() uint32)
+	// feedurationDescID is the schema descriptor for id field.
+	feedurationDescID := feedurationFields[0].Descriptor()
+	// feeduration.DefaultID holds the default value on creation for the id field.
+	feeduration.DefaultID = feedurationDescID.Default.(func() uuid.UUID)
+	feetypeFields := schema.FeeType{}.Fields()
+	_ = feetypeFields
+	// feetypeDescFeeDescription is the schema descriptor for fee_description field.
+	feetypeDescFeeDescription := feetypeFields[2].Descriptor()
+	// feetype.FeeDescriptionValidator is a validator for the "fee_description" field. It is called by the builders before save.
+	feetype.FeeDescriptionValidator = feetypeDescFeeDescription.Validators[0].(func(string) error)
+	// feetypeDescCreateAt is the schema descriptor for create_at field.
+	feetypeDescCreateAt := feetypeFields[4].Descriptor()
+	// feetype.DefaultCreateAt holds the default value on creation for the create_at field.
+	feetype.DefaultCreateAt = feetypeDescCreateAt.Default.(func() uint32)
+	// feetypeDescUpdateAt is the schema descriptor for update_at field.
+	feetypeDescUpdateAt := feetypeFields[5].Descriptor()
+	// feetype.DefaultUpdateAt holds the default value on creation for the update_at field.
+	feetype.DefaultUpdateAt = feetypeDescUpdateAt.Default.(func() uint32)
+	// feetype.UpdateDefaultUpdateAt holds the default value on update for the update_at field.
+	feetype.UpdateDefaultUpdateAt = feetypeDescUpdateAt.UpdateDefault.(func() uint32)
+	// feetypeDescDeleteAt is the schema descriptor for delete_at field.
+	feetypeDescDeleteAt := feetypeFields[6].Descriptor()
+	// feetype.DefaultDeleteAt holds the default value on creation for the delete_at field.
+	feetype.DefaultDeleteAt = feetypeDescDeleteAt.Default.(func() uint32)
+	// feetypeDescID is the schema descriptor for id field.
+	feetypeDescID := feetypeFields[0].Descriptor()
+	// feetype.DefaultID holds the default value on creation for the id field.
+	feetype.DefaultID = feetypeDescID.Default.(func() uuid.UUID)
 	goodcommentFields := schema.GoodComment{}.Fields()
 	_ = goodcommentFields
 	// goodcommentDescContent is the schema descriptor for content field.
@@ -190,30 +235,6 @@ func init() {
 	goodextrainfoDescID := goodextrainfoFields[0].Descriptor()
 	// goodextrainfo.DefaultID holds the default value on creation for the id field.
 	goodextrainfo.DefaultID = goodextrainfoDescID.Default.(func() uuid.UUID)
-	goodfeeFields := schema.GoodFee{}.Fields()
-	_ = goodfeeFields
-	// goodfeeDescFeeDescription is the schema descriptor for fee_description field.
-	goodfeeDescFeeDescription := goodfeeFields[2].Descriptor()
-	// goodfee.FeeDescriptionValidator is a validator for the "fee_description" field. It is called by the builders before save.
-	goodfee.FeeDescriptionValidator = goodfeeDescFeeDescription.Validators[0].(func(string) error)
-	// goodfeeDescCreateAt is the schema descriptor for create_at field.
-	goodfeeDescCreateAt := goodfeeFields[4].Descriptor()
-	// goodfee.DefaultCreateAt holds the default value on creation for the create_at field.
-	goodfee.DefaultCreateAt = goodfeeDescCreateAt.Default.(func() uint32)
-	// goodfeeDescUpdateAt is the schema descriptor for update_at field.
-	goodfeeDescUpdateAt := goodfeeFields[5].Descriptor()
-	// goodfee.DefaultUpdateAt holds the default value on creation for the update_at field.
-	goodfee.DefaultUpdateAt = goodfeeDescUpdateAt.Default.(func() uint32)
-	// goodfee.UpdateDefaultUpdateAt holds the default value on update for the update_at field.
-	goodfee.UpdateDefaultUpdateAt = goodfeeDescUpdateAt.UpdateDefault.(func() uint32)
-	// goodfeeDescDeleteAt is the schema descriptor for delete_at field.
-	goodfeeDescDeleteAt := goodfeeFields[6].Descriptor()
-	// goodfee.DefaultDeleteAt holds the default value on creation for the delete_at field.
-	goodfee.DefaultDeleteAt = goodfeeDescDeleteAt.Default.(func() uint32)
-	// goodfeeDescID is the schema descriptor for id field.
-	goodfeeDescID := goodfeeFields[0].Descriptor()
-	// goodfee.DefaultID holds the default value on creation for the id field.
-	goodfee.DefaultID = goodfeeDescID.Default.(func() uuid.UUID)
 	goodinfoFields := schema.GoodInfo{}.Fields()
 	_ = goodinfoFields
 	// goodinfoDescUnitPower is the schema descriptor for unit_power field.

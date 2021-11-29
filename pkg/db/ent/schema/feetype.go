@@ -9,13 +9,13 @@ import (
 	"github.com/google/uuid"
 )
 
-// GoodFee holds the schema definition for the GoodFee entity.
-type GoodFee struct {
+// FeeType holds the schema definition for the FeeType entity.
+type FeeType struct {
 	ent.Schema
 }
 
-// Fields of the GoodFee.
-func (GoodFee) Fields() []ent.Field {
+// Fields of the FeeType.
+func (FeeType) Fields() []ent.Field {
 	return []ent.Field{
 		field.UUID("id", uuid.UUID{}).
 			Default(uuid.New).
@@ -44,7 +44,7 @@ func (GoodFee) Fields() []ent.Field {
 	}
 }
 
-// Edges of the GoodFee.
-func (GoodFee) Edges() []ent.Edge {
+// Edges of the FeeType.
+func (FeeType) Edges() []ent.Edge {
 	return nil
 }
