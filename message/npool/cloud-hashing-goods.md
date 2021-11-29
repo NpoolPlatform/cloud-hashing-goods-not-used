@@ -21,6 +21,8 @@
     - [CheckAppTargetAreaResponse](#cloud.hashing.goods.v1.CheckAppTargetAreaResponse)
     - [CreateDeviceInfoRequest](#cloud.hashing.goods.v1.CreateDeviceInfoRequest)
     - [CreateDeviceInfoResponse](#cloud.hashing.goods.v1.CreateDeviceInfoResponse)
+    - [CreateFeeDurationRequest](#cloud.hashing.goods.v1.CreateFeeDurationRequest)
+    - [CreateFeeDurationResponse](#cloud.hashing.goods.v1.CreateFeeDurationResponse)
     - [CreateFeeRequest](#cloud.hashing.goods.v1.CreateFeeRequest)
     - [CreateFeeResponse](#cloud.hashing.goods.v1.CreateFeeResponse)
     - [CreateFeeTypeRequest](#cloud.hashing.goods.v1.CreateFeeTypeRequest)
@@ -41,6 +43,8 @@
     - [CreateVendorLocationResponse](#cloud.hashing.goods.v1.CreateVendorLocationResponse)
     - [DeleteDeviceInfoRequest](#cloud.hashing.goods.v1.DeleteDeviceInfoRequest)
     - [DeleteDeviceInfoResponse](#cloud.hashing.goods.v1.DeleteDeviceInfoResponse)
+    - [DeleteFeeDurationRequest](#cloud.hashing.goods.v1.DeleteFeeDurationRequest)
+    - [DeleteFeeDurationResponse](#cloud.hashing.goods.v1.DeleteFeeDurationResponse)
     - [DeleteGoodRequest](#cloud.hashing.goods.v1.DeleteGoodRequest)
     - [DeleteGoodResponse](#cloud.hashing.goods.v1.DeleteGoodResponse)
     - [DeleteTargetAreaByContinentCountryRequest](#cloud.hashing.goods.v1.DeleteTargetAreaByContinentCountryRequest)
@@ -52,11 +56,16 @@
     - [DeviceInfo](#cloud.hashing.goods.v1.DeviceInfo)
     - [Fee](#cloud.hashing.goods.v1.Fee)
     - [FeeDetail](#cloud.hashing.goods.v1.FeeDetail)
+    - [FeeDuration](#cloud.hashing.goods.v1.FeeDuration)
     - [FeeType](#cloud.hashing.goods.v1.FeeType)
     - [GetDeviceInfoRequest](#cloud.hashing.goods.v1.GetDeviceInfoRequest)
     - [GetDeviceInfoResponse](#cloud.hashing.goods.v1.GetDeviceInfoResponse)
     - [GetDeviceInfosRequest](#cloud.hashing.goods.v1.GetDeviceInfosRequest)
     - [GetDeviceInfosResponse](#cloud.hashing.goods.v1.GetDeviceInfosResponse)
+    - [GetFeeDurationRequest](#cloud.hashing.goods.v1.GetFeeDurationRequest)
+    - [GetFeeDurationResponse](#cloud.hashing.goods.v1.GetFeeDurationResponse)
+    - [GetFeeDurationsByFeeTypeRequest](#cloud.hashing.goods.v1.GetFeeDurationsByFeeTypeRequest)
+    - [GetFeeDurationsByFeeTypeResponse](#cloud.hashing.goods.v1.GetFeeDurationsByFeeTypeResponse)
     - [GetFeeRequest](#cloud.hashing.goods.v1.GetFeeRequest)
     - [GetFeeResponse](#cloud.hashing.goods.v1.GetFeeResponse)
     - [GetFeeTypeRequest](#cloud.hashing.goods.v1.GetFeeTypeRequest)
@@ -111,6 +120,8 @@
     - [UnauthorizeAppTargetAreaResponse](#cloud.hashing.goods.v1.UnauthorizeAppTargetAreaResponse)
     - [UpdateDeviceInfoRequest](#cloud.hashing.goods.v1.UpdateDeviceInfoRequest)
     - [UpdateDeviceInfoResponse](#cloud.hashing.goods.v1.UpdateDeviceInfoResponse)
+    - [UpdateFeeDurationRequest](#cloud.hashing.goods.v1.UpdateFeeDurationRequest)
+    - [UpdateFeeDurationResponse](#cloud.hashing.goods.v1.UpdateFeeDurationResponse)
     - [UpdateFeeTypeRequest](#cloud.hashing.goods.v1.UpdateFeeTypeRequest)
     - [UpdateFeeTypeResponse](#cloud.hashing.goods.v1.UpdateFeeTypeResponse)
     - [UpdateGoodCommentRequest](#cloud.hashing.goods.v1.UpdateGoodCommentRequest)
@@ -404,6 +415,36 @@
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
 | Info | [DeviceInfo](#cloud.hashing.goods.v1.DeviceInfo) |  |  |
+
+
+
+
+
+
+<a name="cloud.hashing.goods.v1.CreateFeeDurationRequest"></a>
+
+### CreateFeeDurationRequest
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| Info | [FeeDuration](#cloud.hashing.goods.v1.FeeDuration) |  |  |
+
+
+
+
+
+
+<a name="cloud.hashing.goods.v1.CreateFeeDurationResponse"></a>
+
+### CreateFeeDurationResponse
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| Info | [FeeDuration](#cloud.hashing.goods.v1.FeeDuration) |  |  |
 
 
 
@@ -710,6 +751,36 @@
 
 
 
+<a name="cloud.hashing.goods.v1.DeleteFeeDurationRequest"></a>
+
+### DeleteFeeDurationRequest
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| ID | [string](#string) |  |  |
+
+
+
+
+
+
+<a name="cloud.hashing.goods.v1.DeleteFeeDurationResponse"></a>
+
+### DeleteFeeDurationResponse
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| Info | [FeeDuration](#cloud.hashing.goods.v1.FeeDuration) |  |  |
+
+
+
+
+
+
 <a name="cloud.hashing.goods.v1.DeleteGoodRequest"></a>
 
 ### DeleteGoodRequest
@@ -884,6 +955,24 @@
 
 
 
+<a name="cloud.hashing.goods.v1.FeeDuration"></a>
+
+### FeeDuration
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| ID | [string](#string) |  |  |
+| AppID | [string](#string) |  |  |
+| FeeTypeID | [string](#string) |  |  |
+| Value | [double](#double) |  |  |
+
+
+
+
+
+
 <a name="cloud.hashing.goods.v1.FeeType"></a>
 
 ### FeeType
@@ -958,6 +1047,66 @@
 | ----- | ---- | ----- | ----------- |
 | Infos | [DeviceInfo](#cloud.hashing.goods.v1.DeviceInfo) | repeated |  |
 | Total | [int32](#int32) |  |  |
+
+
+
+
+
+
+<a name="cloud.hashing.goods.v1.GetFeeDurationRequest"></a>
+
+### GetFeeDurationRequest
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| ID | [string](#string) |  |  |
+
+
+
+
+
+
+<a name="cloud.hashing.goods.v1.GetFeeDurationResponse"></a>
+
+### GetFeeDurationResponse
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| Info | [FeeDuration](#cloud.hashing.goods.v1.FeeDuration) |  |  |
+
+
+
+
+
+
+<a name="cloud.hashing.goods.v1.GetFeeDurationsByFeeTypeRequest"></a>
+
+### GetFeeDurationsByFeeTypeRequest
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| FeeTypeID | [string](#string) |  |  |
+
+
+
+
+
+
+<a name="cloud.hashing.goods.v1.GetFeeDurationsByFeeTypeResponse"></a>
+
+### GetFeeDurationsByFeeTypeResponse
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| Infos | [FeeDuration](#cloud.hashing.goods.v1.FeeDuration) | repeated |  |
 
 
 
@@ -1842,6 +1991,36 @@
 
 
 
+<a name="cloud.hashing.goods.v1.UpdateFeeDurationRequest"></a>
+
+### UpdateFeeDurationRequest
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| Info | [FeeDuration](#cloud.hashing.goods.v1.FeeDuration) |  |  |
+
+
+
+
+
+
+<a name="cloud.hashing.goods.v1.UpdateFeeDurationResponse"></a>
+
+### UpdateFeeDurationResponse
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| Info | [FeeDuration](#cloud.hashing.goods.v1.FeeDuration) |  |  |
+
+
+
+
+
+
 <a name="cloud.hashing.goods.v1.UpdateFeeTypeRequest"></a>
 
 ### UpdateFeeTypeRequest
@@ -2184,6 +2363,11 @@ Cloud Hashing Goods
 | UpdateFeeType | [UpdateFeeTypeRequest](#cloud.hashing.goods.v1.UpdateFeeTypeRequest) | [UpdateFeeTypeResponse](#cloud.hashing.goods.v1.UpdateFeeTypeResponse) |  |
 | GetFeeType | [GetFeeTypeRequest](#cloud.hashing.goods.v1.GetFeeTypeRequest) | [GetFeeTypeResponse](#cloud.hashing.goods.v1.GetFeeTypeResponse) |  |
 | GetFeeTypes | [GetFeeTypesRequest](#cloud.hashing.goods.v1.GetFeeTypesRequest) | [GetFeeTypesResponse](#cloud.hashing.goods.v1.GetFeeTypesResponse) |  |
+| CreateFeeDuration | [CreateFeeDurationRequest](#cloud.hashing.goods.v1.CreateFeeDurationRequest) | [CreateFeeDurationResponse](#cloud.hashing.goods.v1.CreateFeeDurationResponse) |  |
+| UpdateFeeDuration | [UpdateFeeDurationRequest](#cloud.hashing.goods.v1.UpdateFeeDurationRequest) | [UpdateFeeDurationResponse](#cloud.hashing.goods.v1.UpdateFeeDurationResponse) |  |
+| GetFeeDuration | [GetFeeDurationRequest](#cloud.hashing.goods.v1.GetFeeDurationRequest) | [GetFeeDurationResponse](#cloud.hashing.goods.v1.GetFeeDurationResponse) |  |
+| GetFeeDurationsByFeeType | [GetFeeDurationsByFeeTypeRequest](#cloud.hashing.goods.v1.GetFeeDurationsByFeeTypeRequest) | [GetFeeDurationsByFeeTypeResponse](#cloud.hashing.goods.v1.GetFeeDurationsByFeeTypeResponse) |  |
+| DeleteFeeDuration | [DeleteFeeDurationRequest](#cloud.hashing.goods.v1.DeleteFeeDurationRequest) | [DeleteFeeDurationResponse](#cloud.hashing.goods.v1.DeleteFeeDurationResponse) |  |
 
  
 

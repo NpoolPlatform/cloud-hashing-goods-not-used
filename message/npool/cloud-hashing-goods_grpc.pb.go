@@ -76,6 +76,11 @@ type CloudHashingGoodsClient interface {
 	UpdateFeeType(ctx context.Context, in *UpdateFeeTypeRequest, opts ...grpc.CallOption) (*UpdateFeeTypeResponse, error)
 	GetFeeType(ctx context.Context, in *GetFeeTypeRequest, opts ...grpc.CallOption) (*GetFeeTypeResponse, error)
 	GetFeeTypes(ctx context.Context, in *GetFeeTypesRequest, opts ...grpc.CallOption) (*GetFeeTypesResponse, error)
+	CreateFeeDuration(ctx context.Context, in *CreateFeeDurationRequest, opts ...grpc.CallOption) (*CreateFeeDurationResponse, error)
+	UpdateFeeDuration(ctx context.Context, in *UpdateFeeDurationRequest, opts ...grpc.CallOption) (*UpdateFeeDurationResponse, error)
+	GetFeeDuration(ctx context.Context, in *GetFeeDurationRequest, opts ...grpc.CallOption) (*GetFeeDurationResponse, error)
+	GetFeeDurationsByFeeType(ctx context.Context, in *GetFeeDurationsByFeeTypeRequest, opts ...grpc.CallOption) (*GetFeeDurationsByFeeTypeResponse, error)
+	DeleteFeeDuration(ctx context.Context, in *DeleteFeeDurationRequest, opts ...grpc.CallOption) (*DeleteFeeDurationResponse, error)
 }
 
 type cloudHashingGoodsClient struct {
@@ -581,6 +586,51 @@ func (c *cloudHashingGoodsClient) GetFeeTypes(ctx context.Context, in *GetFeeTyp
 	return out, nil
 }
 
+func (c *cloudHashingGoodsClient) CreateFeeDuration(ctx context.Context, in *CreateFeeDurationRequest, opts ...grpc.CallOption) (*CreateFeeDurationResponse, error) {
+	out := new(CreateFeeDurationResponse)
+	err := c.cc.Invoke(ctx, "/cloud.hashing.goods.v1.CloudHashingGoods/CreateFeeDuration", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *cloudHashingGoodsClient) UpdateFeeDuration(ctx context.Context, in *UpdateFeeDurationRequest, opts ...grpc.CallOption) (*UpdateFeeDurationResponse, error) {
+	out := new(UpdateFeeDurationResponse)
+	err := c.cc.Invoke(ctx, "/cloud.hashing.goods.v1.CloudHashingGoods/UpdateFeeDuration", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *cloudHashingGoodsClient) GetFeeDuration(ctx context.Context, in *GetFeeDurationRequest, opts ...grpc.CallOption) (*GetFeeDurationResponse, error) {
+	out := new(GetFeeDurationResponse)
+	err := c.cc.Invoke(ctx, "/cloud.hashing.goods.v1.CloudHashingGoods/GetFeeDuration", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *cloudHashingGoodsClient) GetFeeDurationsByFeeType(ctx context.Context, in *GetFeeDurationsByFeeTypeRequest, opts ...grpc.CallOption) (*GetFeeDurationsByFeeTypeResponse, error) {
+	out := new(GetFeeDurationsByFeeTypeResponse)
+	err := c.cc.Invoke(ctx, "/cloud.hashing.goods.v1.CloudHashingGoods/GetFeeDurationsByFeeType", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *cloudHashingGoodsClient) DeleteFeeDuration(ctx context.Context, in *DeleteFeeDurationRequest, opts ...grpc.CallOption) (*DeleteFeeDurationResponse, error) {
+	out := new(DeleteFeeDurationResponse)
+	err := c.cc.Invoke(ctx, "/cloud.hashing.goods.v1.CloudHashingGoods/DeleteFeeDuration", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // CloudHashingGoodsServer is the server API for CloudHashingGoods service.
 // All implementations must embed UnimplementedCloudHashingGoodsServer
 // for forward compatibility
@@ -642,6 +692,11 @@ type CloudHashingGoodsServer interface {
 	UpdateFeeType(context.Context, *UpdateFeeTypeRequest) (*UpdateFeeTypeResponse, error)
 	GetFeeType(context.Context, *GetFeeTypeRequest) (*GetFeeTypeResponse, error)
 	GetFeeTypes(context.Context, *GetFeeTypesRequest) (*GetFeeTypesResponse, error)
+	CreateFeeDuration(context.Context, *CreateFeeDurationRequest) (*CreateFeeDurationResponse, error)
+	UpdateFeeDuration(context.Context, *UpdateFeeDurationRequest) (*UpdateFeeDurationResponse, error)
+	GetFeeDuration(context.Context, *GetFeeDurationRequest) (*GetFeeDurationResponse, error)
+	GetFeeDurationsByFeeType(context.Context, *GetFeeDurationsByFeeTypeRequest) (*GetFeeDurationsByFeeTypeResponse, error)
+	DeleteFeeDuration(context.Context, *DeleteFeeDurationRequest) (*DeleteFeeDurationResponse, error)
 	mustEmbedUnimplementedCloudHashingGoodsServer()
 }
 
@@ -813,6 +868,21 @@ func (UnimplementedCloudHashingGoodsServer) GetFeeType(context.Context, *GetFeeT
 }
 func (UnimplementedCloudHashingGoodsServer) GetFeeTypes(context.Context, *GetFeeTypesRequest) (*GetFeeTypesResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetFeeTypes not implemented")
+}
+func (UnimplementedCloudHashingGoodsServer) CreateFeeDuration(context.Context, *CreateFeeDurationRequest) (*CreateFeeDurationResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateFeeDuration not implemented")
+}
+func (UnimplementedCloudHashingGoodsServer) UpdateFeeDuration(context.Context, *UpdateFeeDurationRequest) (*UpdateFeeDurationResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateFeeDuration not implemented")
+}
+func (UnimplementedCloudHashingGoodsServer) GetFeeDuration(context.Context, *GetFeeDurationRequest) (*GetFeeDurationResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetFeeDuration not implemented")
+}
+func (UnimplementedCloudHashingGoodsServer) GetFeeDurationsByFeeType(context.Context, *GetFeeDurationsByFeeTypeRequest) (*GetFeeDurationsByFeeTypeResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetFeeDurationsByFeeType not implemented")
+}
+func (UnimplementedCloudHashingGoodsServer) DeleteFeeDuration(context.Context, *DeleteFeeDurationRequest) (*DeleteFeeDurationResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteFeeDuration not implemented")
 }
 func (UnimplementedCloudHashingGoodsServer) mustEmbedUnimplementedCloudHashingGoodsServer() {}
 
@@ -1817,6 +1887,96 @@ func _CloudHashingGoods_GetFeeTypes_Handler(srv interface{}, ctx context.Context
 	return interceptor(ctx, in, info, handler)
 }
 
+func _CloudHashingGoods_CreateFeeDuration_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateFeeDurationRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CloudHashingGoodsServer).CreateFeeDuration(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cloud.hashing.goods.v1.CloudHashingGoods/CreateFeeDuration",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CloudHashingGoodsServer).CreateFeeDuration(ctx, req.(*CreateFeeDurationRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _CloudHashingGoods_UpdateFeeDuration_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateFeeDurationRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CloudHashingGoodsServer).UpdateFeeDuration(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cloud.hashing.goods.v1.CloudHashingGoods/UpdateFeeDuration",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CloudHashingGoodsServer).UpdateFeeDuration(ctx, req.(*UpdateFeeDurationRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _CloudHashingGoods_GetFeeDuration_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetFeeDurationRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CloudHashingGoodsServer).GetFeeDuration(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cloud.hashing.goods.v1.CloudHashingGoods/GetFeeDuration",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CloudHashingGoodsServer).GetFeeDuration(ctx, req.(*GetFeeDurationRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _CloudHashingGoods_GetFeeDurationsByFeeType_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetFeeDurationsByFeeTypeRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CloudHashingGoodsServer).GetFeeDurationsByFeeType(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cloud.hashing.goods.v1.CloudHashingGoods/GetFeeDurationsByFeeType",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CloudHashingGoodsServer).GetFeeDurationsByFeeType(ctx, req.(*GetFeeDurationsByFeeTypeRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _CloudHashingGoods_DeleteFeeDuration_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteFeeDurationRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CloudHashingGoodsServer).DeleteFeeDuration(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cloud.hashing.goods.v1.CloudHashingGoods/DeleteFeeDuration",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CloudHashingGoodsServer).DeleteFeeDuration(ctx, req.(*DeleteFeeDurationRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // CloudHashingGoods_ServiceDesc is the grpc.ServiceDesc for CloudHashingGoods service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -2043,6 +2203,26 @@ var CloudHashingGoods_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetFeeTypes",
 			Handler:    _CloudHashingGoods_GetFeeTypes_Handler,
+		},
+		{
+			MethodName: "CreateFeeDuration",
+			Handler:    _CloudHashingGoods_CreateFeeDuration_Handler,
+		},
+		{
+			MethodName: "UpdateFeeDuration",
+			Handler:    _CloudHashingGoods_UpdateFeeDuration_Handler,
+		},
+		{
+			MethodName: "GetFeeDuration",
+			Handler:    _CloudHashingGoods_GetFeeDuration_Handler,
+		},
+		{
+			MethodName: "GetFeeDurationsByFeeType",
+			Handler:    _CloudHashingGoods_GetFeeDurationsByFeeType_Handler,
+		},
+		{
+			MethodName: "DeleteFeeDuration",
+			Handler:    _CloudHashingGoods_DeleteFeeDuration_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
