@@ -15,9 +15,10 @@ import (
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/apptargetarea"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/deviceinfo"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/fee"
+	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/feeduration"
+	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/feetype"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/goodcomment"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/goodextrainfo"
-	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/goodfee"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/goodinfo"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/goodreview"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/pricecurrency"
@@ -43,12 +44,14 @@ type Client struct {
 	DeviceInfo *DeviceInfoClient
 	// Fee is the client for interacting with the Fee builders.
 	Fee *FeeClient
+	// FeeDuration is the client for interacting with the FeeDuration builders.
+	FeeDuration *FeeDurationClient
+	// FeeType is the client for interacting with the FeeType builders.
+	FeeType *FeeTypeClient
 	// GoodComment is the client for interacting with the GoodComment builders.
 	GoodComment *GoodCommentClient
 	// GoodExtraInfo is the client for interacting with the GoodExtraInfo builders.
 	GoodExtraInfo *GoodExtraInfoClient
-	// GoodFee is the client for interacting with the GoodFee builders.
-	GoodFee *GoodFeeClient
 	// GoodInfo is the client for interacting with the GoodInfo builders.
 	GoodInfo *GoodInfoClient
 	// GoodReview is the client for interacting with the GoodReview builders.
@@ -77,9 +80,10 @@ func (c *Client) init() {
 	c.AppTargetArea = NewAppTargetAreaClient(c.config)
 	c.DeviceInfo = NewDeviceInfoClient(c.config)
 	c.Fee = NewFeeClient(c.config)
+	c.FeeDuration = NewFeeDurationClient(c.config)
+	c.FeeType = NewFeeTypeClient(c.config)
 	c.GoodComment = NewGoodCommentClient(c.config)
 	c.GoodExtraInfo = NewGoodExtraInfoClient(c.config)
-	c.GoodFee = NewGoodFeeClient(c.config)
 	c.GoodInfo = NewGoodInfoClient(c.config)
 	c.GoodReview = NewGoodReviewClient(c.config)
 	c.PriceCurrency = NewPriceCurrencyClient(c.config)
@@ -123,9 +127,10 @@ func (c *Client) Tx(ctx context.Context) (*Tx, error) {
 		AppTargetArea:     NewAppTargetAreaClient(cfg),
 		DeviceInfo:        NewDeviceInfoClient(cfg),
 		Fee:               NewFeeClient(cfg),
+		FeeDuration:       NewFeeDurationClient(cfg),
+		FeeType:           NewFeeTypeClient(cfg),
 		GoodComment:       NewGoodCommentClient(cfg),
 		GoodExtraInfo:     NewGoodExtraInfoClient(cfg),
-		GoodFee:           NewGoodFeeClient(cfg),
 		GoodInfo:          NewGoodInfoClient(cfg),
 		GoodReview:        NewGoodReviewClient(cfg),
 		PriceCurrency:     NewPriceCurrencyClient(cfg),
@@ -154,9 +159,10 @@ func (c *Client) BeginTx(ctx context.Context, opts *sql.TxOptions) (*Tx, error) 
 		AppTargetArea:     NewAppTargetAreaClient(cfg),
 		DeviceInfo:        NewDeviceInfoClient(cfg),
 		Fee:               NewFeeClient(cfg),
+		FeeDuration:       NewFeeDurationClient(cfg),
+		FeeType:           NewFeeTypeClient(cfg),
 		GoodComment:       NewGoodCommentClient(cfg),
 		GoodExtraInfo:     NewGoodExtraInfoClient(cfg),
-		GoodFee:           NewGoodFeeClient(cfg),
 		GoodInfo:          NewGoodInfoClient(cfg),
 		GoodReview:        NewGoodReviewClient(cfg),
 		PriceCurrency:     NewPriceCurrencyClient(cfg),
@@ -196,9 +202,10 @@ func (c *Client) Use(hooks ...Hook) {
 	c.AppTargetArea.Use(hooks...)
 	c.DeviceInfo.Use(hooks...)
 	c.Fee.Use(hooks...)
+	c.FeeDuration.Use(hooks...)
+	c.FeeType.Use(hooks...)
 	c.GoodComment.Use(hooks...)
 	c.GoodExtraInfo.Use(hooks...)
-	c.GoodFee.Use(hooks...)
 	c.GoodInfo.Use(hooks...)
 	c.GoodReview.Use(hooks...)
 	c.PriceCurrency.Use(hooks...)
@@ -656,6 +663,186 @@ func (c *FeeClient) Hooks() []Hook {
 	return c.hooks.Fee
 }
 
+// FeeDurationClient is a client for the FeeDuration schema.
+type FeeDurationClient struct {
+	config
+}
+
+// NewFeeDurationClient returns a client for the FeeDuration from the given config.
+func NewFeeDurationClient(c config) *FeeDurationClient {
+	return &FeeDurationClient{config: c}
+}
+
+// Use adds a list of mutation hooks to the hooks stack.
+// A call to `Use(f, g, h)` equals to `feeduration.Hooks(f(g(h())))`.
+func (c *FeeDurationClient) Use(hooks ...Hook) {
+	c.hooks.FeeDuration = append(c.hooks.FeeDuration, hooks...)
+}
+
+// Create returns a create builder for FeeDuration.
+func (c *FeeDurationClient) Create() *FeeDurationCreate {
+	mutation := newFeeDurationMutation(c.config, OpCreate)
+	return &FeeDurationCreate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// CreateBulk returns a builder for creating a bulk of FeeDuration entities.
+func (c *FeeDurationClient) CreateBulk(builders ...*FeeDurationCreate) *FeeDurationCreateBulk {
+	return &FeeDurationCreateBulk{config: c.config, builders: builders}
+}
+
+// Update returns an update builder for FeeDuration.
+func (c *FeeDurationClient) Update() *FeeDurationUpdate {
+	mutation := newFeeDurationMutation(c.config, OpUpdate)
+	return &FeeDurationUpdate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOne returns an update builder for the given entity.
+func (c *FeeDurationClient) UpdateOne(fd *FeeDuration) *FeeDurationUpdateOne {
+	mutation := newFeeDurationMutation(c.config, OpUpdateOne, withFeeDuration(fd))
+	return &FeeDurationUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOneID returns an update builder for the given id.
+func (c *FeeDurationClient) UpdateOneID(id uuid.UUID) *FeeDurationUpdateOne {
+	mutation := newFeeDurationMutation(c.config, OpUpdateOne, withFeeDurationID(id))
+	return &FeeDurationUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// Delete returns a delete builder for FeeDuration.
+func (c *FeeDurationClient) Delete() *FeeDurationDelete {
+	mutation := newFeeDurationMutation(c.config, OpDelete)
+	return &FeeDurationDelete{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// DeleteOne returns a delete builder for the given entity.
+func (c *FeeDurationClient) DeleteOne(fd *FeeDuration) *FeeDurationDeleteOne {
+	return c.DeleteOneID(fd.ID)
+}
+
+// DeleteOneID returns a delete builder for the given id.
+func (c *FeeDurationClient) DeleteOneID(id uuid.UUID) *FeeDurationDeleteOne {
+	builder := c.Delete().Where(feeduration.ID(id))
+	builder.mutation.id = &id
+	builder.mutation.op = OpDeleteOne
+	return &FeeDurationDeleteOne{builder}
+}
+
+// Query returns a query builder for FeeDuration.
+func (c *FeeDurationClient) Query() *FeeDurationQuery {
+	return &FeeDurationQuery{
+		config: c.config,
+	}
+}
+
+// Get returns a FeeDuration entity by its id.
+func (c *FeeDurationClient) Get(ctx context.Context, id uuid.UUID) (*FeeDuration, error) {
+	return c.Query().Where(feeduration.ID(id)).Only(ctx)
+}
+
+// GetX is like Get, but panics if an error occurs.
+func (c *FeeDurationClient) GetX(ctx context.Context, id uuid.UUID) *FeeDuration {
+	obj, err := c.Get(ctx, id)
+	if err != nil {
+		panic(err)
+	}
+	return obj
+}
+
+// Hooks returns the client hooks.
+func (c *FeeDurationClient) Hooks() []Hook {
+	return c.hooks.FeeDuration
+}
+
+// FeeTypeClient is a client for the FeeType schema.
+type FeeTypeClient struct {
+	config
+}
+
+// NewFeeTypeClient returns a client for the FeeType from the given config.
+func NewFeeTypeClient(c config) *FeeTypeClient {
+	return &FeeTypeClient{config: c}
+}
+
+// Use adds a list of mutation hooks to the hooks stack.
+// A call to `Use(f, g, h)` equals to `feetype.Hooks(f(g(h())))`.
+func (c *FeeTypeClient) Use(hooks ...Hook) {
+	c.hooks.FeeType = append(c.hooks.FeeType, hooks...)
+}
+
+// Create returns a create builder for FeeType.
+func (c *FeeTypeClient) Create() *FeeTypeCreate {
+	mutation := newFeeTypeMutation(c.config, OpCreate)
+	return &FeeTypeCreate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// CreateBulk returns a builder for creating a bulk of FeeType entities.
+func (c *FeeTypeClient) CreateBulk(builders ...*FeeTypeCreate) *FeeTypeCreateBulk {
+	return &FeeTypeCreateBulk{config: c.config, builders: builders}
+}
+
+// Update returns an update builder for FeeType.
+func (c *FeeTypeClient) Update() *FeeTypeUpdate {
+	mutation := newFeeTypeMutation(c.config, OpUpdate)
+	return &FeeTypeUpdate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOne returns an update builder for the given entity.
+func (c *FeeTypeClient) UpdateOne(ft *FeeType) *FeeTypeUpdateOne {
+	mutation := newFeeTypeMutation(c.config, OpUpdateOne, withFeeType(ft))
+	return &FeeTypeUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOneID returns an update builder for the given id.
+func (c *FeeTypeClient) UpdateOneID(id uuid.UUID) *FeeTypeUpdateOne {
+	mutation := newFeeTypeMutation(c.config, OpUpdateOne, withFeeTypeID(id))
+	return &FeeTypeUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// Delete returns a delete builder for FeeType.
+func (c *FeeTypeClient) Delete() *FeeTypeDelete {
+	mutation := newFeeTypeMutation(c.config, OpDelete)
+	return &FeeTypeDelete{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// DeleteOne returns a delete builder for the given entity.
+func (c *FeeTypeClient) DeleteOne(ft *FeeType) *FeeTypeDeleteOne {
+	return c.DeleteOneID(ft.ID)
+}
+
+// DeleteOneID returns a delete builder for the given id.
+func (c *FeeTypeClient) DeleteOneID(id uuid.UUID) *FeeTypeDeleteOne {
+	builder := c.Delete().Where(feetype.ID(id))
+	builder.mutation.id = &id
+	builder.mutation.op = OpDeleteOne
+	return &FeeTypeDeleteOne{builder}
+}
+
+// Query returns a query builder for FeeType.
+func (c *FeeTypeClient) Query() *FeeTypeQuery {
+	return &FeeTypeQuery{
+		config: c.config,
+	}
+}
+
+// Get returns a FeeType entity by its id.
+func (c *FeeTypeClient) Get(ctx context.Context, id uuid.UUID) (*FeeType, error) {
+	return c.Query().Where(feetype.ID(id)).Only(ctx)
+}
+
+// GetX is like Get, but panics if an error occurs.
+func (c *FeeTypeClient) GetX(ctx context.Context, id uuid.UUID) *FeeType {
+	obj, err := c.Get(ctx, id)
+	if err != nil {
+		panic(err)
+	}
+	return obj
+}
+
+// Hooks returns the client hooks.
+func (c *FeeTypeClient) Hooks() []Hook {
+	return c.hooks.FeeType
+}
+
 // GoodCommentClient is a client for the GoodComment schema.
 type GoodCommentClient struct {
 	config
@@ -834,96 +1021,6 @@ func (c *GoodExtraInfoClient) GetX(ctx context.Context, id uuid.UUID) *GoodExtra
 // Hooks returns the client hooks.
 func (c *GoodExtraInfoClient) Hooks() []Hook {
 	return c.hooks.GoodExtraInfo
-}
-
-// GoodFeeClient is a client for the GoodFee schema.
-type GoodFeeClient struct {
-	config
-}
-
-// NewGoodFeeClient returns a client for the GoodFee from the given config.
-func NewGoodFeeClient(c config) *GoodFeeClient {
-	return &GoodFeeClient{config: c}
-}
-
-// Use adds a list of mutation hooks to the hooks stack.
-// A call to `Use(f, g, h)` equals to `goodfee.Hooks(f(g(h())))`.
-func (c *GoodFeeClient) Use(hooks ...Hook) {
-	c.hooks.GoodFee = append(c.hooks.GoodFee, hooks...)
-}
-
-// Create returns a create builder for GoodFee.
-func (c *GoodFeeClient) Create() *GoodFeeCreate {
-	mutation := newGoodFeeMutation(c.config, OpCreate)
-	return &GoodFeeCreate{config: c.config, hooks: c.Hooks(), mutation: mutation}
-}
-
-// CreateBulk returns a builder for creating a bulk of GoodFee entities.
-func (c *GoodFeeClient) CreateBulk(builders ...*GoodFeeCreate) *GoodFeeCreateBulk {
-	return &GoodFeeCreateBulk{config: c.config, builders: builders}
-}
-
-// Update returns an update builder for GoodFee.
-func (c *GoodFeeClient) Update() *GoodFeeUpdate {
-	mutation := newGoodFeeMutation(c.config, OpUpdate)
-	return &GoodFeeUpdate{config: c.config, hooks: c.Hooks(), mutation: mutation}
-}
-
-// UpdateOne returns an update builder for the given entity.
-func (c *GoodFeeClient) UpdateOne(gf *GoodFee) *GoodFeeUpdateOne {
-	mutation := newGoodFeeMutation(c.config, OpUpdateOne, withGoodFee(gf))
-	return &GoodFeeUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
-}
-
-// UpdateOneID returns an update builder for the given id.
-func (c *GoodFeeClient) UpdateOneID(id uuid.UUID) *GoodFeeUpdateOne {
-	mutation := newGoodFeeMutation(c.config, OpUpdateOne, withGoodFeeID(id))
-	return &GoodFeeUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
-}
-
-// Delete returns a delete builder for GoodFee.
-func (c *GoodFeeClient) Delete() *GoodFeeDelete {
-	mutation := newGoodFeeMutation(c.config, OpDelete)
-	return &GoodFeeDelete{config: c.config, hooks: c.Hooks(), mutation: mutation}
-}
-
-// DeleteOne returns a delete builder for the given entity.
-func (c *GoodFeeClient) DeleteOne(gf *GoodFee) *GoodFeeDeleteOne {
-	return c.DeleteOneID(gf.ID)
-}
-
-// DeleteOneID returns a delete builder for the given id.
-func (c *GoodFeeClient) DeleteOneID(id uuid.UUID) *GoodFeeDeleteOne {
-	builder := c.Delete().Where(goodfee.ID(id))
-	builder.mutation.id = &id
-	builder.mutation.op = OpDeleteOne
-	return &GoodFeeDeleteOne{builder}
-}
-
-// Query returns a query builder for GoodFee.
-func (c *GoodFeeClient) Query() *GoodFeeQuery {
-	return &GoodFeeQuery{
-		config: c.config,
-	}
-}
-
-// Get returns a GoodFee entity by its id.
-func (c *GoodFeeClient) Get(ctx context.Context, id uuid.UUID) (*GoodFee, error) {
-	return c.Query().Where(goodfee.ID(id)).Only(ctx)
-}
-
-// GetX is like Get, but panics if an error occurs.
-func (c *GoodFeeClient) GetX(ctx context.Context, id uuid.UUID) *GoodFee {
-	obj, err := c.Get(ctx, id)
-	if err != nil {
-		panic(err)
-	}
-	return obj
-}
-
-// Hooks returns the client hooks.
-func (c *GoodFeeClient) Hooks() []Hook {
-	return c.hooks.GoodFee
 }
 
 // GoodInfoClient is a client for the GoodInfo schema.
