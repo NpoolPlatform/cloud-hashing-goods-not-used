@@ -329,25 +329,56 @@ service CloudHashingGoods {
 
     rpc CreateFeeType(CreateFeeTypeRequest) returns (CreateFeeTypeResponse) {
         option (google.api.http) = {
-            post: "/v1/create/good/fee"
+            post: "/v1/create/fee/type"
             body: "*"
         };
     }
     rpc UpdateFeeType(UpdateFeeTypeRequest) returns (UpdateFeeTypeResponse) {
         option (google.api.http) = {
-            post: "/v1/update/good/fee"
+            post: "/v1/update/fee/type"
             body: "*"
         };
     }
     rpc GetFeeType(GetFeeTypeRequest) returns (GetFeeTypeResponse) {
         option (google.api.http) = {
-            post: "/v1/get/good/fee"
+            post: "/v1/get/fee/type"
             body: "*"
         };
     }
     rpc GetFeeTypes(GetFeeTypesRequest) returns (GetFeeTypesResponse) {
         option (google.api.http) = {
-            post: "/v1/get/good/fees"
+            post: "/v1/get/fee/types"
+            body: "*"
+        };
+    }
+
+    rpc CreateFeeDuration(CreateFeeDurationRequest) returns (CreateFeeDurationResponse) {
+        option (google.api.http) = {
+            post: "/v1/create/fee/duration"
+            body: "*"
+        };
+    }
+    rpc UpdateFeeDuration(UpdateFeeDurationRequest) returns (UpdateFeeDurationResponse) {
+        option (google.api.http) = {
+            post: "/v1/update/fee/duration"
+            body: "*"
+        };
+    }
+    rpc GetFeeDuration(GetFeeDurationRequest) returns (GetFeeDurationResponse) {
+        option (google.api.http) = {
+            post: "/v1/get/fee/duration"
+            body: "*"
+        };
+    }
+    rpc GetFeeDurationsByFeeType(GetFeeDurationsByFeeTypeRequest) returns (GetFeeDurationsByFeeTypeResponse) {
+        option (google.api.http) = {
+            post: "/v1/get/fee/durations/feetype"
+            body: "*"
+        };
+    }
+    rpc DeleteFeeDuration(DeleteFeeDurationRequest) returns (DeleteFeeDurationResponse) {
+        option (google.api.http) = {
+            post: "/v1/delete/fee/duration"
             body: "*"
         };
     }
@@ -949,4 +980,50 @@ message GetFeeRequest {
 
 message GetFeeResponse {
     Fee Info = 1;
+}
+
+message FeeDuration {
+    string ID = 1;
+    string FeeTypeID = 2;
+    int32 Duration = 3;
+}
+
+message CreateFeeDurationRequest {
+    FeeDuration Info = 1;
+}
+
+message CreateFeeDurationResponse {
+    FeeDuration Info = 1;
+}
+
+message UpdateFeeDurationRequest {
+    FeeDuration Info = 1;
+}
+
+message UpdateFeeDurationResponse {
+    FeeDuration Info = 1;
+}
+
+message GetFeeDurationRequest {
+    string ID = 1;
+}
+
+message GetFeeDurationResponse {
+    FeeDuration Info = 1;
+}
+
+message GetFeeDurationsByFeeTypeRequest {
+    string FeeTypeID = 1;
+}
+
+message GetFeeDurationsByFeeTypeResponse {
+    repeated FeeDuration Infos = 1;
+}
+
+message DeleteFeeDurationRequest {
+    string ID = 1;
+}
+
+message DeleteFeeDurationResponse {
+    FeeDuration Info = 1;
 }
