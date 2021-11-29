@@ -43,6 +43,8 @@ const (
 	FieldTitle = "title"
 	// FieldUnit holds the string denoting the unit field in the database.
 	FieldUnit = "unit"
+	// FieldFeeIds holds the string denoting the fee_ids field in the database.
+	FieldFeeIds = "fee_ids"
 	// FieldSupportCoinTypeIds holds the string denoting the support_coin_type_ids field in the database.
 	FieldSupportCoinTypeIds = "support_coin_type_ids"
 	// FieldTotal holds the string denoting the total field in the database.
@@ -75,6 +77,7 @@ var Columns = []string{
 	FieldClassic,
 	FieldTitle,
 	FieldUnit,
+	FieldFeeIds,
 	FieldSupportCoinTypeIds,
 	FieldTotal,
 	FieldCreateAt,

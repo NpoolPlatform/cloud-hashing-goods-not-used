@@ -18,10 +18,14 @@ import (
 )
 
 func dbRowToInfo(row *ent.GoodInfo) *npool.GoodInfo {
-	ids := []string{}
-
+	idsCoinType := []string{}
 	for _, id := range row.SupportCoinTypeIds {
-		ids = append(ids, id.String())
+		idsCoinType = append(idsCoinType, id.String())
+	}
+
+	idsFee := []string{}
+	for _, id := range row.FeeIds {
+		idsFee = append(idsFee, id.String())
 	}
 
 	return &npool.GoodInfo{
@@ -40,7 +44,8 @@ func dbRowToInfo(row *ent.GoodInfo) *npool.GoodInfo {
 		PriceCurrency:      row.PriceCurrency.String(),
 		BenefitType:        string(row.BenefitType),
 		Classic:            row.Classic,
-		SupportCoinTypeIDs: ids,
+		FeeIDs:             idsFee,
+		SupportCoinTypeIDs: idsCoinType,
 		Total:              row.Total,
 		Unit:               row.Unit,
 	}
@@ -72,6 +77,11 @@ func validateRequestGoodInfo(info *npool.GoodInfo) error {
 			return xerrors.Errorf("invalid support coin type id: %v", err)
 		}
 	}
+	for _, id := range info.GetFeeIDs() {
+		if _, err = uuid.Parse(id); err != nil {
+			return xerrors.Errorf("invalid fee id: %v", err)
+		}
+	}
 	return nil
 }
 
@@ -80,9 +90,13 @@ func Create(ctx context.Context, in *npool.CreateGoodRequest) (*npool.CreateGood
 		return nil, xerrors.Errorf("invalid request good info: %v", err)
 	}
 
-	ids := []uuid.UUID{}
+	idsCoinType := []uuid.UUID{}
 	for _, id := range in.GetInfo().GetSupportCoinTypeIDs() {
-		ids = append(ids, uuid.MustParse(id))
+		idsCoinType = append(idsCoinType, uuid.MustParse(id))
+	}
+	idsFee := []uuid.UUID{}
+	for _, id := range in.GetInfo().GetFeeIDs() {
+		idsFee = append(idsFee, uuid.MustParse(id))
 	}
 
 	info, err := db.Client().
@@ -102,7 +116,8 @@ func Create(ctx context.Context, in *npool.CreateGoodRequest) (*npool.CreateGood
 		SetPriceCurrency(uuid.MustParse(in.GetInfo().GetPriceCurrency())).
 		SetBenefitType(goodinfo.BenefitType(in.GetInfo().GetBenefitType())).
 		SetClassic(in.GetInfo().GetClassic()).
-		SetSupportCoinTypeIds(ids).
+		SetFeeIds(idsFee).
+		SetSupportCoinTypeIds(idsCoinType).
 		SetTotal(in.GetInfo().GetTotal()).
 		SetUnit(in.GetInfo().GetUnit()).
 		Save(ctx)
@@ -125,9 +140,14 @@ func Update(ctx context.Context, in *npool.UpdateGoodRequest) (*npool.UpdateGood
 		return nil, xerrors.Errorf("invalid request good info: %v", err)
 	}
 
-	ids := []uuid.UUID{}
+	idsCoinType := []uuid.UUID{}
 	for _, id := range in.GetInfo().GetSupportCoinTypeIDs() {
-		ids = append(ids, uuid.MustParse(id))
+		idsCoinType = append(idsCoinType, uuid.MustParse(id))
+	}
+
+	idsFee := []uuid.UUID{}
+	for _, id := range in.GetInfo().GetFeeIDs() {
+		idsFee = append(idsFee, uuid.MustParse(id))
 	}
 
 	info, err := db.Client().
@@ -146,7 +166,8 @@ func Update(ctx context.Context, in *npool.UpdateGoodRequest) (*npool.UpdateGood
 		SetPrice(price.VisualPriceToDBPrice(in.GetInfo().GetPrice())).
 		SetBenefitType(goodinfo.BenefitType(in.GetInfo().GetBenefitType())).
 		SetClassic(in.GetInfo().GetClassic()).
-		SetSupportCoinTypeIds(ids).
+		SetFeeIds(idsFee).
+		SetSupportCoinTypeIds(idsCoinType).
 		SetTotal(in.GetInfo().GetTotal()).
 		Save(ctx)
 	if err != nil {
