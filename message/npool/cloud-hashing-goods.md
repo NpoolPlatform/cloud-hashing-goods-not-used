@@ -964,9 +964,8 @@
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
 | ID | [string](#string) |  |  |
-| AppID | [string](#string) |  |  |
 | FeeTypeID | [string](#string) |  |  |
-| Value | [double](#double) |  |  |
+| Duration | [int32](#int32) |  |  |
 
 
 

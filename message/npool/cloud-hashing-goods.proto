@@ -985,9 +985,8 @@ message GetFeeResponse {
 
 message FeeDuration {
     string ID = 1;
-    string AppID = 2;
-    string FeeTypeID = 3;
-    double Value = 4;
+    string FeeTypeID = 2;
+    int32 Duration = 3;
 }
 
 message CreateFeeDurationRequest {
