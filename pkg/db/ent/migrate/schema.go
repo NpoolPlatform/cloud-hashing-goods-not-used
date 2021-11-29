@@ -227,6 +227,7 @@ var (
 		{Name: "classic", Type: field.TypeBool},
 		{Name: "title", Type: field.TypeString},
 		{Name: "unit", Type: field.TypeString},
+		{Name: "fee_ids", Type: field.TypeJSON},
 		{Name: "support_coin_type_ids", Type: field.TypeJSON},
 		{Name: "total", Type: field.TypeInt32},
 		{Name: "create_at", Type: field.TypeUint32},

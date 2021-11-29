@@ -110,6 +110,12 @@ func (gic *GoodInfoCreate) SetUnit(s string) *GoodInfoCreate {
 	return gic
 }
 
+// SetFeeIds sets the "fee_ids" field.
+func (gic *GoodInfoCreate) SetFeeIds(u []uuid.UUID) *GoodInfoCreate {
+	gic.mutation.SetFeeIds(u)
+	return gic
+}
+
 // SetSupportCoinTypeIds sets the "support_coin_type_ids" field.
 func (gic *GoodInfoCreate) SetSupportCoinTypeIds(u []uuid.UUID) *GoodInfoCreate {
 	gic.mutation.SetSupportCoinTypeIds(u)
@@ -326,6 +332,9 @@ func (gic *GoodInfoCreate) check() error {
 	if _, ok := gic.mutation.Unit(); !ok {
 		return &ValidationError{Name: "unit", err: errors.New(`ent: missing required field "unit"`)}
 	}
+	if _, ok := gic.mutation.FeeIds(); !ok {
+		return &ValidationError{Name: "fee_ids", err: errors.New(`ent: missing required field "fee_ids"`)}
+	}
 	if _, ok := gic.mutation.SupportCoinTypeIds(); !ok {
 		return &ValidationError{Name: "support_coin_type_ids", err: errors.New(`ent: missing required field "support_coin_type_ids"`)}
 	}
@@ -497,6 +506,14 @@ func (gic *GoodInfoCreate) createSpec() (*GoodInfo, *sqlgraph.CreateSpec) {
 			Column: goodinfo.FieldUnit,
 		})
 		_node.Unit = value
+	}
+	if value, ok := gic.mutation.FeeIds(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeJSON,
+			Value:  value,
+			Column: goodinfo.FieldFeeIds,
+		})
+		_node.FeeIds = value
 	}
 	if value, ok := gic.mutation.SupportCoinTypeIds(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{

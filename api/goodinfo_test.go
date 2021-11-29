@@ -1,3 +1,4 @@
+//go:build !codeanalysis
 // +build !codeanalysis
 
 package api
@@ -29,6 +30,7 @@ func assertGoodInfo(t *testing.T, actual, expected *npool.GoodInfo) {
 	assert.Equal(t, actual.Price, expected.Price)
 	assert.Equal(t, actual.BenefitType, expected.BenefitType)
 	assert.Equal(t, actual.Classic, expected.Classic)
+	assert.Equal(t, actual.FeeIDs, expected.FeeIDs)
 	assert.Equal(t, actual.SupportCoinTypeIDs, expected.SupportCoinTypeIDs)
 	assert.Equal(t, actual.Total, expected.Total)
 }
@@ -51,6 +53,7 @@ func TestGoodCRUD(t *testing.T) { //nolint
 	benefitType := "pool"
 	classic := true
 	supportCoinTypeIDs := []string{uuid.New().String(), uuid.New().String()}
+	feeIDs := []string{uuid.New().String(), uuid.New().String()}
 	total := int32(1700)
 
 	goodInfo := npool.GoodInfo{
@@ -67,6 +70,7 @@ func TestGoodCRUD(t *testing.T) { //nolint
 		PriceCurrency:      uuid.New().String(),
 		BenefitType:        benefitType,
 		Classic:            classic,
+		FeeIDs:             feeIDs,
 		SupportCoinTypeIDs: supportCoinTypeIDs,
 		Total:              total,
 		Title:              "Ant Miner S19 Pro",

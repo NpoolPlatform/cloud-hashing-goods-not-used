@@ -1,3 +1,4 @@
+//go:build !codeanalysis
 // +build !codeanalysis
 
 package goodinfo
@@ -45,6 +46,7 @@ func TestGoodInfoCRUD(t *testing.T) { //nolint
 	benefitType := "pool"
 	classic := true
 	supportCoinTypeIDs := []string{uuid.New().String(), uuid.New().String()}
+	feeIDs := []string{uuid.New().String(), uuid.New().String()}
 	total := int32(1700)
 
 	goodInfo := npool.GoodInfo{
@@ -61,6 +63,7 @@ func TestGoodInfoCRUD(t *testing.T) { //nolint
 		PriceCurrency:      uuid.New().String(),
 		BenefitType:        benefitType,
 		Classic:            classic,
+		FeeIDs:             feeIDs,
 		SupportCoinTypeIDs: supportCoinTypeIDs,
 		Total:              total,
 		Title:              "Ant Miner S19 Pro",
@@ -83,6 +86,7 @@ func TestGoodInfoCRUD(t *testing.T) { //nolint
 		assert.Equal(t, resp.Info.Price, price)
 		assert.Equal(t, resp.Info.BenefitType, benefitType)
 		assert.Equal(t, resp.Info.Classic, classic)
+		assert.Equal(t, resp.Info.FeeIDs, feeIDs)
 		assert.Equal(t, resp.Info.SupportCoinTypeIDs, supportCoinTypeIDs)
 		assert.Equal(t, resp.Info.Total, total)
 		assert.Equal(t, resp.Info.PriceCurrency, goodInfo.PriceCurrency)
@@ -109,6 +113,7 @@ func TestGoodInfoCRUD(t *testing.T) { //nolint
 		assert.Equal(t, resp1.Info.Price, price)
 		assert.Equal(t, resp1.Info.BenefitType, goodInfo.BenefitType)
 		assert.Equal(t, resp1.Info.Classic, classic)
+		assert.Equal(t, resp1.Info.FeeIDs, feeIDs)
 		assert.Equal(t, resp1.Info.SupportCoinTypeIDs, supportCoinTypeIDs)
 		assert.Equal(t, resp1.Info.Total, total)
 	}
@@ -129,6 +134,7 @@ func TestGoodInfoCRUD(t *testing.T) { //nolint
 		assert.Equal(t, resp2.Info.Price, price)
 		assert.Equal(t, resp2.Info.BenefitType, goodInfo.BenefitType)
 		assert.Equal(t, resp2.Info.Classic, classic)
+		assert.Equal(t, resp2.Info.FeeIDs, feeIDs)
 		assert.Equal(t, resp2.Info.SupportCoinTypeIDs, supportCoinTypeIDs)
 		assert.Equal(t, resp2.Info.Total, total)
 	}
@@ -149,6 +155,7 @@ func TestGoodInfoCRUD(t *testing.T) { //nolint
 		assert.Equal(t, resp3.Info.Price, price)
 		assert.Equal(t, resp3.Info.BenefitType, goodInfo.BenefitType)
 		assert.Equal(t, resp3.Info.Classic, classic)
+		assert.Equal(t, resp3.Info.FeeIDs, feeIDs)
 		assert.Equal(t, resp3.Info.SupportCoinTypeIDs, supportCoinTypeIDs)
 		assert.Equal(t, resp3.Info.Total, total)
 	}
