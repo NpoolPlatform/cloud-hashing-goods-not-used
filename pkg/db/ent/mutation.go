@@ -5560,7 +5560,6 @@ type GoodFeeMutation struct {
 	op              Op
 	typ             string
 	id              *uuid.UUID
-	app_id          *uuid.UUID
 	fee_type        *string
 	fee_description *string
 	pay_type        *goodfee.PayType
@@ -5659,42 +5658,6 @@ func (m *GoodFeeMutation) ID() (id uuid.UUID, exists bool) {
 		return
 	}
 	return *m.id, true
-}
-
-// SetAppID sets the "app_id" field.
-func (m *GoodFeeMutation) SetAppID(u uuid.UUID) {
-	m.app_id = &u
-}
-
-// AppID returns the value of the "app_id" field in the mutation.
-func (m *GoodFeeMutation) AppID() (r uuid.UUID, exists bool) {
-	v := m.app_id
-	if v == nil {
-		return
-	}
-	return *v, true
-}
-
-// OldAppID returns the old "app_id" field's value of the GoodFee entity.
-// If the GoodFee object wasn't provided to the builder, the object is fetched from the database.
-// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *GoodFeeMutation) OldAppID(ctx context.Context) (v uuid.UUID, err error) {
-	if !m.op.Is(OpUpdateOne) {
-		return v, fmt.Errorf("OldAppID is only allowed on UpdateOne operations")
-	}
-	if m.id == nil || m.oldValue == nil {
-		return v, fmt.Errorf("OldAppID requires an ID field in the mutation")
-	}
-	oldValue, err := m.oldValue(ctx)
-	if err != nil {
-		return v, fmt.Errorf("querying old value for OldAppID: %w", err)
-	}
-	return oldValue.AppID, nil
-}
-
-// ResetAppID resets all changes to the "app_id" field.
-func (m *GoodFeeMutation) ResetAppID() {
-	m.app_id = nil
 }
 
 // SetFeeType sets the "fee_type" field.
@@ -5992,10 +5955,7 @@ func (m *GoodFeeMutation) Type() string {
 // order to get all numeric fields that were incremented/decremented, call
 // AddedFields().
 func (m *GoodFeeMutation) Fields() []string {
-	fields := make([]string, 0, 7)
-	if m.app_id != nil {
-		fields = append(fields, goodfee.FieldAppID)
-	}
+	fields := make([]string, 0, 6)
 	if m.fee_type != nil {
 		fields = append(fields, goodfee.FieldFeeType)
 	}
@@ -6022,8 +5982,6 @@ func (m *GoodFeeMutation) Fields() []string {
 // schema.
 func (m *GoodFeeMutation) Field(name string) (ent.Value, bool) {
 	switch name {
-	case goodfee.FieldAppID:
-		return m.AppID()
 	case goodfee.FieldFeeType:
 		return m.FeeType()
 	case goodfee.FieldFeeDescription:
@@ -6045,8 +6003,6 @@ func (m *GoodFeeMutation) Field(name string) (ent.Value, bool) {
 // database failed.
 func (m *GoodFeeMutation) OldField(ctx context.Context, name string) (ent.Value, error) {
 	switch name {
-	case goodfee.FieldAppID:
-		return m.OldAppID(ctx)
 	case goodfee.FieldFeeType:
 		return m.OldFeeType(ctx)
 	case goodfee.FieldFeeDescription:
@@ -6068,13 +6024,6 @@ func (m *GoodFeeMutation) OldField(ctx context.Context, name string) (ent.Value,
 // type.
 func (m *GoodFeeMutation) SetField(name string, value ent.Value) error {
 	switch name {
-	case goodfee.FieldAppID:
-		v, ok := value.(uuid.UUID)
-		if !ok {
-			return fmt.Errorf("unexpected type %T for field %s", value, name)
-		}
-		m.SetAppID(v)
-		return nil
 	case goodfee.FieldFeeType:
 		v, ok := value.(string)
 		if !ok {
@@ -6205,9 +6154,6 @@ func (m *GoodFeeMutation) ClearField(name string) error {
 // It returns an error if the field is not defined in the schema.
 func (m *GoodFeeMutation) ResetField(name string) error {
 	switch name {
-	case goodfee.FieldAppID:
-		m.ResetAppID()
-		return nil
 	case goodfee.FieldFeeType:
 		m.ResetFeeType()
 		return nil

@@ -13,8 +13,6 @@ const (
 	Label = "good_fee"
 	// FieldID holds the string denoting the id field in the database.
 	FieldID = "id"
-	// FieldAppID holds the string denoting the app_id field in the database.
-	FieldAppID = "app_id"
 	// FieldFeeType holds the string denoting the fee_type field in the database.
 	FieldFeeType = "fee_type"
 	// FieldFeeDescription holds the string denoting the fee_description field in the database.
@@ -34,7 +32,6 @@ const (
 // Columns holds all SQL columns for goodfee fields.
 var Columns = []string{
 	FieldID,
-	FieldAppID,
 	FieldFeeType,
 	FieldFeeDescription,
 	FieldPayType,

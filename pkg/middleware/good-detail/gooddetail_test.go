@@ -11,11 +11,11 @@ import (
 	"github.com/NpoolPlatform/cloud-hashing-goods/message/npool"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/test-init" //nolint
 
-	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/crud/device-info"     //nolint
-	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/crud/good-fee"        //nolint
-	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/crud/good-info"       //nolint
-	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/crud/price-currency"  //nolint
-	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/crud/vendor-location" //nolint
+	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/crud/device-info"      //nolint
+	goodfee "github.com/NpoolPlatform/cloud-hashing-goods/pkg/crud/good-fee" //nolint
+	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/crud/good-info"        //nolint
+	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/crud/price-currency"   //nolint
+	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/crud/vendor-location"  //nolint
 
 	"github.com/stretchr/testify/assert"
 

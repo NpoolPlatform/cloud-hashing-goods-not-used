@@ -169,7 +169,6 @@ var (
 	// GoodFeesColumns holds the columns for the "good_fees" table.
 	GoodFeesColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeUUID, Unique: true},
-		{Name: "app_id", Type: field.TypeUUID},
 		{Name: "fee_type", Type: field.TypeString, Unique: true},
 		{Name: "fee_description", Type: field.TypeString, Size: 256},
 		{Name: "pay_type", Type: field.TypeEnum, Enums: []string{"percent", "amount"}},

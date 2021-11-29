@@ -29,7 +29,6 @@ func Create(ctx context.Context, in *npool.CreateGoodFeeRequest) (*npool.CreateG
 	info, err := db.Client().
 		GoodFee.
 		Create().
-		SetAppID(uuid.MustParse(in.GetInfo().GetAppID())).
 		SetFeeType(in.GetInfo().GetFeeType()).
 		SetFeeDescription(in.GetInfo().GetFeeDescription()).
 		SetPayType(goodfee.PayType(in.GetInfo().GetPayType())).
@@ -41,7 +40,6 @@ func Create(ctx context.Context, in *npool.CreateGoodFeeRequest) (*npool.CreateG
 	return &npool.CreateGoodFeeResponse{
 		Info: &npool.GoodFee{
 			ID:             info.ID.String(),
-			AppID:          info.AppID.String(),
 			FeeType:        info.FeeType,
 			FeeDescription: info.FeeDescription,
 			PayType:        string(info.PayType),
@@ -72,7 +70,6 @@ func Update(ctx context.Context, in *npool.UpdateGoodFeeRequest) (*npool.UpdateG
 	return &npool.UpdateGoodFeeResponse{
 		Info: &npool.GoodFee{
 			ID:             info.ID.String(),
-			AppID:          info.AppID.String(),
 			FeeType:        info.FeeType,
 			FeeDescription: info.FeeDescription,
 			PayType:        string(info.PayType),
@@ -105,7 +102,6 @@ func Get(ctx context.Context, in *npool.GetGoodFeeRequest) (*npool.GetGoodFeeRes
 	return &npool.GetGoodFeeResponse{
 		Info: &npool.GoodFee{
 			ID:             infos[0].ID.String(),
-			AppID:          infos[0].AppID.String(),
 			FeeType:        infos[0].FeeType,
 			FeeDescription: infos[0].FeeDescription,
 			PayType:        string(infos[0].PayType),
@@ -131,7 +127,6 @@ func GetAll(ctx context.Context, in *npool.GetGoodFeesRequest) (*npool.GetGoodFe
 	for _, info := range infos {
 		fees = append(fees, &npool.GoodFee{
 			ID:             info.ID.String(),
-			AppID:          info.AppID.String(),
 			FeeType:        info.FeeType,
 			FeeDescription: info.FeeDescription,
 			PayType:        string(info.PayType),
