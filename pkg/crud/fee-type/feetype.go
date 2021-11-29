@@ -87,8 +87,8 @@ func Get(ctx context.Context, in *npool.GetFeeTypeRequest) (*npool.GetFeeTypeRes
 		FeeType.
 		Query().
 		Where(
-			FeeType.Or(
-				FeeType.ID(id),
+			feetype.Or(
+				feetype.ID(id),
 			),
 		).
 		All(ctx)
@@ -114,8 +114,8 @@ func GetAll(ctx context.Context, in *npool.GetFeeTypesRequest) (*npool.GetFeeTyp
 		FeeType.
 		Query().
 		Where(
-			FeeType.And(
-				FeeType.DeleteAt(0),
+			feetype.And(
+				feetype.DeleteAt(0),
 			),
 		).
 		All(ctx)
