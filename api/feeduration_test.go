@@ -18,7 +18,7 @@ func TestFeeDurationCRUD(t *testing.T) {
 		return
 	}
 
-	testFeeDurationInfo := npool.FeeDuration{
+	testFeeDurationInfo := &npool.FeeDuration{
 		ID:        uuid.New().String(),
 		FeeTypeID: uuid.New().String(),
 		Duration:  30,
@@ -27,54 +27,58 @@ func TestFeeDurationCRUD(t *testing.T) {
 	cli := resty.New()
 
 	newFeeDurationRequest := &npool.CreateFeeDurationRequest{
-		Info: &testFeeDurationInfo,
+		Info: testFeeDurationInfo,
 	}
 
 	// create
-	respFeeDurationResponse := npool.CreateFeeDurationResponse{}
-	err := restyFeeDurationTest(cli, "http://localhost:50020/v1/create/fee/duration", newFeeDurationRequest, &respFeeDurationResponse)
+	resp1 := &npool.CreateFeeDurationResponse{
+		Info: &npool.FeeDuration{},
+	}
+	err := restyFeeDurationTest(cli, "http://localhost:50020/v1/create/fee/duration", newFeeDurationRequest, resp1)
 	assert.Nil(t, err)
-	newFeeDurationRequest.Info.ID = respFeeDurationResponse.Info.ID
-	assert.Equal(t, newFeeDurationRequest.Info.Duration, respFeeDurationResponse.Info.Duration)
-	assert.Equal(t, newFeeDurationRequest.Info.FeeTypeID, respFeeDurationResponse.Info.FeeTypeID)
+	newFeeDurationRequest.Info.ID = resp1.Info.ID
+	assert.Equal(t, testFeeDurationInfo.Duration, resp1.Info.Duration)
+	assert.Equal(t, testFeeDurationInfo.FeeTypeID, resp1.Info.FeeTypeID)
 
 	// update
-	respFeeDurationResponse.Info.Duration = 0
-	resp2 := npool.UpdateFeeDurationResponse{}
+	testFeeDurationInfo.Duration = 0
+	resp2 := &npool.UpdateFeeDurationResponse{
+		Info: &npool.FeeDuration{},
+	}
 	err = restyFeeDurationTest(cli, "http://localhost:50020/v1/update/fee/duration", &npool.UpdateFeeDurationRequest{
-		Info: respFeeDurationResponse.Info,
-	}, &resp2)
+		Info: testFeeDurationInfo,
+	}, resp2)
 	assert.Nil(t, err)
-	assert.Equal(t, respFeeDurationResponse.Info.ID, resp2.Info.ID)
-	assert.Equal(t, respFeeDurationResponse.Info.Duration, resp2.Info.Duration)
-	assert.Equal(t, respFeeDurationResponse.Info.FeeTypeID, resp2.Info.FeeTypeID)
+	assert.Equal(t, testFeeDurationInfo.ID, resp2.Info.ID)
+	assert.Equal(t, testFeeDurationInfo.Duration, resp2.Info.Duration)
+	assert.Equal(t, testFeeDurationInfo.FeeTypeID, resp2.Info.FeeTypeID)
 
 	// get
-	resp3 := npool.GetFeeDurationResponse{}
+	resp3 := &npool.GetFeeDurationResponse{}
 	err = restyFeeDurationTest(cli, "http://localhost:50020/v1/get/fee/duration", &npool.GetFeeDurationRequest{
-		ID: resp2.Info.ID,
-	}, &resp3)
+		ID: testFeeDurationInfo.ID,
+	}, resp3)
 	assert.Nil(t, err)
-	assert.Equal(t, resp2.Info.ID, resp3.Info.ID)
-	assert.Equal(t, resp2.Info.Duration, resp3.Info.Duration)
-	assert.Equal(t, resp2.Info.FeeTypeID, resp3.Info.FeeTypeID)
+	assert.Equal(t, testFeeDurationInfo.ID, resp3.Info.ID)
+	assert.Equal(t, testFeeDurationInfo.Duration, resp3.Info.Duration)
+	assert.Equal(t, testFeeDurationInfo.FeeTypeID, resp3.Info.FeeTypeID)
 
 	// get by fee type
-	resp4 := npool.GetFeeDurationsByFeeTypeResponse{
+	resp4 := &npool.GetFeeDurationsByFeeTypeResponse{
 		Infos: []*npool.FeeDuration{},
 	}
 	err = restyFeeDurationTest(cli, "http://localhost:50020/v1/get/fee/duration", &npool.GetFeeDurationsByFeeTypeRequest{
 		FeeTypeID: testFeeDurationInfo.FeeTypeID,
-	}, &resp4)
+	}, resp4)
 	assert.Nil(t, err)
 	assert.NotNil(t, resp4.Infos)
 	assert.Positive(t, len(resp4.Infos))
 
 	// delete
-	resp5 := npool.DeleteFeeDurationResponse{}
+	resp5 := &npool.DeleteFeeDurationResponse{}
 	err = restyFeeDurationTest(cli, "http://localhost:50020/v1/get/fee/duration", &npool.DeleteFeeDurationRequest{
-		ID: resp3.Info.ID,
-	}, &resp5)
+		ID: testFeeDurationInfo.ID,
+	}, resp5)
 	assert.Nil(t, err)
 	assert.NotNil(t, resp5.Info)
 }

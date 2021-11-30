@@ -31,37 +31,46 @@ func TestFeeTypeCRUD(t *testing.T) {
 
 	cli := resty.New()
 
+	testFeeType := &npool.FeeType{
+		ID:             uuid.New().String(),
+		FeeType:        "TestFeeType - " + time.Now().String(),
+		FeeDescription: "created by unit test",
+		PayType:        "percent",
+	}
+
 	newFeeTypeRequest := &npool.CreateFeeTypeRequest{
-		Info: &npool.FeeType{
-			ID:             uuid.New().String(),
-			FeeType:        "TestFeeType - " + time.Now().String(),
-			FeeDescription: "created by unit test",
-			PayType:        "percent",
-		},
+		Info: testFeeType,
 	}
 
 	// create
-	respFeeTypeResponse := npool.CreateFeeTypeResponse{}
-	err := restyFeeTypeTest(cli, "http://localhost:50020/v1/create/fee/type", newFeeTypeRequest, &respFeeTypeResponse)
+	resp1 := &npool.CreateFeeTypeResponse{
+		Info: &npool.FeeType{},
+	}
+	err := restyFeeTypeTest(cli, "http://localhost:50020/v1/create/fee/type", newFeeTypeRequest, resp1)
 	assert.Nil(t, err)
-	newFeeTypeRequest.Info.ID = respFeeTypeResponse.Info.ID
-	assertFeeTypeEqual(t, newFeeTypeRequest.Info, respFeeTypeResponse.Info)
+	testFeeType.ID = resp1.Info.ID
+	assertFeeTypeEqual(t, testFeeType, resp1.Info)
 
 	// update
-	newFeeTypeRequest.Info.FeeType = "UpdatedFeeType"
-	respFeeTypeResponse = npool.CreateFeeTypeResponse{}
+	testFeeType.FeeType = "UpdatedFeeType"
+	resp2 := &npool.CreateFeeTypeResponse{
+		Info: &npool.FeeType{},
+	}
 	err = restyFeeTypeTest(cli, "http://localhost:50020/v1/update/fee/type", &npool.UpdateFeeTypeRequest{
-		Info: newFeeTypeRequest.Info,
-	}, &respFeeTypeResponse)
+		Info: testFeeType,
+	}, resp2)
 	assert.Nil(t, err)
-	assertFeeTypeEqual(t, newFeeTypeRequest.Info, respFeeTypeResponse.Info)
+	assertFeeTypeEqual(t, testFeeType, resp2.Info)
 
 	// get
+	resp3 := &npool.GetFeeTypeResponse{
+		Info: &npool.FeeType{},
+	}
 	err = restyFeeTypeTest(cli, "http://localhost:50020/v1/get/fee/type", &npool.GetFeeTypeRequest{
-		ID: newFeeTypeRequest.Info.ID,
-	}, &respFeeTypeResponse)
+		ID: testFeeType.ID,
+	}, resp3)
 	assert.Nil(t, err)
-	assertFeeTypeEqual(t, newFeeTypeRequest.Info, respFeeTypeResponse.Info)
+	assertFeeTypeEqual(t, testFeeType, resp3.Info)
 }
 
 func restyFeeTypeTest(cli *resty.Client, url string, body interface{ String() string }, respStructPointer interface{}) (err error) {
