@@ -10,7 +10,7 @@ import (
 	"github.com/NpoolPlatform/go-service-framework/pkg/logger"
 	"github.com/go-resty/resty/v2"
 	"github.com/google/uuid"
-	"github.com/stretchr/testify/assert"
+	"golang.org/x/xerrors"
 )
 
 func TestFeeCRUD(t *testing.T) {
@@ -30,29 +30,33 @@ func TestFeeCRUD(t *testing.T) {
 
 	// create
 	respFeeResponse := npool.CreateFeeResponse{}
-	restyFeeTest(cli, t, "http://localhost:50020/v1/create/fee", newFeeRequest, &respFeeResponse)
+	err := restyFeeTest(cli, "http://localhost:50020/v1/create/fee", newFeeRequest, &respFeeResponse)
 	newFeeRequest.Info.ID = respFeeResponse.Info.ID
+	if err != nil {
+		logger.Sugar().Warn(err.Error())
+	}
 
 	// get
-	restyFeeTest(cli, t, "http://localhost:50020/v1/get/fee", &npool.GetFeeRequest{
+	err = restyFeeTest(cli, "http://localhost:50020/v1/get/fee", &npool.GetFeeRequest{
 		ID: newFeeRequest.Info.ID,
 	}, &respFeeResponse)
+	if err != nil {
+		logger.Sugar().Warn(err.Error())
+	}
 }
 
-func restyFeeTest(cli *resty.Client, t *testing.T, url string, body interface{ String() string }, respStructPointer interface{}) {
+func restyFeeTest(cli *resty.Client, url string, body interface{ String() string }, respStructPointer interface{}) (err error) {
 	resp, err := cli.R().
 		SetHeader("Content-Type", "application/json").
 		SetBody(body).
 		Post(url)
 	logger.Sugar().Infof("[resty] %v - %v", url, resp.String())
-	if assert.Nil(t, err) {
+	if err == nil {
 		if resp.StatusCode() == 200 {
 			err = json.Unmarshal(resp.Body(), respStructPointer)
-			assert.Nil(t, err)
-			assert.NotNil(t, respStructPointer)
 		} else {
-			logger.Sugar().Errorf("returned 500 %v %v", err, resp.String())
-			assert.Equal(t, 200, resp.StatusCode())
+			err = xerrors.New(resp.String())
 		}
 	}
+	return
 }
