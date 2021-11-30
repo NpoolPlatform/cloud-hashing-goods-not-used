@@ -44,7 +44,9 @@ func TestFeeTypeCRUD(t *testing.T) {
 	// update
 	newFeeTypeRequest.Info.FeeType = "UpdatedFeeType"
 	respFeeTypeResponse = npool.CreateFeeTypeResponse{}
-	restyFeeTypeTest(cli, t, "http://localhost:50020/v1/update/fee/type", newFeeTypeRequest, &respFeeTypeResponse)
+	restyFeeTypeTest(cli, t, "http://localhost:50020/v1/update/fee/type", &npool.UpdateFeeTypeRequest{
+		Info: newFeeTypeRequest.Info,
+	}, &respFeeTypeResponse)
 	assertFeeTypeEqual(t, newFeeTypeRequest.Info, respFeeTypeResponse.Info)
 
 	// get

@@ -37,13 +37,16 @@ func TestFeeDurationCRUD(t *testing.T) {
 	respFeeDurationResponse := npool.CreateFeeDurationResponse{}
 	restyFeeDurationTest(cli, t, "http://localhost:50020/v1/create/fee/duration", newFeeDurationRequest, &respFeeDurationResponse)
 	newFeeDurationRequest.Info.ID = respFeeDurationResponse.Info.ID
-	assertFeeDurationEqual(t, newFeeDurationRequest.Info, respFeeDurationResponse.Info)
+	assert.Equal(t, newFeeDurationRequest.Info.Duration, respFeeDurationResponse.Info.Duration)
+	assert.Equal(t, newFeeDurationRequest.Info.FeeTypeID, respFeeDurationResponse.Info.FeeTypeID)
 
 	// update
-	newFeeDurationRequest.Info.Duration = 0
+	respFeeDurationResponse.Info.Duration = 0
 	resp2 := npool.UpdateFeeDurationResponse{}
-	restyFeeDurationTest(cli, t, "http://localhost:50020/v1/update/fee/duration", newFeeDurationRequest, &resp2)
-	assertFeeDurationEqual(t, newFeeDurationRequest.Info, resp2.Info)
+	restyFeeDurationTest(cli, t, "http://localhost:50020/v1/update/fee/duration", &npool.UpdateFeeDurationRequest{
+		Info: respFeeDurationResponse.Info,
+	}, &resp2)
+	assertFeeDurationEqual(t, respFeeDurationResponse.Info, resp2.Info)
 
 	// get
 	resp3 := npool.GetFeeDurationResponse{}
