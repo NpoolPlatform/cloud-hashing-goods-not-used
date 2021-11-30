@@ -83,7 +83,7 @@ func TestFeeDurationCRUD(t *testing.T) {
 	resp4 := &npool.GetFeeDurationsByFeeTypeResponse{
 		Infos: []*npool.FeeDuration{},
 	}
-	restyRet, err = restyFeeDurationTest(cli, "http://localhost:50020/v1/get/fee/duration", &npool.GetFeeDurationsByFeeTypeRequest{
+	restyRet, err = restyFeeDurationTest(cli, "http://localhost:50020/v1/get/fee/durations/feetype", &npool.GetFeeDurationsByFeeTypeRequest{
 		FeeTypeID: testFeeDurationInfo.FeeTypeID,
 	})
 	assert.Nil(t, err)
