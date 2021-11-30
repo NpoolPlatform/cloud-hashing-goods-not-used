@@ -2,12 +2,12 @@ package api
 
 import (
 	"encoding/json"
+	"fmt"
 	"os"
 	"strconv"
 	"testing"
 
 	"github.com/NpoolPlatform/cloud-hashing-goods/message/npool"
-	"github.com/NpoolPlatform/go-service-framework/pkg/logger"
 	"github.com/go-resty/resty/v2"
 	"github.com/google/uuid"
 	"github.com/stretchr/testify/assert"
@@ -34,15 +34,23 @@ func TestFeeDurationCRUD(t *testing.T) {
 	resp1 := &npool.CreateFeeDurationResponse{
 		Info: testFeeDurationInfo,
 	}
-	restyRet, err := restyFeeDurationTest(cli, "http://localhost:50020/v1/create/fee/duration", newFeeDurationRequest)
+	resp, err := cli.R().
+		SetHeader("Content-Type", "application/json").
+		SetBody(newFeeDurationRequest).
+		Post("http://localhost:50020/v1/create/fee/duration")
+	assert.Nil(t, err)
+	assert.NotNil(t, resp)
+	restyRet := resp
+	// restyRet, err := restyFeeDurationTest(cli, "http://localhost:50020/v1/create/fee/duration", newFeeDurationRequest)
 	assert.Nil(t, err)
 	err = json.Unmarshal(restyRet.Body(), resp1)
 	assert.Nil(t, err)
-	logger.Sugar().Info(restyRet.String())
+	fmt.Println(restyRet.Body())
+	fmt.Println(restyRet.String())
 	testFeeDurationInfo.ID = resp1.Info.ID
 	assert.Equal(t, testFeeDurationInfo.Duration, resp1.Info.Duration)
 	assert.Equal(t, testFeeDurationInfo.FeeTypeID, resp1.Info.FeeTypeID)
-	logger.Sugar().Infof("created: %v", resp1.Info)
+	fmt.Printf("created: %v", resp1.Info)
 
 	// update
 	testFeeDurationInfo.Duration = 0
