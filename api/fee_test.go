@@ -7,6 +7,7 @@ import (
 	"testing"
 
 	"github.com/NpoolPlatform/cloud-hashing-goods/message/npool"
+	"github.com/NpoolPlatform/go-service-framework/pkg/logger"
 	"github.com/NpoolPlatform/go-service-framework/pkg/price"
 	"github.com/go-resty/resty/v2"
 	"github.com/google/uuid"
@@ -45,9 +46,13 @@ func restyFeeTest(cli *resty.Client, t *testing.T, url string, body interface{ S
 		SetBody(body).
 		Post(url)
 	if assert.Nil(t, err) {
-		assert.Equal(t, 200, resp.StatusCode())
-		err = json.Unmarshal(resp.Body(), respStructPointer)
-		assert.Nil(t, err)
-		assert.NotNil(t, respStructPointer)
+		if resp.StatusCode() == 200 {
+			err = json.Unmarshal(resp.Body(), respStructPointer)
+			assert.Nil(t, err)
+			assert.NotNil(t, respStructPointer)
+		} else {
+			logger.Sugar().Errorf("returned 500 %v %v", err, resp.String())
+			assert.Equal(t, 200, resp.StatusCode())
+		}
 	}
 }

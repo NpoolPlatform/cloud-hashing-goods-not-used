@@ -12,12 +12,6 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func assertFeeDurationEqual(t *testing.T, actual, expected *npool.FeeDuration) {
-	assert.Equal(t, actual.ID, expected.ID)
-	assert.Equal(t, actual.Duration, expected.Duration)
-	assert.Equal(t, actual.FeeTypeID, expected.FeeTypeID)
-}
-
 func TestFeeDurationCRUD(t *testing.T) {
 	if runByGithubAction, err := strconv.ParseBool(os.Getenv("RUN_BY_GITHUB_ACTION")); err == nil && runByGithubAction {
 		return
@@ -46,21 +40,25 @@ func TestFeeDurationCRUD(t *testing.T) {
 	restyFeeDurationTest(cli, t, "http://localhost:50020/v1/update/fee/duration", &npool.UpdateFeeDurationRequest{
 		Info: respFeeDurationResponse.Info,
 	}, &resp2)
-	assertFeeDurationEqual(t, respFeeDurationResponse.Info, resp2.Info)
+	assert.Equal(t, respFeeDurationResponse.Info.ID, resp2.Info.ID)
+	assert.Equal(t, respFeeDurationResponse.Info.Duration, resp2.Info.Duration)
+	assert.Equal(t, respFeeDurationResponse.Info.FeeTypeID, resp2.Info.FeeTypeID)
 
 	// get
 	resp3 := npool.GetFeeDurationResponse{}
 	restyFeeDurationTest(cli, t, "http://localhost:50020/v1/get/fee/duration", &npool.GetFeeDurationRequest{
-		ID: newFeeDurationRequest.Info.ID,
+		ID: resp2.Info.ID,
 	}, &resp3)
-	assertFeeDurationEqual(t, newFeeDurationRequest.Info, resp3.Info)
+	assert.Equal(t, resp2.Info.ID, resp3.Info.ID)
+	assert.Equal(t, resp2.Info.Duration, resp3.Info.Duration)
+	assert.Equal(t, resp2.Info.FeeTypeID, resp3.Info.FeeTypeID)
 
 	// get by fee type
 	resp4 := npool.GetFeeDurationsByFeeTypeResponse{
 		Infos: []*npool.FeeDuration{},
 	}
 	restyFeeDurationTest(cli, t, "http://localhost:50020/v1/get/fee/duration", &npool.GetFeeDurationsByFeeTypeRequest{
-		FeeTypeID: newFeeDurationRequest.Info.FeeTypeID,
+		FeeTypeID: resp3.Info.FeeTypeID,
 	}, &resp4)
 	assert.NotNil(t, resp4.Infos)
 	assert.Positive(t, len(resp4.Infos))
@@ -68,7 +66,7 @@ func TestFeeDurationCRUD(t *testing.T) {
 	// delete
 	resp5 := npool.DeleteFeeDurationResponse{}
 	restyFeeDurationTest(cli, t, "http://localhost:50020/v1/get/fee/duration", &npool.DeleteFeeDurationRequest{
-		ID: newFeeDurationRequest.Info.ID,
+		ID: resp3.Info.ID,
 	}, &resp5)
 	assert.NotNil(t, resp5.Info)
 }
