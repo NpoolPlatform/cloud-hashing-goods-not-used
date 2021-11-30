@@ -1,0 +1,39 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: cloud-hashing-goods-ingress
+  namespace: kube-system
+  annotations:
+    k8s.kuboard.cn/displayName: cloud-hashing-goods
+    k8s.kuboard.cn/workload: cloud-hashing-goods
+    kubernetes.io/ingress.class: "traefik-internet"
+    traefik.ingress.kubernetes.io/router.entrypoints: web,websecure
+    traefik.ingress.kubernetes.io/router.middlewares: kube-system-strip-cloud-hashing-goods-prefix@kubernetescrd,kube-system-common-headers@kubernetescrd
+
+spec:
+  rules:
+    - host: api.npool.top
+      http: &http_rules
+        paths:
+          - path: /api/cloud-hashing-goods/version
+            backend:
+              serviceName: cloud-hashing-goods
+              servicePort: 50020
+    - host: api.xpool.top
+      http: *http_rules
+    - host: www.npool.top
+      http: *http_rules
+    - host: www.xpool.top
+      http: *http_rules
+
+---
+
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: strip-cloud-hashing-goods-prefix
+  namespace: kube-system
+spec:
+  stripPrefix:
+    prefixes:
+      - /api/cloud-hashing-goods
