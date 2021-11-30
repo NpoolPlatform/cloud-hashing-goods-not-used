@@ -17,7 +17,7 @@ import (
 
 func validateFeeDuration(info *npool.FeeDuration) error {
 	if _, err := uuid.Parse(info.GetFeeTypeID()); err != nil {
-		return xerrors.Errorf("invalid fee type id: %v", err)
+		return xerrors.Errorf("invalid fee duration id: %v", err)
 	}
 	if info.GetDuration() < 0 {
 		return xerrors.New("duration(days) shall not be negative")
@@ -47,21 +47,26 @@ func Create(ctx context.Context, in *npool.CreateFeeDurationRequest) (*npool.Cre
 }
 
 func Update(ctx context.Context, in *npool.UpdateFeeDurationRequest) (*npool.UpdateFeeDurationResponse, error) {
-	id, err := uuid.Parse(in.GetInfo().GetFeeTypeID())
+	id, err := uuid.Parse(in.GetInfo().GetID())
 	if err != nil {
-		return nil, xerrors.Errorf("invalid fee type id: %v", err)
+		return nil, xerrors.Errorf("invalid fee duration id: %v", err)
 	}
 	if in.GetInfo().GetDuration() < 0 {
 		return nil, xerrors.New("duration(days) shall not be negative")
+	}
+	ftid, err := uuid.Parse(in.GetInfo().GetFeeTypeID())
+	if err != nil {
+		return nil, xerrors.New("invalid fee type id")
 	}
 
 	info, err := db.Client().
 		FeeDuration.
 		UpdateOneID(id).
 		SetDuration(in.Info.Duration).
+		SetFeeTypeID(ftid).
 		Save(ctx)
 	if err != nil {
-		return nil, xerrors.Errorf("failed to update fee type id: %v", err)
+		return nil, xerrors.Errorf("failed to update fee duration id: %v", err)
 	}
 
 	return &npool.UpdateFeeDurationResponse{
@@ -103,7 +108,7 @@ func Get(ctx context.Context, in *npool.GetFeeDurationRequest) (*npool.GetFeeDur
 func GetByFeeType(ctx context.Context, in *npool.GetFeeDurationsByFeeTypeRequest) (*npool.GetFeeDurationsByFeeTypeResponse, error) {
 	id, err := uuid.Parse(in.GetFeeTypeID())
 	if err != nil {
-		return nil, xerrors.Errorf("invalid fee type id: %v", err)
+		return nil, xerrors.Errorf("invalid fee duration id: %v", err)
 	}
 
 	infos, err := db.Client().FeeDuration.Query().
