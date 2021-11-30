@@ -38,6 +38,7 @@ func TestFeeDurationCRUD(t *testing.T) {
 	assert.Nil(t, err)
 	err = json.Unmarshal(restyRet.Body(), resp1)
 	assert.Nil(t, err)
+	logger.Sugar().Info(restyRet.String())
 	testFeeDurationInfo.ID = resp1.Info.ID
 	assert.Equal(t, testFeeDurationInfo.Duration, resp1.Info.Duration)
 	assert.Equal(t, testFeeDurationInfo.FeeTypeID, resp1.Info.FeeTypeID)
@@ -52,7 +53,7 @@ func TestFeeDurationCRUD(t *testing.T) {
 		Info: testFeeDurationInfo,
 	})
 	assert.Nil(t, err)
-	err = json.Unmarshal(restyRet.Body(), resp1)
+	err = json.Unmarshal(restyRet.Body(), resp2)
 	assert.Nil(t, err)
 	assert.Equal(t, testFeeDurationInfo.ID, resp2.Info.ID)
 	assert.Equal(t, testFeeDurationInfo.Duration, resp2.Info.Duration)
@@ -64,7 +65,7 @@ func TestFeeDurationCRUD(t *testing.T) {
 		ID: testFeeDurationInfo.ID,
 	})
 	assert.Nil(t, err)
-	err = json.Unmarshal(restyRet.Body(), resp1)
+	err = json.Unmarshal(restyRet.Body(), resp3)
 	assert.Nil(t, err)
 	assert.Equal(t, testFeeDurationInfo.ID, resp3.Info.ID)
 	assert.Equal(t, testFeeDurationInfo.Duration, resp3.Info.Duration)
@@ -78,7 +79,7 @@ func TestFeeDurationCRUD(t *testing.T) {
 		FeeTypeID: testFeeDurationInfo.FeeTypeID,
 	})
 	assert.Nil(t, err)
-	err = json.Unmarshal(restyRet.Body(), resp1)
+	err = json.Unmarshal(restyRet.Body(), resp4)
 	assert.Nil(t, err)
 	assert.NotNil(t, resp4.Infos)
 	assert.Positive(t, len(resp4.Infos))
@@ -89,7 +90,7 @@ func TestFeeDurationCRUD(t *testing.T) {
 		ID: testFeeDurationInfo.ID,
 	})
 	assert.Nil(t, err)
-	err = json.Unmarshal(restyRet.Body(), resp1)
+	err = json.Unmarshal(restyRet.Body(), resp5)
 	assert.Nil(t, err)
 	assert.NotNil(t, resp5.Info)
 }
