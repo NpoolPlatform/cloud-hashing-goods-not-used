@@ -2,6 +2,7 @@ package api
 
 import (
 	"encoding/json"
+	"fmt"
 	"os"
 	"strconv"
 	"testing"
@@ -33,7 +34,7 @@ func TestFeeTypeCRUD(t *testing.T) {
 
 	testFeeType := &npool.FeeType{
 		ID:             uuid.New().String(),
-		FeeType:        "TestFeeType - " + time.Now().String(),
+		FeeType:        fmt.Sprintf("TestFeeType - %v", time.Now().UTC().Unix()),
 		FeeDescription: "created by unit test",
 		PayType:        "percent",
 	}
@@ -52,7 +53,7 @@ func TestFeeTypeCRUD(t *testing.T) {
 	assertFeeTypeEqual(t, testFeeType, resp1.Info)
 
 	// update
-	testFeeType.FeeType = "UpdatedFeeType"
+	testFeeType.FeeType = fmt.Sprintf("UpdatedFeeType - %v", time.Now().UTC().Unix())
 	resp2 := &npool.CreateFeeTypeResponse{
 		Info: &npool.FeeType{},
 	}

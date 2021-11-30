@@ -36,7 +36,7 @@ func TestFeeDurationCRUD(t *testing.T) {
 	}
 	err := restyFeeDurationTest(cli, "http://localhost:50020/v1/create/fee/duration", newFeeDurationRequest, resp1)
 	assert.Nil(t, err)
-	newFeeDurationRequest.Info.ID = resp1.Info.ID
+	testFeeDurationInfo.ID = resp1.Info.ID
 	assert.Equal(t, testFeeDurationInfo.Duration, resp1.Info.Duration)
 	assert.Equal(t, testFeeDurationInfo.FeeTypeID, resp1.Info.FeeTypeID)
 
