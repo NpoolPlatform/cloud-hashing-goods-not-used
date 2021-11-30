@@ -14,7 +14,11 @@ import (
 )
 
 func assertFeeTypeEqual(t *testing.T, actual, expected *npool.FeeType) {
-	assert.Equal(t, actual.ID, expected.ID)
+	assert.NotNil(t, actual)
+	assert.NotNil(t, expected)
+	if actual.ID != "" && expected.ID != "" {
+		assert.Equal(t, actual.ID, expected.ID)
+	}
 	assert.Equal(t, actual.FeeType, expected.FeeType)
 	assert.Equal(t, actual.FeeDescription, expected.FeeDescription)
 	assert.Equal(t, actual.PayType, expected.PayType)

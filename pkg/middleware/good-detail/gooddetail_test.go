@@ -116,7 +116,7 @@ func TestGet(t *testing.T) {
 	assert.Nil(t, err)
 
 	fee1 := npool.Fee{
-		AppID:     "default",
+		AppID:     uuid.NewString(),
 		FeeTypeID: feeTypeResp1.Info.ID,
 		Value:     1.23,
 	}
