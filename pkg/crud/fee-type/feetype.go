@@ -14,7 +14,11 @@ import (
 )
 
 func validateFeeType(info *npool.FeeType) error {
-	if _, err := uuid.Parse(info.GetID()); err != nil {
+	if info.PayType != "percent" && info.PayType != "amount" {
+		return xerrors.Errorf("invalid paytype %v", info.PayType)
+	}
+	_, err := uuid.Parse(info.GetID())
+	if info.GetID() != "" && err != nil {
 		return xerrors.Errorf("invalid fee type id: %v", err)
 	}
 
