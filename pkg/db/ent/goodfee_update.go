@@ -11,7 +11,6 @@ import (
 	"entgo.io/ent/schema/field"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/goodfee"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/predicate"
-	"github.com/google/uuid"
 )
 
 // GoodFeeUpdate is the builder for updating GoodFee entities.
@@ -24,12 +23,6 @@ type GoodFeeUpdate struct {
 // Where appends a list predicates to the GoodFeeUpdate builder.
 func (gfu *GoodFeeUpdate) Where(ps ...predicate.GoodFee) *GoodFeeUpdate {
 	gfu.mutation.Where(ps...)
-	return gfu
-}
-
-// SetAppID sets the "app_id" field.
-func (gfu *GoodFeeUpdate) SetAppID(u uuid.UUID) *GoodFeeUpdate {
-	gfu.mutation.SetAppID(u)
 	return gfu
 }
 
@@ -213,13 +206,6 @@ func (gfu *GoodFeeUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			}
 		}
 	}
-	if value, ok := gfu.mutation.AppID(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeUUID,
-			Value:  value,
-			Column: goodfee.FieldAppID,
-		})
-	}
 	if value, ok := gfu.mutation.FeeType(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
@@ -300,12 +286,6 @@ type GoodFeeUpdateOne struct {
 	fields   []string
 	hooks    []Hook
 	mutation *GoodFeeMutation
-}
-
-// SetAppID sets the "app_id" field.
-func (gfuo *GoodFeeUpdateOne) SetAppID(u uuid.UUID) *GoodFeeUpdateOne {
-	gfuo.mutation.SetAppID(u)
-	return gfuo
 }
 
 // SetFeeType sets the "fee_type" field.
@@ -511,13 +491,6 @@ func (gfuo *GoodFeeUpdateOne) sqlSave(ctx context.Context) (_node *GoodFee, err 
 				ps[i](selector)
 			}
 		}
-	}
-	if value, ok := gfuo.mutation.AppID(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeUUID,
-			Value:  value,
-			Column: goodfee.FieldAppID,
-		})
 	}
 	if value, ok := gfuo.mutation.FeeType(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
