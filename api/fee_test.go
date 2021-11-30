@@ -8,7 +8,6 @@ import (
 
 	"github.com/NpoolPlatform/cloud-hashing-goods/message/npool"
 	"github.com/NpoolPlatform/go-service-framework/pkg/logger"
-	"github.com/NpoolPlatform/go-service-framework/pkg/price"
 	"github.com/go-resty/resty/v2"
 	"github.com/google/uuid"
 	"github.com/stretchr/testify/assert"
@@ -25,7 +24,7 @@ func TestFeeCRUD(t *testing.T) {
 		Info: &npool.Fee{
 			AppID:     uuid.New().String(),
 			FeeTypeID: uuid.New().String(),
-			Value:     float64(price.VisualPriceToDBPrice(1.23)),
+			Value:     1.23,
 		},
 	}
 
