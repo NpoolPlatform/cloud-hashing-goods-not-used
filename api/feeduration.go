@@ -37,7 +37,7 @@ func (s *Server) UpdateFeeDuration(ctx context.Context, in *npool.UpdateFeeDurat
 func (s *Server) GetFeeDuration(ctx context.Context, in *npool.GetFeeDurationRequest) (*npool.GetFeeDurationResponse, error) {
 	resp, err := feeduration.Get(ctx, in)
 	if err != nil {
-		logger.Sugar().Errorf("delete fee duration error: %w", err)
+		logger.Sugar().Errorf("get fee duration error: %w", err)
 		return &npool.GetFeeDurationResponse{}, status.Error(codes.Internal, "internal server error")
 	}
 	return resp, nil
