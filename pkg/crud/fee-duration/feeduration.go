@@ -77,7 +77,7 @@ func Update(ctx context.Context, in *npool.UpdateFeeDurationRequest) (*npool.Upd
 func Get(ctx context.Context, in *npool.GetFeeDurationRequest) (*npool.GetFeeDurationResponse, error) {
 	id, err := uuid.Parse(in.GetID())
 	if err != nil {
-		return nil, xerrors.Errorf("invalid fee duration id: %v", err)
+		return nil, xerrors.Errorf("invalid fee duration id: %v", in.GetID())
 	}
 
 	infos, err := db.Client().

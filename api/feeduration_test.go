@@ -2,6 +2,7 @@ package api
 
 import (
 	"encoding/json"
+	"fmt"
 	"os"
 	"strconv"
 	"testing"
@@ -10,78 +11,105 @@ import (
 	"github.com/go-resty/resty/v2"
 	"github.com/google/uuid"
 	"github.com/stretchr/testify/assert"
+	"golang.org/x/xerrors"
 )
-
-func assertFeeDurationEqual(t *testing.T, actual, expected *npool.FeeDuration) {
-	assert.Equal(t, actual.ID, expected.ID)
-	assert.Equal(t, actual.Duration, expected.Duration)
-	assert.Equal(t, actual.FeeTypeID, expected.FeeTypeID)
-}
 
 func TestFeeDurationCRUD(t *testing.T) {
 	if runByGithubAction, err := strconv.ParseBool(os.Getenv("RUN_BY_GITHUB_ACTION")); err == nil && runByGithubAction {
 		return
 	}
 
+	testFeeDurationInfo := &npool.FeeDuration{
+		FeeTypeID: uuid.New().String(),
+		Duration:  30,
+	}
+
 	cli := resty.New()
 
 	newFeeDurationRequest := &npool.CreateFeeDurationRequest{
-		Info: &npool.FeeDuration{
-			ID:        uuid.New().String(),
-			FeeTypeID: uuid.New().String(),
-			Duration:  30,
-		},
+		Info: testFeeDurationInfo,
 	}
 
 	// create
-	respFeeDurationResponse := npool.CreateFeeDurationResponse{}
-	restyFeeDurationTest(cli, t, "http://localhost:50020/v1/create/fee/duration", newFeeDurationRequest, &respFeeDurationResponse)
-	newFeeDurationRequest.Info.ID = respFeeDurationResponse.Info.ID
-	assert.Equal(t, newFeeDurationRequest.Info.Duration, respFeeDurationResponse.Info.Duration)
-	assert.Equal(t, newFeeDurationRequest.Info.FeeTypeID, respFeeDurationResponse.Info.FeeTypeID)
+	resp1 := &npool.CreateFeeDurationResponse{
+		Info: testFeeDurationInfo,
+	}
+	resp, err := cli.R().
+		SetHeader("Content-Type", "application/json").
+		SetBody(newFeeDurationRequest).
+		Post("http://localhost:50020/v1/create/fee/duration")
+	assert.Nil(t, err)
+	assert.NotNil(t, resp)
+	restyRet := resp
+	// restyRet, err := restyFeeDurationTest(cli, "http://localhost:50020/v1/create/fee/duration", newFeeDurationRequest)
+	assert.Nil(t, err)
+	err = json.Unmarshal(restyRet.Body(), resp1)
+	assert.Nil(t, err)
+	fmt.Println(restyRet.Body())
+	fmt.Println(restyRet.String())
+	testFeeDurationInfo.ID = resp1.Info.ID
+	assert.Equal(t, testFeeDurationInfo.Duration, resp1.Info.Duration)
+	assert.Equal(t, testFeeDurationInfo.FeeTypeID, resp1.Info.FeeTypeID)
+	fmt.Printf("created: %v", resp1.Info)
 
 	// update
-	respFeeDurationResponse.Info.Duration = 0
-	resp2 := npool.UpdateFeeDurationResponse{}
-	restyFeeDurationTest(cli, t, "http://localhost:50020/v1/update/fee/duration", &npool.UpdateFeeDurationRequest{
-		Info: respFeeDurationResponse.Info,
-	}, &resp2)
-	assertFeeDurationEqual(t, respFeeDurationResponse.Info, resp2.Info)
+	testFeeDurationInfo.Duration = 0
+	resp2 := &npool.UpdateFeeDurationResponse{
+		Info: &npool.FeeDuration{},
+	}
+	restyRet, err = restyFeeDurationTest(cli, "http://localhost:50020/v1/update/fee/duration", &npool.UpdateFeeDurationRequest{
+		Info: testFeeDurationInfo,
+	})
+	assert.Nil(t, err)
+	err = json.Unmarshal(restyRet.Body(), resp2)
+	assert.Nil(t, err)
+	assert.Equal(t, testFeeDurationInfo.ID, resp2.Info.ID)
+	assert.Equal(t, testFeeDurationInfo.Duration, resp2.Info.Duration)
+	assert.Equal(t, testFeeDurationInfo.FeeTypeID, resp2.Info.FeeTypeID)
 
 	// get
-	resp3 := npool.GetFeeDurationResponse{}
-	restyFeeDurationTest(cli, t, "http://localhost:50020/v1/get/fee/duration", &npool.GetFeeDurationRequest{
-		ID: newFeeDurationRequest.Info.ID,
-	}, &resp3)
-	assertFeeDurationEqual(t, newFeeDurationRequest.Info, resp3.Info)
+	resp3 := &npool.GetFeeDurationResponse{}
+	restyRet, err = restyFeeDurationTest(cli, "http://localhost:50020/v1/get/fee/duration", &npool.GetFeeDurationRequest{
+		ID: testFeeDurationInfo.ID,
+	})
+	assert.Nil(t, err)
+	err = json.Unmarshal(restyRet.Body(), resp3)
+	assert.Nil(t, err)
+	assert.Equal(t, testFeeDurationInfo.ID, resp3.Info.ID)
+	assert.Equal(t, testFeeDurationInfo.Duration, resp3.Info.Duration)
+	assert.Equal(t, testFeeDurationInfo.FeeTypeID, resp3.Info.FeeTypeID)
 
 	// get by fee type
-	resp4 := npool.GetFeeDurationsByFeeTypeResponse{
+	resp4 := &npool.GetFeeDurationsByFeeTypeResponse{
 		Infos: []*npool.FeeDuration{},
 	}
-	restyFeeDurationTest(cli, t, "http://localhost:50020/v1/get/fee/duration", &npool.GetFeeDurationsByFeeTypeRequest{
-		FeeTypeID: newFeeDurationRequest.Info.FeeTypeID,
-	}, &resp4)
+	restyRet, err = restyFeeDurationTest(cli, "http://localhost:50020/v1/get/fee/durations/feetype", &npool.GetFeeDurationsByFeeTypeRequest{
+		FeeTypeID: testFeeDurationInfo.FeeTypeID,
+	})
+	assert.Nil(t, err)
+	err = json.Unmarshal(restyRet.Body(), resp4)
+	assert.Nil(t, err)
 	assert.NotNil(t, resp4.Infos)
 	assert.Positive(t, len(resp4.Infos))
 
 	// delete
-	resp5 := npool.DeleteFeeDurationResponse{}
-	restyFeeDurationTest(cli, t, "http://localhost:50020/v1/get/fee/duration", &npool.DeleteFeeDurationRequest{
-		ID: newFeeDurationRequest.Info.ID,
-	}, &resp5)
+	resp5 := &npool.DeleteFeeDurationResponse{}
+	restyRet, err = restyFeeDurationTest(cli, "http://localhost:50020/v1/get/fee/duration", &npool.DeleteFeeDurationRequest{
+		ID: testFeeDurationInfo.ID,
+	})
+	assert.Nil(t, err)
+	err = json.Unmarshal(restyRet.Body(), resp5)
+	assert.Nil(t, err)
 	assert.NotNil(t, resp5.Info)
 }
 
-func restyFeeDurationTest(cli *resty.Client, t *testing.T, url string, body interface{ String() string }, respStructPointer interface{}) {
-	resp, err := cli.R().
+func restyFeeDurationTest(cli *resty.Client, url string, body interface{ String() string }) (resp *resty.Response, err error) {
+	resp, err = cli.R().
 		SetHeader("Content-Type", "application/json").
 		SetBody(body).
 		Post(url)
-	if assert.Nil(t, err) {
-		assert.Equal(t, 200, resp.StatusCode())
-		err = json.Unmarshal(resp.Body(), respStructPointer)
-		assert.Nil(t, err)
-		assert.NotNil(t, respStructPointer)
+	if err != nil || resp.StatusCode() != 200 {
+		err = xerrors.New("code not 200 - " + url)
 	}
+	return
 }

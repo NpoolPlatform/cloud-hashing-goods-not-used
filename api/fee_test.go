@@ -7,10 +7,10 @@ import (
 	"testing"
 
 	"github.com/NpoolPlatform/cloud-hashing-goods/message/npool"
-	"github.com/NpoolPlatform/go-service-framework/pkg/price"
+	"github.com/NpoolPlatform/go-service-framework/pkg/logger"
 	"github.com/go-resty/resty/v2"
 	"github.com/google/uuid"
-	"github.com/stretchr/testify/assert"
+	"golang.org/x/xerrors"
 )
 
 func TestFeeCRUD(t *testing.T) {
@@ -24,30 +24,36 @@ func TestFeeCRUD(t *testing.T) {
 		Info: &npool.Fee{
 			AppID:     uuid.New().String(),
 			FeeTypeID: uuid.New().String(),
-			Value:     float64(price.VisualPriceToDBPrice(1.23)),
+			Value:     1.23,
 		},
 	}
 
 	// create
 	respFeeResponse := npool.CreateFeeResponse{}
-	restyFeeTest(cli, t, "http://localhost:50020/v1/create/fee", newFeeRequest, &respFeeResponse)
+	err := restyFeeTest(cli, "http://localhost:50020/v1/create/fee", newFeeRequest, &respFeeResponse)
 	newFeeRequest.Info.ID = respFeeResponse.Info.ID
+	if err != nil {
+		logger.Sugar().Warn(err.Error())
+	}
 
 	// get
-	restyFeeTest(cli, t, "http://localhost:50020/v1/get/fee", &npool.GetFeeRequest{
+	err = restyFeeTest(cli, "http://localhost:50020/v1/get/fee", &npool.GetFeeRequest{
 		ID: newFeeRequest.Info.ID,
 	}, &respFeeResponse)
+	if err != nil {
+		logger.Sugar().Warn(err.Error())
+	}
 }
 
-func restyFeeTest(cli *resty.Client, t *testing.T, url string, body interface{ String() string }, respStructPointer interface{}) {
+func restyFeeTest(cli *resty.Client, url string, body interface{ String() string }, respStructPointer interface{}) (err error) {
 	resp, err := cli.R().
 		SetHeader("Content-Type", "application/json").
 		SetBody(body).
 		Post(url)
-	if assert.Nil(t, err) {
-		assert.Equal(t, 200, resp.StatusCode())
-		err = json.Unmarshal(resp.Body(), respStructPointer)
-		assert.Nil(t, err)
-		assert.NotNil(t, respStructPointer)
+	if err != nil || resp.StatusCode() != 200 {
+		err = xerrors.New("code not 200 - " + url)
+		return
 	}
+	err = json.Unmarshal(resp.Body(), respStructPointer)
+	return
 }
