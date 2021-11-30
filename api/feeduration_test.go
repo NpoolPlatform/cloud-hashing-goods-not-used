@@ -36,6 +36,7 @@ func TestFeeDurationCRUD(t *testing.T) {
 	// create
 	respFeeDurationResponse := npool.CreateFeeDurationResponse{}
 	restyFeeDurationTest(cli, t, "http://localhost:50020/v1/create/fee/duration", newFeeDurationRequest, &respFeeDurationResponse)
+	newFeeDurationRequest.Info.ID = respFeeDurationResponse.Info.ID
 	assertFeeDurationEqual(t, newFeeDurationRequest.Info, respFeeDurationResponse.Info)
 
 	// update
