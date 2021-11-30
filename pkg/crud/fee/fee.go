@@ -61,14 +61,10 @@ func Get(ctx context.Context, in *npool.GetFeeRequest) (*npool.GetFeeResponse, e
 	infos, err := db.Client().
 		Fee.
 		Query().
-		Where(
-			fee.Or(
-				fee.ID(id),
-			),
-		).
+		Where(fee.ID(id)).
 		All(ctx)
 	if err != nil {
-		return nil, xerrors.Errorf("fail to query fee: %v", err)
+		return nil, xerrors.Errorf("fail to query fee - %v", err)
 	}
 	if len(infos) == 0 {
 		return nil, xerrors.Errorf("empty reply of fee")

@@ -36,7 +36,7 @@ func TestFeeCRUD(t *testing.T) {
 
 	// get
 	restyFeeTest(cli, t, "http://localhost:50020/v1/get/fee", &npool.GetFeeRequest{
-		ID: respFeeResponse.Info.ID,
+		ID: newFeeRequest.Info.ID,
 	}, &respFeeResponse)
 }
 
@@ -45,6 +45,7 @@ func restyFeeTest(cli *resty.Client, t *testing.T, url string, body interface{ S
 		SetHeader("Content-Type", "application/json").
 		SetBody(body).
 		Post(url)
+	logger.Sugar().Infof("[resty] %v - %v", url, resp.String())
 	if assert.Nil(t, err) {
 		if resp.StatusCode() == 200 {
 			err = json.Unmarshal(resp.Body(), respStructPointer)
