@@ -19,7 +19,7 @@ import (
 func (s *Server) CreateFeeDuration(ctx context.Context, in *npool.CreateFeeDurationRequest) (*npool.CreateFeeDurationResponse, error) {
 	resp, err := feeduration.Create(ctx, in)
 	if err != nil {
-		logger.Sugar().Errorf("create good fee error: %w", err)
+		logger.Sugar().Errorf("create fee duration error: %w", err)
 		return &npool.CreateFeeDurationResponse{}, status.Error(codes.Internal, "internal server error")
 	}
 	return resp, nil
@@ -28,7 +28,7 @@ func (s *Server) CreateFeeDuration(ctx context.Context, in *npool.CreateFeeDurat
 func (s *Server) UpdateFeeDuration(ctx context.Context, in *npool.UpdateFeeDurationRequest) (*npool.UpdateFeeDurationResponse, error) {
 	resp, err := feeduration.Update(ctx, in)
 	if err != nil {
-		logger.Sugar().Errorf("update good fee error: %w", err)
+		logger.Sugar().Errorf("update fee duration error: %w", err)
 		return &npool.UpdateFeeDurationResponse{}, status.Error(codes.Internal, "internal server error")
 	}
 	return resp, nil
@@ -37,7 +37,7 @@ func (s *Server) UpdateFeeDuration(ctx context.Context, in *npool.UpdateFeeDurat
 func (s *Server) GetFeeDuration(ctx context.Context, in *npool.GetFeeDurationRequest) (*npool.GetFeeDurationResponse, error) {
 	resp, err := feeduration.Get(ctx, in)
 	if err != nil {
-		logger.Sugar().Errorf("delete good fee error: %w", err)
+		logger.Sugar().Errorf("delete fee duration error: %w", err)
 		return &npool.GetFeeDurationResponse{}, status.Error(codes.Internal, "internal server error")
 	}
 	return resp, nil
@@ -46,7 +46,7 @@ func (s *Server) GetFeeDuration(ctx context.Context, in *npool.GetFeeDurationReq
 func (s *Server) GetFeeDurationsByFeeType(ctx context.Context, in *npool.GetFeeDurationsByFeeTypeRequest) (*npool.GetFeeDurationsByFeeTypeResponse, error) {
 	resp, err := feeduration.GetByFeeType(ctx, in)
 	if err != nil {
-		logger.Sugar().Errorf("get good fees error: %w", err)
+		logger.Sugar().Errorf("get fee durations error: %w", err)
 		return &npool.GetFeeDurationsByFeeTypeResponse{}, status.Error(codes.Internal, "internal server error")
 	}
 	return resp, nil
@@ -55,7 +55,7 @@ func (s *Server) GetFeeDurationsByFeeType(ctx context.Context, in *npool.GetFeeD
 func (s *Server) DeleteFeeDuration(ctx context.Context, in *npool.DeleteFeeDurationRequest) (*npool.DeleteFeeDurationResponse, error) {
 	resp, err := feeduration.Delete(ctx, in)
 	if err != nil {
-		logger.Sugar().Errorf("get good fees error: %w", err)
+		logger.Sugar().Errorf("delete fee duration error: %w", err)
 		return &npool.DeleteFeeDurationResponse{}, status.Error(codes.Internal, "internal server error")
 	}
 	return resp, nil
