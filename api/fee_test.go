@@ -10,7 +10,6 @@ import (
 	"github.com/NpoolPlatform/go-service-framework/pkg/logger"
 	"github.com/go-resty/resty/v2"
 	"github.com/google/uuid"
-	"golang.org/x/xerrors"
 )
 
 func TestFeeCRUD(t *testing.T) {
@@ -50,16 +49,9 @@ func restyFeeTest(cli *resty.Client, url string, body interface{ String() string
 		SetHeader("Content-Type", "application/json").
 		SetBody(body).
 		Post(url)
-	if err != nil {
+	if err != nil || resp.StatusCode() != 200 {
 		return
 	}
-	logger.Sugar().Infof("[resty] %v - %v", url, resp.String())
-	if err == nil {
-		if resp.StatusCode() == 200 {
-			err = json.Unmarshal(resp.Body(), respStructPointer)
-		} else {
-			err = xerrors.New(resp.String())
-		}
-	}
+	err = json.Unmarshal(resp.Body(), respStructPointer)
 	return
 }

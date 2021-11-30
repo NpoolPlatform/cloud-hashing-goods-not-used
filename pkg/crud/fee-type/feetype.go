@@ -54,7 +54,7 @@ func Create(ctx context.Context, in *npool.CreateFeeTypeRequest) (*npool.CreateF
 func Update(ctx context.Context, in *npool.UpdateFeeTypeRequest) (*npool.UpdateFeeTypeResponse, error) {
 	id, err := uuid.Parse(in.GetInfo().GetID())
 	if err != nil {
-		return nil, xerrors.Errorf("invalid good fee id: %v", err)
+		return nil, xerrors.Errorf("invalid fee type id: %v", err)
 	}
 
 	if err := validateFeeType(in.GetInfo()); err != nil {
@@ -84,7 +84,7 @@ func Update(ctx context.Context, in *npool.UpdateFeeTypeRequest) (*npool.UpdateF
 func Get(ctx context.Context, in *npool.GetFeeTypeRequest) (*npool.GetFeeTypeResponse, error) {
 	id, err := uuid.Parse(in.GetID())
 	if err != nil {
-		return nil, xerrors.Errorf("invalid good fee id: %v", err)
+		return nil, xerrors.Errorf("invalid fee type id: %v", err)
 	}
 
 	infos, err := db.Client().
@@ -97,10 +97,10 @@ func Get(ctx context.Context, in *npool.GetFeeTypeRequest) (*npool.GetFeeTypeRes
 		).
 		All(ctx)
 	if err != nil {
-		return nil, xerrors.Errorf("fail to query good fee: %v", err)
+		return nil, xerrors.Errorf("fail to query fee type: %v", err)
 	}
 	if len(infos) == 0 {
-		return nil, xerrors.Errorf("empty reply of good fee")
+		return nil, xerrors.Errorf("empty reply of fee type")
 	}
 
 	return &npool.GetFeeTypeResponse{

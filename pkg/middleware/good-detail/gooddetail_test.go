@@ -11,7 +11,8 @@ import (
 	"github.com/NpoolPlatform/cloud-hashing-goods/message/npool"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/test-init" //nolint
 
-	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/crud/device-info"     //nolint
+	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/crud/device-info" //nolint
+	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/crud/fee"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/crud/fee-type"        //nolint
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/crud/good-info"       //nolint
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/crud/price-currency"  //nolint
@@ -96,21 +97,31 @@ func TestGet(t *testing.T) {
 	})
 	assert.Nil(t, err)
 
-	fee1 := npool.FeeType{
+	feeType1 := npool.FeeType{
 		FeeType: fmt.Sprintf("Gas Fee-%v", nano),
 		PayType: "amount",
 	}
-	feeResp1, err := feetype.Create(context.Background(), &npool.CreateFeeTypeRequest{
-		Info: &fee1,
+	feeTypeResp1, err := feetype.Create(context.Background(), &npool.CreateFeeTypeRequest{
+		Info: &feeType1,
 	})
 	assert.Nil(t, err)
 
-	fee2 := npool.FeeType{
+	feeType2 := npool.FeeType{
 		FeeType: fmt.Sprintf("Gas Fee 1-%v", nano),
-		PayType: "amount",
+		PayType: "percent",
 	}
-	feeResp2, err := feetype.Create(context.Background(), &npool.CreateFeeTypeRequest{
-		Info: &fee2,
+	_, err = feetype.Create(context.Background(), &npool.CreateFeeTypeRequest{
+		Info: &feeType2,
+	})
+	assert.Nil(t, err)
+
+	fee1 := npool.Fee{
+		AppID:     "default",
+		FeeTypeID: feeTypeResp1.Info.ID,
+		Value:     1.23,
+	}
+	feeResp1, err := fee.Create(context.Background(), &npool.CreateFeeRequest{
+		Info: &fee1,
 	})
 	assert.Nil(t, err)
 
@@ -132,7 +143,7 @@ func TestGet(t *testing.T) {
 		Classic:            true,
 		SupportCoinTypeIDs: []string{uuid.New().String(), uuid.New().String()},
 		Total:              100,
-		FeeIDs:             []string{feeResp1.Info.ID, feeResp2.Info.ID},
+		FeeIDs:             []string{feeResp1.Info.ID},
 	}
 	goodInfoResp, err := goodinfo.Create(context.Background(), &npool.CreateGoodRequest{
 		Info: &goodInfo,

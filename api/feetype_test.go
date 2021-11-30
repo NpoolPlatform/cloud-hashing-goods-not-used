@@ -5,6 +5,7 @@ import (
 	"os"
 	"strconv"
 	"testing"
+	"time"
 
 	"github.com/NpoolPlatform/cloud-hashing-goods/message/npool"
 	"github.com/go-resty/resty/v2"
@@ -29,7 +30,7 @@ func TestFeeTypeCRUD(t *testing.T) {
 	newFeeTypeRequest := &npool.CreateFeeTypeRequest{
 		Info: &npool.FeeType{
 			ID:             uuid.New().String(),
-			FeeType:        "TestFeeType",
+			FeeType:        "TestFeeType - " + time.Now().String(),
 			FeeDescription: "created by unit test",
 			PayType:        "percent",
 		},
@@ -37,34 +38,36 @@ func TestFeeTypeCRUD(t *testing.T) {
 
 	// create
 	respFeeTypeResponse := npool.CreateFeeTypeResponse{}
-	restyFeeTypeTest(cli, t, "http://localhost:50020/v1/create/fee/type", newFeeTypeRequest, &respFeeTypeResponse)
+	err := restyFeeTypeTest(cli, "http://localhost:50020/v1/create/fee/type", newFeeTypeRequest, &respFeeTypeResponse)
+	assert.Nil(t, err)
 	newFeeTypeRequest.Info.ID = respFeeTypeResponse.Info.ID
 	assertFeeTypeEqual(t, newFeeTypeRequest.Info, respFeeTypeResponse.Info)
 
 	// update
 	newFeeTypeRequest.Info.FeeType = "UpdatedFeeType"
 	respFeeTypeResponse = npool.CreateFeeTypeResponse{}
-	restyFeeTypeTest(cli, t, "http://localhost:50020/v1/update/fee/type", &npool.UpdateFeeTypeRequest{
+	err = restyFeeTypeTest(cli, "http://localhost:50020/v1/update/fee/type", &npool.UpdateFeeTypeRequest{
 		Info: newFeeTypeRequest.Info,
 	}, &respFeeTypeResponse)
+	assert.Nil(t, err)
 	assertFeeTypeEqual(t, newFeeTypeRequest.Info, respFeeTypeResponse.Info)
 
 	// get
-	restyFeeTypeTest(cli, t, "http://localhost:50020/v1/get/fee/type", &npool.GetFeeTypeRequest{
+	err = restyFeeTypeTest(cli, "http://localhost:50020/v1/get/fee/type", &npool.GetFeeTypeRequest{
 		ID: newFeeTypeRequest.Info.ID,
 	}, &respFeeTypeResponse)
+	assert.Nil(t, err)
 	assertFeeTypeEqual(t, newFeeTypeRequest.Info, respFeeTypeResponse.Info)
 }
 
-func restyFeeTypeTest(cli *resty.Client, t *testing.T, url string, body interface{ String() string }, respStructPointer interface{}) {
+func restyFeeTypeTest(cli *resty.Client, url string, body interface{ String() string }, respStructPointer interface{}) (err error) {
 	resp, err := cli.R().
 		SetHeader("Content-Type", "application/json").
 		SetBody(body).
 		Post(url)
-	if assert.Nil(t, err) {
-		assert.Equal(t, 200, resp.StatusCode())
-		err = json.Unmarshal(resp.Body(), respStructPointer)
-		assert.Nil(t, err)
-		assert.NotNil(t, respStructPointer)
+	if err != nil || resp.StatusCode() != 200 {
+		return
 	}
+	err = json.Unmarshal(resp.Body(), respStructPointer)
+	return
 }
