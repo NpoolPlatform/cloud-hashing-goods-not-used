@@ -18,14 +18,16 @@ func TestFeeDurationCRUD(t *testing.T) {
 		return
 	}
 
+	testFeeDurationInfo := npool.FeeDuration{
+		ID:        uuid.New().String(),
+		FeeTypeID: uuid.New().String(),
+		Duration:  30,
+	}
+
 	cli := resty.New()
 
 	newFeeDurationRequest := &npool.CreateFeeDurationRequest{
-		Info: &npool.FeeDuration{
-			ID:        uuid.New().String(),
-			FeeTypeID: uuid.New().String(),
-			Duration:  30,
-		},
+		Info: &testFeeDurationInfo,
 	}
 
 	// create
@@ -62,7 +64,7 @@ func TestFeeDurationCRUD(t *testing.T) {
 		Infos: []*npool.FeeDuration{},
 	}
 	err = restyFeeDurationTest(cli, "http://localhost:50020/v1/get/fee/duration", &npool.GetFeeDurationsByFeeTypeRequest{
-		FeeTypeID: resp3.Info.FeeTypeID,
+		FeeTypeID: testFeeDurationInfo.FeeTypeID,
 	}, &resp4)
 	assert.Nil(t, err)
 	assert.NotNil(t, resp4.Infos)
