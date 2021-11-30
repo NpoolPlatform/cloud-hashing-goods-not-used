@@ -32,7 +32,6 @@ func TestCRUD(t *testing.T) {
 
 	nano := time.Now().UnixNano()
 	fee := npool.FeeType{
-		AppID:          uuid.New().String(),
 		FeeType:        fmt.Sprintf("GasFee-%v", nano),
 		FeeDescription: "jkjdsajlkfdlsajfdlksajlkfdjsal;fjdsa",
 		PayType:        "amount",
@@ -43,7 +42,6 @@ func TestCRUD(t *testing.T) {
 	})
 	if assert.Nil(t, err) {
 		assert.NotEqual(t, resp.Info.ID, uuid.UUID{}.String())
-		assert.Equal(t, resp.Info.AppID, fee.AppID)
 		assert.Equal(t, resp.Info.FeeType, fee.FeeType)
 		assert.Equal(t, resp.Info.FeeDescription, fee.FeeDescription)
 		assert.Equal(t, resp.Info.PayType, fee.PayType)
@@ -54,7 +52,6 @@ func TestCRUD(t *testing.T) {
 	})
 	if assert.Nil(t, err) {
 		assert.Equal(t, resp1.Info.ID, resp.Info.ID)
-		assert.Equal(t, resp.Info.AppID, fee.AppID)
 		assert.Equal(t, resp.Info.FeeType, fee.FeeType)
 		assert.Equal(t, resp.Info.FeeDescription, fee.FeeDescription)
 		assert.Equal(t, resp.Info.PayType, fee.PayType)

@@ -981,7 +981,6 @@
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
 | ID | [string](#string) |  |  |
-| AppID | [string](#string) |  |  |
 | FeeType | [string](#string) |  |  |
 | FeeDescription | [string](#string) |  |  |
 | PayType | [string](#string) |  |  |

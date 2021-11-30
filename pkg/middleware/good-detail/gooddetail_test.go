@@ -97,7 +97,6 @@ func TestGet(t *testing.T) {
 	assert.Nil(t, err)
 
 	fee1 := npool.FeeType{
-		AppID:   uuid.New().String(),
 		FeeType: fmt.Sprintf("Gas Fee-%v", nano),
 		PayType: "amount",
 	}
@@ -107,7 +106,6 @@ func TestGet(t *testing.T) {
 	assert.Nil(t, err)
 
 	fee2 := npool.FeeType{
-		AppID:   uuid.New().String(),
 		FeeType: fmt.Sprintf("Gas Fee 1-%v", nano),
 		PayType: "amount",
 	}
