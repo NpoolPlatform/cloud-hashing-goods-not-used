@@ -14,8 +14,8 @@ import (
 )
 
 func validateFeeType(info *npool.FeeType) error {
-	if _, err := uuid.Parse(info.GetAppID()); err != nil {
-		return xerrors.Errorf("invalid app id: %v", err)
+	if _, err := uuid.Parse(info.GetID()); err != nil {
+		return xerrors.Errorf("invalid fee type id: %v", err)
 	}
 
 	return nil
