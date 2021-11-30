@@ -50,6 +50,9 @@ func restyFeeTest(cli *resty.Client, url string, body interface{ String() string
 		SetHeader("Content-Type", "application/json").
 		SetBody(body).
 		Post(url)
+	if err != nil {
+		return
+	}
 	logger.Sugar().Infof("[resty] %v - %v", url, resp.String())
 	if err == nil {
 		if resp.StatusCode() == 200 {
