@@ -35,7 +35,7 @@ func TestFeeCRUD(t *testing.T) {
 
 	// get
 	restyFeeTest(cli, t, "http://localhost:50020/v1/get/fee", &npool.GetFeeRequest{
-		ID: newFeeRequest.Info.ID,
+		ID: respFeeResponse.Info.ID,
 	}, &respFeeResponse)
 }
 
