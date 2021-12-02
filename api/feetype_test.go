@@ -15,11 +15,7 @@ import (
 )
 
 func assertFeeTypeEqual(t *testing.T, actual, expected *npool.FeeType) {
-	assert.NotNil(t, actual)
-	assert.NotNil(t, expected)
-	if actual.ID != "" && expected.ID != "" {
-		assert.Equal(t, actual.ID, expected.ID)
-	}
+	assert.Equal(t, actual.ID, expected.ID)
 	assert.Equal(t, actual.FeeType, expected.FeeType)
 	assert.Equal(t, actual.FeeDescription, expected.FeeDescription)
 	assert.Equal(t, actual.PayType, expected.PayType)
@@ -48,9 +44,15 @@ func TestFeeTypeCRUD(t *testing.T) {
 		Info: &npool.FeeType{},
 	}
 	err := restyFeeTypeTest(cli, "http://localhost:50020/v1/create/fee/type", newFeeTypeRequest, resp1)
-	assert.Nil(t, err)
-	testFeeType.ID = resp1.Info.ID
-	assertFeeTypeEqual(t, testFeeType, resp1.Info)
+	if assert.Nil(t, err) {
+		testFeeType.ID = resp1.Info.ID
+		assert.Equal(t, testFeeType, testFeeType.FeeType, resp1.Info.FeeType)
+		assert.Equal(t, testFeeType, testFeeType.FeeDescription, resp1.Info.FeeDescription)
+		assert.Equal(t, testFeeType, testFeeType.PayType, resp1.Info.PayType)
+	} else {
+		fmt.Printf("error create feetype, resp: %v", resp1)
+		return
+	}
 
 	// update
 	testFeeType.FeeType = fmt.Sprintf("UpdatedFeeType - %v", time.Now().UTC().Unix())
@@ -60,8 +62,12 @@ func TestFeeTypeCRUD(t *testing.T) {
 	err = restyFeeTypeTest(cli, "http://localhost:50020/v1/update/fee/type", &npool.UpdateFeeTypeRequest{
 		Info: testFeeType,
 	}, resp2)
-	assert.Nil(t, err)
-	assertFeeTypeEqual(t, testFeeType, resp2.Info)
+	if assert.Nil(t, err) {
+		assertFeeTypeEqual(t, testFeeType, resp2.Info)
+	} else {
+		fmt.Printf("error update feetype, resp: %v", resp2)
+		return
+	}
 
 	// get
 	resp3 := &npool.GetFeeTypeResponse{
@@ -70,8 +76,12 @@ func TestFeeTypeCRUD(t *testing.T) {
 	err = restyFeeTypeTest(cli, "http://localhost:50020/v1/get/fee/type", &npool.GetFeeTypeRequest{
 		ID: testFeeType.ID,
 	}, resp3)
-	assert.Nil(t, err)
-	assertFeeTypeEqual(t, testFeeType, resp3.Info)
+	if assert.Nil(t, err) {
+		assertFeeTypeEqual(t, testFeeType, resp3.Info)
+	} else {
+		fmt.Printf("error get feetype, resp: %v", resp3)
+		return
+	}
 }
 
 func restyFeeTypeTest(cli *resty.Client, url string, body interface{ String() string }, respStructPointer interface{}) (err error) {

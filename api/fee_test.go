@@ -10,6 +10,7 @@ import (
 	"github.com/NpoolPlatform/go-service-framework/pkg/logger"
 	"github.com/go-resty/resty/v2"
 	"github.com/google/uuid"
+	"github.com/stretchr/testify/assert"
 	"golang.org/x/xerrors"
 )
 
@@ -32,16 +33,18 @@ func TestFeeCRUD(t *testing.T) {
 	respFeeResponse := npool.CreateFeeResponse{}
 	err := restyFeeTest(cli, "http://localhost:50020/v1/create/fee", newFeeRequest, &respFeeResponse)
 	newFeeRequest.Info.ID = respFeeResponse.Info.ID
-	if err != nil {
+	if !assert.Nil(t, err) {
 		logger.Sugar().Warn(err.Error())
+		return
 	}
 
 	// get
 	err = restyFeeTest(cli, "http://localhost:50020/v1/get/fee", &npool.GetFeeRequest{
 		ID: newFeeRequest.Info.ID,
 	}, &respFeeResponse)
-	if err != nil {
+	if !assert.Nil(t, err) {
 		logger.Sugar().Warn(err.Error())
+		return
 	}
 }
 
