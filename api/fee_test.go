@@ -7,7 +7,6 @@ import (
 	"testing"
 
 	"github.com/NpoolPlatform/cloud-hashing-goods/message/npool"
-	"github.com/NpoolPlatform/go-service-framework/pkg/logger"
 	"github.com/go-resty/resty/v2"
 	"github.com/google/uuid"
 	"github.com/stretchr/testify/assert"
@@ -32,19 +31,19 @@ func TestFeeCRUD(t *testing.T) {
 	// create
 	respFeeResponse := npool.CreateFeeResponse{}
 	err := restyFeeTest(cli, "http://localhost:50020/v1/create/fee", newFeeRequest, &respFeeResponse)
-	newFeeRequest.Info.ID = respFeeResponse.Info.ID
-	if !assert.Nil(t, err) {
-		logger.Sugar().Warn(err.Error())
-		return
+	if assert.Nil(t, err) {
+		assert.NotNil(t, respFeeResponse.Info)
+		assert.NotEmpty(t, respFeeResponse.Info.ID)
+		newFeeRequest.Info.ID = respFeeResponse.Info.ID
 	}
 
 	// get
 	err = restyFeeTest(cli, "http://localhost:50020/v1/get/fee", &npool.GetFeeRequest{
 		ID: newFeeRequest.Info.ID,
 	}, &respFeeResponse)
-	if !assert.Nil(t, err) {
-		logger.Sugar().Warn(err.Error())
-		return
+	if assert.Nil(t, err) {
+		assert.NotNil(t, respFeeResponse.Info)
+		assert.Equal(t, newFeeRequest.Info.ID, respFeeResponse.Info.ID)
 	}
 }
 

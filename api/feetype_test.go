@@ -49,9 +49,6 @@ func TestFeeTypeCRUD(t *testing.T) {
 		assert.Equal(t, testFeeType, testFeeType.FeeType, resp1.Info.FeeType)
 		assert.Equal(t, testFeeType, testFeeType.FeeDescription, resp1.Info.FeeDescription)
 		assert.Equal(t, testFeeType, testFeeType.PayType, resp1.Info.PayType)
-	} else {
-		fmt.Printf("error create feetype, resp: %v", resp1)
-		return
 	}
 
 	// update
@@ -64,9 +61,6 @@ func TestFeeTypeCRUD(t *testing.T) {
 	}, resp2)
 	if assert.Nil(t, err) {
 		assertFeeTypeEqual(t, testFeeType, resp2.Info)
-	} else {
-		fmt.Printf("error update feetype, resp: %v", resp2)
-		return
 	}
 
 	// get
@@ -78,9 +72,6 @@ func TestFeeTypeCRUD(t *testing.T) {
 	}, resp3)
 	if assert.Nil(t, err) {
 		assertFeeTypeEqual(t, testFeeType, resp3.Info)
-	} else {
-		fmt.Printf("error get feetype, resp: %v", resp3)
-		return
 	}
 }
 

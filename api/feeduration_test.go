@@ -48,12 +48,7 @@ func TestFeeDurationCRUD(t *testing.T) { // nolint
 			assert.Equal(t, testFeeDurationInfo.Duration, resp1.Info.Duration)
 			assert.Equal(t, testFeeDurationInfo.FeeTypeID, resp1.Info.FeeTypeID)
 			fmt.Printf("created: %v", resp1.Info)
-		} else {
-			fmt.Println("error create fee, resp: ", restyRet.String())
-			return
 		}
-	} else {
-		return
 	}
 
 	// update
@@ -70,12 +65,7 @@ func TestFeeDurationCRUD(t *testing.T) { // nolint
 			assert.Equal(t, testFeeDurationInfo.ID, resp2.Info.ID)
 			assert.Equal(t, testFeeDurationInfo.Duration, resp2.Info.Duration)
 			assert.Equal(t, testFeeDurationInfo.FeeTypeID, resp2.Info.FeeTypeID)
-		} else {
-			fmt.Println("error update fee, resp: ", restyRet.String())
-			return
 		}
-	} else {
-		return
 	}
 
 	// get
@@ -89,12 +79,7 @@ func TestFeeDurationCRUD(t *testing.T) { // nolint
 			assert.Equal(t, testFeeDurationInfo.ID, resp3.Info.ID)
 			assert.Equal(t, testFeeDurationInfo.Duration, resp3.Info.Duration)
 			assert.Equal(t, testFeeDurationInfo.FeeTypeID, resp3.Info.FeeTypeID)
-		} else {
-			fmt.Println("error get fee, resp: ", restyRet.String())
-			return
 		}
-	} else {
-		return
 	}
 
 	// get by fee type
@@ -109,12 +94,7 @@ func TestFeeDurationCRUD(t *testing.T) { // nolint
 		if assert.Nil(t, err) {
 			assert.NotNil(t, resp4.Infos)
 			assert.Positive(t, len(resp4.Infos))
-		} else {
-			fmt.Println("error get fees by type, resp: ", restyRet.String())
-			return
 		}
-	} else {
-		return
 	}
 
 	// delete
@@ -126,9 +106,6 @@ func TestFeeDurationCRUD(t *testing.T) { // nolint
 		err = json.Unmarshal(restyRet.Body(), resp5)
 		if assert.Nil(t, err) {
 			assert.NotNil(t, resp5.Info)
-		} else {
-			fmt.Println("error delete fee, resp: ", restyRet.String())
-			return
 		}
 	}
 }
