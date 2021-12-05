@@ -14,7 +14,21 @@ import (
 	"golang.org/x/xerrors"
 )
 
+func validateDeviceInfo(in *npool.DeviceInfo) error {
+	if in.GetType() == "" {
+		return xerrors.Errorf("invalid device type")
+	}
+	if in.GetManufacturer() == "" {
+		return xerrors.Errorf("invalid device manufacturer")
+	}
+	return nil
+}
+
 func Create(ctx context.Context, in *npool.CreateDeviceInfoRequest) (*npool.CreateDeviceInfoResponse, error) {
+	if err := validateDeviceInfo(in.GetInfo()); err != nil {
+		return nil, xerrors.Errorf("invalid parameter: %v", err)
+	}
+
 	info, err := db.Client().
 		DeviceInfo.
 		Create().
@@ -42,6 +56,10 @@ func Update(ctx context.Context, in *npool.UpdateDeviceInfoRequest) (*npool.Upda
 	id, err := uuid.Parse(in.GetInfo().GetID())
 	if err != nil {
 		return nil, xerrors.Errorf("invalid device info id: %v", err)
+	}
+
+	if err := validateDeviceInfo(in.GetInfo()); err != nil {
+		return nil, xerrors.Errorf("invalid parameter: %v", err)
 	}
 
 	info, err := db.Client().
