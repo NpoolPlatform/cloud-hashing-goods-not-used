@@ -19,9 +19,13 @@ import (
 
 func dbRowToInfo(row *ent.GoodInfo) *npool.GoodInfo {
 	ids := []string{}
-
 	for _, id := range row.SupportCoinTypeIds {
 		ids = append(ids, id.String())
+	}
+
+	feeIDs := []string{}
+	for _, id := range row.FeeIds {
+		feeIDs = append(feeIDs, id.String())
 	}
 
 	return &npool.GoodInfo{
@@ -43,6 +47,7 @@ func dbRowToInfo(row *ent.GoodInfo) *npool.GoodInfo {
 		SupportCoinTypeIDs: ids,
 		Total:              row.Total,
 		Unit:               row.Unit,
+		FeeIDs:             feeIDs,
 	}
 }
 
@@ -85,6 +90,11 @@ func Create(ctx context.Context, in *npool.CreateGoodRequest) (*npool.CreateGood
 		ids = append(ids, uuid.MustParse(id))
 	}
 
+	feeIDs := []uuid.UUID{}
+	for _, id := range in.GetInfo().GetFeeIDs() {
+		feeIDs = append(feeIDs, uuid.MustParse(id))
+	}
+
 	info, err := db.Client().
 		GoodInfo.
 		Create().
@@ -105,6 +115,7 @@ func Create(ctx context.Context, in *npool.CreateGoodRequest) (*npool.CreateGood
 		SetSupportCoinTypeIds(ids).
 		SetTotal(in.GetInfo().GetTotal()).
 		SetUnit(in.GetInfo().GetUnit()).
+		SetFeeIds(feeIDs).
 		Save(ctx)
 	if err != nil {
 		return nil, xerrors.Errorf("fail to create good: %v", err)

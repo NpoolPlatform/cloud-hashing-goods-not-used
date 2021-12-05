@@ -6250,6 +6250,7 @@ type GoodInfoMutation struct {
 	title                 *string
 	unit                  *string
 	support_coin_type_ids *[]uuid.UUID
+	fee_ids               *[]uuid.UUID
 	total                 *int32
 	addtotal              *int32
 	create_at             *uint32
@@ -7005,6 +7006,42 @@ func (m *GoodInfoMutation) ResetSupportCoinTypeIds() {
 	m.support_coin_type_ids = nil
 }
 
+// SetFeeIds sets the "fee_ids" field.
+func (m *GoodInfoMutation) SetFeeIds(u []uuid.UUID) {
+	m.fee_ids = &u
+}
+
+// FeeIds returns the value of the "fee_ids" field in the mutation.
+func (m *GoodInfoMutation) FeeIds() (r []uuid.UUID, exists bool) {
+	v := m.fee_ids
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldFeeIds returns the old "fee_ids" field's value of the GoodInfo entity.
+// If the GoodInfo object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *GoodInfoMutation) OldFeeIds(ctx context.Context) (v []uuid.UUID, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, fmt.Errorf("OldFeeIds is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, fmt.Errorf("OldFeeIds requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldFeeIds: %w", err)
+	}
+	return oldValue.FeeIds, nil
+}
+
+// ResetFeeIds resets all changes to the "fee_ids" field.
+func (m *GoodInfoMutation) ResetFeeIds() {
+	m.fee_ids = nil
+}
+
 // SetTotal sets the "total" field.
 func (m *GoodInfoMutation) SetTotal(i int32) {
 	m.total = &i
@@ -7248,7 +7285,7 @@ func (m *GoodInfoMutation) Type() string {
 // order to get all numeric fields that were incremented/decremented, call
 // AddedFields().
 func (m *GoodInfoMutation) Fields() []string {
-	fields := make([]string, 0, 20)
+	fields := make([]string, 0, 21)
 	if m.device_info_id != nil {
 		fields = append(fields, goodinfo.FieldDeviceInfoID)
 	}
@@ -7296,6 +7333,9 @@ func (m *GoodInfoMutation) Fields() []string {
 	}
 	if m.support_coin_type_ids != nil {
 		fields = append(fields, goodinfo.FieldSupportCoinTypeIds)
+	}
+	if m.fee_ids != nil {
+		fields = append(fields, goodinfo.FieldFeeIds)
 	}
 	if m.total != nil {
 		fields = append(fields, goodinfo.FieldTotal)
@@ -7349,6 +7389,8 @@ func (m *GoodInfoMutation) Field(name string) (ent.Value, bool) {
 		return m.Unit()
 	case goodinfo.FieldSupportCoinTypeIds:
 		return m.SupportCoinTypeIds()
+	case goodinfo.FieldFeeIds:
+		return m.FeeIds()
 	case goodinfo.FieldTotal:
 		return m.Total()
 	case goodinfo.FieldCreateAt:
@@ -7398,6 +7440,8 @@ func (m *GoodInfoMutation) OldField(ctx context.Context, name string) (ent.Value
 		return m.OldUnit(ctx)
 	case goodinfo.FieldSupportCoinTypeIds:
 		return m.OldSupportCoinTypeIds(ctx)
+	case goodinfo.FieldFeeIds:
+		return m.OldFeeIds(ctx)
 	case goodinfo.FieldTotal:
 		return m.OldTotal(ctx)
 	case goodinfo.FieldCreateAt:
@@ -7526,6 +7570,13 @@ func (m *GoodInfoMutation) SetField(name string, value ent.Value) error {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.SetSupportCoinTypeIds(v)
+		return nil
+	case goodinfo.FieldFeeIds:
+		v, ok := value.([]uuid.UUID)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetFeeIds(v)
 		return nil
 	case goodinfo.FieldTotal:
 		v, ok := value.(int32)
@@ -7750,6 +7801,9 @@ func (m *GoodInfoMutation) ResetField(name string) error {
 		return nil
 	case goodinfo.FieldSupportCoinTypeIds:
 		m.ResetSupportCoinTypeIds()
+		return nil
+	case goodinfo.FieldFeeIds:
+		m.ResetFeeIds()
 		return nil
 	case goodinfo.FieldTotal:
 		m.ResetTotal()

@@ -119,6 +119,12 @@ func (gic *GoodInfoCreate) SetSupportCoinTypeIds(u []uuid.UUID) *GoodInfoCreate 
 	return gic
 }
 
+// SetFeeIds sets the "fee_ids" field.
+func (gic *GoodInfoCreate) SetFeeIds(u []uuid.UUID) *GoodInfoCreate {
+	gic.mutation.SetFeeIds(u)
+	return gic
+}
+
 // SetTotal sets the "total" field.
 func (gic *GoodInfoCreate) SetTotal(i int32) *GoodInfoCreate {
 	gic.mutation.SetTotal(i)
@@ -332,6 +338,9 @@ func (gic *GoodInfoCreate) check() error {
 	if _, ok := gic.mutation.SupportCoinTypeIds(); !ok {
 		return &ValidationError{Name: "support_coin_type_ids", err: errors.New(`ent: missing required field "support_coin_type_ids"`)}
 	}
+	if _, ok := gic.mutation.FeeIds(); !ok {
+		return &ValidationError{Name: "fee_ids", err: errors.New(`ent: missing required field "fee_ids"`)}
+	}
 	if _, ok := gic.mutation.Total(); !ok {
 		return &ValidationError{Name: "total", err: errors.New(`ent: missing required field "total"`)}
 	}
@@ -509,6 +518,14 @@ func (gic *GoodInfoCreate) createSpec() (*GoodInfo, *sqlgraph.CreateSpec) {
 			Column: goodinfo.FieldSupportCoinTypeIds,
 		})
 		_node.SupportCoinTypeIds = value
+	}
+	if value, ok := gic.mutation.FeeIds(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeJSON,
+			Value:  value,
+			Column: goodinfo.FieldFeeIds,
+		})
+		_node.FeeIds = value
 	}
 	if value, ok := gic.mutation.Total(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
@@ -785,6 +802,18 @@ func (u *GoodInfoUpsert) SetSupportCoinTypeIds(v []uuid.UUID) *GoodInfoUpsert {
 // UpdateSupportCoinTypeIds sets the "support_coin_type_ids" field to the value that was provided on create.
 func (u *GoodInfoUpsert) UpdateSupportCoinTypeIds() *GoodInfoUpsert {
 	u.SetExcluded(goodinfo.FieldSupportCoinTypeIds)
+	return u
+}
+
+// SetFeeIds sets the "fee_ids" field.
+func (u *GoodInfoUpsert) SetFeeIds(v []uuid.UUID) *GoodInfoUpsert {
+	u.Set(goodinfo.FieldFeeIds, v)
+	return u
+}
+
+// UpdateFeeIds sets the "fee_ids" field to the value that was provided on create.
+func (u *GoodInfoUpsert) UpdateFeeIds() *GoodInfoUpsert {
+	u.SetExcluded(goodinfo.FieldFeeIds)
 	return u
 }
 
@@ -1107,6 +1136,20 @@ func (u *GoodInfoUpsertOne) SetSupportCoinTypeIds(v []uuid.UUID) *GoodInfoUpsert
 func (u *GoodInfoUpsertOne) UpdateSupportCoinTypeIds() *GoodInfoUpsertOne {
 	return u.Update(func(s *GoodInfoUpsert) {
 		s.UpdateSupportCoinTypeIds()
+	})
+}
+
+// SetFeeIds sets the "fee_ids" field.
+func (u *GoodInfoUpsertOne) SetFeeIds(v []uuid.UUID) *GoodInfoUpsertOne {
+	return u.Update(func(s *GoodInfoUpsert) {
+		s.SetFeeIds(v)
+	})
+}
+
+// UpdateFeeIds sets the "fee_ids" field to the value that was provided on create.
+func (u *GoodInfoUpsertOne) UpdateFeeIds() *GoodInfoUpsertOne {
+	return u.Update(func(s *GoodInfoUpsert) {
+		s.UpdateFeeIds()
 	})
 }
 
@@ -1603,6 +1646,20 @@ func (u *GoodInfoUpsertBulk) SetSupportCoinTypeIds(v []uuid.UUID) *GoodInfoUpser
 func (u *GoodInfoUpsertBulk) UpdateSupportCoinTypeIds() *GoodInfoUpsertBulk {
 	return u.Update(func(s *GoodInfoUpsert) {
 		s.UpdateSupportCoinTypeIds()
+	})
+}
+
+// SetFeeIds sets the "fee_ids" field.
+func (u *GoodInfoUpsertBulk) SetFeeIds(v []uuid.UUID) *GoodInfoUpsertBulk {
+	return u.Update(func(s *GoodInfoUpsert) {
+		s.SetFeeIds(v)
+	})
+}
+
+// UpdateFeeIds sets the "fee_ids" field to the value that was provided on create.
+func (u *GoodInfoUpsertBulk) UpdateFeeIds() *GoodInfoUpsertBulk {
+	return u.Update(func(s *GoodInfoUpsert) {
+		s.UpdateFeeIds()
 	})
 }
 

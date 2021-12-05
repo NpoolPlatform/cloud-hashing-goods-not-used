@@ -49,6 +49,8 @@ type GoodInfo struct {
 	Unit string `json:"unit,omitempty"`
 	// SupportCoinTypeIds holds the value of the "support_coin_type_ids" field.
 	SupportCoinTypeIds []uuid.UUID `json:"support_coin_type_ids,omitempty"`
+	// FeeIds holds the value of the "fee_ids" field.
+	FeeIds []uuid.UUID `json:"fee_ids,omitempty"`
 	// Total holds the value of the "total" field.
 	Total int32 `json:"total,omitempty"`
 	// CreateAt holds the value of the "create_at" field.
@@ -64,7 +66,7 @@ func (*GoodInfo) scanValues(columns []string) ([]interface{}, error) {
 	values := make([]interface{}, len(columns))
 	for i := range columns {
 		switch columns[i] {
-		case goodinfo.FieldSupportCoinTypeIds:
+		case goodinfo.FieldSupportCoinTypeIds, goodinfo.FieldFeeIds:
 			values[i] = new([]byte)
 		case goodinfo.FieldSeparateFee, goodinfo.FieldActuals, goodinfo.FieldClassic:
 			values[i] = new(sql.NullBool)
@@ -193,6 +195,14 @@ func (gi *GoodInfo) assignValues(columns []string, values []interface{}) error {
 					return fmt.Errorf("unmarshal field support_coin_type_ids: %w", err)
 				}
 			}
+		case goodinfo.FieldFeeIds:
+			if value, ok := values[i].(*[]byte); !ok {
+				return fmt.Errorf("unexpected type %T for field fee_ids", values[i])
+			} else if value != nil && len(*value) > 0 {
+				if err := json.Unmarshal(*value, &gi.FeeIds); err != nil {
+					return fmt.Errorf("unmarshal field fee_ids: %w", err)
+				}
+			}
 		case goodinfo.FieldTotal:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field total", values[i])
@@ -277,6 +287,8 @@ func (gi *GoodInfo) String() string {
 	builder.WriteString(gi.Unit)
 	builder.WriteString(", support_coin_type_ids=")
 	builder.WriteString(fmt.Sprintf("%v", gi.SupportCoinTypeIds))
+	builder.WriteString(", fee_ids=")
+	builder.WriteString(fmt.Sprintf("%v", gi.FeeIds))
 	builder.WriteString(", total=")
 	builder.WriteString(fmt.Sprintf("%v", gi.Total))
 	builder.WriteString(", create_at=")

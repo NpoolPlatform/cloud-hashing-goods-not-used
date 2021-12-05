@@ -151,6 +151,12 @@ func (giu *GoodInfoUpdate) SetSupportCoinTypeIds(u []uuid.UUID) *GoodInfoUpdate 
 	return giu
 }
 
+// SetFeeIds sets the "fee_ids" field.
+func (giu *GoodInfoUpdate) SetFeeIds(u []uuid.UUID) *GoodInfoUpdate {
+	giu.mutation.SetFeeIds(u)
+	return giu
+}
+
 // SetTotal sets the "total" field.
 func (giu *GoodInfoUpdate) SetTotal(i int32) *GoodInfoUpdate {
 	giu.mutation.ResetTotal()
@@ -481,6 +487,13 @@ func (giu *GoodInfoUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			Column: goodinfo.FieldSupportCoinTypeIds,
 		})
 	}
+	if value, ok := giu.mutation.FeeIds(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeJSON,
+			Value:  value,
+			Column: goodinfo.FieldFeeIds,
+		})
+	}
 	if value, ok := giu.mutation.Total(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeInt32,
@@ -677,6 +690,12 @@ func (giuo *GoodInfoUpdateOne) SetUnit(s string) *GoodInfoUpdateOne {
 // SetSupportCoinTypeIds sets the "support_coin_type_ids" field.
 func (giuo *GoodInfoUpdateOne) SetSupportCoinTypeIds(u []uuid.UUID) *GoodInfoUpdateOne {
 	giuo.mutation.SetSupportCoinTypeIds(u)
+	return giuo
+}
+
+// SetFeeIds sets the "fee_ids" field.
+func (giuo *GoodInfoUpdateOne) SetFeeIds(u []uuid.UUID) *GoodInfoUpdateOne {
+	giuo.mutation.SetFeeIds(u)
 	return giuo
 }
 
@@ -1032,6 +1051,13 @@ func (giuo *GoodInfoUpdateOne) sqlSave(ctx context.Context) (_node *GoodInfo, er
 			Type:   field.TypeJSON,
 			Value:  value,
 			Column: goodinfo.FieldSupportCoinTypeIds,
+		})
+	}
+	if value, ok := giuo.mutation.FeeIds(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeJSON,
+			Value:  value,
+			Column: goodinfo.FieldFeeIds,
 		})
 	}
 	if value, ok := giuo.mutation.Total(); ok {

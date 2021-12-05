@@ -201,6 +201,7 @@ var (
 		{Name: "title", Type: field.TypeString},
 		{Name: "unit", Type: field.TypeString},
 		{Name: "support_coin_type_ids", Type: field.TypeJSON},
+		{Name: "fee_ids", Type: field.TypeJSON},
 		{Name: "total", Type: field.TypeInt32},
 		{Name: "create_at", Type: field.TypeUint32},
 		{Name: "update_at", Type: field.TypeUint32},
