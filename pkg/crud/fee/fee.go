@@ -83,3 +83,32 @@ func Get(ctx context.Context, in *npool.GetFeeRequest) (*npool.GetFeeResponse, e
 		},
 	}, nil
 }
+
+func GetAll(ctx context.Context, in *npool.GetFeesRequest) (*npool.GetFeesResponse, error) {
+	infos, err := db.Client().
+		Fee.
+		Query().
+		Where(
+			fee.And(
+				fee.DeleteAt(0),
+			),
+		).
+		All(ctx)
+	if err != nil {
+		return nil, xerrors.Errorf("fail to query fees: %v", err)
+	}
+
+	fees := []*npool.Fee{}
+	for _, info := range infos {
+		fees = append(fees, &npool.Fee{
+			ID:        info.ID.String(),
+			AppID:     info.AppID.String(),
+			FeeTypeID: info.FeeTypeID.String(),
+			Value:     price.DBPriceToVisualPrice(info.Value),
+		})
+	}
+
+	return &npool.GetFeesResponse{
+		Infos: fees,
+	}, nil
+}

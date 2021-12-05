@@ -58,6 +58,8 @@
     - [GetDeviceInfosResponse](#cloud.hashing.goods.v1.GetDeviceInfosResponse)
     - [GetFeeRequest](#cloud.hashing.goods.v1.GetFeeRequest)
     - [GetFeeResponse](#cloud.hashing.goods.v1.GetFeeResponse)
+    - [GetFeesRequest](#cloud.hashing.goods.v1.GetFeesRequest)
+    - [GetFeesResponse](#cloud.hashing.goods.v1.GetFeesResponse)
     - [GetGoodCommentsRequest](#cloud.hashing.goods.v1.GetGoodCommentsRequest)
     - [GetGoodCommentsResponse](#cloud.hashing.goods.v1.GetGoodCommentsResponse)
     - [GetGoodDetailRequest](#cloud.hashing.goods.v1.GetGoodDetailRequest)
@@ -969,6 +971,36 @@
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
 | Info | [Fee](#cloud.hashing.goods.v1.Fee) |  |  |
+
+
+
+
+
+
+<a name="cloud.hashing.goods.v1.GetFeesRequest"></a>
+
+### GetFeesRequest
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| PageInfo | [PageInfo](#cloud.hashing.goods.v1.PageInfo) |  |  |
+
+
+
+
+
+
+<a name="cloud.hashing.goods.v1.GetFeesResponse"></a>
+
+### GetFeesResponse
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| Infos | [Fee](#cloud.hashing.goods.v1.Fee) | repeated |  |
 
 
 

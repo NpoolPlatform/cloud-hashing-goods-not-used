@@ -950,3 +950,11 @@ message GetFeeRequest {
 message GetFeeResponse {
     Fee Info = 1;
 }
+
+message GetFeesRequest {
+    PageInfo PageInfo = 1;
+}
+
+message GetFeesResponse {
+    repeated Fee Infos = 1;
+}

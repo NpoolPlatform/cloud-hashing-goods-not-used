@@ -32,3 +32,12 @@ func (s *Server) GetFee(ctx context.Context, in *npool.GetFeeRequest) (*npool.Ge
 	}
 	return resp, nil
 }
+
+func (s *Server) GetFees(ctx context.Context, in *npool.GetFeesRequest) (*npool.GetFeesResponse, error) {
+	resp, err := fee.GetAll(ctx, in)
+	if err != nil {
+		logger.Sugar().Errorf("get fees error: %w", err)
+		return &npool.GetFeesResponse{}, status.Error(codes.Internal, "internal server error")
+	}
+	return resp, nil
+}

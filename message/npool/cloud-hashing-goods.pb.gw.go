@@ -3191,7 +3191,7 @@ func RegisterCloudHashingGoodsHandlerFromEndpoint(ctx context.Context, mux *runt
 
 // RegisterCloudHashingGoodsHandler registers the http handlers for service CloudHashingGoods to "mux".
 // The handlers forward requests to the grpc endpoint over "conn".
-func RegisterCloudHashingGoodsHandler(ctx context.Context, mux *runtime.ServeMux, conn *grpc.ClientConn) error {
+func RegisterCloudHashingGoodsHandler(ctx context.Context, mux *runtime.ServeMux, conn grpc.ClientConnInterface) error {
 	return RegisterCloudHashingGoodsHandlerClient(ctx, mux, NewCloudHashingGoodsClient(conn))
 }
 
