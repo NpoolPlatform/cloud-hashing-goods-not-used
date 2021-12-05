@@ -326,6 +326,12 @@ service CloudHashingGoods {
             body: "*"
         };
     }
+    rpc GetFees(GetFeesRequest) returns (GetFeesResponse) {
+        option (google.api.http) = {
+            post: "/v1/get/fees"
+            body: "*"
+        };
+    }
 
     rpc CreateFeeType(CreateFeeTypeRequest) returns (CreateFeeTypeResponse) {
         option (google.api.http) = {

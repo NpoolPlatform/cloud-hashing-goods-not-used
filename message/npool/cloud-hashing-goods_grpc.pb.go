@@ -72,6 +72,7 @@ type CloudHashingGoodsClient interface {
 	GetGoodReview(ctx context.Context, in *GetGoodReviewRequest, opts ...grpc.CallOption) (*GetGoodReviewResponse, error)
 	CreateFee(ctx context.Context, in *CreateFeeRequest, opts ...grpc.CallOption) (*CreateFeeResponse, error)
 	GetFee(ctx context.Context, in *GetFeeRequest, opts ...grpc.CallOption) (*GetFeeResponse, error)
+	GetFees(ctx context.Context, in *GetFeesRequest, opts ...grpc.CallOption) (*GetFeesResponse, error)
 	CreateFeeType(ctx context.Context, in *CreateFeeTypeRequest, opts ...grpc.CallOption) (*CreateFeeTypeResponse, error)
 	UpdateFeeType(ctx context.Context, in *UpdateFeeTypeRequest, opts ...grpc.CallOption) (*UpdateFeeTypeResponse, error)
 	GetFeeType(ctx context.Context, in *GetFeeTypeRequest, opts ...grpc.CallOption) (*GetFeeTypeResponse, error)
@@ -545,6 +546,15 @@ func (c *cloudHashingGoodsClient) GetFee(ctx context.Context, in *GetFeeRequest,
 	return out, nil
 }
 
+func (c *cloudHashingGoodsClient) GetFees(ctx context.Context, in *GetFeesRequest, opts ...grpc.CallOption) (*GetFeesResponse, error) {
+	out := new(GetFeesResponse)
+	err := c.cc.Invoke(ctx, "/cloud.hashing.goods.v1.CloudHashingGoods/GetFees", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *cloudHashingGoodsClient) CreateFeeType(ctx context.Context, in *CreateFeeTypeRequest, opts ...grpc.CallOption) (*CreateFeeTypeResponse, error) {
 	out := new(CreateFeeTypeResponse)
 	err := c.cc.Invoke(ctx, "/cloud.hashing.goods.v1.CloudHashingGoods/CreateFeeType", in, out, opts...)
@@ -638,6 +648,7 @@ type CloudHashingGoodsServer interface {
 	GetGoodReview(context.Context, *GetGoodReviewRequest) (*GetGoodReviewResponse, error)
 	CreateFee(context.Context, *CreateFeeRequest) (*CreateFeeResponse, error)
 	GetFee(context.Context, *GetFeeRequest) (*GetFeeResponse, error)
+	GetFees(context.Context, *GetFeesRequest) (*GetFeesResponse, error)
 	CreateFeeType(context.Context, *CreateFeeTypeRequest) (*CreateFeeTypeResponse, error)
 	UpdateFeeType(context.Context, *UpdateFeeTypeRequest) (*UpdateFeeTypeResponse, error)
 	GetFeeType(context.Context, *GetFeeTypeRequest) (*GetFeeTypeResponse, error)
@@ -801,6 +812,9 @@ func (UnimplementedCloudHashingGoodsServer) CreateFee(context.Context, *CreateFe
 }
 func (UnimplementedCloudHashingGoodsServer) GetFee(context.Context, *GetFeeRequest) (*GetFeeResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetFee not implemented")
+}
+func (UnimplementedCloudHashingGoodsServer) GetFees(context.Context, *GetFeesRequest) (*GetFeesResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetFees not implemented")
 }
 func (UnimplementedCloudHashingGoodsServer) CreateFeeType(context.Context, *CreateFeeTypeRequest) (*CreateFeeTypeResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateFeeType not implemented")
@@ -1745,6 +1759,24 @@ func _CloudHashingGoods_GetFee_Handler(srv interface{}, ctx context.Context, dec
 	return interceptor(ctx, in, info, handler)
 }
 
+func _CloudHashingGoods_GetFees_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetFeesRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CloudHashingGoodsServer).GetFees(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cloud.hashing.goods.v1.CloudHashingGoods/GetFees",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CloudHashingGoodsServer).GetFees(ctx, req.(*GetFeesRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _CloudHashingGoods_CreateFeeType_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(CreateFeeTypeRequest)
 	if err := dec(in); err != nil {
@@ -2027,6 +2059,10 @@ var CloudHashingGoods_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetFee",
 			Handler:    _CloudHashingGoods_GetFee_Handler,
+		},
+		{
+			MethodName: "GetFees",
+			Handler:    _CloudHashingGoods_GetFees_Handler,
 		},
 		{
 			MethodName: "CreateFeeType",

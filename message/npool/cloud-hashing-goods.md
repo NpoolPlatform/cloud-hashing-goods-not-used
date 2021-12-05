@@ -2211,6 +2211,7 @@ Cloud Hashing Goods
 | GetGoodReview | [GetGoodReviewRequest](#cloud.hashing.goods.v1.GetGoodReviewRequest) | [GetGoodReviewResponse](#cloud.hashing.goods.v1.GetGoodReviewResponse) |  |
 | CreateFee | [CreateFeeRequest](#cloud.hashing.goods.v1.CreateFeeRequest) | [CreateFeeResponse](#cloud.hashing.goods.v1.CreateFeeResponse) |  |
 | GetFee | [GetFeeRequest](#cloud.hashing.goods.v1.GetFeeRequest) | [GetFeeResponse](#cloud.hashing.goods.v1.GetFeeResponse) |  |
+| GetFees | [GetFeesRequest](#cloud.hashing.goods.v1.GetFeesRequest) | [GetFeesResponse](#cloud.hashing.goods.v1.GetFeesResponse) |  |
 | CreateFeeType | [CreateFeeTypeRequest](#cloud.hashing.goods.v1.CreateFeeTypeRequest) | [CreateFeeTypeResponse](#cloud.hashing.goods.v1.CreateFeeTypeResponse) |  |
 | UpdateFeeType | [UpdateFeeTypeRequest](#cloud.hashing.goods.v1.UpdateFeeTypeRequest) | [UpdateFeeTypeResponse](#cloud.hashing.goods.v1.UpdateFeeTypeResponse) |  |
 | GetFeeType | [GetFeeTypeRequest](#cloud.hashing.goods.v1.GetFeeTypeRequest) | [GetFeeTypeResponse](#cloud.hashing.goods.v1.GetFeeTypeResponse) |  |
