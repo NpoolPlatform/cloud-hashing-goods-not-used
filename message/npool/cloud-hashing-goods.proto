@@ -327,27 +327,27 @@ service CloudHashingGoods {
         };
     }
 
-    rpc CreateGoodFee(CreateGoodFeeRequest) returns (CreateGoodFeeResponse) {
+    rpc CreateFeeType(CreateFeeTypeRequest) returns (CreateFeeTypeResponse) {
         option (google.api.http) = {
-            post: "/v1/create/good/fee"
+            post: "/v1/create/fee/type"
             body: "*"
         };
     }
-    rpc UpdateGoodFee(UpdateGoodFeeRequest) returns (UpdateGoodFeeResponse) {
+    rpc UpdateFeeType(UpdateFeeTypeRequest) returns (UpdateFeeTypeResponse) {
         option (google.api.http) = {
-            post: "/v1/update/good/fee"
+            post: "/v1/update/fee/type"
             body: "*"
         };
     }
-    rpc GetGoodFee(GetGoodFeeRequest) returns (GetGoodFeeResponse) {
+    rpc GetFeeType(GetFeeTypeRequest) returns (GetFeeTypeResponse) {
         option (google.api.http) = {
-            post: "/v1/get/good/fee"
+            post: "/v1/get/fee/type"
             body: "*"
         };
     }
-    rpc GetGoodFees(GetGoodFeesRequest) returns (GetGoodFeesResponse) {
+    rpc GetFeeTypes(GetFeeTypesRequest) returns (GetFeeTypesResponse) {
         option (google.api.http) = {
-            post: "/v1/get/good/fees"
+            post: "/v1/get/fee/types"
             body: "*"
         };
     }
@@ -603,7 +603,7 @@ message GetPriceCurrencysResponse {
 }
 
 message FeeDetail {
-    GoodFee Fee = 1;
+    FeeType Fee = 1;
     double Value = 2;
 }
 
@@ -889,43 +889,43 @@ message GetGoodReviewResponse {
     GoodReviewInfo Info = 6400;
 }
 
-message GoodFee {
+message FeeType {
     string ID = 1;
     string FeeType = 4;
     string FeeDescription = 5;
     string PayType = 6;
 }
 
-message CreateGoodFeeRequest {
-    GoodFee Info = 1;
+message CreateFeeTypeRequest {
+    FeeType Info = 1;
 }
 
-message CreateGoodFeeResponse {
-    GoodFee Info = 1;
+message CreateFeeTypeResponse {
+    FeeType Info = 1;
 }
 
-message UpdateGoodFeeRequest {
-    GoodFee Info = 1;
+message UpdateFeeTypeRequest {
+    FeeType Info = 1;
 }
 
-message UpdateGoodFeeResponse {
-    GoodFee Info = 1;
+message UpdateFeeTypeResponse {
+    FeeType Info = 1;
 }
 
-message GetGoodFeeRequest {
+message GetFeeTypeRequest {
     string ID = 1;
 }
 
-message GetGoodFeeResponse {
-    GoodFee Info = 1;
+message GetFeeTypeResponse {
+    FeeType Info = 1;
 }
 
-message GetGoodFeesRequest {
+message GetFeeTypesRequest {
     PageInfo PageInfo = 1;
 }
 
-message GetGoodFeesResponse {
-    repeated GoodFee Infos = 1;
+message GetFeeTypesResponse {
+    repeated FeeType Infos = 1;
 }
 
 message Fee {

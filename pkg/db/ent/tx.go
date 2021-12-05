@@ -22,12 +22,12 @@ type Tx struct {
 	DeviceInfo *DeviceInfoClient
 	// Fee is the client for interacting with the Fee builders.
 	Fee *FeeClient
+	// FeeType is the client for interacting with the FeeType builders.
+	FeeType *FeeTypeClient
 	// GoodComment is the client for interacting with the GoodComment builders.
 	GoodComment *GoodCommentClient
 	// GoodExtraInfo is the client for interacting with the GoodExtraInfo builders.
 	GoodExtraInfo *GoodExtraInfoClient
-	// GoodFee is the client for interacting with the GoodFee builders.
-	GoodFee *GoodFeeClient
 	// GoodInfo is the client for interacting with the GoodInfo builders.
 	GoodInfo *GoodInfoClient
 	// GoodReview is the client for interacting with the GoodReview builders.
@@ -178,9 +178,9 @@ func (tx *Tx) init() {
 	tx.AppTargetArea = NewAppTargetAreaClient(tx.config)
 	tx.DeviceInfo = NewDeviceInfoClient(tx.config)
 	tx.Fee = NewFeeClient(tx.config)
+	tx.FeeType = NewFeeTypeClient(tx.config)
 	tx.GoodComment = NewGoodCommentClient(tx.config)
 	tx.GoodExtraInfo = NewGoodExtraInfoClient(tx.config)
-	tx.GoodFee = NewGoodFeeClient(tx.config)
 	tx.GoodInfo = NewGoodInfoClient(tx.config)
 	tx.GoodReview = NewGoodReviewClient(tx.config)
 	tx.PriceCurrency = NewPriceCurrencyClient(tx.config)

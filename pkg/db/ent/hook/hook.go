@@ -74,6 +74,19 @@ func (f FeeFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, error) 
 	return f(ctx, mv)
 }
 
+// The FeeTypeFunc type is an adapter to allow the use of ordinary
+// function as FeeType mutator.
+type FeeTypeFunc func(context.Context, *ent.FeeTypeMutation) (ent.Value, error)
+
+// Mutate calls f(ctx, m).
+func (f FeeTypeFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, error) {
+	mv, ok := m.(*ent.FeeTypeMutation)
+	if !ok {
+		return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.FeeTypeMutation", m)
+	}
+	return f(ctx, mv)
+}
+
 // The GoodCommentFunc type is an adapter to allow the use of ordinary
 // function as GoodComment mutator.
 type GoodCommentFunc func(context.Context, *ent.GoodCommentMutation) (ent.Value, error)
@@ -96,19 +109,6 @@ func (f GoodExtraInfoFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Valu
 	mv, ok := m.(*ent.GoodExtraInfoMutation)
 	if !ok {
 		return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.GoodExtraInfoMutation", m)
-	}
-	return f(ctx, mv)
-}
-
-// The GoodFeeFunc type is an adapter to allow the use of ordinary
-// function as GoodFee mutator.
-type GoodFeeFunc func(context.Context, *ent.GoodFeeMutation) (ent.Value, error)
-
-// Mutate calls f(ctx, m).
-func (f GoodFeeFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, error) {
-	mv, ok := m.(*ent.GoodFeeMutation)
-	if !ok {
-		return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.GoodFeeMutation", m)
 	}
 	return f(ctx, mv)
 }

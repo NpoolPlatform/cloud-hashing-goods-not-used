@@ -21,14 +21,14 @@ type DeviceInfo func(*sql.Selector)
 // Fee is the predicate function for fee builders.
 type Fee func(*sql.Selector)
 
+// FeeType is the predicate function for feetype builders.
+type FeeType func(*sql.Selector)
+
 // GoodComment is the predicate function for goodcomment builders.
 type GoodComment func(*sql.Selector)
 
 // GoodExtraInfo is the predicate function for goodextrainfo builders.
 type GoodExtraInfo func(*sql.Selector)
-
-// GoodFee is the predicate function for goodfee builders.
-type GoodFee func(*sql.Selector)
 
 // GoodInfo is the predicate function for goodinfo builders.
 type GoodInfo func(*sql.Selector)

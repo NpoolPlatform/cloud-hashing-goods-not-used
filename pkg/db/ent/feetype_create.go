@@ -11,125 +11,125 @@ import (
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
-	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/goodfee"
+	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/feetype"
 	"github.com/google/uuid"
 )
 
-// GoodFeeCreate is the builder for creating a GoodFee entity.
-type GoodFeeCreate struct {
+// FeeTypeCreate is the builder for creating a FeeType entity.
+type FeeTypeCreate struct {
 	config
-	mutation *GoodFeeMutation
+	mutation *FeeTypeMutation
 	hooks    []Hook
 	conflict []sql.ConflictOption
 }
 
 // SetFeeType sets the "fee_type" field.
-func (gfc *GoodFeeCreate) SetFeeType(s string) *GoodFeeCreate {
-	gfc.mutation.SetFeeType(s)
-	return gfc
+func (ftc *FeeTypeCreate) SetFeeType(s string) *FeeTypeCreate {
+	ftc.mutation.SetFeeType(s)
+	return ftc
 }
 
 // SetFeeDescription sets the "fee_description" field.
-func (gfc *GoodFeeCreate) SetFeeDescription(s string) *GoodFeeCreate {
-	gfc.mutation.SetFeeDescription(s)
-	return gfc
+func (ftc *FeeTypeCreate) SetFeeDescription(s string) *FeeTypeCreate {
+	ftc.mutation.SetFeeDescription(s)
+	return ftc
 }
 
 // SetPayType sets the "pay_type" field.
-func (gfc *GoodFeeCreate) SetPayType(gt goodfee.PayType) *GoodFeeCreate {
-	gfc.mutation.SetPayType(gt)
-	return gfc
+func (ftc *FeeTypeCreate) SetPayType(ft feetype.PayType) *FeeTypeCreate {
+	ftc.mutation.SetPayType(ft)
+	return ftc
 }
 
 // SetCreateAt sets the "create_at" field.
-func (gfc *GoodFeeCreate) SetCreateAt(u uint32) *GoodFeeCreate {
-	gfc.mutation.SetCreateAt(u)
-	return gfc
+func (ftc *FeeTypeCreate) SetCreateAt(u uint32) *FeeTypeCreate {
+	ftc.mutation.SetCreateAt(u)
+	return ftc
 }
 
 // SetNillableCreateAt sets the "create_at" field if the given value is not nil.
-func (gfc *GoodFeeCreate) SetNillableCreateAt(u *uint32) *GoodFeeCreate {
+func (ftc *FeeTypeCreate) SetNillableCreateAt(u *uint32) *FeeTypeCreate {
 	if u != nil {
-		gfc.SetCreateAt(*u)
+		ftc.SetCreateAt(*u)
 	}
-	return gfc
+	return ftc
 }
 
 // SetUpdateAt sets the "update_at" field.
-func (gfc *GoodFeeCreate) SetUpdateAt(u uint32) *GoodFeeCreate {
-	gfc.mutation.SetUpdateAt(u)
-	return gfc
+func (ftc *FeeTypeCreate) SetUpdateAt(u uint32) *FeeTypeCreate {
+	ftc.mutation.SetUpdateAt(u)
+	return ftc
 }
 
 // SetNillableUpdateAt sets the "update_at" field if the given value is not nil.
-func (gfc *GoodFeeCreate) SetNillableUpdateAt(u *uint32) *GoodFeeCreate {
+func (ftc *FeeTypeCreate) SetNillableUpdateAt(u *uint32) *FeeTypeCreate {
 	if u != nil {
-		gfc.SetUpdateAt(*u)
+		ftc.SetUpdateAt(*u)
 	}
-	return gfc
+	return ftc
 }
 
 // SetDeleteAt sets the "delete_at" field.
-func (gfc *GoodFeeCreate) SetDeleteAt(u uint32) *GoodFeeCreate {
-	gfc.mutation.SetDeleteAt(u)
-	return gfc
+func (ftc *FeeTypeCreate) SetDeleteAt(u uint32) *FeeTypeCreate {
+	ftc.mutation.SetDeleteAt(u)
+	return ftc
 }
 
 // SetNillableDeleteAt sets the "delete_at" field if the given value is not nil.
-func (gfc *GoodFeeCreate) SetNillableDeleteAt(u *uint32) *GoodFeeCreate {
+func (ftc *FeeTypeCreate) SetNillableDeleteAt(u *uint32) *FeeTypeCreate {
 	if u != nil {
-		gfc.SetDeleteAt(*u)
+		ftc.SetDeleteAt(*u)
 	}
-	return gfc
+	return ftc
 }
 
 // SetID sets the "id" field.
-func (gfc *GoodFeeCreate) SetID(u uuid.UUID) *GoodFeeCreate {
-	gfc.mutation.SetID(u)
-	return gfc
+func (ftc *FeeTypeCreate) SetID(u uuid.UUID) *FeeTypeCreate {
+	ftc.mutation.SetID(u)
+	return ftc
 }
 
-// Mutation returns the GoodFeeMutation object of the builder.
-func (gfc *GoodFeeCreate) Mutation() *GoodFeeMutation {
-	return gfc.mutation
+// Mutation returns the FeeTypeMutation object of the builder.
+func (ftc *FeeTypeCreate) Mutation() *FeeTypeMutation {
+	return ftc.mutation
 }
 
-// Save creates the GoodFee in the database.
-func (gfc *GoodFeeCreate) Save(ctx context.Context) (*GoodFee, error) {
+// Save creates the FeeType in the database.
+func (ftc *FeeTypeCreate) Save(ctx context.Context) (*FeeType, error) {
 	var (
 		err  error
-		node *GoodFee
+		node *FeeType
 	)
-	gfc.defaults()
-	if len(gfc.hooks) == 0 {
-		if err = gfc.check(); err != nil {
+	ftc.defaults()
+	if len(ftc.hooks) == 0 {
+		if err = ftc.check(); err != nil {
 			return nil, err
 		}
-		node, err = gfc.sqlSave(ctx)
+		node, err = ftc.sqlSave(ctx)
 	} else {
 		var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
-			mutation, ok := m.(*GoodFeeMutation)
+			mutation, ok := m.(*FeeTypeMutation)
 			if !ok {
 				return nil, fmt.Errorf("unexpected mutation type %T", m)
 			}
-			if err = gfc.check(); err != nil {
+			if err = ftc.check(); err != nil {
 				return nil, err
 			}
-			gfc.mutation = mutation
-			if node, err = gfc.sqlSave(ctx); err != nil {
+			ftc.mutation = mutation
+			if node, err = ftc.sqlSave(ctx); err != nil {
 				return nil, err
 			}
 			mutation.id = &node.ID
 			mutation.done = true
 			return node, err
 		})
-		for i := len(gfc.hooks) - 1; i >= 0; i-- {
-			if gfc.hooks[i] == nil {
+		for i := len(ftc.hooks) - 1; i >= 0; i-- {
+			if ftc.hooks[i] == nil {
 				return nil, fmt.Errorf("ent: uninitialized hook (forgotten import ent/runtime?)")
 			}
-			mut = gfc.hooks[i](mut)
+			mut = ftc.hooks[i](mut)
 		}
-		if _, err := mut.Mutate(ctx, gfc.mutation); err != nil {
+		if _, err := mut.Mutate(ctx, ftc.mutation); err != nil {
 			return nil, err
 		}
 	}
@@ -137,8 +137,8 @@ func (gfc *GoodFeeCreate) Save(ctx context.Context) (*GoodFee, error) {
 }
 
 // SaveX calls Save and panics if Save returns an error.
-func (gfc *GoodFeeCreate) SaveX(ctx context.Context) *GoodFee {
-	v, err := gfc.Save(ctx)
+func (ftc *FeeTypeCreate) SaveX(ctx context.Context) *FeeType {
+	v, err := ftc.Save(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -146,74 +146,74 @@ func (gfc *GoodFeeCreate) SaveX(ctx context.Context) *GoodFee {
 }
 
 // Exec executes the query.
-func (gfc *GoodFeeCreate) Exec(ctx context.Context) error {
-	_, err := gfc.Save(ctx)
+func (ftc *FeeTypeCreate) Exec(ctx context.Context) error {
+	_, err := ftc.Save(ctx)
 	return err
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (gfc *GoodFeeCreate) ExecX(ctx context.Context) {
-	if err := gfc.Exec(ctx); err != nil {
+func (ftc *FeeTypeCreate) ExecX(ctx context.Context) {
+	if err := ftc.Exec(ctx); err != nil {
 		panic(err)
 	}
 }
 
 // defaults sets the default values of the builder before save.
-func (gfc *GoodFeeCreate) defaults() {
-	if _, ok := gfc.mutation.CreateAt(); !ok {
-		v := goodfee.DefaultCreateAt()
-		gfc.mutation.SetCreateAt(v)
+func (ftc *FeeTypeCreate) defaults() {
+	if _, ok := ftc.mutation.CreateAt(); !ok {
+		v := feetype.DefaultCreateAt()
+		ftc.mutation.SetCreateAt(v)
 	}
-	if _, ok := gfc.mutation.UpdateAt(); !ok {
-		v := goodfee.DefaultUpdateAt()
-		gfc.mutation.SetUpdateAt(v)
+	if _, ok := ftc.mutation.UpdateAt(); !ok {
+		v := feetype.DefaultUpdateAt()
+		ftc.mutation.SetUpdateAt(v)
 	}
-	if _, ok := gfc.mutation.DeleteAt(); !ok {
-		v := goodfee.DefaultDeleteAt()
-		gfc.mutation.SetDeleteAt(v)
+	if _, ok := ftc.mutation.DeleteAt(); !ok {
+		v := feetype.DefaultDeleteAt()
+		ftc.mutation.SetDeleteAt(v)
 	}
-	if _, ok := gfc.mutation.ID(); !ok {
-		v := goodfee.DefaultID()
-		gfc.mutation.SetID(v)
+	if _, ok := ftc.mutation.ID(); !ok {
+		v := feetype.DefaultID()
+		ftc.mutation.SetID(v)
 	}
 }
 
 // check runs all checks and user-defined validators on the builder.
-func (gfc *GoodFeeCreate) check() error {
-	if _, ok := gfc.mutation.FeeType(); !ok {
+func (ftc *FeeTypeCreate) check() error {
+	if _, ok := ftc.mutation.FeeType(); !ok {
 		return &ValidationError{Name: "fee_type", err: errors.New(`ent: missing required field "fee_type"`)}
 	}
-	if _, ok := gfc.mutation.FeeDescription(); !ok {
+	if _, ok := ftc.mutation.FeeDescription(); !ok {
 		return &ValidationError{Name: "fee_description", err: errors.New(`ent: missing required field "fee_description"`)}
 	}
-	if v, ok := gfc.mutation.FeeDescription(); ok {
-		if err := goodfee.FeeDescriptionValidator(v); err != nil {
+	if v, ok := ftc.mutation.FeeDescription(); ok {
+		if err := feetype.FeeDescriptionValidator(v); err != nil {
 			return &ValidationError{Name: "fee_description", err: fmt.Errorf(`ent: validator failed for field "fee_description": %w`, err)}
 		}
 	}
-	if _, ok := gfc.mutation.PayType(); !ok {
+	if _, ok := ftc.mutation.PayType(); !ok {
 		return &ValidationError{Name: "pay_type", err: errors.New(`ent: missing required field "pay_type"`)}
 	}
-	if v, ok := gfc.mutation.PayType(); ok {
-		if err := goodfee.PayTypeValidator(v); err != nil {
+	if v, ok := ftc.mutation.PayType(); ok {
+		if err := feetype.PayTypeValidator(v); err != nil {
 			return &ValidationError{Name: "pay_type", err: fmt.Errorf(`ent: validator failed for field "pay_type": %w`, err)}
 		}
 	}
-	if _, ok := gfc.mutation.CreateAt(); !ok {
+	if _, ok := ftc.mutation.CreateAt(); !ok {
 		return &ValidationError{Name: "create_at", err: errors.New(`ent: missing required field "create_at"`)}
 	}
-	if _, ok := gfc.mutation.UpdateAt(); !ok {
+	if _, ok := ftc.mutation.UpdateAt(); !ok {
 		return &ValidationError{Name: "update_at", err: errors.New(`ent: missing required field "update_at"`)}
 	}
-	if _, ok := gfc.mutation.DeleteAt(); !ok {
+	if _, ok := ftc.mutation.DeleteAt(); !ok {
 		return &ValidationError{Name: "delete_at", err: errors.New(`ent: missing required field "delete_at"`)}
 	}
 	return nil
 }
 
-func (gfc *GoodFeeCreate) sqlSave(ctx context.Context) (*GoodFee, error) {
-	_node, _spec := gfc.createSpec()
-	if err := sqlgraph.CreateNode(ctx, gfc.driver, _spec); err != nil {
+func (ftc *FeeTypeCreate) sqlSave(ctx context.Context) (*FeeType, error) {
+	_node, _spec := ftc.createSpec()
+	if err := sqlgraph.CreateNode(ctx, ftc.driver, _spec); err != nil {
 		if sqlgraph.IsConstraintError(err) {
 			err = &ConstraintError{err.Error(), err}
 		}
@@ -225,67 +225,67 @@ func (gfc *GoodFeeCreate) sqlSave(ctx context.Context) (*GoodFee, error) {
 	return _node, nil
 }
 
-func (gfc *GoodFeeCreate) createSpec() (*GoodFee, *sqlgraph.CreateSpec) {
+func (ftc *FeeTypeCreate) createSpec() (*FeeType, *sqlgraph.CreateSpec) {
 	var (
-		_node = &GoodFee{config: gfc.config}
+		_node = &FeeType{config: ftc.config}
 		_spec = &sqlgraph.CreateSpec{
-			Table: goodfee.Table,
+			Table: feetype.Table,
 			ID: &sqlgraph.FieldSpec{
 				Type:   field.TypeUUID,
-				Column: goodfee.FieldID,
+				Column: feetype.FieldID,
 			},
 		}
 	)
-	_spec.OnConflict = gfc.conflict
-	if id, ok := gfc.mutation.ID(); ok {
+	_spec.OnConflict = ftc.conflict
+	if id, ok := ftc.mutation.ID(); ok {
 		_node.ID = id
 		_spec.ID.Value = id
 	}
-	if value, ok := gfc.mutation.FeeType(); ok {
+	if value, ok := ftc.mutation.FeeType(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
 			Value:  value,
-			Column: goodfee.FieldFeeType,
+			Column: feetype.FieldFeeType,
 		})
 		_node.FeeType = value
 	}
-	if value, ok := gfc.mutation.FeeDescription(); ok {
+	if value, ok := ftc.mutation.FeeDescription(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
 			Value:  value,
-			Column: goodfee.FieldFeeDescription,
+			Column: feetype.FieldFeeDescription,
 		})
 		_node.FeeDescription = value
 	}
-	if value, ok := gfc.mutation.PayType(); ok {
+	if value, ok := ftc.mutation.PayType(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
 			Type:   field.TypeEnum,
 			Value:  value,
-			Column: goodfee.FieldPayType,
+			Column: feetype.FieldPayType,
 		})
 		_node.PayType = value
 	}
-	if value, ok := gfc.mutation.CreateAt(); ok {
+	if value, ok := ftc.mutation.CreateAt(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
 			Type:   field.TypeUint32,
 			Value:  value,
-			Column: goodfee.FieldCreateAt,
+			Column: feetype.FieldCreateAt,
 		})
 		_node.CreateAt = value
 	}
-	if value, ok := gfc.mutation.UpdateAt(); ok {
+	if value, ok := ftc.mutation.UpdateAt(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
 			Type:   field.TypeUint32,
 			Value:  value,
-			Column: goodfee.FieldUpdateAt,
+			Column: feetype.FieldUpdateAt,
 		})
 		_node.UpdateAt = value
 	}
-	if value, ok := gfc.mutation.DeleteAt(); ok {
+	if value, ok := ftc.mutation.DeleteAt(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
 			Type:   field.TypeUint32,
 			Value:  value,
-			Column: goodfee.FieldDeleteAt,
+			Column: feetype.FieldDeleteAt,
 		})
 		_node.DeleteAt = value
 	}
@@ -295,7 +295,7 @@ func (gfc *GoodFeeCreate) createSpec() (*GoodFee, *sqlgraph.CreateSpec) {
 // OnConflict allows configuring the `ON CONFLICT` / `ON DUPLICATE KEY` clause
 // of the `INSERT` statement. For example:
 //
-//	client.GoodFee.Create().
+//	client.FeeType.Create().
 //		SetFeeType(v).
 //		OnConflict(
 //			// Update the row with the new values
@@ -304,134 +304,134 @@ func (gfc *GoodFeeCreate) createSpec() (*GoodFee, *sqlgraph.CreateSpec) {
 //		).
 //		// Override some of the fields with custom
 //		// update values.
-//		Update(func(u *ent.GoodFeeUpsert) {
+//		Update(func(u *ent.FeeTypeUpsert) {
 //			SetFeeType(v+v).
 //		}).
 //		Exec(ctx)
 //
-func (gfc *GoodFeeCreate) OnConflict(opts ...sql.ConflictOption) *GoodFeeUpsertOne {
-	gfc.conflict = opts
-	return &GoodFeeUpsertOne{
-		create: gfc,
+func (ftc *FeeTypeCreate) OnConflict(opts ...sql.ConflictOption) *FeeTypeUpsertOne {
+	ftc.conflict = opts
+	return &FeeTypeUpsertOne{
+		create: ftc,
 	}
 }
 
 // OnConflictColumns calls `OnConflict` and configures the columns
 // as conflict target. Using this option is equivalent to using:
 //
-//	client.GoodFee.Create().
+//	client.FeeType.Create().
 //		OnConflict(sql.ConflictColumns(columns...)).
 //		Exec(ctx)
 //
-func (gfc *GoodFeeCreate) OnConflictColumns(columns ...string) *GoodFeeUpsertOne {
-	gfc.conflict = append(gfc.conflict, sql.ConflictColumns(columns...))
-	return &GoodFeeUpsertOne{
-		create: gfc,
+func (ftc *FeeTypeCreate) OnConflictColumns(columns ...string) *FeeTypeUpsertOne {
+	ftc.conflict = append(ftc.conflict, sql.ConflictColumns(columns...))
+	return &FeeTypeUpsertOne{
+		create: ftc,
 	}
 }
 
 type (
-	// GoodFeeUpsertOne is the builder for "upsert"-ing
-	//  one GoodFee node.
-	GoodFeeUpsertOne struct {
-		create *GoodFeeCreate
+	// FeeTypeUpsertOne is the builder for "upsert"-ing
+	//  one FeeType node.
+	FeeTypeUpsertOne struct {
+		create *FeeTypeCreate
 	}
 
-	// GoodFeeUpsert is the "OnConflict" setter.
-	GoodFeeUpsert struct {
+	// FeeTypeUpsert is the "OnConflict" setter.
+	FeeTypeUpsert struct {
 		*sql.UpdateSet
 	}
 )
 
 // SetFeeType sets the "fee_type" field.
-func (u *GoodFeeUpsert) SetFeeType(v string) *GoodFeeUpsert {
-	u.Set(goodfee.FieldFeeType, v)
+func (u *FeeTypeUpsert) SetFeeType(v string) *FeeTypeUpsert {
+	u.Set(feetype.FieldFeeType, v)
 	return u
 }
 
 // UpdateFeeType sets the "fee_type" field to the value that was provided on create.
-func (u *GoodFeeUpsert) UpdateFeeType() *GoodFeeUpsert {
-	u.SetExcluded(goodfee.FieldFeeType)
+func (u *FeeTypeUpsert) UpdateFeeType() *FeeTypeUpsert {
+	u.SetExcluded(feetype.FieldFeeType)
 	return u
 }
 
 // SetFeeDescription sets the "fee_description" field.
-func (u *GoodFeeUpsert) SetFeeDescription(v string) *GoodFeeUpsert {
-	u.Set(goodfee.FieldFeeDescription, v)
+func (u *FeeTypeUpsert) SetFeeDescription(v string) *FeeTypeUpsert {
+	u.Set(feetype.FieldFeeDescription, v)
 	return u
 }
 
 // UpdateFeeDescription sets the "fee_description" field to the value that was provided on create.
-func (u *GoodFeeUpsert) UpdateFeeDescription() *GoodFeeUpsert {
-	u.SetExcluded(goodfee.FieldFeeDescription)
+func (u *FeeTypeUpsert) UpdateFeeDescription() *FeeTypeUpsert {
+	u.SetExcluded(feetype.FieldFeeDescription)
 	return u
 }
 
 // SetPayType sets the "pay_type" field.
-func (u *GoodFeeUpsert) SetPayType(v goodfee.PayType) *GoodFeeUpsert {
-	u.Set(goodfee.FieldPayType, v)
+func (u *FeeTypeUpsert) SetPayType(v feetype.PayType) *FeeTypeUpsert {
+	u.Set(feetype.FieldPayType, v)
 	return u
 }
 
 // UpdatePayType sets the "pay_type" field to the value that was provided on create.
-func (u *GoodFeeUpsert) UpdatePayType() *GoodFeeUpsert {
-	u.SetExcluded(goodfee.FieldPayType)
+func (u *FeeTypeUpsert) UpdatePayType() *FeeTypeUpsert {
+	u.SetExcluded(feetype.FieldPayType)
 	return u
 }
 
 // SetCreateAt sets the "create_at" field.
-func (u *GoodFeeUpsert) SetCreateAt(v uint32) *GoodFeeUpsert {
-	u.Set(goodfee.FieldCreateAt, v)
+func (u *FeeTypeUpsert) SetCreateAt(v uint32) *FeeTypeUpsert {
+	u.Set(feetype.FieldCreateAt, v)
 	return u
 }
 
 // UpdateCreateAt sets the "create_at" field to the value that was provided on create.
-func (u *GoodFeeUpsert) UpdateCreateAt() *GoodFeeUpsert {
-	u.SetExcluded(goodfee.FieldCreateAt)
+func (u *FeeTypeUpsert) UpdateCreateAt() *FeeTypeUpsert {
+	u.SetExcluded(feetype.FieldCreateAt)
 	return u
 }
 
 // SetUpdateAt sets the "update_at" field.
-func (u *GoodFeeUpsert) SetUpdateAt(v uint32) *GoodFeeUpsert {
-	u.Set(goodfee.FieldUpdateAt, v)
+func (u *FeeTypeUpsert) SetUpdateAt(v uint32) *FeeTypeUpsert {
+	u.Set(feetype.FieldUpdateAt, v)
 	return u
 }
 
 // UpdateUpdateAt sets the "update_at" field to the value that was provided on create.
-func (u *GoodFeeUpsert) UpdateUpdateAt() *GoodFeeUpsert {
-	u.SetExcluded(goodfee.FieldUpdateAt)
+func (u *FeeTypeUpsert) UpdateUpdateAt() *FeeTypeUpsert {
+	u.SetExcluded(feetype.FieldUpdateAt)
 	return u
 }
 
 // SetDeleteAt sets the "delete_at" field.
-func (u *GoodFeeUpsert) SetDeleteAt(v uint32) *GoodFeeUpsert {
-	u.Set(goodfee.FieldDeleteAt, v)
+func (u *FeeTypeUpsert) SetDeleteAt(v uint32) *FeeTypeUpsert {
+	u.Set(feetype.FieldDeleteAt, v)
 	return u
 }
 
 // UpdateDeleteAt sets the "delete_at" field to the value that was provided on create.
-func (u *GoodFeeUpsert) UpdateDeleteAt() *GoodFeeUpsert {
-	u.SetExcluded(goodfee.FieldDeleteAt)
+func (u *FeeTypeUpsert) UpdateDeleteAt() *FeeTypeUpsert {
+	u.SetExcluded(feetype.FieldDeleteAt)
 	return u
 }
 
 // UpdateNewValues updates the fields using the new values that were set on create except the ID field.
 // Using this option is equivalent to using:
 //
-//	client.GoodFee.Create().
+//	client.FeeType.Create().
 //		OnConflict(
 //			sql.ResolveWithNewValues(),
 //			sql.ResolveWith(func(u *sql.UpdateSet) {
-//				u.SetIgnore(goodfee.FieldID)
+//				u.SetIgnore(feetype.FieldID)
 //			}),
 //		).
 //		Exec(ctx)
 //
-func (u *GoodFeeUpsertOne) UpdateNewValues() *GoodFeeUpsertOne {
+func (u *FeeTypeUpsertOne) UpdateNewValues() *FeeTypeUpsertOne {
 	u.create.conflict = append(u.create.conflict, sql.ResolveWithNewValues())
 	u.create.conflict = append(u.create.conflict, sql.ResolveWith(func(s *sql.UpdateSet) {
 		if _, exists := u.create.mutation.ID(); exists {
-			s.SetIgnore(goodfee.FieldID)
+			s.SetIgnore(feetype.FieldID)
 		}
 	}))
 	return u
@@ -440,136 +440,136 @@ func (u *GoodFeeUpsertOne) UpdateNewValues() *GoodFeeUpsertOne {
 // Ignore sets each column to itself in case of conflict.
 // Using this option is equivalent to using:
 //
-//  client.GoodFee.Create().
+//  client.FeeType.Create().
 //      OnConflict(sql.ResolveWithIgnore()).
 //      Exec(ctx)
 //
-func (u *GoodFeeUpsertOne) Ignore() *GoodFeeUpsertOne {
+func (u *FeeTypeUpsertOne) Ignore() *FeeTypeUpsertOne {
 	u.create.conflict = append(u.create.conflict, sql.ResolveWithIgnore())
 	return u
 }
 
 // DoNothing configures the conflict_action to `DO NOTHING`.
 // Supported only by SQLite and PostgreSQL.
-func (u *GoodFeeUpsertOne) DoNothing() *GoodFeeUpsertOne {
+func (u *FeeTypeUpsertOne) DoNothing() *FeeTypeUpsertOne {
 	u.create.conflict = append(u.create.conflict, sql.DoNothing())
 	return u
 }
 
-// Update allows overriding fields `UPDATE` values. See the GoodFeeCreate.OnConflict
+// Update allows overriding fields `UPDATE` values. See the FeeTypeCreate.OnConflict
 // documentation for more info.
-func (u *GoodFeeUpsertOne) Update(set func(*GoodFeeUpsert)) *GoodFeeUpsertOne {
+func (u *FeeTypeUpsertOne) Update(set func(*FeeTypeUpsert)) *FeeTypeUpsertOne {
 	u.create.conflict = append(u.create.conflict, sql.ResolveWith(func(update *sql.UpdateSet) {
-		set(&GoodFeeUpsert{UpdateSet: update})
+		set(&FeeTypeUpsert{UpdateSet: update})
 	}))
 	return u
 }
 
 // SetFeeType sets the "fee_type" field.
-func (u *GoodFeeUpsertOne) SetFeeType(v string) *GoodFeeUpsertOne {
-	return u.Update(func(s *GoodFeeUpsert) {
+func (u *FeeTypeUpsertOne) SetFeeType(v string) *FeeTypeUpsertOne {
+	return u.Update(func(s *FeeTypeUpsert) {
 		s.SetFeeType(v)
 	})
 }
 
 // UpdateFeeType sets the "fee_type" field to the value that was provided on create.
-func (u *GoodFeeUpsertOne) UpdateFeeType() *GoodFeeUpsertOne {
-	return u.Update(func(s *GoodFeeUpsert) {
+func (u *FeeTypeUpsertOne) UpdateFeeType() *FeeTypeUpsertOne {
+	return u.Update(func(s *FeeTypeUpsert) {
 		s.UpdateFeeType()
 	})
 }
 
 // SetFeeDescription sets the "fee_description" field.
-func (u *GoodFeeUpsertOne) SetFeeDescription(v string) *GoodFeeUpsertOne {
-	return u.Update(func(s *GoodFeeUpsert) {
+func (u *FeeTypeUpsertOne) SetFeeDescription(v string) *FeeTypeUpsertOne {
+	return u.Update(func(s *FeeTypeUpsert) {
 		s.SetFeeDescription(v)
 	})
 }
 
 // UpdateFeeDescription sets the "fee_description" field to the value that was provided on create.
-func (u *GoodFeeUpsertOne) UpdateFeeDescription() *GoodFeeUpsertOne {
-	return u.Update(func(s *GoodFeeUpsert) {
+func (u *FeeTypeUpsertOne) UpdateFeeDescription() *FeeTypeUpsertOne {
+	return u.Update(func(s *FeeTypeUpsert) {
 		s.UpdateFeeDescription()
 	})
 }
 
 // SetPayType sets the "pay_type" field.
-func (u *GoodFeeUpsertOne) SetPayType(v goodfee.PayType) *GoodFeeUpsertOne {
-	return u.Update(func(s *GoodFeeUpsert) {
+func (u *FeeTypeUpsertOne) SetPayType(v feetype.PayType) *FeeTypeUpsertOne {
+	return u.Update(func(s *FeeTypeUpsert) {
 		s.SetPayType(v)
 	})
 }
 
 // UpdatePayType sets the "pay_type" field to the value that was provided on create.
-func (u *GoodFeeUpsertOne) UpdatePayType() *GoodFeeUpsertOne {
-	return u.Update(func(s *GoodFeeUpsert) {
+func (u *FeeTypeUpsertOne) UpdatePayType() *FeeTypeUpsertOne {
+	return u.Update(func(s *FeeTypeUpsert) {
 		s.UpdatePayType()
 	})
 }
 
 // SetCreateAt sets the "create_at" field.
-func (u *GoodFeeUpsertOne) SetCreateAt(v uint32) *GoodFeeUpsertOne {
-	return u.Update(func(s *GoodFeeUpsert) {
+func (u *FeeTypeUpsertOne) SetCreateAt(v uint32) *FeeTypeUpsertOne {
+	return u.Update(func(s *FeeTypeUpsert) {
 		s.SetCreateAt(v)
 	})
 }
 
 // UpdateCreateAt sets the "create_at" field to the value that was provided on create.
-func (u *GoodFeeUpsertOne) UpdateCreateAt() *GoodFeeUpsertOne {
-	return u.Update(func(s *GoodFeeUpsert) {
+func (u *FeeTypeUpsertOne) UpdateCreateAt() *FeeTypeUpsertOne {
+	return u.Update(func(s *FeeTypeUpsert) {
 		s.UpdateCreateAt()
 	})
 }
 
 // SetUpdateAt sets the "update_at" field.
-func (u *GoodFeeUpsertOne) SetUpdateAt(v uint32) *GoodFeeUpsertOne {
-	return u.Update(func(s *GoodFeeUpsert) {
+func (u *FeeTypeUpsertOne) SetUpdateAt(v uint32) *FeeTypeUpsertOne {
+	return u.Update(func(s *FeeTypeUpsert) {
 		s.SetUpdateAt(v)
 	})
 }
 
 // UpdateUpdateAt sets the "update_at" field to the value that was provided on create.
-func (u *GoodFeeUpsertOne) UpdateUpdateAt() *GoodFeeUpsertOne {
-	return u.Update(func(s *GoodFeeUpsert) {
+func (u *FeeTypeUpsertOne) UpdateUpdateAt() *FeeTypeUpsertOne {
+	return u.Update(func(s *FeeTypeUpsert) {
 		s.UpdateUpdateAt()
 	})
 }
 
 // SetDeleteAt sets the "delete_at" field.
-func (u *GoodFeeUpsertOne) SetDeleteAt(v uint32) *GoodFeeUpsertOne {
-	return u.Update(func(s *GoodFeeUpsert) {
+func (u *FeeTypeUpsertOne) SetDeleteAt(v uint32) *FeeTypeUpsertOne {
+	return u.Update(func(s *FeeTypeUpsert) {
 		s.SetDeleteAt(v)
 	})
 }
 
 // UpdateDeleteAt sets the "delete_at" field to the value that was provided on create.
-func (u *GoodFeeUpsertOne) UpdateDeleteAt() *GoodFeeUpsertOne {
-	return u.Update(func(s *GoodFeeUpsert) {
+func (u *FeeTypeUpsertOne) UpdateDeleteAt() *FeeTypeUpsertOne {
+	return u.Update(func(s *FeeTypeUpsert) {
 		s.UpdateDeleteAt()
 	})
 }
 
 // Exec executes the query.
-func (u *GoodFeeUpsertOne) Exec(ctx context.Context) error {
+func (u *FeeTypeUpsertOne) Exec(ctx context.Context) error {
 	if len(u.create.conflict) == 0 {
-		return errors.New("ent: missing options for GoodFeeCreate.OnConflict")
+		return errors.New("ent: missing options for FeeTypeCreate.OnConflict")
 	}
 	return u.create.Exec(ctx)
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (u *GoodFeeUpsertOne) ExecX(ctx context.Context) {
+func (u *FeeTypeUpsertOne) ExecX(ctx context.Context) {
 	if err := u.create.Exec(ctx); err != nil {
 		panic(err)
 	}
 }
 
 // Exec executes the UPSERT query and returns the inserted/updated ID.
-func (u *GoodFeeUpsertOne) ID(ctx context.Context) (id uuid.UUID, err error) {
+func (u *FeeTypeUpsertOne) ID(ctx context.Context) (id uuid.UUID, err error) {
 	if u.create.driver.Dialect() == dialect.MySQL {
 		// In case of "ON CONFLICT", there is no way to get back non-numeric ID
 		// fields from the database since MySQL does not support the RETURNING clause.
-		return id, errors.New("ent: GoodFeeUpsertOne.ID is not supported by MySQL driver. Use GoodFeeUpsertOne.Exec instead")
+		return id, errors.New("ent: FeeTypeUpsertOne.ID is not supported by MySQL driver. Use FeeTypeUpsertOne.Exec instead")
 	}
 	node, err := u.create.Save(ctx)
 	if err != nil {
@@ -579,7 +579,7 @@ func (u *GoodFeeUpsertOne) ID(ctx context.Context) (id uuid.UUID, err error) {
 }
 
 // IDX is like ID, but panics if an error occurs.
-func (u *GoodFeeUpsertOne) IDX(ctx context.Context) uuid.UUID {
+func (u *FeeTypeUpsertOne) IDX(ctx context.Context) uuid.UUID {
 	id, err := u.ID(ctx)
 	if err != nil {
 		panic(err)
@@ -587,24 +587,24 @@ func (u *GoodFeeUpsertOne) IDX(ctx context.Context) uuid.UUID {
 	return id
 }
 
-// GoodFeeCreateBulk is the builder for creating many GoodFee entities in bulk.
-type GoodFeeCreateBulk struct {
+// FeeTypeCreateBulk is the builder for creating many FeeType entities in bulk.
+type FeeTypeCreateBulk struct {
 	config
-	builders []*GoodFeeCreate
+	builders []*FeeTypeCreate
 	conflict []sql.ConflictOption
 }
 
-// Save creates the GoodFee entities in the database.
-func (gfcb *GoodFeeCreateBulk) Save(ctx context.Context) ([]*GoodFee, error) {
-	specs := make([]*sqlgraph.CreateSpec, len(gfcb.builders))
-	nodes := make([]*GoodFee, len(gfcb.builders))
-	mutators := make([]Mutator, len(gfcb.builders))
-	for i := range gfcb.builders {
+// Save creates the FeeType entities in the database.
+func (ftcb *FeeTypeCreateBulk) Save(ctx context.Context) ([]*FeeType, error) {
+	specs := make([]*sqlgraph.CreateSpec, len(ftcb.builders))
+	nodes := make([]*FeeType, len(ftcb.builders))
+	mutators := make([]Mutator, len(ftcb.builders))
+	for i := range ftcb.builders {
 		func(i int, root context.Context) {
-			builder := gfcb.builders[i]
+			builder := ftcb.builders[i]
 			builder.defaults()
 			var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
-				mutation, ok := m.(*GoodFeeMutation)
+				mutation, ok := m.(*FeeTypeMutation)
 				if !ok {
 					return nil, fmt.Errorf("unexpected mutation type %T", m)
 				}
@@ -615,12 +615,12 @@ func (gfcb *GoodFeeCreateBulk) Save(ctx context.Context) ([]*GoodFee, error) {
 				nodes[i], specs[i] = builder.createSpec()
 				var err error
 				if i < len(mutators)-1 {
-					_, err = mutators[i+1].Mutate(root, gfcb.builders[i+1].mutation)
+					_, err = mutators[i+1].Mutate(root, ftcb.builders[i+1].mutation)
 				} else {
 					spec := &sqlgraph.BatchCreateSpec{Nodes: specs}
-					spec.OnConflict = gfcb.conflict
+					spec.OnConflict = ftcb.conflict
 					// Invoke the actual operation on the latest mutation in the chain.
-					if err = sqlgraph.BatchCreate(ctx, gfcb.driver, spec); err != nil {
+					if err = sqlgraph.BatchCreate(ctx, ftcb.driver, spec); err != nil {
 						if sqlgraph.IsConstraintError(err) {
 							err = &ConstraintError{err.Error(), err}
 						}
@@ -640,7 +640,7 @@ func (gfcb *GoodFeeCreateBulk) Save(ctx context.Context) ([]*GoodFee, error) {
 		}(i, ctx)
 	}
 	if len(mutators) > 0 {
-		if _, err := mutators[0].Mutate(ctx, gfcb.builders[0].mutation); err != nil {
+		if _, err := mutators[0].Mutate(ctx, ftcb.builders[0].mutation); err != nil {
 			return nil, err
 		}
 	}
@@ -648,8 +648,8 @@ func (gfcb *GoodFeeCreateBulk) Save(ctx context.Context) ([]*GoodFee, error) {
 }
 
 // SaveX is like Save, but panics if an error occurs.
-func (gfcb *GoodFeeCreateBulk) SaveX(ctx context.Context) []*GoodFee {
-	v, err := gfcb.Save(ctx)
+func (ftcb *FeeTypeCreateBulk) SaveX(ctx context.Context) []*FeeType {
+	v, err := ftcb.Save(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -657,14 +657,14 @@ func (gfcb *GoodFeeCreateBulk) SaveX(ctx context.Context) []*GoodFee {
 }
 
 // Exec executes the query.
-func (gfcb *GoodFeeCreateBulk) Exec(ctx context.Context) error {
-	_, err := gfcb.Save(ctx)
+func (ftcb *FeeTypeCreateBulk) Exec(ctx context.Context) error {
+	_, err := ftcb.Save(ctx)
 	return err
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (gfcb *GoodFeeCreateBulk) ExecX(ctx context.Context) {
-	if err := gfcb.Exec(ctx); err != nil {
+func (ftcb *FeeTypeCreateBulk) ExecX(ctx context.Context) {
+	if err := ftcb.Exec(ctx); err != nil {
 		panic(err)
 	}
 }
@@ -672,7 +672,7 @@ func (gfcb *GoodFeeCreateBulk) ExecX(ctx context.Context) {
 // OnConflict allows configuring the `ON CONFLICT` / `ON DUPLICATE KEY` clause
 // of the `INSERT` statement. For example:
 //
-//	client.GoodFee.CreateBulk(builders...).
+//	client.FeeType.CreateBulk(builders...).
 //		OnConflict(
 //			// Update the row with the new values
 //			// the was proposed for insertion.
@@ -680,56 +680,56 @@ func (gfcb *GoodFeeCreateBulk) ExecX(ctx context.Context) {
 //		).
 //		// Override some of the fields with custom
 //		// update values.
-//		Update(func(u *ent.GoodFeeUpsert) {
+//		Update(func(u *ent.FeeTypeUpsert) {
 //			SetFeeType(v+v).
 //		}).
 //		Exec(ctx)
 //
-func (gfcb *GoodFeeCreateBulk) OnConflict(opts ...sql.ConflictOption) *GoodFeeUpsertBulk {
-	gfcb.conflict = opts
-	return &GoodFeeUpsertBulk{
-		create: gfcb,
+func (ftcb *FeeTypeCreateBulk) OnConflict(opts ...sql.ConflictOption) *FeeTypeUpsertBulk {
+	ftcb.conflict = opts
+	return &FeeTypeUpsertBulk{
+		create: ftcb,
 	}
 }
 
 // OnConflictColumns calls `OnConflict` and configures the columns
 // as conflict target. Using this option is equivalent to using:
 //
-//	client.GoodFee.Create().
+//	client.FeeType.Create().
 //		OnConflict(sql.ConflictColumns(columns...)).
 //		Exec(ctx)
 //
-func (gfcb *GoodFeeCreateBulk) OnConflictColumns(columns ...string) *GoodFeeUpsertBulk {
-	gfcb.conflict = append(gfcb.conflict, sql.ConflictColumns(columns...))
-	return &GoodFeeUpsertBulk{
-		create: gfcb,
+func (ftcb *FeeTypeCreateBulk) OnConflictColumns(columns ...string) *FeeTypeUpsertBulk {
+	ftcb.conflict = append(ftcb.conflict, sql.ConflictColumns(columns...))
+	return &FeeTypeUpsertBulk{
+		create: ftcb,
 	}
 }
 
-// GoodFeeUpsertBulk is the builder for "upsert"-ing
-// a bulk of GoodFee nodes.
-type GoodFeeUpsertBulk struct {
-	create *GoodFeeCreateBulk
+// FeeTypeUpsertBulk is the builder for "upsert"-ing
+// a bulk of FeeType nodes.
+type FeeTypeUpsertBulk struct {
+	create *FeeTypeCreateBulk
 }
 
 // UpdateNewValues updates the fields using the new values that
 // were set on create. Using this option is equivalent to using:
 //
-//	client.GoodFee.Create().
+//	client.FeeType.Create().
 //		OnConflict(
 //			sql.ResolveWithNewValues(),
 //			sql.ResolveWith(func(u *sql.UpdateSet) {
-//				u.SetIgnore(goodfee.FieldID)
+//				u.SetIgnore(feetype.FieldID)
 //			}),
 //		).
 //		Exec(ctx)
 //
-func (u *GoodFeeUpsertBulk) UpdateNewValues() *GoodFeeUpsertBulk {
+func (u *FeeTypeUpsertBulk) UpdateNewValues() *FeeTypeUpsertBulk {
 	u.create.conflict = append(u.create.conflict, sql.ResolveWithNewValues())
 	u.create.conflict = append(u.create.conflict, sql.ResolveWith(func(s *sql.UpdateSet) {
 		for _, b := range u.create.builders {
 			if _, exists := b.mutation.ID(); exists {
-				s.SetIgnore(goodfee.FieldID)
+				s.SetIgnore(feetype.FieldID)
 				return
 			}
 		}
@@ -740,130 +740,130 @@ func (u *GoodFeeUpsertBulk) UpdateNewValues() *GoodFeeUpsertBulk {
 // Ignore sets each column to itself in case of conflict.
 // Using this option is equivalent to using:
 //
-//	client.GoodFee.Create().
+//	client.FeeType.Create().
 //		OnConflict(sql.ResolveWithIgnore()).
 //		Exec(ctx)
 //
-func (u *GoodFeeUpsertBulk) Ignore() *GoodFeeUpsertBulk {
+func (u *FeeTypeUpsertBulk) Ignore() *FeeTypeUpsertBulk {
 	u.create.conflict = append(u.create.conflict, sql.ResolveWithIgnore())
 	return u
 }
 
 // DoNothing configures the conflict_action to `DO NOTHING`.
 // Supported only by SQLite and PostgreSQL.
-func (u *GoodFeeUpsertBulk) DoNothing() *GoodFeeUpsertBulk {
+func (u *FeeTypeUpsertBulk) DoNothing() *FeeTypeUpsertBulk {
 	u.create.conflict = append(u.create.conflict, sql.DoNothing())
 	return u
 }
 
-// Update allows overriding fields `UPDATE` values. See the GoodFeeCreateBulk.OnConflict
+// Update allows overriding fields `UPDATE` values. See the FeeTypeCreateBulk.OnConflict
 // documentation for more info.
-func (u *GoodFeeUpsertBulk) Update(set func(*GoodFeeUpsert)) *GoodFeeUpsertBulk {
+func (u *FeeTypeUpsertBulk) Update(set func(*FeeTypeUpsert)) *FeeTypeUpsertBulk {
 	u.create.conflict = append(u.create.conflict, sql.ResolveWith(func(update *sql.UpdateSet) {
-		set(&GoodFeeUpsert{UpdateSet: update})
+		set(&FeeTypeUpsert{UpdateSet: update})
 	}))
 	return u
 }
 
 // SetFeeType sets the "fee_type" field.
-func (u *GoodFeeUpsertBulk) SetFeeType(v string) *GoodFeeUpsertBulk {
-	return u.Update(func(s *GoodFeeUpsert) {
+func (u *FeeTypeUpsertBulk) SetFeeType(v string) *FeeTypeUpsertBulk {
+	return u.Update(func(s *FeeTypeUpsert) {
 		s.SetFeeType(v)
 	})
 }
 
 // UpdateFeeType sets the "fee_type" field to the value that was provided on create.
-func (u *GoodFeeUpsertBulk) UpdateFeeType() *GoodFeeUpsertBulk {
-	return u.Update(func(s *GoodFeeUpsert) {
+func (u *FeeTypeUpsertBulk) UpdateFeeType() *FeeTypeUpsertBulk {
+	return u.Update(func(s *FeeTypeUpsert) {
 		s.UpdateFeeType()
 	})
 }
 
 // SetFeeDescription sets the "fee_description" field.
-func (u *GoodFeeUpsertBulk) SetFeeDescription(v string) *GoodFeeUpsertBulk {
-	return u.Update(func(s *GoodFeeUpsert) {
+func (u *FeeTypeUpsertBulk) SetFeeDescription(v string) *FeeTypeUpsertBulk {
+	return u.Update(func(s *FeeTypeUpsert) {
 		s.SetFeeDescription(v)
 	})
 }
 
 // UpdateFeeDescription sets the "fee_description" field to the value that was provided on create.
-func (u *GoodFeeUpsertBulk) UpdateFeeDescription() *GoodFeeUpsertBulk {
-	return u.Update(func(s *GoodFeeUpsert) {
+func (u *FeeTypeUpsertBulk) UpdateFeeDescription() *FeeTypeUpsertBulk {
+	return u.Update(func(s *FeeTypeUpsert) {
 		s.UpdateFeeDescription()
 	})
 }
 
 // SetPayType sets the "pay_type" field.
-func (u *GoodFeeUpsertBulk) SetPayType(v goodfee.PayType) *GoodFeeUpsertBulk {
-	return u.Update(func(s *GoodFeeUpsert) {
+func (u *FeeTypeUpsertBulk) SetPayType(v feetype.PayType) *FeeTypeUpsertBulk {
+	return u.Update(func(s *FeeTypeUpsert) {
 		s.SetPayType(v)
 	})
 }
 
 // UpdatePayType sets the "pay_type" field to the value that was provided on create.
-func (u *GoodFeeUpsertBulk) UpdatePayType() *GoodFeeUpsertBulk {
-	return u.Update(func(s *GoodFeeUpsert) {
+func (u *FeeTypeUpsertBulk) UpdatePayType() *FeeTypeUpsertBulk {
+	return u.Update(func(s *FeeTypeUpsert) {
 		s.UpdatePayType()
 	})
 }
 
 // SetCreateAt sets the "create_at" field.
-func (u *GoodFeeUpsertBulk) SetCreateAt(v uint32) *GoodFeeUpsertBulk {
-	return u.Update(func(s *GoodFeeUpsert) {
+func (u *FeeTypeUpsertBulk) SetCreateAt(v uint32) *FeeTypeUpsertBulk {
+	return u.Update(func(s *FeeTypeUpsert) {
 		s.SetCreateAt(v)
 	})
 }
 
 // UpdateCreateAt sets the "create_at" field to the value that was provided on create.
-func (u *GoodFeeUpsertBulk) UpdateCreateAt() *GoodFeeUpsertBulk {
-	return u.Update(func(s *GoodFeeUpsert) {
+func (u *FeeTypeUpsertBulk) UpdateCreateAt() *FeeTypeUpsertBulk {
+	return u.Update(func(s *FeeTypeUpsert) {
 		s.UpdateCreateAt()
 	})
 }
 
 // SetUpdateAt sets the "update_at" field.
-func (u *GoodFeeUpsertBulk) SetUpdateAt(v uint32) *GoodFeeUpsertBulk {
-	return u.Update(func(s *GoodFeeUpsert) {
+func (u *FeeTypeUpsertBulk) SetUpdateAt(v uint32) *FeeTypeUpsertBulk {
+	return u.Update(func(s *FeeTypeUpsert) {
 		s.SetUpdateAt(v)
 	})
 }
 
 // UpdateUpdateAt sets the "update_at" field to the value that was provided on create.
-func (u *GoodFeeUpsertBulk) UpdateUpdateAt() *GoodFeeUpsertBulk {
-	return u.Update(func(s *GoodFeeUpsert) {
+func (u *FeeTypeUpsertBulk) UpdateUpdateAt() *FeeTypeUpsertBulk {
+	return u.Update(func(s *FeeTypeUpsert) {
 		s.UpdateUpdateAt()
 	})
 }
 
 // SetDeleteAt sets the "delete_at" field.
-func (u *GoodFeeUpsertBulk) SetDeleteAt(v uint32) *GoodFeeUpsertBulk {
-	return u.Update(func(s *GoodFeeUpsert) {
+func (u *FeeTypeUpsertBulk) SetDeleteAt(v uint32) *FeeTypeUpsertBulk {
+	return u.Update(func(s *FeeTypeUpsert) {
 		s.SetDeleteAt(v)
 	})
 }
 
 // UpdateDeleteAt sets the "delete_at" field to the value that was provided on create.
-func (u *GoodFeeUpsertBulk) UpdateDeleteAt() *GoodFeeUpsertBulk {
-	return u.Update(func(s *GoodFeeUpsert) {
+func (u *FeeTypeUpsertBulk) UpdateDeleteAt() *FeeTypeUpsertBulk {
+	return u.Update(func(s *FeeTypeUpsert) {
 		s.UpdateDeleteAt()
 	})
 }
 
 // Exec executes the query.
-func (u *GoodFeeUpsertBulk) Exec(ctx context.Context) error {
+func (u *FeeTypeUpsertBulk) Exec(ctx context.Context) error {
 	for i, b := range u.create.builders {
 		if len(b.conflict) != 0 {
-			return fmt.Errorf("ent: OnConflict was set for builder %d. Set it on the GoodFeeCreateBulk instead", i)
+			return fmt.Errorf("ent: OnConflict was set for builder %d. Set it on the FeeTypeCreateBulk instead", i)
 		}
 	}
 	if len(u.create.conflict) == 0 {
-		return errors.New("ent: missing options for GoodFeeCreateBulk.OnConflict")
+		return errors.New("ent: missing options for FeeTypeCreateBulk.OnConflict")
 	}
 	return u.create.Exec(ctx)
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (u *GoodFeeUpsertBulk) ExecX(ctx context.Context) {
+func (u *FeeTypeUpsertBulk) ExecX(ctx context.Context) {
 	if err := u.create.Exec(ctx); err != nil {
 		panic(err)
 	}

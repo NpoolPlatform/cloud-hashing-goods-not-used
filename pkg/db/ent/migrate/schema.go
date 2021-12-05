@@ -127,6 +127,22 @@ var (
 			},
 		},
 	}
+	// FeeTypesColumns holds the columns for the "fee_types" table.
+	FeeTypesColumns = []*schema.Column{
+		{Name: "id", Type: field.TypeUUID, Unique: true},
+		{Name: "fee_type", Type: field.TypeString, Unique: true},
+		{Name: "fee_description", Type: field.TypeString, Size: 256},
+		{Name: "pay_type", Type: field.TypeEnum, Enums: []string{"percent", "amount"}},
+		{Name: "create_at", Type: field.TypeUint32},
+		{Name: "update_at", Type: field.TypeUint32},
+		{Name: "delete_at", Type: field.TypeUint32},
+	}
+	// FeeTypesTable holds the schema information for the "fee_types" table.
+	FeeTypesTable = &schema.Table{
+		Name:       "fee_types",
+		Columns:    FeeTypesColumns,
+		PrimaryKey: []*schema.Column{FeeTypesColumns[0]},
+	}
 	// GoodCommentsColumns holds the columns for the "good_comments" table.
 	GoodCommentsColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeUUID, Unique: true},
@@ -165,22 +181,6 @@ var (
 		Name:       "good_extra_infos",
 		Columns:    GoodExtraInfosColumns,
 		PrimaryKey: []*schema.Column{GoodExtraInfosColumns[0]},
-	}
-	// GoodFeesColumns holds the columns for the "good_fees" table.
-	GoodFeesColumns = []*schema.Column{
-		{Name: "id", Type: field.TypeUUID, Unique: true},
-		{Name: "fee_type", Type: field.TypeString, Unique: true},
-		{Name: "fee_description", Type: field.TypeString, Size: 256},
-		{Name: "pay_type", Type: field.TypeEnum, Enums: []string{"percent", "amount"}},
-		{Name: "create_at", Type: field.TypeUint32},
-		{Name: "update_at", Type: field.TypeUint32},
-		{Name: "delete_at", Type: field.TypeUint32},
-	}
-	// GoodFeesTable holds the schema information for the "good_fees" table.
-	GoodFeesTable = &schema.Table{
-		Name:       "good_fees",
-		Columns:    GoodFeesColumns,
-		PrimaryKey: []*schema.Column{GoodFeesColumns[0]},
 	}
 	// GoodInfosColumns holds the columns for the "good_infos" table.
 	GoodInfosColumns = []*schema.Column{
@@ -306,9 +306,9 @@ var (
 		AppTargetAreasTable,
 		DeviceInfosTable,
 		FeesTable,
+		FeeTypesTable,
 		GoodCommentsTable,
 		GoodExtraInfosTable,
-		GoodFeesTable,
 		GoodInfosTable,
 		GoodReviewsTable,
 		PriceCurrenciesTable,
