@@ -7,6 +7,8 @@ import (
 	"entgo.io/ent/schema/field"
 
 	"github.com/google/uuid"
+
+	constant "github.com/NpoolPlatform/cloud-hashing-goods/pkg/const"
 )
 
 // GoodInfo holds the schema definition for the GoodInfo entity.
@@ -35,7 +37,7 @@ func (GoodInfo) Fields() []ent.Field {
 			Positive(),
 		field.UUID("price_currency", uuid.UUID{}),
 		field.Enum("benefit_type").
-			Values("pool", "platform"),
+			Values(constant.BenefitTypePool, constant.BenefitTypePlatform),
 		field.Bool("classic"),
 		field.String("title"),
 		field.String("unit"),
