@@ -81,6 +81,10 @@
     - [GetGoodResponse](#cloud.hashing.goods.v1.GetGoodResponse)
     - [GetGoodReviewRequest](#cloud.hashing.goods.v1.GetGoodReviewRequest)
     - [GetGoodReviewResponse](#cloud.hashing.goods.v1.GetGoodReviewResponse)
+    - [GetGoodsByAppRequest](#cloud.hashing.goods.v1.GetGoodsByAppRequest)
+    - [GetGoodsByAppResponse](#cloud.hashing.goods.v1.GetGoodsByAppResponse)
+    - [GetGoodsDetailByAppRequest](#cloud.hashing.goods.v1.GetGoodsDetailByAppRequest)
+    - [GetGoodsDetailByAppResponse](#cloud.hashing.goods.v1.GetGoodsDetailByAppResponse)
     - [GetGoodsDetailRequest](#cloud.hashing.goods.v1.GetGoodsDetailRequest)
     - [GetGoodsDetailResponse](#cloud.hashing.goods.v1.GetGoodsDetailResponse)
     - [GetGoodsRequest](#cloud.hashing.goods.v1.GetGoodsRequest)
@@ -1342,6 +1346,70 @@
 
 
 
+<a name="cloud.hashing.goods.v1.GetGoodsByAppRequest"></a>
+
+### GetGoodsByAppRequest
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| AppID | [string](#string) |  |  |
+| PageInfo | [PageInfo](#cloud.hashing.goods.v1.PageInfo) |  |  |
+
+
+
+
+
+
+<a name="cloud.hashing.goods.v1.GetGoodsByAppResponse"></a>
+
+### GetGoodsByAppResponse
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| Infos | [GoodInfo](#cloud.hashing.goods.v1.GoodInfo) | repeated |  |
+| Total | [int32](#int32) |  |  |
+
+
+
+
+
+
+<a name="cloud.hashing.goods.v1.GetGoodsDetailByAppRequest"></a>
+
+### GetGoodsDetailByAppRequest
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| AppID | [string](#string) |  |  |
+| PageInfo | [PageInfo](#cloud.hashing.goods.v1.PageInfo) |  |  |
+
+
+
+
+
+
+<a name="cloud.hashing.goods.v1.GetGoodsDetailByAppResponse"></a>
+
+### GetGoodsDetailByAppResponse
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| Details | [GoodDetail](#cloud.hashing.goods.v1.GoodDetail) | repeated |  |
+| Total | [int32](#int32) |  |  |
+
+
+
+
+
+
 <a name="cloud.hashing.goods.v1.GetGoodsDetailRequest"></a>
 
 ### GetGoodsDetailRequest
@@ -2339,8 +2407,10 @@ Cloud Hashing Goods
 | GetGood | [GetGoodRequest](#cloud.hashing.goods.v1.GetGoodRequest) | [GetGoodResponse](#cloud.hashing.goods.v1.GetGoodResponse) |  |
 | DeleteGood | [DeleteGoodRequest](#cloud.hashing.goods.v1.DeleteGoodRequest) | [DeleteGoodResponse](#cloud.hashing.goods.v1.DeleteGoodResponse) |  |
 | GetGoods | [GetGoodsRequest](#cloud.hashing.goods.v1.GetGoodsRequest) | [GetGoodsResponse](#cloud.hashing.goods.v1.GetGoodsResponse) |  |
+| GetGoodsByApp | [GetGoodsByAppRequest](#cloud.hashing.goods.v1.GetGoodsByAppRequest) | [GetGoodsByAppResponse](#cloud.hashing.goods.v1.GetGoodsByAppResponse) |  |
 | GetGoodDetail | [GetGoodDetailRequest](#cloud.hashing.goods.v1.GetGoodDetailRequest) | [GetGoodDetailResponse](#cloud.hashing.goods.v1.GetGoodDetailResponse) | Good information for API |
 | GetGoodsDetail | [GetGoodsDetailRequest](#cloud.hashing.goods.v1.GetGoodsDetailRequest) | [GetGoodsDetailResponse](#cloud.hashing.goods.v1.GetGoodsDetailResponse) |  |
+| GetGoodsDetailByApp | [GetGoodsDetailByAppRequest](#cloud.hashing.goods.v1.GetGoodsDetailByAppRequest) | [GetGoodsDetailByAppResponse](#cloud.hashing.goods.v1.GetGoodsDetailByAppResponse) |  |
 | AuthorizeAppGood | [AuthorizeAppGoodRequest](#cloud.hashing.goods.v1.AuthorizeAppGoodRequest) | [AuthorizeAppGoodResponse](#cloud.hashing.goods.v1.AuthorizeAppGoodResponse) |  |
 | SetAppGoodPrice | [SetAppGoodPriceRequest](#cloud.hashing.goods.v1.SetAppGoodPriceRequest) | [SetAppGoodPriceResponse](#cloud.hashing.goods.v1.SetAppGoodPriceResponse) |  |
 | CheckAppGood | [CheckAppGoodRequest](#cloud.hashing.goods.v1.CheckAppGoodRequest) | [CheckAppGoodResponse](#cloud.hashing.goods.v1.CheckAppGoodResponse) |  |

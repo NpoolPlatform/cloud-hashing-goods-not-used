@@ -168,6 +168,12 @@ service CloudHashingGoods {
             body: "*"
         };
     }
+    rpc GetGoodsByApp(GetGoodsByAppRequest) returns (GetGoodsByAppResponse) {
+        option (google.api.http) = {
+            post: "/v1/get/goods/by/app"
+            body: "*"
+        };
+    }
     // Good information for API
     rpc GetGoodDetail(GetGoodDetailRequest) returns (GetGoodDetailResponse) {
         option (google.api.http) = {
@@ -178,6 +184,12 @@ service CloudHashingGoods {
     rpc GetGoodsDetail(GetGoodsDetailRequest) returns (GetGoodsDetailResponse) {
         option (google.api.http) = {
             post: "/v1/get/goods/detail"
+            body: "*"
+        };
+    }
+    rpc GetGoodsDetailByApp(GetGoodsDetailByAppRequest) returns (GetGoodsDetailByAppResponse) {
+        option (google.api.http) = {
+            post: "/v1/get/goods/detail/by/app"
             body: "*"
         };
     }
@@ -678,6 +690,26 @@ message GetGoodsDetailRequest {
 message GetGoodsDetailResponse {
     repeated GoodDetail Details = 3212;
     int32 Total = 3213;
+}
+
+message GetGoodsByAppRequest {
+    string AppID = 1;
+    PageInfo PageInfo = 3;
+}
+
+message GetGoodsByAppResponse {
+    repeated GoodInfo Infos = 3;
+    int32 Total = 5;
+}
+
+message GetGoodsDetailByAppRequest {
+    string AppID = 1;
+    PageInfo PageInfo = 3;
+}
+
+message GetGoodsDetailByAppResponse {
+    repeated GoodDetail Details = 1;
+    int32 Total = 3;
 }
 
 message DeleteGoodRequest {
