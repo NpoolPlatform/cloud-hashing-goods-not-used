@@ -16,7 +16,7 @@ import (
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/goodcomment"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/goodextrainfo"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/goodinfo"
-	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/goodrecommand"
+	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/goodrecommend"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/goodreview"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/predicate"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/pricecurrency"
@@ -45,7 +45,7 @@ const (
 	TypeGoodComment       = "GoodComment"
 	TypeGoodExtraInfo     = "GoodExtraInfo"
 	TypeGoodInfo          = "GoodInfo"
-	TypeGoodRecommand     = "GoodRecommand"
+	TypeGoodRecommend     = "GoodRecommend"
 	TypeGoodReview        = "GoodReview"
 	TypePriceCurrency     = "PriceCurrency"
 	TypeTargetArea        = "TargetArea"
@@ -7871,8 +7871,8 @@ func (m *GoodInfoMutation) ResetEdge(name string) error {
 	return fmt.Errorf("unknown GoodInfo edge %s", name)
 }
 
-// GoodRecommandMutation represents an operation that mutates the GoodRecommand nodes in the graph.
-type GoodRecommandMutation struct {
+// GoodRecommendMutation represents an operation that mutates the GoodRecommend nodes in the graph.
+type GoodRecommendMutation struct {
 	config
 	op            Op
 	typ           string
@@ -7889,21 +7889,21 @@ type GoodRecommandMutation struct {
 	adddelete_at  *int64
 	clearedFields map[string]struct{}
 	done          bool
-	oldValue      func(context.Context) (*GoodRecommand, error)
-	predicates    []predicate.GoodRecommand
+	oldValue      func(context.Context) (*GoodRecommend, error)
+	predicates    []predicate.GoodRecommend
 }
 
-var _ ent.Mutation = (*GoodRecommandMutation)(nil)
+var _ ent.Mutation = (*GoodRecommendMutation)(nil)
 
-// goodrecommandOption allows management of the mutation configuration using functional options.
-type goodrecommandOption func(*GoodRecommandMutation)
+// goodrecommendOption allows management of the mutation configuration using functional options.
+type goodrecommendOption func(*GoodRecommendMutation)
 
-// newGoodRecommandMutation creates new mutation for the GoodRecommand entity.
-func newGoodRecommandMutation(c config, op Op, opts ...goodrecommandOption) *GoodRecommandMutation {
-	m := &GoodRecommandMutation{
+// newGoodRecommendMutation creates new mutation for the GoodRecommend entity.
+func newGoodRecommendMutation(c config, op Op, opts ...goodrecommendOption) *GoodRecommendMutation {
+	m := &GoodRecommendMutation{
 		config:        c,
 		op:            op,
-		typ:           TypeGoodRecommand,
+		typ:           TypeGoodRecommend,
 		clearedFields: make(map[string]struct{}),
 	}
 	for _, opt := range opts {
@@ -7912,20 +7912,20 @@ func newGoodRecommandMutation(c config, op Op, opts ...goodrecommandOption) *Goo
 	return m
 }
 
-// withGoodRecommandID sets the ID field of the mutation.
-func withGoodRecommandID(id uuid.UUID) goodrecommandOption {
-	return func(m *GoodRecommandMutation) {
+// withGoodRecommendID sets the ID field of the mutation.
+func withGoodRecommendID(id uuid.UUID) goodrecommendOption {
+	return func(m *GoodRecommendMutation) {
 		var (
 			err   error
 			once  sync.Once
-			value *GoodRecommand
+			value *GoodRecommend
 		)
-		m.oldValue = func(ctx context.Context) (*GoodRecommand, error) {
+		m.oldValue = func(ctx context.Context) (*GoodRecommend, error) {
 			once.Do(func() {
 				if m.done {
 					err = fmt.Errorf("querying old values post mutation is not allowed")
 				} else {
-					value, err = m.Client().GoodRecommand.Get(ctx, id)
+					value, err = m.Client().GoodRecommend.Get(ctx, id)
 				}
 			})
 			return value, err
@@ -7934,10 +7934,10 @@ func withGoodRecommandID(id uuid.UUID) goodrecommandOption {
 	}
 }
 
-// withGoodRecommand sets the old GoodRecommand of the mutation.
-func withGoodRecommand(node *GoodRecommand) goodrecommandOption {
-	return func(m *GoodRecommandMutation) {
-		m.oldValue = func(context.Context) (*GoodRecommand, error) {
+// withGoodRecommend sets the old GoodRecommend of the mutation.
+func withGoodRecommend(node *GoodRecommend) goodrecommendOption {
+	return func(m *GoodRecommendMutation) {
+		m.oldValue = func(context.Context) (*GoodRecommend, error) {
 			return node, nil
 		}
 		m.id = &node.ID
@@ -7946,7 +7946,7 @@ func withGoodRecommand(node *GoodRecommand) goodrecommandOption {
 
 // Client returns a new `ent.Client` from the mutation. If the mutation was
 // executed in a transaction (ent.Tx), a transactional client is returned.
-func (m GoodRecommandMutation) Client() *Client {
+func (m GoodRecommendMutation) Client() *Client {
 	client := &Client{config: m.config}
 	client.init()
 	return client
@@ -7954,7 +7954,7 @@ func (m GoodRecommandMutation) Client() *Client {
 
 // Tx returns an `ent.Tx` for mutations that were executed in transactions;
 // it returns an error otherwise.
-func (m GoodRecommandMutation) Tx() (*Tx, error) {
+func (m GoodRecommendMutation) Tx() (*Tx, error) {
 	if _, ok := m.driver.(*txDriver); !ok {
 		return nil, fmt.Errorf("ent: mutation is not running in a transaction")
 	}
@@ -7964,14 +7964,14 @@ func (m GoodRecommandMutation) Tx() (*Tx, error) {
 }
 
 // SetID sets the value of the id field. Note that this
-// operation is only accepted on creation of GoodRecommand entities.
-func (m *GoodRecommandMutation) SetID(id uuid.UUID) {
+// operation is only accepted on creation of GoodRecommend entities.
+func (m *GoodRecommendMutation) SetID(id uuid.UUID) {
 	m.id = &id
 }
 
 // ID returns the ID value in the mutation. Note that the ID is only available
 // if it was provided to the builder or after it was returned from the database.
-func (m *GoodRecommandMutation) ID() (id uuid.UUID, exists bool) {
+func (m *GoodRecommendMutation) ID() (id uuid.UUID, exists bool) {
 	if m.id == nil {
 		return
 	}
@@ -7979,12 +7979,12 @@ func (m *GoodRecommandMutation) ID() (id uuid.UUID, exists bool) {
 }
 
 // SetAppID sets the "app_id" field.
-func (m *GoodRecommandMutation) SetAppID(u uuid.UUID) {
+func (m *GoodRecommendMutation) SetAppID(u uuid.UUID) {
 	m.app_id = &u
 }
 
 // AppID returns the value of the "app_id" field in the mutation.
-func (m *GoodRecommandMutation) AppID() (r uuid.UUID, exists bool) {
+func (m *GoodRecommendMutation) AppID() (r uuid.UUID, exists bool) {
 	v := m.app_id
 	if v == nil {
 		return
@@ -7992,10 +7992,10 @@ func (m *GoodRecommandMutation) AppID() (r uuid.UUID, exists bool) {
 	return *v, true
 }
 
-// OldAppID returns the old "app_id" field's value of the GoodRecommand entity.
-// If the GoodRecommand object wasn't provided to the builder, the object is fetched from the database.
+// OldAppID returns the old "app_id" field's value of the GoodRecommend entity.
+// If the GoodRecommend object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *GoodRecommandMutation) OldAppID(ctx context.Context) (v uuid.UUID, err error) {
+func (m *GoodRecommendMutation) OldAppID(ctx context.Context) (v uuid.UUID, err error) {
 	if !m.op.Is(OpUpdateOne) {
 		return v, fmt.Errorf("OldAppID is only allowed on UpdateOne operations")
 	}
@@ -8010,17 +8010,17 @@ func (m *GoodRecommandMutation) OldAppID(ctx context.Context) (v uuid.UUID, err 
 }
 
 // ResetAppID resets all changes to the "app_id" field.
-func (m *GoodRecommandMutation) ResetAppID() {
+func (m *GoodRecommendMutation) ResetAppID() {
 	m.app_id = nil
 }
 
 // SetUserID sets the "user_id" field.
-func (m *GoodRecommandMutation) SetUserID(u uuid.UUID) {
+func (m *GoodRecommendMutation) SetUserID(u uuid.UUID) {
 	m.user_id = &u
 }
 
 // UserID returns the value of the "user_id" field in the mutation.
-func (m *GoodRecommandMutation) UserID() (r uuid.UUID, exists bool) {
+func (m *GoodRecommendMutation) UserID() (r uuid.UUID, exists bool) {
 	v := m.user_id
 	if v == nil {
 		return
@@ -8028,10 +8028,10 @@ func (m *GoodRecommandMutation) UserID() (r uuid.UUID, exists bool) {
 	return *v, true
 }
 
-// OldUserID returns the old "user_id" field's value of the GoodRecommand entity.
-// If the GoodRecommand object wasn't provided to the builder, the object is fetched from the database.
+// OldUserID returns the old "user_id" field's value of the GoodRecommend entity.
+// If the GoodRecommend object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *GoodRecommandMutation) OldUserID(ctx context.Context) (v uuid.UUID, err error) {
+func (m *GoodRecommendMutation) OldUserID(ctx context.Context) (v uuid.UUID, err error) {
 	if !m.op.Is(OpUpdateOne) {
 		return v, fmt.Errorf("OldUserID is only allowed on UpdateOne operations")
 	}
@@ -8046,17 +8046,17 @@ func (m *GoodRecommandMutation) OldUserID(ctx context.Context) (v uuid.UUID, err
 }
 
 // ResetUserID resets all changes to the "user_id" field.
-func (m *GoodRecommandMutation) ResetUserID() {
+func (m *GoodRecommendMutation) ResetUserID() {
 	m.user_id = nil
 }
 
 // SetGoodID sets the "good_id" field.
-func (m *GoodRecommandMutation) SetGoodID(u uuid.UUID) {
+func (m *GoodRecommendMutation) SetGoodID(u uuid.UUID) {
 	m.good_id = &u
 }
 
 // GoodID returns the value of the "good_id" field in the mutation.
-func (m *GoodRecommandMutation) GoodID() (r uuid.UUID, exists bool) {
+func (m *GoodRecommendMutation) GoodID() (r uuid.UUID, exists bool) {
 	v := m.good_id
 	if v == nil {
 		return
@@ -8064,10 +8064,10 @@ func (m *GoodRecommandMutation) GoodID() (r uuid.UUID, exists bool) {
 	return *v, true
 }
 
-// OldGoodID returns the old "good_id" field's value of the GoodRecommand entity.
-// If the GoodRecommand object wasn't provided to the builder, the object is fetched from the database.
+// OldGoodID returns the old "good_id" field's value of the GoodRecommend entity.
+// If the GoodRecommend object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *GoodRecommandMutation) OldGoodID(ctx context.Context) (v uuid.UUID, err error) {
+func (m *GoodRecommendMutation) OldGoodID(ctx context.Context) (v uuid.UUID, err error) {
 	if !m.op.Is(OpUpdateOne) {
 		return v, fmt.Errorf("OldGoodID is only allowed on UpdateOne operations")
 	}
@@ -8082,17 +8082,17 @@ func (m *GoodRecommandMutation) OldGoodID(ctx context.Context) (v uuid.UUID, err
 }
 
 // ResetGoodID resets all changes to the "good_id" field.
-func (m *GoodRecommandMutation) ResetGoodID() {
+func (m *GoodRecommendMutation) ResetGoodID() {
 	m.good_id = nil
 }
 
 // SetContent sets the "content" field.
-func (m *GoodRecommandMutation) SetContent(s string) {
+func (m *GoodRecommendMutation) SetContent(s string) {
 	m.content = &s
 }
 
 // Content returns the value of the "content" field in the mutation.
-func (m *GoodRecommandMutation) Content() (r string, exists bool) {
+func (m *GoodRecommendMutation) Content() (r string, exists bool) {
 	v := m.content
 	if v == nil {
 		return
@@ -8100,10 +8100,10 @@ func (m *GoodRecommandMutation) Content() (r string, exists bool) {
 	return *v, true
 }
 
-// OldContent returns the old "content" field's value of the GoodRecommand entity.
-// If the GoodRecommand object wasn't provided to the builder, the object is fetched from the database.
+// OldContent returns the old "content" field's value of the GoodRecommend entity.
+// If the GoodRecommend object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *GoodRecommandMutation) OldContent(ctx context.Context) (v string, err error) {
+func (m *GoodRecommendMutation) OldContent(ctx context.Context) (v string, err error) {
 	if !m.op.Is(OpUpdateOne) {
 		return v, fmt.Errorf("OldContent is only allowed on UpdateOne operations")
 	}
@@ -8118,18 +8118,18 @@ func (m *GoodRecommandMutation) OldContent(ctx context.Context) (v string, err e
 }
 
 // ResetContent resets all changes to the "content" field.
-func (m *GoodRecommandMutation) ResetContent() {
+func (m *GoodRecommendMutation) ResetContent() {
 	m.content = nil
 }
 
 // SetCreateAt sets the "create_at" field.
-func (m *GoodRecommandMutation) SetCreateAt(i int64) {
+func (m *GoodRecommendMutation) SetCreateAt(i int64) {
 	m.create_at = &i
 	m.addcreate_at = nil
 }
 
 // CreateAt returns the value of the "create_at" field in the mutation.
-func (m *GoodRecommandMutation) CreateAt() (r int64, exists bool) {
+func (m *GoodRecommendMutation) CreateAt() (r int64, exists bool) {
 	v := m.create_at
 	if v == nil {
 		return
@@ -8137,10 +8137,10 @@ func (m *GoodRecommandMutation) CreateAt() (r int64, exists bool) {
 	return *v, true
 }
 
-// OldCreateAt returns the old "create_at" field's value of the GoodRecommand entity.
-// If the GoodRecommand object wasn't provided to the builder, the object is fetched from the database.
+// OldCreateAt returns the old "create_at" field's value of the GoodRecommend entity.
+// If the GoodRecommend object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *GoodRecommandMutation) OldCreateAt(ctx context.Context) (v int64, err error) {
+func (m *GoodRecommendMutation) OldCreateAt(ctx context.Context) (v int64, err error) {
 	if !m.op.Is(OpUpdateOne) {
 		return v, fmt.Errorf("OldCreateAt is only allowed on UpdateOne operations")
 	}
@@ -8155,7 +8155,7 @@ func (m *GoodRecommandMutation) OldCreateAt(ctx context.Context) (v int64, err e
 }
 
 // AddCreateAt adds i to the "create_at" field.
-func (m *GoodRecommandMutation) AddCreateAt(i int64) {
+func (m *GoodRecommendMutation) AddCreateAt(i int64) {
 	if m.addcreate_at != nil {
 		*m.addcreate_at += i
 	} else {
@@ -8164,7 +8164,7 @@ func (m *GoodRecommandMutation) AddCreateAt(i int64) {
 }
 
 // AddedCreateAt returns the value that was added to the "create_at" field in this mutation.
-func (m *GoodRecommandMutation) AddedCreateAt() (r int64, exists bool) {
+func (m *GoodRecommendMutation) AddedCreateAt() (r int64, exists bool) {
 	v := m.addcreate_at
 	if v == nil {
 		return
@@ -8173,19 +8173,19 @@ func (m *GoodRecommandMutation) AddedCreateAt() (r int64, exists bool) {
 }
 
 // ResetCreateAt resets all changes to the "create_at" field.
-func (m *GoodRecommandMutation) ResetCreateAt() {
+func (m *GoodRecommendMutation) ResetCreateAt() {
 	m.create_at = nil
 	m.addcreate_at = nil
 }
 
 // SetUpdateAt sets the "update_at" field.
-func (m *GoodRecommandMutation) SetUpdateAt(i int64) {
+func (m *GoodRecommendMutation) SetUpdateAt(i int64) {
 	m.update_at = &i
 	m.addupdate_at = nil
 }
 
 // UpdateAt returns the value of the "update_at" field in the mutation.
-func (m *GoodRecommandMutation) UpdateAt() (r int64, exists bool) {
+func (m *GoodRecommendMutation) UpdateAt() (r int64, exists bool) {
 	v := m.update_at
 	if v == nil {
 		return
@@ -8193,10 +8193,10 @@ func (m *GoodRecommandMutation) UpdateAt() (r int64, exists bool) {
 	return *v, true
 }
 
-// OldUpdateAt returns the old "update_at" field's value of the GoodRecommand entity.
-// If the GoodRecommand object wasn't provided to the builder, the object is fetched from the database.
+// OldUpdateAt returns the old "update_at" field's value of the GoodRecommend entity.
+// If the GoodRecommend object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *GoodRecommandMutation) OldUpdateAt(ctx context.Context) (v int64, err error) {
+func (m *GoodRecommendMutation) OldUpdateAt(ctx context.Context) (v int64, err error) {
 	if !m.op.Is(OpUpdateOne) {
 		return v, fmt.Errorf("OldUpdateAt is only allowed on UpdateOne operations")
 	}
@@ -8211,7 +8211,7 @@ func (m *GoodRecommandMutation) OldUpdateAt(ctx context.Context) (v int64, err e
 }
 
 // AddUpdateAt adds i to the "update_at" field.
-func (m *GoodRecommandMutation) AddUpdateAt(i int64) {
+func (m *GoodRecommendMutation) AddUpdateAt(i int64) {
 	if m.addupdate_at != nil {
 		*m.addupdate_at += i
 	} else {
@@ -8220,7 +8220,7 @@ func (m *GoodRecommandMutation) AddUpdateAt(i int64) {
 }
 
 // AddedUpdateAt returns the value that was added to the "update_at" field in this mutation.
-func (m *GoodRecommandMutation) AddedUpdateAt() (r int64, exists bool) {
+func (m *GoodRecommendMutation) AddedUpdateAt() (r int64, exists bool) {
 	v := m.addupdate_at
 	if v == nil {
 		return
@@ -8229,19 +8229,19 @@ func (m *GoodRecommandMutation) AddedUpdateAt() (r int64, exists bool) {
 }
 
 // ResetUpdateAt resets all changes to the "update_at" field.
-func (m *GoodRecommandMutation) ResetUpdateAt() {
+func (m *GoodRecommendMutation) ResetUpdateAt() {
 	m.update_at = nil
 	m.addupdate_at = nil
 }
 
 // SetDeleteAt sets the "delete_at" field.
-func (m *GoodRecommandMutation) SetDeleteAt(i int64) {
+func (m *GoodRecommendMutation) SetDeleteAt(i int64) {
 	m.delete_at = &i
 	m.adddelete_at = nil
 }
 
 // DeleteAt returns the value of the "delete_at" field in the mutation.
-func (m *GoodRecommandMutation) DeleteAt() (r int64, exists bool) {
+func (m *GoodRecommendMutation) DeleteAt() (r int64, exists bool) {
 	v := m.delete_at
 	if v == nil {
 		return
@@ -8249,10 +8249,10 @@ func (m *GoodRecommandMutation) DeleteAt() (r int64, exists bool) {
 	return *v, true
 }
 
-// OldDeleteAt returns the old "delete_at" field's value of the GoodRecommand entity.
-// If the GoodRecommand object wasn't provided to the builder, the object is fetched from the database.
+// OldDeleteAt returns the old "delete_at" field's value of the GoodRecommend entity.
+// If the GoodRecommend object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *GoodRecommandMutation) OldDeleteAt(ctx context.Context) (v int64, err error) {
+func (m *GoodRecommendMutation) OldDeleteAt(ctx context.Context) (v int64, err error) {
 	if !m.op.Is(OpUpdateOne) {
 		return v, fmt.Errorf("OldDeleteAt is only allowed on UpdateOne operations")
 	}
@@ -8267,7 +8267,7 @@ func (m *GoodRecommandMutation) OldDeleteAt(ctx context.Context) (v int64, err e
 }
 
 // AddDeleteAt adds i to the "delete_at" field.
-func (m *GoodRecommandMutation) AddDeleteAt(i int64) {
+func (m *GoodRecommendMutation) AddDeleteAt(i int64) {
 	if m.adddelete_at != nil {
 		*m.adddelete_at += i
 	} else {
@@ -8276,7 +8276,7 @@ func (m *GoodRecommandMutation) AddDeleteAt(i int64) {
 }
 
 // AddedDeleteAt returns the value that was added to the "delete_at" field in this mutation.
-func (m *GoodRecommandMutation) AddedDeleteAt() (r int64, exists bool) {
+func (m *GoodRecommendMutation) AddedDeleteAt() (r int64, exists bool) {
 	v := m.adddelete_at
 	if v == nil {
 		return
@@ -8285,51 +8285,51 @@ func (m *GoodRecommandMutation) AddedDeleteAt() (r int64, exists bool) {
 }
 
 // ResetDeleteAt resets all changes to the "delete_at" field.
-func (m *GoodRecommandMutation) ResetDeleteAt() {
+func (m *GoodRecommendMutation) ResetDeleteAt() {
 	m.delete_at = nil
 	m.adddelete_at = nil
 }
 
-// Where appends a list predicates to the GoodRecommandMutation builder.
-func (m *GoodRecommandMutation) Where(ps ...predicate.GoodRecommand) {
+// Where appends a list predicates to the GoodRecommendMutation builder.
+func (m *GoodRecommendMutation) Where(ps ...predicate.GoodRecommend) {
 	m.predicates = append(m.predicates, ps...)
 }
 
 // Op returns the operation name.
-func (m *GoodRecommandMutation) Op() Op {
+func (m *GoodRecommendMutation) Op() Op {
 	return m.op
 }
 
-// Type returns the node type of this mutation (GoodRecommand).
-func (m *GoodRecommandMutation) Type() string {
+// Type returns the node type of this mutation (GoodRecommend).
+func (m *GoodRecommendMutation) Type() string {
 	return m.typ
 }
 
 // Fields returns all fields that were changed during this mutation. Note that in
 // order to get all numeric fields that were incremented/decremented, call
 // AddedFields().
-func (m *GoodRecommandMutation) Fields() []string {
+func (m *GoodRecommendMutation) Fields() []string {
 	fields := make([]string, 0, 7)
 	if m.app_id != nil {
-		fields = append(fields, goodrecommand.FieldAppID)
+		fields = append(fields, goodrecommend.FieldAppID)
 	}
 	if m.user_id != nil {
-		fields = append(fields, goodrecommand.FieldUserID)
+		fields = append(fields, goodrecommend.FieldUserID)
 	}
 	if m.good_id != nil {
-		fields = append(fields, goodrecommand.FieldGoodID)
+		fields = append(fields, goodrecommend.FieldGoodID)
 	}
 	if m.content != nil {
-		fields = append(fields, goodrecommand.FieldContent)
+		fields = append(fields, goodrecommend.FieldContent)
 	}
 	if m.create_at != nil {
-		fields = append(fields, goodrecommand.FieldCreateAt)
+		fields = append(fields, goodrecommend.FieldCreateAt)
 	}
 	if m.update_at != nil {
-		fields = append(fields, goodrecommand.FieldUpdateAt)
+		fields = append(fields, goodrecommend.FieldUpdateAt)
 	}
 	if m.delete_at != nil {
-		fields = append(fields, goodrecommand.FieldDeleteAt)
+		fields = append(fields, goodrecommend.FieldDeleteAt)
 	}
 	return fields
 }
@@ -8337,21 +8337,21 @@ func (m *GoodRecommandMutation) Fields() []string {
 // Field returns the value of a field with the given name. The second boolean
 // return value indicates that this field was not set, or was not defined in the
 // schema.
-func (m *GoodRecommandMutation) Field(name string) (ent.Value, bool) {
+func (m *GoodRecommendMutation) Field(name string) (ent.Value, bool) {
 	switch name {
-	case goodrecommand.FieldAppID:
+	case goodrecommend.FieldAppID:
 		return m.AppID()
-	case goodrecommand.FieldUserID:
+	case goodrecommend.FieldUserID:
 		return m.UserID()
-	case goodrecommand.FieldGoodID:
+	case goodrecommend.FieldGoodID:
 		return m.GoodID()
-	case goodrecommand.FieldContent:
+	case goodrecommend.FieldContent:
 		return m.Content()
-	case goodrecommand.FieldCreateAt:
+	case goodrecommend.FieldCreateAt:
 		return m.CreateAt()
-	case goodrecommand.FieldUpdateAt:
+	case goodrecommend.FieldUpdateAt:
 		return m.UpdateAt()
-	case goodrecommand.FieldDeleteAt:
+	case goodrecommend.FieldDeleteAt:
 		return m.DeleteAt()
 	}
 	return nil, false
@@ -8360,74 +8360,74 @@ func (m *GoodRecommandMutation) Field(name string) (ent.Value, bool) {
 // OldField returns the old value of the field from the database. An error is
 // returned if the mutation operation is not UpdateOne, or the query to the
 // database failed.
-func (m *GoodRecommandMutation) OldField(ctx context.Context, name string) (ent.Value, error) {
+func (m *GoodRecommendMutation) OldField(ctx context.Context, name string) (ent.Value, error) {
 	switch name {
-	case goodrecommand.FieldAppID:
+	case goodrecommend.FieldAppID:
 		return m.OldAppID(ctx)
-	case goodrecommand.FieldUserID:
+	case goodrecommend.FieldUserID:
 		return m.OldUserID(ctx)
-	case goodrecommand.FieldGoodID:
+	case goodrecommend.FieldGoodID:
 		return m.OldGoodID(ctx)
-	case goodrecommand.FieldContent:
+	case goodrecommend.FieldContent:
 		return m.OldContent(ctx)
-	case goodrecommand.FieldCreateAt:
+	case goodrecommend.FieldCreateAt:
 		return m.OldCreateAt(ctx)
-	case goodrecommand.FieldUpdateAt:
+	case goodrecommend.FieldUpdateAt:
 		return m.OldUpdateAt(ctx)
-	case goodrecommand.FieldDeleteAt:
+	case goodrecommend.FieldDeleteAt:
 		return m.OldDeleteAt(ctx)
 	}
-	return nil, fmt.Errorf("unknown GoodRecommand field %s", name)
+	return nil, fmt.Errorf("unknown GoodRecommend field %s", name)
 }
 
 // SetField sets the value of a field with the given name. It returns an error if
 // the field is not defined in the schema, or if the type mismatched the field
 // type.
-func (m *GoodRecommandMutation) SetField(name string, value ent.Value) error {
+func (m *GoodRecommendMutation) SetField(name string, value ent.Value) error {
 	switch name {
-	case goodrecommand.FieldAppID:
+	case goodrecommend.FieldAppID:
 		v, ok := value.(uuid.UUID)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.SetAppID(v)
 		return nil
-	case goodrecommand.FieldUserID:
+	case goodrecommend.FieldUserID:
 		v, ok := value.(uuid.UUID)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.SetUserID(v)
 		return nil
-	case goodrecommand.FieldGoodID:
+	case goodrecommend.FieldGoodID:
 		v, ok := value.(uuid.UUID)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.SetGoodID(v)
 		return nil
-	case goodrecommand.FieldContent:
+	case goodrecommend.FieldContent:
 		v, ok := value.(string)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.SetContent(v)
 		return nil
-	case goodrecommand.FieldCreateAt:
+	case goodrecommend.FieldCreateAt:
 		v, ok := value.(int64)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.SetCreateAt(v)
 		return nil
-	case goodrecommand.FieldUpdateAt:
+	case goodrecommend.FieldUpdateAt:
 		v, ok := value.(int64)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.SetUpdateAt(v)
 		return nil
-	case goodrecommand.FieldDeleteAt:
+	case goodrecommend.FieldDeleteAt:
 		v, ok := value.(int64)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
@@ -8435,21 +8435,21 @@ func (m *GoodRecommandMutation) SetField(name string, value ent.Value) error {
 		m.SetDeleteAt(v)
 		return nil
 	}
-	return fmt.Errorf("unknown GoodRecommand field %s", name)
+	return fmt.Errorf("unknown GoodRecommend field %s", name)
 }
 
 // AddedFields returns all numeric fields that were incremented/decremented during
 // this mutation.
-func (m *GoodRecommandMutation) AddedFields() []string {
+func (m *GoodRecommendMutation) AddedFields() []string {
 	var fields []string
 	if m.addcreate_at != nil {
-		fields = append(fields, goodrecommand.FieldCreateAt)
+		fields = append(fields, goodrecommend.FieldCreateAt)
 	}
 	if m.addupdate_at != nil {
-		fields = append(fields, goodrecommand.FieldUpdateAt)
+		fields = append(fields, goodrecommend.FieldUpdateAt)
 	}
 	if m.adddelete_at != nil {
-		fields = append(fields, goodrecommand.FieldDeleteAt)
+		fields = append(fields, goodrecommend.FieldDeleteAt)
 	}
 	return fields
 }
@@ -8457,13 +8457,13 @@ func (m *GoodRecommandMutation) AddedFields() []string {
 // AddedField returns the numeric value that was incremented/decremented on a field
 // with the given name. The second boolean return value indicates that this field
 // was not set, or was not defined in the schema.
-func (m *GoodRecommandMutation) AddedField(name string) (ent.Value, bool) {
+func (m *GoodRecommendMutation) AddedField(name string) (ent.Value, bool) {
 	switch name {
-	case goodrecommand.FieldCreateAt:
+	case goodrecommend.FieldCreateAt:
 		return m.AddedCreateAt()
-	case goodrecommand.FieldUpdateAt:
+	case goodrecommend.FieldUpdateAt:
 		return m.AddedUpdateAt()
-	case goodrecommand.FieldDeleteAt:
+	case goodrecommend.FieldDeleteAt:
 		return m.AddedDeleteAt()
 	}
 	return nil, false
@@ -8472,23 +8472,23 @@ func (m *GoodRecommandMutation) AddedField(name string) (ent.Value, bool) {
 // AddField adds the value to the field with the given name. It returns an error if
 // the field is not defined in the schema, or if the type mismatched the field
 // type.
-func (m *GoodRecommandMutation) AddField(name string, value ent.Value) error {
+func (m *GoodRecommendMutation) AddField(name string, value ent.Value) error {
 	switch name {
-	case goodrecommand.FieldCreateAt:
+	case goodrecommend.FieldCreateAt:
 		v, ok := value.(int64)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.AddCreateAt(v)
 		return nil
-	case goodrecommand.FieldUpdateAt:
+	case goodrecommend.FieldUpdateAt:
 		v, ok := value.(int64)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.AddUpdateAt(v)
 		return nil
-	case goodrecommand.FieldDeleteAt:
+	case goodrecommend.FieldDeleteAt:
 		v, ok := value.(int64)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
@@ -8496,103 +8496,103 @@ func (m *GoodRecommandMutation) AddField(name string, value ent.Value) error {
 		m.AddDeleteAt(v)
 		return nil
 	}
-	return fmt.Errorf("unknown GoodRecommand numeric field %s", name)
+	return fmt.Errorf("unknown GoodRecommend numeric field %s", name)
 }
 
 // ClearedFields returns all nullable fields that were cleared during this
 // mutation.
-func (m *GoodRecommandMutation) ClearedFields() []string {
+func (m *GoodRecommendMutation) ClearedFields() []string {
 	return nil
 }
 
 // FieldCleared returns a boolean indicating if a field with the given name was
 // cleared in this mutation.
-func (m *GoodRecommandMutation) FieldCleared(name string) bool {
+func (m *GoodRecommendMutation) FieldCleared(name string) bool {
 	_, ok := m.clearedFields[name]
 	return ok
 }
 
 // ClearField clears the value of the field with the given name. It returns an
 // error if the field is not defined in the schema.
-func (m *GoodRecommandMutation) ClearField(name string) error {
-	return fmt.Errorf("unknown GoodRecommand nullable field %s", name)
+func (m *GoodRecommendMutation) ClearField(name string) error {
+	return fmt.Errorf("unknown GoodRecommend nullable field %s", name)
 }
 
 // ResetField resets all changes in the mutation for the field with the given name.
 // It returns an error if the field is not defined in the schema.
-func (m *GoodRecommandMutation) ResetField(name string) error {
+func (m *GoodRecommendMutation) ResetField(name string) error {
 	switch name {
-	case goodrecommand.FieldAppID:
+	case goodrecommend.FieldAppID:
 		m.ResetAppID()
 		return nil
-	case goodrecommand.FieldUserID:
+	case goodrecommend.FieldUserID:
 		m.ResetUserID()
 		return nil
-	case goodrecommand.FieldGoodID:
+	case goodrecommend.FieldGoodID:
 		m.ResetGoodID()
 		return nil
-	case goodrecommand.FieldContent:
+	case goodrecommend.FieldContent:
 		m.ResetContent()
 		return nil
-	case goodrecommand.FieldCreateAt:
+	case goodrecommend.FieldCreateAt:
 		m.ResetCreateAt()
 		return nil
-	case goodrecommand.FieldUpdateAt:
+	case goodrecommend.FieldUpdateAt:
 		m.ResetUpdateAt()
 		return nil
-	case goodrecommand.FieldDeleteAt:
+	case goodrecommend.FieldDeleteAt:
 		m.ResetDeleteAt()
 		return nil
 	}
-	return fmt.Errorf("unknown GoodRecommand field %s", name)
+	return fmt.Errorf("unknown GoodRecommend field %s", name)
 }
 
 // AddedEdges returns all edge names that were set/added in this mutation.
-func (m *GoodRecommandMutation) AddedEdges() []string {
+func (m *GoodRecommendMutation) AddedEdges() []string {
 	edges := make([]string, 0, 0)
 	return edges
 }
 
 // AddedIDs returns all IDs (to other nodes) that were added for the given edge
 // name in this mutation.
-func (m *GoodRecommandMutation) AddedIDs(name string) []ent.Value {
+func (m *GoodRecommendMutation) AddedIDs(name string) []ent.Value {
 	return nil
 }
 
 // RemovedEdges returns all edge names that were removed in this mutation.
-func (m *GoodRecommandMutation) RemovedEdges() []string {
+func (m *GoodRecommendMutation) RemovedEdges() []string {
 	edges := make([]string, 0, 0)
 	return edges
 }
 
 // RemovedIDs returns all IDs (to other nodes) that were removed for the edge with
 // the given name in this mutation.
-func (m *GoodRecommandMutation) RemovedIDs(name string) []ent.Value {
+func (m *GoodRecommendMutation) RemovedIDs(name string) []ent.Value {
 	return nil
 }
 
 // ClearedEdges returns all edge names that were cleared in this mutation.
-func (m *GoodRecommandMutation) ClearedEdges() []string {
+func (m *GoodRecommendMutation) ClearedEdges() []string {
 	edges := make([]string, 0, 0)
 	return edges
 }
 
 // EdgeCleared returns a boolean which indicates if the edge with the given name
 // was cleared in this mutation.
-func (m *GoodRecommandMutation) EdgeCleared(name string) bool {
+func (m *GoodRecommendMutation) EdgeCleared(name string) bool {
 	return false
 }
 
 // ClearEdge clears the value of the edge with the given name. It returns an error
 // if that edge is not defined in the schema.
-func (m *GoodRecommandMutation) ClearEdge(name string) error {
-	return fmt.Errorf("unknown GoodRecommand unique edge %s", name)
+func (m *GoodRecommendMutation) ClearEdge(name string) error {
+	return fmt.Errorf("unknown GoodRecommend unique edge %s", name)
 }
 
 // ResetEdge resets all changes to the edge with the given name in this mutation.
 // It returns an error if the edge is not defined in the schema.
-func (m *GoodRecommandMutation) ResetEdge(name string) error {
-	return fmt.Errorf("unknown GoodRecommand edge %s", name)
+func (m *GoodRecommendMutation) ResetEdge(name string) error {
+	return fmt.Errorf("unknown GoodRecommend edge %s", name)
 }
 
 // GoodReviewMutation represents an operation that mutates the GoodReview nodes in the graph.

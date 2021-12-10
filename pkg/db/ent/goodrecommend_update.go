@@ -9,50 +9,50 @@ import (
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
-	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/goodrecommand"
+	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/goodrecommend"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/predicate"
 	"github.com/google/uuid"
 )
 
-// GoodRecommandUpdate is the builder for updating GoodRecommand entities.
-type GoodRecommandUpdate struct {
+// GoodRecommendUpdate is the builder for updating GoodRecommend entities.
+type GoodRecommendUpdate struct {
 	config
 	hooks    []Hook
-	mutation *GoodRecommandMutation
+	mutation *GoodRecommendMutation
 }
 
-// Where appends a list predicates to the GoodRecommandUpdate builder.
-func (gru *GoodRecommandUpdate) Where(ps ...predicate.GoodRecommand) *GoodRecommandUpdate {
+// Where appends a list predicates to the GoodRecommendUpdate builder.
+func (gru *GoodRecommendUpdate) Where(ps ...predicate.GoodRecommend) *GoodRecommendUpdate {
 	gru.mutation.Where(ps...)
 	return gru
 }
 
 // SetAppID sets the "app_id" field.
-func (gru *GoodRecommandUpdate) SetAppID(u uuid.UUID) *GoodRecommandUpdate {
+func (gru *GoodRecommendUpdate) SetAppID(u uuid.UUID) *GoodRecommendUpdate {
 	gru.mutation.SetAppID(u)
 	return gru
 }
 
 // SetUserID sets the "user_id" field.
-func (gru *GoodRecommandUpdate) SetUserID(u uuid.UUID) *GoodRecommandUpdate {
+func (gru *GoodRecommendUpdate) SetUserID(u uuid.UUID) *GoodRecommendUpdate {
 	gru.mutation.SetUserID(u)
 	return gru
 }
 
 // SetGoodID sets the "good_id" field.
-func (gru *GoodRecommandUpdate) SetGoodID(u uuid.UUID) *GoodRecommandUpdate {
+func (gru *GoodRecommendUpdate) SetGoodID(u uuid.UUID) *GoodRecommendUpdate {
 	gru.mutation.SetGoodID(u)
 	return gru
 }
 
 // SetContent sets the "content" field.
-func (gru *GoodRecommandUpdate) SetContent(s string) *GoodRecommandUpdate {
+func (gru *GoodRecommendUpdate) SetContent(s string) *GoodRecommendUpdate {
 	gru.mutation.SetContent(s)
 	return gru
 }
 
 // SetNillableContent sets the "content" field if the given value is not nil.
-func (gru *GoodRecommandUpdate) SetNillableContent(s *string) *GoodRecommandUpdate {
+func (gru *GoodRecommendUpdate) SetNillableContent(s *string) *GoodRecommendUpdate {
 	if s != nil {
 		gru.SetContent(*s)
 	}
@@ -60,14 +60,14 @@ func (gru *GoodRecommandUpdate) SetNillableContent(s *string) *GoodRecommandUpda
 }
 
 // SetCreateAt sets the "create_at" field.
-func (gru *GoodRecommandUpdate) SetCreateAt(i int64) *GoodRecommandUpdate {
+func (gru *GoodRecommendUpdate) SetCreateAt(i int64) *GoodRecommendUpdate {
 	gru.mutation.ResetCreateAt()
 	gru.mutation.SetCreateAt(i)
 	return gru
 }
 
 // SetNillableCreateAt sets the "create_at" field if the given value is not nil.
-func (gru *GoodRecommandUpdate) SetNillableCreateAt(i *int64) *GoodRecommandUpdate {
+func (gru *GoodRecommendUpdate) SetNillableCreateAt(i *int64) *GoodRecommendUpdate {
 	if i != nil {
 		gru.SetCreateAt(*i)
 	}
@@ -75,33 +75,33 @@ func (gru *GoodRecommandUpdate) SetNillableCreateAt(i *int64) *GoodRecommandUpda
 }
 
 // AddCreateAt adds i to the "create_at" field.
-func (gru *GoodRecommandUpdate) AddCreateAt(i int64) *GoodRecommandUpdate {
+func (gru *GoodRecommendUpdate) AddCreateAt(i int64) *GoodRecommendUpdate {
 	gru.mutation.AddCreateAt(i)
 	return gru
 }
 
 // SetUpdateAt sets the "update_at" field.
-func (gru *GoodRecommandUpdate) SetUpdateAt(i int64) *GoodRecommandUpdate {
+func (gru *GoodRecommendUpdate) SetUpdateAt(i int64) *GoodRecommendUpdate {
 	gru.mutation.ResetUpdateAt()
 	gru.mutation.SetUpdateAt(i)
 	return gru
 }
 
 // AddUpdateAt adds i to the "update_at" field.
-func (gru *GoodRecommandUpdate) AddUpdateAt(i int64) *GoodRecommandUpdate {
+func (gru *GoodRecommendUpdate) AddUpdateAt(i int64) *GoodRecommendUpdate {
 	gru.mutation.AddUpdateAt(i)
 	return gru
 }
 
 // SetDeleteAt sets the "delete_at" field.
-func (gru *GoodRecommandUpdate) SetDeleteAt(i int64) *GoodRecommandUpdate {
+func (gru *GoodRecommendUpdate) SetDeleteAt(i int64) *GoodRecommendUpdate {
 	gru.mutation.ResetDeleteAt()
 	gru.mutation.SetDeleteAt(i)
 	return gru
 }
 
 // SetNillableDeleteAt sets the "delete_at" field if the given value is not nil.
-func (gru *GoodRecommandUpdate) SetNillableDeleteAt(i *int64) *GoodRecommandUpdate {
+func (gru *GoodRecommendUpdate) SetNillableDeleteAt(i *int64) *GoodRecommendUpdate {
 	if i != nil {
 		gru.SetDeleteAt(*i)
 	}
@@ -109,18 +109,18 @@ func (gru *GoodRecommandUpdate) SetNillableDeleteAt(i *int64) *GoodRecommandUpda
 }
 
 // AddDeleteAt adds i to the "delete_at" field.
-func (gru *GoodRecommandUpdate) AddDeleteAt(i int64) *GoodRecommandUpdate {
+func (gru *GoodRecommendUpdate) AddDeleteAt(i int64) *GoodRecommendUpdate {
 	gru.mutation.AddDeleteAt(i)
 	return gru
 }
 
-// Mutation returns the GoodRecommandMutation object of the builder.
-func (gru *GoodRecommandUpdate) Mutation() *GoodRecommandMutation {
+// Mutation returns the GoodRecommendMutation object of the builder.
+func (gru *GoodRecommendUpdate) Mutation() *GoodRecommendMutation {
 	return gru.mutation
 }
 
 // Save executes the query and returns the number of nodes affected by the update operation.
-func (gru *GoodRecommandUpdate) Save(ctx context.Context) (int, error) {
+func (gru *GoodRecommendUpdate) Save(ctx context.Context) (int, error) {
 	var (
 		err      error
 		affected int
@@ -130,7 +130,7 @@ func (gru *GoodRecommandUpdate) Save(ctx context.Context) (int, error) {
 		affected, err = gru.sqlSave(ctx)
 	} else {
 		var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
-			mutation, ok := m.(*GoodRecommandMutation)
+			mutation, ok := m.(*GoodRecommendMutation)
 			if !ok {
 				return nil, fmt.Errorf("unexpected mutation type %T", m)
 			}
@@ -153,7 +153,7 @@ func (gru *GoodRecommandUpdate) Save(ctx context.Context) (int, error) {
 }
 
 // SaveX is like Save, but panics if an error occurs.
-func (gru *GoodRecommandUpdate) SaveX(ctx context.Context) int {
+func (gru *GoodRecommendUpdate) SaveX(ctx context.Context) int {
 	affected, err := gru.Save(ctx)
 	if err != nil {
 		panic(err)
@@ -162,34 +162,34 @@ func (gru *GoodRecommandUpdate) SaveX(ctx context.Context) int {
 }
 
 // Exec executes the query.
-func (gru *GoodRecommandUpdate) Exec(ctx context.Context) error {
+func (gru *GoodRecommendUpdate) Exec(ctx context.Context) error {
 	_, err := gru.Save(ctx)
 	return err
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (gru *GoodRecommandUpdate) ExecX(ctx context.Context) {
+func (gru *GoodRecommendUpdate) ExecX(ctx context.Context) {
 	if err := gru.Exec(ctx); err != nil {
 		panic(err)
 	}
 }
 
 // defaults sets the default values of the builder before save.
-func (gru *GoodRecommandUpdate) defaults() {
+func (gru *GoodRecommendUpdate) defaults() {
 	if _, ok := gru.mutation.UpdateAt(); !ok {
-		v := goodrecommand.UpdateDefaultUpdateAt()
+		v := goodrecommend.UpdateDefaultUpdateAt()
 		gru.mutation.SetUpdateAt(v)
 	}
 }
 
-func (gru *GoodRecommandUpdate) sqlSave(ctx context.Context) (n int, err error) {
+func (gru *GoodRecommendUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	_spec := &sqlgraph.UpdateSpec{
 		Node: &sqlgraph.NodeSpec{
-			Table:   goodrecommand.Table,
-			Columns: goodrecommand.Columns,
+			Table:   goodrecommend.Table,
+			Columns: goodrecommend.Columns,
 			ID: &sqlgraph.FieldSpec{
 				Type:   field.TypeUUID,
-				Column: goodrecommand.FieldID,
+				Column: goodrecommend.FieldID,
 			},
 		},
 	}
@@ -204,75 +204,75 @@ func (gru *GoodRecommandUpdate) sqlSave(ctx context.Context) (n int, err error) 
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeUUID,
 			Value:  value,
-			Column: goodrecommand.FieldAppID,
+			Column: goodrecommend.FieldAppID,
 		})
 	}
 	if value, ok := gru.mutation.UserID(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeUUID,
 			Value:  value,
-			Column: goodrecommand.FieldUserID,
+			Column: goodrecommend.FieldUserID,
 		})
 	}
 	if value, ok := gru.mutation.GoodID(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeUUID,
 			Value:  value,
-			Column: goodrecommand.FieldGoodID,
+			Column: goodrecommend.FieldGoodID,
 		})
 	}
 	if value, ok := gru.mutation.Content(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
 			Value:  value,
-			Column: goodrecommand.FieldContent,
+			Column: goodrecommend.FieldContent,
 		})
 	}
 	if value, ok := gru.mutation.CreateAt(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeInt64,
 			Value:  value,
-			Column: goodrecommand.FieldCreateAt,
+			Column: goodrecommend.FieldCreateAt,
 		})
 	}
 	if value, ok := gru.mutation.AddedCreateAt(); ok {
 		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
 			Type:   field.TypeInt64,
 			Value:  value,
-			Column: goodrecommand.FieldCreateAt,
+			Column: goodrecommend.FieldCreateAt,
 		})
 	}
 	if value, ok := gru.mutation.UpdateAt(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeInt64,
 			Value:  value,
-			Column: goodrecommand.FieldUpdateAt,
+			Column: goodrecommend.FieldUpdateAt,
 		})
 	}
 	if value, ok := gru.mutation.AddedUpdateAt(); ok {
 		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
 			Type:   field.TypeInt64,
 			Value:  value,
-			Column: goodrecommand.FieldUpdateAt,
+			Column: goodrecommend.FieldUpdateAt,
 		})
 	}
 	if value, ok := gru.mutation.DeleteAt(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeInt64,
 			Value:  value,
-			Column: goodrecommand.FieldDeleteAt,
+			Column: goodrecommend.FieldDeleteAt,
 		})
 	}
 	if value, ok := gru.mutation.AddedDeleteAt(); ok {
 		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
 			Type:   field.TypeInt64,
 			Value:  value,
-			Column: goodrecommand.FieldDeleteAt,
+			Column: goodrecommend.FieldDeleteAt,
 		})
 	}
 	if n, err = sqlgraph.UpdateNodes(ctx, gru.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
-			err = &NotFoundError{goodrecommand.Label}
+			err = &NotFoundError{goodrecommend.Label}
 		} else if sqlgraph.IsConstraintError(err) {
 			err = &ConstraintError{err.Error(), err}
 		}
@@ -281,40 +281,40 @@ func (gru *GoodRecommandUpdate) sqlSave(ctx context.Context) (n int, err error) 
 	return n, nil
 }
 
-// GoodRecommandUpdateOne is the builder for updating a single GoodRecommand entity.
-type GoodRecommandUpdateOne struct {
+// GoodRecommendUpdateOne is the builder for updating a single GoodRecommend entity.
+type GoodRecommendUpdateOne struct {
 	config
 	fields   []string
 	hooks    []Hook
-	mutation *GoodRecommandMutation
+	mutation *GoodRecommendMutation
 }
 
 // SetAppID sets the "app_id" field.
-func (gruo *GoodRecommandUpdateOne) SetAppID(u uuid.UUID) *GoodRecommandUpdateOne {
+func (gruo *GoodRecommendUpdateOne) SetAppID(u uuid.UUID) *GoodRecommendUpdateOne {
 	gruo.mutation.SetAppID(u)
 	return gruo
 }
 
 // SetUserID sets the "user_id" field.
-func (gruo *GoodRecommandUpdateOne) SetUserID(u uuid.UUID) *GoodRecommandUpdateOne {
+func (gruo *GoodRecommendUpdateOne) SetUserID(u uuid.UUID) *GoodRecommendUpdateOne {
 	gruo.mutation.SetUserID(u)
 	return gruo
 }
 
 // SetGoodID sets the "good_id" field.
-func (gruo *GoodRecommandUpdateOne) SetGoodID(u uuid.UUID) *GoodRecommandUpdateOne {
+func (gruo *GoodRecommendUpdateOne) SetGoodID(u uuid.UUID) *GoodRecommendUpdateOne {
 	gruo.mutation.SetGoodID(u)
 	return gruo
 }
 
 // SetContent sets the "content" field.
-func (gruo *GoodRecommandUpdateOne) SetContent(s string) *GoodRecommandUpdateOne {
+func (gruo *GoodRecommendUpdateOne) SetContent(s string) *GoodRecommendUpdateOne {
 	gruo.mutation.SetContent(s)
 	return gruo
 }
 
 // SetNillableContent sets the "content" field if the given value is not nil.
-func (gruo *GoodRecommandUpdateOne) SetNillableContent(s *string) *GoodRecommandUpdateOne {
+func (gruo *GoodRecommendUpdateOne) SetNillableContent(s *string) *GoodRecommendUpdateOne {
 	if s != nil {
 		gruo.SetContent(*s)
 	}
@@ -322,14 +322,14 @@ func (gruo *GoodRecommandUpdateOne) SetNillableContent(s *string) *GoodRecommand
 }
 
 // SetCreateAt sets the "create_at" field.
-func (gruo *GoodRecommandUpdateOne) SetCreateAt(i int64) *GoodRecommandUpdateOne {
+func (gruo *GoodRecommendUpdateOne) SetCreateAt(i int64) *GoodRecommendUpdateOne {
 	gruo.mutation.ResetCreateAt()
 	gruo.mutation.SetCreateAt(i)
 	return gruo
 }
 
 // SetNillableCreateAt sets the "create_at" field if the given value is not nil.
-func (gruo *GoodRecommandUpdateOne) SetNillableCreateAt(i *int64) *GoodRecommandUpdateOne {
+func (gruo *GoodRecommendUpdateOne) SetNillableCreateAt(i *int64) *GoodRecommendUpdateOne {
 	if i != nil {
 		gruo.SetCreateAt(*i)
 	}
@@ -337,33 +337,33 @@ func (gruo *GoodRecommandUpdateOne) SetNillableCreateAt(i *int64) *GoodRecommand
 }
 
 // AddCreateAt adds i to the "create_at" field.
-func (gruo *GoodRecommandUpdateOne) AddCreateAt(i int64) *GoodRecommandUpdateOne {
+func (gruo *GoodRecommendUpdateOne) AddCreateAt(i int64) *GoodRecommendUpdateOne {
 	gruo.mutation.AddCreateAt(i)
 	return gruo
 }
 
 // SetUpdateAt sets the "update_at" field.
-func (gruo *GoodRecommandUpdateOne) SetUpdateAt(i int64) *GoodRecommandUpdateOne {
+func (gruo *GoodRecommendUpdateOne) SetUpdateAt(i int64) *GoodRecommendUpdateOne {
 	gruo.mutation.ResetUpdateAt()
 	gruo.mutation.SetUpdateAt(i)
 	return gruo
 }
 
 // AddUpdateAt adds i to the "update_at" field.
-func (gruo *GoodRecommandUpdateOne) AddUpdateAt(i int64) *GoodRecommandUpdateOne {
+func (gruo *GoodRecommendUpdateOne) AddUpdateAt(i int64) *GoodRecommendUpdateOne {
 	gruo.mutation.AddUpdateAt(i)
 	return gruo
 }
 
 // SetDeleteAt sets the "delete_at" field.
-func (gruo *GoodRecommandUpdateOne) SetDeleteAt(i int64) *GoodRecommandUpdateOne {
+func (gruo *GoodRecommendUpdateOne) SetDeleteAt(i int64) *GoodRecommendUpdateOne {
 	gruo.mutation.ResetDeleteAt()
 	gruo.mutation.SetDeleteAt(i)
 	return gruo
 }
 
 // SetNillableDeleteAt sets the "delete_at" field if the given value is not nil.
-func (gruo *GoodRecommandUpdateOne) SetNillableDeleteAt(i *int64) *GoodRecommandUpdateOne {
+func (gruo *GoodRecommendUpdateOne) SetNillableDeleteAt(i *int64) *GoodRecommendUpdateOne {
 	if i != nil {
 		gruo.SetDeleteAt(*i)
 	}
@@ -371,35 +371,35 @@ func (gruo *GoodRecommandUpdateOne) SetNillableDeleteAt(i *int64) *GoodRecommand
 }
 
 // AddDeleteAt adds i to the "delete_at" field.
-func (gruo *GoodRecommandUpdateOne) AddDeleteAt(i int64) *GoodRecommandUpdateOne {
+func (gruo *GoodRecommendUpdateOne) AddDeleteAt(i int64) *GoodRecommendUpdateOne {
 	gruo.mutation.AddDeleteAt(i)
 	return gruo
 }
 
-// Mutation returns the GoodRecommandMutation object of the builder.
-func (gruo *GoodRecommandUpdateOne) Mutation() *GoodRecommandMutation {
+// Mutation returns the GoodRecommendMutation object of the builder.
+func (gruo *GoodRecommendUpdateOne) Mutation() *GoodRecommendMutation {
 	return gruo.mutation
 }
 
 // Select allows selecting one or more fields (columns) of the returned entity.
 // The default is selecting all fields defined in the entity schema.
-func (gruo *GoodRecommandUpdateOne) Select(field string, fields ...string) *GoodRecommandUpdateOne {
+func (gruo *GoodRecommendUpdateOne) Select(field string, fields ...string) *GoodRecommendUpdateOne {
 	gruo.fields = append([]string{field}, fields...)
 	return gruo
 }
 
-// Save executes the query and returns the updated GoodRecommand entity.
-func (gruo *GoodRecommandUpdateOne) Save(ctx context.Context) (*GoodRecommand, error) {
+// Save executes the query and returns the updated GoodRecommend entity.
+func (gruo *GoodRecommendUpdateOne) Save(ctx context.Context) (*GoodRecommend, error) {
 	var (
 		err  error
-		node *GoodRecommand
+		node *GoodRecommend
 	)
 	gruo.defaults()
 	if len(gruo.hooks) == 0 {
 		node, err = gruo.sqlSave(ctx)
 	} else {
 		var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
-			mutation, ok := m.(*GoodRecommandMutation)
+			mutation, ok := m.(*GoodRecommendMutation)
 			if !ok {
 				return nil, fmt.Errorf("unexpected mutation type %T", m)
 			}
@@ -422,7 +422,7 @@ func (gruo *GoodRecommandUpdateOne) Save(ctx context.Context) (*GoodRecommand, e
 }
 
 // SaveX is like Save, but panics if an error occurs.
-func (gruo *GoodRecommandUpdateOne) SaveX(ctx context.Context) *GoodRecommand {
+func (gruo *GoodRecommendUpdateOne) SaveX(ctx context.Context) *GoodRecommend {
 	node, err := gruo.Save(ctx)
 	if err != nil {
 		panic(err)
@@ -431,50 +431,50 @@ func (gruo *GoodRecommandUpdateOne) SaveX(ctx context.Context) *GoodRecommand {
 }
 
 // Exec executes the query on the entity.
-func (gruo *GoodRecommandUpdateOne) Exec(ctx context.Context) error {
+func (gruo *GoodRecommendUpdateOne) Exec(ctx context.Context) error {
 	_, err := gruo.Save(ctx)
 	return err
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (gruo *GoodRecommandUpdateOne) ExecX(ctx context.Context) {
+func (gruo *GoodRecommendUpdateOne) ExecX(ctx context.Context) {
 	if err := gruo.Exec(ctx); err != nil {
 		panic(err)
 	}
 }
 
 // defaults sets the default values of the builder before save.
-func (gruo *GoodRecommandUpdateOne) defaults() {
+func (gruo *GoodRecommendUpdateOne) defaults() {
 	if _, ok := gruo.mutation.UpdateAt(); !ok {
-		v := goodrecommand.UpdateDefaultUpdateAt()
+		v := goodrecommend.UpdateDefaultUpdateAt()
 		gruo.mutation.SetUpdateAt(v)
 	}
 }
 
-func (gruo *GoodRecommandUpdateOne) sqlSave(ctx context.Context) (_node *GoodRecommand, err error) {
+func (gruo *GoodRecommendUpdateOne) sqlSave(ctx context.Context) (_node *GoodRecommend, err error) {
 	_spec := &sqlgraph.UpdateSpec{
 		Node: &sqlgraph.NodeSpec{
-			Table:   goodrecommand.Table,
-			Columns: goodrecommand.Columns,
+			Table:   goodrecommend.Table,
+			Columns: goodrecommend.Columns,
 			ID: &sqlgraph.FieldSpec{
 				Type:   field.TypeUUID,
-				Column: goodrecommand.FieldID,
+				Column: goodrecommend.FieldID,
 			},
 		},
 	}
 	id, ok := gruo.mutation.ID()
 	if !ok {
-		return nil, &ValidationError{Name: "ID", err: fmt.Errorf("missing GoodRecommand.ID for update")}
+		return nil, &ValidationError{Name: "ID", err: fmt.Errorf("missing GoodRecommend.ID for update")}
 	}
 	_spec.Node.ID.Value = id
 	if fields := gruo.fields; len(fields) > 0 {
 		_spec.Node.Columns = make([]string, 0, len(fields))
-		_spec.Node.Columns = append(_spec.Node.Columns, goodrecommand.FieldID)
+		_spec.Node.Columns = append(_spec.Node.Columns, goodrecommend.FieldID)
 		for _, f := range fields {
-			if !goodrecommand.ValidColumn(f) {
+			if !goodrecommend.ValidColumn(f) {
 				return nil, &ValidationError{Name: f, err: fmt.Errorf("ent: invalid field %q for query", f)}
 			}
-			if f != goodrecommand.FieldID {
+			if f != goodrecommend.FieldID {
 				_spec.Node.Columns = append(_spec.Node.Columns, f)
 			}
 		}
@@ -490,78 +490,78 @@ func (gruo *GoodRecommandUpdateOne) sqlSave(ctx context.Context) (_node *GoodRec
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeUUID,
 			Value:  value,
-			Column: goodrecommand.FieldAppID,
+			Column: goodrecommend.FieldAppID,
 		})
 	}
 	if value, ok := gruo.mutation.UserID(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeUUID,
 			Value:  value,
-			Column: goodrecommand.FieldUserID,
+			Column: goodrecommend.FieldUserID,
 		})
 	}
 	if value, ok := gruo.mutation.GoodID(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeUUID,
 			Value:  value,
-			Column: goodrecommand.FieldGoodID,
+			Column: goodrecommend.FieldGoodID,
 		})
 	}
 	if value, ok := gruo.mutation.Content(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
 			Value:  value,
-			Column: goodrecommand.FieldContent,
+			Column: goodrecommend.FieldContent,
 		})
 	}
 	if value, ok := gruo.mutation.CreateAt(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeInt64,
 			Value:  value,
-			Column: goodrecommand.FieldCreateAt,
+			Column: goodrecommend.FieldCreateAt,
 		})
 	}
 	if value, ok := gruo.mutation.AddedCreateAt(); ok {
 		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
 			Type:   field.TypeInt64,
 			Value:  value,
-			Column: goodrecommand.FieldCreateAt,
+			Column: goodrecommend.FieldCreateAt,
 		})
 	}
 	if value, ok := gruo.mutation.UpdateAt(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeInt64,
 			Value:  value,
-			Column: goodrecommand.FieldUpdateAt,
+			Column: goodrecommend.FieldUpdateAt,
 		})
 	}
 	if value, ok := gruo.mutation.AddedUpdateAt(); ok {
 		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
 			Type:   field.TypeInt64,
 			Value:  value,
-			Column: goodrecommand.FieldUpdateAt,
+			Column: goodrecommend.FieldUpdateAt,
 		})
 	}
 	if value, ok := gruo.mutation.DeleteAt(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeInt64,
 			Value:  value,
-			Column: goodrecommand.FieldDeleteAt,
+			Column: goodrecommend.FieldDeleteAt,
 		})
 	}
 	if value, ok := gruo.mutation.AddedDeleteAt(); ok {
 		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
 			Type:   field.TypeInt64,
 			Value:  value,
-			Column: goodrecommand.FieldDeleteAt,
+			Column: goodrecommend.FieldDeleteAt,
 		})
 	}
-	_node = &GoodRecommand{config: gruo.config}
+	_node = &GoodRecommend{config: gruo.config}
 	_spec.Assign = _node.assignValues
 	_spec.ScanValues = _node.scanValues
 	if err = sqlgraph.UpdateNode(ctx, gruo.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
-			err = &NotFoundError{goodrecommand.Label}
+			err = &NotFoundError{goodrecommend.Label}
 		} else if sqlgraph.IsConstraintError(err) {
 			err = &ConstraintError{err.Error(), err}
 		}

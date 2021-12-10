@@ -33,8 +33,8 @@ type GoodExtraInfo func(*sql.Selector)
 // GoodInfo is the predicate function for goodinfo builders.
 type GoodInfo func(*sql.Selector)
 
-// GoodRecommand is the predicate function for goodrecommand builders.
-type GoodRecommand func(*sql.Selector)
+// GoodRecommend is the predicate function for goodrecommend builders.
+type GoodRecommend func(*sql.Selector)
 
 // GoodReview is the predicate function for goodreview builders.
 type GoodReview func(*sql.Selector)

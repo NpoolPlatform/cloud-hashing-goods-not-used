@@ -126,15 +126,15 @@ func (f GoodInfoFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, er
 	return f(ctx, mv)
 }
 
-// The GoodRecommandFunc type is an adapter to allow the use of ordinary
-// function as GoodRecommand mutator.
-type GoodRecommandFunc func(context.Context, *ent.GoodRecommandMutation) (ent.Value, error)
+// The GoodRecommendFunc type is an adapter to allow the use of ordinary
+// function as GoodRecommend mutator.
+type GoodRecommendFunc func(context.Context, *ent.GoodRecommendMutation) (ent.Value, error)
 
 // Mutate calls f(ctx, m).
-func (f GoodRecommandFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, error) {
-	mv, ok := m.(*ent.GoodRecommandMutation)
+func (f GoodRecommendFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, error) {
+	mv, ok := m.(*ent.GoodRecommendMutation)
 	if !ok {
-		return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.GoodRecommandMutation", m)
+		return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.GoodRecommendMutation", m)
 	}
 	return f(ctx, mv)
 }

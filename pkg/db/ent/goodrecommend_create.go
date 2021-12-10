@@ -9,43 +9,43 @@ import (
 
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
-	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/goodrecommand"
+	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/goodrecommend"
 	"github.com/google/uuid"
 )
 
-// GoodRecommandCreate is the builder for creating a GoodRecommand entity.
-type GoodRecommandCreate struct {
+// GoodRecommendCreate is the builder for creating a GoodRecommend entity.
+type GoodRecommendCreate struct {
 	config
-	mutation *GoodRecommandMutation
+	mutation *GoodRecommendMutation
 	hooks    []Hook
 }
 
 // SetAppID sets the "app_id" field.
-func (grc *GoodRecommandCreate) SetAppID(u uuid.UUID) *GoodRecommandCreate {
+func (grc *GoodRecommendCreate) SetAppID(u uuid.UUID) *GoodRecommendCreate {
 	grc.mutation.SetAppID(u)
 	return grc
 }
 
 // SetUserID sets the "user_id" field.
-func (grc *GoodRecommandCreate) SetUserID(u uuid.UUID) *GoodRecommandCreate {
+func (grc *GoodRecommendCreate) SetUserID(u uuid.UUID) *GoodRecommendCreate {
 	grc.mutation.SetUserID(u)
 	return grc
 }
 
 // SetGoodID sets the "good_id" field.
-func (grc *GoodRecommandCreate) SetGoodID(u uuid.UUID) *GoodRecommandCreate {
+func (grc *GoodRecommendCreate) SetGoodID(u uuid.UUID) *GoodRecommendCreate {
 	grc.mutation.SetGoodID(u)
 	return grc
 }
 
 // SetContent sets the "content" field.
-func (grc *GoodRecommandCreate) SetContent(s string) *GoodRecommandCreate {
+func (grc *GoodRecommendCreate) SetContent(s string) *GoodRecommendCreate {
 	grc.mutation.SetContent(s)
 	return grc
 }
 
 // SetNillableContent sets the "content" field if the given value is not nil.
-func (grc *GoodRecommandCreate) SetNillableContent(s *string) *GoodRecommandCreate {
+func (grc *GoodRecommendCreate) SetNillableContent(s *string) *GoodRecommendCreate {
 	if s != nil {
 		grc.SetContent(*s)
 	}
@@ -53,13 +53,13 @@ func (grc *GoodRecommandCreate) SetNillableContent(s *string) *GoodRecommandCrea
 }
 
 // SetCreateAt sets the "create_at" field.
-func (grc *GoodRecommandCreate) SetCreateAt(i int64) *GoodRecommandCreate {
+func (grc *GoodRecommendCreate) SetCreateAt(i int64) *GoodRecommendCreate {
 	grc.mutation.SetCreateAt(i)
 	return grc
 }
 
 // SetNillableCreateAt sets the "create_at" field if the given value is not nil.
-func (grc *GoodRecommandCreate) SetNillableCreateAt(i *int64) *GoodRecommandCreate {
+func (grc *GoodRecommendCreate) SetNillableCreateAt(i *int64) *GoodRecommendCreate {
 	if i != nil {
 		grc.SetCreateAt(*i)
 	}
@@ -67,13 +67,13 @@ func (grc *GoodRecommandCreate) SetNillableCreateAt(i *int64) *GoodRecommandCrea
 }
 
 // SetUpdateAt sets the "update_at" field.
-func (grc *GoodRecommandCreate) SetUpdateAt(i int64) *GoodRecommandCreate {
+func (grc *GoodRecommendCreate) SetUpdateAt(i int64) *GoodRecommendCreate {
 	grc.mutation.SetUpdateAt(i)
 	return grc
 }
 
 // SetNillableUpdateAt sets the "update_at" field if the given value is not nil.
-func (grc *GoodRecommandCreate) SetNillableUpdateAt(i *int64) *GoodRecommandCreate {
+func (grc *GoodRecommendCreate) SetNillableUpdateAt(i *int64) *GoodRecommendCreate {
 	if i != nil {
 		grc.SetUpdateAt(*i)
 	}
@@ -81,13 +81,13 @@ func (grc *GoodRecommandCreate) SetNillableUpdateAt(i *int64) *GoodRecommandCrea
 }
 
 // SetDeleteAt sets the "delete_at" field.
-func (grc *GoodRecommandCreate) SetDeleteAt(i int64) *GoodRecommandCreate {
+func (grc *GoodRecommendCreate) SetDeleteAt(i int64) *GoodRecommendCreate {
 	grc.mutation.SetDeleteAt(i)
 	return grc
 }
 
 // SetNillableDeleteAt sets the "delete_at" field if the given value is not nil.
-func (grc *GoodRecommandCreate) SetNillableDeleteAt(i *int64) *GoodRecommandCreate {
+func (grc *GoodRecommendCreate) SetNillableDeleteAt(i *int64) *GoodRecommendCreate {
 	if i != nil {
 		grc.SetDeleteAt(*i)
 	}
@@ -95,21 +95,21 @@ func (grc *GoodRecommandCreate) SetNillableDeleteAt(i *int64) *GoodRecommandCrea
 }
 
 // SetID sets the "id" field.
-func (grc *GoodRecommandCreate) SetID(u uuid.UUID) *GoodRecommandCreate {
+func (grc *GoodRecommendCreate) SetID(u uuid.UUID) *GoodRecommendCreate {
 	grc.mutation.SetID(u)
 	return grc
 }
 
-// Mutation returns the GoodRecommandMutation object of the builder.
-func (grc *GoodRecommandCreate) Mutation() *GoodRecommandMutation {
+// Mutation returns the GoodRecommendMutation object of the builder.
+func (grc *GoodRecommendCreate) Mutation() *GoodRecommendMutation {
 	return grc.mutation
 }
 
-// Save creates the GoodRecommand in the database.
-func (grc *GoodRecommandCreate) Save(ctx context.Context) (*GoodRecommand, error) {
+// Save creates the GoodRecommend in the database.
+func (grc *GoodRecommendCreate) Save(ctx context.Context) (*GoodRecommend, error) {
 	var (
 		err  error
-		node *GoodRecommand
+		node *GoodRecommend
 	)
 	grc.defaults()
 	if len(grc.hooks) == 0 {
@@ -119,7 +119,7 @@ func (grc *GoodRecommandCreate) Save(ctx context.Context) (*GoodRecommand, error
 		node, err = grc.sqlSave(ctx)
 	} else {
 		var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
-			mutation, ok := m.(*GoodRecommandMutation)
+			mutation, ok := m.(*GoodRecommendMutation)
 			if !ok {
 				return nil, fmt.Errorf("unexpected mutation type %T", m)
 			}
@@ -148,7 +148,7 @@ func (grc *GoodRecommandCreate) Save(ctx context.Context) (*GoodRecommand, error
 }
 
 // SaveX calls Save and panics if Save returns an error.
-func (grc *GoodRecommandCreate) SaveX(ctx context.Context) *GoodRecommand {
+func (grc *GoodRecommendCreate) SaveX(ctx context.Context) *GoodRecommend {
 	v, err := grc.Save(ctx)
 	if err != nil {
 		panic(err)
@@ -157,44 +157,44 @@ func (grc *GoodRecommandCreate) SaveX(ctx context.Context) *GoodRecommand {
 }
 
 // Exec executes the query.
-func (grc *GoodRecommandCreate) Exec(ctx context.Context) error {
+func (grc *GoodRecommendCreate) Exec(ctx context.Context) error {
 	_, err := grc.Save(ctx)
 	return err
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (grc *GoodRecommandCreate) ExecX(ctx context.Context) {
+func (grc *GoodRecommendCreate) ExecX(ctx context.Context) {
 	if err := grc.Exec(ctx); err != nil {
 		panic(err)
 	}
 }
 
 // defaults sets the default values of the builder before save.
-func (grc *GoodRecommandCreate) defaults() {
+func (grc *GoodRecommendCreate) defaults() {
 	if _, ok := grc.mutation.Content(); !ok {
-		v := goodrecommand.DefaultContent
+		v := goodrecommend.DefaultContent
 		grc.mutation.SetContent(v)
 	}
 	if _, ok := grc.mutation.CreateAt(); !ok {
-		v := goodrecommand.DefaultCreateAt()
+		v := goodrecommend.DefaultCreateAt()
 		grc.mutation.SetCreateAt(v)
 	}
 	if _, ok := grc.mutation.UpdateAt(); !ok {
-		v := goodrecommand.DefaultUpdateAt()
+		v := goodrecommend.DefaultUpdateAt()
 		grc.mutation.SetUpdateAt(v)
 	}
 	if _, ok := grc.mutation.DeleteAt(); !ok {
-		v := goodrecommand.DefaultDeleteAt()
+		v := goodrecommend.DefaultDeleteAt()
 		grc.mutation.SetDeleteAt(v)
 	}
 	if _, ok := grc.mutation.ID(); !ok {
-		v := goodrecommand.DefaultID()
+		v := goodrecommend.DefaultID()
 		grc.mutation.SetID(v)
 	}
 }
 
 // check runs all checks and user-defined validators on the builder.
-func (grc *GoodRecommandCreate) check() error {
+func (grc *GoodRecommendCreate) check() error {
 	if _, ok := grc.mutation.AppID(); !ok {
 		return &ValidationError{Name: "app_id", err: errors.New(`ent: missing required field "app_id"`)}
 	}
@@ -219,7 +219,7 @@ func (grc *GoodRecommandCreate) check() error {
 	return nil
 }
 
-func (grc *GoodRecommandCreate) sqlSave(ctx context.Context) (*GoodRecommand, error) {
+func (grc *GoodRecommendCreate) sqlSave(ctx context.Context) (*GoodRecommend, error) {
 	_node, _spec := grc.createSpec()
 	if err := sqlgraph.CreateNode(ctx, grc.driver, _spec); err != nil {
 		if sqlgraph.IsConstraintError(err) {
@@ -233,14 +233,14 @@ func (grc *GoodRecommandCreate) sqlSave(ctx context.Context) (*GoodRecommand, er
 	return _node, nil
 }
 
-func (grc *GoodRecommandCreate) createSpec() (*GoodRecommand, *sqlgraph.CreateSpec) {
+func (grc *GoodRecommendCreate) createSpec() (*GoodRecommend, *sqlgraph.CreateSpec) {
 	var (
-		_node = &GoodRecommand{config: grc.config}
+		_node = &GoodRecommend{config: grc.config}
 		_spec = &sqlgraph.CreateSpec{
-			Table: goodrecommand.Table,
+			Table: goodrecommend.Table,
 			ID: &sqlgraph.FieldSpec{
 				Type:   field.TypeUUID,
-				Column: goodrecommand.FieldID,
+				Column: goodrecommend.FieldID,
 			},
 		}
 	)
@@ -252,7 +252,7 @@ func (grc *GoodRecommandCreate) createSpec() (*GoodRecommand, *sqlgraph.CreateSp
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
 			Type:   field.TypeUUID,
 			Value:  value,
-			Column: goodrecommand.FieldAppID,
+			Column: goodrecommend.FieldAppID,
 		})
 		_node.AppID = value
 	}
@@ -260,7 +260,7 @@ func (grc *GoodRecommandCreate) createSpec() (*GoodRecommand, *sqlgraph.CreateSp
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
 			Type:   field.TypeUUID,
 			Value:  value,
-			Column: goodrecommand.FieldUserID,
+			Column: goodrecommend.FieldUserID,
 		})
 		_node.UserID = value
 	}
@@ -268,7 +268,7 @@ func (grc *GoodRecommandCreate) createSpec() (*GoodRecommand, *sqlgraph.CreateSp
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
 			Type:   field.TypeUUID,
 			Value:  value,
-			Column: goodrecommand.FieldGoodID,
+			Column: goodrecommend.FieldGoodID,
 		})
 		_node.GoodID = value
 	}
@@ -276,7 +276,7 @@ func (grc *GoodRecommandCreate) createSpec() (*GoodRecommand, *sqlgraph.CreateSp
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
 			Value:  value,
-			Column: goodrecommand.FieldContent,
+			Column: goodrecommend.FieldContent,
 		})
 		_node.Content = value
 	}
@@ -284,7 +284,7 @@ func (grc *GoodRecommandCreate) createSpec() (*GoodRecommand, *sqlgraph.CreateSp
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
 			Type:   field.TypeInt64,
 			Value:  value,
-			Column: goodrecommand.FieldCreateAt,
+			Column: goodrecommend.FieldCreateAt,
 		})
 		_node.CreateAt = value
 	}
@@ -292,7 +292,7 @@ func (grc *GoodRecommandCreate) createSpec() (*GoodRecommand, *sqlgraph.CreateSp
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
 			Type:   field.TypeInt64,
 			Value:  value,
-			Column: goodrecommand.FieldUpdateAt,
+			Column: goodrecommend.FieldUpdateAt,
 		})
 		_node.UpdateAt = value
 	}
@@ -300,30 +300,30 @@ func (grc *GoodRecommandCreate) createSpec() (*GoodRecommand, *sqlgraph.CreateSp
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
 			Type:   field.TypeInt64,
 			Value:  value,
-			Column: goodrecommand.FieldDeleteAt,
+			Column: goodrecommend.FieldDeleteAt,
 		})
 		_node.DeleteAt = value
 	}
 	return _node, _spec
 }
 
-// GoodRecommandCreateBulk is the builder for creating many GoodRecommand entities in bulk.
-type GoodRecommandCreateBulk struct {
+// GoodRecommendCreateBulk is the builder for creating many GoodRecommend entities in bulk.
+type GoodRecommendCreateBulk struct {
 	config
-	builders []*GoodRecommandCreate
+	builders []*GoodRecommendCreate
 }
 
-// Save creates the GoodRecommand entities in the database.
-func (grcb *GoodRecommandCreateBulk) Save(ctx context.Context) ([]*GoodRecommand, error) {
+// Save creates the GoodRecommend entities in the database.
+func (grcb *GoodRecommendCreateBulk) Save(ctx context.Context) ([]*GoodRecommend, error) {
 	specs := make([]*sqlgraph.CreateSpec, len(grcb.builders))
-	nodes := make([]*GoodRecommand, len(grcb.builders))
+	nodes := make([]*GoodRecommend, len(grcb.builders))
 	mutators := make([]Mutator, len(grcb.builders))
 	for i := range grcb.builders {
 		func(i int, root context.Context) {
 			builder := grcb.builders[i]
 			builder.defaults()
 			var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
-				mutation, ok := m.(*GoodRecommandMutation)
+				mutation, ok := m.(*GoodRecommendMutation)
 				if !ok {
 					return nil, fmt.Errorf("unexpected mutation type %T", m)
 				}
@@ -366,7 +366,7 @@ func (grcb *GoodRecommandCreateBulk) Save(ctx context.Context) ([]*GoodRecommand
 }
 
 // SaveX is like Save, but panics if an error occurs.
-func (grcb *GoodRecommandCreateBulk) SaveX(ctx context.Context) []*GoodRecommand {
+func (grcb *GoodRecommendCreateBulk) SaveX(ctx context.Context) []*GoodRecommend {
 	v, err := grcb.Save(ctx)
 	if err != nil {
 		panic(err)
@@ -375,13 +375,13 @@ func (grcb *GoodRecommandCreateBulk) SaveX(ctx context.Context) []*GoodRecommand
 }
 
 // Exec executes the query.
-func (grcb *GoodRecommandCreateBulk) Exec(ctx context.Context) error {
+func (grcb *GoodRecommendCreateBulk) Exec(ctx context.Context) error {
 	_, err := grcb.Save(ctx)
 	return err
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (grcb *GoodRecommandCreateBulk) ExecX(ctx context.Context) {
+func (grcb *GoodRecommendCreateBulk) ExecX(ctx context.Context) {
 	if err := grcb.Exec(ctx); err != nil {
 		panic(err)
 	}
