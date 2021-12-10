@@ -20,12 +20,6 @@ type GoodRecommendCreate struct {
 	hooks    []Hook
 }
 
-// SetAppID sets the "app_id" field.
-func (grc *GoodRecommendCreate) SetAppID(u uuid.UUID) *GoodRecommendCreate {
-	grc.mutation.SetAppID(u)
-	return grc
-}
-
 // SetUserID sets the "user_id" field.
 func (grc *GoodRecommendCreate) SetUserID(u uuid.UUID) *GoodRecommendCreate {
 	grc.mutation.SetUserID(u)
@@ -195,9 +189,6 @@ func (grc *GoodRecommendCreate) defaults() {
 
 // check runs all checks and user-defined validators on the builder.
 func (grc *GoodRecommendCreate) check() error {
-	if _, ok := grc.mutation.AppID(); !ok {
-		return &ValidationError{Name: "app_id", err: errors.New(`ent: missing required field "app_id"`)}
-	}
 	if _, ok := grc.mutation.UserID(); !ok {
 		return &ValidationError{Name: "user_id", err: errors.New(`ent: missing required field "user_id"`)}
 	}
@@ -247,14 +238,6 @@ func (grc *GoodRecommendCreate) createSpec() (*GoodRecommend, *sqlgraph.CreateSp
 	if id, ok := grc.mutation.ID(); ok {
 		_node.ID = id
 		_spec.ID.Value = id
-	}
-	if value, ok := grc.mutation.AppID(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeUUID,
-			Value:  value,
-			Column: goodrecommend.FieldAppID,
-		})
-		_node.AppID = value
 	}
 	if value, ok := grc.mutation.UserID(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{

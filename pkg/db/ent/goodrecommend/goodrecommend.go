@@ -11,8 +11,6 @@ const (
 	Label = "good_recommend"
 	// FieldID holds the string denoting the id field in the database.
 	FieldID = "id"
-	// FieldAppID holds the string denoting the app_id field in the database.
-	FieldAppID = "app_id"
 	// FieldUserID holds the string denoting the user_id field in the database.
 	FieldUserID = "user_id"
 	// FieldGoodID holds the string denoting the good_id field in the database.
@@ -32,7 +30,6 @@ const (
 // Columns holds all SQL columns for goodrecommend fields.
 var Columns = []string{
 	FieldID,
-	FieldAppID,
 	FieldUserID,
 	FieldGoodID,
 	FieldContent,

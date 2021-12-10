@@ -254,21 +254,21 @@ func init() {
 	goodrecommendFields := schema.GoodRecommend{}.Fields()
 	_ = goodrecommendFields
 	// goodrecommendDescContent is the schema descriptor for content field.
-	goodrecommendDescContent := goodrecommendFields[4].Descriptor()
+	goodrecommendDescContent := goodrecommendFields[3].Descriptor()
 	// goodrecommend.DefaultContent holds the default value on creation for the content field.
 	goodrecommend.DefaultContent = goodrecommendDescContent.Default.(string)
 	// goodrecommendDescCreateAt is the schema descriptor for create_at field.
-	goodrecommendDescCreateAt := goodrecommendFields[5].Descriptor()
+	goodrecommendDescCreateAt := goodrecommendFields[4].Descriptor()
 	// goodrecommend.DefaultCreateAt holds the default value on creation for the create_at field.
 	goodrecommend.DefaultCreateAt = goodrecommendDescCreateAt.Default.(func() int64)
 	// goodrecommendDescUpdateAt is the schema descriptor for update_at field.
-	goodrecommendDescUpdateAt := goodrecommendFields[6].Descriptor()
+	goodrecommendDescUpdateAt := goodrecommendFields[5].Descriptor()
 	// goodrecommend.DefaultUpdateAt holds the default value on creation for the update_at field.
 	goodrecommend.DefaultUpdateAt = goodrecommendDescUpdateAt.Default.(func() int64)
 	// goodrecommend.UpdateDefaultUpdateAt holds the default value on update for the update_at field.
 	goodrecommend.UpdateDefaultUpdateAt = goodrecommendDescUpdateAt.UpdateDefault.(func() int64)
 	// goodrecommendDescDeleteAt is the schema descriptor for delete_at field.
-	goodrecommendDescDeleteAt := goodrecommendFields[7].Descriptor()
+	goodrecommendDescDeleteAt := goodrecommendFields[6].Descriptor()
 	// goodrecommend.DefaultDeleteAt holds the default value on creation for the delete_at field.
 	goodrecommend.DefaultDeleteAt = goodrecommendDescDeleteAt.Default.(func() int64)
 	// goodrecommendDescID is the schema descriptor for id field.

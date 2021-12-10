@@ -7877,7 +7877,6 @@ type GoodRecommendMutation struct {
 	op            Op
 	typ           string
 	id            *uuid.UUID
-	app_id        *uuid.UUID
 	user_id       *uuid.UUID
 	good_id       *uuid.UUID
 	content       *string
@@ -7976,42 +7975,6 @@ func (m *GoodRecommendMutation) ID() (id uuid.UUID, exists bool) {
 		return
 	}
 	return *m.id, true
-}
-
-// SetAppID sets the "app_id" field.
-func (m *GoodRecommendMutation) SetAppID(u uuid.UUID) {
-	m.app_id = &u
-}
-
-// AppID returns the value of the "app_id" field in the mutation.
-func (m *GoodRecommendMutation) AppID() (r uuid.UUID, exists bool) {
-	v := m.app_id
-	if v == nil {
-		return
-	}
-	return *v, true
-}
-
-// OldAppID returns the old "app_id" field's value of the GoodRecommend entity.
-// If the GoodRecommend object wasn't provided to the builder, the object is fetched from the database.
-// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *GoodRecommendMutation) OldAppID(ctx context.Context) (v uuid.UUID, err error) {
-	if !m.op.Is(OpUpdateOne) {
-		return v, fmt.Errorf("OldAppID is only allowed on UpdateOne operations")
-	}
-	if m.id == nil || m.oldValue == nil {
-		return v, fmt.Errorf("OldAppID requires an ID field in the mutation")
-	}
-	oldValue, err := m.oldValue(ctx)
-	if err != nil {
-		return v, fmt.Errorf("querying old value for OldAppID: %w", err)
-	}
-	return oldValue.AppID, nil
-}
-
-// ResetAppID resets all changes to the "app_id" field.
-func (m *GoodRecommendMutation) ResetAppID() {
-	m.app_id = nil
 }
 
 // SetUserID sets the "user_id" field.
@@ -8309,10 +8272,7 @@ func (m *GoodRecommendMutation) Type() string {
 // order to get all numeric fields that were incremented/decremented, call
 // AddedFields().
 func (m *GoodRecommendMutation) Fields() []string {
-	fields := make([]string, 0, 7)
-	if m.app_id != nil {
-		fields = append(fields, goodrecommend.FieldAppID)
-	}
+	fields := make([]string, 0, 6)
 	if m.user_id != nil {
 		fields = append(fields, goodrecommend.FieldUserID)
 	}
@@ -8339,8 +8299,6 @@ func (m *GoodRecommendMutation) Fields() []string {
 // schema.
 func (m *GoodRecommendMutation) Field(name string) (ent.Value, bool) {
 	switch name {
-	case goodrecommend.FieldAppID:
-		return m.AppID()
 	case goodrecommend.FieldUserID:
 		return m.UserID()
 	case goodrecommend.FieldGoodID:
@@ -8362,8 +8320,6 @@ func (m *GoodRecommendMutation) Field(name string) (ent.Value, bool) {
 // database failed.
 func (m *GoodRecommendMutation) OldField(ctx context.Context, name string) (ent.Value, error) {
 	switch name {
-	case goodrecommend.FieldAppID:
-		return m.OldAppID(ctx)
 	case goodrecommend.FieldUserID:
 		return m.OldUserID(ctx)
 	case goodrecommend.FieldGoodID:
@@ -8385,13 +8341,6 @@ func (m *GoodRecommendMutation) OldField(ctx context.Context, name string) (ent.
 // type.
 func (m *GoodRecommendMutation) SetField(name string, value ent.Value) error {
 	switch name {
-	case goodrecommend.FieldAppID:
-		v, ok := value.(uuid.UUID)
-		if !ok {
-			return fmt.Errorf("unexpected type %T for field %s", value, name)
-		}
-		m.SetAppID(v)
-		return nil
 	case goodrecommend.FieldUserID:
 		v, ok := value.(uuid.UUID)
 		if !ok {
@@ -8522,9 +8471,6 @@ func (m *GoodRecommendMutation) ClearField(name string) error {
 // It returns an error if the field is not defined in the schema.
 func (m *GoodRecommendMutation) ResetField(name string) error {
 	switch name {
-	case goodrecommend.FieldAppID:
-		m.ResetAppID()
-		return nil
 	case goodrecommend.FieldUserID:
 		m.ResetUserID()
 		return nil
