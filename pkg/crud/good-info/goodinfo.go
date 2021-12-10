@@ -287,6 +287,8 @@ func appID2GoodIDs(ctx context.Context, appID uuid.UUID) ([]uuid.UUID, error) {
 			appgood.And(
 				appgood.AppID(appID),
 				appgood.DeleteAt(0),
+				appgood.Authorized(true),
+				appgood.Online(true),
 			),
 		).
 		All(ctx)
