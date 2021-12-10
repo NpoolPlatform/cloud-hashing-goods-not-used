@@ -254,12 +254,12 @@ func (grq *GoodRecommendQuery) Clone() *GoodRecommendQuery {
 // Example:
 //
 //	var v []struct {
-//		AppID uuid.UUID `json:"app_id,omitempty"`
+//		UserID uuid.UUID `json:"user_id,omitempty"`
 //		Count int `json:"count,omitempty"`
 //	}
 //
 //	client.GoodRecommend.Query().
-//		GroupBy(goodrecommend.FieldAppID).
+//		GroupBy(goodrecommend.FieldUserID).
 //		Aggregate(ent.Count()).
 //		Scan(ctx, &v)
 //
@@ -281,11 +281,11 @@ func (grq *GoodRecommendQuery) GroupBy(field string, fields ...string) *GoodReco
 // Example:
 //
 //	var v []struct {
-//		AppID uuid.UUID `json:"app_id,omitempty"`
+//		UserID uuid.UUID `json:"user_id,omitempty"`
 //	}
 //
 //	client.GoodRecommend.Query().
-//		Select(goodrecommend.FieldAppID).
+//		Select(goodrecommend.FieldUserID).
 //		Scan(ctx, &v)
 //
 func (grq *GoodRecommendQuery) Select(fields ...string) *GoodRecommendSelect {
