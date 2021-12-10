@@ -5,5 +5,6 @@ config:
   grpc_port: 50021
   healthz_port: 50022
   appid: "89089012783789789719823798127398"
+  serviceid: "2ddf3dfd-f7f6-40e5-8983-3cf068c59082"
   logdir: "/var/log"
   apolloAccessKey: "0147fb70b815403790e8634b899fac07"
