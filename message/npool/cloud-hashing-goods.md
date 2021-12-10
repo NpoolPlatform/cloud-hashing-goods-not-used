@@ -878,6 +878,7 @@
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
+| ID | [string](#string) |  |  |
 | Fee | [FeeType](#cloud.hashing.goods.v1.FeeType) |  |  |
 | Value | [double](#double) |  |  |
 

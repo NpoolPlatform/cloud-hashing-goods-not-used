@@ -92,6 +92,7 @@ func Get(ctx context.Context, in *npool.GetGoodDetailRequest) (*npool.GetGoodDet
 			return nil, xerrors.Errorf("fail get fee type: %v", err)
 		}
 		fees = append(fees, &npool.FeeDetail{
+			ID:    id,
 			Fee:   myFeeType.Info,
 			Value: myFee.Info.Value,
 		})

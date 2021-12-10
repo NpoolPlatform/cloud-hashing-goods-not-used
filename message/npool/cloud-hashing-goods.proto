@@ -609,8 +609,9 @@ message GetPriceCurrencysResponse {
 }
 
 message FeeDetail {
-    FeeType Fee = 1;
-    double Value = 2;
+    string ID = 1;
+    FeeType Fee = 2;
+    double Value = 3;
 }
 
 message GoodDetail {
