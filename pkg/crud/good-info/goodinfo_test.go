@@ -153,6 +153,13 @@ func TestGoodInfoCRUD(t *testing.T) { //nolint
 		assert.Equal(t, resp3.Info.SupportCoinTypeIDs, supportCoinTypeIDs)
 		assert.Equal(t, resp3.Info.Total, total)
 	}
+
+	resp4, err := GetByIDs(context.Background(), &npool.GetGoodsByIDsRequest{
+		IDs: []string{resp.Info.ID},
+	})
+	if assert.Nil(t, err) && assert.NotNil(t, resp4.Infos) {
+		assert.Positive(t, len(resp4.Infos))
+	}
 }
 
 func TestGetAll(t *testing.T) {
@@ -161,20 +168,5 @@ func TestGetAll(t *testing.T) {
 	}
 
 	_, err := GetAll(context.Background(), &npool.GetGoodsRequest{})
-	assert.Nil(t, err)
-}
-
-func TestGetByApp(t *testing.T) {
-	if runByGithubAction, err := strconv.ParseBool(os.Getenv("RUN_BY_GITHUB_ACTION")); err == nil && runByGithubAction {
-		return
-	}
-
-	_, err := GetByApp(context.Background(), &npool.GetGoodsByAppRequest{
-		AppID: uuid.NewString(),
-		PageInfo: &npool.PageInfo{
-			PageIndex: 1,
-			PageSize:  10,
-		},
-	})
 	assert.Nil(t, err)
 }

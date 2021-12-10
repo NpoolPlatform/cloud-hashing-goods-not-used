@@ -168,9 +168,9 @@ service CloudHashingGoods {
             body: "*"
         };
     }
-    rpc GetGoodsByApp(GetGoodsByAppRequest) returns (GetGoodsByAppResponse) {
+    rpc GetGoodsByIDs(GetGoodsByIDsRequest) returns (GetGoodsByIDsResponse) {
         option (google.api.http) = {
-            post: "/v1/get/goods/by/app"
+            post: "/v1/get/goods/by/ids"
             body: "*"
         };
     }
@@ -227,6 +227,12 @@ service CloudHashingGoods {
     rpc UnauthorizeAppGood(UnauthorizeAppGoodRequest) returns (UnauthorizeAppGoodResponse) {
         option (google.api.http) = {
             post: "/v1/unauthorize/app/good"
+            body: "*"
+        };
+    }
+    rpc GetAppGoodInfosByApp(GetAppGoodInfosByAppRequest) returns (GetAppGoodInfosByAppResponse) {
+        option (google.api.http) = {
+            post: "/v1/get/app/good/infos/by/app"
             body: "*"
         };
     }
@@ -692,14 +698,12 @@ message GetGoodsDetailResponse {
     int32 Total = 3213;
 }
 
-message GetGoodsByAppRequest {
-    string AppID = 1;
-    PageInfo PageInfo = 3;
+message GetGoodsByIDsRequest {
+    repeated string IDs = 1;
 }
 
-message GetGoodsByAppResponse {
+message GetGoodsByIDsResponse {
     repeated GoodInfo Infos = 3;
-    int32 Total = 5;
 }
 
 message GetGoodsDetailByAppRequest {
@@ -737,6 +741,16 @@ message AppGoodInfo {
     bool Authorized = 3315;
     bool Online = 3316;
     string InitAreaStrategy = 3317;
+}
+
+message GetAppGoodInfosByAppRequest {
+    string AppID = 1;
+    PageInfo PageInfo = 2;
+}
+
+message GetAppGoodInfosByAppResponse {
+    repeated AppGoodInfo Infos = 1;
+    int32 Total = 2;
 }
 
 message SetAppGoodPriceRequest {
