@@ -27,12 +27,6 @@ func (gru *GoodRecommendUpdate) Where(ps ...predicate.GoodRecommend) *GoodRecomm
 	return gru
 }
 
-// SetAppID sets the "app_id" field.
-func (gru *GoodRecommendUpdate) SetAppID(u uuid.UUID) *GoodRecommendUpdate {
-	gru.mutation.SetAppID(u)
-	return gru
-}
-
 // SetUserID sets the "user_id" field.
 func (gru *GoodRecommendUpdate) SetUserID(u uuid.UUID) *GoodRecommendUpdate {
 	gru.mutation.SetUserID(u)
@@ -200,13 +194,6 @@ func (gru *GoodRecommendUpdate) sqlSave(ctx context.Context) (n int, err error) 
 			}
 		}
 	}
-	if value, ok := gru.mutation.AppID(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeUUID,
-			Value:  value,
-			Column: goodrecommend.FieldAppID,
-		})
-	}
 	if value, ok := gru.mutation.UserID(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeUUID,
@@ -287,12 +274,6 @@ type GoodRecommendUpdateOne struct {
 	fields   []string
 	hooks    []Hook
 	mutation *GoodRecommendMutation
-}
-
-// SetAppID sets the "app_id" field.
-func (gruo *GoodRecommendUpdateOne) SetAppID(u uuid.UUID) *GoodRecommendUpdateOne {
-	gruo.mutation.SetAppID(u)
-	return gruo
 }
 
 // SetUserID sets the "user_id" field.
@@ -485,13 +466,6 @@ func (gruo *GoodRecommendUpdateOne) sqlSave(ctx context.Context) (_node *GoodRec
 				ps[i](selector)
 			}
 		}
-	}
-	if value, ok := gruo.mutation.AppID(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeUUID,
-			Value:  value,
-			Column: goodrecommend.FieldAppID,
-		})
 	}
 	if value, ok := gruo.mutation.UserID(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{

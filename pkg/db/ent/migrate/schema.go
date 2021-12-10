@@ -216,7 +216,6 @@ var (
 	// GoodRecommendsColumns holds the columns for the "good_recommends" table.
 	GoodRecommendsColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeUUID, Unique: true},
-		{Name: "app_id", Type: field.TypeUUID},
 		{Name: "user_id", Type: field.TypeUUID},
 		{Name: "good_id", Type: field.TypeUUID},
 		{Name: "content", Type: field.TypeString, Default: ""},
@@ -233,12 +232,12 @@ var (
 			{
 				Name:    "goodrecommend_user_id",
 				Unique:  false,
-				Columns: []*schema.Column{GoodRecommendsColumns[2]},
+				Columns: []*schema.Column{GoodRecommendsColumns[1]},
 			},
 			{
 				Name:    "goodrecommend_good_id",
 				Unique:  false,
-				Columns: []*schema.Column{GoodRecommendsColumns[3]},
+				Columns: []*schema.Column{GoodRecommendsColumns[2]},
 			},
 		},
 	}

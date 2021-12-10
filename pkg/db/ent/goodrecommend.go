@@ -16,8 +16,6 @@ type GoodRecommend struct {
 	config `json:"-"`
 	// ID of the ent.
 	ID uuid.UUID `json:"id,omitempty"`
-	// AppID holds the value of the "app_id" field.
-	AppID uuid.UUID `json:"app_id,omitempty"`
 	// UserID holds the value of the "user_id" field.
 	UserID uuid.UUID `json:"user_id,omitempty"`
 	// GoodID holds the value of the "good_id" field.
@@ -41,7 +39,7 @@ func (*GoodRecommend) scanValues(columns []string) ([]interface{}, error) {
 			values[i] = new(sql.NullInt64)
 		case goodrecommend.FieldContent:
 			values[i] = new(sql.NullString)
-		case goodrecommend.FieldID, goodrecommend.FieldAppID, goodrecommend.FieldUserID, goodrecommend.FieldGoodID:
+		case goodrecommend.FieldID, goodrecommend.FieldUserID, goodrecommend.FieldGoodID:
 			values[i] = new(uuid.UUID)
 		default:
 			return nil, fmt.Errorf("unexpected column %q for type GoodRecommend", columns[i])
@@ -63,12 +61,6 @@ func (gr *GoodRecommend) assignValues(columns []string, values []interface{}) er
 				return fmt.Errorf("unexpected type %T for field id", values[i])
 			} else if value != nil {
 				gr.ID = *value
-			}
-		case goodrecommend.FieldAppID:
-			if value, ok := values[i].(*uuid.UUID); !ok {
-				return fmt.Errorf("unexpected type %T for field app_id", values[i])
-			} else if value != nil {
-				gr.AppID = *value
 			}
 		case goodrecommend.FieldUserID:
 			if value, ok := values[i].(*uuid.UUID); !ok {
@@ -134,8 +126,6 @@ func (gr *GoodRecommend) String() string {
 	var builder strings.Builder
 	builder.WriteString("GoodRecommend(")
 	builder.WriteString(fmt.Sprintf("id=%v", gr.ID))
-	builder.WriteString(", app_id=")
-	builder.WriteString(fmt.Sprintf("%v", gr.AppID))
 	builder.WriteString(", user_id=")
 	builder.WriteString(fmt.Sprintf("%v", gr.UserID))
 	builder.WriteString(", good_id=")
