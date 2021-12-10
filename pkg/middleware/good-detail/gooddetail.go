@@ -168,6 +168,7 @@ func GetByApp(ctx context.Context, in *npool.GetGoodsDetailByAppRequest) (*npool
 			logger.Sugar().Errorf("fail get good detail: %v", err)
 			continue
 		}
+		detail.Detail.Price = info.Price // replace price with app definition
 		details = append(details, detail.Detail)
 	}
 
