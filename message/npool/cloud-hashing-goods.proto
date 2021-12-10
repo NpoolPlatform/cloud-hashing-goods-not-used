@@ -276,6 +276,31 @@ service CloudHashingGoods {
         };
     }
 
+    rpc CreateGoodRecommend(CreateGoodRecommendRequest) returns (CreateGoodRecommendResponse) {
+        option (google.api.http) = {
+            post: "/v1/create/good/recommend"
+            body: "*"
+        };
+    }
+    rpc UpdateGoodRecommend(UpdateGoodRecommendRequest) returns (UpdateGoodRecommendResponse) {
+        option (google.api.http) = {
+            post: "/v1/update/good/recommend"
+            body: "*"
+        };
+    }
+    rpc GetGoodRecommendsByGood(GetGoodRecommendsByGoodRequest) returns (GetGoodRecommendsByGoodResponse) {
+        option (google.api.http) = {
+            post: "/v1/get/good/recommends/by/good"
+            body: "*"
+        };
+    }
+    rpc GetGoodRecommendsByUser(GetGoodRecommendsByUserRequest) returns (GetGoodRecommendsByUserResponse) {
+        option (google.api.http) = {
+            post: "/v1/get/good/recommends/by/User"
+            body: "*"
+        };
+    }
+
     rpc CreateGoodExtraInfo(CreateGoodExtraInfoRequest) returns (CreateGoodExtraInfoRequest) {
         option (google.api.http) = {
             post: "/v1/create/good/extra"
@@ -963,4 +988,47 @@ message GetFeesRequest {
 
 message GetFeesResponse {
     repeated Fee Infos = 1;
+}
+
+message GoodRecommend {
+    string ID = 1;
+    string UserID = 2;
+    string GoodID = 3;
+    string Content = 4;
+}
+
+message CreateGoodRecommendRequest {
+    GoodRecommend Info = 1;
+}
+
+message CreateGoodRecommendResponse {
+    GoodRecommend Info = 1;
+}
+
+message UpdateGoodRecommendRequest {
+    GoodRecommend Info = 1;
+}
+
+message UpdateGoodRecommendResponse {
+    GoodRecommend Info = 1;
+}
+
+message GetGoodRecommendsByGoodRequest {
+    string GoodID = 1;
+    PageInfo PageInfo = 2;
+}
+
+message GetGoodRecommendsByGoodResponse {
+    repeated GoodRecommend Infos = 1;
+    int32 Total = 2;
+}
+
+message GetGoodRecommendsByUserRequest {
+    string UserID = 1;
+    PageInfo PageInfo = 2;
+}
+
+message GetGoodRecommendsByUserResponse {
+    repeated GoodRecommend Infos = 1;
+    int32 Total = 2;
 }

@@ -9,25 +9,25 @@ import (
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
-	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/goodrecommand"
+	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/goodrecommend"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/predicate"
 )
 
-// GoodRecommandDelete is the builder for deleting a GoodRecommand entity.
-type GoodRecommandDelete struct {
+// GoodRecommendDelete is the builder for deleting a GoodRecommend entity.
+type GoodRecommendDelete struct {
 	config
 	hooks    []Hook
-	mutation *GoodRecommandMutation
+	mutation *GoodRecommendMutation
 }
 
-// Where appends a list predicates to the GoodRecommandDelete builder.
-func (grd *GoodRecommandDelete) Where(ps ...predicate.GoodRecommand) *GoodRecommandDelete {
+// Where appends a list predicates to the GoodRecommendDelete builder.
+func (grd *GoodRecommendDelete) Where(ps ...predicate.GoodRecommend) *GoodRecommendDelete {
 	grd.mutation.Where(ps...)
 	return grd
 }
 
 // Exec executes the deletion query and returns how many vertices were deleted.
-func (grd *GoodRecommandDelete) Exec(ctx context.Context) (int, error) {
+func (grd *GoodRecommendDelete) Exec(ctx context.Context) (int, error) {
 	var (
 		err      error
 		affected int
@@ -36,7 +36,7 @@ func (grd *GoodRecommandDelete) Exec(ctx context.Context) (int, error) {
 		affected, err = grd.sqlExec(ctx)
 	} else {
 		var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
-			mutation, ok := m.(*GoodRecommandMutation)
+			mutation, ok := m.(*GoodRecommendMutation)
 			if !ok {
 				return nil, fmt.Errorf("unexpected mutation type %T", m)
 			}
@@ -59,7 +59,7 @@ func (grd *GoodRecommandDelete) Exec(ctx context.Context) (int, error) {
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (grd *GoodRecommandDelete) ExecX(ctx context.Context) int {
+func (grd *GoodRecommendDelete) ExecX(ctx context.Context) int {
 	n, err := grd.Exec(ctx)
 	if err != nil {
 		panic(err)
@@ -67,13 +67,13 @@ func (grd *GoodRecommandDelete) ExecX(ctx context.Context) int {
 	return n
 }
 
-func (grd *GoodRecommandDelete) sqlExec(ctx context.Context) (int, error) {
+func (grd *GoodRecommendDelete) sqlExec(ctx context.Context) (int, error) {
 	_spec := &sqlgraph.DeleteSpec{
 		Node: &sqlgraph.NodeSpec{
-			Table: goodrecommand.Table,
+			Table: goodrecommend.Table,
 			ID: &sqlgraph.FieldSpec{
 				Type:   field.TypeUUID,
-				Column: goodrecommand.FieldID,
+				Column: goodrecommend.FieldID,
 			},
 		},
 	}
@@ -87,25 +87,25 @@ func (grd *GoodRecommandDelete) sqlExec(ctx context.Context) (int, error) {
 	return sqlgraph.DeleteNodes(ctx, grd.driver, _spec)
 }
 
-// GoodRecommandDeleteOne is the builder for deleting a single GoodRecommand entity.
-type GoodRecommandDeleteOne struct {
-	grd *GoodRecommandDelete
+// GoodRecommendDeleteOne is the builder for deleting a single GoodRecommend entity.
+type GoodRecommendDeleteOne struct {
+	grd *GoodRecommendDelete
 }
 
 // Exec executes the deletion query.
-func (grdo *GoodRecommandDeleteOne) Exec(ctx context.Context) error {
+func (grdo *GoodRecommendDeleteOne) Exec(ctx context.Context) error {
 	n, err := grdo.grd.Exec(ctx)
 	switch {
 	case err != nil:
 		return err
 	case n == 0:
-		return &NotFoundError{goodrecommand.Label}
+		return &NotFoundError{goodrecommend.Label}
 	default:
 		return nil
 	}
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (grdo *GoodRecommandDeleteOne) ExecX(ctx context.Context) {
+func (grdo *GoodRecommendDeleteOne) ExecX(ctx context.Context) {
 	grdo.grd.ExecX(ctx)
 }

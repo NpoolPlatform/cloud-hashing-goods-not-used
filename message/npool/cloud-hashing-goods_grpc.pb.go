@@ -64,6 +64,10 @@ type CloudHashingGoodsClient interface {
 	CreateGoodComment(ctx context.Context, in *CreateGoodCommentRequest, opts ...grpc.CallOption) (*CreateGoodCommentResponse, error)
 	UpdateGoodComment(ctx context.Context, in *UpdateGoodCommentRequest, opts ...grpc.CallOption) (*UpdateGoodCommentResponse, error)
 	GetGoodComments(ctx context.Context, in *GetGoodCommentsRequest, opts ...grpc.CallOption) (*GetGoodCommentsResponse, error)
+	CreateGoodRecommend(ctx context.Context, in *CreateGoodRecommendRequest, opts ...grpc.CallOption) (*CreateGoodRecommendResponse, error)
+	UpdateGoodRecommend(ctx context.Context, in *UpdateGoodRecommendRequest, opts ...grpc.CallOption) (*UpdateGoodRecommendResponse, error)
+	GetGoodRecommendsByGood(ctx context.Context, in *GetGoodRecommendsByGoodRequest, opts ...grpc.CallOption) (*GetGoodRecommendsByGoodResponse, error)
+	GetGoodRecommendsByUser(ctx context.Context, in *GetGoodRecommendsByUserRequest, opts ...grpc.CallOption) (*GetGoodRecommendsByUserResponse, error)
 	CreateGoodExtraInfo(ctx context.Context, in *CreateGoodExtraInfoRequest, opts ...grpc.CallOption) (*CreateGoodExtraInfoRequest, error)
 	GetGoodExtraInfo(ctx context.Context, in *GetGoodExtraInfoRequest, opts ...grpc.CallOption) (*GetGoodExtraInfoRequest, error)
 	UpdateGoodExtraInfo(ctx context.Context, in *UpdateGoodExtraInfoRequest, opts ...grpc.CallOption) (*UpdateGoodExtraInfoRequest, error)
@@ -474,6 +478,42 @@ func (c *cloudHashingGoodsClient) GetGoodComments(ctx context.Context, in *GetGo
 	return out, nil
 }
 
+func (c *cloudHashingGoodsClient) CreateGoodRecommend(ctx context.Context, in *CreateGoodRecommendRequest, opts ...grpc.CallOption) (*CreateGoodRecommendResponse, error) {
+	out := new(CreateGoodRecommendResponse)
+	err := c.cc.Invoke(ctx, "/cloud.hashing.goods.v1.CloudHashingGoods/CreateGoodRecommend", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *cloudHashingGoodsClient) UpdateGoodRecommend(ctx context.Context, in *UpdateGoodRecommendRequest, opts ...grpc.CallOption) (*UpdateGoodRecommendResponse, error) {
+	out := new(UpdateGoodRecommendResponse)
+	err := c.cc.Invoke(ctx, "/cloud.hashing.goods.v1.CloudHashingGoods/UpdateGoodRecommend", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *cloudHashingGoodsClient) GetGoodRecommendsByGood(ctx context.Context, in *GetGoodRecommendsByGoodRequest, opts ...grpc.CallOption) (*GetGoodRecommendsByGoodResponse, error) {
+	out := new(GetGoodRecommendsByGoodResponse)
+	err := c.cc.Invoke(ctx, "/cloud.hashing.goods.v1.CloudHashingGoods/GetGoodRecommendsByGood", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *cloudHashingGoodsClient) GetGoodRecommendsByUser(ctx context.Context, in *GetGoodRecommendsByUserRequest, opts ...grpc.CallOption) (*GetGoodRecommendsByUserResponse, error) {
+	out := new(GetGoodRecommendsByUserResponse)
+	err := c.cc.Invoke(ctx, "/cloud.hashing.goods.v1.CloudHashingGoods/GetGoodRecommendsByUser", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *cloudHashingGoodsClient) CreateGoodExtraInfo(ctx context.Context, in *CreateGoodExtraInfoRequest, opts ...grpc.CallOption) (*CreateGoodExtraInfoRequest, error) {
 	out := new(CreateGoodExtraInfoRequest)
 	err := c.cc.Invoke(ctx, "/cloud.hashing.goods.v1.CloudHashingGoods/CreateGoodExtraInfo", in, out, opts...)
@@ -640,6 +680,10 @@ type CloudHashingGoodsServer interface {
 	CreateGoodComment(context.Context, *CreateGoodCommentRequest) (*CreateGoodCommentResponse, error)
 	UpdateGoodComment(context.Context, *UpdateGoodCommentRequest) (*UpdateGoodCommentResponse, error)
 	GetGoodComments(context.Context, *GetGoodCommentsRequest) (*GetGoodCommentsResponse, error)
+	CreateGoodRecommend(context.Context, *CreateGoodRecommendRequest) (*CreateGoodRecommendResponse, error)
+	UpdateGoodRecommend(context.Context, *UpdateGoodRecommendRequest) (*UpdateGoodRecommendResponse, error)
+	GetGoodRecommendsByGood(context.Context, *GetGoodRecommendsByGoodRequest) (*GetGoodRecommendsByGoodResponse, error)
+	GetGoodRecommendsByUser(context.Context, *GetGoodRecommendsByUserRequest) (*GetGoodRecommendsByUserResponse, error)
 	CreateGoodExtraInfo(context.Context, *CreateGoodExtraInfoRequest) (*CreateGoodExtraInfoRequest, error)
 	GetGoodExtraInfo(context.Context, *GetGoodExtraInfoRequest) (*GetGoodExtraInfoRequest, error)
 	UpdateGoodExtraInfo(context.Context, *UpdateGoodExtraInfoRequest) (*UpdateGoodExtraInfoRequest, error)
@@ -788,6 +832,18 @@ func (UnimplementedCloudHashingGoodsServer) UpdateGoodComment(context.Context, *
 }
 func (UnimplementedCloudHashingGoodsServer) GetGoodComments(context.Context, *GetGoodCommentsRequest) (*GetGoodCommentsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetGoodComments not implemented")
+}
+func (UnimplementedCloudHashingGoodsServer) CreateGoodRecommend(context.Context, *CreateGoodRecommendRequest) (*CreateGoodRecommendResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateGoodRecommend not implemented")
+}
+func (UnimplementedCloudHashingGoodsServer) UpdateGoodRecommend(context.Context, *UpdateGoodRecommendRequest) (*UpdateGoodRecommendResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateGoodRecommend not implemented")
+}
+func (UnimplementedCloudHashingGoodsServer) GetGoodRecommendsByGood(context.Context, *GetGoodRecommendsByGoodRequest) (*GetGoodRecommendsByGoodResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetGoodRecommendsByGood not implemented")
+}
+func (UnimplementedCloudHashingGoodsServer) GetGoodRecommendsByUser(context.Context, *GetGoodRecommendsByUserRequest) (*GetGoodRecommendsByUserResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetGoodRecommendsByUser not implemented")
 }
 func (UnimplementedCloudHashingGoodsServer) CreateGoodExtraInfo(context.Context, *CreateGoodExtraInfoRequest) (*CreateGoodExtraInfoRequest, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateGoodExtraInfo not implemented")
@@ -1615,6 +1671,78 @@ func _CloudHashingGoods_GetGoodComments_Handler(srv interface{}, ctx context.Con
 	return interceptor(ctx, in, info, handler)
 }
 
+func _CloudHashingGoods_CreateGoodRecommend_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateGoodRecommendRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CloudHashingGoodsServer).CreateGoodRecommend(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cloud.hashing.goods.v1.CloudHashingGoods/CreateGoodRecommend",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CloudHashingGoodsServer).CreateGoodRecommend(ctx, req.(*CreateGoodRecommendRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _CloudHashingGoods_UpdateGoodRecommend_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateGoodRecommendRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CloudHashingGoodsServer).UpdateGoodRecommend(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cloud.hashing.goods.v1.CloudHashingGoods/UpdateGoodRecommend",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CloudHashingGoodsServer).UpdateGoodRecommend(ctx, req.(*UpdateGoodRecommendRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _CloudHashingGoods_GetGoodRecommendsByGood_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetGoodRecommendsByGoodRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CloudHashingGoodsServer).GetGoodRecommendsByGood(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cloud.hashing.goods.v1.CloudHashingGoods/GetGoodRecommendsByGood",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CloudHashingGoodsServer).GetGoodRecommendsByGood(ctx, req.(*GetGoodRecommendsByGoodRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _CloudHashingGoods_GetGoodRecommendsByUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetGoodRecommendsByUserRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CloudHashingGoodsServer).GetGoodRecommendsByUser(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cloud.hashing.goods.v1.CloudHashingGoods/GetGoodRecommendsByUser",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CloudHashingGoodsServer).GetGoodRecommendsByUser(ctx, req.(*GetGoodRecommendsByUserRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _CloudHashingGoods_CreateGoodExtraInfo_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(CreateGoodExtraInfoRequest)
 	if err := dec(in); err != nil {
@@ -2027,6 +2155,22 @@ var CloudHashingGoods_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetGoodComments",
 			Handler:    _CloudHashingGoods_GetGoodComments_Handler,
+		},
+		{
+			MethodName: "CreateGoodRecommend",
+			Handler:    _CloudHashingGoods_CreateGoodRecommend_Handler,
+		},
+		{
+			MethodName: "UpdateGoodRecommend",
+			Handler:    _CloudHashingGoods_UpdateGoodRecommend_Handler,
+		},
+		{
+			MethodName: "GetGoodRecommendsByGood",
+			Handler:    _CloudHashingGoods_GetGoodRecommendsByGood_Handler,
+		},
+		{
+			MethodName: "GetGoodRecommendsByUser",
+			Handler:    _CloudHashingGoods_GetGoodRecommendsByUser_Handler,
 		},
 		{
 			MethodName: "CreateGoodExtraInfo",

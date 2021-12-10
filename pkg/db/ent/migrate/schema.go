@@ -213,8 +213,8 @@ var (
 		Columns:    GoodInfosColumns,
 		PrimaryKey: []*schema.Column{GoodInfosColumns[0]},
 	}
-	// GoodRecommandsColumns holds the columns for the "good_recommands" table.
-	GoodRecommandsColumns = []*schema.Column{
+	// GoodRecommendsColumns holds the columns for the "good_recommends" table.
+	GoodRecommendsColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeUUID, Unique: true},
 		{Name: "app_id", Type: field.TypeUUID},
 		{Name: "user_id", Type: field.TypeUUID},
@@ -224,21 +224,21 @@ var (
 		{Name: "update_at", Type: field.TypeInt64},
 		{Name: "delete_at", Type: field.TypeInt64},
 	}
-	// GoodRecommandsTable holds the schema information for the "good_recommands" table.
-	GoodRecommandsTable = &schema.Table{
-		Name:       "good_recommands",
-		Columns:    GoodRecommandsColumns,
-		PrimaryKey: []*schema.Column{GoodRecommandsColumns[0]},
+	// GoodRecommendsTable holds the schema information for the "good_recommends" table.
+	GoodRecommendsTable = &schema.Table{
+		Name:       "good_recommends",
+		Columns:    GoodRecommendsColumns,
+		PrimaryKey: []*schema.Column{GoodRecommendsColumns[0]},
 		Indexes: []*schema.Index{
 			{
-				Name:    "goodrecommand_user_id",
+				Name:    "goodrecommend_user_id",
 				Unique:  false,
-				Columns: []*schema.Column{GoodRecommandsColumns[2]},
+				Columns: []*schema.Column{GoodRecommendsColumns[2]},
 			},
 			{
-				Name:    "goodrecommand_good_id",
+				Name:    "goodrecommend_good_id",
 				Unique:  false,
-				Columns: []*schema.Column{GoodRecommandsColumns[3]},
+				Columns: []*schema.Column{GoodRecommendsColumns[3]},
 			},
 		},
 	}
@@ -340,7 +340,7 @@ var (
 		GoodCommentsTable,
 		GoodExtraInfosTable,
 		GoodInfosTable,
-		GoodRecommandsTable,
+		GoodRecommendsTable,
 		GoodReviewsTable,
 		PriceCurrenciesTable,
 		TargetAreasTable,
