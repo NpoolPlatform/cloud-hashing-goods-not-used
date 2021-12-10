@@ -93,6 +93,7 @@ func Get(ctx context.Context, in *npool.GetGoodDetailRequest) (*npool.GetGoodDet
 		}
 		fees = append(fees, &npool.FeeDetail{
 			ID:    id,
+			AppID: myFee.Info.AppID,
 			Fee:   myFeeType.Info,
 			Value: myFee.Info.Value,
 		})
