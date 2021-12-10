@@ -213,6 +213,35 @@ var (
 		Columns:    GoodInfosColumns,
 		PrimaryKey: []*schema.Column{GoodInfosColumns[0]},
 	}
+	// GoodRecommandsColumns holds the columns for the "good_recommands" table.
+	GoodRecommandsColumns = []*schema.Column{
+		{Name: "id", Type: field.TypeUUID, Unique: true},
+		{Name: "app_id", Type: field.TypeUUID},
+		{Name: "user_id", Type: field.TypeUUID},
+		{Name: "good_id", Type: field.TypeUUID},
+		{Name: "content", Type: field.TypeString, Default: ""},
+		{Name: "create_at", Type: field.TypeInt64},
+		{Name: "update_at", Type: field.TypeInt64},
+		{Name: "delete_at", Type: field.TypeInt64},
+	}
+	// GoodRecommandsTable holds the schema information for the "good_recommands" table.
+	GoodRecommandsTable = &schema.Table{
+		Name:       "good_recommands",
+		Columns:    GoodRecommandsColumns,
+		PrimaryKey: []*schema.Column{GoodRecommandsColumns[0]},
+		Indexes: []*schema.Index{
+			{
+				Name:    "goodrecommand_user_id",
+				Unique:  false,
+				Columns: []*schema.Column{GoodRecommandsColumns[2]},
+			},
+			{
+				Name:    "goodrecommand_good_id",
+				Unique:  false,
+				Columns: []*schema.Column{GoodRecommandsColumns[3]},
+			},
+		},
+	}
 	// GoodReviewsColumns holds the columns for the "good_reviews" table.
 	GoodReviewsColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeUUID, Unique: true},
@@ -311,6 +340,7 @@ var (
 		GoodCommentsTable,
 		GoodExtraInfosTable,
 		GoodInfosTable,
+		GoodRecommandsTable,
 		GoodReviewsTable,
 		PriceCurrenciesTable,
 		TargetAreasTable,
