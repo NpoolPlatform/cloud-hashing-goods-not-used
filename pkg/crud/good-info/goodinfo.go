@@ -8,6 +8,7 @@ import (
 
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent"
+	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/appgood"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/goodinfo"
 
 	"github.com/NpoolPlatform/go-service-framework/pkg/price"
@@ -238,4 +239,64 @@ func GetAll(ctx context.Context, in *npool.GetGoodsRequest) (*npool.GetGoodsResp
 	return &npool.GetGoodsResponse{
 		Infos: infos,
 	}, nil
+}
+
+func GetByApp(ctx context.Context, in *npool.GetGoodsByAppRequest) (*npool.GetGoodsByAppResponse, error) {
+	appUUID, err := uuid.Parse(in.AppID)
+	if err != nil {
+		return nil, xerrors.Errorf("cannot parse %v as uuid", in.AppID)
+	}
+
+	goodIDs, err := appID2GoodIDs(ctx, appUUID)
+	if err != nil {
+		return nil, err
+	}
+	if len(goodIDs) == 0 {
+		return &npool.GetGoodsByAppResponse{
+			Infos: []*npool.GoodInfo{},
+			Total: 0,
+		}, nil
+	}
+
+	respEnt, err := db.Client().GoodInfo.Query().
+		Where(goodinfo.And(
+			goodinfo.DeleteAt(0),
+			goodinfo.IDIn(goodIDs...),
+		)).
+		All(ctx)
+	if err != nil {
+		return nil, xerrors.Errorf("fail query goodinfo %v", err)
+	}
+
+	infos := []*npool.GoodInfo{}
+	for _, row := range respEnt {
+		infos = append(infos, dbRowToInfo(row))
+	}
+
+	return &npool.GetGoodsByAppResponse{
+		Infos: infos,
+		Total: 0,
+	}, nil
+}
+
+func appID2GoodIDs(ctx context.Context, appID uuid.UUID) ([]uuid.UUID, error) {
+	infos, err := db.Client().
+		AppGood.
+		Query().
+		Where(
+			appgood.And(
+				appgood.AppID(appID),
+				appgood.DeleteAt(0),
+			),
+		).
+		All(ctx)
+	if err != nil {
+		return nil, xerrors.Errorf("failed to query app good %v", err)
+	}
+
+	goodIDs := make([]uuid.UUID, len(infos))
+	for i, v := range infos {
+		goodIDs[i] = v.GoodID
+	}
+	return goodIDs, nil
 }

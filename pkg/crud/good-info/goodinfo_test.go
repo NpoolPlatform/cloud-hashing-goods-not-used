@@ -1,3 +1,4 @@
+//go:build !codeanalysis
 // +build !codeanalysis
 
 package goodinfo
@@ -160,5 +161,20 @@ func TestGetAll(t *testing.T) {
 	}
 
 	_, err := GetAll(context.Background(), &npool.GetGoodsRequest{})
+	assert.Nil(t, err)
+}
+
+func TestGetByApp(t *testing.T) {
+	if runByGithubAction, err := strconv.ParseBool(os.Getenv("RUN_BY_GITHUB_ACTION")); err == nil && runByGithubAction {
+		return
+	}
+
+	_, err := GetByApp(context.Background(), &npool.GetGoodsByAppRequest{
+		AppID: uuid.NewString(),
+		PageInfo: &npool.PageInfo{
+			PageIndex: 1,
+			PageSize:  10,
+		},
+	})
 	assert.Nil(t, err)
 }

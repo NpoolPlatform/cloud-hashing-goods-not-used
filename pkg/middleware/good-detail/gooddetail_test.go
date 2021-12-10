@@ -188,4 +188,12 @@ func TestGet(t *testing.T) {
 	if assert.Nil(t, err) {
 		assert.NotNil(t, resp2.Details)
 	}
+
+	resp3, err := GetByApp(context.Background(), &npool.GetGoodsDetailByAppRequest{
+		AppID:    uuid.NewString(),
+		PageInfo: &npool.PageInfo{},
+	})
+	if assert.Nil(t, err) {
+		assert.NotNil(t, resp3.Details)
+	}
 }

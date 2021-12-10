@@ -149,3 +149,30 @@ func GetAll(ctx context.Context, in *npool.GetGoodsDetailRequest) (*npool.GetGoo
 		Details: details,
 	}, nil
 }
+
+func GetByApp(ctx context.Context, in *npool.GetGoodsDetailByAppRequest) (*npool.GetGoodsDetailByAppResponse, error) {
+	resp, err := goodinfo.GetByApp(ctx, &npool.GetGoodsByAppRequest{
+		AppID:    in.GetAppID(),
+		PageInfo: in.GetPageInfo(),
+	})
+	if err != nil {
+		return nil, xerrors.Errorf("fail get goods info: %v", err)
+	}
+
+	details := []*npool.GoodDetail{}
+	for _, info := range resp.Infos {
+		detail, err := Get(ctx, &npool.GetGoodDetailRequest{
+			ID: info.ID,
+		})
+		if err != nil {
+			logger.Sugar().Errorf("fail get good detail: %v", err)
+			continue
+		}
+		details = append(details, detail.Detail)
+	}
+
+	return &npool.GetGoodsDetailByAppResponse{
+		Details: details,
+		Total:   int32(len(details)),
+	}, nil
+}

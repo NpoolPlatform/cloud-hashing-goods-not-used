@@ -1,3 +1,4 @@
+//go:build !codeanalysis
 // +build !codeanalysis
 
 package api
@@ -29,6 +30,15 @@ func (s *Server) GetGoodsDetail(ctx context.Context, in *npool.GetGoodsDetailReq
 	if err != nil {
 		logger.Sugar().Errorf("get good detail all error: %w", err)
 		return &npool.GetGoodsDetailResponse{}, status.Error(codes.Internal, err.Error())
+	}
+	return resp, nil
+}
+
+func (s *Server) GetGoodsDetailByApp(ctx context.Context, in *npool.GetGoodsDetailByAppRequest) (*npool.GetGoodsDetailByAppResponse, error) {
+	resp, err := gooddetail.GetByApp(ctx, in)
+	if err != nil {
+		logger.Sugar().Errorf("get good detail by app error: %w", err)
+		return &npool.GetGoodsDetailByAppResponse{}, status.Error(codes.Internal, err.Error())
 	}
 	return resp, nil
 }
