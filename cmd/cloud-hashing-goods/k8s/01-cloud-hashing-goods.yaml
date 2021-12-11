@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: cloud-hashing-goods
-        image: entropypool/cloud-hashing-goods:latest
+        image: uhub.service.ucloud.cn/entropypool/cloud-hashing-goods:latest
         imagePullPolicy: Always
         env:
         - name: ENV_ENVIRONMENT_TARGET
