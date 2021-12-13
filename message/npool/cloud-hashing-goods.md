@@ -1424,7 +1424,8 @@
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| Infos | [RecommendGood](#cloud.hashing.goods.v1.RecommendGood) | repeated |  |
+| Infos | [GoodInfo](#cloud.hashing.goods.v1.GoodInfo) | repeated |  |
+| Recommends | [RecommendGood](#cloud.hashing.goods.v1.RecommendGood) | repeated |  |
 | Total | [int32](#int32) |  |  |
 
 
@@ -1435,7 +1436,7 @@
 <a name="cloud.hashing.goods.v1.GetRecommendGoodsRequest"></a>
 
 ### GetRecommendGoodsRequest
-
+currently ordered by time desc
 
 
 | Field | Type | Label | Description |
@@ -1450,12 +1451,13 @@
 <a name="cloud.hashing.goods.v1.GetRecommendGoodsResponse"></a>
 
 ### GetRecommendGoodsResponse
-
+Infos and Recommands share same length
 
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| Infos | [RecommendGood](#cloud.hashing.goods.v1.RecommendGood) | repeated |  |
+| Infos | [GoodInfo](#cloud.hashing.goods.v1.GoodInfo) | repeated |  |
+| Recommends | [RecommendGood](#cloud.hashing.goods.v1.RecommendGood) | repeated |  |
 | Total | [int32](#int32) |  |  |
 
 

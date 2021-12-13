@@ -1,0 +1,48 @@
+package recommendgoods
+
+import (
+	"context"
+
+	"github.com/NpoolPlatform/cloud-hashing-goods/message/npool"
+	goodinfo "github.com/NpoolPlatform/cloud-hashing-goods/pkg/crud/good-info"
+	recommendgood "github.com/NpoolPlatform/cloud-hashing-goods/pkg/crud/recommend-good"
+	//nolint
+)
+
+func Get(ctx context.Context, in *npool.GetRecommendGoodsRequest) (*npool.GetRecommendGoodsResponse, error) {
+	partialGoodsResponse, err := recommendgood.Get(ctx, in)
+	if err != nil {
+		return &npool.GetRecommendGoodsResponse{}, err
+	}
+
+	for i := 0; i < len(partialGoodsResponse.Recommends); i++ {
+		tmpResp, err := goodinfo.Get(ctx, &npool.GetGoodRequest{
+			ID: partialGoodsResponse.Recommends[i].GoodID,
+		})
+		if err != nil {
+			return &npool.GetRecommendGoodsResponse{}, err
+		}
+		partialGoodsResponse.Infos[i] = tmpResp.Info
+	}
+
+	return partialGoodsResponse, nil
+}
+
+func GetByRecommender(ctx context.Context, in *npool.GetRecommendGoodsByRecommenderRequest) (*npool.GetRecommendGoodsByRecommenderResponse, error) {
+	partialGoodsResponse, err := recommendgood.GetByRecommender(ctx, in)
+	if err != nil {
+		return &npool.GetRecommendGoodsByRecommenderResponse{}, err
+	}
+
+	for i := 0; i < len(partialGoodsResponse.Recommends); i++ {
+		tmpResp, err := goodinfo.Get(ctx, &npool.GetGoodRequest{
+			ID: partialGoodsResponse.Recommends[i].GoodID,
+		})
+		if err != nil {
+			return &npool.GetRecommendGoodsByRecommenderResponse{}, err
+		}
+		partialGoodsResponse.Infos[i] = tmpResp.Info
+	}
+
+	return partialGoodsResponse, nil
+}

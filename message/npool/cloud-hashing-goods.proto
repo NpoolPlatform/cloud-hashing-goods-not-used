@@ -1015,13 +1015,16 @@ message UpdateRecommendGoodResponse {
     RecommendGood Info = 1;
 }
 
+// currently ordered by time desc
 message GetRecommendGoodsRequest {
     PageInfo PageInfo = 1;
 }
 
+// Infos and Recommands share same length
 message GetRecommendGoodsResponse {
-    repeated RecommendGood Infos = 1;
-    int32 Total = 2;
+    repeated GoodInfo Infos = 1;
+    repeated RecommendGood Recommends = 2;
+    int32 Total = 3;
 }
 
 message GetRecommendGoodsByRecommenderRequest {
@@ -1030,6 +1033,7 @@ message GetRecommendGoodsByRecommenderRequest {
 }
 
 message GetRecommendGoodsByRecommenderResponse {
-    repeated RecommendGood Infos = 1;
-    int32 Total = 2;
+    repeated GoodInfo Infos = 1;
+    repeated RecommendGood Recommends = 2;
+    int32 Total = 3;
 }

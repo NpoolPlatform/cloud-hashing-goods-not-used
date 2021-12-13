@@ -33,21 +33,3 @@ func (s *Server) UpdateRecommendGood(ctx context.Context, in *npool.UpdateRecomm
 	}
 	return resp, nil
 }
-
-func (s *Server) GetRecommendGoods(ctx context.Context, in *npool.GetRecommendGoodsRequest) (*npool.GetRecommendGoodsResponse, error) {
-	resp, err := recommendgood.Get(ctx, in)
-	if err != nil {
-		logger.Sugar().Errorf("get recommend goods error: %w", err)
-		return &npool.GetRecommendGoodsResponse{}, status.Error(codes.Internal, "internal server error")
-	}
-	return resp, nil
-}
-
-func (s *Server) GetRecommendGoodsByRecommender(ctx context.Context, in *npool.GetRecommendGoodsByRecommenderRequest) (*npool.GetRecommendGoodsByRecommenderResponse, error) {
-	resp, err := recommendgood.GetByRecommender(ctx, in)
-	if err != nil {
-		logger.Sugar().Errorf("get recommend goods error: %w", err)
-		return &npool.GetRecommendGoodsByRecommenderResponse{}, status.Error(codes.Internal, "internal server error")
-	}
-	return resp, nil
-}

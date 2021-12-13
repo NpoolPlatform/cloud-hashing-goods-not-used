@@ -19,7 +19,7 @@ func assertRecommendGood(t *testing.T, actual, expected *npool.RecommendGood) {
 	assert.Equal(t, actual.Message, expected.Message)
 }
 
-func TestCreateRecommendGood(t *testing.T) { //nolint
+func TestRecommendGoodCRUD(t *testing.T) {
 	if runByGithubAction, err := strconv.ParseBool(os.Getenv("RUN_BY_GITHUB_ACTION")); err == nil && runByGithubAction {
 		return
 	}
@@ -65,23 +65,4 @@ func TestCreateRecommendGood(t *testing.T) { //nolint
 			assertRecommendGood(t, info.Info, &Recommendgood)
 		}
 	}
-
-	resp, err = cli.R().
-		SetHeader("Content-Type", "application/json").
-		SetBody(npool.GetRecommendGoodsRequest{
-			PageInfo: &npool.PageInfo{},
-		}).
-		Post("http://localhost:50020/v1/get/recommend/goods")
-	assert.Nil(t, err)
-	assert.Equal(t, 200, resp.StatusCode())
-
-	resp, err = cli.R().
-		SetHeader("Content-Type", "application/json").
-		SetBody(npool.GetRecommendGoodsByRecommenderRequest{
-			RecommenderID: Recommendgood.RecommenderID,
-			PageInfo:      &npool.PageInfo{},
-		}).
-		Post("http://localhost:50020/v1/get/recommend/goods/by/recommender")
-	assert.Nil(t, err)
-	assert.Equal(t, 200, resp.StatusCode())
 }

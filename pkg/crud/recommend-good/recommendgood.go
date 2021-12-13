@@ -79,13 +79,26 @@ func Update(ctx context.Context, in *npool.UpdateRecommendGoodRequest) (*npool.U
 }
 
 func Get(ctx context.Context, in *npool.GetRecommendGoodsRequest) (*npool.GetRecommendGoodsResponse, error) {
+	offsetN, limitN := in.PageInfo.PageIndex, in.PageInfo.PageSize
+	if limitN == 0 {
+		limitN = 20
+	}
+	offsetN *= limitN
 	infos, err := db.Client().
 		RecommendGood.
 		Query().
 		Order(ent.Desc(recommendgood.FieldCreateAt)).
+		Offset(int(offsetN)).
+		Limit(int(limitN)).
 		All(ctx)
 	if err != nil {
 		return nil, xerrors.Errorf("fail query recommend good: %v", err)
+	}
+	countN, err := db.Client().
+		RecommendGood.
+		Query().Count(ctx)
+	if err != nil {
+		return nil, xerrors.Errorf("fail query recommend length: %v", err)
 	}
 
 	recommends := []*npool.RecommendGood{}
@@ -94,8 +107,8 @@ func Get(ctx context.Context, in *npool.GetRecommendGoodsRequest) (*npool.GetRec
 	}
 
 	return &npool.GetRecommendGoodsResponse{
-		Infos: recommends,
-		Total: int32(len(recommends)),
+		Recommends: recommends,
+		Total:      int32(countN),
 	}, nil
 }
 
@@ -123,6 +136,6 @@ func GetByRecommender(ctx context.Context, in *npool.GetRecommendGoodsByRecommen
 	}
 
 	return &npool.GetRecommendGoodsByRecommenderResponse{
-		Infos: recommends,
+		Recommends: recommends,
 	}, nil
 }
