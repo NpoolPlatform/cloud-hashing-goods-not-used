@@ -1482,8 +1482,8 @@ func local_request_CloudHashingGoods_GetGoodComments_0(ctx context.Context, mars
 
 }
 
-func request_CloudHashingGoods_CreateGoodRecommend_0(ctx context.Context, marshaler runtime.Marshaler, client CloudHashingGoodsClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq CreateGoodRecommendRequest
+func request_CloudHashingGoods_CreateRecommendGood_0(ctx context.Context, marshaler runtime.Marshaler, client CloudHashingGoodsClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq CreateRecommendGoodRequest
 	var metadata runtime.ServerMetadata
 
 	newReader, berr := utilities.IOReaderFactory(req.Body)
@@ -1494,13 +1494,13 @@ func request_CloudHashingGoods_CreateGoodRecommend_0(ctx context.Context, marsha
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
-	msg, err := client.CreateGoodRecommend(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	msg, err := client.CreateRecommendGood(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
 	return msg, metadata, err
 
 }
 
-func local_request_CloudHashingGoods_CreateGoodRecommend_0(ctx context.Context, marshaler runtime.Marshaler, server CloudHashingGoodsServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq CreateGoodRecommendRequest
+func local_request_CloudHashingGoods_CreateRecommendGood_0(ctx context.Context, marshaler runtime.Marshaler, server CloudHashingGoodsServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq CreateRecommendGoodRequest
 	var metadata runtime.ServerMetadata
 
 	newReader, berr := utilities.IOReaderFactory(req.Body)
@@ -1511,13 +1511,13 @@ func local_request_CloudHashingGoods_CreateGoodRecommend_0(ctx context.Context, 
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
-	msg, err := server.CreateGoodRecommend(ctx, &protoReq)
+	msg, err := server.CreateRecommendGood(ctx, &protoReq)
 	return msg, metadata, err
 
 }
 
-func request_CloudHashingGoods_UpdateGoodRecommend_0(ctx context.Context, marshaler runtime.Marshaler, client CloudHashingGoodsClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq UpdateGoodRecommendRequest
+func request_CloudHashingGoods_UpdateRecommendGood_0(ctx context.Context, marshaler runtime.Marshaler, client CloudHashingGoodsClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq UpdateRecommendGoodRequest
 	var metadata runtime.ServerMetadata
 
 	newReader, berr := utilities.IOReaderFactory(req.Body)
@@ -1528,13 +1528,13 @@ func request_CloudHashingGoods_UpdateGoodRecommend_0(ctx context.Context, marsha
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
-	msg, err := client.UpdateGoodRecommend(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	msg, err := client.UpdateRecommendGood(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
 	return msg, metadata, err
 
 }
 
-func local_request_CloudHashingGoods_UpdateGoodRecommend_0(ctx context.Context, marshaler runtime.Marshaler, server CloudHashingGoodsServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq UpdateGoodRecommendRequest
+func local_request_CloudHashingGoods_UpdateRecommendGood_0(ctx context.Context, marshaler runtime.Marshaler, server CloudHashingGoodsServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq UpdateRecommendGoodRequest
 	var metadata runtime.ServerMetadata
 
 	newReader, berr := utilities.IOReaderFactory(req.Body)
@@ -1545,13 +1545,13 @@ func local_request_CloudHashingGoods_UpdateGoodRecommend_0(ctx context.Context, 
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
-	msg, err := server.UpdateGoodRecommend(ctx, &protoReq)
+	msg, err := server.UpdateRecommendGood(ctx, &protoReq)
 	return msg, metadata, err
 
 }
 
-func request_CloudHashingGoods_GetGoodRecommendsByGood_0(ctx context.Context, marshaler runtime.Marshaler, client CloudHashingGoodsClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq GetGoodRecommendsByGoodRequest
+func request_CloudHashingGoods_GetRecommendGoods_0(ctx context.Context, marshaler runtime.Marshaler, client CloudHashingGoodsClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq GetRecommendGoodsRequest
 	var metadata runtime.ServerMetadata
 
 	newReader, berr := utilities.IOReaderFactory(req.Body)
@@ -1562,13 +1562,13 @@ func request_CloudHashingGoods_GetGoodRecommendsByGood_0(ctx context.Context, ma
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
-	msg, err := client.GetGoodRecommendsByGood(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	msg, err := client.GetRecommendGoods(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
 	return msg, metadata, err
 
 }
 
-func local_request_CloudHashingGoods_GetGoodRecommendsByGood_0(ctx context.Context, marshaler runtime.Marshaler, server CloudHashingGoodsServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq GetGoodRecommendsByGoodRequest
+func local_request_CloudHashingGoods_GetRecommendGoods_0(ctx context.Context, marshaler runtime.Marshaler, server CloudHashingGoodsServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq GetRecommendGoodsRequest
 	var metadata runtime.ServerMetadata
 
 	newReader, berr := utilities.IOReaderFactory(req.Body)
@@ -1579,13 +1579,13 @@ func local_request_CloudHashingGoods_GetGoodRecommendsByGood_0(ctx context.Conte
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
-	msg, err := server.GetGoodRecommendsByGood(ctx, &protoReq)
+	msg, err := server.GetRecommendGoods(ctx, &protoReq)
 	return msg, metadata, err
 
 }
 
-func request_CloudHashingGoods_GetGoodRecommendsByUser_0(ctx context.Context, marshaler runtime.Marshaler, client CloudHashingGoodsClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq GetGoodRecommendsByUserRequest
+func request_CloudHashingGoods_GetRecommendGoodsByRecommender_0(ctx context.Context, marshaler runtime.Marshaler, client CloudHashingGoodsClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq GetRecommendGoodsByRecommenderRequest
 	var metadata runtime.ServerMetadata
 
 	newReader, berr := utilities.IOReaderFactory(req.Body)
@@ -1596,13 +1596,13 @@ func request_CloudHashingGoods_GetGoodRecommendsByUser_0(ctx context.Context, ma
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
-	msg, err := client.GetGoodRecommendsByUser(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	msg, err := client.GetRecommendGoodsByRecommender(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
 	return msg, metadata, err
 
 }
 
-func local_request_CloudHashingGoods_GetGoodRecommendsByUser_0(ctx context.Context, marshaler runtime.Marshaler, server CloudHashingGoodsServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq GetGoodRecommendsByUserRequest
+func local_request_CloudHashingGoods_GetRecommendGoodsByRecommender_0(ctx context.Context, marshaler runtime.Marshaler, server CloudHashingGoodsServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq GetRecommendGoodsByRecommenderRequest
 	var metadata runtime.ServerMetadata
 
 	newReader, berr := utilities.IOReaderFactory(req.Body)
@@ -1613,7 +1613,7 @@ func local_request_CloudHashingGoods_GetGoodRecommendsByUser_0(ctx context.Conte
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
-	msg, err := server.GetGoodRecommendsByUser(ctx, &protoReq)
+	msg, err := server.GetRecommendGoodsByRecommender(ctx, &protoReq)
 	return msg, metadata, err
 
 }
@@ -3055,18 +3055,18 @@ func RegisterCloudHashingGoodsHandlerServer(ctx context.Context, mux *runtime.Se
 
 	})
 
-	mux.Handle("POST", pattern_CloudHashingGoods_CreateGoodRecommend_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_CloudHashingGoods_CreateRecommendGood_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/cloud.hashing.goods.v1.CloudHashingGoods/CreateGoodRecommend", runtime.WithHTTPPathPattern("/v1/create/good/recommend"))
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/cloud.hashing.goods.v1.CloudHashingGoods/CreateRecommendGood", runtime.WithHTTPPathPattern("/v1/create/recommend/good"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_CloudHashingGoods_CreateGoodRecommend_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_CloudHashingGoods_CreateRecommendGood_0(rctx, inboundMarshaler, server, req, pathParams)
 		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
@@ -3074,22 +3074,22 @@ func RegisterCloudHashingGoodsHandlerServer(ctx context.Context, mux *runtime.Se
 			return
 		}
 
-		forward_CloudHashingGoods_CreateGoodRecommend_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_CloudHashingGoods_CreateRecommendGood_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("POST", pattern_CloudHashingGoods_UpdateGoodRecommend_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_CloudHashingGoods_UpdateRecommendGood_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/cloud.hashing.goods.v1.CloudHashingGoods/UpdateGoodRecommend", runtime.WithHTTPPathPattern("/v1/update/good/recommend"))
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/cloud.hashing.goods.v1.CloudHashingGoods/UpdateRecommendGood", runtime.WithHTTPPathPattern("/v1/update/recommend/good"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_CloudHashingGoods_UpdateGoodRecommend_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_CloudHashingGoods_UpdateRecommendGood_0(rctx, inboundMarshaler, server, req, pathParams)
 		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
@@ -3097,22 +3097,22 @@ func RegisterCloudHashingGoodsHandlerServer(ctx context.Context, mux *runtime.Se
 			return
 		}
 
-		forward_CloudHashingGoods_UpdateGoodRecommend_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_CloudHashingGoods_UpdateRecommendGood_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("POST", pattern_CloudHashingGoods_GetGoodRecommendsByGood_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_CloudHashingGoods_GetRecommendGoods_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/cloud.hashing.goods.v1.CloudHashingGoods/GetGoodRecommendsByGood", runtime.WithHTTPPathPattern("/v1/get/good/recommends/by/good"))
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/cloud.hashing.goods.v1.CloudHashingGoods/GetRecommendGoods", runtime.WithHTTPPathPattern("/v1/get/recommend/goods"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_CloudHashingGoods_GetGoodRecommendsByGood_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_CloudHashingGoods_GetRecommendGoods_0(rctx, inboundMarshaler, server, req, pathParams)
 		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
@@ -3120,22 +3120,22 @@ func RegisterCloudHashingGoodsHandlerServer(ctx context.Context, mux *runtime.Se
 			return
 		}
 
-		forward_CloudHashingGoods_GetGoodRecommendsByGood_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_CloudHashingGoods_GetRecommendGoods_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("POST", pattern_CloudHashingGoods_GetGoodRecommendsByUser_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_CloudHashingGoods_GetRecommendGoodsByRecommender_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/cloud.hashing.goods.v1.CloudHashingGoods/GetGoodRecommendsByUser", runtime.WithHTTPPathPattern("/v1/get/good/recommends/by/User"))
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/cloud.hashing.goods.v1.CloudHashingGoods/GetRecommendGoodsByRecommender", runtime.WithHTTPPathPattern("/v1/get/recommend/goods/by/recommender"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_CloudHashingGoods_GetGoodRecommendsByUser_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_CloudHashingGoods_GetRecommendGoodsByRecommender_0(rctx, inboundMarshaler, server, req, pathParams)
 		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
@@ -3143,7 +3143,7 @@ func RegisterCloudHashingGoodsHandlerServer(ctx context.Context, mux *runtime.Se
 			return
 		}
 
-		forward_CloudHashingGoods_GetGoodRecommendsByUser_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_CloudHashingGoods_GetRecommendGoodsByRecommender_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
@@ -4347,83 +4347,83 @@ func RegisterCloudHashingGoodsHandlerClient(ctx context.Context, mux *runtime.Se
 
 	})
 
-	mux.Handle("POST", pattern_CloudHashingGoods_CreateGoodRecommend_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_CloudHashingGoods_CreateRecommendGood_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/cloud.hashing.goods.v1.CloudHashingGoods/CreateGoodRecommend", runtime.WithHTTPPathPattern("/v1/create/good/recommend"))
+		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/cloud.hashing.goods.v1.CloudHashingGoods/CreateRecommendGood", runtime.WithHTTPPathPattern("/v1/create/recommend/good"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_CloudHashingGoods_CreateGoodRecommend_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_CloudHashingGoods_CreateRecommendGood_0(rctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_CloudHashingGoods_CreateGoodRecommend_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_CloudHashingGoods_CreateRecommendGood_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("POST", pattern_CloudHashingGoods_UpdateGoodRecommend_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_CloudHashingGoods_UpdateRecommendGood_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/cloud.hashing.goods.v1.CloudHashingGoods/UpdateGoodRecommend", runtime.WithHTTPPathPattern("/v1/update/good/recommend"))
+		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/cloud.hashing.goods.v1.CloudHashingGoods/UpdateRecommendGood", runtime.WithHTTPPathPattern("/v1/update/recommend/good"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_CloudHashingGoods_UpdateGoodRecommend_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_CloudHashingGoods_UpdateRecommendGood_0(rctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_CloudHashingGoods_UpdateGoodRecommend_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_CloudHashingGoods_UpdateRecommendGood_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("POST", pattern_CloudHashingGoods_GetGoodRecommendsByGood_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_CloudHashingGoods_GetRecommendGoods_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/cloud.hashing.goods.v1.CloudHashingGoods/GetGoodRecommendsByGood", runtime.WithHTTPPathPattern("/v1/get/good/recommends/by/good"))
+		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/cloud.hashing.goods.v1.CloudHashingGoods/GetRecommendGoods", runtime.WithHTTPPathPattern("/v1/get/recommend/goods"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_CloudHashingGoods_GetGoodRecommendsByGood_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_CloudHashingGoods_GetRecommendGoods_0(rctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_CloudHashingGoods_GetGoodRecommendsByGood_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_CloudHashingGoods_GetRecommendGoods_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("POST", pattern_CloudHashingGoods_GetGoodRecommendsByUser_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_CloudHashingGoods_GetRecommendGoodsByRecommender_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/cloud.hashing.goods.v1.CloudHashingGoods/GetGoodRecommendsByUser", runtime.WithHTTPPathPattern("/v1/get/good/recommends/by/User"))
+		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/cloud.hashing.goods.v1.CloudHashingGoods/GetRecommendGoodsByRecommender", runtime.WithHTTPPathPattern("/v1/get/recommend/goods/by/recommender"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_CloudHashingGoods_GetGoodRecommendsByUser_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_CloudHashingGoods_GetRecommendGoodsByRecommender_0(rctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_CloudHashingGoods_GetGoodRecommendsByUser_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_CloudHashingGoods_GetRecommendGoodsByRecommender_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
@@ -4777,13 +4777,13 @@ var (
 
 	pattern_CloudHashingGoods_GetGoodComments_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3}, []string{"v1", "get", "good", "comments"}, ""))
 
-	pattern_CloudHashingGoods_CreateGoodRecommend_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3}, []string{"v1", "create", "good", "recommend"}, ""))
+	pattern_CloudHashingGoods_CreateRecommendGood_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3}, []string{"v1", "create", "recommend", "good"}, ""))
 
-	pattern_CloudHashingGoods_UpdateGoodRecommend_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3}, []string{"v1", "update", "good", "recommend"}, ""))
+	pattern_CloudHashingGoods_UpdateRecommendGood_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3}, []string{"v1", "update", "recommend", "good"}, ""))
 
-	pattern_CloudHashingGoods_GetGoodRecommendsByGood_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 2, 4, 2, 2}, []string{"v1", "get", "good", "recommends", "by"}, ""))
+	pattern_CloudHashingGoods_GetRecommendGoods_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3}, []string{"v1", "get", "recommend", "goods"}, ""))
 
-	pattern_CloudHashingGoods_GetGoodRecommendsByUser_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 2, 4, 2, 5}, []string{"v1", "get", "good", "recommends", "by", "User"}, ""))
+	pattern_CloudHashingGoods_GetRecommendGoodsByRecommender_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 2, 4, 2, 5}, []string{"v1", "get", "recommend", "goods", "by", "recommender"}, ""))
 
 	pattern_CloudHashingGoods_CreateGoodExtraInfo_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3}, []string{"v1", "create", "good", "extra"}, ""))
 
@@ -4899,13 +4899,13 @@ var (
 
 	forward_CloudHashingGoods_GetGoodComments_0 = runtime.ForwardResponseMessage
 
-	forward_CloudHashingGoods_CreateGoodRecommend_0 = runtime.ForwardResponseMessage
+	forward_CloudHashingGoods_CreateRecommendGood_0 = runtime.ForwardResponseMessage
 
-	forward_CloudHashingGoods_UpdateGoodRecommend_0 = runtime.ForwardResponseMessage
+	forward_CloudHashingGoods_UpdateRecommendGood_0 = runtime.ForwardResponseMessage
 
-	forward_CloudHashingGoods_GetGoodRecommendsByGood_0 = runtime.ForwardResponseMessage
+	forward_CloudHashingGoods_GetRecommendGoods_0 = runtime.ForwardResponseMessage
 
-	forward_CloudHashingGoods_GetGoodRecommendsByUser_0 = runtime.ForwardResponseMessage
+	forward_CloudHashingGoods_GetRecommendGoodsByRecommender_0 = runtime.ForwardResponseMessage
 
 	forward_CloudHashingGoods_CreateGoodExtraInfo_0 = runtime.ForwardResponseMessage
 

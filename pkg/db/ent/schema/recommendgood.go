@@ -10,20 +10,20 @@ import (
 	"github.com/google/uuid"
 )
 
-// GoodRecommend holds the schema definition for the GoodRecommend entity.
-type GoodRecommend struct {
+// RecommendGood holds the schema definition for the RecommendGood entity.
+type RecommendGood struct {
 	ent.Schema
 }
 
-// Fields of the GoodRecommend.
-func (GoodRecommend) Fields() []ent.Field {
+// Fields of the RecommendGood.
+func (RecommendGood) Fields() []ent.Field {
 	return []ent.Field{
 		field.UUID("id", uuid.UUID{}).
 			Default(uuid.New).
 			Unique(),
-		field.UUID("user_id", uuid.UUID{}),
+		field.UUID("recommender_id", uuid.UUID{}),
 		field.UUID("good_id", uuid.UUID{}),
-		field.String("content").
+		field.String("message").
 			Default(""),
 		field.Int64("create_at").
 			DefaultFunc(func() int64 {
@@ -43,10 +43,10 @@ func (GoodRecommend) Fields() []ent.Field {
 	}
 }
 
-// Indexes of the GoodRecommend.
-func (GoodRecommend) Indexes() []ent.Index {
+// Indexes of the RecommendGood.
+func (RecommendGood) Indexes() []ent.Index {
 	return []ent.Index{
-		index.Fields("user_id"),
+		index.Fields("recommender_id"),
 		index.Fields("good_id"),
 	}
 }

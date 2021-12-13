@@ -10,44 +10,44 @@ import (
 
 	"github.com/NpoolPlatform/cloud-hashing-goods/message/npool"
 
-	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/crud/good-recommend" //nolint
+	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/crud/recommend-good" //nolint
 
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 )
 
-func (s *Server) CreateGoodRecommend(ctx context.Context, in *npool.CreateGoodRecommendRequest) (*npool.CreateGoodRecommendResponse, error) {
-	resp, err := goodrecommend.Create(ctx, in)
+func (s *Server) CreateRecommendGood(ctx context.Context, in *npool.CreateRecommendGoodRequest) (*npool.CreateRecommendGoodResponse, error) {
+	resp, err := recommendgood.Create(ctx, in)
 	if err != nil {
-		logger.Sugar().Errorf("create good recommend error: %w", err)
-		return &npool.CreateGoodRecommendResponse{}, status.Error(codes.Internal, "internal server error")
+		logger.Sugar().Errorf("create recommend good error: %w", err)
+		return &npool.CreateRecommendGoodResponse{}, status.Error(codes.Internal, "internal server error")
 	}
 	return resp, nil
 }
 
-func (s *Server) UpdateGoodRecommend(ctx context.Context, in *npool.UpdateGoodRecommendRequest) (*npool.UpdateGoodRecommendResponse, error) {
-	resp, err := goodrecommend.Update(ctx, in)
+func (s *Server) UpdateRecommendGood(ctx context.Context, in *npool.UpdateRecommendGoodRequest) (*npool.UpdateRecommendGoodResponse, error) {
+	resp, err := recommendgood.Update(ctx, in)
 	if err != nil {
-		logger.Sugar().Errorf("update good recommend error: %w", err)
-		return &npool.UpdateGoodRecommendResponse{}, status.Error(codes.Internal, "internal server error")
+		logger.Sugar().Errorf("update recommend good error: %w", err)
+		return &npool.UpdateRecommendGoodResponse{}, status.Error(codes.Internal, "internal server error")
 	}
 	return resp, nil
 }
 
-func (s *Server) GetGoodRecommendsByGood(ctx context.Context, in *npool.GetGoodRecommendsByGoodRequest) (*npool.GetGoodRecommendsByGoodResponse, error) {
-	resp, err := goodrecommend.GetByGood(ctx, in)
+func (s *Server) GetRecommendGoods(ctx context.Context, in *npool.GetRecommendGoodsRequest) (*npool.GetRecommendGoodsResponse, error) {
+	resp, err := recommendgood.Get(ctx, in)
 	if err != nil {
-		logger.Sugar().Errorf("get good recommends error: %w", err)
-		return &npool.GetGoodRecommendsByGoodResponse{}, status.Error(codes.Internal, "internal server error")
+		logger.Sugar().Errorf("get recommend goods error: %w", err)
+		return &npool.GetRecommendGoodsResponse{}, status.Error(codes.Internal, "internal server error")
 	}
 	return resp, nil
 }
 
-func (s *Server) GetGoodRecommendsByUser(ctx context.Context, in *npool.GetGoodRecommendsByUserRequest) (*npool.GetGoodRecommendsByUserResponse, error) {
-	resp, err := goodrecommend.GetByUser(ctx, in)
+func (s *Server) GetRecommendGoodsByRecommender(ctx context.Context, in *npool.GetRecommendGoodsByRecommenderRequest) (*npool.GetRecommendGoodsByRecommenderResponse, error) {
+	resp, err := recommendgood.GetByRecommender(ctx, in)
 	if err != nil {
-		logger.Sugar().Errorf("get good recommends error: %w", err)
-		return &npool.GetGoodRecommendsByUserResponse{}, status.Error(codes.Internal, "internal server error")
+		logger.Sugar().Errorf("get recommend goods error: %w", err)
+		return &npool.GetRecommendGoodsByRecommenderResponse{}, status.Error(codes.Internal, "internal server error")
 	}
 	return resp, nil
 }

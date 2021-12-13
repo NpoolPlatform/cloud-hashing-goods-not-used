@@ -33,9 +33,9 @@ type hooks struct {
 	GoodComment       []ent.Hook
 	GoodExtraInfo     []ent.Hook
 	GoodInfo          []ent.Hook
-	GoodRecommend     []ent.Hook
 	GoodReview        []ent.Hook
 	PriceCurrency     []ent.Hook
+	RecommendGood     []ent.Hook
 	TargetArea        []ent.Hook
 	VendorLocation    []ent.Hook
 }

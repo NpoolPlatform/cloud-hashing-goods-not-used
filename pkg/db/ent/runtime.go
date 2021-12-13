@@ -12,9 +12,9 @@ import (
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/goodcomment"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/goodextrainfo"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/goodinfo"
-	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/goodrecommend"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/goodreview"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/pricecurrency"
+	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/recommendgood"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/schema"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/targetarea"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/vendorlocation"
@@ -251,30 +251,6 @@ func init() {
 	goodinfoDescID := goodinfoFields[0].Descriptor()
 	// goodinfo.DefaultID holds the default value on creation for the id field.
 	goodinfo.DefaultID = goodinfoDescID.Default.(func() uuid.UUID)
-	goodrecommendFields := schema.GoodRecommend{}.Fields()
-	_ = goodrecommendFields
-	// goodrecommendDescContent is the schema descriptor for content field.
-	goodrecommendDescContent := goodrecommendFields[3].Descriptor()
-	// goodrecommend.DefaultContent holds the default value on creation for the content field.
-	goodrecommend.DefaultContent = goodrecommendDescContent.Default.(string)
-	// goodrecommendDescCreateAt is the schema descriptor for create_at field.
-	goodrecommendDescCreateAt := goodrecommendFields[4].Descriptor()
-	// goodrecommend.DefaultCreateAt holds the default value on creation for the create_at field.
-	goodrecommend.DefaultCreateAt = goodrecommendDescCreateAt.Default.(func() int64)
-	// goodrecommendDescUpdateAt is the schema descriptor for update_at field.
-	goodrecommendDescUpdateAt := goodrecommendFields[5].Descriptor()
-	// goodrecommend.DefaultUpdateAt holds the default value on creation for the update_at field.
-	goodrecommend.DefaultUpdateAt = goodrecommendDescUpdateAt.Default.(func() int64)
-	// goodrecommend.UpdateDefaultUpdateAt holds the default value on update for the update_at field.
-	goodrecommend.UpdateDefaultUpdateAt = goodrecommendDescUpdateAt.UpdateDefault.(func() int64)
-	// goodrecommendDescDeleteAt is the schema descriptor for delete_at field.
-	goodrecommendDescDeleteAt := goodrecommendFields[6].Descriptor()
-	// goodrecommend.DefaultDeleteAt holds the default value on creation for the delete_at field.
-	goodrecommend.DefaultDeleteAt = goodrecommendDescDeleteAt.Default.(func() int64)
-	// goodrecommendDescID is the schema descriptor for id field.
-	goodrecommendDescID := goodrecommendFields[0].Descriptor()
-	// goodrecommend.DefaultID holds the default value on creation for the id field.
-	goodrecommend.DefaultID = goodrecommendDescID.Default.(func() uuid.UUID)
 	goodreviewFields := schema.GoodReview{}.Fields()
 	_ = goodreviewFields
 	// goodreviewDescMessage is the schema descriptor for message field.
@@ -319,6 +295,30 @@ func init() {
 	pricecurrencyDescID := pricecurrencyFields[0].Descriptor()
 	// pricecurrency.DefaultID holds the default value on creation for the id field.
 	pricecurrency.DefaultID = pricecurrencyDescID.Default.(func() uuid.UUID)
+	recommendgoodFields := schema.RecommendGood{}.Fields()
+	_ = recommendgoodFields
+	// recommendgoodDescMessage is the schema descriptor for message field.
+	recommendgoodDescMessage := recommendgoodFields[3].Descriptor()
+	// recommendgood.DefaultMessage holds the default value on creation for the message field.
+	recommendgood.DefaultMessage = recommendgoodDescMessage.Default.(string)
+	// recommendgoodDescCreateAt is the schema descriptor for create_at field.
+	recommendgoodDescCreateAt := recommendgoodFields[4].Descriptor()
+	// recommendgood.DefaultCreateAt holds the default value on creation for the create_at field.
+	recommendgood.DefaultCreateAt = recommendgoodDescCreateAt.Default.(func() int64)
+	// recommendgoodDescUpdateAt is the schema descriptor for update_at field.
+	recommendgoodDescUpdateAt := recommendgoodFields[5].Descriptor()
+	// recommendgood.DefaultUpdateAt holds the default value on creation for the update_at field.
+	recommendgood.DefaultUpdateAt = recommendgoodDescUpdateAt.Default.(func() int64)
+	// recommendgood.UpdateDefaultUpdateAt holds the default value on update for the update_at field.
+	recommendgood.UpdateDefaultUpdateAt = recommendgoodDescUpdateAt.UpdateDefault.(func() int64)
+	// recommendgoodDescDeleteAt is the schema descriptor for delete_at field.
+	recommendgoodDescDeleteAt := recommendgoodFields[6].Descriptor()
+	// recommendgood.DefaultDeleteAt holds the default value on creation for the delete_at field.
+	recommendgood.DefaultDeleteAt = recommendgoodDescDeleteAt.Default.(func() int64)
+	// recommendgoodDescID is the schema descriptor for id field.
+	recommendgoodDescID := recommendgoodFields[0].Descriptor()
+	// recommendgood.DefaultID holds the default value on creation for the id field.
+	recommendgood.DefaultID = recommendgoodDescID.Default.(func() uuid.UUID)
 	targetareaFields := schema.TargetArea{}.Fields()
 	_ = targetareaFields
 	// targetareaDescContinent is the schema descriptor for continent field.

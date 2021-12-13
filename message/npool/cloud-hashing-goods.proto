@@ -276,27 +276,27 @@ service CloudHashingGoods {
         };
     }
 
-    rpc CreateGoodRecommend(CreateGoodRecommendRequest) returns (CreateGoodRecommendResponse) {
+    rpc CreateRecommendGood(CreateRecommendGoodRequest) returns (CreateRecommendGoodResponse) {
         option (google.api.http) = {
-            post: "/v1/create/good/recommend"
+            post: "/v1/create/recommend/good"
             body: "*"
         };
     }
-    rpc UpdateGoodRecommend(UpdateGoodRecommendRequest) returns (UpdateGoodRecommendResponse) {
+    rpc UpdateRecommendGood(UpdateRecommendGoodRequest) returns (UpdateRecommendGoodResponse) {
         option (google.api.http) = {
-            post: "/v1/update/good/recommend"
+            post: "/v1/update/recommend/good"
             body: "*"
         };
     }
-    rpc GetGoodRecommendsByGood(GetGoodRecommendsByGoodRequest) returns (GetGoodRecommendsByGoodResponse) {
+    rpc GetRecommendGoods(GetRecommendGoodsRequest) returns (GetRecommendGoodsResponse) {
         option (google.api.http) = {
-            post: "/v1/get/good/recommends/by/good"
+            post: "/v1/get/recommend/goods"
             body: "*"
         };
     }
-    rpc GetGoodRecommendsByUser(GetGoodRecommendsByUserRequest) returns (GetGoodRecommendsByUserResponse) {
+    rpc GetRecommendGoodsByRecommender(GetRecommendGoodsByRecommenderRequest) returns (GetRecommendGoodsByRecommenderResponse) {
         option (google.api.http) = {
-            post: "/v1/get/good/recommends/by/User"
+            post: "/v1/get/recommend/goods/by/recommender"
             body: "*"
         };
     }
@@ -992,45 +992,44 @@ message GetFeesResponse {
     repeated Fee Infos = 1;
 }
 
-message GoodRecommend {
+message RecommendGood {
     string ID = 1;
-    string UserID = 2;
-    string GoodID = 3;
-    string Content = 4;
+    string RecommenderID = 3;
+    string GoodID = 5;
+    string Message = 7;
 }
 
-message CreateGoodRecommendRequest {
-    GoodRecommend Info = 1;
+message CreateRecommendGoodRequest {
+    RecommendGood Info = 1;
 }
 
-message CreateGoodRecommendResponse {
-    GoodRecommend Info = 1;
+message CreateRecommendGoodResponse {
+    RecommendGood Info = 1;
 }
 
-message UpdateGoodRecommendRequest {
-    GoodRecommend Info = 1;
+message UpdateRecommendGoodRequest {
+    RecommendGood Info = 1;
 }
 
-message UpdateGoodRecommendResponse {
-    GoodRecommend Info = 1;
+message UpdateRecommendGoodResponse {
+    RecommendGood Info = 1;
 }
 
-message GetGoodRecommendsByGoodRequest {
-    string GoodID = 1;
-    PageInfo PageInfo = 2;
+message GetRecommendGoodsRequest {
+    PageInfo PageInfo = 1;
 }
 
-message GetGoodRecommendsByGoodResponse {
-    repeated GoodRecommend Infos = 1;
+message GetRecommendGoodsResponse {
+    repeated RecommendGood Infos = 1;
     int32 Total = 2;
 }
 
-message GetGoodRecommendsByUserRequest {
-    string UserID = 1;
+message GetRecommendGoodsByRecommenderRequest {
+    string RecommenderID = 1;
     PageInfo PageInfo = 2;
 }
 
-message GetGoodRecommendsByUserResponse {
-    repeated GoodRecommend Infos = 1;
+message GetRecommendGoodsByRecommenderResponse {
+    repeated RecommendGood Infos = 1;
     int32 Total = 2;
 }

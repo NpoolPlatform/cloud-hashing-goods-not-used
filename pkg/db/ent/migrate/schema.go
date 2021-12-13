@@ -213,34 +213,6 @@ var (
 		Columns:    GoodInfosColumns,
 		PrimaryKey: []*schema.Column{GoodInfosColumns[0]},
 	}
-	// GoodRecommendsColumns holds the columns for the "good_recommends" table.
-	GoodRecommendsColumns = []*schema.Column{
-		{Name: "id", Type: field.TypeUUID, Unique: true},
-		{Name: "user_id", Type: field.TypeUUID},
-		{Name: "good_id", Type: field.TypeUUID},
-		{Name: "content", Type: field.TypeString, Default: ""},
-		{Name: "create_at", Type: field.TypeInt64},
-		{Name: "update_at", Type: field.TypeInt64},
-		{Name: "delete_at", Type: field.TypeInt64},
-	}
-	// GoodRecommendsTable holds the schema information for the "good_recommends" table.
-	GoodRecommendsTable = &schema.Table{
-		Name:       "good_recommends",
-		Columns:    GoodRecommendsColumns,
-		PrimaryKey: []*schema.Column{GoodRecommendsColumns[0]},
-		Indexes: []*schema.Index{
-			{
-				Name:    "goodrecommend_user_id",
-				Unique:  false,
-				Columns: []*schema.Column{GoodRecommendsColumns[1]},
-			},
-			{
-				Name:    "goodrecommend_good_id",
-				Unique:  false,
-				Columns: []*schema.Column{GoodRecommendsColumns[2]},
-			},
-		},
-	}
 	// GoodReviewsColumns holds the columns for the "good_reviews" table.
 	GoodReviewsColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeUUID, Unique: true},
@@ -281,6 +253,34 @@ var (
 		Name:       "price_currencies",
 		Columns:    PriceCurrenciesColumns,
 		PrimaryKey: []*schema.Column{PriceCurrenciesColumns[0]},
+	}
+	// RecommendGoodsColumns holds the columns for the "recommend_goods" table.
+	RecommendGoodsColumns = []*schema.Column{
+		{Name: "id", Type: field.TypeUUID, Unique: true},
+		{Name: "recommender_id", Type: field.TypeUUID},
+		{Name: "good_id", Type: field.TypeUUID},
+		{Name: "message", Type: field.TypeString, Default: ""},
+		{Name: "create_at", Type: field.TypeInt64},
+		{Name: "update_at", Type: field.TypeInt64},
+		{Name: "delete_at", Type: field.TypeInt64},
+	}
+	// RecommendGoodsTable holds the schema information for the "recommend_goods" table.
+	RecommendGoodsTable = &schema.Table{
+		Name:       "recommend_goods",
+		Columns:    RecommendGoodsColumns,
+		PrimaryKey: []*schema.Column{RecommendGoodsColumns[0]},
+		Indexes: []*schema.Index{
+			{
+				Name:    "recommendgood_recommender_id",
+				Unique:  false,
+				Columns: []*schema.Column{RecommendGoodsColumns[1]},
+			},
+			{
+				Name:    "recommendgood_good_id",
+				Unique:  false,
+				Columns: []*schema.Column{RecommendGoodsColumns[2]},
+			},
+		},
 	}
 	// TargetAreasColumns holds the columns for the "target_areas" table.
 	TargetAreasColumns = []*schema.Column{
@@ -339,9 +339,9 @@ var (
 		GoodCommentsTable,
 		GoodExtraInfosTable,
 		GoodInfosTable,
-		GoodRecommendsTable,
 		GoodReviewsTable,
 		PriceCurrenciesTable,
+		RecommendGoodsTable,
 		TargetAreasTable,
 		VendorLocationsTable,
 	}
