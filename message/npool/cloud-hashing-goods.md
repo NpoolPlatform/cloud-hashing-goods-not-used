@@ -1451,7 +1451,7 @@ currently ordered by time desc
 <a name="cloud.hashing.goods.v1.GetRecommendGoodsResponse"></a>
 
 ### GetRecommendGoodsResponse
-Infos and Recommands share same length
+Infos and Recommends should share same length
 
 
 | Field | Type | Label | Description |

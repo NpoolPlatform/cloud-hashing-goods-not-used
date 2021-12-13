@@ -1020,7 +1020,7 @@ message GetRecommendGoodsRequest {
     PageInfo PageInfo = 1;
 }
 
-// Infos and Recommands share same length
+// Infos and Recommends should share same length
 message GetRecommendGoodsResponse {
     repeated GoodInfo Infos = 1;
     repeated RecommendGood Recommends = 2;

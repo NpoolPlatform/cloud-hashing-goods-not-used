@@ -7091,7 +7091,7 @@ func (x *GetRecommendGoodsRequest) GetPageInfo() *PageInfo {
 	return nil
 }
 
-// Infos and Recommands share same length
+// Infos and Recommends should share same length
 type GetRecommendGoodsResponse struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
