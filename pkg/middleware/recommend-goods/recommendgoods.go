@@ -16,7 +16,7 @@ func Get(ctx context.Context, in *npool.GetRecommendGoodsRequest) (*npool.GetRec
 		return &npool.GetRecommendGoodsResponse{}, err
 	}
 
-	partialGoodsResponse.Infos = make([]*npool.GoodInfo, len(partialGoodsResponse.Recommends))
+	partialGoodsResponse.Infos = []*npool.GoodInfo{}
 	for i := 0; i < len(partialGoodsResponse.Recommends); i++ {
 		tmpResp, err := goodinfo.Get(ctx, &npool.GetGoodRequest{
 			ID: partialGoodsResponse.Recommends[i].GoodID,
@@ -37,7 +37,7 @@ func GetByRecommender(ctx context.Context, in *npool.GetRecommendGoodsByRecommen
 	if err != nil {
 		return &npool.GetRecommendGoodsByRecommenderResponse{}, err
 	}
-	partialGoodsResponse.Infos = make([]*npool.GoodInfo, len(partialGoodsResponse.Recommends))
+	partialGoodsResponse.Infos = []*npool.GoodInfo{}
 
 	for i := 0; i < len(partialGoodsResponse.Recommends); i++ {
 		tmpResp, err := goodinfo.Get(ctx, &npool.GetGoodRequest{

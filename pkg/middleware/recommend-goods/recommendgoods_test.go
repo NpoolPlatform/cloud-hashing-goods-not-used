@@ -162,6 +162,6 @@ func TestRecommendGoodsCRUD(t *testing.T) {
 	if assert.Nil(t, err) {
 		assert.NotNil(t, resp2)
 		assert.Positive(t, len(resp2.Infos))
-		assert.NotNil(t, resp1.Infos[0])
+		assert.NotNil(t, resp2.Infos[0])
 	}
 }
