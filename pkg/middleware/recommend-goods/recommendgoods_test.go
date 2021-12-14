@@ -151,7 +151,8 @@ func TestRecommendGoodsCRUD(t *testing.T) {
 	})
 	if assert.Nil(t, err) {
 		assert.NotNil(t, resp1)
-		assert.Equal(t, len(resp1.Infos), len(resp1.Recommends))
+		assert.Positive(t, len(resp1.Infos))
+		assert.NotNil(t, resp1.Infos[0])
 	}
 
 	resp2, err := GetByRecommender(ctx, &npool.GetRecommendGoodsByRecommenderRequest{
@@ -160,6 +161,7 @@ func TestRecommendGoodsCRUD(t *testing.T) {
 	})
 	if assert.Nil(t, err) {
 		assert.NotNil(t, resp2)
-		assert.Equal(t, len(resp2.Infos), len(resp2.Recommends))
+		assert.Positive(t, len(resp2.Infos))
+		assert.NotNil(t, resp1.Infos[0])
 	}
 }
