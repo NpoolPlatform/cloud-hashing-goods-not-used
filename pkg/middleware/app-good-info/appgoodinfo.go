@@ -24,12 +24,10 @@ func Get(ctx context.Context, in *npool.GetGoodsByAppRequest) (*npool.GetGoodsBy
 	}
 
 	goodIDs := []string{}
-	numStart, numEnd := in.PageInfo.PageIndex*in.PageInfo.PageSize, (in.PageInfo.PageIndex+1)*in.PageInfo.PageSize
-	for i, v := range appGoods.Infos {
-		if int32(i) < numStart || int32(i) > numEnd {
-			continue
+	for _, v := range appGoods.Infos {
+		if v.Authorized {
+			goodIDs = append(goodIDs, v.GoodID)
 		}
-		goodIDs = append(goodIDs, v.GoodID)
 	}
 	goodInfos, err := goodinfo.GetByIDs(ctx, &npool.GetGoodsByIDsRequest{
 		IDs: goodIDs,
@@ -40,6 +38,6 @@ func Get(ctx context.Context, in *npool.GetGoodsByAppRequest) (*npool.GetGoodsBy
 
 	return &npool.GetGoodsByAppResponse{
 		Infos: goodInfos.Infos,
-		Total: int32(len(appGoods.Infos)),
+		Total: int32(len(goodInfos.Infos)),
 	}, nil
 }
