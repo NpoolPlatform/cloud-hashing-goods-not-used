@@ -237,3 +237,26 @@ func Unauthorize(ctx context.Context, in *npool.UnauthorizeAppGoodRequest) (*npo
 		Info: dbRowToAppGood(info),
 	}, nil
 }
+
+func GetAppGoodInfosByApp(ctx context.Context, in *npool.GetAppGoodInfosByAppRequest) (*npool.GetAppGoodInfosByAppResponse, error) {
+	appID, err := uuid.Parse(in.AppID)
+	if err != nil {
+		return nil, xerrors.Errorf("invalid uuid appid %v", err)
+	}
+
+	entResp, err := db.Client().
+		AppGood.
+		Query().
+		Where(appgood.AppID(appID)).
+		All(ctx)
+	if err != nil {
+		return nil, xerrors.Errorf("fail get appgood infos %v", err)
+	}
+	infos := make([]*npool.AppGoodInfo, len(entResp))
+	for i, v := range entResp {
+		infos[i] = dbRowToAppGood(v)
+	}
+	return &npool.GetAppGoodInfosByAppResponse{
+		Infos: infos,
+	}, nil
+}

@@ -239,3 +239,33 @@ func GetAll(ctx context.Context, in *npool.GetGoodsRequest) (*npool.GetGoodsResp
 		Infos: infos,
 	}, nil
 }
+
+func GetByIDs(ctx context.Context, in *npool.GetGoodsByIDsRequest) (*npool.GetGoodsByIDsResponse, error) {
+	ids := []uuid.UUID{}
+	for _, v := range in.IDs {
+		id, err := uuid.Parse(v)
+		if err != nil {
+			return &npool.GetGoodsByIDsResponse{}, xerrors.Errorf("invalid uuid %v", v)
+		}
+		ids = append(ids, id)
+	}
+
+	respEnt, err := db.Client().GoodInfo.Query().
+		Where(goodinfo.And(
+			goodinfo.DeleteAt(0),
+			goodinfo.IDIn(ids...),
+		)).
+		All(ctx)
+	if err != nil {
+		return nil, xerrors.Errorf("fail query goodinfo %v", err)
+	}
+
+	infos := []*npool.GoodInfo{}
+	for _, row := range respEnt {
+		infos = append(infos, dbRowToInfo(row))
+	}
+
+	return &npool.GetGoodsByIDsResponse{
+		Infos: infos,
+	}, nil
+}

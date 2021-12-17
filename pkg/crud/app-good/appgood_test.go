@@ -136,4 +136,12 @@ func TestAppGoodCRUD(t *testing.T) {
 		assert.Equal(t, resp9.Info.ID, resp.Info.ID)
 		assertAppGood(t, resp9.Info, &appGoodInfo)
 	}
+
+	resp10, err := GetAppGoodInfosByApp(context.Background(), &npool.GetAppGoodInfosByAppRequest{
+		AppID: appGoodInfo.AppID,
+	})
+	if assert.Nil(t, err) {
+		assert.NotNil(t, resp10)
+		assert.Positive(t, len(resp10.Infos))
+	}
 }

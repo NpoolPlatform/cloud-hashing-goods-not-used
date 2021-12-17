@@ -1,3 +1,4 @@
+//go:build !codeanalysis
 // +build !codeanalysis
 
 package goodinfo
@@ -151,6 +152,13 @@ func TestGoodInfoCRUD(t *testing.T) { //nolint
 		assert.Equal(t, resp3.Info.Classic, classic)
 		assert.Equal(t, resp3.Info.SupportCoinTypeIDs, supportCoinTypeIDs)
 		assert.Equal(t, resp3.Info.Total, total)
+	}
+
+	resp4, err := GetByIDs(context.Background(), &npool.GetGoodsByIDsRequest{
+		IDs: []string{resp.Info.ID},
+	})
+	if assert.Nil(t, err) && assert.NotNil(t, resp4.Infos) {
+		assert.Positive(t, len(resp4.Infos))
 	}
 }
 

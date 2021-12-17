@@ -1,3 +1,4 @@
+//go:build !codeanalysis
 // +build !codeanalysis
 
 package api
@@ -9,7 +10,8 @@ import (
 
 	"github.com/NpoolPlatform/cloud-hashing-goods/message/npool"
 
-	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/crud/good-info" //nolint
+	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/crud/good-info"
+	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/middleware/app-good-info"
 
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
@@ -56,6 +58,15 @@ func (s *Server) GetGoods(ctx context.Context, in *npool.GetGoodsRequest) (*npoo
 	if err != nil {
 		logger.Sugar().Errorf("update target area error: %w", err)
 		return &npool.GetGoodsResponse{}, status.Error(codes.Internal, "internal server error")
+	}
+	return resp, nil
+}
+
+func (s *Server) GetGoodsByApp(ctx context.Context, in *npool.GetGoodsByAppRequest) (*npool.GetGoodsByAppResponse, error) {
+	resp, err := appgoodinfo.Get(ctx, in)
+	if err != nil {
+		logger.Sugar().Errorf("get goods by app error: %w", err)
+		return &npool.GetGoodsByAppResponse{}, status.Error(codes.Internal, "internal server error")
 	}
 	return resp, nil
 }
