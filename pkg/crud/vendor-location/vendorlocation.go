@@ -2,7 +2,6 @@ package vendorlocation
 
 import (
 	"context"
-	"fmt"
 	"time"
 
 	"github.com/NpoolPlatform/cloud-hashing-goods/message/npool"
@@ -134,8 +133,6 @@ func GetAll(ctx context.Context, in *npool.GetVendorLocationsRequest) (*npool.Ge
 	if err != nil {
 		return nil, err
 	}
-
-	fmt.Println(infos)
 
 	locations := []*npool.VendorLocationInfo{}
 	for _, info := range infos {
