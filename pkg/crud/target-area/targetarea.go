@@ -2,7 +2,6 @@ package targetarea
 
 import (
 	"context"
-	"fmt"
 	"time"
 
 	"github.com/NpoolPlatform/cloud-hashing-goods/message/npool"
@@ -156,8 +155,6 @@ func GetAll(ctx context.Context, in *npool.GetTargetAreasRequest) (*npool.GetTar
 	if err != nil {
 		return nil, err
 	}
-
-	fmt.Println(infos)
 
 	areas := []*npool.TargetAreaInfo{}
 	for _, info := range infos {

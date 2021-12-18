@@ -2,7 +2,6 @@ package pricecurrency
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/NpoolPlatform/cloud-hashing-goods/message/npool"
 
@@ -107,8 +106,6 @@ func GetAll(ctx context.Context, in *npool.GetPriceCurrencysRequest) (*npool.Get
 	if err != nil {
 		return nil, err
 	}
-
-	fmt.Println(infos)
 
 	areas := []*npool.PriceCurrency{}
 	for _, info := range infos {
