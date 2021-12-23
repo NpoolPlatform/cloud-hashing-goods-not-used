@@ -51,9 +51,14 @@ func validateGoodComment(info *npool.GoodComment) error {
 }
 
 func validateReplyToID(ctx context.Context, info *npool.GoodComment) (*uuid.UUID, error) {
+	cli, err := db.Client()
+	if err != nil {
+		return nil, xerrors.Errorf("fail get db client: %v", err)
+	}
+
 	replyToID, err := uuid.Parse(info.GetReplyToID())
 	if err == nil {
-		infos, err := db.Client().
+		infos, err := cli.
 			GoodComment.
 			Query().
 			Where(
@@ -87,7 +92,12 @@ func Create(ctx context.Context, in *npool.CreateGoodCommentRequest) (*npool.Cre
 		return nil, xerrors.Errorf("invalid reply to: %v", err)
 	}
 
-	info, err := db.Client().
+	cli, err := db.Client()
+	if err != nil {
+		return nil, xerrors.Errorf("fail get db client: %v", err)
+	}
+
+	info, err := cli.
 		GoodComment.
 		Create().
 		SetUserID(uuid.MustParse(in.GetComment().GetUserID())).
@@ -101,7 +111,7 @@ func Create(ctx context.Context, in *npool.CreateGoodCommentRequest) (*npool.Cre
 	}
 
 	if replyToID != nil {
-		info, err = db.Client().
+		info, err = cli.
 			GoodComment.
 			UpdateOneID(info.ID).
 			SetReplyToID(*replyToID).
@@ -122,7 +132,12 @@ func Update(ctx context.Context, in *npool.UpdateGoodCommentRequest) (*npool.Upd
 		return nil, xerrors.Errorf("invalid comment id: %v", err)
 	}
 
-	info, err := db.Client().
+	cli, err := db.Client()
+	if err != nil {
+		return nil, xerrors.Errorf("fail get db client: %v", err)
+	}
+
+	info, err := cli.
 		GoodComment.
 		UpdateOneID(id).
 		SetContent(in.GetComment().GetContent()).
@@ -142,7 +157,12 @@ func GetAll(ctx context.Context, in *npool.GetGoodCommentsRequest) (*npool.GetGo
 		return nil, xerrors.Errorf("invalid good id: %v", err)
 	}
 
-	infos, err := db.Client().
+	cli, err := db.Client()
+	if err != nil {
+		return nil, xerrors.Errorf("fail get db client: %v", err)
+	}
+
+	infos, err := cli.
 		GoodComment.
 		Query().
 		Where(

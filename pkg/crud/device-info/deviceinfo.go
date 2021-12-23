@@ -29,7 +29,12 @@ func Create(ctx context.Context, in *npool.CreateDeviceInfoRequest) (*npool.Crea
 		return nil, xerrors.Errorf("invalid parameter: %v", err)
 	}
 
-	info, err := db.Client().
+	cli, err := db.Client()
+	if err != nil {
+		return nil, xerrors.Errorf("fail get db client: %v", err)
+	}
+
+	info, err := cli.
 		DeviceInfo.
 		Create().
 		SetType(in.GetInfo().GetType()).
@@ -62,7 +67,12 @@ func Update(ctx context.Context, in *npool.UpdateDeviceInfoRequest) (*npool.Upda
 		return nil, xerrors.Errorf("invalid parameter: %v", err)
 	}
 
-	info, err := db.Client().
+	cli, err := db.Client()
+	if err != nil {
+		return nil, xerrors.Errorf("fail get db client: %v", err)
+	}
+
+	info, err := cli.
 		DeviceInfo.
 		UpdateOneID(id).
 		SetType(in.GetInfo().GetType()).
@@ -90,7 +100,12 @@ func Get(ctx context.Context, in *npool.GetDeviceInfoRequest) (*npool.GetDeviceI
 		return nil, xerrors.Errorf("invalid device info id: %v", err)
 	}
 
-	infos, err := db.Client().
+	cli, err := db.Client()
+	if err != nil {
+		return nil, xerrors.Errorf("fail get db client: %v", err)
+	}
+
+	infos, err := cli.
 		DeviceInfo.
 		Query().
 		Where(
@@ -118,7 +133,12 @@ func Get(ctx context.Context, in *npool.GetDeviceInfoRequest) (*npool.GetDeviceI
 }
 
 func Delete(ctx context.Context, in *npool.DeleteDeviceInfoRequest) (*npool.DeleteDeviceInfoResponse, error) {
-	info, err := db.Client().
+	cli, err := db.Client()
+	if err != nil {
+		return nil, xerrors.Errorf("fail get db client: %v", err)
+	}
+
+	info, err := cli.
 		DeviceInfo.
 		UpdateOneID(uuid.MustParse(in.GetID())).
 		SetDeleteAt(time.Now().UnixNano()).
@@ -139,7 +159,12 @@ func Delete(ctx context.Context, in *npool.DeleteDeviceInfoRequest) (*npool.Dele
 }
 
 func GetAll(ctx context.Context, in *npool.GetDeviceInfosRequest) (*npool.GetDeviceInfosResponse, error) {
-	infos, err := db.Client().
+	cli, err := db.Client()
+	if err != nil {
+		return nil, xerrors.Errorf("fail get db client: %v", err)
+	}
+
+	infos, err := cli.
 		DeviceInfo.
 		Query().
 		Where(

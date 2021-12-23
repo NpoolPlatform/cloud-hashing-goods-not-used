@@ -48,9 +48,14 @@ func Authorize(ctx context.Context, in *npool.AuthorizeAppGoodRequest) (*npool.A
 		return nil, xerrors.Errorf("invalid parameter: %v", err)
 	}
 
+	cli, err := db.Client()
+	if err != nil {
+		return nil, xerrors.Errorf("fail get db client: %v", err)
+	}
+
 	id, err := uuid.Parse(in.GetInfo().GetID())
 	if err == nil {
-		info, err := db.Client().
+		info, err := cli.
 			AppGood.
 			UpdateOneID(id).
 			SetAuthorized(true).
@@ -64,7 +69,7 @@ func Authorize(ctx context.Context, in *npool.AuthorizeAppGoodRequest) (*npool.A
 		}, nil
 	}
 
-	info, err := db.Client().
+	info, err := cli.
 		AppGood.
 		Create().
 		SetAppID(uuid.MustParse(in.GetInfo().GetAppID())).
@@ -88,7 +93,12 @@ func Check(ctx context.Context, in *npool.CheckAppGoodRequest) (*npool.CheckAppG
 		return nil, xerrors.Errorf("invalid parameter: %v", err)
 	}
 
-	infos, err := db.Client().
+	cli, err := db.Client()
+	if err != nil {
+		return nil, xerrors.Errorf("fail get db client: %v", err)
+	}
+
+	infos, err := cli.
 		AppGood.
 		Query().
 		Where(
@@ -139,7 +149,12 @@ func SetAppGoodPrice(ctx context.Context, in *npool.SetAppGoodPriceRequest) (*np
 		return nil, xerrors.Errorf("price should be greater than 0")
 	}
 
-	info, err := db.Client().
+	cli, err := db.Client()
+	if err != nil {
+		return nil, xerrors.Errorf("fail get db client: %v", err)
+	}
+
+	info, err := cli.
 		AppGood.
 		UpdateOneID(id).
 		SetPrice(price.VisualPriceToDBPrice(in.GetInfo().GetPrice())).
@@ -174,7 +189,12 @@ func Onsale(ctx context.Context, in *npool.OnsaleAppGoodRequest) (*npool.OnsaleA
 		return nil, xerrors.Errorf("good not authorized by app")
 	}
 
-	info, err := db.Client().
+	cli, err := db.Client()
+	if err != nil {
+		return nil, xerrors.Errorf("fail get db client: %v", err)
+	}
+
+	info, err := cli.
 		AppGood.
 		UpdateOneID(id).
 		SetOnline(true).
@@ -198,7 +218,12 @@ func Offsale(ctx context.Context, in *npool.OffsaleAppGoodRequest) (*npool.Offsa
 		return nil, xerrors.Errorf("invalid app good id: %v", err)
 	}
 
-	info, err := db.Client().
+	cli, err := db.Client()
+	if err != nil {
+		return nil, xerrors.Errorf("fail get db client: %v", err)
+	}
+
+	info, err := cli.
 		AppGood.
 		UpdateOneID(id).
 		SetOnline(false).
@@ -222,7 +247,12 @@ func Unauthorize(ctx context.Context, in *npool.UnauthorizeAppGoodRequest) (*npo
 		return nil, xerrors.Errorf("invalid app good id: %v", err)
 	}
 
-	info, err := db.Client().
+	cli, err := db.Client()
+	if err != nil {
+		return nil, xerrors.Errorf("fail get db client: %v", err)
+	}
+
+	info, err := cli.
 		AppGood.
 		UpdateOneID(id).
 		SetAuthorized(false).

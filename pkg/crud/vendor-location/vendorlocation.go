@@ -15,7 +15,12 @@ import (
 )
 
 func Create(ctx context.Context, in *npool.CreateVendorLocationRequest) (*npool.CreateVendorLocationResponse, error) {
-	info, err := db.Client().
+	cli, err := db.Client()
+	if err != nil {
+		return nil, xerrors.Errorf("fail get db client: %v", err)
+	}
+
+	info, err := cli.
 		VendorLocation.
 		Create().
 		SetCountry(in.GetInfo().GetCountry()).
@@ -44,7 +49,12 @@ func Update(ctx context.Context, in *npool.UpdateVendorLocationRequest) (*npool.
 		return nil, xerrors.Errorf("invalid vendor location id: %v", err)
 	}
 
-	info, err := db.Client().
+	cli, err := db.Client()
+	if err != nil {
+		return nil, xerrors.Errorf("fail get db client: %v", err)
+	}
+
+	info, err := cli.
 		VendorLocation.
 		UpdateOneID(id).
 		SetCountry(in.GetInfo().GetCountry()).
@@ -72,7 +82,12 @@ func Get(ctx context.Context, in *npool.GetVendorLocationRequest) (*npool.GetVen
 		return nil, xerrors.Errorf("invalid vendor location id: %v", err)
 	}
 
-	infos, err := db.Client().
+	cli, err := db.Client()
+	if err != nil {
+		return nil, xerrors.Errorf("fail get db client: %v", err)
+	}
+
+	infos, err := cli.
 		VendorLocation.
 		Query().
 		Where(
@@ -100,7 +115,12 @@ func Get(ctx context.Context, in *npool.GetVendorLocationRequest) (*npool.GetVen
 }
 
 func Delete(ctx context.Context, in *npool.DeleteVendorLocationRequest) (*npool.DeleteVendorLocationResponse, error) {
-	info, err := db.Client().
+	cli, err := db.Client()
+	if err != nil {
+		return nil, xerrors.Errorf("fail get db client: %v", err)
+	}
+
+	info, err := cli.
 		VendorLocation.
 		UpdateOneID(uuid.MustParse(in.GetID())).
 		SetDeleteAt(time.Now().UnixNano()).
@@ -121,7 +141,12 @@ func Delete(ctx context.Context, in *npool.DeleteVendorLocationRequest) (*npool.
 }
 
 func GetAll(ctx context.Context, in *npool.GetVendorLocationsRequest) (*npool.GetVendorLocationsResponse, error) {
-	infos, err := db.Client().
+	cli, err := db.Client()
+	if err != nil {
+		return nil, xerrors.Errorf("fail get db client: %v", err)
+	}
+
+	infos, err := cli.
 		VendorLocation.
 		Query().
 		Where(

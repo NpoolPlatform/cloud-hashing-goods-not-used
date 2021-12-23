@@ -31,7 +31,12 @@ func Create(ctx context.Context, in *npool.CreateFeeRequest) (*npool.CreateFeeRe
 		return nil, xerrors.Errorf("invalid parameter: %v", err)
 	}
 
-	info, err := db.Client().
+	cli, err := db.Client()
+	if err != nil {
+		return nil, xerrors.Errorf("fail get db client: %v", err)
+	}
+
+	info, err := cli.
 		Fee.
 		Create().
 		SetAppID(uuid.MustParse(in.GetInfo().GetAppID())).
@@ -58,7 +63,12 @@ func Get(ctx context.Context, in *npool.GetFeeRequest) (*npool.GetFeeResponse, e
 		return nil, xerrors.Errorf("invalid fee id: %v", err)
 	}
 
-	infos, err := db.Client().
+	cli, err := db.Client()
+	if err != nil {
+		return nil, xerrors.Errorf("fail get db client: %v", err)
+	}
+
+	infos, err := cli.
 		Fee.
 		Query().
 		Where(
@@ -85,7 +95,12 @@ func Get(ctx context.Context, in *npool.GetFeeRequest) (*npool.GetFeeResponse, e
 }
 
 func GetAll(ctx context.Context, in *npool.GetFeesRequest) (*npool.GetFeesResponse, error) {
-	infos, err := db.Client().
+	cli, err := db.Client()
+	if err != nil {
+		return nil, xerrors.Errorf("fail get db client: %v", err)
+	}
+
+	infos, err := cli.
 		Fee.
 		Query().
 		Where(

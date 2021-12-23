@@ -48,9 +48,14 @@ func Authorize(ctx context.Context, in *npool.AuthorizeAppGoodTargetAreaRequest)
 		return nil, xerrors.Errorf("invalid parameter: %v", err)
 	}
 
+	cli, err := db.Client()
+	if err != nil {
+		return nil, xerrors.Errorf("fail get db client: %v", err)
+	}
+
 	id, err := uuid.Parse(in.GetInfo().GetID())
 	if err == nil {
-		info, err := db.Client().
+		info, err := cli.
 			AppGoodTargetArea.
 			UpdateOneID(id).
 			SetDeleteAt(0).
@@ -63,7 +68,7 @@ func Authorize(ctx context.Context, in *npool.AuthorizeAppGoodTargetAreaRequest)
 		}, nil
 	}
 
-	info, err := db.Client().
+	info, err := cli.
 		AppGoodTargetArea.
 		Create().
 		SetAppID(uuid.MustParse(in.GetInfo().GetAppID())).
@@ -84,7 +89,12 @@ func Check(ctx context.Context, in *npool.CheckAppGoodTargetAreaRequest) (*npool
 		return nil, xerrors.Errorf("invalid parameter: %v", err)
 	}
 
-	infos, err := db.Client().
+	cli, err := db.Client()
+	if err != nil {
+		return nil, xerrors.Errorf("fail get db client: %v", err)
+	}
+
+	infos, err := cli.
 		AppGoodTargetArea.
 		Query().
 		Where(
@@ -118,7 +128,12 @@ func Unauthorize(ctx context.Context, in *npool.UnauthorizeAppGoodTargetAreaRequ
 		return nil, xerrors.Errorf("invalid app good target area id: %v", err)
 	}
 
-	info, err := db.Client().
+	cli, err := db.Client()
+	if err != nil {
+		return nil, xerrors.Errorf("fail get db client: %v", err)
+	}
+
+	info, err := cli.
 		AppGoodTargetArea.
 		UpdateOneID(id).
 		SetDeleteAt(time.Now().UnixNano()).

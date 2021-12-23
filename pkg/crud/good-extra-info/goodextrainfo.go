@@ -19,7 +19,12 @@ func Create(ctx context.Context, in *npool.CreateGoodExtraInfoRequest) (*npool.C
 		return nil, xerrors.Errorf("invalid good id: %v", err)
 	}
 
-	info, err := db.Client().
+	cli, err := db.Client()
+	if err != nil {
+		return nil, xerrors.Errorf("fail get db client: %v", err)
+	}
+
+	info, err := cli.
 		GoodExtraInfo.
 		Create().
 		SetGoodID(id).
@@ -59,7 +64,12 @@ func Update(ctx context.Context, in *npool.UpdateGoodExtraInfoRequest) (*npool.U
 		return nil, xerrors.Errorf("invalid good id: %v", err)
 	}
 
-	_, err = db.Client().
+	cli, err := db.Client()
+	if err != nil {
+		return nil, xerrors.Errorf("fail get db client: %v", err)
+	}
+
+	_, err = cli.
 		GoodExtraInfo.
 		Query().
 		Where(
@@ -73,7 +83,7 @@ func Update(ctx context.Context, in *npool.UpdateGoodExtraInfoRequest) (*npool.U
 		return nil, xerrors.Errorf("mismatch good extra info: %v", err)
 	}
 
-	info, err := db.Client().
+	info, err := cli.
 		GoodExtraInfo.
 		UpdateOneID(id).
 		SetPosters(in.GetInfo().GetPosters()).
@@ -105,7 +115,12 @@ func Get(ctx context.Context, in *npool.GetGoodExtraInfoRequest) (*npool.GetGood
 		return nil, xerrors.Errorf("invalid good extra info id: %v", err)
 	}
 
-	infos, err := db.Client().
+	cli, err := db.Client()
+	if err != nil {
+		return nil, xerrors.Errorf("fail get db client: %v", err)
+	}
+
+	infos, err := cli.
 		GoodExtraInfo.
 		Query().
 		Where(

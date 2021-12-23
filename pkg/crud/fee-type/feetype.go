@@ -22,7 +22,12 @@ func Create(ctx context.Context, in *npool.CreateFeeTypeRequest) (*npool.CreateF
 		return nil, xerrors.Errorf("invalid parameter: %v", err)
 	}
 
-	info, err := db.Client().
+	cli, err := db.Client()
+	if err != nil {
+		return nil, xerrors.Errorf("fail get db client: %v", err)
+	}
+
+	info, err := cli.
 		FeeType.
 		Create().
 		SetFeeType(in.GetInfo().GetFeeType()).
@@ -53,7 +58,12 @@ func Update(ctx context.Context, in *npool.UpdateFeeTypeRequest) (*npool.UpdateF
 		return nil, xerrors.Errorf("invalid parameter: %v", err)
 	}
 
-	info, err := db.Client().
+	cli, err := db.Client()
+	if err != nil {
+		return nil, xerrors.Errorf("fail get db client: %v", err)
+	}
+
+	info, err := cli.
 		FeeType.
 		UpdateOneID(id).
 		SetFeeType(in.GetInfo().GetFeeType()).
@@ -79,7 +89,12 @@ func Get(ctx context.Context, in *npool.GetFeeTypeRequest) (*npool.GetFeeTypeRes
 		return nil, xerrors.Errorf("invalid fee type id: %v", err)
 	}
 
-	infos, err := db.Client().
+	cli, err := db.Client()
+	if err != nil {
+		return nil, xerrors.Errorf("fail get db client: %v", err)
+	}
+
+	infos, err := cli.
 		FeeType.
 		Query().
 		Where(
@@ -106,7 +121,12 @@ func Get(ctx context.Context, in *npool.GetFeeTypeRequest) (*npool.GetFeeTypeRes
 }
 
 func GetAll(ctx context.Context, in *npool.GetFeeTypesRequest) (*npool.GetFeeTypesResponse, error) {
-	infos, err := db.Client().
+	cli, err := db.Client()
+	if err != nil {
+		return nil, xerrors.Errorf("fail get db client: %v", err)
+	}
+
+	infos, err := cli.
 		FeeType.
 		Query().
 		Where(

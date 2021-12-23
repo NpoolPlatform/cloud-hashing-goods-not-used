@@ -95,7 +95,12 @@ func Create(ctx context.Context, in *npool.CreateGoodRequest) (*npool.CreateGood
 		feeIDs = append(feeIDs, uuid.MustParse(id))
 	}
 
-	info, err := db.Client().
+	cli, err := db.Client()
+	if err != nil {
+		return nil, xerrors.Errorf("fail get db client: %v", err)
+	}
+
+	info, err := cli.
 		GoodInfo.
 		Create().
 		SetTitle(in.GetInfo().GetTitle()).
@@ -141,7 +146,12 @@ func Update(ctx context.Context, in *npool.UpdateGoodRequest) (*npool.UpdateGood
 		ids = append(ids, uuid.MustParse(id))
 	}
 
-	info, err := db.Client().
+	cli, err := db.Client()
+	if err != nil {
+		return nil, xerrors.Errorf("fail get db client: %v", err)
+	}
+
+	info, err := cli.
 		GoodInfo.
 		UpdateOneID(goodID).
 		SetTitle(in.GetInfo().GetTitle()).
@@ -175,7 +185,12 @@ func Get(ctx context.Context, in *npool.GetGoodRequest) (*npool.GetGoodResponse,
 		return nil, xerrors.Errorf("invalid good id: %v", err)
 	}
 
-	infos, err := db.Client().
+	cli, err := db.Client()
+	if err != nil {
+		return nil, xerrors.Errorf("fail get db client: %v", err)
+	}
+
+	infos, err := cli.
 		GoodInfo.
 		Query().
 		Where(
@@ -202,7 +217,12 @@ func Delete(ctx context.Context, in *npool.DeleteGoodRequest) (*npool.DeleteGood
 		return nil, xerrors.Errorf("invalid good id: %v", err)
 	}
 
-	info, err := db.Client().
+	cli, err := db.Client()
+	if err != nil {
+		return nil, xerrors.Errorf("fail get db client: %v", err)
+	}
+
+	info, err := cli.
 		GoodInfo.
 		UpdateOneID(id).
 		SetDeleteAt(uint32(time.Now().Unix())).
@@ -217,7 +237,12 @@ func Delete(ctx context.Context, in *npool.DeleteGoodRequest) (*npool.DeleteGood
 }
 
 func GetAll(ctx context.Context, in *npool.GetGoodsRequest) (*npool.GetGoodsResponse, error) {
-	rows, err := db.Client().
+	cli, err := db.Client()
+	if err != nil {
+		return nil, xerrors.Errorf("fail get db client: %v", err)
+	}
+
+	rows, err := cli.
 		GoodInfo.
 		Query().
 		Where(

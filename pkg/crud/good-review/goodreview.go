@@ -39,7 +39,12 @@ func Create(ctx context.Context, in *npool.CreateGoodReviewRequest) (*npool.Crea
 		return nil, xerrors.Errorf("invalid parameter: %v", err)
 	}
 
-	info, err := db.Client().
+	cli, err := db.Client()
+	if err != nil {
+		return nil, xerrors.Errorf("fail get db client: %v", err)
+	}
+
+	info, err := cli.
 		GoodReview.
 		Create().
 		SetReviewedID(uuid.MustParse(in.GetInfo().GetReviewedID())).
@@ -67,7 +72,12 @@ func Update(ctx context.Context, in *npool.UpdateGoodReviewRequest) (*npool.Upda
 		return nil, xerrors.Errorf("invalid parameter: %v", err)
 	}
 
-	_, err = db.Client().
+	cli, err := db.Client()
+	if err != nil {
+		return nil, xerrors.Errorf("fail get db client: %v", err)
+	}
+
+	_, err = cli.
 		GoodReview.
 		Query().
 		Where(
@@ -81,7 +91,7 @@ func Update(ctx context.Context, in *npool.UpdateGoodReviewRequest) (*npool.Upda
 		return nil, xerrors.Errorf("mismatch good extra info: %v", err)
 	}
 
-	info, err := db.Client().
+	info, err := cli.
 		GoodReview.
 		UpdateOneID(id).
 		SetReviewerID(uuid.MustParse(in.GetInfo().GetReviewerID())).
@@ -101,7 +111,12 @@ func Get(ctx context.Context, in *npool.GetGoodReviewRequest) (*npool.GetGoodRev
 		return nil, xerrors.Errorf("invalid parameter: %v", err)
 	}
 
-	infos, err := db.Client().
+	cli, err := db.Client()
+	if err != nil {
+		return nil, xerrors.Errorf("fail get db client: %v", err)
+	}
+
+	infos, err := cli.
 		GoodReview.
 		Query().
 		Where(

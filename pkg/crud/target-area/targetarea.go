@@ -15,7 +15,12 @@ import (
 )
 
 func Create(ctx context.Context, in *npool.CreateTargetAreaRequest) (*npool.CreateTargetAreaResponse, error) {
-	info, err := db.Client().
+	cli, err := db.Client()
+	if err != nil {
+		return nil, xerrors.Errorf("fail get db client: %v", err)
+	}
+
+	info, err := cli.
 		TargetArea.
 		Create().
 		SetContinent(in.GetInfo().GetContinent()).
@@ -40,7 +45,12 @@ func Update(ctx context.Context, in *npool.UpdateTargetAreaRequest) (*npool.Upda
 		return nil, xerrors.Errorf("invalid target area id: %v", err)
 	}
 
-	info, err := db.Client().
+	cli, err := db.Client()
+	if err != nil {
+		return nil, xerrors.Errorf("fail get db client: %v", err)
+	}
+
+	info, err := cli.
 		TargetArea.
 		UpdateOneID(id).
 		SetContinent(in.GetInfo().GetContinent()).
@@ -64,7 +74,12 @@ func Get(ctx context.Context, in *npool.GetTargetAreaRequest) (*npool.GetTargetA
 		return nil, xerrors.Errorf("invalid target area id: %v", err)
 	}
 
-	infos, err := db.Client().
+	cli, err := db.Client()
+	if err != nil {
+		return nil, xerrors.Errorf("fail get db client: %v", err)
+	}
+
+	infos, err := cli.
 		TargetArea.
 		Query().
 		Where(
@@ -95,7 +110,12 @@ func Delete(ctx context.Context, in *npool.DeleteTargetAreaRequest) (*npool.Dele
 		return nil, xerrors.Errorf("invalid target area id: %v", err)
 	}
 
-	info, err := db.Client().
+	cli, err := db.Client()
+	if err != nil {
+		return nil, xerrors.Errorf("fail get db client: %v", err)
+	}
+
+	info, err := cli.
 		TargetArea.
 		UpdateOneID(id).
 		SetDeleteAt(time.Now().UnixNano()).
@@ -114,7 +134,12 @@ func Delete(ctx context.Context, in *npool.DeleteTargetAreaRequest) (*npool.Dele
 }
 
 func DeleteByContinentCountry(ctx context.Context, in *npool.DeleteTargetAreaByContinentCountryRequest) (*npool.DeleteTargetAreaByContinentCountryResponse, error) {
-	infos, err := db.Client().
+	cli, err := db.Client()
+	if err != nil {
+		return nil, xerrors.Errorf("fail get db client: %v", err)
+	}
+
+	infos, err := cli.
 		TargetArea.
 		Query().
 		Where(
@@ -143,7 +168,12 @@ func DeleteByContinentCountry(ctx context.Context, in *npool.DeleteTargetAreaByC
 }
 
 func GetAll(ctx context.Context, in *npool.GetTargetAreasRequest) (*npool.GetTargetAreasResponse, error) {
-	infos, err := db.Client().
+	cli, err := db.Client()
+	if err != nil {
+		return nil, xerrors.Errorf("fail get db client: %v", err)
+	}
+
+	infos, err := cli.
 		TargetArea.
 		Query().
 		Where(
