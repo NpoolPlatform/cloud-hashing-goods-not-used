@@ -43,6 +43,15 @@ func (s *Server) GetRecommendsByApp(ctx context.Context, in *npool.GetRecommends
 	return resp, nil
 }
 
+func (s *Server) GetRecommendsByRecommender(ctx context.Context, in *npool.GetRecommendsByRecommenderRequest) (*npool.GetRecommendsByRecommenderResponse, error) {
+	resp, err := crud.GetByRecommender(ctx, in)
+	if err != nil {
+		logger.Sugar().Errorf("get recommend goods by recommender: %v", err)
+		return &npool.GetRecommendsByRecommenderResponse{}, status.Error(codes.Internal, err.Error())
+	}
+	return resp, nil
+}
+
 func (s *Server) DeleteRecommend(ctx context.Context, in *npool.DeleteRecommendRequest) (*npool.DeleteRecommendResponse, error) {
 	resp, err := crud.Delete(ctx, in)
 	if err != nil {
