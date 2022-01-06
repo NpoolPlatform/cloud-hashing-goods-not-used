@@ -34,6 +34,8 @@ type Tx struct {
 	GoodReview *GoodReviewClient
 	// PriceCurrency is the client for interacting with the PriceCurrency builders.
 	PriceCurrency *PriceCurrencyClient
+	// Recommend is the client for interacting with the Recommend builders.
+	Recommend *RecommendClient
 	// TargetArea is the client for interacting with the TargetArea builders.
 	TargetArea *TargetAreaClient
 	// VendorLocation is the client for interacting with the VendorLocation builders.
@@ -184,6 +186,7 @@ func (tx *Tx) init() {
 	tx.GoodInfo = NewGoodInfoClient(tx.config)
 	tx.GoodReview = NewGoodReviewClient(tx.config)
 	tx.PriceCurrency = NewPriceCurrencyClient(tx.config)
+	tx.Recommend = NewRecommendClient(tx.config)
 	tx.TargetArea = NewTargetAreaClient(tx.config)
 	tx.VendorLocation = NewVendorLocationClient(tx.config)
 }

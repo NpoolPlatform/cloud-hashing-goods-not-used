@@ -21,6 +21,7 @@ import (
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/goodinfo"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/goodreview"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/pricecurrency"
+	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/recommend"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/targetarea"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/vendorlocation"
 
@@ -55,6 +56,8 @@ type Client struct {
 	GoodReview *GoodReviewClient
 	// PriceCurrency is the client for interacting with the PriceCurrency builders.
 	PriceCurrency *PriceCurrencyClient
+	// Recommend is the client for interacting with the Recommend builders.
+	Recommend *RecommendClient
 	// TargetArea is the client for interacting with the TargetArea builders.
 	TargetArea *TargetAreaClient
 	// VendorLocation is the client for interacting with the VendorLocation builders.
@@ -83,6 +86,7 @@ func (c *Client) init() {
 	c.GoodInfo = NewGoodInfoClient(c.config)
 	c.GoodReview = NewGoodReviewClient(c.config)
 	c.PriceCurrency = NewPriceCurrencyClient(c.config)
+	c.Recommend = NewRecommendClient(c.config)
 	c.TargetArea = NewTargetAreaClient(c.config)
 	c.VendorLocation = NewVendorLocationClient(c.config)
 }
@@ -129,6 +133,7 @@ func (c *Client) Tx(ctx context.Context) (*Tx, error) {
 		GoodInfo:          NewGoodInfoClient(cfg),
 		GoodReview:        NewGoodReviewClient(cfg),
 		PriceCurrency:     NewPriceCurrencyClient(cfg),
+		Recommend:         NewRecommendClient(cfg),
 		TargetArea:        NewTargetAreaClient(cfg),
 		VendorLocation:    NewVendorLocationClient(cfg),
 	}, nil
@@ -160,6 +165,7 @@ func (c *Client) BeginTx(ctx context.Context, opts *sql.TxOptions) (*Tx, error) 
 		GoodInfo:          NewGoodInfoClient(cfg),
 		GoodReview:        NewGoodReviewClient(cfg),
 		PriceCurrency:     NewPriceCurrencyClient(cfg),
+		Recommend:         NewRecommendClient(cfg),
 		TargetArea:        NewTargetAreaClient(cfg),
 		VendorLocation:    NewVendorLocationClient(cfg),
 	}, nil
@@ -202,6 +208,7 @@ func (c *Client) Use(hooks ...Hook) {
 	c.GoodInfo.Use(hooks...)
 	c.GoodReview.Use(hooks...)
 	c.PriceCurrency.Use(hooks...)
+	c.Recommend.Use(hooks...)
 	c.TargetArea.Use(hooks...)
 	c.VendorLocation.Use(hooks...)
 }
@@ -1194,6 +1201,96 @@ func (c *PriceCurrencyClient) GetX(ctx context.Context, id uuid.UUID) *PriceCurr
 // Hooks returns the client hooks.
 func (c *PriceCurrencyClient) Hooks() []Hook {
 	return c.hooks.PriceCurrency
+}
+
+// RecommendClient is a client for the Recommend schema.
+type RecommendClient struct {
+	config
+}
+
+// NewRecommendClient returns a client for the Recommend from the given config.
+func NewRecommendClient(c config) *RecommendClient {
+	return &RecommendClient{config: c}
+}
+
+// Use adds a list of mutation hooks to the hooks stack.
+// A call to `Use(f, g, h)` equals to `recommend.Hooks(f(g(h())))`.
+func (c *RecommendClient) Use(hooks ...Hook) {
+	c.hooks.Recommend = append(c.hooks.Recommend, hooks...)
+}
+
+// Create returns a create builder for Recommend.
+func (c *RecommendClient) Create() *RecommendCreate {
+	mutation := newRecommendMutation(c.config, OpCreate)
+	return &RecommendCreate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// CreateBulk returns a builder for creating a bulk of Recommend entities.
+func (c *RecommendClient) CreateBulk(builders ...*RecommendCreate) *RecommendCreateBulk {
+	return &RecommendCreateBulk{config: c.config, builders: builders}
+}
+
+// Update returns an update builder for Recommend.
+func (c *RecommendClient) Update() *RecommendUpdate {
+	mutation := newRecommendMutation(c.config, OpUpdate)
+	return &RecommendUpdate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOne returns an update builder for the given entity.
+func (c *RecommendClient) UpdateOne(r *Recommend) *RecommendUpdateOne {
+	mutation := newRecommendMutation(c.config, OpUpdateOne, withRecommend(r))
+	return &RecommendUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOneID returns an update builder for the given id.
+func (c *RecommendClient) UpdateOneID(id uuid.UUID) *RecommendUpdateOne {
+	mutation := newRecommendMutation(c.config, OpUpdateOne, withRecommendID(id))
+	return &RecommendUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// Delete returns a delete builder for Recommend.
+func (c *RecommendClient) Delete() *RecommendDelete {
+	mutation := newRecommendMutation(c.config, OpDelete)
+	return &RecommendDelete{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// DeleteOne returns a delete builder for the given entity.
+func (c *RecommendClient) DeleteOne(r *Recommend) *RecommendDeleteOne {
+	return c.DeleteOneID(r.ID)
+}
+
+// DeleteOneID returns a delete builder for the given id.
+func (c *RecommendClient) DeleteOneID(id uuid.UUID) *RecommendDeleteOne {
+	builder := c.Delete().Where(recommend.ID(id))
+	builder.mutation.id = &id
+	builder.mutation.op = OpDeleteOne
+	return &RecommendDeleteOne{builder}
+}
+
+// Query returns a query builder for Recommend.
+func (c *RecommendClient) Query() *RecommendQuery {
+	return &RecommendQuery{
+		config: c.config,
+	}
+}
+
+// Get returns a Recommend entity by its id.
+func (c *RecommendClient) Get(ctx context.Context, id uuid.UUID) (*Recommend, error) {
+	return c.Query().Where(recommend.ID(id)).Only(ctx)
+}
+
+// GetX is like Get, but panics if an error occurs.
+func (c *RecommendClient) GetX(ctx context.Context, id uuid.UUID) *Recommend {
+	obj, err := c.Get(ctx, id)
+	if err != nil {
+		panic(err)
+	}
+	return obj
+}
+
+// Hooks returns the client hooks.
+func (c *RecommendClient) Hooks() []Hook {
+	return c.hooks.Recommend
 }
 
 // TargetAreaClient is a client for the TargetArea schema.

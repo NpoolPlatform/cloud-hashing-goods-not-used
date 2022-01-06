@@ -152,6 +152,19 @@ func (f PriceCurrencyFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Valu
 	return f(ctx, mv)
 }
 
+// The RecommendFunc type is an adapter to allow the use of ordinary
+// function as Recommend mutator.
+type RecommendFunc func(context.Context, *ent.RecommendMutation) (ent.Value, error)
+
+// Mutate calls f(ctx, m).
+func (f RecommendFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, error) {
+	mv, ok := m.(*ent.RecommendMutation)
+	if !ok {
+		return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.RecommendMutation", m)
+	}
+	return f(ctx, mv)
+}
+
 // The TargetAreaFunc type is an adapter to allow the use of ordinary
 // function as TargetArea mutator.
 type TargetAreaFunc func(context.Context, *ent.TargetAreaMutation) (ent.Value, error)

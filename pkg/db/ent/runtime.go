@@ -14,6 +14,7 @@ import (
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/goodinfo"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/goodreview"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/pricecurrency"
+	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/recommend"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/schema"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/targetarea"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/vendorlocation"
@@ -294,6 +295,30 @@ func init() {
 	pricecurrencyDescID := pricecurrencyFields[0].Descriptor()
 	// pricecurrency.DefaultID holds the default value on creation for the id field.
 	pricecurrency.DefaultID = pricecurrencyDescID.Default.(func() uuid.UUID)
+	recommendFields := schema.Recommend{}.Fields()
+	_ = recommendFields
+	// recommendDescMessage is the schema descriptor for message field.
+	recommendDescMessage := recommendFields[4].Descriptor()
+	// recommend.DefaultMessage holds the default value on creation for the message field.
+	recommend.DefaultMessage = recommendDescMessage.Default.(string)
+	// recommendDescCreateAt is the schema descriptor for create_at field.
+	recommendDescCreateAt := recommendFields[5].Descriptor()
+	// recommend.DefaultCreateAt holds the default value on creation for the create_at field.
+	recommend.DefaultCreateAt = recommendDescCreateAt.Default.(func() int64)
+	// recommendDescUpdateAt is the schema descriptor for update_at field.
+	recommendDescUpdateAt := recommendFields[6].Descriptor()
+	// recommend.DefaultUpdateAt holds the default value on creation for the update_at field.
+	recommend.DefaultUpdateAt = recommendDescUpdateAt.Default.(func() int64)
+	// recommend.UpdateDefaultUpdateAt holds the default value on update for the update_at field.
+	recommend.UpdateDefaultUpdateAt = recommendDescUpdateAt.UpdateDefault.(func() int64)
+	// recommendDescDeleteAt is the schema descriptor for delete_at field.
+	recommendDescDeleteAt := recommendFields[7].Descriptor()
+	// recommend.DefaultDeleteAt holds the default value on creation for the delete_at field.
+	recommend.DefaultDeleteAt = recommendDescDeleteAt.Default.(func() int64)
+	// recommendDescID is the schema descriptor for id field.
+	recommendDescID := recommendFields[0].Descriptor()
+	// recommend.DefaultID holds the default value on creation for the id field.
+	recommend.DefaultID = recommendDescID.Default.(func() uuid.UUID)
 	targetareaFields := schema.TargetArea{}.Fields()
 	_ = targetareaFields
 	// targetareaDescContinent is the schema descriptor for continent field.

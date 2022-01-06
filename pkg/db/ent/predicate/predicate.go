@@ -39,6 +39,9 @@ type GoodReview func(*sql.Selector)
 // PriceCurrency is the predicate function for pricecurrency builders.
 type PriceCurrency func(*sql.Selector)
 
+// Recommend is the predicate function for recommend builders.
+type Recommend func(*sql.Selector)
+
 // TargetArea is the predicate function for targetarea builders.
 type TargetArea func(*sql.Selector)
 

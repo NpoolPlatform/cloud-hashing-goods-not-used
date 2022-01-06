@@ -254,6 +254,30 @@ var (
 		Columns:    PriceCurrenciesColumns,
 		PrimaryKey: []*schema.Column{PriceCurrenciesColumns[0]},
 	}
+	// RecommendsColumns holds the columns for the "recommends" table.
+	RecommendsColumns = []*schema.Column{
+		{Name: "id", Type: field.TypeUUID, Unique: true},
+		{Name: "app_id", Type: field.TypeUUID},
+		{Name: "good_id", Type: field.TypeUUID},
+		{Name: "recommender_id", Type: field.TypeUUID},
+		{Name: "message", Type: field.TypeString, Default: ""},
+		{Name: "create_at", Type: field.TypeInt64},
+		{Name: "update_at", Type: field.TypeInt64},
+		{Name: "delete_at", Type: field.TypeInt64},
+	}
+	// RecommendsTable holds the schema information for the "recommends" table.
+	RecommendsTable = &schema.Table{
+		Name:       "recommends",
+		Columns:    RecommendsColumns,
+		PrimaryKey: []*schema.Column{RecommendsColumns[0]},
+		Indexes: []*schema.Index{
+			{
+				Name:    "recommend_app_id_good_id",
+				Unique:  false,
+				Columns: []*schema.Column{RecommendsColumns[1], RecommendsColumns[2]},
+			},
+		},
+	}
 	// TargetAreasColumns holds the columns for the "target_areas" table.
 	TargetAreasColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeUUID, Unique: true},
@@ -313,6 +337,7 @@ var (
 		GoodInfosTable,
 		GoodReviewsTable,
 		PriceCurrenciesTable,
+		RecommendsTable,
 		TargetAreasTable,
 		VendorLocationsTable,
 	}
