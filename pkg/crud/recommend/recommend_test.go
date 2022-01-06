@@ -46,4 +46,14 @@ func TestCRUD(t *testing.T) {
 		assert.NotEqual(t, resp.Info.ID, uuid.UUID{}.String())
 		assertRecommend(t, resp.Info, &recommend)
 	}
+
+	recommend.ID = resp.Info.ID
+
+	resp1, err := Update(context.Background(), &npool.UpdateRecommendRequest{
+		Info: &recommend,
+	})
+	if assert.Nil(t, err) {
+		assert.Equal(t, resp1.Info.ID, recommend.ID)
+		assertRecommend(t, resp.Info, &recommend)
+	}
 }

@@ -75,7 +75,35 @@ func Create(ctx context.Context, in *npool.CreateRecommendRequest) (*npool.Creat
 }
 
 func Update(ctx context.Context, in *npool.UpdateRecommendRequest) (*npool.UpdateRecommendResponse, error) {
-	return nil, nil
+	if err := validateRecommend(in.GetInfo()); err != nil {
+		return nil, xerrors.Errorf("invalid parameter: %v", err)
+	}
+
+	id, err := uuid.Parse(in.GetInfo().GetID())
+	if err != nil {
+		return nil, xerrors.Errorf("invalid id: %v", err)
+	}
+
+	cli, err := db.Client()
+	if err != nil {
+		return nil, xerrors.Errorf("fail get db client: %v", err)
+	}
+
+	ctx, cancel := context.WithTimeout(ctx, dbTimeout)
+	defer cancel()
+
+	info, err := cli.
+		Recommend.
+		UpdateOneID(id).
+		SetMessage(in.GetInfo().GetMessage()).
+		Save(ctx)
+	if err != nil {
+		return nil, xerrors.Errorf("fail update recommend: %v", err)
+	}
+
+	return &npool.UpdateRecommendResponse{
+		Info: dbRowToRecommend(info),
+	}, nil
 }
 
 func GetByApp(ctx context.Context, in *npool.GetRecommendsByAppRequest) (*npool.GetRecommendsByAppResponse, error) {
