@@ -56,43 +56,43 @@ func (rc *RecommendCreate) SetNillableMessage(s *string) *RecommendCreate {
 }
 
 // SetCreateAt sets the "create_at" field.
-func (rc *RecommendCreate) SetCreateAt(i int64) *RecommendCreate {
-	rc.mutation.SetCreateAt(i)
+func (rc *RecommendCreate) SetCreateAt(u uint32) *RecommendCreate {
+	rc.mutation.SetCreateAt(u)
 	return rc
 }
 
 // SetNillableCreateAt sets the "create_at" field if the given value is not nil.
-func (rc *RecommendCreate) SetNillableCreateAt(i *int64) *RecommendCreate {
-	if i != nil {
-		rc.SetCreateAt(*i)
+func (rc *RecommendCreate) SetNillableCreateAt(u *uint32) *RecommendCreate {
+	if u != nil {
+		rc.SetCreateAt(*u)
 	}
 	return rc
 }
 
 // SetUpdateAt sets the "update_at" field.
-func (rc *RecommendCreate) SetUpdateAt(i int64) *RecommendCreate {
-	rc.mutation.SetUpdateAt(i)
+func (rc *RecommendCreate) SetUpdateAt(u uint32) *RecommendCreate {
+	rc.mutation.SetUpdateAt(u)
 	return rc
 }
 
 // SetNillableUpdateAt sets the "update_at" field if the given value is not nil.
-func (rc *RecommendCreate) SetNillableUpdateAt(i *int64) *RecommendCreate {
-	if i != nil {
-		rc.SetUpdateAt(*i)
+func (rc *RecommendCreate) SetNillableUpdateAt(u *uint32) *RecommendCreate {
+	if u != nil {
+		rc.SetUpdateAt(*u)
 	}
 	return rc
 }
 
 // SetDeleteAt sets the "delete_at" field.
-func (rc *RecommendCreate) SetDeleteAt(i int64) *RecommendCreate {
-	rc.mutation.SetDeleteAt(i)
+func (rc *RecommendCreate) SetDeleteAt(u uint32) *RecommendCreate {
+	rc.mutation.SetDeleteAt(u)
 	return rc
 }
 
 // SetNillableDeleteAt sets the "delete_at" field if the given value is not nil.
-func (rc *RecommendCreate) SetNillableDeleteAt(i *int64) *RecommendCreate {
-	if i != nil {
-		rc.SetDeleteAt(*i)
+func (rc *RecommendCreate) SetNillableDeleteAt(u *uint32) *RecommendCreate {
+	if u != nil {
+		rc.SetDeleteAt(*u)
 	}
 	return rc
 }
@@ -286,7 +286,7 @@ func (rc *RecommendCreate) createSpec() (*Recommend, *sqlgraph.CreateSpec) {
 	}
 	if value, ok := rc.mutation.CreateAt(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
+			Type:   field.TypeUint32,
 			Value:  value,
 			Column: recommend.FieldCreateAt,
 		})
@@ -294,7 +294,7 @@ func (rc *RecommendCreate) createSpec() (*Recommend, *sqlgraph.CreateSpec) {
 	}
 	if value, ok := rc.mutation.UpdateAt(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
+			Type:   field.TypeUint32,
 			Value:  value,
 			Column: recommend.FieldUpdateAt,
 		})
@@ -302,7 +302,7 @@ func (rc *RecommendCreate) createSpec() (*Recommend, *sqlgraph.CreateSpec) {
 	}
 	if value, ok := rc.mutation.DeleteAt(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
+			Type:   field.TypeUint32,
 			Value:  value,
 			Column: recommend.FieldDeleteAt,
 		})
@@ -411,7 +411,7 @@ func (u *RecommendUpsert) UpdateMessage() *RecommendUpsert {
 }
 
 // SetCreateAt sets the "create_at" field.
-func (u *RecommendUpsert) SetCreateAt(v int64) *RecommendUpsert {
+func (u *RecommendUpsert) SetCreateAt(v uint32) *RecommendUpsert {
 	u.Set(recommend.FieldCreateAt, v)
 	return u
 }
@@ -423,7 +423,7 @@ func (u *RecommendUpsert) UpdateCreateAt() *RecommendUpsert {
 }
 
 // SetUpdateAt sets the "update_at" field.
-func (u *RecommendUpsert) SetUpdateAt(v int64) *RecommendUpsert {
+func (u *RecommendUpsert) SetUpdateAt(v uint32) *RecommendUpsert {
 	u.Set(recommend.FieldUpdateAt, v)
 	return u
 }
@@ -435,7 +435,7 @@ func (u *RecommendUpsert) UpdateUpdateAt() *RecommendUpsert {
 }
 
 // SetDeleteAt sets the "delete_at" field.
-func (u *RecommendUpsert) SetDeleteAt(v int64) *RecommendUpsert {
+func (u *RecommendUpsert) SetDeleteAt(v uint32) *RecommendUpsert {
 	u.Set(recommend.FieldDeleteAt, v)
 	return u
 }
@@ -553,7 +553,7 @@ func (u *RecommendUpsertOne) UpdateMessage() *RecommendUpsertOne {
 }
 
 // SetCreateAt sets the "create_at" field.
-func (u *RecommendUpsertOne) SetCreateAt(v int64) *RecommendUpsertOne {
+func (u *RecommendUpsertOne) SetCreateAt(v uint32) *RecommendUpsertOne {
 	return u.Update(func(s *RecommendUpsert) {
 		s.SetCreateAt(v)
 	})
@@ -567,7 +567,7 @@ func (u *RecommendUpsertOne) UpdateCreateAt() *RecommendUpsertOne {
 }
 
 // SetUpdateAt sets the "update_at" field.
-func (u *RecommendUpsertOne) SetUpdateAt(v int64) *RecommendUpsertOne {
+func (u *RecommendUpsertOne) SetUpdateAt(v uint32) *RecommendUpsertOne {
 	return u.Update(func(s *RecommendUpsert) {
 		s.SetUpdateAt(v)
 	})
@@ -581,7 +581,7 @@ func (u *RecommendUpsertOne) UpdateUpdateAt() *RecommendUpsertOne {
 }
 
 // SetDeleteAt sets the "delete_at" field.
-func (u *RecommendUpsertOne) SetDeleteAt(v int64) *RecommendUpsertOne {
+func (u *RecommendUpsertOne) SetDeleteAt(v uint32) *RecommendUpsertOne {
 	return u.Update(func(s *RecommendUpsert) {
 		s.SetDeleteAt(v)
 	})
@@ -867,7 +867,7 @@ func (u *RecommendUpsertBulk) UpdateMessage() *RecommendUpsertBulk {
 }
 
 // SetCreateAt sets the "create_at" field.
-func (u *RecommendUpsertBulk) SetCreateAt(v int64) *RecommendUpsertBulk {
+func (u *RecommendUpsertBulk) SetCreateAt(v uint32) *RecommendUpsertBulk {
 	return u.Update(func(s *RecommendUpsert) {
 		s.SetCreateAt(v)
 	})
@@ -881,7 +881,7 @@ func (u *RecommendUpsertBulk) UpdateCreateAt() *RecommendUpsertBulk {
 }
 
 // SetUpdateAt sets the "update_at" field.
-func (u *RecommendUpsertBulk) SetUpdateAt(v int64) *RecommendUpsertBulk {
+func (u *RecommendUpsertBulk) SetUpdateAt(v uint32) *RecommendUpsertBulk {
 	return u.Update(func(s *RecommendUpsert) {
 		s.SetUpdateAt(v)
 	})
@@ -895,7 +895,7 @@ func (u *RecommendUpsertBulk) UpdateUpdateAt() *RecommendUpsertBulk {
 }
 
 // SetDeleteAt sets the "delete_at" field.
-func (u *RecommendUpsertBulk) SetDeleteAt(v int64) *RecommendUpsertBulk {
+func (u *RecommendUpsertBulk) SetDeleteAt(v uint32) *RecommendUpsertBulk {
 	return u.Update(func(s *RecommendUpsert) {
 		s.SetDeleteAt(v)
 	})

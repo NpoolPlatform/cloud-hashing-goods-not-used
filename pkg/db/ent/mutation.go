@@ -9329,12 +9329,12 @@ type RecommendMutation struct {
 	good_id        *uuid.UUID
 	recommender_id *uuid.UUID
 	message        *string
-	create_at      *int64
-	addcreate_at   *int64
-	update_at      *int64
-	addupdate_at   *int64
-	delete_at      *int64
-	adddelete_at   *int64
+	create_at      *uint32
+	addcreate_at   *uint32
+	update_at      *uint32
+	addupdate_at   *uint32
+	delete_at      *uint32
+	adddelete_at   *uint32
 	clearedFields  map[string]struct{}
 	done           bool
 	oldValue       func(context.Context) (*Recommend, error)
@@ -9571,13 +9571,13 @@ func (m *RecommendMutation) ResetMessage() {
 }
 
 // SetCreateAt sets the "create_at" field.
-func (m *RecommendMutation) SetCreateAt(i int64) {
-	m.create_at = &i
+func (m *RecommendMutation) SetCreateAt(u uint32) {
+	m.create_at = &u
 	m.addcreate_at = nil
 }
 
 // CreateAt returns the value of the "create_at" field in the mutation.
-func (m *RecommendMutation) CreateAt() (r int64, exists bool) {
+func (m *RecommendMutation) CreateAt() (r uint32, exists bool) {
 	v := m.create_at
 	if v == nil {
 		return
@@ -9588,7 +9588,7 @@ func (m *RecommendMutation) CreateAt() (r int64, exists bool) {
 // OldCreateAt returns the old "create_at" field's value of the Recommend entity.
 // If the Recommend object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *RecommendMutation) OldCreateAt(ctx context.Context) (v int64, err error) {
+func (m *RecommendMutation) OldCreateAt(ctx context.Context) (v uint32, err error) {
 	if !m.op.Is(OpUpdateOne) {
 		return v, fmt.Errorf("OldCreateAt is only allowed on UpdateOne operations")
 	}
@@ -9602,17 +9602,17 @@ func (m *RecommendMutation) OldCreateAt(ctx context.Context) (v int64, err error
 	return oldValue.CreateAt, nil
 }
 
-// AddCreateAt adds i to the "create_at" field.
-func (m *RecommendMutation) AddCreateAt(i int64) {
+// AddCreateAt adds u to the "create_at" field.
+func (m *RecommendMutation) AddCreateAt(u uint32) {
 	if m.addcreate_at != nil {
-		*m.addcreate_at += i
+		*m.addcreate_at += u
 	} else {
-		m.addcreate_at = &i
+		m.addcreate_at = &u
 	}
 }
 
 // AddedCreateAt returns the value that was added to the "create_at" field in this mutation.
-func (m *RecommendMutation) AddedCreateAt() (r int64, exists bool) {
+func (m *RecommendMutation) AddedCreateAt() (r uint32, exists bool) {
 	v := m.addcreate_at
 	if v == nil {
 		return
@@ -9627,13 +9627,13 @@ func (m *RecommendMutation) ResetCreateAt() {
 }
 
 // SetUpdateAt sets the "update_at" field.
-func (m *RecommendMutation) SetUpdateAt(i int64) {
-	m.update_at = &i
+func (m *RecommendMutation) SetUpdateAt(u uint32) {
+	m.update_at = &u
 	m.addupdate_at = nil
 }
 
 // UpdateAt returns the value of the "update_at" field in the mutation.
-func (m *RecommendMutation) UpdateAt() (r int64, exists bool) {
+func (m *RecommendMutation) UpdateAt() (r uint32, exists bool) {
 	v := m.update_at
 	if v == nil {
 		return
@@ -9644,7 +9644,7 @@ func (m *RecommendMutation) UpdateAt() (r int64, exists bool) {
 // OldUpdateAt returns the old "update_at" field's value of the Recommend entity.
 // If the Recommend object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *RecommendMutation) OldUpdateAt(ctx context.Context) (v int64, err error) {
+func (m *RecommendMutation) OldUpdateAt(ctx context.Context) (v uint32, err error) {
 	if !m.op.Is(OpUpdateOne) {
 		return v, fmt.Errorf("OldUpdateAt is only allowed on UpdateOne operations")
 	}
@@ -9658,17 +9658,17 @@ func (m *RecommendMutation) OldUpdateAt(ctx context.Context) (v int64, err error
 	return oldValue.UpdateAt, nil
 }
 
-// AddUpdateAt adds i to the "update_at" field.
-func (m *RecommendMutation) AddUpdateAt(i int64) {
+// AddUpdateAt adds u to the "update_at" field.
+func (m *RecommendMutation) AddUpdateAt(u uint32) {
 	if m.addupdate_at != nil {
-		*m.addupdate_at += i
+		*m.addupdate_at += u
 	} else {
-		m.addupdate_at = &i
+		m.addupdate_at = &u
 	}
 }
 
 // AddedUpdateAt returns the value that was added to the "update_at" field in this mutation.
-func (m *RecommendMutation) AddedUpdateAt() (r int64, exists bool) {
+func (m *RecommendMutation) AddedUpdateAt() (r uint32, exists bool) {
 	v := m.addupdate_at
 	if v == nil {
 		return
@@ -9683,13 +9683,13 @@ func (m *RecommendMutation) ResetUpdateAt() {
 }
 
 // SetDeleteAt sets the "delete_at" field.
-func (m *RecommendMutation) SetDeleteAt(i int64) {
-	m.delete_at = &i
+func (m *RecommendMutation) SetDeleteAt(u uint32) {
+	m.delete_at = &u
 	m.adddelete_at = nil
 }
 
 // DeleteAt returns the value of the "delete_at" field in the mutation.
-func (m *RecommendMutation) DeleteAt() (r int64, exists bool) {
+func (m *RecommendMutation) DeleteAt() (r uint32, exists bool) {
 	v := m.delete_at
 	if v == nil {
 		return
@@ -9700,7 +9700,7 @@ func (m *RecommendMutation) DeleteAt() (r int64, exists bool) {
 // OldDeleteAt returns the old "delete_at" field's value of the Recommend entity.
 // If the Recommend object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *RecommendMutation) OldDeleteAt(ctx context.Context) (v int64, err error) {
+func (m *RecommendMutation) OldDeleteAt(ctx context.Context) (v uint32, err error) {
 	if !m.op.Is(OpUpdateOne) {
 		return v, fmt.Errorf("OldDeleteAt is only allowed on UpdateOne operations")
 	}
@@ -9714,17 +9714,17 @@ func (m *RecommendMutation) OldDeleteAt(ctx context.Context) (v int64, err error
 	return oldValue.DeleteAt, nil
 }
 
-// AddDeleteAt adds i to the "delete_at" field.
-func (m *RecommendMutation) AddDeleteAt(i int64) {
+// AddDeleteAt adds u to the "delete_at" field.
+func (m *RecommendMutation) AddDeleteAt(u uint32) {
 	if m.adddelete_at != nil {
-		*m.adddelete_at += i
+		*m.adddelete_at += u
 	} else {
-		m.adddelete_at = &i
+		m.adddelete_at = &u
 	}
 }
 
 // AddedDeleteAt returns the value that was added to the "delete_at" field in this mutation.
-func (m *RecommendMutation) AddedDeleteAt() (r int64, exists bool) {
+func (m *RecommendMutation) AddedDeleteAt() (r uint32, exists bool) {
 	v := m.adddelete_at
 	if v == nil {
 		return
@@ -9862,21 +9862,21 @@ func (m *RecommendMutation) SetField(name string, value ent.Value) error {
 		m.SetMessage(v)
 		return nil
 	case recommend.FieldCreateAt:
-		v, ok := value.(int64)
+		v, ok := value.(uint32)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.SetCreateAt(v)
 		return nil
 	case recommend.FieldUpdateAt:
-		v, ok := value.(int64)
+		v, ok := value.(uint32)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.SetUpdateAt(v)
 		return nil
 	case recommend.FieldDeleteAt:
-		v, ok := value.(int64)
+		v, ok := value.(uint32)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
@@ -9923,21 +9923,21 @@ func (m *RecommendMutation) AddedField(name string) (ent.Value, bool) {
 func (m *RecommendMutation) AddField(name string, value ent.Value) error {
 	switch name {
 	case recommend.FieldCreateAt:
-		v, ok := value.(int64)
+		v, ok := value.(uint32)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.AddCreateAt(v)
 		return nil
 	case recommend.FieldUpdateAt:
-		v, ok := value.(int64)
+		v, ok := value.(uint32)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.AddUpdateAt(v)
 		return nil
 	case recommend.FieldDeleteAt:
-		v, ok := value.(int64)
+		v, ok := value.(uint32)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}

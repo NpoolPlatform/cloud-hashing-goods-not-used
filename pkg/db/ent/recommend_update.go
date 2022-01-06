@@ -60,57 +60,57 @@ func (ru *RecommendUpdate) SetNillableMessage(s *string) *RecommendUpdate {
 }
 
 // SetCreateAt sets the "create_at" field.
-func (ru *RecommendUpdate) SetCreateAt(i int64) *RecommendUpdate {
+func (ru *RecommendUpdate) SetCreateAt(u uint32) *RecommendUpdate {
 	ru.mutation.ResetCreateAt()
-	ru.mutation.SetCreateAt(i)
+	ru.mutation.SetCreateAt(u)
 	return ru
 }
 
 // SetNillableCreateAt sets the "create_at" field if the given value is not nil.
-func (ru *RecommendUpdate) SetNillableCreateAt(i *int64) *RecommendUpdate {
-	if i != nil {
-		ru.SetCreateAt(*i)
+func (ru *RecommendUpdate) SetNillableCreateAt(u *uint32) *RecommendUpdate {
+	if u != nil {
+		ru.SetCreateAt(*u)
 	}
 	return ru
 }
 
-// AddCreateAt adds i to the "create_at" field.
-func (ru *RecommendUpdate) AddCreateAt(i int64) *RecommendUpdate {
-	ru.mutation.AddCreateAt(i)
+// AddCreateAt adds u to the "create_at" field.
+func (ru *RecommendUpdate) AddCreateAt(u uint32) *RecommendUpdate {
+	ru.mutation.AddCreateAt(u)
 	return ru
 }
 
 // SetUpdateAt sets the "update_at" field.
-func (ru *RecommendUpdate) SetUpdateAt(i int64) *RecommendUpdate {
+func (ru *RecommendUpdate) SetUpdateAt(u uint32) *RecommendUpdate {
 	ru.mutation.ResetUpdateAt()
-	ru.mutation.SetUpdateAt(i)
+	ru.mutation.SetUpdateAt(u)
 	return ru
 }
 
-// AddUpdateAt adds i to the "update_at" field.
-func (ru *RecommendUpdate) AddUpdateAt(i int64) *RecommendUpdate {
-	ru.mutation.AddUpdateAt(i)
+// AddUpdateAt adds u to the "update_at" field.
+func (ru *RecommendUpdate) AddUpdateAt(u uint32) *RecommendUpdate {
+	ru.mutation.AddUpdateAt(u)
 	return ru
 }
 
 // SetDeleteAt sets the "delete_at" field.
-func (ru *RecommendUpdate) SetDeleteAt(i int64) *RecommendUpdate {
+func (ru *RecommendUpdate) SetDeleteAt(u uint32) *RecommendUpdate {
 	ru.mutation.ResetDeleteAt()
-	ru.mutation.SetDeleteAt(i)
+	ru.mutation.SetDeleteAt(u)
 	return ru
 }
 
 // SetNillableDeleteAt sets the "delete_at" field if the given value is not nil.
-func (ru *RecommendUpdate) SetNillableDeleteAt(i *int64) *RecommendUpdate {
-	if i != nil {
-		ru.SetDeleteAt(*i)
+func (ru *RecommendUpdate) SetNillableDeleteAt(u *uint32) *RecommendUpdate {
+	if u != nil {
+		ru.SetDeleteAt(*u)
 	}
 	return ru
 }
 
-// AddDeleteAt adds i to the "delete_at" field.
-func (ru *RecommendUpdate) AddDeleteAt(i int64) *RecommendUpdate {
-	ru.mutation.AddDeleteAt(i)
+// AddDeleteAt adds u to the "delete_at" field.
+func (ru *RecommendUpdate) AddDeleteAt(u uint32) *RecommendUpdate {
+	ru.mutation.AddDeleteAt(u)
 	return ru
 }
 
@@ -230,42 +230,42 @@ func (ru *RecommendUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	}
 	if value, ok := ru.mutation.CreateAt(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
+			Type:   field.TypeUint32,
 			Value:  value,
 			Column: recommend.FieldCreateAt,
 		})
 	}
 	if value, ok := ru.mutation.AddedCreateAt(); ok {
 		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
+			Type:   field.TypeUint32,
 			Value:  value,
 			Column: recommend.FieldCreateAt,
 		})
 	}
 	if value, ok := ru.mutation.UpdateAt(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
+			Type:   field.TypeUint32,
 			Value:  value,
 			Column: recommend.FieldUpdateAt,
 		})
 	}
 	if value, ok := ru.mutation.AddedUpdateAt(); ok {
 		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
+			Type:   field.TypeUint32,
 			Value:  value,
 			Column: recommend.FieldUpdateAt,
 		})
 	}
 	if value, ok := ru.mutation.DeleteAt(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
+			Type:   field.TypeUint32,
 			Value:  value,
 			Column: recommend.FieldDeleteAt,
 		})
 	}
 	if value, ok := ru.mutation.AddedDeleteAt(); ok {
 		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
+			Type:   field.TypeUint32,
 			Value:  value,
 			Column: recommend.FieldDeleteAt,
 		})
@@ -322,57 +322,57 @@ func (ruo *RecommendUpdateOne) SetNillableMessage(s *string) *RecommendUpdateOne
 }
 
 // SetCreateAt sets the "create_at" field.
-func (ruo *RecommendUpdateOne) SetCreateAt(i int64) *RecommendUpdateOne {
+func (ruo *RecommendUpdateOne) SetCreateAt(u uint32) *RecommendUpdateOne {
 	ruo.mutation.ResetCreateAt()
-	ruo.mutation.SetCreateAt(i)
+	ruo.mutation.SetCreateAt(u)
 	return ruo
 }
 
 // SetNillableCreateAt sets the "create_at" field if the given value is not nil.
-func (ruo *RecommendUpdateOne) SetNillableCreateAt(i *int64) *RecommendUpdateOne {
-	if i != nil {
-		ruo.SetCreateAt(*i)
+func (ruo *RecommendUpdateOne) SetNillableCreateAt(u *uint32) *RecommendUpdateOne {
+	if u != nil {
+		ruo.SetCreateAt(*u)
 	}
 	return ruo
 }
 
-// AddCreateAt adds i to the "create_at" field.
-func (ruo *RecommendUpdateOne) AddCreateAt(i int64) *RecommendUpdateOne {
-	ruo.mutation.AddCreateAt(i)
+// AddCreateAt adds u to the "create_at" field.
+func (ruo *RecommendUpdateOne) AddCreateAt(u uint32) *RecommendUpdateOne {
+	ruo.mutation.AddCreateAt(u)
 	return ruo
 }
 
 // SetUpdateAt sets the "update_at" field.
-func (ruo *RecommendUpdateOne) SetUpdateAt(i int64) *RecommendUpdateOne {
+func (ruo *RecommendUpdateOne) SetUpdateAt(u uint32) *RecommendUpdateOne {
 	ruo.mutation.ResetUpdateAt()
-	ruo.mutation.SetUpdateAt(i)
+	ruo.mutation.SetUpdateAt(u)
 	return ruo
 }
 
-// AddUpdateAt adds i to the "update_at" field.
-func (ruo *RecommendUpdateOne) AddUpdateAt(i int64) *RecommendUpdateOne {
-	ruo.mutation.AddUpdateAt(i)
+// AddUpdateAt adds u to the "update_at" field.
+func (ruo *RecommendUpdateOne) AddUpdateAt(u uint32) *RecommendUpdateOne {
+	ruo.mutation.AddUpdateAt(u)
 	return ruo
 }
 
 // SetDeleteAt sets the "delete_at" field.
-func (ruo *RecommendUpdateOne) SetDeleteAt(i int64) *RecommendUpdateOne {
+func (ruo *RecommendUpdateOne) SetDeleteAt(u uint32) *RecommendUpdateOne {
 	ruo.mutation.ResetDeleteAt()
-	ruo.mutation.SetDeleteAt(i)
+	ruo.mutation.SetDeleteAt(u)
 	return ruo
 }
 
 // SetNillableDeleteAt sets the "delete_at" field if the given value is not nil.
-func (ruo *RecommendUpdateOne) SetNillableDeleteAt(i *int64) *RecommendUpdateOne {
-	if i != nil {
-		ruo.SetDeleteAt(*i)
+func (ruo *RecommendUpdateOne) SetNillableDeleteAt(u *uint32) *RecommendUpdateOne {
+	if u != nil {
+		ruo.SetDeleteAt(*u)
 	}
 	return ruo
 }
 
-// AddDeleteAt adds i to the "delete_at" field.
-func (ruo *RecommendUpdateOne) AddDeleteAt(i int64) *RecommendUpdateOne {
-	ruo.mutation.AddDeleteAt(i)
+// AddDeleteAt adds u to the "delete_at" field.
+func (ruo *RecommendUpdateOne) AddDeleteAt(u uint32) *RecommendUpdateOne {
+	ruo.mutation.AddDeleteAt(u)
 	return ruo
 }
 
@@ -516,42 +516,42 @@ func (ruo *RecommendUpdateOne) sqlSave(ctx context.Context) (_node *Recommend, e
 	}
 	if value, ok := ruo.mutation.CreateAt(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
+			Type:   field.TypeUint32,
 			Value:  value,
 			Column: recommend.FieldCreateAt,
 		})
 	}
 	if value, ok := ruo.mutation.AddedCreateAt(); ok {
 		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
+			Type:   field.TypeUint32,
 			Value:  value,
 			Column: recommend.FieldCreateAt,
 		})
 	}
 	if value, ok := ruo.mutation.UpdateAt(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
+			Type:   field.TypeUint32,
 			Value:  value,
 			Column: recommend.FieldUpdateAt,
 		})
 	}
 	if value, ok := ruo.mutation.AddedUpdateAt(); ok {
 		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
+			Type:   field.TypeUint32,
 			Value:  value,
 			Column: recommend.FieldUpdateAt,
 		})
 	}
 	if value, ok := ruo.mutation.DeleteAt(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
+			Type:   field.TypeUint32,
 			Value:  value,
 			Column: recommend.FieldDeleteAt,
 		})
 	}
 	if value, ok := ruo.mutation.AddedDeleteAt(); ok {
 		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
+			Type:   field.TypeUint32,
 			Value:  value,
 			Column: recommend.FieldDeleteAt,
 		})

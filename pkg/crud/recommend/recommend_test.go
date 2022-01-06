@@ -54,7 +54,7 @@ func TestCRUD(t *testing.T) {
 	})
 	if assert.Nil(t, err) {
 		assert.Equal(t, resp1.Info.ID, recommend.ID)
-		assertRecommend(t, resp.Info, &recommend)
+		assertRecommend(t, resp1.Info, &recommend)
 	}
 
 	resp2, err := GetByApp(context.Background(), &npool.GetRecommendsByAppRequest{
@@ -69,5 +69,13 @@ func TestCRUD(t *testing.T) {
 	})
 	if assert.Nil(t, err) {
 		assert.Equal(t, len(resp3.Infos), 1)
+	}
+
+	resp4, err := Delete(context.Background(), &npool.DeleteRecommendRequest{
+		ID: recommend.ID,
+	})
+	if assert.Nil(t, err) {
+		assert.Equal(t, resp4.Info.ID, recommend.ID)
+		assertRecommend(t, resp4.Info, &recommend)
 	}
 }

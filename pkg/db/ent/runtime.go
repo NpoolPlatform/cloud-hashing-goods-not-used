@@ -304,17 +304,17 @@ func init() {
 	// recommendDescCreateAt is the schema descriptor for create_at field.
 	recommendDescCreateAt := recommendFields[5].Descriptor()
 	// recommend.DefaultCreateAt holds the default value on creation for the create_at field.
-	recommend.DefaultCreateAt = recommendDescCreateAt.Default.(func() int64)
+	recommend.DefaultCreateAt = recommendDescCreateAt.Default.(func() uint32)
 	// recommendDescUpdateAt is the schema descriptor for update_at field.
 	recommendDescUpdateAt := recommendFields[6].Descriptor()
 	// recommend.DefaultUpdateAt holds the default value on creation for the update_at field.
-	recommend.DefaultUpdateAt = recommendDescUpdateAt.Default.(func() int64)
+	recommend.DefaultUpdateAt = recommendDescUpdateAt.Default.(func() uint32)
 	// recommend.UpdateDefaultUpdateAt holds the default value on update for the update_at field.
-	recommend.UpdateDefaultUpdateAt = recommendDescUpdateAt.UpdateDefault.(func() int64)
+	recommend.UpdateDefaultUpdateAt = recommendDescUpdateAt.UpdateDefault.(func() uint32)
 	// recommendDescDeleteAt is the schema descriptor for delete_at field.
 	recommendDescDeleteAt := recommendFields[7].Descriptor()
 	// recommend.DefaultDeleteAt holds the default value on creation for the delete_at field.
-	recommend.DefaultDeleteAt = recommendDescDeleteAt.Default.(func() int64)
+	recommend.DefaultDeleteAt = recommendDescDeleteAt.Default.(func() uint32)
 	// recommendDescID is the schema descriptor for id field.
 	recommendDescID := recommendFields[0].Descriptor()
 	// recommend.DefaultID holds the default value on creation for the id field.

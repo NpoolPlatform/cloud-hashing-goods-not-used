@@ -125,7 +125,10 @@ func GetByApp(ctx context.Context, in *npool.GetRecommendsByAppRequest) (*npool.
 		Recommend.
 		Query().
 		Where(
-			recommend.AppID(appID),
+			recommend.And(
+				recommend.AppID(appID),
+				recommend.DeleteAt(0),
+			),
 		).
 		All(ctx)
 	if err != nil {
@@ -178,5 +181,29 @@ func GetByRecommender(ctx context.Context, in *npool.GetRecommendsByRecommenderR
 }
 
 func Delete(ctx context.Context, in *npool.DeleteRecommendRequest) (*npool.DeleteRecommendResponse, error) {
-	return nil, nil
+	id, err := uuid.Parse(in.GetID())
+	if err != nil {
+		return nil, xerrors.Errorf("invalid id: %v", err)
+	}
+
+	cli, err := db.Client()
+	if err != nil {
+		return nil, xerrors.Errorf("fail get db client: %v", err)
+	}
+
+	ctx, cancel := context.WithTimeout(ctx, dbTimeout)
+	defer cancel()
+
+	info, err := cli.
+		Recommend.
+		UpdateOneID(id).
+		SetDeleteAt(uint32(time.Now().Unix())).
+		Save(ctx)
+	if err != nil {
+		return nil, xerrors.Errorf("fail update recommend: %v", err)
+	}
+
+	return &npool.DeleteRecommendResponse{
+		Info: dbRowToRecommend(info),
+	}, nil
 }
