@@ -56,4 +56,11 @@ func TestCRUD(t *testing.T) {
 		assert.Equal(t, resp1.Info.ID, recommend.ID)
 		assertRecommend(t, resp.Info, &recommend)
 	}
+
+	resp2, err := GetByApp(context.Background(), &npool.GetRecommendsByAppRequest{
+		AppID: recommend.AppID,
+	})
+	if assert.Nil(t, err) {
+		assert.Equal(t, len(resp2.Infos), 1)
+	}
 }

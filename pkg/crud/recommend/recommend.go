@@ -6,6 +6,7 @@ import (
 
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent"
+	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/recommend"
 
 	"github.com/NpoolPlatform/cloud-hashing-goods/message/npool"
 
@@ -107,7 +108,38 @@ func Update(ctx context.Context, in *npool.UpdateRecommendRequest) (*npool.Updat
 }
 
 func GetByApp(ctx context.Context, in *npool.GetRecommendsByAppRequest) (*npool.GetRecommendsByAppResponse, error) {
-	return nil, nil
+	appID, err := uuid.Parse(in.GetAppID())
+	if err != nil {
+		return nil, xerrors.Errorf("invalid app id: %v", err)
+	}
+
+	cli, err := db.Client()
+	if err != nil {
+		return nil, xerrors.Errorf("fail get db client: %v", err)
+	}
+
+	ctx, cancel := context.WithTimeout(ctx, dbTimeout)
+	defer cancel()
+
+	infos, err := cli.
+		Recommend.
+		Query().
+		Where(
+			recommend.AppID(appID),
+		).
+		All(ctx)
+	if err != nil {
+		return nil, xerrors.Errorf("fail query recommend by app id: %v", err)
+	}
+
+	recommends := []*npool.Recommend{}
+	for _, info := range infos {
+		recommends = append(recommends, dbRowToRecommend(info))
+	}
+
+	return &npool.GetRecommendsByAppResponse{
+		Infos: recommends,
+	}, nil
 }
 
 func Delete(ctx context.Context, in *npool.DeleteRecommendRequest) (*npool.DeleteRecommendResponse, error) {
