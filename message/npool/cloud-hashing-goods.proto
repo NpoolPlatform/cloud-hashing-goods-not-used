@@ -182,6 +182,43 @@ service CloudHashingGoods {
         };
     }
 
+    rpc CreateRecommend(CreateRecommendRequest) returns (CreateRecommendResponse) {
+        option (google.api.http) = {
+            post: "/v1/create/recommend"
+            body: "*"
+        };
+    }
+    rpc UpdateRecommend(UpdateRecommendRequest) returns (UpdateRecommendResponse) {
+        option (google.api.http) = {
+            post: "/v1/update/recommend"
+            body: "*"
+        };
+    }
+    rpc GetRecommendsByApp(GetRecommendsByAppRequest) returns (GetRecommendsByAppResponse) {
+        option (google.api.http) = {
+            post: "/v1/get/recommends/by/app"
+            body: "*"
+        };
+    }
+    rpc DeleteRecommend(DeleteRecommendRequest) returns (DeleteRecommendResponse) {
+        option (google.api.http) = {
+            post: "/v1/delete/recommend"
+            body: "*"
+        };
+    }
+    rpc GetRecommendGoodsByApp(GetRecommendGoodsByAppRequest) returns (GetRecommendGoodsByAppResponse) {
+        option (google.api.http) = {
+            post: "/v1/get/recommend/goods/by/app"
+            body: "*"
+        };
+    }
+    rpc GetRecommendGoodsByRecommender(GetRecommendGoodsByRecommenderRequest) returns (GetRecommendGoodsByRecommenderResponse) {
+        option (google.api.http) = {
+            post: "/v1/get/recommend/goods/by/recommender"
+            body: "*"
+        };
+    }
+
     rpc AuthorizeAppGood(AuthorizeAppGoodRequest) returns (AuthorizeAppGoodResponse) {
         option (google.api.http) = {
             post: "/v1/authorize/app/good"
@@ -670,6 +707,67 @@ message GetGoodsRequest {
 message GetGoodsResponse {
     repeated GoodInfo Infos = 3300;
     int32 Total = 3301;
+}
+
+message Recommend {
+    string ID = 10;
+    string AppID = 20;
+    string GoodID = 30;
+    string RecommenderID = 40;
+    string Message = 50;
+}
+
+message CreateRecommendRequest {
+    Recommend Info = 10;
+}
+
+message CreateRecommendResponse {
+    Recommend Info = 10;
+}
+
+message UpdateRecommendRequest {
+    Recommend Info = 10;
+}
+
+message UpdateRecommendResponse {
+    Recommend Info = 10;
+}
+
+message GetRecommendsByAppRequest {
+    string AppID = 10;
+}
+
+message GetRecommendsByAppResponse {
+    repeated Recommend Infos = 10;
+}
+
+message DeleteRecommendRequest {
+    string ID = 10;
+}
+
+message DeleteRecommendResponse {
+    Recommend Info = 10;
+}
+
+message RecommendGood {
+    Recommend Recommend = 10;
+    GoodInfo Good = 20;
+}
+
+message GetRecommendGoodsByAppRequest {
+    string AppID = 10;
+}
+
+message GetRecommendGoodsByAppResponse {
+    repeated RecommendGood Infos = 10;
+}
+
+message GetRecommendGoodsByRecommenderRequest {
+    string UserID = 10;
+}
+
+message GetRecommendGoodsByRecommenderResponse {
+    repeated RecommendGood Infos = 10;
 }
 
 message AppGoodInfo {

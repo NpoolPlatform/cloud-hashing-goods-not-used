@@ -35,6 +35,8 @@
     - [CreateGoodReviewResponse](#cloud.hashing.goods.v1.CreateGoodReviewResponse)
     - [CreatePriceCurrencyRequest](#cloud.hashing.goods.v1.CreatePriceCurrencyRequest)
     - [CreatePriceCurrencyResponse](#cloud.hashing.goods.v1.CreatePriceCurrencyResponse)
+    - [CreateRecommendRequest](#cloud.hashing.goods.v1.CreateRecommendRequest)
+    - [CreateRecommendResponse](#cloud.hashing.goods.v1.CreateRecommendResponse)
     - [CreateTargetAreaRequest](#cloud.hashing.goods.v1.CreateTargetAreaRequest)
     - [CreateTargetAreaResponse](#cloud.hashing.goods.v1.CreateTargetAreaResponse)
     - [CreateVendorLocationRequest](#cloud.hashing.goods.v1.CreateVendorLocationRequest)
@@ -43,6 +45,8 @@
     - [DeleteDeviceInfoResponse](#cloud.hashing.goods.v1.DeleteDeviceInfoResponse)
     - [DeleteGoodRequest](#cloud.hashing.goods.v1.DeleteGoodRequest)
     - [DeleteGoodResponse](#cloud.hashing.goods.v1.DeleteGoodResponse)
+    - [DeleteRecommendRequest](#cloud.hashing.goods.v1.DeleteRecommendRequest)
+    - [DeleteRecommendResponse](#cloud.hashing.goods.v1.DeleteRecommendResponse)
     - [DeleteTargetAreaByContinentCountryRequest](#cloud.hashing.goods.v1.DeleteTargetAreaByContinentCountryRequest)
     - [DeleteTargetAreaByContinentCountryResponse](#cloud.hashing.goods.v1.DeleteTargetAreaByContinentCountryResponse)
     - [DeleteTargetAreaRequest](#cloud.hashing.goods.v1.DeleteTargetAreaRequest)
@@ -83,6 +87,12 @@
     - [GetPriceCurrencyResponse](#cloud.hashing.goods.v1.GetPriceCurrencyResponse)
     - [GetPriceCurrencysRequest](#cloud.hashing.goods.v1.GetPriceCurrencysRequest)
     - [GetPriceCurrencysResponse](#cloud.hashing.goods.v1.GetPriceCurrencysResponse)
+    - [GetRecommendGoodsByAppRequest](#cloud.hashing.goods.v1.GetRecommendGoodsByAppRequest)
+    - [GetRecommendGoodsByAppResponse](#cloud.hashing.goods.v1.GetRecommendGoodsByAppResponse)
+    - [GetRecommendGoodsByRecommenderRequest](#cloud.hashing.goods.v1.GetRecommendGoodsByRecommenderRequest)
+    - [GetRecommendGoodsByRecommenderResponse](#cloud.hashing.goods.v1.GetRecommendGoodsByRecommenderResponse)
+    - [GetRecommendsByAppRequest](#cloud.hashing.goods.v1.GetRecommendsByAppRequest)
+    - [GetRecommendsByAppResponse](#cloud.hashing.goods.v1.GetRecommendsByAppResponse)
     - [GetTargetAreaRequest](#cloud.hashing.goods.v1.GetTargetAreaRequest)
     - [GetTargetAreaResponse](#cloud.hashing.goods.v1.GetTargetAreaResponse)
     - [GetTargetAreasRequest](#cloud.hashing.goods.v1.GetTargetAreasRequest)
@@ -102,6 +112,8 @@
     - [OnsaleAppGoodResponse](#cloud.hashing.goods.v1.OnsaleAppGoodResponse)
     - [PageInfo](#cloud.hashing.goods.v1.PageInfo)
     - [PriceCurrency](#cloud.hashing.goods.v1.PriceCurrency)
+    - [Recommend](#cloud.hashing.goods.v1.Recommend)
+    - [RecommendGood](#cloud.hashing.goods.v1.RecommendGood)
     - [SetAppGoodPriceRequest](#cloud.hashing.goods.v1.SetAppGoodPriceRequest)
     - [SetAppGoodPriceResponse](#cloud.hashing.goods.v1.SetAppGoodPriceResponse)
     - [TargetAreaInfo](#cloud.hashing.goods.v1.TargetAreaInfo)
@@ -125,6 +137,8 @@
     - [UpdateGoodReviewResponse](#cloud.hashing.goods.v1.UpdateGoodReviewResponse)
     - [UpdatePriceCurrencyRequest](#cloud.hashing.goods.v1.UpdatePriceCurrencyRequest)
     - [UpdatePriceCurrencyResponse](#cloud.hashing.goods.v1.UpdatePriceCurrencyResponse)
+    - [UpdateRecommendRequest](#cloud.hashing.goods.v1.UpdateRecommendRequest)
+    - [UpdateRecommendResponse](#cloud.hashing.goods.v1.UpdateRecommendResponse)
     - [UpdateTargetAreaRequest](#cloud.hashing.goods.v1.UpdateTargetAreaRequest)
     - [UpdateTargetAreaResponse](#cloud.hashing.goods.v1.UpdateTargetAreaResponse)
     - [UpdateVendorLocationRequest](#cloud.hashing.goods.v1.UpdateVendorLocationRequest)
@@ -622,6 +636,36 @@
 
 
 
+<a name="cloud.hashing.goods.v1.CreateRecommendRequest"></a>
+
+### CreateRecommendRequest
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| Info | [Recommend](#cloud.hashing.goods.v1.Recommend) |  |  |
+
+
+
+
+
+
+<a name="cloud.hashing.goods.v1.CreateRecommendResponse"></a>
+
+### CreateRecommendResponse
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| Info | [Recommend](#cloud.hashing.goods.v1.Recommend) |  |  |
+
+
+
+
+
+
 <a name="cloud.hashing.goods.v1.CreateTargetAreaRequest"></a>
 
 ### CreateTargetAreaRequest
@@ -736,6 +780,36 @@
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
 | Info | [GoodInfo](#cloud.hashing.goods.v1.GoodInfo) |  |  |
+
+
+
+
+
+
+<a name="cloud.hashing.goods.v1.DeleteRecommendRequest"></a>
+
+### DeleteRecommendRequest
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| ID | [string](#string) |  |  |
+
+
+
+
+
+
+<a name="cloud.hashing.goods.v1.DeleteRecommendResponse"></a>
+
+### DeleteRecommendResponse
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| Info | [Recommend](#cloud.hashing.goods.v1.Recommend) |  |  |
 
 
 
@@ -1361,6 +1435,96 @@
 
 
 
+<a name="cloud.hashing.goods.v1.GetRecommendGoodsByAppRequest"></a>
+
+### GetRecommendGoodsByAppRequest
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| AppID | [string](#string) |  |  |
+
+
+
+
+
+
+<a name="cloud.hashing.goods.v1.GetRecommendGoodsByAppResponse"></a>
+
+### GetRecommendGoodsByAppResponse
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| Infos | [RecommendGood](#cloud.hashing.goods.v1.RecommendGood) | repeated |  |
+
+
+
+
+
+
+<a name="cloud.hashing.goods.v1.GetRecommendGoodsByRecommenderRequest"></a>
+
+### GetRecommendGoodsByRecommenderRequest
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| UserID | [string](#string) |  |  |
+
+
+
+
+
+
+<a name="cloud.hashing.goods.v1.GetRecommendGoodsByRecommenderResponse"></a>
+
+### GetRecommendGoodsByRecommenderResponse
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| Infos | [RecommendGood](#cloud.hashing.goods.v1.RecommendGood) | repeated |  |
+
+
+
+
+
+
+<a name="cloud.hashing.goods.v1.GetRecommendsByAppRequest"></a>
+
+### GetRecommendsByAppRequest
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| AppID | [string](#string) |  |  |
+
+
+
+
+
+
+<a name="cloud.hashing.goods.v1.GetRecommendsByAppResponse"></a>
+
+### GetRecommendsByAppResponse
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| Infos | [Recommend](#cloud.hashing.goods.v1.Recommend) | repeated |  |
+
+
+
+
+
+
 <a name="cloud.hashing.goods.v1.GetTargetAreaRequest"></a>
 
 ### GetTargetAreaRequest
@@ -1701,6 +1865,41 @@
 | Name | [string](#string) |  |  |
 | Unit | [string](#string) |  |  |
 | Symbol | [string](#string) |  |  |
+
+
+
+
+
+
+<a name="cloud.hashing.goods.v1.Recommend"></a>
+
+### Recommend
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| ID | [string](#string) |  |  |
+| AppID | [string](#string) |  |  |
+| GoodID | [string](#string) |  |  |
+| RecommenderID | [string](#string) |  |  |
+| Message | [string](#string) |  |  |
+
+
+
+
+
+
+<a name="cloud.hashing.goods.v1.RecommendGood"></a>
+
+### RecommendGood
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| Recommend | [Recommend](#cloud.hashing.goods.v1.Recommend) |  |  |
+| Good | [GoodInfo](#cloud.hashing.goods.v1.GoodInfo) |  |  |
 
 
 
@@ -2055,6 +2254,36 @@
 
 
 
+<a name="cloud.hashing.goods.v1.UpdateRecommendRequest"></a>
+
+### UpdateRecommendRequest
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| Info | [Recommend](#cloud.hashing.goods.v1.Recommend) |  |  |
+
+
+
+
+
+
+<a name="cloud.hashing.goods.v1.UpdateRecommendResponse"></a>
+
+### UpdateRecommendResponse
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| Info | [Recommend](#cloud.hashing.goods.v1.Recommend) |  |  |
+
+
+
+
+
+
 <a name="cloud.hashing.goods.v1.UpdateTargetAreaRequest"></a>
 
 ### UpdateTargetAreaRequest
@@ -2190,6 +2419,12 @@ Cloud Hashing Goods
 | GetGoods | [GetGoodsRequest](#cloud.hashing.goods.v1.GetGoodsRequest) | [GetGoodsResponse](#cloud.hashing.goods.v1.GetGoodsResponse) |  |
 | GetGoodDetail | [GetGoodDetailRequest](#cloud.hashing.goods.v1.GetGoodDetailRequest) | [GetGoodDetailResponse](#cloud.hashing.goods.v1.GetGoodDetailResponse) | Good information for API |
 | GetGoodsDetail | [GetGoodsDetailRequest](#cloud.hashing.goods.v1.GetGoodsDetailRequest) | [GetGoodsDetailResponse](#cloud.hashing.goods.v1.GetGoodsDetailResponse) |  |
+| CreateRecommend | [CreateRecommendRequest](#cloud.hashing.goods.v1.CreateRecommendRequest) | [CreateRecommendResponse](#cloud.hashing.goods.v1.CreateRecommendResponse) |  |
+| UpdateRecommend | [UpdateRecommendRequest](#cloud.hashing.goods.v1.UpdateRecommendRequest) | [UpdateRecommendResponse](#cloud.hashing.goods.v1.UpdateRecommendResponse) |  |
+| GetRecommendsByApp | [GetRecommendsByAppRequest](#cloud.hashing.goods.v1.GetRecommendsByAppRequest) | [GetRecommendsByAppResponse](#cloud.hashing.goods.v1.GetRecommendsByAppResponse) |  |
+| DeleteRecommend | [DeleteRecommendRequest](#cloud.hashing.goods.v1.DeleteRecommendRequest) | [DeleteRecommendResponse](#cloud.hashing.goods.v1.DeleteRecommendResponse) |  |
+| GetRecommendGoodsByApp | [GetRecommendGoodsByAppRequest](#cloud.hashing.goods.v1.GetRecommendGoodsByAppRequest) | [GetRecommendGoodsByAppResponse](#cloud.hashing.goods.v1.GetRecommendGoodsByAppResponse) |  |
+| GetRecommendGoodsByRecommender | [GetRecommendGoodsByRecommenderRequest](#cloud.hashing.goods.v1.GetRecommendGoodsByRecommenderRequest) | [GetRecommendGoodsByRecommenderResponse](#cloud.hashing.goods.v1.GetRecommendGoodsByRecommenderResponse) |  |
 | AuthorizeAppGood | [AuthorizeAppGoodRequest](#cloud.hashing.goods.v1.AuthorizeAppGoodRequest) | [AuthorizeAppGoodResponse](#cloud.hashing.goods.v1.AuthorizeAppGoodResponse) |  |
 | SetAppGoodPrice | [SetAppGoodPriceRequest](#cloud.hashing.goods.v1.SetAppGoodPriceRequest) | [SetAppGoodPriceResponse](#cloud.hashing.goods.v1.SetAppGoodPriceResponse) |  |
 | CheckAppGood | [CheckAppGoodRequest](#cloud.hashing.goods.v1.CheckAppGoodRequest) | [CheckAppGoodResponse](#cloud.hashing.goods.v1.CheckAppGoodResponse) |  |
