@@ -200,6 +200,12 @@ service CloudHashingGoods {
             body: "*"
         };
     }
+    rpc GetRecommendsByRecommender(GetRecommendsByRecommenderRequest) returns (GetRecommendsByRecommenderResponse) {
+        option (google.api.http) = {
+            post: "/v1/get/recommends/by/recommender"
+            body: "*"
+        };
+    }
     rpc DeleteRecommend(DeleteRecommendRequest) returns (DeleteRecommendResponse) {
         option (google.api.http) = {
             post: "/v1/delete/recommend"
@@ -738,6 +744,14 @@ message GetRecommendsByAppRequest {
 }
 
 message GetRecommendsByAppResponse {
+    repeated Recommend Infos = 10;
+}
+
+message GetRecommendsByRecommenderRequest {
+    string RecommenderID = 10;
+}
+
+message GetRecommendsByRecommenderResponse {
     repeated Recommend Infos = 10;
 }
 

@@ -142,6 +142,41 @@ func GetByApp(ctx context.Context, in *npool.GetRecommendsByAppRequest) (*npool.
 	}, nil
 }
 
+func GetByRecommender(ctx context.Context, in *npool.GetRecommendsByRecommenderRequest) (*npool.GetRecommendsByRecommenderResponse, error) {
+	recommenderID, err := uuid.Parse(in.GetRecommenderID())
+	if err != nil {
+		return nil, xerrors.Errorf("invalid recommender id: %v", err)
+	}
+
+	cli, err := db.Client()
+	if err != nil {
+		return nil, xerrors.Errorf("fail get db client: %v", err)
+	}
+
+	ctx, cancel := context.WithTimeout(ctx, dbTimeout)
+	defer cancel()
+
+	infos, err := cli.
+		Recommend.
+		Query().
+		Where(
+			recommend.RecommenderID(recommenderID),
+		).
+		All(ctx)
+	if err != nil {
+		return nil, xerrors.Errorf("fail query recommend by app id: %v", err)
+	}
+
+	recommends := []*npool.Recommend{}
+	for _, info := range infos {
+		recommends = append(recommends, dbRowToRecommend(info))
+	}
+
+	return &npool.GetRecommendsByRecommenderResponse{
+		Infos: recommends,
+	}, nil
+}
+
 func Delete(ctx context.Context, in *npool.DeleteRecommendRequest) (*npool.DeleteRecommendResponse, error) {
 	return nil, nil
 }

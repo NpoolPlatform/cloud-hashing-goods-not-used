@@ -52,6 +52,7 @@ type CloudHashingGoodsClient interface {
 	CreateRecommend(ctx context.Context, in *CreateRecommendRequest, opts ...grpc.CallOption) (*CreateRecommendResponse, error)
 	UpdateRecommend(ctx context.Context, in *UpdateRecommendRequest, opts ...grpc.CallOption) (*UpdateRecommendResponse, error)
 	GetRecommendsByApp(ctx context.Context, in *GetRecommendsByAppRequest, opts ...grpc.CallOption) (*GetRecommendsByAppResponse, error)
+	GetRecommendsByRecommender(ctx context.Context, in *GetRecommendsByRecommenderRequest, opts ...grpc.CallOption) (*GetRecommendsByRecommenderResponse, error)
 	DeleteRecommend(ctx context.Context, in *DeleteRecommendRequest, opts ...grpc.CallOption) (*DeleteRecommendResponse, error)
 	GetRecommendGoodsByApp(ctx context.Context, in *GetRecommendGoodsByAppRequest, opts ...grpc.CallOption) (*GetRecommendGoodsByAppResponse, error)
 	GetRecommendGoodsByRecommender(ctx context.Context, in *GetRecommendGoodsByRecommenderRequest, opts ...grpc.CallOption) (*GetRecommendGoodsByRecommenderResponse, error)
@@ -366,6 +367,15 @@ func (c *cloudHashingGoodsClient) UpdateRecommend(ctx context.Context, in *Updat
 func (c *cloudHashingGoodsClient) GetRecommendsByApp(ctx context.Context, in *GetRecommendsByAppRequest, opts ...grpc.CallOption) (*GetRecommendsByAppResponse, error) {
 	out := new(GetRecommendsByAppResponse)
 	err := c.cc.Invoke(ctx, "/cloud.hashing.goods.v1.CloudHashingGoods/GetRecommendsByApp", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *cloudHashingGoodsClient) GetRecommendsByRecommender(ctx context.Context, in *GetRecommendsByRecommenderRequest, opts ...grpc.CallOption) (*GetRecommendsByRecommenderResponse, error) {
+	out := new(GetRecommendsByRecommenderResponse)
+	err := c.cc.Invoke(ctx, "/cloud.hashing.goods.v1.CloudHashingGoods/GetRecommendsByRecommender", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -688,6 +698,7 @@ type CloudHashingGoodsServer interface {
 	CreateRecommend(context.Context, *CreateRecommendRequest) (*CreateRecommendResponse, error)
 	UpdateRecommend(context.Context, *UpdateRecommendRequest) (*UpdateRecommendResponse, error)
 	GetRecommendsByApp(context.Context, *GetRecommendsByAppRequest) (*GetRecommendsByAppResponse, error)
+	GetRecommendsByRecommender(context.Context, *GetRecommendsByRecommenderRequest) (*GetRecommendsByRecommenderResponse, error)
 	DeleteRecommend(context.Context, *DeleteRecommendRequest) (*DeleteRecommendResponse, error)
 	GetRecommendGoodsByApp(context.Context, *GetRecommendGoodsByAppRequest) (*GetRecommendGoodsByAppResponse, error)
 	GetRecommendGoodsByRecommender(context.Context, *GetRecommendGoodsByRecommenderRequest) (*GetRecommendGoodsByRecommenderResponse, error)
@@ -818,6 +829,9 @@ func (UnimplementedCloudHashingGoodsServer) UpdateRecommend(context.Context, *Up
 }
 func (UnimplementedCloudHashingGoodsServer) GetRecommendsByApp(context.Context, *GetRecommendsByAppRequest) (*GetRecommendsByAppResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetRecommendsByApp not implemented")
+}
+func (UnimplementedCloudHashingGoodsServer) GetRecommendsByRecommender(context.Context, *GetRecommendsByRecommenderRequest) (*GetRecommendsByRecommenderResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetRecommendsByRecommender not implemented")
 }
 func (UnimplementedCloudHashingGoodsServer) DeleteRecommend(context.Context, *DeleteRecommendRequest) (*DeleteRecommendResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteRecommend not implemented")
@@ -1479,6 +1493,24 @@ func _CloudHashingGoods_GetRecommendsByApp_Handler(srv interface{}, ctx context.
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(CloudHashingGoodsServer).GetRecommendsByApp(ctx, req.(*GetRecommendsByAppRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _CloudHashingGoods_GetRecommendsByRecommender_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetRecommendsByRecommenderRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CloudHashingGoodsServer).GetRecommendsByRecommender(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cloud.hashing.goods.v1.CloudHashingGoods/GetRecommendsByRecommender",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CloudHashingGoodsServer).GetRecommendsByRecommender(ctx, req.(*GetRecommendsByRecommenderRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -2171,6 +2203,10 @@ var CloudHashingGoods_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetRecommendsByApp",
 			Handler:    _CloudHashingGoods_GetRecommendsByApp_Handler,
+		},
+		{
+			MethodName: "GetRecommendsByRecommender",
+			Handler:    _CloudHashingGoods_GetRecommendsByRecommender_Handler,
 		},
 		{
 			MethodName: "DeleteRecommend",
