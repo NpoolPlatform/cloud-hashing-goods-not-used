@@ -146,7 +146,7 @@ func GetByApp(ctx context.Context, in *npool.GetRecommendsByAppRequest) (*npool.
 }
 
 func GetByRecommender(ctx context.Context, in *npool.GetRecommendsByRecommenderRequest) (*npool.GetRecommendsByRecommenderResponse, error) {
-	recommenderID, err := uuid.Parse(in.GetRecommenderID())
+	recommenderID, err := uuid.Parse(in.GetUserID())
 	if err != nil {
 		return nil, xerrors.Errorf("invalid recommender id: %v", err)
 	}

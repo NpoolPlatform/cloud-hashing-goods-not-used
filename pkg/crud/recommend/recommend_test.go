@@ -65,7 +65,7 @@ func TestCRUD(t *testing.T) {
 	}
 
 	resp3, err := GetByRecommender(context.Background(), &npool.GetRecommendsByRecommenderRequest{
-		RecommenderID: recommend.RecommenderID,
+		UserID: recommend.RecommenderID,
 	})
 	if assert.Nil(t, err) {
 		assert.Equal(t, len(resp3.Infos), 1)

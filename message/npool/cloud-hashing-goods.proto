@@ -748,7 +748,7 @@ message GetRecommendsByAppResponse {
 }
 
 message GetRecommendsByRecommenderRequest {
-    string RecommenderID = 10;
+    string UserID = 10;
 }
 
 message GetRecommendsByRecommenderResponse {
@@ -765,7 +765,7 @@ message DeleteRecommendResponse {
 
 message RecommendGood {
     Recommend Recommend = 10;
-    GoodInfo Good = 20;
+    GoodDetail Good = 20;
 }
 
 message GetRecommendGoodsByAppRequest {

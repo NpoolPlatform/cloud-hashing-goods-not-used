@@ -1535,7 +1535,7 @@
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| RecommenderID | [string](#string) |  |  |
+| UserID | [string](#string) |  |  |
 
 
 
@@ -1931,7 +1931,7 @@
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
 | Recommend | [Recommend](#cloud.hashing.goods.v1.Recommend) |  |  |
-| Good | [GoodInfo](#cloud.hashing.goods.v1.GoodInfo) |  |  |
+| Good | [GoodDetail](#cloud.hashing.goods.v1.GoodDetail) |  |  |
 
 
 
