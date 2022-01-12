@@ -61,6 +61,22 @@ spec:
             backend:
               serviceName: cloud-hashing-goods
               servicePort: 50020
+          - path: /api/cloud-hashing-goods/v1/get/fee/types
+            backend:
+              serviceName: cloud-hashing-goods
+              servicePort: 50020
+          - path: /api/cloud-hashing-goods/v1/create/fee/type
+            backend:
+              serviceName: cloud-hashing-goods
+              servicePort: 50020
+          - path: /api/cloud-hashing-goods/v1/get/fees
+            backend:
+              serviceName: cloud-hashing-goods
+              servicePort: 50020
+          - path: /api/cloud-hashing-goods/v1/create/fee
+            backend:
+              serviceName: cloud-hashing-goods
+              servicePort: 50020
     - host: api.xpool.top
       http: *http_rules
     - host: www.npool.top
