@@ -32,6 +32,9 @@ func assertRecommend(t *testing.T, actual, expected *npool.Recommend) {
 }
 
 func TestCRUD(t *testing.T) {
+	if runByGithubAction, err := strconv.ParseBool(os.Getenv("RUN_BY_GITHUB_ACTION")); err == nil && runByGithubAction {
+		return
+	}
 	recommend := npool.Recommend{
 		AppID:         uuid.New().String(),
 		GoodID:        uuid.New().String(),
