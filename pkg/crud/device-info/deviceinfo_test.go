@@ -8,8 +8,8 @@ import (
 	"testing"
 	"time"
 
-	npool "github.com/NpoolPlatform/message/npool/cloud-hashing-goods"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/test-init" //nolint
+	npool "github.com/NpoolPlatform/message/npool/cloud-hashing-goods"
 
 	"github.com/stretchr/testify/assert"
 )
