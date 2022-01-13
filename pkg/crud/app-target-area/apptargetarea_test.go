@@ -7,7 +7,7 @@ import (
 	"strconv"
 	"testing"
 
-	"github.com/NpoolPlatform/cloud-hashing-goods/message/npool"
+	npool "github.com/NpoolPlatform/message/npool/cloud-hashing-goods"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/test-init" //nolint
 
 	"github.com/google/uuid"

@@ -8,7 +8,7 @@ import (
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/recommend"
 
-	"github.com/NpoolPlatform/cloud-hashing-goods/message/npool"
+	npool "github.com/NpoolPlatform/message/npool/cloud-hashing-goods"
 
 	"github.com/google/uuid"
 

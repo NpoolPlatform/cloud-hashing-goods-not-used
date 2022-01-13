@@ -12,7 +12,7 @@ import (
 	"github.com/google/uuid"
 	"github.com/stretchr/testify/assert"
 
-	"github.com/NpoolPlatform/cloud-hashing-goods/message/npool"
+	npool "github.com/NpoolPlatform/message/npool/cloud-hashing-goods"
 )
 
 func TestCreateVendorLocation(t *testing.T) { //nolint

@@ -10,7 +10,7 @@ import (
 	"github.com/google/uuid"
 	"github.com/stretchr/testify/assert"
 
-	"github.com/NpoolPlatform/cloud-hashing-goods/message/npool"
+	npool "github.com/NpoolPlatform/message/npool/cloud-hashing-goods"
 )
 
 func assertAppGoodTargetAreaInfo(t *testing.T, actual, expected *npool.AppGoodTargetAreaInfo) {

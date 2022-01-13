@@ -3,7 +3,7 @@ package fee
 import (
 	"context"
 
-	"github.com/NpoolPlatform/cloud-hashing-goods/message/npool"
+	npool "github.com/NpoolPlatform/message/npool/cloud-hashing-goods"
 
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/fee"

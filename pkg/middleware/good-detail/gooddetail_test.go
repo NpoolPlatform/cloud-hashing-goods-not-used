@@ -8,7 +8,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/NpoolPlatform/cloud-hashing-goods/message/npool"
+	npool "github.com/NpoolPlatform/message/npool/cloud-hashing-goods"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/test-init" //nolint
 
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/crud/device-info"      //nolint

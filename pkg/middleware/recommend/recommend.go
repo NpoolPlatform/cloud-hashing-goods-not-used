@@ -3,7 +3,7 @@ package recommend
 import (
 	"context"
 
-	"github.com/NpoolPlatform/cloud-hashing-goods/message/npool"
+	npool "github.com/NpoolPlatform/message/npool/cloud-hashing-goods"
 	"github.com/NpoolPlatform/go-service-framework/pkg/logger"
 
 	crud "github.com/NpoolPlatform/cloud-hashing-goods/pkg/crud/recommend"         //nolint

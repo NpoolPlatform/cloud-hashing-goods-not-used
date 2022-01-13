@@ -5,7 +5,7 @@ import (
 
 	"github.com/NpoolPlatform/go-service-framework/pkg/logger"
 
-	"github.com/NpoolPlatform/cloud-hashing-goods/message/npool"
+	npool "github.com/NpoolPlatform/message/npool/cloud-hashing-goods"
 
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/crud/price-currency" //nolint
 
