@@ -65,7 +65,15 @@ spec:
             backend:
               serviceName: cloud-hashing-goods
               servicePort: 50020
+          - path: /api/cloud-hashing-goods/v1/update/device
+            backend:
+              serviceName: cloud-hashing-goods
+              servicePort: 50020
           - path: /api/cloud-hashing-goods/v1/create/vendor-location
+            backend:
+              serviceName: cloud-hashing-goods
+              servicePort: 50020
+          - path: /api/cloud-hashing-goods/v1/update/vendor-location
             backend:
               serviceName: cloud-hashing-goods
               servicePort: 50020
