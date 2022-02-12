@@ -69,6 +69,14 @@ spec:
             backend:
               serviceName: cloud-hashing-goods
               servicePort: 50020
+          - path: /api/cloud-hashing-goods/v1/get/price-currencys
+            backend:
+              serviceName: cloud-hashing-goods
+              servicePort: 50020
+          - path: /api/cloud-hashing-goods/v1/create/price-currency
+            backend:
+              serviceName: cloud-hashing-goods
+              servicePort: 50020
           - path: /api/cloud-hashing-goods/v1/get/fee/types
             backend:
               serviceName: cloud-hashing-goods
@@ -86,14 +94,6 @@ spec:
               serviceName: cloud-hashing-goods
               servicePort: 50020
           - path: /api/cloud-hashing-goods/v1/create/good
-            backend:
-              serviceName: cloud-hashing-goods
-              servicePort: 50020
-          - path: /api/cloud-hashing-goods/v1/get/price-currencys
-            backend:
-              serviceName: cloud-hashing-goods
-              servicePort: 50020
-          - path: /api/cloud-hashing-goods/v1/create/price-currency
             backend:
               serviceName: cloud-hashing-goods
               servicePort: 50020
