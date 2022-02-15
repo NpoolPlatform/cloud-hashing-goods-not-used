@@ -89,6 +89,14 @@ func (ftc *FeeTypeCreate) SetID(u uuid.UUID) *FeeTypeCreate {
 	return ftc
 }
 
+// SetNillableID sets the "id" field if the given value is not nil.
+func (ftc *FeeTypeCreate) SetNillableID(u *uuid.UUID) *FeeTypeCreate {
+	if u != nil {
+		ftc.SetID(*u)
+	}
+	return ftc
+}
+
 // Mutation returns the FeeTypeMutation object of the builder.
 func (ftc *FeeTypeCreate) Mutation() *FeeTypeMutation {
 	return ftc.mutation
@@ -181,32 +189,32 @@ func (ftc *FeeTypeCreate) defaults() {
 // check runs all checks and user-defined validators on the builder.
 func (ftc *FeeTypeCreate) check() error {
 	if _, ok := ftc.mutation.FeeType(); !ok {
-		return &ValidationError{Name: "fee_type", err: errors.New(`ent: missing required field "fee_type"`)}
+		return &ValidationError{Name: "fee_type", err: errors.New(`ent: missing required field "FeeType.fee_type"`)}
 	}
 	if _, ok := ftc.mutation.FeeDescription(); !ok {
-		return &ValidationError{Name: "fee_description", err: errors.New(`ent: missing required field "fee_description"`)}
+		return &ValidationError{Name: "fee_description", err: errors.New(`ent: missing required field "FeeType.fee_description"`)}
 	}
 	if v, ok := ftc.mutation.FeeDescription(); ok {
 		if err := feetype.FeeDescriptionValidator(v); err != nil {
-			return &ValidationError{Name: "fee_description", err: fmt.Errorf(`ent: validator failed for field "fee_description": %w`, err)}
+			return &ValidationError{Name: "fee_description", err: fmt.Errorf(`ent: validator failed for field "FeeType.fee_description": %w`, err)}
 		}
 	}
 	if _, ok := ftc.mutation.PayType(); !ok {
-		return &ValidationError{Name: "pay_type", err: errors.New(`ent: missing required field "pay_type"`)}
+		return &ValidationError{Name: "pay_type", err: errors.New(`ent: missing required field "FeeType.pay_type"`)}
 	}
 	if v, ok := ftc.mutation.PayType(); ok {
 		if err := feetype.PayTypeValidator(v); err != nil {
-			return &ValidationError{Name: "pay_type", err: fmt.Errorf(`ent: validator failed for field "pay_type": %w`, err)}
+			return &ValidationError{Name: "pay_type", err: fmt.Errorf(`ent: validator failed for field "FeeType.pay_type": %w`, err)}
 		}
 	}
 	if _, ok := ftc.mutation.CreateAt(); !ok {
-		return &ValidationError{Name: "create_at", err: errors.New(`ent: missing required field "create_at"`)}
+		return &ValidationError{Name: "create_at", err: errors.New(`ent: missing required field "FeeType.create_at"`)}
 	}
 	if _, ok := ftc.mutation.UpdateAt(); !ok {
-		return &ValidationError{Name: "update_at", err: errors.New(`ent: missing required field "update_at"`)}
+		return &ValidationError{Name: "update_at", err: errors.New(`ent: missing required field "FeeType.update_at"`)}
 	}
 	if _, ok := ftc.mutation.DeleteAt(); !ok {
-		return &ValidationError{Name: "delete_at", err: errors.New(`ent: missing required field "delete_at"`)}
+		return &ValidationError{Name: "delete_at", err: errors.New(`ent: missing required field "FeeType.delete_at"`)}
 	}
 	return nil
 }
@@ -220,7 +228,11 @@ func (ftc *FeeTypeCreate) sqlSave(ctx context.Context) (*FeeType, error) {
 		return nil, err
 	}
 	if _spec.ID.Value != nil {
-		_node.ID = _spec.ID.Value.(uuid.UUID)
+		if id, ok := _spec.ID.Value.(*uuid.UUID); ok {
+			_node.ID = *id
+		} else if err := _node.ID.Scan(_spec.ID.Value); err != nil {
+			return nil, err
+		}
 	}
 	return _node, nil
 }
@@ -239,7 +251,7 @@ func (ftc *FeeTypeCreate) createSpec() (*FeeType, *sqlgraph.CreateSpec) {
 	_spec.OnConflict = ftc.conflict
 	if id, ok := ftc.mutation.ID(); ok {
 		_node.ID = id
-		_spec.ID.Value = id
+		_spec.ID.Value = &id
 	}
 	if value, ok := ftc.mutation.FeeType(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
@@ -391,6 +403,12 @@ func (u *FeeTypeUpsert) UpdateCreateAt() *FeeTypeUpsert {
 	return u
 }
 
+// AddCreateAt adds v to the "create_at" field.
+func (u *FeeTypeUpsert) AddCreateAt(v uint32) *FeeTypeUpsert {
+	u.Add(feetype.FieldCreateAt, v)
+	return u
+}
+
 // SetUpdateAt sets the "update_at" field.
 func (u *FeeTypeUpsert) SetUpdateAt(v uint32) *FeeTypeUpsert {
 	u.Set(feetype.FieldUpdateAt, v)
@@ -400,6 +418,12 @@ func (u *FeeTypeUpsert) SetUpdateAt(v uint32) *FeeTypeUpsert {
 // UpdateUpdateAt sets the "update_at" field to the value that was provided on create.
 func (u *FeeTypeUpsert) UpdateUpdateAt() *FeeTypeUpsert {
 	u.SetExcluded(feetype.FieldUpdateAt)
+	return u
+}
+
+// AddUpdateAt adds v to the "update_at" field.
+func (u *FeeTypeUpsert) AddUpdateAt(v uint32) *FeeTypeUpsert {
+	u.Add(feetype.FieldUpdateAt, v)
 	return u
 }
 
@@ -415,7 +439,13 @@ func (u *FeeTypeUpsert) UpdateDeleteAt() *FeeTypeUpsert {
 	return u
 }
 
-// UpdateNewValues updates the fields using the new values that were set on create except the ID field.
+// AddDeleteAt adds v to the "delete_at" field.
+func (u *FeeTypeUpsert) AddDeleteAt(v uint32) *FeeTypeUpsert {
+	u.Add(feetype.FieldDeleteAt, v)
+	return u
+}
+
+// UpdateNewValues updates the mutable fields using the new values that were set on create except the ID field.
 // Using this option is equivalent to using:
 //
 //	client.FeeType.Create().
@@ -514,6 +544,13 @@ func (u *FeeTypeUpsertOne) SetCreateAt(v uint32) *FeeTypeUpsertOne {
 	})
 }
 
+// AddCreateAt adds v to the "create_at" field.
+func (u *FeeTypeUpsertOne) AddCreateAt(v uint32) *FeeTypeUpsertOne {
+	return u.Update(func(s *FeeTypeUpsert) {
+		s.AddCreateAt(v)
+	})
+}
+
 // UpdateCreateAt sets the "create_at" field to the value that was provided on create.
 func (u *FeeTypeUpsertOne) UpdateCreateAt() *FeeTypeUpsertOne {
 	return u.Update(func(s *FeeTypeUpsert) {
@@ -528,6 +565,13 @@ func (u *FeeTypeUpsertOne) SetUpdateAt(v uint32) *FeeTypeUpsertOne {
 	})
 }
 
+// AddUpdateAt adds v to the "update_at" field.
+func (u *FeeTypeUpsertOne) AddUpdateAt(v uint32) *FeeTypeUpsertOne {
+	return u.Update(func(s *FeeTypeUpsert) {
+		s.AddUpdateAt(v)
+	})
+}
+
 // UpdateUpdateAt sets the "update_at" field to the value that was provided on create.
 func (u *FeeTypeUpsertOne) UpdateUpdateAt() *FeeTypeUpsertOne {
 	return u.Update(func(s *FeeTypeUpsert) {
@@ -539,6 +583,13 @@ func (u *FeeTypeUpsertOne) UpdateUpdateAt() *FeeTypeUpsertOne {
 func (u *FeeTypeUpsertOne) SetDeleteAt(v uint32) *FeeTypeUpsertOne {
 	return u.Update(func(s *FeeTypeUpsert) {
 		s.SetDeleteAt(v)
+	})
+}
+
+// AddDeleteAt adds v to the "delete_at" field.
+func (u *FeeTypeUpsertOne) AddDeleteAt(v uint32) *FeeTypeUpsertOne {
+	return u.Update(func(s *FeeTypeUpsert) {
+		s.AddDeleteAt(v)
 	})
 }
 
@@ -712,7 +763,7 @@ type FeeTypeUpsertBulk struct {
 	create *FeeTypeCreateBulk
 }
 
-// UpdateNewValues updates the fields using the new values that
+// UpdateNewValues updates the mutable fields using the new values that
 // were set on create. Using this option is equivalent to using:
 //
 //	client.FeeType.Create().
@@ -814,6 +865,13 @@ func (u *FeeTypeUpsertBulk) SetCreateAt(v uint32) *FeeTypeUpsertBulk {
 	})
 }
 
+// AddCreateAt adds v to the "create_at" field.
+func (u *FeeTypeUpsertBulk) AddCreateAt(v uint32) *FeeTypeUpsertBulk {
+	return u.Update(func(s *FeeTypeUpsert) {
+		s.AddCreateAt(v)
+	})
+}
+
 // UpdateCreateAt sets the "create_at" field to the value that was provided on create.
 func (u *FeeTypeUpsertBulk) UpdateCreateAt() *FeeTypeUpsertBulk {
 	return u.Update(func(s *FeeTypeUpsert) {
@@ -828,6 +886,13 @@ func (u *FeeTypeUpsertBulk) SetUpdateAt(v uint32) *FeeTypeUpsertBulk {
 	})
 }
 
+// AddUpdateAt adds v to the "update_at" field.
+func (u *FeeTypeUpsertBulk) AddUpdateAt(v uint32) *FeeTypeUpsertBulk {
+	return u.Update(func(s *FeeTypeUpsert) {
+		s.AddUpdateAt(v)
+	})
+}
+
 // UpdateUpdateAt sets the "update_at" field to the value that was provided on create.
 func (u *FeeTypeUpsertBulk) UpdateUpdateAt() *FeeTypeUpsertBulk {
 	return u.Update(func(s *FeeTypeUpsert) {
@@ -839,6 +904,13 @@ func (u *FeeTypeUpsertBulk) UpdateUpdateAt() *FeeTypeUpsertBulk {
 func (u *FeeTypeUpsertBulk) SetDeleteAt(v uint32) *FeeTypeUpsertBulk {
 	return u.Update(func(s *FeeTypeUpsert) {
 		s.SetDeleteAt(v)
+	})
+}
+
+// AddDeleteAt adds v to the "delete_at" field.
+func (u *FeeTypeUpsertBulk) AddDeleteAt(v uint32) *FeeTypeUpsertBulk {
+	return u.Update(func(s *FeeTypeUpsert) {
+		s.AddDeleteAt(v)
 	})
 }
 

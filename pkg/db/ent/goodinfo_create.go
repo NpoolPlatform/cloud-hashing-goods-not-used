@@ -125,6 +125,12 @@ func (gic *GoodInfoCreate) SetFeeIds(u []uuid.UUID) *GoodInfoCreate {
 	return gic
 }
 
+// SetStartAt sets the "start_at" field.
+func (gic *GoodInfoCreate) SetStartAt(u uint32) *GoodInfoCreate {
+	gic.mutation.SetStartAt(u)
+	return gic
+}
+
 // SetTotal sets the "total" field.
 func (gic *GoodInfoCreate) SetTotal(i int32) *GoodInfoCreate {
 	gic.mutation.SetTotal(i)
@@ -176,6 +182,14 @@ func (gic *GoodInfoCreate) SetNillableDeleteAt(u *uint32) *GoodInfoCreate {
 // SetID sets the "id" field.
 func (gic *GoodInfoCreate) SetID(u uuid.UUID) *GoodInfoCreate {
 	gic.mutation.SetID(u)
+	return gic
+}
+
+// SetNillableID sets the "id" field if the given value is not nil.
+func (gic *GoodInfoCreate) SetNillableID(u *uuid.UUID) *GoodInfoCreate {
+	if u != nil {
+		gic.SetID(*u)
+	}
 	return gic
 }
 
@@ -271,92 +285,95 @@ func (gic *GoodInfoCreate) defaults() {
 // check runs all checks and user-defined validators on the builder.
 func (gic *GoodInfoCreate) check() error {
 	if _, ok := gic.mutation.DeviceInfoID(); !ok {
-		return &ValidationError{Name: "device_info_id", err: errors.New(`ent: missing required field "device_info_id"`)}
+		return &ValidationError{Name: "device_info_id", err: errors.New(`ent: missing required field "GoodInfo.device_info_id"`)}
 	}
 	if _, ok := gic.mutation.SeparateFee(); !ok {
-		return &ValidationError{Name: "separate_fee", err: errors.New(`ent: missing required field "separate_fee"`)}
+		return &ValidationError{Name: "separate_fee", err: errors.New(`ent: missing required field "GoodInfo.separate_fee"`)}
 	}
 	if _, ok := gic.mutation.UnitPower(); !ok {
-		return &ValidationError{Name: "unit_power", err: errors.New(`ent: missing required field "unit_power"`)}
+		return &ValidationError{Name: "unit_power", err: errors.New(`ent: missing required field "GoodInfo.unit_power"`)}
 	}
 	if v, ok := gic.mutation.UnitPower(); ok {
 		if err := goodinfo.UnitPowerValidator(v); err != nil {
-			return &ValidationError{Name: "unit_power", err: fmt.Errorf(`ent: validator failed for field "unit_power": %w`, err)}
+			return &ValidationError{Name: "unit_power", err: fmt.Errorf(`ent: validator failed for field "GoodInfo.unit_power": %w`, err)}
 		}
 	}
 	if _, ok := gic.mutation.DurationDays(); !ok {
-		return &ValidationError{Name: "duration_days", err: errors.New(`ent: missing required field "duration_days"`)}
+		return &ValidationError{Name: "duration_days", err: errors.New(`ent: missing required field "GoodInfo.duration_days"`)}
 	}
 	if v, ok := gic.mutation.DurationDays(); ok {
 		if err := goodinfo.DurationDaysValidator(v); err != nil {
-			return &ValidationError{Name: "duration_days", err: fmt.Errorf(`ent: validator failed for field "duration_days": %w`, err)}
+			return &ValidationError{Name: "duration_days", err: fmt.Errorf(`ent: validator failed for field "GoodInfo.duration_days": %w`, err)}
 		}
 	}
 	if _, ok := gic.mutation.CoinInfoID(); !ok {
-		return &ValidationError{Name: "coin_info_id", err: errors.New(`ent: missing required field "coin_info_id"`)}
+		return &ValidationError{Name: "coin_info_id", err: errors.New(`ent: missing required field "GoodInfo.coin_info_id"`)}
 	}
 	if _, ok := gic.mutation.Actuals(); !ok {
-		return &ValidationError{Name: "actuals", err: errors.New(`ent: missing required field "actuals"`)}
+		return &ValidationError{Name: "actuals", err: errors.New(`ent: missing required field "GoodInfo.actuals"`)}
 	}
 	if _, ok := gic.mutation.DeliveryAt(); !ok {
-		return &ValidationError{Name: "delivery_at", err: errors.New(`ent: missing required field "delivery_at"`)}
+		return &ValidationError{Name: "delivery_at", err: errors.New(`ent: missing required field "GoodInfo.delivery_at"`)}
 	}
 	if _, ok := gic.mutation.InheritFromGoodID(); !ok {
-		return &ValidationError{Name: "inherit_from_good_id", err: errors.New(`ent: missing required field "inherit_from_good_id"`)}
+		return &ValidationError{Name: "inherit_from_good_id", err: errors.New(`ent: missing required field "GoodInfo.inherit_from_good_id"`)}
 	}
 	if _, ok := gic.mutation.VendorLocationID(); !ok {
-		return &ValidationError{Name: "vendor_location_id", err: errors.New(`ent: missing required field "vendor_location_id"`)}
+		return &ValidationError{Name: "vendor_location_id", err: errors.New(`ent: missing required field "GoodInfo.vendor_location_id"`)}
 	}
 	if _, ok := gic.mutation.Price(); !ok {
-		return &ValidationError{Name: "price", err: errors.New(`ent: missing required field "price"`)}
+		return &ValidationError{Name: "price", err: errors.New(`ent: missing required field "GoodInfo.price"`)}
 	}
 	if v, ok := gic.mutation.Price(); ok {
 		if err := goodinfo.PriceValidator(v); err != nil {
-			return &ValidationError{Name: "price", err: fmt.Errorf(`ent: validator failed for field "price": %w`, err)}
+			return &ValidationError{Name: "price", err: fmt.Errorf(`ent: validator failed for field "GoodInfo.price": %w`, err)}
 		}
 	}
 	if _, ok := gic.mutation.PriceCurrency(); !ok {
-		return &ValidationError{Name: "price_currency", err: errors.New(`ent: missing required field "price_currency"`)}
+		return &ValidationError{Name: "price_currency", err: errors.New(`ent: missing required field "GoodInfo.price_currency"`)}
 	}
 	if _, ok := gic.mutation.BenefitType(); !ok {
-		return &ValidationError{Name: "benefit_type", err: errors.New(`ent: missing required field "benefit_type"`)}
+		return &ValidationError{Name: "benefit_type", err: errors.New(`ent: missing required field "GoodInfo.benefit_type"`)}
 	}
 	if v, ok := gic.mutation.BenefitType(); ok {
 		if err := goodinfo.BenefitTypeValidator(v); err != nil {
-			return &ValidationError{Name: "benefit_type", err: fmt.Errorf(`ent: validator failed for field "benefit_type": %w`, err)}
+			return &ValidationError{Name: "benefit_type", err: fmt.Errorf(`ent: validator failed for field "GoodInfo.benefit_type": %w`, err)}
 		}
 	}
 	if _, ok := gic.mutation.Classic(); !ok {
-		return &ValidationError{Name: "classic", err: errors.New(`ent: missing required field "classic"`)}
+		return &ValidationError{Name: "classic", err: errors.New(`ent: missing required field "GoodInfo.classic"`)}
 	}
 	if _, ok := gic.mutation.Title(); !ok {
-		return &ValidationError{Name: "title", err: errors.New(`ent: missing required field "title"`)}
+		return &ValidationError{Name: "title", err: errors.New(`ent: missing required field "GoodInfo.title"`)}
 	}
 	if _, ok := gic.mutation.Unit(); !ok {
-		return &ValidationError{Name: "unit", err: errors.New(`ent: missing required field "unit"`)}
+		return &ValidationError{Name: "unit", err: errors.New(`ent: missing required field "GoodInfo.unit"`)}
 	}
 	if _, ok := gic.mutation.SupportCoinTypeIds(); !ok {
-		return &ValidationError{Name: "support_coin_type_ids", err: errors.New(`ent: missing required field "support_coin_type_ids"`)}
+		return &ValidationError{Name: "support_coin_type_ids", err: errors.New(`ent: missing required field "GoodInfo.support_coin_type_ids"`)}
 	}
 	if _, ok := gic.mutation.FeeIds(); !ok {
-		return &ValidationError{Name: "fee_ids", err: errors.New(`ent: missing required field "fee_ids"`)}
+		return &ValidationError{Name: "fee_ids", err: errors.New(`ent: missing required field "GoodInfo.fee_ids"`)}
+	}
+	if _, ok := gic.mutation.StartAt(); !ok {
+		return &ValidationError{Name: "start_at", err: errors.New(`ent: missing required field "GoodInfo.start_at"`)}
 	}
 	if _, ok := gic.mutation.Total(); !ok {
-		return &ValidationError{Name: "total", err: errors.New(`ent: missing required field "total"`)}
+		return &ValidationError{Name: "total", err: errors.New(`ent: missing required field "GoodInfo.total"`)}
 	}
 	if v, ok := gic.mutation.Total(); ok {
 		if err := goodinfo.TotalValidator(v); err != nil {
-			return &ValidationError{Name: "total", err: fmt.Errorf(`ent: validator failed for field "total": %w`, err)}
+			return &ValidationError{Name: "total", err: fmt.Errorf(`ent: validator failed for field "GoodInfo.total": %w`, err)}
 		}
 	}
 	if _, ok := gic.mutation.CreateAt(); !ok {
-		return &ValidationError{Name: "create_at", err: errors.New(`ent: missing required field "create_at"`)}
+		return &ValidationError{Name: "create_at", err: errors.New(`ent: missing required field "GoodInfo.create_at"`)}
 	}
 	if _, ok := gic.mutation.UpdateAt(); !ok {
-		return &ValidationError{Name: "update_at", err: errors.New(`ent: missing required field "update_at"`)}
+		return &ValidationError{Name: "update_at", err: errors.New(`ent: missing required field "GoodInfo.update_at"`)}
 	}
 	if _, ok := gic.mutation.DeleteAt(); !ok {
-		return &ValidationError{Name: "delete_at", err: errors.New(`ent: missing required field "delete_at"`)}
+		return &ValidationError{Name: "delete_at", err: errors.New(`ent: missing required field "GoodInfo.delete_at"`)}
 	}
 	return nil
 }
@@ -370,7 +387,11 @@ func (gic *GoodInfoCreate) sqlSave(ctx context.Context) (*GoodInfo, error) {
 		return nil, err
 	}
 	if _spec.ID.Value != nil {
-		_node.ID = _spec.ID.Value.(uuid.UUID)
+		if id, ok := _spec.ID.Value.(*uuid.UUID); ok {
+			_node.ID = *id
+		} else if err := _node.ID.Scan(_spec.ID.Value); err != nil {
+			return nil, err
+		}
 	}
 	return _node, nil
 }
@@ -389,7 +410,7 @@ func (gic *GoodInfoCreate) createSpec() (*GoodInfo, *sqlgraph.CreateSpec) {
 	_spec.OnConflict = gic.conflict
 	if id, ok := gic.mutation.ID(); ok {
 		_node.ID = id
-		_spec.ID.Value = id
+		_spec.ID.Value = &id
 	}
 	if value, ok := gic.mutation.DeviceInfoID(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
@@ -527,6 +548,14 @@ func (gic *GoodInfoCreate) createSpec() (*GoodInfo, *sqlgraph.CreateSpec) {
 		})
 		_node.FeeIds = value
 	}
+	if value, ok := gic.mutation.StartAt(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeUint32,
+			Value:  value,
+			Column: goodinfo.FieldStartAt,
+		})
+		_node.StartAt = value
+	}
 	if value, ok := gic.mutation.Total(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
 			Type:   field.TypeInt32,
@@ -649,6 +678,12 @@ func (u *GoodInfoUpsert) UpdateUnitPower() *GoodInfoUpsert {
 	return u
 }
 
+// AddUnitPower adds v to the "unit_power" field.
+func (u *GoodInfoUpsert) AddUnitPower(v int32) *GoodInfoUpsert {
+	u.Add(goodinfo.FieldUnitPower, v)
+	return u
+}
+
 // SetDurationDays sets the "duration_days" field.
 func (u *GoodInfoUpsert) SetDurationDays(v int32) *GoodInfoUpsert {
 	u.Set(goodinfo.FieldDurationDays, v)
@@ -658,6 +693,12 @@ func (u *GoodInfoUpsert) SetDurationDays(v int32) *GoodInfoUpsert {
 // UpdateDurationDays sets the "duration_days" field to the value that was provided on create.
 func (u *GoodInfoUpsert) UpdateDurationDays() *GoodInfoUpsert {
 	u.SetExcluded(goodinfo.FieldDurationDays)
+	return u
+}
+
+// AddDurationDays adds v to the "duration_days" field.
+func (u *GoodInfoUpsert) AddDurationDays(v int32) *GoodInfoUpsert {
+	u.Add(goodinfo.FieldDurationDays, v)
 	return u
 }
 
@@ -697,6 +738,12 @@ func (u *GoodInfoUpsert) UpdateDeliveryAt() *GoodInfoUpsert {
 	return u
 }
 
+// AddDeliveryAt adds v to the "delivery_at" field.
+func (u *GoodInfoUpsert) AddDeliveryAt(v uint32) *GoodInfoUpsert {
+	u.Add(goodinfo.FieldDeliveryAt, v)
+	return u
+}
+
 // SetInheritFromGoodID sets the "inherit_from_good_id" field.
 func (u *GoodInfoUpsert) SetInheritFromGoodID(v uuid.UUID) *GoodInfoUpsert {
 	u.Set(goodinfo.FieldInheritFromGoodID, v)
@@ -730,6 +777,12 @@ func (u *GoodInfoUpsert) SetPrice(v uint64) *GoodInfoUpsert {
 // UpdatePrice sets the "price" field to the value that was provided on create.
 func (u *GoodInfoUpsert) UpdatePrice() *GoodInfoUpsert {
 	u.SetExcluded(goodinfo.FieldPrice)
+	return u
+}
+
+// AddPrice adds v to the "price" field.
+func (u *GoodInfoUpsert) AddPrice(v uint64) *GoodInfoUpsert {
+	u.Add(goodinfo.FieldPrice, v)
 	return u
 }
 
@@ -817,6 +870,24 @@ func (u *GoodInfoUpsert) UpdateFeeIds() *GoodInfoUpsert {
 	return u
 }
 
+// SetStartAt sets the "start_at" field.
+func (u *GoodInfoUpsert) SetStartAt(v uint32) *GoodInfoUpsert {
+	u.Set(goodinfo.FieldStartAt, v)
+	return u
+}
+
+// UpdateStartAt sets the "start_at" field to the value that was provided on create.
+func (u *GoodInfoUpsert) UpdateStartAt() *GoodInfoUpsert {
+	u.SetExcluded(goodinfo.FieldStartAt)
+	return u
+}
+
+// AddStartAt adds v to the "start_at" field.
+func (u *GoodInfoUpsert) AddStartAt(v uint32) *GoodInfoUpsert {
+	u.Add(goodinfo.FieldStartAt, v)
+	return u
+}
+
 // SetTotal sets the "total" field.
 func (u *GoodInfoUpsert) SetTotal(v int32) *GoodInfoUpsert {
 	u.Set(goodinfo.FieldTotal, v)
@@ -826,6 +897,12 @@ func (u *GoodInfoUpsert) SetTotal(v int32) *GoodInfoUpsert {
 // UpdateTotal sets the "total" field to the value that was provided on create.
 func (u *GoodInfoUpsert) UpdateTotal() *GoodInfoUpsert {
 	u.SetExcluded(goodinfo.FieldTotal)
+	return u
+}
+
+// AddTotal adds v to the "total" field.
+func (u *GoodInfoUpsert) AddTotal(v int32) *GoodInfoUpsert {
+	u.Add(goodinfo.FieldTotal, v)
 	return u
 }
 
@@ -841,6 +918,12 @@ func (u *GoodInfoUpsert) UpdateCreateAt() *GoodInfoUpsert {
 	return u
 }
 
+// AddCreateAt adds v to the "create_at" field.
+func (u *GoodInfoUpsert) AddCreateAt(v uint32) *GoodInfoUpsert {
+	u.Add(goodinfo.FieldCreateAt, v)
+	return u
+}
+
 // SetUpdateAt sets the "update_at" field.
 func (u *GoodInfoUpsert) SetUpdateAt(v uint32) *GoodInfoUpsert {
 	u.Set(goodinfo.FieldUpdateAt, v)
@@ -850,6 +933,12 @@ func (u *GoodInfoUpsert) SetUpdateAt(v uint32) *GoodInfoUpsert {
 // UpdateUpdateAt sets the "update_at" field to the value that was provided on create.
 func (u *GoodInfoUpsert) UpdateUpdateAt() *GoodInfoUpsert {
 	u.SetExcluded(goodinfo.FieldUpdateAt)
+	return u
+}
+
+// AddUpdateAt adds v to the "update_at" field.
+func (u *GoodInfoUpsert) AddUpdateAt(v uint32) *GoodInfoUpsert {
+	u.Add(goodinfo.FieldUpdateAt, v)
 	return u
 }
 
@@ -865,7 +954,13 @@ func (u *GoodInfoUpsert) UpdateDeleteAt() *GoodInfoUpsert {
 	return u
 }
 
-// UpdateNewValues updates the fields using the new values that were set on create except the ID field.
+// AddDeleteAt adds v to the "delete_at" field.
+func (u *GoodInfoUpsert) AddDeleteAt(v uint32) *GoodInfoUpsert {
+	u.Add(goodinfo.FieldDeleteAt, v)
+	return u
+}
+
+// UpdateNewValues updates the mutable fields using the new values that were set on create except the ID field.
 // Using this option is equivalent to using:
 //
 //	client.GoodInfo.Create().
@@ -950,6 +1045,13 @@ func (u *GoodInfoUpsertOne) SetUnitPower(v int32) *GoodInfoUpsertOne {
 	})
 }
 
+// AddUnitPower adds v to the "unit_power" field.
+func (u *GoodInfoUpsertOne) AddUnitPower(v int32) *GoodInfoUpsertOne {
+	return u.Update(func(s *GoodInfoUpsert) {
+		s.AddUnitPower(v)
+	})
+}
+
 // UpdateUnitPower sets the "unit_power" field to the value that was provided on create.
 func (u *GoodInfoUpsertOne) UpdateUnitPower() *GoodInfoUpsertOne {
 	return u.Update(func(s *GoodInfoUpsert) {
@@ -961,6 +1063,13 @@ func (u *GoodInfoUpsertOne) UpdateUnitPower() *GoodInfoUpsertOne {
 func (u *GoodInfoUpsertOne) SetDurationDays(v int32) *GoodInfoUpsertOne {
 	return u.Update(func(s *GoodInfoUpsert) {
 		s.SetDurationDays(v)
+	})
+}
+
+// AddDurationDays adds v to the "duration_days" field.
+func (u *GoodInfoUpsertOne) AddDurationDays(v int32) *GoodInfoUpsertOne {
+	return u.Update(func(s *GoodInfoUpsert) {
+		s.AddDurationDays(v)
 	})
 }
 
@@ -1006,6 +1115,13 @@ func (u *GoodInfoUpsertOne) SetDeliveryAt(v uint32) *GoodInfoUpsertOne {
 	})
 }
 
+// AddDeliveryAt adds v to the "delivery_at" field.
+func (u *GoodInfoUpsertOne) AddDeliveryAt(v uint32) *GoodInfoUpsertOne {
+	return u.Update(func(s *GoodInfoUpsert) {
+		s.AddDeliveryAt(v)
+	})
+}
+
 // UpdateDeliveryAt sets the "delivery_at" field to the value that was provided on create.
 func (u *GoodInfoUpsertOne) UpdateDeliveryAt() *GoodInfoUpsertOne {
 	return u.Update(func(s *GoodInfoUpsert) {
@@ -1045,6 +1161,13 @@ func (u *GoodInfoUpsertOne) UpdateVendorLocationID() *GoodInfoUpsertOne {
 func (u *GoodInfoUpsertOne) SetPrice(v uint64) *GoodInfoUpsertOne {
 	return u.Update(func(s *GoodInfoUpsert) {
 		s.SetPrice(v)
+	})
+}
+
+// AddPrice adds v to the "price" field.
+func (u *GoodInfoUpsertOne) AddPrice(v uint64) *GoodInfoUpsertOne {
+	return u.Update(func(s *GoodInfoUpsert) {
+		s.AddPrice(v)
 	})
 }
 
@@ -1153,10 +1276,38 @@ func (u *GoodInfoUpsertOne) UpdateFeeIds() *GoodInfoUpsertOne {
 	})
 }
 
+// SetStartAt sets the "start_at" field.
+func (u *GoodInfoUpsertOne) SetStartAt(v uint32) *GoodInfoUpsertOne {
+	return u.Update(func(s *GoodInfoUpsert) {
+		s.SetStartAt(v)
+	})
+}
+
+// AddStartAt adds v to the "start_at" field.
+func (u *GoodInfoUpsertOne) AddStartAt(v uint32) *GoodInfoUpsertOne {
+	return u.Update(func(s *GoodInfoUpsert) {
+		s.AddStartAt(v)
+	})
+}
+
+// UpdateStartAt sets the "start_at" field to the value that was provided on create.
+func (u *GoodInfoUpsertOne) UpdateStartAt() *GoodInfoUpsertOne {
+	return u.Update(func(s *GoodInfoUpsert) {
+		s.UpdateStartAt()
+	})
+}
+
 // SetTotal sets the "total" field.
 func (u *GoodInfoUpsertOne) SetTotal(v int32) *GoodInfoUpsertOne {
 	return u.Update(func(s *GoodInfoUpsert) {
 		s.SetTotal(v)
+	})
+}
+
+// AddTotal adds v to the "total" field.
+func (u *GoodInfoUpsertOne) AddTotal(v int32) *GoodInfoUpsertOne {
+	return u.Update(func(s *GoodInfoUpsert) {
+		s.AddTotal(v)
 	})
 }
 
@@ -1174,6 +1325,13 @@ func (u *GoodInfoUpsertOne) SetCreateAt(v uint32) *GoodInfoUpsertOne {
 	})
 }
 
+// AddCreateAt adds v to the "create_at" field.
+func (u *GoodInfoUpsertOne) AddCreateAt(v uint32) *GoodInfoUpsertOne {
+	return u.Update(func(s *GoodInfoUpsert) {
+		s.AddCreateAt(v)
+	})
+}
+
 // UpdateCreateAt sets the "create_at" field to the value that was provided on create.
 func (u *GoodInfoUpsertOne) UpdateCreateAt() *GoodInfoUpsertOne {
 	return u.Update(func(s *GoodInfoUpsert) {
@@ -1188,6 +1346,13 @@ func (u *GoodInfoUpsertOne) SetUpdateAt(v uint32) *GoodInfoUpsertOne {
 	})
 }
 
+// AddUpdateAt adds v to the "update_at" field.
+func (u *GoodInfoUpsertOne) AddUpdateAt(v uint32) *GoodInfoUpsertOne {
+	return u.Update(func(s *GoodInfoUpsert) {
+		s.AddUpdateAt(v)
+	})
+}
+
 // UpdateUpdateAt sets the "update_at" field to the value that was provided on create.
 func (u *GoodInfoUpsertOne) UpdateUpdateAt() *GoodInfoUpsertOne {
 	return u.Update(func(s *GoodInfoUpsert) {
@@ -1199,6 +1364,13 @@ func (u *GoodInfoUpsertOne) UpdateUpdateAt() *GoodInfoUpsertOne {
 func (u *GoodInfoUpsertOne) SetDeleteAt(v uint32) *GoodInfoUpsertOne {
 	return u.Update(func(s *GoodInfoUpsert) {
 		s.SetDeleteAt(v)
+	})
+}
+
+// AddDeleteAt adds v to the "delete_at" field.
+func (u *GoodInfoUpsertOne) AddDeleteAt(v uint32) *GoodInfoUpsertOne {
+	return u.Update(func(s *GoodInfoUpsert) {
+		s.AddDeleteAt(v)
 	})
 }
 
@@ -1372,7 +1544,7 @@ type GoodInfoUpsertBulk struct {
 	create *GoodInfoCreateBulk
 }
 
-// UpdateNewValues updates the fields using the new values that
+// UpdateNewValues updates the mutable fields using the new values that
 // were set on create. Using this option is equivalent to using:
 //
 //	client.GoodInfo.Create().
@@ -1460,6 +1632,13 @@ func (u *GoodInfoUpsertBulk) SetUnitPower(v int32) *GoodInfoUpsertBulk {
 	})
 }
 
+// AddUnitPower adds v to the "unit_power" field.
+func (u *GoodInfoUpsertBulk) AddUnitPower(v int32) *GoodInfoUpsertBulk {
+	return u.Update(func(s *GoodInfoUpsert) {
+		s.AddUnitPower(v)
+	})
+}
+
 // UpdateUnitPower sets the "unit_power" field to the value that was provided on create.
 func (u *GoodInfoUpsertBulk) UpdateUnitPower() *GoodInfoUpsertBulk {
 	return u.Update(func(s *GoodInfoUpsert) {
@@ -1471,6 +1650,13 @@ func (u *GoodInfoUpsertBulk) UpdateUnitPower() *GoodInfoUpsertBulk {
 func (u *GoodInfoUpsertBulk) SetDurationDays(v int32) *GoodInfoUpsertBulk {
 	return u.Update(func(s *GoodInfoUpsert) {
 		s.SetDurationDays(v)
+	})
+}
+
+// AddDurationDays adds v to the "duration_days" field.
+func (u *GoodInfoUpsertBulk) AddDurationDays(v int32) *GoodInfoUpsertBulk {
+	return u.Update(func(s *GoodInfoUpsert) {
+		s.AddDurationDays(v)
 	})
 }
 
@@ -1516,6 +1702,13 @@ func (u *GoodInfoUpsertBulk) SetDeliveryAt(v uint32) *GoodInfoUpsertBulk {
 	})
 }
 
+// AddDeliveryAt adds v to the "delivery_at" field.
+func (u *GoodInfoUpsertBulk) AddDeliveryAt(v uint32) *GoodInfoUpsertBulk {
+	return u.Update(func(s *GoodInfoUpsert) {
+		s.AddDeliveryAt(v)
+	})
+}
+
 // UpdateDeliveryAt sets the "delivery_at" field to the value that was provided on create.
 func (u *GoodInfoUpsertBulk) UpdateDeliveryAt() *GoodInfoUpsertBulk {
 	return u.Update(func(s *GoodInfoUpsert) {
@@ -1555,6 +1748,13 @@ func (u *GoodInfoUpsertBulk) UpdateVendorLocationID() *GoodInfoUpsertBulk {
 func (u *GoodInfoUpsertBulk) SetPrice(v uint64) *GoodInfoUpsertBulk {
 	return u.Update(func(s *GoodInfoUpsert) {
 		s.SetPrice(v)
+	})
+}
+
+// AddPrice adds v to the "price" field.
+func (u *GoodInfoUpsertBulk) AddPrice(v uint64) *GoodInfoUpsertBulk {
+	return u.Update(func(s *GoodInfoUpsert) {
+		s.AddPrice(v)
 	})
 }
 
@@ -1663,10 +1863,38 @@ func (u *GoodInfoUpsertBulk) UpdateFeeIds() *GoodInfoUpsertBulk {
 	})
 }
 
+// SetStartAt sets the "start_at" field.
+func (u *GoodInfoUpsertBulk) SetStartAt(v uint32) *GoodInfoUpsertBulk {
+	return u.Update(func(s *GoodInfoUpsert) {
+		s.SetStartAt(v)
+	})
+}
+
+// AddStartAt adds v to the "start_at" field.
+func (u *GoodInfoUpsertBulk) AddStartAt(v uint32) *GoodInfoUpsertBulk {
+	return u.Update(func(s *GoodInfoUpsert) {
+		s.AddStartAt(v)
+	})
+}
+
+// UpdateStartAt sets the "start_at" field to the value that was provided on create.
+func (u *GoodInfoUpsertBulk) UpdateStartAt() *GoodInfoUpsertBulk {
+	return u.Update(func(s *GoodInfoUpsert) {
+		s.UpdateStartAt()
+	})
+}
+
 // SetTotal sets the "total" field.
 func (u *GoodInfoUpsertBulk) SetTotal(v int32) *GoodInfoUpsertBulk {
 	return u.Update(func(s *GoodInfoUpsert) {
 		s.SetTotal(v)
+	})
+}
+
+// AddTotal adds v to the "total" field.
+func (u *GoodInfoUpsertBulk) AddTotal(v int32) *GoodInfoUpsertBulk {
+	return u.Update(func(s *GoodInfoUpsert) {
+		s.AddTotal(v)
 	})
 }
 
@@ -1684,6 +1912,13 @@ func (u *GoodInfoUpsertBulk) SetCreateAt(v uint32) *GoodInfoUpsertBulk {
 	})
 }
 
+// AddCreateAt adds v to the "create_at" field.
+func (u *GoodInfoUpsertBulk) AddCreateAt(v uint32) *GoodInfoUpsertBulk {
+	return u.Update(func(s *GoodInfoUpsert) {
+		s.AddCreateAt(v)
+	})
+}
+
 // UpdateCreateAt sets the "create_at" field to the value that was provided on create.
 func (u *GoodInfoUpsertBulk) UpdateCreateAt() *GoodInfoUpsertBulk {
 	return u.Update(func(s *GoodInfoUpsert) {
@@ -1698,6 +1933,13 @@ func (u *GoodInfoUpsertBulk) SetUpdateAt(v uint32) *GoodInfoUpsertBulk {
 	})
 }
 
+// AddUpdateAt adds v to the "update_at" field.
+func (u *GoodInfoUpsertBulk) AddUpdateAt(v uint32) *GoodInfoUpsertBulk {
+	return u.Update(func(s *GoodInfoUpsert) {
+		s.AddUpdateAt(v)
+	})
+}
+
 // UpdateUpdateAt sets the "update_at" field to the value that was provided on create.
 func (u *GoodInfoUpsertBulk) UpdateUpdateAt() *GoodInfoUpsertBulk {
 	return u.Update(func(s *GoodInfoUpsert) {
@@ -1709,6 +1951,13 @@ func (u *GoodInfoUpsertBulk) UpdateUpdateAt() *GoodInfoUpsertBulk {
 func (u *GoodInfoUpsertBulk) SetDeleteAt(v uint32) *GoodInfoUpsertBulk {
 	return u.Update(func(s *GoodInfoUpsert) {
 		s.SetDeleteAt(v)
+	})
+}
+
+// AddDeleteAt adds v to the "delete_at" field.
+func (u *GoodInfoUpsertBulk) AddDeleteAt(v uint32) *GoodInfoUpsertBulk {
+	return u.Update(func(s *GoodInfoUpsert) {
+		s.AddDeleteAt(v)
 	})
 }
 

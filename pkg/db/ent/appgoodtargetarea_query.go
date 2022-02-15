@@ -337,6 +337,10 @@ func (agtaq *AppGoodTargetAreaQuery) sqlAll(ctx context.Context) ([]*AppGoodTarg
 
 func (agtaq *AppGoodTargetAreaQuery) sqlCount(ctx context.Context) (int, error) {
 	_spec := agtaq.querySpec()
+	_spec.Node.Columns = agtaq.fields
+	if len(agtaq.fields) > 0 {
+		_spec.Unique = agtaq.unique != nil && *agtaq.unique
+	}
 	return sqlgraph.CountNodes(ctx, agtaq.driver, _spec)
 }
 
@@ -407,6 +411,9 @@ func (agtaq *AppGoodTargetAreaQuery) sqlQuery(ctx context.Context) *sql.Selector
 	if agtaq.sql != nil {
 		selector = agtaq.sql
 		selector.Select(selector.Columns(columns...)...)
+	}
+	if agtaq.unique != nil && *agtaq.unique {
+		selector.Distinct()
 	}
 	for _, p := range agtaq.predicates {
 		p(selector)
@@ -686,9 +693,7 @@ func (agtagb *AppGoodTargetAreaGroupBy) sqlQuery() *sql.Selector {
 		for _, f := range agtagb.fields {
 			columns = append(columns, selector.C(f))
 		}
-		for _, c := range aggregation {
-			columns = append(columns, c)
-		}
+		columns = append(columns, aggregation...)
 		selector.Select(columns...)
 	}
 	return selector.GroupBy(selector.Columns(agtagb.fields...)...)

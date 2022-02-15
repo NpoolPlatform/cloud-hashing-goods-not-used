@@ -337,6 +337,10 @@ func (vlq *VendorLocationQuery) sqlAll(ctx context.Context) ([]*VendorLocation, 
 
 func (vlq *VendorLocationQuery) sqlCount(ctx context.Context) (int, error) {
 	_spec := vlq.querySpec()
+	_spec.Node.Columns = vlq.fields
+	if len(vlq.fields) > 0 {
+		_spec.Unique = vlq.unique != nil && *vlq.unique
+	}
 	return sqlgraph.CountNodes(ctx, vlq.driver, _spec)
 }
 
@@ -407,6 +411,9 @@ func (vlq *VendorLocationQuery) sqlQuery(ctx context.Context) *sql.Selector {
 	if vlq.sql != nil {
 		selector = vlq.sql
 		selector.Select(selector.Columns(columns...)...)
+	}
+	if vlq.unique != nil && *vlq.unique {
+		selector.Distinct()
 	}
 	for _, p := range vlq.predicates {
 		p(selector)
@@ -686,9 +693,7 @@ func (vlgb *VendorLocationGroupBy) sqlQuery() *sql.Selector {
 		for _, f := range vlgb.fields {
 			columns = append(columns, selector.C(f))
 		}
-		for _, c := range aggregation {
-			columns = append(columns, c)
-		}
+		columns = append(columns, aggregation...)
 		selector.Select(columns...)
 	}
 	return selector.GroupBy(selector.Columns(vlgb.fields...)...)

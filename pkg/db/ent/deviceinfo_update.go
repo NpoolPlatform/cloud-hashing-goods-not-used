@@ -4,6 +4,7 @@ package ent
 
 import (
 	"context"
+	"errors"
 	"fmt"
 
 	"entgo.io/ent/dialect/sql"
@@ -205,12 +206,12 @@ func (diu *DeviceInfoUpdate) defaults() {
 func (diu *DeviceInfoUpdate) check() error {
 	if v, ok := diu.mutation.GetType(); ok {
 		if err := deviceinfo.TypeValidator(v); err != nil {
-			return &ValidationError{Name: "type", err: fmt.Errorf("ent: validator failed for field \"type\": %w", err)}
+			return &ValidationError{Name: "type", err: fmt.Errorf(`ent: validator failed for field "DeviceInfo.type": %w`, err)}
 		}
 	}
 	if v, ok := diu.mutation.Manufacturer(); ok {
 		if err := deviceinfo.ManufacturerValidator(v); err != nil {
-			return &ValidationError{Name: "manufacturer", err: fmt.Errorf("ent: validator failed for field \"manufacturer\": %w", err)}
+			return &ValidationError{Name: "manufacturer", err: fmt.Errorf(`ent: validator failed for field "DeviceInfo.manufacturer": %w`, err)}
 		}
 	}
 	return nil
@@ -523,12 +524,12 @@ func (diuo *DeviceInfoUpdateOne) defaults() {
 func (diuo *DeviceInfoUpdateOne) check() error {
 	if v, ok := diuo.mutation.GetType(); ok {
 		if err := deviceinfo.TypeValidator(v); err != nil {
-			return &ValidationError{Name: "type", err: fmt.Errorf("ent: validator failed for field \"type\": %w", err)}
+			return &ValidationError{Name: "type", err: fmt.Errorf(`ent: validator failed for field "DeviceInfo.type": %w`, err)}
 		}
 	}
 	if v, ok := diuo.mutation.Manufacturer(); ok {
 		if err := deviceinfo.ManufacturerValidator(v); err != nil {
-			return &ValidationError{Name: "manufacturer", err: fmt.Errorf("ent: validator failed for field \"manufacturer\": %w", err)}
+			return &ValidationError{Name: "manufacturer", err: fmt.Errorf(`ent: validator failed for field "DeviceInfo.manufacturer": %w`, err)}
 		}
 	}
 	return nil
@@ -547,7 +548,7 @@ func (diuo *DeviceInfoUpdateOne) sqlSave(ctx context.Context) (_node *DeviceInfo
 	}
 	id, ok := diuo.mutation.ID()
 	if !ok {
-		return nil, &ValidationError{Name: "ID", err: fmt.Errorf("missing DeviceInfo.ID for update")}
+		return nil, &ValidationError{Name: "id", err: errors.New(`ent: missing "DeviceInfo.id" for update`)}
 	}
 	_spec.Node.ID.Value = id
 	if fields := diuo.fields; len(fields) > 0 {

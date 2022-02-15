@@ -89,6 +89,14 @@ func (agtac *AppGoodTargetAreaCreate) SetID(u uuid.UUID) *AppGoodTargetAreaCreat
 	return agtac
 }
 
+// SetNillableID sets the "id" field if the given value is not nil.
+func (agtac *AppGoodTargetAreaCreate) SetNillableID(u *uuid.UUID) *AppGoodTargetAreaCreate {
+	if u != nil {
+		agtac.SetID(*u)
+	}
+	return agtac
+}
+
 // Mutation returns the AppGoodTargetAreaMutation object of the builder.
 func (agtac *AppGoodTargetAreaCreate) Mutation() *AppGoodTargetAreaMutation {
 	return agtac.mutation
@@ -181,22 +189,22 @@ func (agtac *AppGoodTargetAreaCreate) defaults() {
 // check runs all checks and user-defined validators on the builder.
 func (agtac *AppGoodTargetAreaCreate) check() error {
 	if _, ok := agtac.mutation.AppID(); !ok {
-		return &ValidationError{Name: "app_id", err: errors.New(`ent: missing required field "app_id"`)}
+		return &ValidationError{Name: "app_id", err: errors.New(`ent: missing required field "AppGoodTargetArea.app_id"`)}
 	}
 	if _, ok := agtac.mutation.GoodID(); !ok {
-		return &ValidationError{Name: "good_id", err: errors.New(`ent: missing required field "good_id"`)}
+		return &ValidationError{Name: "good_id", err: errors.New(`ent: missing required field "AppGoodTargetArea.good_id"`)}
 	}
 	if _, ok := agtac.mutation.TargetAreaID(); !ok {
-		return &ValidationError{Name: "target_area_id", err: errors.New(`ent: missing required field "target_area_id"`)}
+		return &ValidationError{Name: "target_area_id", err: errors.New(`ent: missing required field "AppGoodTargetArea.target_area_id"`)}
 	}
 	if _, ok := agtac.mutation.CreateAt(); !ok {
-		return &ValidationError{Name: "create_at", err: errors.New(`ent: missing required field "create_at"`)}
+		return &ValidationError{Name: "create_at", err: errors.New(`ent: missing required field "AppGoodTargetArea.create_at"`)}
 	}
 	if _, ok := agtac.mutation.UpdateAt(); !ok {
-		return &ValidationError{Name: "update_at", err: errors.New(`ent: missing required field "update_at"`)}
+		return &ValidationError{Name: "update_at", err: errors.New(`ent: missing required field "AppGoodTargetArea.update_at"`)}
 	}
 	if _, ok := agtac.mutation.DeleteAt(); !ok {
-		return &ValidationError{Name: "delete_at", err: errors.New(`ent: missing required field "delete_at"`)}
+		return &ValidationError{Name: "delete_at", err: errors.New(`ent: missing required field "AppGoodTargetArea.delete_at"`)}
 	}
 	return nil
 }
@@ -210,7 +218,11 @@ func (agtac *AppGoodTargetAreaCreate) sqlSave(ctx context.Context) (*AppGoodTarg
 		return nil, err
 	}
 	if _spec.ID.Value != nil {
-		_node.ID = _spec.ID.Value.(uuid.UUID)
+		if id, ok := _spec.ID.Value.(*uuid.UUID); ok {
+			_node.ID = *id
+		} else if err := _node.ID.Scan(_spec.ID.Value); err != nil {
+			return nil, err
+		}
 	}
 	return _node, nil
 }
@@ -229,7 +241,7 @@ func (agtac *AppGoodTargetAreaCreate) createSpec() (*AppGoodTargetArea, *sqlgrap
 	_spec.OnConflict = agtac.conflict
 	if id, ok := agtac.mutation.ID(); ok {
 		_node.ID = id
-		_spec.ID.Value = id
+		_spec.ID.Value = &id
 	}
 	if value, ok := agtac.mutation.AppID(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
@@ -381,6 +393,12 @@ func (u *AppGoodTargetAreaUpsert) UpdateCreateAt() *AppGoodTargetAreaUpsert {
 	return u
 }
 
+// AddCreateAt adds v to the "create_at" field.
+func (u *AppGoodTargetAreaUpsert) AddCreateAt(v int64) *AppGoodTargetAreaUpsert {
+	u.Add(appgoodtargetarea.FieldCreateAt, v)
+	return u
+}
+
 // SetUpdateAt sets the "update_at" field.
 func (u *AppGoodTargetAreaUpsert) SetUpdateAt(v int64) *AppGoodTargetAreaUpsert {
 	u.Set(appgoodtargetarea.FieldUpdateAt, v)
@@ -390,6 +408,12 @@ func (u *AppGoodTargetAreaUpsert) SetUpdateAt(v int64) *AppGoodTargetAreaUpsert 
 // UpdateUpdateAt sets the "update_at" field to the value that was provided on create.
 func (u *AppGoodTargetAreaUpsert) UpdateUpdateAt() *AppGoodTargetAreaUpsert {
 	u.SetExcluded(appgoodtargetarea.FieldUpdateAt)
+	return u
+}
+
+// AddUpdateAt adds v to the "update_at" field.
+func (u *AppGoodTargetAreaUpsert) AddUpdateAt(v int64) *AppGoodTargetAreaUpsert {
+	u.Add(appgoodtargetarea.FieldUpdateAt, v)
 	return u
 }
 
@@ -405,7 +429,13 @@ func (u *AppGoodTargetAreaUpsert) UpdateDeleteAt() *AppGoodTargetAreaUpsert {
 	return u
 }
 
-// UpdateNewValues updates the fields using the new values that were set on create except the ID field.
+// AddDeleteAt adds v to the "delete_at" field.
+func (u *AppGoodTargetAreaUpsert) AddDeleteAt(v int64) *AppGoodTargetAreaUpsert {
+	u.Add(appgoodtargetarea.FieldDeleteAt, v)
+	return u
+}
+
+// UpdateNewValues updates the mutable fields using the new values that were set on create except the ID field.
 // Using this option is equivalent to using:
 //
 //	client.AppGoodTargetArea.Create().
@@ -504,6 +534,13 @@ func (u *AppGoodTargetAreaUpsertOne) SetCreateAt(v int64) *AppGoodTargetAreaUpse
 	})
 }
 
+// AddCreateAt adds v to the "create_at" field.
+func (u *AppGoodTargetAreaUpsertOne) AddCreateAt(v int64) *AppGoodTargetAreaUpsertOne {
+	return u.Update(func(s *AppGoodTargetAreaUpsert) {
+		s.AddCreateAt(v)
+	})
+}
+
 // UpdateCreateAt sets the "create_at" field to the value that was provided on create.
 func (u *AppGoodTargetAreaUpsertOne) UpdateCreateAt() *AppGoodTargetAreaUpsertOne {
 	return u.Update(func(s *AppGoodTargetAreaUpsert) {
@@ -518,6 +555,13 @@ func (u *AppGoodTargetAreaUpsertOne) SetUpdateAt(v int64) *AppGoodTargetAreaUpse
 	})
 }
 
+// AddUpdateAt adds v to the "update_at" field.
+func (u *AppGoodTargetAreaUpsertOne) AddUpdateAt(v int64) *AppGoodTargetAreaUpsertOne {
+	return u.Update(func(s *AppGoodTargetAreaUpsert) {
+		s.AddUpdateAt(v)
+	})
+}
+
 // UpdateUpdateAt sets the "update_at" field to the value that was provided on create.
 func (u *AppGoodTargetAreaUpsertOne) UpdateUpdateAt() *AppGoodTargetAreaUpsertOne {
 	return u.Update(func(s *AppGoodTargetAreaUpsert) {
@@ -529,6 +573,13 @@ func (u *AppGoodTargetAreaUpsertOne) UpdateUpdateAt() *AppGoodTargetAreaUpsertOn
 func (u *AppGoodTargetAreaUpsertOne) SetDeleteAt(v int64) *AppGoodTargetAreaUpsertOne {
 	return u.Update(func(s *AppGoodTargetAreaUpsert) {
 		s.SetDeleteAt(v)
+	})
+}
+
+// AddDeleteAt adds v to the "delete_at" field.
+func (u *AppGoodTargetAreaUpsertOne) AddDeleteAt(v int64) *AppGoodTargetAreaUpsertOne {
+	return u.Update(func(s *AppGoodTargetAreaUpsert) {
+		s.AddDeleteAt(v)
 	})
 }
 
@@ -702,7 +753,7 @@ type AppGoodTargetAreaUpsertBulk struct {
 	create *AppGoodTargetAreaCreateBulk
 }
 
-// UpdateNewValues updates the fields using the new values that
+// UpdateNewValues updates the mutable fields using the new values that
 // were set on create. Using this option is equivalent to using:
 //
 //	client.AppGoodTargetArea.Create().
@@ -804,6 +855,13 @@ func (u *AppGoodTargetAreaUpsertBulk) SetCreateAt(v int64) *AppGoodTargetAreaUps
 	})
 }
 
+// AddCreateAt adds v to the "create_at" field.
+func (u *AppGoodTargetAreaUpsertBulk) AddCreateAt(v int64) *AppGoodTargetAreaUpsertBulk {
+	return u.Update(func(s *AppGoodTargetAreaUpsert) {
+		s.AddCreateAt(v)
+	})
+}
+
 // UpdateCreateAt sets the "create_at" field to the value that was provided on create.
 func (u *AppGoodTargetAreaUpsertBulk) UpdateCreateAt() *AppGoodTargetAreaUpsertBulk {
 	return u.Update(func(s *AppGoodTargetAreaUpsert) {
@@ -818,6 +876,13 @@ func (u *AppGoodTargetAreaUpsertBulk) SetUpdateAt(v int64) *AppGoodTargetAreaUps
 	})
 }
 
+// AddUpdateAt adds v to the "update_at" field.
+func (u *AppGoodTargetAreaUpsertBulk) AddUpdateAt(v int64) *AppGoodTargetAreaUpsertBulk {
+	return u.Update(func(s *AppGoodTargetAreaUpsert) {
+		s.AddUpdateAt(v)
+	})
+}
+
 // UpdateUpdateAt sets the "update_at" field to the value that was provided on create.
 func (u *AppGoodTargetAreaUpsertBulk) UpdateUpdateAt() *AppGoodTargetAreaUpsertBulk {
 	return u.Update(func(s *AppGoodTargetAreaUpsert) {
@@ -829,6 +894,13 @@ func (u *AppGoodTargetAreaUpsertBulk) UpdateUpdateAt() *AppGoodTargetAreaUpsertB
 func (u *AppGoodTargetAreaUpsertBulk) SetDeleteAt(v int64) *AppGoodTargetAreaUpsertBulk {
 	return u.Update(func(s *AppGoodTargetAreaUpsert) {
 		s.SetDeleteAt(v)
+	})
+}
+
+// AddDeleteAt adds v to the "delete_at" field.
+func (u *AppGoodTargetAreaUpsertBulk) AddDeleteAt(v int64) *AppGoodTargetAreaUpsertBulk {
+	return u.Update(func(s *AppGoodTargetAreaUpsert) {
+		s.AddDeleteAt(v)
 	})
 }
 

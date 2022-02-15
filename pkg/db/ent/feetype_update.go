@@ -4,6 +4,7 @@ package ent
 
 import (
 	"context"
+	"errors"
 	"fmt"
 
 	"entgo.io/ent/dialect/sql"
@@ -60,7 +61,7 @@ func (ftu *FeeTypeUpdate) SetNillableCreateAt(u *uint32) *FeeTypeUpdate {
 }
 
 // AddCreateAt adds u to the "create_at" field.
-func (ftu *FeeTypeUpdate) AddCreateAt(u uint32) *FeeTypeUpdate {
+func (ftu *FeeTypeUpdate) AddCreateAt(u int32) *FeeTypeUpdate {
 	ftu.mutation.AddCreateAt(u)
 	return ftu
 }
@@ -73,7 +74,7 @@ func (ftu *FeeTypeUpdate) SetUpdateAt(u uint32) *FeeTypeUpdate {
 }
 
 // AddUpdateAt adds u to the "update_at" field.
-func (ftu *FeeTypeUpdate) AddUpdateAt(u uint32) *FeeTypeUpdate {
+func (ftu *FeeTypeUpdate) AddUpdateAt(u int32) *FeeTypeUpdate {
 	ftu.mutation.AddUpdateAt(u)
 	return ftu
 }
@@ -94,7 +95,7 @@ func (ftu *FeeTypeUpdate) SetNillableDeleteAt(u *uint32) *FeeTypeUpdate {
 }
 
 // AddDeleteAt adds u to the "delete_at" field.
-func (ftu *FeeTypeUpdate) AddDeleteAt(u uint32) *FeeTypeUpdate {
+func (ftu *FeeTypeUpdate) AddDeleteAt(u int32) *FeeTypeUpdate {
 	ftu.mutation.AddDeleteAt(u)
 	return ftu
 }
@@ -177,12 +178,12 @@ func (ftu *FeeTypeUpdate) defaults() {
 func (ftu *FeeTypeUpdate) check() error {
 	if v, ok := ftu.mutation.FeeDescription(); ok {
 		if err := feetype.FeeDescriptionValidator(v); err != nil {
-			return &ValidationError{Name: "fee_description", err: fmt.Errorf("ent: validator failed for field \"fee_description\": %w", err)}
+			return &ValidationError{Name: "fee_description", err: fmt.Errorf(`ent: validator failed for field "FeeType.fee_description": %w`, err)}
 		}
 	}
 	if v, ok := ftu.mutation.PayType(); ok {
 		if err := feetype.PayTypeValidator(v); err != nil {
-			return &ValidationError{Name: "pay_type", err: fmt.Errorf("ent: validator failed for field \"pay_type\": %w", err)}
+			return &ValidationError{Name: "pay_type", err: fmt.Errorf(`ent: validator failed for field "FeeType.pay_type": %w`, err)}
 		}
 	}
 	return nil
@@ -322,7 +323,7 @@ func (ftuo *FeeTypeUpdateOne) SetNillableCreateAt(u *uint32) *FeeTypeUpdateOne {
 }
 
 // AddCreateAt adds u to the "create_at" field.
-func (ftuo *FeeTypeUpdateOne) AddCreateAt(u uint32) *FeeTypeUpdateOne {
+func (ftuo *FeeTypeUpdateOne) AddCreateAt(u int32) *FeeTypeUpdateOne {
 	ftuo.mutation.AddCreateAt(u)
 	return ftuo
 }
@@ -335,7 +336,7 @@ func (ftuo *FeeTypeUpdateOne) SetUpdateAt(u uint32) *FeeTypeUpdateOne {
 }
 
 // AddUpdateAt adds u to the "update_at" field.
-func (ftuo *FeeTypeUpdateOne) AddUpdateAt(u uint32) *FeeTypeUpdateOne {
+func (ftuo *FeeTypeUpdateOne) AddUpdateAt(u int32) *FeeTypeUpdateOne {
 	ftuo.mutation.AddUpdateAt(u)
 	return ftuo
 }
@@ -356,7 +357,7 @@ func (ftuo *FeeTypeUpdateOne) SetNillableDeleteAt(u *uint32) *FeeTypeUpdateOne {
 }
 
 // AddDeleteAt adds u to the "delete_at" field.
-func (ftuo *FeeTypeUpdateOne) AddDeleteAt(u uint32) *FeeTypeUpdateOne {
+func (ftuo *FeeTypeUpdateOne) AddDeleteAt(u int32) *FeeTypeUpdateOne {
 	ftuo.mutation.AddDeleteAt(u)
 	return ftuo
 }
@@ -446,12 +447,12 @@ func (ftuo *FeeTypeUpdateOne) defaults() {
 func (ftuo *FeeTypeUpdateOne) check() error {
 	if v, ok := ftuo.mutation.FeeDescription(); ok {
 		if err := feetype.FeeDescriptionValidator(v); err != nil {
-			return &ValidationError{Name: "fee_description", err: fmt.Errorf("ent: validator failed for field \"fee_description\": %w", err)}
+			return &ValidationError{Name: "fee_description", err: fmt.Errorf(`ent: validator failed for field "FeeType.fee_description": %w`, err)}
 		}
 	}
 	if v, ok := ftuo.mutation.PayType(); ok {
 		if err := feetype.PayTypeValidator(v); err != nil {
-			return &ValidationError{Name: "pay_type", err: fmt.Errorf("ent: validator failed for field \"pay_type\": %w", err)}
+			return &ValidationError{Name: "pay_type", err: fmt.Errorf(`ent: validator failed for field "FeeType.pay_type": %w`, err)}
 		}
 	}
 	return nil
@@ -470,7 +471,7 @@ func (ftuo *FeeTypeUpdateOne) sqlSave(ctx context.Context) (_node *FeeType, err 
 	}
 	id, ok := ftuo.mutation.ID()
 	if !ok {
-		return nil, &ValidationError{Name: "ID", err: fmt.Errorf("missing FeeType.ID for update")}
+		return nil, &ValidationError{Name: "id", err: errors.New(`ent: missing "FeeType.id" for update`)}
 	}
 	_spec.Node.ID.Value = id
 	if fields := ftuo.fields; len(fields) > 0 {

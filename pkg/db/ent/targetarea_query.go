@@ -337,6 +337,10 @@ func (taq *TargetAreaQuery) sqlAll(ctx context.Context) ([]*TargetArea, error) {
 
 func (taq *TargetAreaQuery) sqlCount(ctx context.Context) (int, error) {
 	_spec := taq.querySpec()
+	_spec.Node.Columns = taq.fields
+	if len(taq.fields) > 0 {
+		_spec.Unique = taq.unique != nil && *taq.unique
+	}
 	return sqlgraph.CountNodes(ctx, taq.driver, _spec)
 }
 
@@ -407,6 +411,9 @@ func (taq *TargetAreaQuery) sqlQuery(ctx context.Context) *sql.Selector {
 	if taq.sql != nil {
 		selector = taq.sql
 		selector.Select(selector.Columns(columns...)...)
+	}
+	if taq.unique != nil && *taq.unique {
+		selector.Distinct()
 	}
 	for _, p := range taq.predicates {
 		p(selector)
@@ -686,9 +693,7 @@ func (tagb *TargetAreaGroupBy) sqlQuery() *sql.Selector {
 		for _, f := range tagb.fields {
 			columns = append(columns, selector.C(f))
 		}
-		for _, c := range aggregation {
-			columns = append(columns, c)
-		}
+		columns = append(columns, aggregation...)
 		selector.Select(columns...)
 	}
 	return selector.GroupBy(selector.Columns(tagb.fields...)...)

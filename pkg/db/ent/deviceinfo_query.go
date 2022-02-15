@@ -337,6 +337,10 @@ func (diq *DeviceInfoQuery) sqlAll(ctx context.Context) ([]*DeviceInfo, error) {
 
 func (diq *DeviceInfoQuery) sqlCount(ctx context.Context) (int, error) {
 	_spec := diq.querySpec()
+	_spec.Node.Columns = diq.fields
+	if len(diq.fields) > 0 {
+		_spec.Unique = diq.unique != nil && *diq.unique
+	}
 	return sqlgraph.CountNodes(ctx, diq.driver, _spec)
 }
 
@@ -407,6 +411,9 @@ func (diq *DeviceInfoQuery) sqlQuery(ctx context.Context) *sql.Selector {
 	if diq.sql != nil {
 		selector = diq.sql
 		selector.Select(selector.Columns(columns...)...)
+	}
+	if diq.unique != nil && *diq.unique {
+		selector.Distinct()
 	}
 	for _, p := range diq.predicates {
 		p(selector)
@@ -686,9 +693,7 @@ func (digb *DeviceInfoGroupBy) sqlQuery() *sql.Selector {
 		for _, f := range digb.fields {
 			columns = append(columns, selector.C(f))
 		}
-		for _, c := range aggregation {
-			columns = append(columns, c)
-		}
+		columns = append(columns, aggregation...)
 		selector.Select(columns...)
 	}
 	return selector.GroupBy(selector.Columns(digb.fields...)...)

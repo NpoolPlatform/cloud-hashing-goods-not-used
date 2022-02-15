@@ -137,6 +137,14 @@ func (agc *AppGoodCreate) SetID(u uuid.UUID) *AppGoodCreate {
 	return agc
 }
 
+// SetNillableID sets the "id" field if the given value is not nil.
+func (agc *AppGoodCreate) SetNillableID(u *uuid.UUID) *AppGoodCreate {
+	if u != nil {
+		agc.SetID(*u)
+	}
+	return agc
+}
+
 // Mutation returns the AppGoodMutation object of the builder.
 func (agc *AppGoodCreate) Mutation() *AppGoodMutation {
 	return agc.mutation
@@ -241,39 +249,39 @@ func (agc *AppGoodCreate) defaults() {
 // check runs all checks and user-defined validators on the builder.
 func (agc *AppGoodCreate) check() error {
 	if _, ok := agc.mutation.AppID(); !ok {
-		return &ValidationError{Name: "app_id", err: errors.New(`ent: missing required field "app_id"`)}
+		return &ValidationError{Name: "app_id", err: errors.New(`ent: missing required field "AppGood.app_id"`)}
 	}
 	if _, ok := agc.mutation.GoodID(); !ok {
-		return &ValidationError{Name: "good_id", err: errors.New(`ent: missing required field "good_id"`)}
+		return &ValidationError{Name: "good_id", err: errors.New(`ent: missing required field "AppGood.good_id"`)}
 	}
 	if _, ok := agc.mutation.Authorized(); !ok {
-		return &ValidationError{Name: "authorized", err: errors.New(`ent: missing required field "authorized"`)}
+		return &ValidationError{Name: "authorized", err: errors.New(`ent: missing required field "AppGood.authorized"`)}
 	}
 	if _, ok := agc.mutation.Online(); !ok {
-		return &ValidationError{Name: "online", err: errors.New(`ent: missing required field "online"`)}
+		return &ValidationError{Name: "online", err: errors.New(`ent: missing required field "AppGood.online"`)}
 	}
 	if _, ok := agc.mutation.InitAreaStrategy(); !ok {
-		return &ValidationError{Name: "init_area_strategy", err: errors.New(`ent: missing required field "init_area_strategy"`)}
+		return &ValidationError{Name: "init_area_strategy", err: errors.New(`ent: missing required field "AppGood.init_area_strategy"`)}
 	}
 	if v, ok := agc.mutation.InitAreaStrategy(); ok {
 		if err := appgood.InitAreaStrategyValidator(v); err != nil {
-			return &ValidationError{Name: "init_area_strategy", err: fmt.Errorf(`ent: validator failed for field "init_area_strategy": %w`, err)}
+			return &ValidationError{Name: "init_area_strategy", err: fmt.Errorf(`ent: validator failed for field "AppGood.init_area_strategy": %w`, err)}
 		}
 	}
 	if _, ok := agc.mutation.Price(); !ok {
-		return &ValidationError{Name: "price", err: errors.New(`ent: missing required field "price"`)}
+		return &ValidationError{Name: "price", err: errors.New(`ent: missing required field "AppGood.price"`)}
 	}
 	if _, ok := agc.mutation.InvitationOnly(); !ok {
-		return &ValidationError{Name: "invitation_only", err: errors.New(`ent: missing required field "invitation_only"`)}
+		return &ValidationError{Name: "invitation_only", err: errors.New(`ent: missing required field "AppGood.invitation_only"`)}
 	}
 	if _, ok := agc.mutation.CreateAt(); !ok {
-		return &ValidationError{Name: "create_at", err: errors.New(`ent: missing required field "create_at"`)}
+		return &ValidationError{Name: "create_at", err: errors.New(`ent: missing required field "AppGood.create_at"`)}
 	}
 	if _, ok := agc.mutation.UpdateAt(); !ok {
-		return &ValidationError{Name: "update_at", err: errors.New(`ent: missing required field "update_at"`)}
+		return &ValidationError{Name: "update_at", err: errors.New(`ent: missing required field "AppGood.update_at"`)}
 	}
 	if _, ok := agc.mutation.DeleteAt(); !ok {
-		return &ValidationError{Name: "delete_at", err: errors.New(`ent: missing required field "delete_at"`)}
+		return &ValidationError{Name: "delete_at", err: errors.New(`ent: missing required field "AppGood.delete_at"`)}
 	}
 	return nil
 }
@@ -287,7 +295,11 @@ func (agc *AppGoodCreate) sqlSave(ctx context.Context) (*AppGood, error) {
 		return nil, err
 	}
 	if _spec.ID.Value != nil {
-		_node.ID = _spec.ID.Value.(uuid.UUID)
+		if id, ok := _spec.ID.Value.(*uuid.UUID); ok {
+			_node.ID = *id
+		} else if err := _node.ID.Scan(_spec.ID.Value); err != nil {
+			return nil, err
+		}
 	}
 	return _node, nil
 }
@@ -306,7 +318,7 @@ func (agc *AppGoodCreate) createSpec() (*AppGood, *sqlgraph.CreateSpec) {
 	_spec.OnConflict = agc.conflict
 	if id, ok := agc.mutation.ID(); ok {
 		_node.ID = id
-		_spec.ID.Value = id
+		_spec.ID.Value = &id
 	}
 	if value, ok := agc.mutation.AppID(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
@@ -514,6 +526,12 @@ func (u *AppGoodUpsert) UpdatePrice() *AppGoodUpsert {
 	return u
 }
 
+// AddPrice adds v to the "price" field.
+func (u *AppGoodUpsert) AddPrice(v uint64) *AppGoodUpsert {
+	u.Add(appgood.FieldPrice, v)
+	return u
+}
+
 // SetInvitationOnly sets the "invitation_only" field.
 func (u *AppGoodUpsert) SetInvitationOnly(v bool) *AppGoodUpsert {
 	u.Set(appgood.FieldInvitationOnly, v)
@@ -538,6 +556,12 @@ func (u *AppGoodUpsert) UpdateCreateAt() *AppGoodUpsert {
 	return u
 }
 
+// AddCreateAt adds v to the "create_at" field.
+func (u *AppGoodUpsert) AddCreateAt(v int64) *AppGoodUpsert {
+	u.Add(appgood.FieldCreateAt, v)
+	return u
+}
+
 // SetUpdateAt sets the "update_at" field.
 func (u *AppGoodUpsert) SetUpdateAt(v int64) *AppGoodUpsert {
 	u.Set(appgood.FieldUpdateAt, v)
@@ -547,6 +571,12 @@ func (u *AppGoodUpsert) SetUpdateAt(v int64) *AppGoodUpsert {
 // UpdateUpdateAt sets the "update_at" field to the value that was provided on create.
 func (u *AppGoodUpsert) UpdateUpdateAt() *AppGoodUpsert {
 	u.SetExcluded(appgood.FieldUpdateAt)
+	return u
+}
+
+// AddUpdateAt adds v to the "update_at" field.
+func (u *AppGoodUpsert) AddUpdateAt(v int64) *AppGoodUpsert {
+	u.Add(appgood.FieldUpdateAt, v)
 	return u
 }
 
@@ -562,7 +592,13 @@ func (u *AppGoodUpsert) UpdateDeleteAt() *AppGoodUpsert {
 	return u
 }
 
-// UpdateNewValues updates the fields using the new values that were set on create except the ID field.
+// AddDeleteAt adds v to the "delete_at" field.
+func (u *AppGoodUpsert) AddDeleteAt(v int64) *AppGoodUpsert {
+	u.Add(appgood.FieldDeleteAt, v)
+	return u
+}
+
+// UpdateNewValues updates the mutable fields using the new values that were set on create except the ID field.
 // Using this option is equivalent to using:
 //
 //	client.AppGood.Create().
@@ -689,6 +725,13 @@ func (u *AppGoodUpsertOne) SetPrice(v uint64) *AppGoodUpsertOne {
 	})
 }
 
+// AddPrice adds v to the "price" field.
+func (u *AppGoodUpsertOne) AddPrice(v uint64) *AppGoodUpsertOne {
+	return u.Update(func(s *AppGoodUpsert) {
+		s.AddPrice(v)
+	})
+}
+
 // UpdatePrice sets the "price" field to the value that was provided on create.
 func (u *AppGoodUpsertOne) UpdatePrice() *AppGoodUpsertOne {
 	return u.Update(func(s *AppGoodUpsert) {
@@ -717,6 +760,13 @@ func (u *AppGoodUpsertOne) SetCreateAt(v int64) *AppGoodUpsertOne {
 	})
 }
 
+// AddCreateAt adds v to the "create_at" field.
+func (u *AppGoodUpsertOne) AddCreateAt(v int64) *AppGoodUpsertOne {
+	return u.Update(func(s *AppGoodUpsert) {
+		s.AddCreateAt(v)
+	})
+}
+
 // UpdateCreateAt sets the "create_at" field to the value that was provided on create.
 func (u *AppGoodUpsertOne) UpdateCreateAt() *AppGoodUpsertOne {
 	return u.Update(func(s *AppGoodUpsert) {
@@ -731,6 +781,13 @@ func (u *AppGoodUpsertOne) SetUpdateAt(v int64) *AppGoodUpsertOne {
 	})
 }
 
+// AddUpdateAt adds v to the "update_at" field.
+func (u *AppGoodUpsertOne) AddUpdateAt(v int64) *AppGoodUpsertOne {
+	return u.Update(func(s *AppGoodUpsert) {
+		s.AddUpdateAt(v)
+	})
+}
+
 // UpdateUpdateAt sets the "update_at" field to the value that was provided on create.
 func (u *AppGoodUpsertOne) UpdateUpdateAt() *AppGoodUpsertOne {
 	return u.Update(func(s *AppGoodUpsert) {
@@ -742,6 +799,13 @@ func (u *AppGoodUpsertOne) UpdateUpdateAt() *AppGoodUpsertOne {
 func (u *AppGoodUpsertOne) SetDeleteAt(v int64) *AppGoodUpsertOne {
 	return u.Update(func(s *AppGoodUpsert) {
 		s.SetDeleteAt(v)
+	})
+}
+
+// AddDeleteAt adds v to the "delete_at" field.
+func (u *AppGoodUpsertOne) AddDeleteAt(v int64) *AppGoodUpsertOne {
+	return u.Update(func(s *AppGoodUpsert) {
+		s.AddDeleteAt(v)
 	})
 }
 
@@ -915,7 +979,7 @@ type AppGoodUpsertBulk struct {
 	create *AppGoodCreateBulk
 }
 
-// UpdateNewValues updates the fields using the new values that
+// UpdateNewValues updates the mutable fields using the new values that
 // were set on create. Using this option is equivalent to using:
 //
 //	client.AppGood.Create().
@@ -1045,6 +1109,13 @@ func (u *AppGoodUpsertBulk) SetPrice(v uint64) *AppGoodUpsertBulk {
 	})
 }
 
+// AddPrice adds v to the "price" field.
+func (u *AppGoodUpsertBulk) AddPrice(v uint64) *AppGoodUpsertBulk {
+	return u.Update(func(s *AppGoodUpsert) {
+		s.AddPrice(v)
+	})
+}
+
 // UpdatePrice sets the "price" field to the value that was provided on create.
 func (u *AppGoodUpsertBulk) UpdatePrice() *AppGoodUpsertBulk {
 	return u.Update(func(s *AppGoodUpsert) {
@@ -1073,6 +1144,13 @@ func (u *AppGoodUpsertBulk) SetCreateAt(v int64) *AppGoodUpsertBulk {
 	})
 }
 
+// AddCreateAt adds v to the "create_at" field.
+func (u *AppGoodUpsertBulk) AddCreateAt(v int64) *AppGoodUpsertBulk {
+	return u.Update(func(s *AppGoodUpsert) {
+		s.AddCreateAt(v)
+	})
+}
+
 // UpdateCreateAt sets the "create_at" field to the value that was provided on create.
 func (u *AppGoodUpsertBulk) UpdateCreateAt() *AppGoodUpsertBulk {
 	return u.Update(func(s *AppGoodUpsert) {
@@ -1087,6 +1165,13 @@ func (u *AppGoodUpsertBulk) SetUpdateAt(v int64) *AppGoodUpsertBulk {
 	})
 }
 
+// AddUpdateAt adds v to the "update_at" field.
+func (u *AppGoodUpsertBulk) AddUpdateAt(v int64) *AppGoodUpsertBulk {
+	return u.Update(func(s *AppGoodUpsert) {
+		s.AddUpdateAt(v)
+	})
+}
+
 // UpdateUpdateAt sets the "update_at" field to the value that was provided on create.
 func (u *AppGoodUpsertBulk) UpdateUpdateAt() *AppGoodUpsertBulk {
 	return u.Update(func(s *AppGoodUpsert) {
@@ -1098,6 +1183,13 @@ func (u *AppGoodUpsertBulk) UpdateUpdateAt() *AppGoodUpsertBulk {
 func (u *AppGoodUpsertBulk) SetDeleteAt(v int64) *AppGoodUpsertBulk {
 	return u.Update(func(s *AppGoodUpsert) {
 		s.SetDeleteAt(v)
+	})
+}
+
+// AddDeleteAt adds v to the "delete_at" field.
+func (u *AppGoodUpsertBulk) AddDeleteAt(v int64) *AppGoodUpsertBulk {
+	return u.Update(func(s *AppGoodUpsert) {
+		s.AddDeleteAt(v)
 	})
 }
 

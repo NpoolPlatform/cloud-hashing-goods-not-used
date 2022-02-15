@@ -113,6 +113,14 @@ func (geic *GoodExtraInfoCreate) SetID(u uuid.UUID) *GoodExtraInfoCreate {
 	return geic
 }
 
+// SetNillableID sets the "id" field if the given value is not nil.
+func (geic *GoodExtraInfoCreate) SetNillableID(u *uuid.UUID) *GoodExtraInfoCreate {
+	if u != nil {
+		geic.SetID(*u)
+	}
+	return geic
+}
+
 // Mutation returns the GoodExtraInfoMutation object of the builder.
 func (geic *GoodExtraInfoCreate) Mutation() *GoodExtraInfoMutation {
 	return geic.mutation
@@ -205,34 +213,34 @@ func (geic *GoodExtraInfoCreate) defaults() {
 // check runs all checks and user-defined validators on the builder.
 func (geic *GoodExtraInfoCreate) check() error {
 	if _, ok := geic.mutation.GoodID(); !ok {
-		return &ValidationError{Name: "good_id", err: errors.New(`ent: missing required field "good_id"`)}
+		return &ValidationError{Name: "good_id", err: errors.New(`ent: missing required field "GoodExtraInfo.good_id"`)}
 	}
 	if _, ok := geic.mutation.Posters(); !ok {
-		return &ValidationError{Name: "posters", err: errors.New(`ent: missing required field "posters"`)}
+		return &ValidationError{Name: "posters", err: errors.New(`ent: missing required field "GoodExtraInfo.posters"`)}
 	}
 	if _, ok := geic.mutation.Labels(); !ok {
-		return &ValidationError{Name: "labels", err: errors.New(`ent: missing required field "labels"`)}
+		return &ValidationError{Name: "labels", err: errors.New(`ent: missing required field "GoodExtraInfo.labels"`)}
 	}
 	if _, ok := geic.mutation.OutSale(); !ok {
-		return &ValidationError{Name: "out_sale", err: errors.New(`ent: missing required field "out_sale"`)}
+		return &ValidationError{Name: "out_sale", err: errors.New(`ent: missing required field "GoodExtraInfo.out_sale"`)}
 	}
 	if _, ok := geic.mutation.PreSale(); !ok {
-		return &ValidationError{Name: "pre_sale", err: errors.New(`ent: missing required field "pre_sale"`)}
+		return &ValidationError{Name: "pre_sale", err: errors.New(`ent: missing required field "GoodExtraInfo.pre_sale"`)}
 	}
 	if _, ok := geic.mutation.VoteCount(); !ok {
-		return &ValidationError{Name: "vote_count", err: errors.New(`ent: missing required field "vote_count"`)}
+		return &ValidationError{Name: "vote_count", err: errors.New(`ent: missing required field "GoodExtraInfo.vote_count"`)}
 	}
 	if _, ok := geic.mutation.Rating(); !ok {
-		return &ValidationError{Name: "rating", err: errors.New(`ent: missing required field "rating"`)}
+		return &ValidationError{Name: "rating", err: errors.New(`ent: missing required field "GoodExtraInfo.rating"`)}
 	}
 	if _, ok := geic.mutation.CreateAt(); !ok {
-		return &ValidationError{Name: "create_at", err: errors.New(`ent: missing required field "create_at"`)}
+		return &ValidationError{Name: "create_at", err: errors.New(`ent: missing required field "GoodExtraInfo.create_at"`)}
 	}
 	if _, ok := geic.mutation.UpdateAt(); !ok {
-		return &ValidationError{Name: "update_at", err: errors.New(`ent: missing required field "update_at"`)}
+		return &ValidationError{Name: "update_at", err: errors.New(`ent: missing required field "GoodExtraInfo.update_at"`)}
 	}
 	if _, ok := geic.mutation.DeleteAt(); !ok {
-		return &ValidationError{Name: "delete_at", err: errors.New(`ent: missing required field "delete_at"`)}
+		return &ValidationError{Name: "delete_at", err: errors.New(`ent: missing required field "GoodExtraInfo.delete_at"`)}
 	}
 	return nil
 }
@@ -246,7 +254,11 @@ func (geic *GoodExtraInfoCreate) sqlSave(ctx context.Context) (*GoodExtraInfo, e
 		return nil, err
 	}
 	if _spec.ID.Value != nil {
-		_node.ID = _spec.ID.Value.(uuid.UUID)
+		if id, ok := _spec.ID.Value.(*uuid.UUID); ok {
+			_node.ID = *id
+		} else if err := _node.ID.Scan(_spec.ID.Value); err != nil {
+			return nil, err
+		}
 	}
 	return _node, nil
 }
@@ -265,7 +277,7 @@ func (geic *GoodExtraInfoCreate) createSpec() (*GoodExtraInfo, *sqlgraph.CreateS
 	_spec.OnConflict = geic.conflict
 	if id, ok := geic.mutation.ID(); ok {
 		_node.ID = id
-		_spec.ID.Value = id
+		_spec.ID.Value = &id
 	}
 	if value, ok := geic.mutation.GoodID(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
@@ -473,6 +485,12 @@ func (u *GoodExtraInfoUpsert) UpdateVoteCount() *GoodExtraInfoUpsert {
 	return u
 }
 
+// AddVoteCount adds v to the "vote_count" field.
+func (u *GoodExtraInfoUpsert) AddVoteCount(v uint32) *GoodExtraInfoUpsert {
+	u.Add(goodextrainfo.FieldVoteCount, v)
+	return u
+}
+
 // SetRating sets the "rating" field.
 func (u *GoodExtraInfoUpsert) SetRating(v float32) *GoodExtraInfoUpsert {
 	u.Set(goodextrainfo.FieldRating, v)
@@ -482,6 +500,12 @@ func (u *GoodExtraInfoUpsert) SetRating(v float32) *GoodExtraInfoUpsert {
 // UpdateRating sets the "rating" field to the value that was provided on create.
 func (u *GoodExtraInfoUpsert) UpdateRating() *GoodExtraInfoUpsert {
 	u.SetExcluded(goodextrainfo.FieldRating)
+	return u
+}
+
+// AddRating adds v to the "rating" field.
+func (u *GoodExtraInfoUpsert) AddRating(v float32) *GoodExtraInfoUpsert {
+	u.Add(goodextrainfo.FieldRating, v)
 	return u
 }
 
@@ -497,6 +521,12 @@ func (u *GoodExtraInfoUpsert) UpdateCreateAt() *GoodExtraInfoUpsert {
 	return u
 }
 
+// AddCreateAt adds v to the "create_at" field.
+func (u *GoodExtraInfoUpsert) AddCreateAt(v int64) *GoodExtraInfoUpsert {
+	u.Add(goodextrainfo.FieldCreateAt, v)
+	return u
+}
+
 // SetUpdateAt sets the "update_at" field.
 func (u *GoodExtraInfoUpsert) SetUpdateAt(v int64) *GoodExtraInfoUpsert {
 	u.Set(goodextrainfo.FieldUpdateAt, v)
@@ -506,6 +536,12 @@ func (u *GoodExtraInfoUpsert) SetUpdateAt(v int64) *GoodExtraInfoUpsert {
 // UpdateUpdateAt sets the "update_at" field to the value that was provided on create.
 func (u *GoodExtraInfoUpsert) UpdateUpdateAt() *GoodExtraInfoUpsert {
 	u.SetExcluded(goodextrainfo.FieldUpdateAt)
+	return u
+}
+
+// AddUpdateAt adds v to the "update_at" field.
+func (u *GoodExtraInfoUpsert) AddUpdateAt(v int64) *GoodExtraInfoUpsert {
+	u.Add(goodextrainfo.FieldUpdateAt, v)
 	return u
 }
 
@@ -521,7 +557,13 @@ func (u *GoodExtraInfoUpsert) UpdateDeleteAt() *GoodExtraInfoUpsert {
 	return u
 }
 
-// UpdateNewValues updates the fields using the new values that were set on create except the ID field.
+// AddDeleteAt adds v to the "delete_at" field.
+func (u *GoodExtraInfoUpsert) AddDeleteAt(v int64) *GoodExtraInfoUpsert {
+	u.Add(goodextrainfo.FieldDeleteAt, v)
+	return u
+}
+
+// UpdateNewValues updates the mutable fields using the new values that were set on create except the ID field.
 // Using this option is equivalent to using:
 //
 //	client.GoodExtraInfo.Create().
@@ -648,6 +690,13 @@ func (u *GoodExtraInfoUpsertOne) SetVoteCount(v uint32) *GoodExtraInfoUpsertOne 
 	})
 }
 
+// AddVoteCount adds v to the "vote_count" field.
+func (u *GoodExtraInfoUpsertOne) AddVoteCount(v uint32) *GoodExtraInfoUpsertOne {
+	return u.Update(func(s *GoodExtraInfoUpsert) {
+		s.AddVoteCount(v)
+	})
+}
+
 // UpdateVoteCount sets the "vote_count" field to the value that was provided on create.
 func (u *GoodExtraInfoUpsertOne) UpdateVoteCount() *GoodExtraInfoUpsertOne {
 	return u.Update(func(s *GoodExtraInfoUpsert) {
@@ -659,6 +708,13 @@ func (u *GoodExtraInfoUpsertOne) UpdateVoteCount() *GoodExtraInfoUpsertOne {
 func (u *GoodExtraInfoUpsertOne) SetRating(v float32) *GoodExtraInfoUpsertOne {
 	return u.Update(func(s *GoodExtraInfoUpsert) {
 		s.SetRating(v)
+	})
+}
+
+// AddRating adds v to the "rating" field.
+func (u *GoodExtraInfoUpsertOne) AddRating(v float32) *GoodExtraInfoUpsertOne {
+	return u.Update(func(s *GoodExtraInfoUpsert) {
+		s.AddRating(v)
 	})
 }
 
@@ -676,6 +732,13 @@ func (u *GoodExtraInfoUpsertOne) SetCreateAt(v int64) *GoodExtraInfoUpsertOne {
 	})
 }
 
+// AddCreateAt adds v to the "create_at" field.
+func (u *GoodExtraInfoUpsertOne) AddCreateAt(v int64) *GoodExtraInfoUpsertOne {
+	return u.Update(func(s *GoodExtraInfoUpsert) {
+		s.AddCreateAt(v)
+	})
+}
+
 // UpdateCreateAt sets the "create_at" field to the value that was provided on create.
 func (u *GoodExtraInfoUpsertOne) UpdateCreateAt() *GoodExtraInfoUpsertOne {
 	return u.Update(func(s *GoodExtraInfoUpsert) {
@@ -690,6 +753,13 @@ func (u *GoodExtraInfoUpsertOne) SetUpdateAt(v int64) *GoodExtraInfoUpsertOne {
 	})
 }
 
+// AddUpdateAt adds v to the "update_at" field.
+func (u *GoodExtraInfoUpsertOne) AddUpdateAt(v int64) *GoodExtraInfoUpsertOne {
+	return u.Update(func(s *GoodExtraInfoUpsert) {
+		s.AddUpdateAt(v)
+	})
+}
+
 // UpdateUpdateAt sets the "update_at" field to the value that was provided on create.
 func (u *GoodExtraInfoUpsertOne) UpdateUpdateAt() *GoodExtraInfoUpsertOne {
 	return u.Update(func(s *GoodExtraInfoUpsert) {
@@ -701,6 +771,13 @@ func (u *GoodExtraInfoUpsertOne) UpdateUpdateAt() *GoodExtraInfoUpsertOne {
 func (u *GoodExtraInfoUpsertOne) SetDeleteAt(v int64) *GoodExtraInfoUpsertOne {
 	return u.Update(func(s *GoodExtraInfoUpsert) {
 		s.SetDeleteAt(v)
+	})
+}
+
+// AddDeleteAt adds v to the "delete_at" field.
+func (u *GoodExtraInfoUpsertOne) AddDeleteAt(v int64) *GoodExtraInfoUpsertOne {
+	return u.Update(func(s *GoodExtraInfoUpsert) {
+		s.AddDeleteAt(v)
 	})
 }
 
@@ -874,7 +951,7 @@ type GoodExtraInfoUpsertBulk struct {
 	create *GoodExtraInfoCreateBulk
 }
 
-// UpdateNewValues updates the fields using the new values that
+// UpdateNewValues updates the mutable fields using the new values that
 // were set on create. Using this option is equivalent to using:
 //
 //	client.GoodExtraInfo.Create().
@@ -1004,6 +1081,13 @@ func (u *GoodExtraInfoUpsertBulk) SetVoteCount(v uint32) *GoodExtraInfoUpsertBul
 	})
 }
 
+// AddVoteCount adds v to the "vote_count" field.
+func (u *GoodExtraInfoUpsertBulk) AddVoteCount(v uint32) *GoodExtraInfoUpsertBulk {
+	return u.Update(func(s *GoodExtraInfoUpsert) {
+		s.AddVoteCount(v)
+	})
+}
+
 // UpdateVoteCount sets the "vote_count" field to the value that was provided on create.
 func (u *GoodExtraInfoUpsertBulk) UpdateVoteCount() *GoodExtraInfoUpsertBulk {
 	return u.Update(func(s *GoodExtraInfoUpsert) {
@@ -1015,6 +1099,13 @@ func (u *GoodExtraInfoUpsertBulk) UpdateVoteCount() *GoodExtraInfoUpsertBulk {
 func (u *GoodExtraInfoUpsertBulk) SetRating(v float32) *GoodExtraInfoUpsertBulk {
 	return u.Update(func(s *GoodExtraInfoUpsert) {
 		s.SetRating(v)
+	})
+}
+
+// AddRating adds v to the "rating" field.
+func (u *GoodExtraInfoUpsertBulk) AddRating(v float32) *GoodExtraInfoUpsertBulk {
+	return u.Update(func(s *GoodExtraInfoUpsert) {
+		s.AddRating(v)
 	})
 }
 
@@ -1032,6 +1123,13 @@ func (u *GoodExtraInfoUpsertBulk) SetCreateAt(v int64) *GoodExtraInfoUpsertBulk 
 	})
 }
 
+// AddCreateAt adds v to the "create_at" field.
+func (u *GoodExtraInfoUpsertBulk) AddCreateAt(v int64) *GoodExtraInfoUpsertBulk {
+	return u.Update(func(s *GoodExtraInfoUpsert) {
+		s.AddCreateAt(v)
+	})
+}
+
 // UpdateCreateAt sets the "create_at" field to the value that was provided on create.
 func (u *GoodExtraInfoUpsertBulk) UpdateCreateAt() *GoodExtraInfoUpsertBulk {
 	return u.Update(func(s *GoodExtraInfoUpsert) {
@@ -1046,6 +1144,13 @@ func (u *GoodExtraInfoUpsertBulk) SetUpdateAt(v int64) *GoodExtraInfoUpsertBulk 
 	})
 }
 
+// AddUpdateAt adds v to the "update_at" field.
+func (u *GoodExtraInfoUpsertBulk) AddUpdateAt(v int64) *GoodExtraInfoUpsertBulk {
+	return u.Update(func(s *GoodExtraInfoUpsert) {
+		s.AddUpdateAt(v)
+	})
+}
+
 // UpdateUpdateAt sets the "update_at" field to the value that was provided on create.
 func (u *GoodExtraInfoUpsertBulk) UpdateUpdateAt() *GoodExtraInfoUpsertBulk {
 	return u.Update(func(s *GoodExtraInfoUpsert) {
@@ -1057,6 +1162,13 @@ func (u *GoodExtraInfoUpsertBulk) UpdateUpdateAt() *GoodExtraInfoUpsertBulk {
 func (u *GoodExtraInfoUpsertBulk) SetDeleteAt(v int64) *GoodExtraInfoUpsertBulk {
 	return u.Update(func(s *GoodExtraInfoUpsert) {
 		s.SetDeleteAt(v)
+	})
+}
+
+// AddDeleteAt adds v to the "delete_at" field.
+func (u *GoodExtraInfoUpsertBulk) AddDeleteAt(v int64) *GoodExtraInfoUpsertBulk {
+	return u.Update(func(s *GoodExtraInfoUpsert) {
+		s.AddDeleteAt(v)
 	})
 }
 

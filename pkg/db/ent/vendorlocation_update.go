@@ -4,6 +4,7 @@ package ent
 
 import (
 	"context"
+	"errors"
 	"fmt"
 
 	"entgo.io/ent/dialect/sql"
@@ -215,22 +216,22 @@ func (vlu *VendorLocationUpdate) defaults() {
 func (vlu *VendorLocationUpdate) check() error {
 	if v, ok := vlu.mutation.Country(); ok {
 		if err := vendorlocation.CountryValidator(v); err != nil {
-			return &ValidationError{Name: "country", err: fmt.Errorf("ent: validator failed for field \"country\": %w", err)}
+			return &ValidationError{Name: "country", err: fmt.Errorf(`ent: validator failed for field "VendorLocation.country": %w`, err)}
 		}
 	}
 	if v, ok := vlu.mutation.Province(); ok {
 		if err := vendorlocation.ProvinceValidator(v); err != nil {
-			return &ValidationError{Name: "province", err: fmt.Errorf("ent: validator failed for field \"province\": %w", err)}
+			return &ValidationError{Name: "province", err: fmt.Errorf(`ent: validator failed for field "VendorLocation.province": %w`, err)}
 		}
 	}
 	if v, ok := vlu.mutation.City(); ok {
 		if err := vendorlocation.CityValidator(v); err != nil {
-			return &ValidationError{Name: "city", err: fmt.Errorf("ent: validator failed for field \"city\": %w", err)}
+			return &ValidationError{Name: "city", err: fmt.Errorf(`ent: validator failed for field "VendorLocation.city": %w`, err)}
 		}
 	}
 	if v, ok := vlu.mutation.Address(); ok {
 		if err := vendorlocation.AddressValidator(v); err != nil {
-			return &ValidationError{Name: "address", err: fmt.Errorf("ent: validator failed for field \"address\": %w", err)}
+			return &ValidationError{Name: "address", err: fmt.Errorf(`ent: validator failed for field "VendorLocation.address": %w`, err)}
 		}
 	}
 	return nil
@@ -539,22 +540,22 @@ func (vluo *VendorLocationUpdateOne) defaults() {
 func (vluo *VendorLocationUpdateOne) check() error {
 	if v, ok := vluo.mutation.Country(); ok {
 		if err := vendorlocation.CountryValidator(v); err != nil {
-			return &ValidationError{Name: "country", err: fmt.Errorf("ent: validator failed for field \"country\": %w", err)}
+			return &ValidationError{Name: "country", err: fmt.Errorf(`ent: validator failed for field "VendorLocation.country": %w`, err)}
 		}
 	}
 	if v, ok := vluo.mutation.Province(); ok {
 		if err := vendorlocation.ProvinceValidator(v); err != nil {
-			return &ValidationError{Name: "province", err: fmt.Errorf("ent: validator failed for field \"province\": %w", err)}
+			return &ValidationError{Name: "province", err: fmt.Errorf(`ent: validator failed for field "VendorLocation.province": %w`, err)}
 		}
 	}
 	if v, ok := vluo.mutation.City(); ok {
 		if err := vendorlocation.CityValidator(v); err != nil {
-			return &ValidationError{Name: "city", err: fmt.Errorf("ent: validator failed for field \"city\": %w", err)}
+			return &ValidationError{Name: "city", err: fmt.Errorf(`ent: validator failed for field "VendorLocation.city": %w`, err)}
 		}
 	}
 	if v, ok := vluo.mutation.Address(); ok {
 		if err := vendorlocation.AddressValidator(v); err != nil {
-			return &ValidationError{Name: "address", err: fmt.Errorf("ent: validator failed for field \"address\": %w", err)}
+			return &ValidationError{Name: "address", err: fmt.Errorf(`ent: validator failed for field "VendorLocation.address": %w`, err)}
 		}
 	}
 	return nil
@@ -573,7 +574,7 @@ func (vluo *VendorLocationUpdateOne) sqlSave(ctx context.Context) (_node *Vendor
 	}
 	id, ok := vluo.mutation.ID()
 	if !ok {
-		return nil, &ValidationError{Name: "ID", err: fmt.Errorf("missing VendorLocation.ID for update")}
+		return nil, &ValidationError{Name: "id", err: errors.New(`ent: missing "VendorLocation.id" for update`)}
 	}
 	_spec.Node.ID.Value = id
 	if fields := vluo.fields; len(fields) > 0 {

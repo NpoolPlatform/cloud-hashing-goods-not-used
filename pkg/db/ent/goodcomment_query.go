@@ -337,6 +337,10 @@ func (gcq *GoodCommentQuery) sqlAll(ctx context.Context) ([]*GoodComment, error)
 
 func (gcq *GoodCommentQuery) sqlCount(ctx context.Context) (int, error) {
 	_spec := gcq.querySpec()
+	_spec.Node.Columns = gcq.fields
+	if len(gcq.fields) > 0 {
+		_spec.Unique = gcq.unique != nil && *gcq.unique
+	}
 	return sqlgraph.CountNodes(ctx, gcq.driver, _spec)
 }
 
@@ -407,6 +411,9 @@ func (gcq *GoodCommentQuery) sqlQuery(ctx context.Context) *sql.Selector {
 	if gcq.sql != nil {
 		selector = gcq.sql
 		selector.Select(selector.Columns(columns...)...)
+	}
+	if gcq.unique != nil && *gcq.unique {
+		selector.Distinct()
 	}
 	for _, p := range gcq.predicates {
 		p(selector)
@@ -686,9 +693,7 @@ func (gcgb *GoodCommentGroupBy) sqlQuery() *sql.Selector {
 		for _, f := range gcgb.fields {
 			columns = append(columns, selector.C(f))
 		}
-		for _, c := range aggregation {
-			columns = append(columns, c)
-		}
+		columns = append(columns, aggregation...)
 		selector.Select(columns...)
 	}
 	return selector.GroupBy(selector.Columns(gcgb.fields...)...)

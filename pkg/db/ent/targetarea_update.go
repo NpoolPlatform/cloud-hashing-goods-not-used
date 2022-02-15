@@ -4,6 +4,7 @@ package ent
 
 import (
 	"context"
+	"errors"
 	"fmt"
 
 	"entgo.io/ent/dialect/sql"
@@ -187,12 +188,12 @@ func (tau *TargetAreaUpdate) defaults() {
 func (tau *TargetAreaUpdate) check() error {
 	if v, ok := tau.mutation.Continent(); ok {
 		if err := targetarea.ContinentValidator(v); err != nil {
-			return &ValidationError{Name: "continent", err: fmt.Errorf("ent: validator failed for field \"continent\": %w", err)}
+			return &ValidationError{Name: "continent", err: fmt.Errorf(`ent: validator failed for field "TargetArea.continent": %w`, err)}
 		}
 	}
 	if v, ok := tau.mutation.Country(); ok {
 		if err := targetarea.CountryValidator(v); err != nil {
-			return &ValidationError{Name: "country", err: fmt.Errorf("ent: validator failed for field \"country\": %w", err)}
+			return &ValidationError{Name: "country", err: fmt.Errorf(`ent: validator failed for field "TargetArea.country": %w`, err)}
 		}
 	}
 	return nil
@@ -459,12 +460,12 @@ func (tauo *TargetAreaUpdateOne) defaults() {
 func (tauo *TargetAreaUpdateOne) check() error {
 	if v, ok := tauo.mutation.Continent(); ok {
 		if err := targetarea.ContinentValidator(v); err != nil {
-			return &ValidationError{Name: "continent", err: fmt.Errorf("ent: validator failed for field \"continent\": %w", err)}
+			return &ValidationError{Name: "continent", err: fmt.Errorf(`ent: validator failed for field "TargetArea.continent": %w`, err)}
 		}
 	}
 	if v, ok := tauo.mutation.Country(); ok {
 		if err := targetarea.CountryValidator(v); err != nil {
-			return &ValidationError{Name: "country", err: fmt.Errorf("ent: validator failed for field \"country\": %w", err)}
+			return &ValidationError{Name: "country", err: fmt.Errorf(`ent: validator failed for field "TargetArea.country": %w`, err)}
 		}
 	}
 	return nil
@@ -483,7 +484,7 @@ func (tauo *TargetAreaUpdateOne) sqlSave(ctx context.Context) (_node *TargetArea
 	}
 	id, ok := tauo.mutation.ID()
 	if !ok {
-		return nil, &ValidationError{Name: "ID", err: fmt.Errorf("missing TargetArea.ID for update")}
+		return nil, &ValidationError{Name: "id", err: errors.New(`ent: missing "TargetArea.id" for update`)}
 	}
 	_spec.Node.ID.Value = id
 	if fields := tauo.fields; len(fields) > 0 {

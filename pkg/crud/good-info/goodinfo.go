@@ -48,6 +48,7 @@ func dbRowToInfo(row *ent.GoodInfo) *npool.GoodInfo {
 		Total:              row.Total,
 		Unit:               row.Unit,
 		FeeIDs:             feeIDs,
+		StartAt:            row.StartAt,
 	}
 }
 
@@ -100,6 +101,11 @@ func Create(ctx context.Context, in *npool.CreateGoodRequest) (*npool.CreateGood
 		return nil, xerrors.Errorf("fail get db client: %v", err)
 	}
 
+	startAt := in.GetInfo().GetStartAt()
+	if startAt <= 0 {
+		startAt = uint32(time.Now().Unix())
+	}
+
 	info, err := cli.
 		GoodInfo.
 		Create().
@@ -121,6 +127,7 @@ func Create(ctx context.Context, in *npool.CreateGoodRequest) (*npool.CreateGood
 		SetTotal(in.GetInfo().GetTotal()).
 		SetUnit(in.GetInfo().GetUnit()).
 		SetFeeIds(feeIDs).
+		SetStartAt(startAt).
 		Save(ctx)
 	if err != nil {
 		return nil, xerrors.Errorf("fail to create good: %v", err)

@@ -99,6 +99,14 @@ func (tac *TargetAreaCreate) SetID(u uuid.UUID) *TargetAreaCreate {
 	return tac
 }
 
+// SetNillableID sets the "id" field if the given value is not nil.
+func (tac *TargetAreaCreate) SetNillableID(u *uuid.UUID) *TargetAreaCreate {
+	if u != nil {
+		tac.SetID(*u)
+	}
+	return tac
+}
+
 // Mutation returns the TargetAreaMutation object of the builder.
 func (tac *TargetAreaCreate) Mutation() *TargetAreaMutation {
 	return tac.mutation
@@ -199,29 +207,29 @@ func (tac *TargetAreaCreate) defaults() {
 // check runs all checks and user-defined validators on the builder.
 func (tac *TargetAreaCreate) check() error {
 	if _, ok := tac.mutation.Continent(); !ok {
-		return &ValidationError{Name: "continent", err: errors.New(`ent: missing required field "continent"`)}
+		return &ValidationError{Name: "continent", err: errors.New(`ent: missing required field "TargetArea.continent"`)}
 	}
 	if v, ok := tac.mutation.Continent(); ok {
 		if err := targetarea.ContinentValidator(v); err != nil {
-			return &ValidationError{Name: "continent", err: fmt.Errorf(`ent: validator failed for field "continent": %w`, err)}
+			return &ValidationError{Name: "continent", err: fmt.Errorf(`ent: validator failed for field "TargetArea.continent": %w`, err)}
 		}
 	}
 	if _, ok := tac.mutation.Country(); !ok {
-		return &ValidationError{Name: "country", err: errors.New(`ent: missing required field "country"`)}
+		return &ValidationError{Name: "country", err: errors.New(`ent: missing required field "TargetArea.country"`)}
 	}
 	if v, ok := tac.mutation.Country(); ok {
 		if err := targetarea.CountryValidator(v); err != nil {
-			return &ValidationError{Name: "country", err: fmt.Errorf(`ent: validator failed for field "country": %w`, err)}
+			return &ValidationError{Name: "country", err: fmt.Errorf(`ent: validator failed for field "TargetArea.country": %w`, err)}
 		}
 	}
 	if _, ok := tac.mutation.CreateAt(); !ok {
-		return &ValidationError{Name: "create_at", err: errors.New(`ent: missing required field "create_at"`)}
+		return &ValidationError{Name: "create_at", err: errors.New(`ent: missing required field "TargetArea.create_at"`)}
 	}
 	if _, ok := tac.mutation.UpdateAt(); !ok {
-		return &ValidationError{Name: "update_at", err: errors.New(`ent: missing required field "update_at"`)}
+		return &ValidationError{Name: "update_at", err: errors.New(`ent: missing required field "TargetArea.update_at"`)}
 	}
 	if _, ok := tac.mutation.DeleteAt(); !ok {
-		return &ValidationError{Name: "delete_at", err: errors.New(`ent: missing required field "delete_at"`)}
+		return &ValidationError{Name: "delete_at", err: errors.New(`ent: missing required field "TargetArea.delete_at"`)}
 	}
 	return nil
 }
@@ -235,7 +243,11 @@ func (tac *TargetAreaCreate) sqlSave(ctx context.Context) (*TargetArea, error) {
 		return nil, err
 	}
 	if _spec.ID.Value != nil {
-		_node.ID = _spec.ID.Value.(uuid.UUID)
+		if id, ok := _spec.ID.Value.(*uuid.UUID); ok {
+			_node.ID = *id
+		} else if err := _node.ID.Scan(_spec.ID.Value); err != nil {
+			return nil, err
+		}
 	}
 	return _node, nil
 }
@@ -254,7 +266,7 @@ func (tac *TargetAreaCreate) createSpec() (*TargetArea, *sqlgraph.CreateSpec) {
 	_spec.OnConflict = tac.conflict
 	if id, ok := tac.mutation.ID(); ok {
 		_node.ID = id
-		_spec.ID.Value = id
+		_spec.ID.Value = &id
 	}
 	if value, ok := tac.mutation.Continent(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
@@ -386,6 +398,12 @@ func (u *TargetAreaUpsert) UpdateCreateAt() *TargetAreaUpsert {
 	return u
 }
 
+// AddCreateAt adds v to the "create_at" field.
+func (u *TargetAreaUpsert) AddCreateAt(v int64) *TargetAreaUpsert {
+	u.Add(targetarea.FieldCreateAt, v)
+	return u
+}
+
 // SetUpdateAt sets the "update_at" field.
 func (u *TargetAreaUpsert) SetUpdateAt(v int64) *TargetAreaUpsert {
 	u.Set(targetarea.FieldUpdateAt, v)
@@ -395,6 +413,12 @@ func (u *TargetAreaUpsert) SetUpdateAt(v int64) *TargetAreaUpsert {
 // UpdateUpdateAt sets the "update_at" field to the value that was provided on create.
 func (u *TargetAreaUpsert) UpdateUpdateAt() *TargetAreaUpsert {
 	u.SetExcluded(targetarea.FieldUpdateAt)
+	return u
+}
+
+// AddUpdateAt adds v to the "update_at" field.
+func (u *TargetAreaUpsert) AddUpdateAt(v int64) *TargetAreaUpsert {
+	u.Add(targetarea.FieldUpdateAt, v)
 	return u
 }
 
@@ -410,7 +434,13 @@ func (u *TargetAreaUpsert) UpdateDeleteAt() *TargetAreaUpsert {
 	return u
 }
 
-// UpdateNewValues updates the fields using the new values that were set on create except the ID field.
+// AddDeleteAt adds v to the "delete_at" field.
+func (u *TargetAreaUpsert) AddDeleteAt(v int64) *TargetAreaUpsert {
+	u.Add(targetarea.FieldDeleteAt, v)
+	return u
+}
+
+// UpdateNewValues updates the mutable fields using the new values that were set on create except the ID field.
 // Using this option is equivalent to using:
 //
 //	client.TargetArea.Create().
@@ -495,6 +525,13 @@ func (u *TargetAreaUpsertOne) SetCreateAt(v int64) *TargetAreaUpsertOne {
 	})
 }
 
+// AddCreateAt adds v to the "create_at" field.
+func (u *TargetAreaUpsertOne) AddCreateAt(v int64) *TargetAreaUpsertOne {
+	return u.Update(func(s *TargetAreaUpsert) {
+		s.AddCreateAt(v)
+	})
+}
+
 // UpdateCreateAt sets the "create_at" field to the value that was provided on create.
 func (u *TargetAreaUpsertOne) UpdateCreateAt() *TargetAreaUpsertOne {
 	return u.Update(func(s *TargetAreaUpsert) {
@@ -509,6 +546,13 @@ func (u *TargetAreaUpsertOne) SetUpdateAt(v int64) *TargetAreaUpsertOne {
 	})
 }
 
+// AddUpdateAt adds v to the "update_at" field.
+func (u *TargetAreaUpsertOne) AddUpdateAt(v int64) *TargetAreaUpsertOne {
+	return u.Update(func(s *TargetAreaUpsert) {
+		s.AddUpdateAt(v)
+	})
+}
+
 // UpdateUpdateAt sets the "update_at" field to the value that was provided on create.
 func (u *TargetAreaUpsertOne) UpdateUpdateAt() *TargetAreaUpsertOne {
 	return u.Update(func(s *TargetAreaUpsert) {
@@ -520,6 +564,13 @@ func (u *TargetAreaUpsertOne) UpdateUpdateAt() *TargetAreaUpsertOne {
 func (u *TargetAreaUpsertOne) SetDeleteAt(v int64) *TargetAreaUpsertOne {
 	return u.Update(func(s *TargetAreaUpsert) {
 		s.SetDeleteAt(v)
+	})
+}
+
+// AddDeleteAt adds v to the "delete_at" field.
+func (u *TargetAreaUpsertOne) AddDeleteAt(v int64) *TargetAreaUpsertOne {
+	return u.Update(func(s *TargetAreaUpsert) {
+		s.AddDeleteAt(v)
 	})
 }
 
@@ -693,7 +744,7 @@ type TargetAreaUpsertBulk struct {
 	create *TargetAreaCreateBulk
 }
 
-// UpdateNewValues updates the fields using the new values that
+// UpdateNewValues updates the mutable fields using the new values that
 // were set on create. Using this option is equivalent to using:
 //
 //	client.TargetArea.Create().
@@ -781,6 +832,13 @@ func (u *TargetAreaUpsertBulk) SetCreateAt(v int64) *TargetAreaUpsertBulk {
 	})
 }
 
+// AddCreateAt adds v to the "create_at" field.
+func (u *TargetAreaUpsertBulk) AddCreateAt(v int64) *TargetAreaUpsertBulk {
+	return u.Update(func(s *TargetAreaUpsert) {
+		s.AddCreateAt(v)
+	})
+}
+
 // UpdateCreateAt sets the "create_at" field to the value that was provided on create.
 func (u *TargetAreaUpsertBulk) UpdateCreateAt() *TargetAreaUpsertBulk {
 	return u.Update(func(s *TargetAreaUpsert) {
@@ -795,6 +853,13 @@ func (u *TargetAreaUpsertBulk) SetUpdateAt(v int64) *TargetAreaUpsertBulk {
 	})
 }
 
+// AddUpdateAt adds v to the "update_at" field.
+func (u *TargetAreaUpsertBulk) AddUpdateAt(v int64) *TargetAreaUpsertBulk {
+	return u.Update(func(s *TargetAreaUpsert) {
+		s.AddUpdateAt(v)
+	})
+}
+
 // UpdateUpdateAt sets the "update_at" field to the value that was provided on create.
 func (u *TargetAreaUpsertBulk) UpdateUpdateAt() *TargetAreaUpsertBulk {
 	return u.Update(func(s *TargetAreaUpsert) {
@@ -806,6 +871,13 @@ func (u *TargetAreaUpsertBulk) UpdateUpdateAt() *TargetAreaUpsertBulk {
 func (u *TargetAreaUpsertBulk) SetDeleteAt(v int64) *TargetAreaUpsertBulk {
 	return u.Update(func(s *TargetAreaUpsert) {
 		s.SetDeleteAt(v)
+	})
+}
+
+// AddDeleteAt adds v to the "delete_at" field.
+func (u *TargetAreaUpsertBulk) AddDeleteAt(v int64) *TargetAreaUpsertBulk {
+	return u.Update(func(s *TargetAreaUpsert) {
+		s.AddDeleteAt(v)
 	})
 }
 

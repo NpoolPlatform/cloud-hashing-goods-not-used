@@ -29,6 +29,14 @@ func (gcc *GoodCommentCreate) SetReplyToID(u uuid.UUID) *GoodCommentCreate {
 	return gcc
 }
 
+// SetNillableReplyToID sets the "reply_to_id" field if the given value is not nil.
+func (gcc *GoodCommentCreate) SetNillableReplyToID(u *uuid.UUID) *GoodCommentCreate {
+	if u != nil {
+		gcc.SetReplyToID(*u)
+	}
+	return gcc
+}
+
 // SetUserID sets the "user_id" field.
 func (gcc *GoodCommentCreate) SetUserID(u uuid.UUID) *GoodCommentCreate {
 	gcc.mutation.SetUserID(u)
@@ -112,6 +120,14 @@ func (gcc *GoodCommentCreate) SetNillableDeleteAt(i *int64) *GoodCommentCreate {
 // SetID sets the "id" field.
 func (gcc *GoodCommentCreate) SetID(u uuid.UUID) *GoodCommentCreate {
 	gcc.mutation.SetID(u)
+	return gcc
+}
+
+// SetNillableID sets the "id" field if the given value is not nil.
+func (gcc *GoodCommentCreate) SetNillableID(u *uuid.UUID) *GoodCommentCreate {
+	if u != nil {
+		gcc.SetID(*u)
+	}
 	return gcc
 }
 
@@ -211,28 +227,28 @@ func (gcc *GoodCommentCreate) defaults() {
 // check runs all checks and user-defined validators on the builder.
 func (gcc *GoodCommentCreate) check() error {
 	if _, ok := gcc.mutation.UserID(); !ok {
-		return &ValidationError{Name: "user_id", err: errors.New(`ent: missing required field "user_id"`)}
+		return &ValidationError{Name: "user_id", err: errors.New(`ent: missing required field "GoodComment.user_id"`)}
 	}
 	if _, ok := gcc.mutation.AppID(); !ok {
-		return &ValidationError{Name: "app_id", err: errors.New(`ent: missing required field "app_id"`)}
+		return &ValidationError{Name: "app_id", err: errors.New(`ent: missing required field "GoodComment.app_id"`)}
 	}
 	if _, ok := gcc.mutation.GoodID(); !ok {
-		return &ValidationError{Name: "good_id", err: errors.New(`ent: missing required field "good_id"`)}
+		return &ValidationError{Name: "good_id", err: errors.New(`ent: missing required field "GoodComment.good_id"`)}
 	}
 	if _, ok := gcc.mutation.OrderID(); !ok {
-		return &ValidationError{Name: "order_id", err: errors.New(`ent: missing required field "order_id"`)}
+		return &ValidationError{Name: "order_id", err: errors.New(`ent: missing required field "GoodComment.order_id"`)}
 	}
 	if _, ok := gcc.mutation.Content(); !ok {
-		return &ValidationError{Name: "content", err: errors.New(`ent: missing required field "content"`)}
+		return &ValidationError{Name: "content", err: errors.New(`ent: missing required field "GoodComment.content"`)}
 	}
 	if _, ok := gcc.mutation.CreateAt(); !ok {
-		return &ValidationError{Name: "create_at", err: errors.New(`ent: missing required field "create_at"`)}
+		return &ValidationError{Name: "create_at", err: errors.New(`ent: missing required field "GoodComment.create_at"`)}
 	}
 	if _, ok := gcc.mutation.UpdateAt(); !ok {
-		return &ValidationError{Name: "update_at", err: errors.New(`ent: missing required field "update_at"`)}
+		return &ValidationError{Name: "update_at", err: errors.New(`ent: missing required field "GoodComment.update_at"`)}
 	}
 	if _, ok := gcc.mutation.DeleteAt(); !ok {
-		return &ValidationError{Name: "delete_at", err: errors.New(`ent: missing required field "delete_at"`)}
+		return &ValidationError{Name: "delete_at", err: errors.New(`ent: missing required field "GoodComment.delete_at"`)}
 	}
 	return nil
 }
@@ -246,7 +262,11 @@ func (gcc *GoodCommentCreate) sqlSave(ctx context.Context) (*GoodComment, error)
 		return nil, err
 	}
 	if _spec.ID.Value != nil {
-		_node.ID = _spec.ID.Value.(uuid.UUID)
+		if id, ok := _spec.ID.Value.(*uuid.UUID); ok {
+			_node.ID = *id
+		} else if err := _node.ID.Scan(_spec.ID.Value); err != nil {
+			return nil, err
+		}
 	}
 	return _node, nil
 }
@@ -265,7 +285,7 @@ func (gcc *GoodCommentCreate) createSpec() (*GoodComment, *sqlgraph.CreateSpec) 
 	_spec.OnConflict = gcc.conflict
 	if id, ok := gcc.mutation.ID(); ok {
 		_node.ID = id
-		_spec.ID.Value = id
+		_spec.ID.Value = &id
 	}
 	if value, ok := gcc.mutation.ReplyToID(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
@@ -483,6 +503,12 @@ func (u *GoodCommentUpsert) UpdateCreateAt() *GoodCommentUpsert {
 	return u
 }
 
+// AddCreateAt adds v to the "create_at" field.
+func (u *GoodCommentUpsert) AddCreateAt(v int64) *GoodCommentUpsert {
+	u.Add(goodcomment.FieldCreateAt, v)
+	return u
+}
+
 // SetUpdateAt sets the "update_at" field.
 func (u *GoodCommentUpsert) SetUpdateAt(v int64) *GoodCommentUpsert {
 	u.Set(goodcomment.FieldUpdateAt, v)
@@ -492,6 +518,12 @@ func (u *GoodCommentUpsert) SetUpdateAt(v int64) *GoodCommentUpsert {
 // UpdateUpdateAt sets the "update_at" field to the value that was provided on create.
 func (u *GoodCommentUpsert) UpdateUpdateAt() *GoodCommentUpsert {
 	u.SetExcluded(goodcomment.FieldUpdateAt)
+	return u
+}
+
+// AddUpdateAt adds v to the "update_at" field.
+func (u *GoodCommentUpsert) AddUpdateAt(v int64) *GoodCommentUpsert {
+	u.Add(goodcomment.FieldUpdateAt, v)
 	return u
 }
 
@@ -507,7 +539,13 @@ func (u *GoodCommentUpsert) UpdateDeleteAt() *GoodCommentUpsert {
 	return u
 }
 
-// UpdateNewValues updates the fields using the new values that were set on create except the ID field.
+// AddDeleteAt adds v to the "delete_at" field.
+func (u *GoodCommentUpsert) AddDeleteAt(v int64) *GoodCommentUpsert {
+	u.Add(goodcomment.FieldDeleteAt, v)
+	return u
+}
+
+// UpdateNewValues updates the mutable fields using the new values that were set on create except the ID field.
 // Using this option is equivalent to using:
 //
 //	client.GoodComment.Create().
@@ -655,6 +693,13 @@ func (u *GoodCommentUpsertOne) SetCreateAt(v int64) *GoodCommentUpsertOne {
 	})
 }
 
+// AddCreateAt adds v to the "create_at" field.
+func (u *GoodCommentUpsertOne) AddCreateAt(v int64) *GoodCommentUpsertOne {
+	return u.Update(func(s *GoodCommentUpsert) {
+		s.AddCreateAt(v)
+	})
+}
+
 // UpdateCreateAt sets the "create_at" field to the value that was provided on create.
 func (u *GoodCommentUpsertOne) UpdateCreateAt() *GoodCommentUpsertOne {
 	return u.Update(func(s *GoodCommentUpsert) {
@@ -669,6 +714,13 @@ func (u *GoodCommentUpsertOne) SetUpdateAt(v int64) *GoodCommentUpsertOne {
 	})
 }
 
+// AddUpdateAt adds v to the "update_at" field.
+func (u *GoodCommentUpsertOne) AddUpdateAt(v int64) *GoodCommentUpsertOne {
+	return u.Update(func(s *GoodCommentUpsert) {
+		s.AddUpdateAt(v)
+	})
+}
+
 // UpdateUpdateAt sets the "update_at" field to the value that was provided on create.
 func (u *GoodCommentUpsertOne) UpdateUpdateAt() *GoodCommentUpsertOne {
 	return u.Update(func(s *GoodCommentUpsert) {
@@ -680,6 +732,13 @@ func (u *GoodCommentUpsertOne) UpdateUpdateAt() *GoodCommentUpsertOne {
 func (u *GoodCommentUpsertOne) SetDeleteAt(v int64) *GoodCommentUpsertOne {
 	return u.Update(func(s *GoodCommentUpsert) {
 		s.SetDeleteAt(v)
+	})
+}
+
+// AddDeleteAt adds v to the "delete_at" field.
+func (u *GoodCommentUpsertOne) AddDeleteAt(v int64) *GoodCommentUpsertOne {
+	return u.Update(func(s *GoodCommentUpsert) {
+		s.AddDeleteAt(v)
 	})
 }
 
@@ -853,7 +912,7 @@ type GoodCommentUpsertBulk struct {
 	create *GoodCommentCreateBulk
 }
 
-// UpdateNewValues updates the fields using the new values that
+// UpdateNewValues updates the mutable fields using the new values that
 // were set on create. Using this option is equivalent to using:
 //
 //	client.GoodComment.Create().
@@ -1004,6 +1063,13 @@ func (u *GoodCommentUpsertBulk) SetCreateAt(v int64) *GoodCommentUpsertBulk {
 	})
 }
 
+// AddCreateAt adds v to the "create_at" field.
+func (u *GoodCommentUpsertBulk) AddCreateAt(v int64) *GoodCommentUpsertBulk {
+	return u.Update(func(s *GoodCommentUpsert) {
+		s.AddCreateAt(v)
+	})
+}
+
 // UpdateCreateAt sets the "create_at" field to the value that was provided on create.
 func (u *GoodCommentUpsertBulk) UpdateCreateAt() *GoodCommentUpsertBulk {
 	return u.Update(func(s *GoodCommentUpsert) {
@@ -1018,6 +1084,13 @@ func (u *GoodCommentUpsertBulk) SetUpdateAt(v int64) *GoodCommentUpsertBulk {
 	})
 }
 
+// AddUpdateAt adds v to the "update_at" field.
+func (u *GoodCommentUpsertBulk) AddUpdateAt(v int64) *GoodCommentUpsertBulk {
+	return u.Update(func(s *GoodCommentUpsert) {
+		s.AddUpdateAt(v)
+	})
+}
+
 // UpdateUpdateAt sets the "update_at" field to the value that was provided on create.
 func (u *GoodCommentUpsertBulk) UpdateUpdateAt() *GoodCommentUpsertBulk {
 	return u.Update(func(s *GoodCommentUpsert) {
@@ -1029,6 +1102,13 @@ func (u *GoodCommentUpsertBulk) UpdateUpdateAt() *GoodCommentUpsertBulk {
 func (u *GoodCommentUpsertBulk) SetDeleteAt(v int64) *GoodCommentUpsertBulk {
 	return u.Update(func(s *GoodCommentUpsert) {
 		s.SetDeleteAt(v)
+	})
+}
+
+// AddDeleteAt adds v to the "delete_at" field.
+func (u *GoodCommentUpsertBulk) AddDeleteAt(v int64) *GoodCommentUpsertBulk {
+	return u.Update(func(s *GoodCommentUpsert) {
+		s.AddDeleteAt(v)
 	})
 }
 

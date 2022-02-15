@@ -4,6 +4,7 @@ package ent
 
 import (
 	"context"
+	"errors"
 	"fmt"
 
 	"entgo.io/ent/dialect/sql"
@@ -85,7 +86,7 @@ func (giu *GoodInfoUpdate) SetDeliveryAt(u uint32) *GoodInfoUpdate {
 }
 
 // AddDeliveryAt adds u to the "delivery_at" field.
-func (giu *GoodInfoUpdate) AddDeliveryAt(u uint32) *GoodInfoUpdate {
+func (giu *GoodInfoUpdate) AddDeliveryAt(u int32) *GoodInfoUpdate {
 	giu.mutation.AddDeliveryAt(u)
 	return giu
 }
@@ -110,7 +111,7 @@ func (giu *GoodInfoUpdate) SetPrice(u uint64) *GoodInfoUpdate {
 }
 
 // AddPrice adds u to the "price" field.
-func (giu *GoodInfoUpdate) AddPrice(u uint64) *GoodInfoUpdate {
+func (giu *GoodInfoUpdate) AddPrice(u int64) *GoodInfoUpdate {
 	giu.mutation.AddPrice(u)
 	return giu
 }
@@ -157,6 +158,19 @@ func (giu *GoodInfoUpdate) SetFeeIds(u []uuid.UUID) *GoodInfoUpdate {
 	return giu
 }
 
+// SetStartAt sets the "start_at" field.
+func (giu *GoodInfoUpdate) SetStartAt(u uint32) *GoodInfoUpdate {
+	giu.mutation.ResetStartAt()
+	giu.mutation.SetStartAt(u)
+	return giu
+}
+
+// AddStartAt adds u to the "start_at" field.
+func (giu *GoodInfoUpdate) AddStartAt(u int32) *GoodInfoUpdate {
+	giu.mutation.AddStartAt(u)
+	return giu
+}
+
 // SetTotal sets the "total" field.
 func (giu *GoodInfoUpdate) SetTotal(i int32) *GoodInfoUpdate {
 	giu.mutation.ResetTotal()
@@ -186,7 +200,7 @@ func (giu *GoodInfoUpdate) SetNillableCreateAt(u *uint32) *GoodInfoUpdate {
 }
 
 // AddCreateAt adds u to the "create_at" field.
-func (giu *GoodInfoUpdate) AddCreateAt(u uint32) *GoodInfoUpdate {
+func (giu *GoodInfoUpdate) AddCreateAt(u int32) *GoodInfoUpdate {
 	giu.mutation.AddCreateAt(u)
 	return giu
 }
@@ -199,7 +213,7 @@ func (giu *GoodInfoUpdate) SetUpdateAt(u uint32) *GoodInfoUpdate {
 }
 
 // AddUpdateAt adds u to the "update_at" field.
-func (giu *GoodInfoUpdate) AddUpdateAt(u uint32) *GoodInfoUpdate {
+func (giu *GoodInfoUpdate) AddUpdateAt(u int32) *GoodInfoUpdate {
 	giu.mutation.AddUpdateAt(u)
 	return giu
 }
@@ -220,7 +234,7 @@ func (giu *GoodInfoUpdate) SetNillableDeleteAt(u *uint32) *GoodInfoUpdate {
 }
 
 // AddDeleteAt adds u to the "delete_at" field.
-func (giu *GoodInfoUpdate) AddDeleteAt(u uint32) *GoodInfoUpdate {
+func (giu *GoodInfoUpdate) AddDeleteAt(u int32) *GoodInfoUpdate {
 	giu.mutation.AddDeleteAt(u)
 	return giu
 }
@@ -303,27 +317,27 @@ func (giu *GoodInfoUpdate) defaults() {
 func (giu *GoodInfoUpdate) check() error {
 	if v, ok := giu.mutation.UnitPower(); ok {
 		if err := goodinfo.UnitPowerValidator(v); err != nil {
-			return &ValidationError{Name: "unit_power", err: fmt.Errorf("ent: validator failed for field \"unit_power\": %w", err)}
+			return &ValidationError{Name: "unit_power", err: fmt.Errorf(`ent: validator failed for field "GoodInfo.unit_power": %w`, err)}
 		}
 	}
 	if v, ok := giu.mutation.DurationDays(); ok {
 		if err := goodinfo.DurationDaysValidator(v); err != nil {
-			return &ValidationError{Name: "duration_days", err: fmt.Errorf("ent: validator failed for field \"duration_days\": %w", err)}
+			return &ValidationError{Name: "duration_days", err: fmt.Errorf(`ent: validator failed for field "GoodInfo.duration_days": %w`, err)}
 		}
 	}
 	if v, ok := giu.mutation.Price(); ok {
 		if err := goodinfo.PriceValidator(v); err != nil {
-			return &ValidationError{Name: "price", err: fmt.Errorf("ent: validator failed for field \"price\": %w", err)}
+			return &ValidationError{Name: "price", err: fmt.Errorf(`ent: validator failed for field "GoodInfo.price": %w`, err)}
 		}
 	}
 	if v, ok := giu.mutation.BenefitType(); ok {
 		if err := goodinfo.BenefitTypeValidator(v); err != nil {
-			return &ValidationError{Name: "benefit_type", err: fmt.Errorf("ent: validator failed for field \"benefit_type\": %w", err)}
+			return &ValidationError{Name: "benefit_type", err: fmt.Errorf(`ent: validator failed for field "GoodInfo.benefit_type": %w`, err)}
 		}
 	}
 	if v, ok := giu.mutation.Total(); ok {
 		if err := goodinfo.TotalValidator(v); err != nil {
-			return &ValidationError{Name: "total", err: fmt.Errorf("ent: validator failed for field \"total\": %w", err)}
+			return &ValidationError{Name: "total", err: fmt.Errorf(`ent: validator failed for field "GoodInfo.total": %w`, err)}
 		}
 	}
 	return nil
@@ -494,6 +508,20 @@ func (giu *GoodInfoUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			Column: goodinfo.FieldFeeIds,
 		})
 	}
+	if value, ok := giu.mutation.StartAt(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeUint32,
+			Value:  value,
+			Column: goodinfo.FieldStartAt,
+		})
+	}
+	if value, ok := giu.mutation.AddedStartAt(); ok {
+		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
+			Type:   field.TypeUint32,
+			Value:  value,
+			Column: goodinfo.FieldStartAt,
+		})
+	}
 	if value, ok := giu.mutation.Total(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeInt32,
@@ -627,7 +655,7 @@ func (giuo *GoodInfoUpdateOne) SetDeliveryAt(u uint32) *GoodInfoUpdateOne {
 }
 
 // AddDeliveryAt adds u to the "delivery_at" field.
-func (giuo *GoodInfoUpdateOne) AddDeliveryAt(u uint32) *GoodInfoUpdateOne {
+func (giuo *GoodInfoUpdateOne) AddDeliveryAt(u int32) *GoodInfoUpdateOne {
 	giuo.mutation.AddDeliveryAt(u)
 	return giuo
 }
@@ -652,7 +680,7 @@ func (giuo *GoodInfoUpdateOne) SetPrice(u uint64) *GoodInfoUpdateOne {
 }
 
 // AddPrice adds u to the "price" field.
-func (giuo *GoodInfoUpdateOne) AddPrice(u uint64) *GoodInfoUpdateOne {
+func (giuo *GoodInfoUpdateOne) AddPrice(u int64) *GoodInfoUpdateOne {
 	giuo.mutation.AddPrice(u)
 	return giuo
 }
@@ -699,6 +727,19 @@ func (giuo *GoodInfoUpdateOne) SetFeeIds(u []uuid.UUID) *GoodInfoUpdateOne {
 	return giuo
 }
 
+// SetStartAt sets the "start_at" field.
+func (giuo *GoodInfoUpdateOne) SetStartAt(u uint32) *GoodInfoUpdateOne {
+	giuo.mutation.ResetStartAt()
+	giuo.mutation.SetStartAt(u)
+	return giuo
+}
+
+// AddStartAt adds u to the "start_at" field.
+func (giuo *GoodInfoUpdateOne) AddStartAt(u int32) *GoodInfoUpdateOne {
+	giuo.mutation.AddStartAt(u)
+	return giuo
+}
+
 // SetTotal sets the "total" field.
 func (giuo *GoodInfoUpdateOne) SetTotal(i int32) *GoodInfoUpdateOne {
 	giuo.mutation.ResetTotal()
@@ -728,7 +769,7 @@ func (giuo *GoodInfoUpdateOne) SetNillableCreateAt(u *uint32) *GoodInfoUpdateOne
 }
 
 // AddCreateAt adds u to the "create_at" field.
-func (giuo *GoodInfoUpdateOne) AddCreateAt(u uint32) *GoodInfoUpdateOne {
+func (giuo *GoodInfoUpdateOne) AddCreateAt(u int32) *GoodInfoUpdateOne {
 	giuo.mutation.AddCreateAt(u)
 	return giuo
 }
@@ -741,7 +782,7 @@ func (giuo *GoodInfoUpdateOne) SetUpdateAt(u uint32) *GoodInfoUpdateOne {
 }
 
 // AddUpdateAt adds u to the "update_at" field.
-func (giuo *GoodInfoUpdateOne) AddUpdateAt(u uint32) *GoodInfoUpdateOne {
+func (giuo *GoodInfoUpdateOne) AddUpdateAt(u int32) *GoodInfoUpdateOne {
 	giuo.mutation.AddUpdateAt(u)
 	return giuo
 }
@@ -762,7 +803,7 @@ func (giuo *GoodInfoUpdateOne) SetNillableDeleteAt(u *uint32) *GoodInfoUpdateOne
 }
 
 // AddDeleteAt adds u to the "delete_at" field.
-func (giuo *GoodInfoUpdateOne) AddDeleteAt(u uint32) *GoodInfoUpdateOne {
+func (giuo *GoodInfoUpdateOne) AddDeleteAt(u int32) *GoodInfoUpdateOne {
 	giuo.mutation.AddDeleteAt(u)
 	return giuo
 }
@@ -852,27 +893,27 @@ func (giuo *GoodInfoUpdateOne) defaults() {
 func (giuo *GoodInfoUpdateOne) check() error {
 	if v, ok := giuo.mutation.UnitPower(); ok {
 		if err := goodinfo.UnitPowerValidator(v); err != nil {
-			return &ValidationError{Name: "unit_power", err: fmt.Errorf("ent: validator failed for field \"unit_power\": %w", err)}
+			return &ValidationError{Name: "unit_power", err: fmt.Errorf(`ent: validator failed for field "GoodInfo.unit_power": %w`, err)}
 		}
 	}
 	if v, ok := giuo.mutation.DurationDays(); ok {
 		if err := goodinfo.DurationDaysValidator(v); err != nil {
-			return &ValidationError{Name: "duration_days", err: fmt.Errorf("ent: validator failed for field \"duration_days\": %w", err)}
+			return &ValidationError{Name: "duration_days", err: fmt.Errorf(`ent: validator failed for field "GoodInfo.duration_days": %w`, err)}
 		}
 	}
 	if v, ok := giuo.mutation.Price(); ok {
 		if err := goodinfo.PriceValidator(v); err != nil {
-			return &ValidationError{Name: "price", err: fmt.Errorf("ent: validator failed for field \"price\": %w", err)}
+			return &ValidationError{Name: "price", err: fmt.Errorf(`ent: validator failed for field "GoodInfo.price": %w`, err)}
 		}
 	}
 	if v, ok := giuo.mutation.BenefitType(); ok {
 		if err := goodinfo.BenefitTypeValidator(v); err != nil {
-			return &ValidationError{Name: "benefit_type", err: fmt.Errorf("ent: validator failed for field \"benefit_type\": %w", err)}
+			return &ValidationError{Name: "benefit_type", err: fmt.Errorf(`ent: validator failed for field "GoodInfo.benefit_type": %w`, err)}
 		}
 	}
 	if v, ok := giuo.mutation.Total(); ok {
 		if err := goodinfo.TotalValidator(v); err != nil {
-			return &ValidationError{Name: "total", err: fmt.Errorf("ent: validator failed for field \"total\": %w", err)}
+			return &ValidationError{Name: "total", err: fmt.Errorf(`ent: validator failed for field "GoodInfo.total": %w`, err)}
 		}
 	}
 	return nil
@@ -891,7 +932,7 @@ func (giuo *GoodInfoUpdateOne) sqlSave(ctx context.Context) (_node *GoodInfo, er
 	}
 	id, ok := giuo.mutation.ID()
 	if !ok {
-		return nil, &ValidationError{Name: "ID", err: fmt.Errorf("missing GoodInfo.ID for update")}
+		return nil, &ValidationError{Name: "id", err: errors.New(`ent: missing "GoodInfo.id" for update`)}
 	}
 	_spec.Node.ID.Value = id
 	if fields := giuo.fields; len(fields) > 0 {
@@ -1058,6 +1099,20 @@ func (giuo *GoodInfoUpdateOne) sqlSave(ctx context.Context) (_node *GoodInfo, er
 			Type:   field.TypeJSON,
 			Value:  value,
 			Column: goodinfo.FieldFeeIds,
+		})
+	}
+	if value, ok := giuo.mutation.StartAt(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeUint32,
+			Value:  value,
+			Column: goodinfo.FieldStartAt,
+		})
+	}
+	if value, ok := giuo.mutation.AddedStartAt(); ok {
+		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
+			Type:   field.TypeUint32,
+			Value:  value,
+			Column: goodinfo.FieldStartAt,
 		})
 	}
 	if value, ok := giuo.mutation.Total(); ok {

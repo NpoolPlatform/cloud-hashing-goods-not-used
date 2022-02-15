@@ -337,6 +337,10 @@ func (ftq *FeeTypeQuery) sqlAll(ctx context.Context) ([]*FeeType, error) {
 
 func (ftq *FeeTypeQuery) sqlCount(ctx context.Context) (int, error) {
 	_spec := ftq.querySpec()
+	_spec.Node.Columns = ftq.fields
+	if len(ftq.fields) > 0 {
+		_spec.Unique = ftq.unique != nil && *ftq.unique
+	}
 	return sqlgraph.CountNodes(ctx, ftq.driver, _spec)
 }
 
@@ -407,6 +411,9 @@ func (ftq *FeeTypeQuery) sqlQuery(ctx context.Context) *sql.Selector {
 	if ftq.sql != nil {
 		selector = ftq.sql
 		selector.Select(selector.Columns(columns...)...)
+	}
+	if ftq.unique != nil && *ftq.unique {
+		selector.Distinct()
 	}
 	for _, p := range ftq.predicates {
 		p(selector)
@@ -686,9 +693,7 @@ func (ftgb *FeeTypeGroupBy) sqlQuery() *sql.Selector {
 		for _, f := range ftgb.fields {
 			columns = append(columns, selector.C(f))
 		}
-		for _, c := range aggregation {
-			columns = append(columns, c)
-		}
+		columns = append(columns, aggregation...)
 		selector.Select(columns...)
 	}
 	return selector.GroupBy(selector.Columns(ftgb.fields...)...)

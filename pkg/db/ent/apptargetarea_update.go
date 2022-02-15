@@ -4,6 +4,7 @@ package ent
 
 import (
 	"context"
+	"errors"
 	"fmt"
 
 	"entgo.io/ent/dialect/sql"
@@ -410,7 +411,7 @@ func (atauo *AppTargetAreaUpdateOne) sqlSave(ctx context.Context) (_node *AppTar
 	}
 	id, ok := atauo.mutation.ID()
 	if !ok {
-		return nil, &ValidationError{Name: "ID", err: fmt.Errorf("missing AppTargetArea.ID for update")}
+		return nil, &ValidationError{Name: "id", err: errors.New(`ent: missing "AppTargetArea.id" for update`)}
 	}
 	_spec.Node.ID.Value = id
 	if fields := atauo.fields; len(fields) > 0 {

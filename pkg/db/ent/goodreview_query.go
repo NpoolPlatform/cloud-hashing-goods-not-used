@@ -337,6 +337,10 @@ func (grq *GoodReviewQuery) sqlAll(ctx context.Context) ([]*GoodReview, error) {
 
 func (grq *GoodReviewQuery) sqlCount(ctx context.Context) (int, error) {
 	_spec := grq.querySpec()
+	_spec.Node.Columns = grq.fields
+	if len(grq.fields) > 0 {
+		_spec.Unique = grq.unique != nil && *grq.unique
+	}
 	return sqlgraph.CountNodes(ctx, grq.driver, _spec)
 }
 
@@ -407,6 +411,9 @@ func (grq *GoodReviewQuery) sqlQuery(ctx context.Context) *sql.Selector {
 	if grq.sql != nil {
 		selector = grq.sql
 		selector.Select(selector.Columns(columns...)...)
+	}
+	if grq.unique != nil && *grq.unique {
+		selector.Distinct()
 	}
 	for _, p := range grq.predicates {
 		p(selector)
@@ -686,9 +693,7 @@ func (grgb *GoodReviewGroupBy) sqlQuery() *sql.Selector {
 		for _, f := range grgb.fields {
 			columns = append(columns, selector.C(f))
 		}
-		for _, c := range aggregation {
-			columns = append(columns, c)
-		}
+		columns = append(columns, aggregation...)
 		selector.Select(columns...)
 	}
 	return selector.GroupBy(selector.Columns(grgb.fields...)...)

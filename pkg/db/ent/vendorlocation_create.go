@@ -127,6 +127,14 @@ func (vlc *VendorLocationCreate) SetID(u uuid.UUID) *VendorLocationCreate {
 	return vlc
 }
 
+// SetNillableID sets the "id" field if the given value is not nil.
+func (vlc *VendorLocationCreate) SetNillableID(u *uuid.UUID) *VendorLocationCreate {
+	if u != nil {
+		vlc.SetID(*u)
+	}
+	return vlc
+}
+
 // Mutation returns the VendorLocationMutation object of the builder.
 func (vlc *VendorLocationCreate) Mutation() *VendorLocationMutation {
 	return vlc.mutation
@@ -235,45 +243,45 @@ func (vlc *VendorLocationCreate) defaults() {
 // check runs all checks and user-defined validators on the builder.
 func (vlc *VendorLocationCreate) check() error {
 	if _, ok := vlc.mutation.Country(); !ok {
-		return &ValidationError{Name: "country", err: errors.New(`ent: missing required field "country"`)}
+		return &ValidationError{Name: "country", err: errors.New(`ent: missing required field "VendorLocation.country"`)}
 	}
 	if v, ok := vlc.mutation.Country(); ok {
 		if err := vendorlocation.CountryValidator(v); err != nil {
-			return &ValidationError{Name: "country", err: fmt.Errorf(`ent: validator failed for field "country": %w`, err)}
+			return &ValidationError{Name: "country", err: fmt.Errorf(`ent: validator failed for field "VendorLocation.country": %w`, err)}
 		}
 	}
 	if _, ok := vlc.mutation.Province(); !ok {
-		return &ValidationError{Name: "province", err: errors.New(`ent: missing required field "province"`)}
+		return &ValidationError{Name: "province", err: errors.New(`ent: missing required field "VendorLocation.province"`)}
 	}
 	if v, ok := vlc.mutation.Province(); ok {
 		if err := vendorlocation.ProvinceValidator(v); err != nil {
-			return &ValidationError{Name: "province", err: fmt.Errorf(`ent: validator failed for field "province": %w`, err)}
+			return &ValidationError{Name: "province", err: fmt.Errorf(`ent: validator failed for field "VendorLocation.province": %w`, err)}
 		}
 	}
 	if _, ok := vlc.mutation.City(); !ok {
-		return &ValidationError{Name: "city", err: errors.New(`ent: missing required field "city"`)}
+		return &ValidationError{Name: "city", err: errors.New(`ent: missing required field "VendorLocation.city"`)}
 	}
 	if v, ok := vlc.mutation.City(); ok {
 		if err := vendorlocation.CityValidator(v); err != nil {
-			return &ValidationError{Name: "city", err: fmt.Errorf(`ent: validator failed for field "city": %w`, err)}
+			return &ValidationError{Name: "city", err: fmt.Errorf(`ent: validator failed for field "VendorLocation.city": %w`, err)}
 		}
 	}
 	if _, ok := vlc.mutation.Address(); !ok {
-		return &ValidationError{Name: "address", err: errors.New(`ent: missing required field "address"`)}
+		return &ValidationError{Name: "address", err: errors.New(`ent: missing required field "VendorLocation.address"`)}
 	}
 	if v, ok := vlc.mutation.Address(); ok {
 		if err := vendorlocation.AddressValidator(v); err != nil {
-			return &ValidationError{Name: "address", err: fmt.Errorf(`ent: validator failed for field "address": %w`, err)}
+			return &ValidationError{Name: "address", err: fmt.Errorf(`ent: validator failed for field "VendorLocation.address": %w`, err)}
 		}
 	}
 	if _, ok := vlc.mutation.CreateAt(); !ok {
-		return &ValidationError{Name: "create_at", err: errors.New(`ent: missing required field "create_at"`)}
+		return &ValidationError{Name: "create_at", err: errors.New(`ent: missing required field "VendorLocation.create_at"`)}
 	}
 	if _, ok := vlc.mutation.UpdateAt(); !ok {
-		return &ValidationError{Name: "update_at", err: errors.New(`ent: missing required field "update_at"`)}
+		return &ValidationError{Name: "update_at", err: errors.New(`ent: missing required field "VendorLocation.update_at"`)}
 	}
 	if _, ok := vlc.mutation.DeleteAt(); !ok {
-		return &ValidationError{Name: "delete_at", err: errors.New(`ent: missing required field "delete_at"`)}
+		return &ValidationError{Name: "delete_at", err: errors.New(`ent: missing required field "VendorLocation.delete_at"`)}
 	}
 	return nil
 }
@@ -287,7 +295,11 @@ func (vlc *VendorLocationCreate) sqlSave(ctx context.Context) (*VendorLocation, 
 		return nil, err
 	}
 	if _spec.ID.Value != nil {
-		_node.ID = _spec.ID.Value.(uuid.UUID)
+		if id, ok := _spec.ID.Value.(*uuid.UUID); ok {
+			_node.ID = *id
+		} else if err := _node.ID.Scan(_spec.ID.Value); err != nil {
+			return nil, err
+		}
 	}
 	return _node, nil
 }
@@ -306,7 +318,7 @@ func (vlc *VendorLocationCreate) createSpec() (*VendorLocation, *sqlgraph.Create
 	_spec.OnConflict = vlc.conflict
 	if id, ok := vlc.mutation.ID(); ok {
 		_node.ID = id
-		_spec.ID.Value = id
+		_spec.ID.Value = &id
 	}
 	if value, ok := vlc.mutation.Country(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
@@ -478,6 +490,12 @@ func (u *VendorLocationUpsert) UpdateCreateAt() *VendorLocationUpsert {
 	return u
 }
 
+// AddCreateAt adds v to the "create_at" field.
+func (u *VendorLocationUpsert) AddCreateAt(v int64) *VendorLocationUpsert {
+	u.Add(vendorlocation.FieldCreateAt, v)
+	return u
+}
+
 // SetUpdateAt sets the "update_at" field.
 func (u *VendorLocationUpsert) SetUpdateAt(v int64) *VendorLocationUpsert {
 	u.Set(vendorlocation.FieldUpdateAt, v)
@@ -487,6 +505,12 @@ func (u *VendorLocationUpsert) SetUpdateAt(v int64) *VendorLocationUpsert {
 // UpdateUpdateAt sets the "update_at" field to the value that was provided on create.
 func (u *VendorLocationUpsert) UpdateUpdateAt() *VendorLocationUpsert {
 	u.SetExcluded(vendorlocation.FieldUpdateAt)
+	return u
+}
+
+// AddUpdateAt adds v to the "update_at" field.
+func (u *VendorLocationUpsert) AddUpdateAt(v int64) *VendorLocationUpsert {
+	u.Add(vendorlocation.FieldUpdateAt, v)
 	return u
 }
 
@@ -502,7 +526,13 @@ func (u *VendorLocationUpsert) UpdateDeleteAt() *VendorLocationUpsert {
 	return u
 }
 
-// UpdateNewValues updates the fields using the new values that were set on create except the ID field.
+// AddDeleteAt adds v to the "delete_at" field.
+func (u *VendorLocationUpsert) AddDeleteAt(v int64) *VendorLocationUpsert {
+	u.Add(vendorlocation.FieldDeleteAt, v)
+	return u
+}
+
+// UpdateNewValues updates the mutable fields using the new values that were set on create except the ID field.
 // Using this option is equivalent to using:
 //
 //	client.VendorLocation.Create().
@@ -615,6 +645,13 @@ func (u *VendorLocationUpsertOne) SetCreateAt(v int64) *VendorLocationUpsertOne 
 	})
 }
 
+// AddCreateAt adds v to the "create_at" field.
+func (u *VendorLocationUpsertOne) AddCreateAt(v int64) *VendorLocationUpsertOne {
+	return u.Update(func(s *VendorLocationUpsert) {
+		s.AddCreateAt(v)
+	})
+}
+
 // UpdateCreateAt sets the "create_at" field to the value that was provided on create.
 func (u *VendorLocationUpsertOne) UpdateCreateAt() *VendorLocationUpsertOne {
 	return u.Update(func(s *VendorLocationUpsert) {
@@ -629,6 +666,13 @@ func (u *VendorLocationUpsertOne) SetUpdateAt(v int64) *VendorLocationUpsertOne 
 	})
 }
 
+// AddUpdateAt adds v to the "update_at" field.
+func (u *VendorLocationUpsertOne) AddUpdateAt(v int64) *VendorLocationUpsertOne {
+	return u.Update(func(s *VendorLocationUpsert) {
+		s.AddUpdateAt(v)
+	})
+}
+
 // UpdateUpdateAt sets the "update_at" field to the value that was provided on create.
 func (u *VendorLocationUpsertOne) UpdateUpdateAt() *VendorLocationUpsertOne {
 	return u.Update(func(s *VendorLocationUpsert) {
@@ -640,6 +684,13 @@ func (u *VendorLocationUpsertOne) UpdateUpdateAt() *VendorLocationUpsertOne {
 func (u *VendorLocationUpsertOne) SetDeleteAt(v int64) *VendorLocationUpsertOne {
 	return u.Update(func(s *VendorLocationUpsert) {
 		s.SetDeleteAt(v)
+	})
+}
+
+// AddDeleteAt adds v to the "delete_at" field.
+func (u *VendorLocationUpsertOne) AddDeleteAt(v int64) *VendorLocationUpsertOne {
+	return u.Update(func(s *VendorLocationUpsert) {
+		s.AddDeleteAt(v)
 	})
 }
 
@@ -813,7 +864,7 @@ type VendorLocationUpsertBulk struct {
 	create *VendorLocationCreateBulk
 }
 
-// UpdateNewValues updates the fields using the new values that
+// UpdateNewValues updates the mutable fields using the new values that
 // were set on create. Using this option is equivalent to using:
 //
 //	client.VendorLocation.Create().
@@ -929,6 +980,13 @@ func (u *VendorLocationUpsertBulk) SetCreateAt(v int64) *VendorLocationUpsertBul
 	})
 }
 
+// AddCreateAt adds v to the "create_at" field.
+func (u *VendorLocationUpsertBulk) AddCreateAt(v int64) *VendorLocationUpsertBulk {
+	return u.Update(func(s *VendorLocationUpsert) {
+		s.AddCreateAt(v)
+	})
+}
+
 // UpdateCreateAt sets the "create_at" field to the value that was provided on create.
 func (u *VendorLocationUpsertBulk) UpdateCreateAt() *VendorLocationUpsertBulk {
 	return u.Update(func(s *VendorLocationUpsert) {
@@ -943,6 +1001,13 @@ func (u *VendorLocationUpsertBulk) SetUpdateAt(v int64) *VendorLocationUpsertBul
 	})
 }
 
+// AddUpdateAt adds v to the "update_at" field.
+func (u *VendorLocationUpsertBulk) AddUpdateAt(v int64) *VendorLocationUpsertBulk {
+	return u.Update(func(s *VendorLocationUpsert) {
+		s.AddUpdateAt(v)
+	})
+}
+
 // UpdateUpdateAt sets the "update_at" field to the value that was provided on create.
 func (u *VendorLocationUpsertBulk) UpdateUpdateAt() *VendorLocationUpsertBulk {
 	return u.Update(func(s *VendorLocationUpsert) {
@@ -954,6 +1019,13 @@ func (u *VendorLocationUpsertBulk) UpdateUpdateAt() *VendorLocationUpsertBulk {
 func (u *VendorLocationUpsertBulk) SetDeleteAt(v int64) *VendorLocationUpsertBulk {
 	return u.Update(func(s *VendorLocationUpsert) {
 		s.SetDeleteAt(v)
+	})
+}
+
+// AddDeleteAt adds v to the "delete_at" field.
+func (u *VendorLocationUpsertBulk) AddDeleteAt(v int64) *VendorLocationUpsertBulk {
+	return u.Update(func(s *VendorLocationUpsert) {
+		s.AddDeleteAt(v)
 	})
 }
 

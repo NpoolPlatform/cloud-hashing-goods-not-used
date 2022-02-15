@@ -117,6 +117,14 @@ func (grc *GoodReviewCreate) SetID(u uuid.UUID) *GoodReviewCreate {
 	return grc
 }
 
+// SetNillableID sets the "id" field if the given value is not nil.
+func (grc *GoodReviewCreate) SetNillableID(u *uuid.UUID) *GoodReviewCreate {
+	if u != nil {
+		grc.SetID(*u)
+	}
+	return grc
+}
+
 // Mutation returns the GoodReviewMutation object of the builder.
 func (grc *GoodReviewCreate) Mutation() *GoodReviewMutation {
 	return grc.mutation
@@ -217,38 +225,38 @@ func (grc *GoodReviewCreate) defaults() {
 // check runs all checks and user-defined validators on the builder.
 func (grc *GoodReviewCreate) check() error {
 	if _, ok := grc.mutation.EntityType(); !ok {
-		return &ValidationError{Name: "entity_type", err: errors.New(`ent: missing required field "entity_type"`)}
+		return &ValidationError{Name: "entity_type", err: errors.New(`ent: missing required field "GoodReview.entity_type"`)}
 	}
 	if v, ok := grc.mutation.EntityType(); ok {
 		if err := goodreview.EntityTypeValidator(v); err != nil {
-			return &ValidationError{Name: "entity_type", err: fmt.Errorf(`ent: validator failed for field "entity_type": %w`, err)}
+			return &ValidationError{Name: "entity_type", err: fmt.Errorf(`ent: validator failed for field "GoodReview.entity_type": %w`, err)}
 		}
 	}
 	if _, ok := grc.mutation.ReviewedID(); !ok {
-		return &ValidationError{Name: "reviewed_id", err: errors.New(`ent: missing required field "reviewed_id"`)}
+		return &ValidationError{Name: "reviewed_id", err: errors.New(`ent: missing required field "GoodReview.reviewed_id"`)}
 	}
 	if _, ok := grc.mutation.ReviewerID(); !ok {
-		return &ValidationError{Name: "reviewer_id", err: errors.New(`ent: missing required field "reviewer_id"`)}
+		return &ValidationError{Name: "reviewer_id", err: errors.New(`ent: missing required field "GoodReview.reviewer_id"`)}
 	}
 	if _, ok := grc.mutation.State(); !ok {
-		return &ValidationError{Name: "state", err: errors.New(`ent: missing required field "state"`)}
+		return &ValidationError{Name: "state", err: errors.New(`ent: missing required field "GoodReview.state"`)}
 	}
 	if v, ok := grc.mutation.State(); ok {
 		if err := goodreview.StateValidator(v); err != nil {
-			return &ValidationError{Name: "state", err: fmt.Errorf(`ent: validator failed for field "state": %w`, err)}
+			return &ValidationError{Name: "state", err: fmt.Errorf(`ent: validator failed for field "GoodReview.state": %w`, err)}
 		}
 	}
 	if _, ok := grc.mutation.Message(); !ok {
-		return &ValidationError{Name: "message", err: errors.New(`ent: missing required field "message"`)}
+		return &ValidationError{Name: "message", err: errors.New(`ent: missing required field "GoodReview.message"`)}
 	}
 	if _, ok := grc.mutation.CreateAt(); !ok {
-		return &ValidationError{Name: "create_at", err: errors.New(`ent: missing required field "create_at"`)}
+		return &ValidationError{Name: "create_at", err: errors.New(`ent: missing required field "GoodReview.create_at"`)}
 	}
 	if _, ok := grc.mutation.UpdateAt(); !ok {
-		return &ValidationError{Name: "update_at", err: errors.New(`ent: missing required field "update_at"`)}
+		return &ValidationError{Name: "update_at", err: errors.New(`ent: missing required field "GoodReview.update_at"`)}
 	}
 	if _, ok := grc.mutation.DeleteAt(); !ok {
-		return &ValidationError{Name: "delete_at", err: errors.New(`ent: missing required field "delete_at"`)}
+		return &ValidationError{Name: "delete_at", err: errors.New(`ent: missing required field "GoodReview.delete_at"`)}
 	}
 	return nil
 }
@@ -262,7 +270,11 @@ func (grc *GoodReviewCreate) sqlSave(ctx context.Context) (*GoodReview, error) {
 		return nil, err
 	}
 	if _spec.ID.Value != nil {
-		_node.ID = _spec.ID.Value.(uuid.UUID)
+		if id, ok := _spec.ID.Value.(*uuid.UUID); ok {
+			_node.ID = *id
+		} else if err := _node.ID.Scan(_spec.ID.Value); err != nil {
+			return nil, err
+		}
 	}
 	return _node, nil
 }
@@ -281,7 +293,7 @@ func (grc *GoodReviewCreate) createSpec() (*GoodReview, *sqlgraph.CreateSpec) {
 	_spec.OnConflict = grc.conflict
 	if id, ok := grc.mutation.ID(); ok {
 		_node.ID = id
-		_spec.ID.Value = id
+		_spec.ID.Value = &id
 	}
 	if value, ok := grc.mutation.EntityType(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
@@ -473,6 +485,12 @@ func (u *GoodReviewUpsert) UpdateCreateAt() *GoodReviewUpsert {
 	return u
 }
 
+// AddCreateAt adds v to the "create_at" field.
+func (u *GoodReviewUpsert) AddCreateAt(v int64) *GoodReviewUpsert {
+	u.Add(goodreview.FieldCreateAt, v)
+	return u
+}
+
 // SetUpdateAt sets the "update_at" field.
 func (u *GoodReviewUpsert) SetUpdateAt(v int64) *GoodReviewUpsert {
 	u.Set(goodreview.FieldUpdateAt, v)
@@ -482,6 +500,12 @@ func (u *GoodReviewUpsert) SetUpdateAt(v int64) *GoodReviewUpsert {
 // UpdateUpdateAt sets the "update_at" field to the value that was provided on create.
 func (u *GoodReviewUpsert) UpdateUpdateAt() *GoodReviewUpsert {
 	u.SetExcluded(goodreview.FieldUpdateAt)
+	return u
+}
+
+// AddUpdateAt adds v to the "update_at" field.
+func (u *GoodReviewUpsert) AddUpdateAt(v int64) *GoodReviewUpsert {
+	u.Add(goodreview.FieldUpdateAt, v)
 	return u
 }
 
@@ -497,7 +521,13 @@ func (u *GoodReviewUpsert) UpdateDeleteAt() *GoodReviewUpsert {
 	return u
 }
 
-// UpdateNewValues updates the fields using the new values that were set on create except the ID field.
+// AddDeleteAt adds v to the "delete_at" field.
+func (u *GoodReviewUpsert) AddDeleteAt(v int64) *GoodReviewUpsert {
+	u.Add(goodreview.FieldDeleteAt, v)
+	return u
+}
+
+// UpdateNewValues updates the mutable fields using the new values that were set on create except the ID field.
 // Using this option is equivalent to using:
 //
 //	client.GoodReview.Create().
@@ -624,6 +654,13 @@ func (u *GoodReviewUpsertOne) SetCreateAt(v int64) *GoodReviewUpsertOne {
 	})
 }
 
+// AddCreateAt adds v to the "create_at" field.
+func (u *GoodReviewUpsertOne) AddCreateAt(v int64) *GoodReviewUpsertOne {
+	return u.Update(func(s *GoodReviewUpsert) {
+		s.AddCreateAt(v)
+	})
+}
+
 // UpdateCreateAt sets the "create_at" field to the value that was provided on create.
 func (u *GoodReviewUpsertOne) UpdateCreateAt() *GoodReviewUpsertOne {
 	return u.Update(func(s *GoodReviewUpsert) {
@@ -638,6 +675,13 @@ func (u *GoodReviewUpsertOne) SetUpdateAt(v int64) *GoodReviewUpsertOne {
 	})
 }
 
+// AddUpdateAt adds v to the "update_at" field.
+func (u *GoodReviewUpsertOne) AddUpdateAt(v int64) *GoodReviewUpsertOne {
+	return u.Update(func(s *GoodReviewUpsert) {
+		s.AddUpdateAt(v)
+	})
+}
+
 // UpdateUpdateAt sets the "update_at" field to the value that was provided on create.
 func (u *GoodReviewUpsertOne) UpdateUpdateAt() *GoodReviewUpsertOne {
 	return u.Update(func(s *GoodReviewUpsert) {
@@ -649,6 +693,13 @@ func (u *GoodReviewUpsertOne) UpdateUpdateAt() *GoodReviewUpsertOne {
 func (u *GoodReviewUpsertOne) SetDeleteAt(v int64) *GoodReviewUpsertOne {
 	return u.Update(func(s *GoodReviewUpsert) {
 		s.SetDeleteAt(v)
+	})
+}
+
+// AddDeleteAt adds v to the "delete_at" field.
+func (u *GoodReviewUpsertOne) AddDeleteAt(v int64) *GoodReviewUpsertOne {
+	return u.Update(func(s *GoodReviewUpsert) {
+		s.AddDeleteAt(v)
 	})
 }
 
@@ -822,7 +873,7 @@ type GoodReviewUpsertBulk struct {
 	create *GoodReviewCreateBulk
 }
 
-// UpdateNewValues updates the fields using the new values that
+// UpdateNewValues updates the mutable fields using the new values that
 // were set on create. Using this option is equivalent to using:
 //
 //	client.GoodReview.Create().
@@ -952,6 +1003,13 @@ func (u *GoodReviewUpsertBulk) SetCreateAt(v int64) *GoodReviewUpsertBulk {
 	})
 }
 
+// AddCreateAt adds v to the "create_at" field.
+func (u *GoodReviewUpsertBulk) AddCreateAt(v int64) *GoodReviewUpsertBulk {
+	return u.Update(func(s *GoodReviewUpsert) {
+		s.AddCreateAt(v)
+	})
+}
+
 // UpdateCreateAt sets the "create_at" field to the value that was provided on create.
 func (u *GoodReviewUpsertBulk) UpdateCreateAt() *GoodReviewUpsertBulk {
 	return u.Update(func(s *GoodReviewUpsert) {
@@ -966,6 +1024,13 @@ func (u *GoodReviewUpsertBulk) SetUpdateAt(v int64) *GoodReviewUpsertBulk {
 	})
 }
 
+// AddUpdateAt adds v to the "update_at" field.
+func (u *GoodReviewUpsertBulk) AddUpdateAt(v int64) *GoodReviewUpsertBulk {
+	return u.Update(func(s *GoodReviewUpsert) {
+		s.AddUpdateAt(v)
+	})
+}
+
 // UpdateUpdateAt sets the "update_at" field to the value that was provided on create.
 func (u *GoodReviewUpsertBulk) UpdateUpdateAt() *GoodReviewUpsertBulk {
 	return u.Update(func(s *GoodReviewUpsert) {
@@ -977,6 +1042,13 @@ func (u *GoodReviewUpsertBulk) UpdateUpdateAt() *GoodReviewUpsertBulk {
 func (u *GoodReviewUpsertBulk) SetDeleteAt(v int64) *GoodReviewUpsertBulk {
 	return u.Update(func(s *GoodReviewUpsert) {
 		s.SetDeleteAt(v)
+	})
+}
+
+// AddDeleteAt adds v to the "delete_at" field.
+func (u *GoodReviewUpsertBulk) AddDeleteAt(v int64) *GoodReviewUpsertBulk {
+	return u.Update(func(s *GoodReviewUpsert) {
+		s.AddDeleteAt(v)
 	})
 }
 

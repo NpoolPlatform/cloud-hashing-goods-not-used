@@ -89,6 +89,14 @@ func (pcc *PriceCurrencyCreate) SetID(u uuid.UUID) *PriceCurrencyCreate {
 	return pcc
 }
 
+// SetNillableID sets the "id" field if the given value is not nil.
+func (pcc *PriceCurrencyCreate) SetNillableID(u *uuid.UUID) *PriceCurrencyCreate {
+	if u != nil {
+		pcc.SetID(*u)
+	}
+	return pcc
+}
+
 // Mutation returns the PriceCurrencyMutation object of the builder.
 func (pcc *PriceCurrencyCreate) Mutation() *PriceCurrencyMutation {
 	return pcc.mutation
@@ -181,22 +189,22 @@ func (pcc *PriceCurrencyCreate) defaults() {
 // check runs all checks and user-defined validators on the builder.
 func (pcc *PriceCurrencyCreate) check() error {
 	if _, ok := pcc.mutation.Name(); !ok {
-		return &ValidationError{Name: "name", err: errors.New(`ent: missing required field "name"`)}
+		return &ValidationError{Name: "name", err: errors.New(`ent: missing required field "PriceCurrency.name"`)}
 	}
 	if _, ok := pcc.mutation.Unit(); !ok {
-		return &ValidationError{Name: "unit", err: errors.New(`ent: missing required field "unit"`)}
+		return &ValidationError{Name: "unit", err: errors.New(`ent: missing required field "PriceCurrency.unit"`)}
 	}
 	if _, ok := pcc.mutation.Symbol(); !ok {
-		return &ValidationError{Name: "symbol", err: errors.New(`ent: missing required field "symbol"`)}
+		return &ValidationError{Name: "symbol", err: errors.New(`ent: missing required field "PriceCurrency.symbol"`)}
 	}
 	if _, ok := pcc.mutation.CreateAt(); !ok {
-		return &ValidationError{Name: "create_at", err: errors.New(`ent: missing required field "create_at"`)}
+		return &ValidationError{Name: "create_at", err: errors.New(`ent: missing required field "PriceCurrency.create_at"`)}
 	}
 	if _, ok := pcc.mutation.UpdateAt(); !ok {
-		return &ValidationError{Name: "update_at", err: errors.New(`ent: missing required field "update_at"`)}
+		return &ValidationError{Name: "update_at", err: errors.New(`ent: missing required field "PriceCurrency.update_at"`)}
 	}
 	if _, ok := pcc.mutation.DeleteAt(); !ok {
-		return &ValidationError{Name: "delete_at", err: errors.New(`ent: missing required field "delete_at"`)}
+		return &ValidationError{Name: "delete_at", err: errors.New(`ent: missing required field "PriceCurrency.delete_at"`)}
 	}
 	return nil
 }
@@ -210,7 +218,11 @@ func (pcc *PriceCurrencyCreate) sqlSave(ctx context.Context) (*PriceCurrency, er
 		return nil, err
 	}
 	if _spec.ID.Value != nil {
-		_node.ID = _spec.ID.Value.(uuid.UUID)
+		if id, ok := _spec.ID.Value.(*uuid.UUID); ok {
+			_node.ID = *id
+		} else if err := _node.ID.Scan(_spec.ID.Value); err != nil {
+			return nil, err
+		}
 	}
 	return _node, nil
 }
@@ -229,7 +241,7 @@ func (pcc *PriceCurrencyCreate) createSpec() (*PriceCurrency, *sqlgraph.CreateSp
 	_spec.OnConflict = pcc.conflict
 	if id, ok := pcc.mutation.ID(); ok {
 		_node.ID = id
-		_spec.ID.Value = id
+		_spec.ID.Value = &id
 	}
 	if value, ok := pcc.mutation.Name(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
@@ -381,6 +393,12 @@ func (u *PriceCurrencyUpsert) UpdateCreateAt() *PriceCurrencyUpsert {
 	return u
 }
 
+// AddCreateAt adds v to the "create_at" field.
+func (u *PriceCurrencyUpsert) AddCreateAt(v uint32) *PriceCurrencyUpsert {
+	u.Add(pricecurrency.FieldCreateAt, v)
+	return u
+}
+
 // SetUpdateAt sets the "update_at" field.
 func (u *PriceCurrencyUpsert) SetUpdateAt(v uint32) *PriceCurrencyUpsert {
 	u.Set(pricecurrency.FieldUpdateAt, v)
@@ -390,6 +408,12 @@ func (u *PriceCurrencyUpsert) SetUpdateAt(v uint32) *PriceCurrencyUpsert {
 // UpdateUpdateAt sets the "update_at" field to the value that was provided on create.
 func (u *PriceCurrencyUpsert) UpdateUpdateAt() *PriceCurrencyUpsert {
 	u.SetExcluded(pricecurrency.FieldUpdateAt)
+	return u
+}
+
+// AddUpdateAt adds v to the "update_at" field.
+func (u *PriceCurrencyUpsert) AddUpdateAt(v uint32) *PriceCurrencyUpsert {
+	u.Add(pricecurrency.FieldUpdateAt, v)
 	return u
 }
 
@@ -405,7 +429,13 @@ func (u *PriceCurrencyUpsert) UpdateDeleteAt() *PriceCurrencyUpsert {
 	return u
 }
 
-// UpdateNewValues updates the fields using the new values that were set on create except the ID field.
+// AddDeleteAt adds v to the "delete_at" field.
+func (u *PriceCurrencyUpsert) AddDeleteAt(v uint32) *PriceCurrencyUpsert {
+	u.Add(pricecurrency.FieldDeleteAt, v)
+	return u
+}
+
+// UpdateNewValues updates the mutable fields using the new values that were set on create except the ID field.
 // Using this option is equivalent to using:
 //
 //	client.PriceCurrency.Create().
@@ -504,6 +534,13 @@ func (u *PriceCurrencyUpsertOne) SetCreateAt(v uint32) *PriceCurrencyUpsertOne {
 	})
 }
 
+// AddCreateAt adds v to the "create_at" field.
+func (u *PriceCurrencyUpsertOne) AddCreateAt(v uint32) *PriceCurrencyUpsertOne {
+	return u.Update(func(s *PriceCurrencyUpsert) {
+		s.AddCreateAt(v)
+	})
+}
+
 // UpdateCreateAt sets the "create_at" field to the value that was provided on create.
 func (u *PriceCurrencyUpsertOne) UpdateCreateAt() *PriceCurrencyUpsertOne {
 	return u.Update(func(s *PriceCurrencyUpsert) {
@@ -518,6 +555,13 @@ func (u *PriceCurrencyUpsertOne) SetUpdateAt(v uint32) *PriceCurrencyUpsertOne {
 	})
 }
 
+// AddUpdateAt adds v to the "update_at" field.
+func (u *PriceCurrencyUpsertOne) AddUpdateAt(v uint32) *PriceCurrencyUpsertOne {
+	return u.Update(func(s *PriceCurrencyUpsert) {
+		s.AddUpdateAt(v)
+	})
+}
+
 // UpdateUpdateAt sets the "update_at" field to the value that was provided on create.
 func (u *PriceCurrencyUpsertOne) UpdateUpdateAt() *PriceCurrencyUpsertOne {
 	return u.Update(func(s *PriceCurrencyUpsert) {
@@ -529,6 +573,13 @@ func (u *PriceCurrencyUpsertOne) UpdateUpdateAt() *PriceCurrencyUpsertOne {
 func (u *PriceCurrencyUpsertOne) SetDeleteAt(v uint32) *PriceCurrencyUpsertOne {
 	return u.Update(func(s *PriceCurrencyUpsert) {
 		s.SetDeleteAt(v)
+	})
+}
+
+// AddDeleteAt adds v to the "delete_at" field.
+func (u *PriceCurrencyUpsertOne) AddDeleteAt(v uint32) *PriceCurrencyUpsertOne {
+	return u.Update(func(s *PriceCurrencyUpsert) {
+		s.AddDeleteAt(v)
 	})
 }
 
@@ -702,7 +753,7 @@ type PriceCurrencyUpsertBulk struct {
 	create *PriceCurrencyCreateBulk
 }
 
-// UpdateNewValues updates the fields using the new values that
+// UpdateNewValues updates the mutable fields using the new values that
 // were set on create. Using this option is equivalent to using:
 //
 //	client.PriceCurrency.Create().
@@ -804,6 +855,13 @@ func (u *PriceCurrencyUpsertBulk) SetCreateAt(v uint32) *PriceCurrencyUpsertBulk
 	})
 }
 
+// AddCreateAt adds v to the "create_at" field.
+func (u *PriceCurrencyUpsertBulk) AddCreateAt(v uint32) *PriceCurrencyUpsertBulk {
+	return u.Update(func(s *PriceCurrencyUpsert) {
+		s.AddCreateAt(v)
+	})
+}
+
 // UpdateCreateAt sets the "create_at" field to the value that was provided on create.
 func (u *PriceCurrencyUpsertBulk) UpdateCreateAt() *PriceCurrencyUpsertBulk {
 	return u.Update(func(s *PriceCurrencyUpsert) {
@@ -818,6 +876,13 @@ func (u *PriceCurrencyUpsertBulk) SetUpdateAt(v uint32) *PriceCurrencyUpsertBulk
 	})
 }
 
+// AddUpdateAt adds v to the "update_at" field.
+func (u *PriceCurrencyUpsertBulk) AddUpdateAt(v uint32) *PriceCurrencyUpsertBulk {
+	return u.Update(func(s *PriceCurrencyUpsert) {
+		s.AddUpdateAt(v)
+	})
+}
+
 // UpdateUpdateAt sets the "update_at" field to the value that was provided on create.
 func (u *PriceCurrencyUpsertBulk) UpdateUpdateAt() *PriceCurrencyUpsertBulk {
 	return u.Update(func(s *PriceCurrencyUpsert) {
@@ -829,6 +894,13 @@ func (u *PriceCurrencyUpsertBulk) UpdateUpdateAt() *PriceCurrencyUpsertBulk {
 func (u *PriceCurrencyUpsertBulk) SetDeleteAt(v uint32) *PriceCurrencyUpsertBulk {
 	return u.Update(func(s *PriceCurrencyUpsert) {
 		s.SetDeleteAt(v)
+	})
+}
+
+// AddDeleteAt adds v to the "delete_at" field.
+func (u *PriceCurrencyUpsertBulk) AddDeleteAt(v uint32) *PriceCurrencyUpsertBulk {
+	return u.Update(func(s *PriceCurrencyUpsert) {
+		s.AddDeleteAt(v)
 	})
 }
 

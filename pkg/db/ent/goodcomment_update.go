@@ -4,6 +4,7 @@ package ent
 
 import (
 	"context"
+	"errors"
 	"fmt"
 
 	"entgo.io/ent/dialect/sql"
@@ -30,6 +31,14 @@ func (gcu *GoodCommentUpdate) Where(ps ...predicate.GoodComment) *GoodCommentUpd
 // SetReplyToID sets the "reply_to_id" field.
 func (gcu *GoodCommentUpdate) SetReplyToID(u uuid.UUID) *GoodCommentUpdate {
 	gcu.mutation.SetReplyToID(u)
+	return gcu
+}
+
+// SetNillableReplyToID sets the "reply_to_id" field if the given value is not nil.
+func (gcu *GoodCommentUpdate) SetNillableReplyToID(u *uuid.UUID) *GoodCommentUpdate {
+	if u != nil {
+		gcu.SetReplyToID(*u)
+	}
 	return gcu
 }
 
@@ -333,6 +342,14 @@ func (gcuo *GoodCommentUpdateOne) SetReplyToID(u uuid.UUID) *GoodCommentUpdateOn
 	return gcuo
 }
 
+// SetNillableReplyToID sets the "reply_to_id" field if the given value is not nil.
+func (gcuo *GoodCommentUpdateOne) SetNillableReplyToID(u *uuid.UUID) *GoodCommentUpdateOne {
+	if u != nil {
+		gcuo.SetReplyToID(*u)
+	}
+	return gcuo
+}
+
 // ClearReplyToID clears the value of the "reply_to_id" field.
 func (gcuo *GoodCommentUpdateOne) ClearReplyToID() *GoodCommentUpdateOne {
 	gcuo.mutation.ClearReplyToID()
@@ -520,7 +537,7 @@ func (gcuo *GoodCommentUpdateOne) sqlSave(ctx context.Context) (_node *GoodComme
 	}
 	id, ok := gcuo.mutation.ID()
 	if !ok {
-		return nil, &ValidationError{Name: "ID", err: fmt.Errorf("missing GoodComment.ID for update")}
+		return nil, &ValidationError{Name: "id", err: errors.New(`ent: missing "GoodComment.id" for update`)}
 	}
 	_spec.Node.ID.Value = id
 	if fields := gcuo.fields; len(fields) > 0 {

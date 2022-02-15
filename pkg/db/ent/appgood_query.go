@@ -337,6 +337,10 @@ func (agq *AppGoodQuery) sqlAll(ctx context.Context) ([]*AppGood, error) {
 
 func (agq *AppGoodQuery) sqlCount(ctx context.Context) (int, error) {
 	_spec := agq.querySpec()
+	_spec.Node.Columns = agq.fields
+	if len(agq.fields) > 0 {
+		_spec.Unique = agq.unique != nil && *agq.unique
+	}
 	return sqlgraph.CountNodes(ctx, agq.driver, _spec)
 }
 
@@ -407,6 +411,9 @@ func (agq *AppGoodQuery) sqlQuery(ctx context.Context) *sql.Selector {
 	if agq.sql != nil {
 		selector = agq.sql
 		selector.Select(selector.Columns(columns...)...)
+	}
+	if agq.unique != nil && *agq.unique {
+		selector.Distinct()
 	}
 	for _, p := range agq.predicates {
 		p(selector)
@@ -686,9 +693,7 @@ func (aggb *AppGoodGroupBy) sqlQuery() *sql.Selector {
 		for _, f := range aggb.fields {
 			columns = append(columns, selector.C(f))
 		}
-		for _, c := range aggregation {
-			columns = append(columns, c)
-		}
+		columns = append(columns, aggregation...)
 		selector.Select(columns...)
 	}
 	return selector.GroupBy(selector.Columns(aggb.fields...)...)

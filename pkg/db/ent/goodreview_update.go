@@ -4,6 +4,7 @@ package ent
 
 import (
 	"context"
+	"errors"
 	"fmt"
 
 	"entgo.io/ent/dialect/sql"
@@ -206,12 +207,12 @@ func (gru *GoodReviewUpdate) defaults() {
 func (gru *GoodReviewUpdate) check() error {
 	if v, ok := gru.mutation.EntityType(); ok {
 		if err := goodreview.EntityTypeValidator(v); err != nil {
-			return &ValidationError{Name: "entity_type", err: fmt.Errorf("ent: validator failed for field \"entity_type\": %w", err)}
+			return &ValidationError{Name: "entity_type", err: fmt.Errorf(`ent: validator failed for field "GoodReview.entity_type": %w`, err)}
 		}
 	}
 	if v, ok := gru.mutation.State(); ok {
 		if err := goodreview.StateValidator(v); err != nil {
-			return &ValidationError{Name: "state", err: fmt.Errorf("ent: validator failed for field \"state\": %w", err)}
+			return &ValidationError{Name: "state", err: fmt.Errorf(`ent: validator failed for field "GoodReview.state": %w`, err)}
 		}
 	}
 	return nil
@@ -517,12 +518,12 @@ func (gruo *GoodReviewUpdateOne) defaults() {
 func (gruo *GoodReviewUpdateOne) check() error {
 	if v, ok := gruo.mutation.EntityType(); ok {
 		if err := goodreview.EntityTypeValidator(v); err != nil {
-			return &ValidationError{Name: "entity_type", err: fmt.Errorf("ent: validator failed for field \"entity_type\": %w", err)}
+			return &ValidationError{Name: "entity_type", err: fmt.Errorf(`ent: validator failed for field "GoodReview.entity_type": %w`, err)}
 		}
 	}
 	if v, ok := gruo.mutation.State(); ok {
 		if err := goodreview.StateValidator(v); err != nil {
-			return &ValidationError{Name: "state", err: fmt.Errorf("ent: validator failed for field \"state\": %w", err)}
+			return &ValidationError{Name: "state", err: fmt.Errorf(`ent: validator failed for field "GoodReview.state": %w`, err)}
 		}
 	}
 	return nil
@@ -541,7 +542,7 @@ func (gruo *GoodReviewUpdateOne) sqlSave(ctx context.Context) (_node *GoodReview
 	}
 	id, ok := gruo.mutation.ID()
 	if !ok {
-		return nil, &ValidationError{Name: "ID", err: fmt.Errorf("missing GoodReview.ID for update")}
+		return nil, &ValidationError{Name: "id", err: errors.New(`ent: missing "GoodReview.id" for update`)}
 	}
 	_spec.Node.ID.Value = id
 	if fields := gruo.fields; len(fields) > 0 {

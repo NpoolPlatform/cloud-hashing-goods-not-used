@@ -4,6 +4,7 @@ package ent
 
 import (
 	"context"
+	"errors"
 	"fmt"
 
 	"entgo.io/ent/dialect/sql"
@@ -47,7 +48,7 @@ func (fu *FeeUpdate) SetValue(u uint64) *FeeUpdate {
 }
 
 // AddValue adds u to the "value" field.
-func (fu *FeeUpdate) AddValue(u uint64) *FeeUpdate {
+func (fu *FeeUpdate) AddValue(u int64) *FeeUpdate {
 	fu.mutation.AddValue(u)
 	return fu
 }
@@ -68,7 +69,7 @@ func (fu *FeeUpdate) SetNillableCreateAt(u *uint32) *FeeUpdate {
 }
 
 // AddCreateAt adds u to the "create_at" field.
-func (fu *FeeUpdate) AddCreateAt(u uint32) *FeeUpdate {
+func (fu *FeeUpdate) AddCreateAt(u int32) *FeeUpdate {
 	fu.mutation.AddCreateAt(u)
 	return fu
 }
@@ -81,7 +82,7 @@ func (fu *FeeUpdate) SetUpdateAt(u uint32) *FeeUpdate {
 }
 
 // AddUpdateAt adds u to the "update_at" field.
-func (fu *FeeUpdate) AddUpdateAt(u uint32) *FeeUpdate {
+func (fu *FeeUpdate) AddUpdateAt(u int32) *FeeUpdate {
 	fu.mutation.AddUpdateAt(u)
 	return fu
 }
@@ -102,7 +103,7 @@ func (fu *FeeUpdate) SetNillableDeleteAt(u *uint32) *FeeUpdate {
 }
 
 // AddDeleteAt adds u to the "delete_at" field.
-func (fu *FeeUpdate) AddDeleteAt(u uint32) *FeeUpdate {
+func (fu *FeeUpdate) AddDeleteAt(u int32) *FeeUpdate {
 	fu.mutation.AddDeleteAt(u)
 	return fu
 }
@@ -302,7 +303,7 @@ func (fuo *FeeUpdateOne) SetValue(u uint64) *FeeUpdateOne {
 }
 
 // AddValue adds u to the "value" field.
-func (fuo *FeeUpdateOne) AddValue(u uint64) *FeeUpdateOne {
+func (fuo *FeeUpdateOne) AddValue(u int64) *FeeUpdateOne {
 	fuo.mutation.AddValue(u)
 	return fuo
 }
@@ -323,7 +324,7 @@ func (fuo *FeeUpdateOne) SetNillableCreateAt(u *uint32) *FeeUpdateOne {
 }
 
 // AddCreateAt adds u to the "create_at" field.
-func (fuo *FeeUpdateOne) AddCreateAt(u uint32) *FeeUpdateOne {
+func (fuo *FeeUpdateOne) AddCreateAt(u int32) *FeeUpdateOne {
 	fuo.mutation.AddCreateAt(u)
 	return fuo
 }
@@ -336,7 +337,7 @@ func (fuo *FeeUpdateOne) SetUpdateAt(u uint32) *FeeUpdateOne {
 }
 
 // AddUpdateAt adds u to the "update_at" field.
-func (fuo *FeeUpdateOne) AddUpdateAt(u uint32) *FeeUpdateOne {
+func (fuo *FeeUpdateOne) AddUpdateAt(u int32) *FeeUpdateOne {
 	fuo.mutation.AddUpdateAt(u)
 	return fuo
 }
@@ -357,7 +358,7 @@ func (fuo *FeeUpdateOne) SetNillableDeleteAt(u *uint32) *FeeUpdateOne {
 }
 
 // AddDeleteAt adds u to the "delete_at" field.
-func (fuo *FeeUpdateOne) AddDeleteAt(u uint32) *FeeUpdateOne {
+func (fuo *FeeUpdateOne) AddDeleteAt(u int32) *FeeUpdateOne {
 	fuo.mutation.AddDeleteAt(u)
 	return fuo
 }
@@ -450,7 +451,7 @@ func (fuo *FeeUpdateOne) sqlSave(ctx context.Context) (_node *Fee, err error) {
 	}
 	id, ok := fuo.mutation.ID()
 	if !ok {
-		return nil, &ValidationError{Name: "ID", err: fmt.Errorf("missing Fee.ID for update")}
+		return nil, &ValidationError{Name: "id", err: errors.New(`ent: missing "Fee.id" for update`)}
 	}
 	_spec.Node.ID.Value = id
 	if fields := fuo.fields; len(fields) > 0 {

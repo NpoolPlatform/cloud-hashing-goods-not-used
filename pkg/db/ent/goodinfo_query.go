@@ -337,6 +337,10 @@ func (giq *GoodInfoQuery) sqlAll(ctx context.Context) ([]*GoodInfo, error) {
 
 func (giq *GoodInfoQuery) sqlCount(ctx context.Context) (int, error) {
 	_spec := giq.querySpec()
+	_spec.Node.Columns = giq.fields
+	if len(giq.fields) > 0 {
+		_spec.Unique = giq.unique != nil && *giq.unique
+	}
 	return sqlgraph.CountNodes(ctx, giq.driver, _spec)
 }
 
@@ -407,6 +411,9 @@ func (giq *GoodInfoQuery) sqlQuery(ctx context.Context) *sql.Selector {
 	if giq.sql != nil {
 		selector = giq.sql
 		selector.Select(selector.Columns(columns...)...)
+	}
+	if giq.unique != nil && *giq.unique {
+		selector.Distinct()
 	}
 	for _, p := range giq.predicates {
 		p(selector)
@@ -686,9 +693,7 @@ func (gigb *GoodInfoGroupBy) sqlQuery() *sql.Selector {
 		for _, f := range gigb.fields {
 			columns = append(columns, selector.C(f))
 		}
-		for _, c := range aggregation {
-			columns = append(columns, c)
-		}
+		columns = append(columns, aggregation...)
 		selector.Select(columns...)
 	}
 	return selector.GroupBy(selector.Columns(gigb.fields...)...)

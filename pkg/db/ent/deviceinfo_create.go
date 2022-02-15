@@ -103,6 +103,14 @@ func (dic *DeviceInfoCreate) SetID(u uuid.UUID) *DeviceInfoCreate {
 	return dic
 }
 
+// SetNillableID sets the "id" field if the given value is not nil.
+func (dic *DeviceInfoCreate) SetNillableID(u *uuid.UUID) *DeviceInfoCreate {
+	if u != nil {
+		dic.SetID(*u)
+	}
+	return dic
+}
+
 // Mutation returns the DeviceInfoMutation object of the builder.
 func (dic *DeviceInfoCreate) Mutation() *DeviceInfoMutation {
 	return dic.mutation
@@ -199,35 +207,35 @@ func (dic *DeviceInfoCreate) defaults() {
 // check runs all checks and user-defined validators on the builder.
 func (dic *DeviceInfoCreate) check() error {
 	if _, ok := dic.mutation.GetType(); !ok {
-		return &ValidationError{Name: "type", err: errors.New(`ent: missing required field "type"`)}
+		return &ValidationError{Name: "type", err: errors.New(`ent: missing required field "DeviceInfo.type"`)}
 	}
 	if v, ok := dic.mutation.GetType(); ok {
 		if err := deviceinfo.TypeValidator(v); err != nil {
-			return &ValidationError{Name: "type", err: fmt.Errorf(`ent: validator failed for field "type": %w`, err)}
+			return &ValidationError{Name: "type", err: fmt.Errorf(`ent: validator failed for field "DeviceInfo.type": %w`, err)}
 		}
 	}
 	if _, ok := dic.mutation.Manufacturer(); !ok {
-		return &ValidationError{Name: "manufacturer", err: errors.New(`ent: missing required field "manufacturer"`)}
+		return &ValidationError{Name: "manufacturer", err: errors.New(`ent: missing required field "DeviceInfo.manufacturer"`)}
 	}
 	if v, ok := dic.mutation.Manufacturer(); ok {
 		if err := deviceinfo.ManufacturerValidator(v); err != nil {
-			return &ValidationError{Name: "manufacturer", err: fmt.Errorf(`ent: validator failed for field "manufacturer": %w`, err)}
+			return &ValidationError{Name: "manufacturer", err: fmt.Errorf(`ent: validator failed for field "DeviceInfo.manufacturer": %w`, err)}
 		}
 	}
 	if _, ok := dic.mutation.PowerComsuption(); !ok {
-		return &ValidationError{Name: "power_comsuption", err: errors.New(`ent: missing required field "power_comsuption"`)}
+		return &ValidationError{Name: "power_comsuption", err: errors.New(`ent: missing required field "DeviceInfo.power_comsuption"`)}
 	}
 	if _, ok := dic.mutation.ShipmentAt(); !ok {
-		return &ValidationError{Name: "shipment_at", err: errors.New(`ent: missing required field "shipment_at"`)}
+		return &ValidationError{Name: "shipment_at", err: errors.New(`ent: missing required field "DeviceInfo.shipment_at"`)}
 	}
 	if _, ok := dic.mutation.CreateAt(); !ok {
-		return &ValidationError{Name: "create_at", err: errors.New(`ent: missing required field "create_at"`)}
+		return &ValidationError{Name: "create_at", err: errors.New(`ent: missing required field "DeviceInfo.create_at"`)}
 	}
 	if _, ok := dic.mutation.UpdateAt(); !ok {
-		return &ValidationError{Name: "update_at", err: errors.New(`ent: missing required field "update_at"`)}
+		return &ValidationError{Name: "update_at", err: errors.New(`ent: missing required field "DeviceInfo.update_at"`)}
 	}
 	if _, ok := dic.mutation.DeleteAt(); !ok {
-		return &ValidationError{Name: "delete_at", err: errors.New(`ent: missing required field "delete_at"`)}
+		return &ValidationError{Name: "delete_at", err: errors.New(`ent: missing required field "DeviceInfo.delete_at"`)}
 	}
 	return nil
 }
@@ -241,7 +249,11 @@ func (dic *DeviceInfoCreate) sqlSave(ctx context.Context) (*DeviceInfo, error) {
 		return nil, err
 	}
 	if _spec.ID.Value != nil {
-		_node.ID = _spec.ID.Value.(uuid.UUID)
+		if id, ok := _spec.ID.Value.(*uuid.UUID); ok {
+			_node.ID = *id
+		} else if err := _node.ID.Scan(_spec.ID.Value); err != nil {
+			return nil, err
+		}
 	}
 	return _node, nil
 }
@@ -260,7 +272,7 @@ func (dic *DeviceInfoCreate) createSpec() (*DeviceInfo, *sqlgraph.CreateSpec) {
 	_spec.OnConflict = dic.conflict
 	if id, ok := dic.mutation.ID(); ok {
 		_node.ID = id
-		_spec.ID.Value = id
+		_spec.ID.Value = &id
 	}
 	if value, ok := dic.mutation.GetType(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
@@ -408,6 +420,12 @@ func (u *DeviceInfoUpsert) UpdatePowerComsuption() *DeviceInfoUpsert {
 	return u
 }
 
+// AddPowerComsuption adds v to the "power_comsuption" field.
+func (u *DeviceInfoUpsert) AddPowerComsuption(v int32) *DeviceInfoUpsert {
+	u.Add(deviceinfo.FieldPowerComsuption, v)
+	return u
+}
+
 // SetShipmentAt sets the "shipment_at" field.
 func (u *DeviceInfoUpsert) SetShipmentAt(v int32) *DeviceInfoUpsert {
 	u.Set(deviceinfo.FieldShipmentAt, v)
@@ -417,6 +435,12 @@ func (u *DeviceInfoUpsert) SetShipmentAt(v int32) *DeviceInfoUpsert {
 // UpdateShipmentAt sets the "shipment_at" field to the value that was provided on create.
 func (u *DeviceInfoUpsert) UpdateShipmentAt() *DeviceInfoUpsert {
 	u.SetExcluded(deviceinfo.FieldShipmentAt)
+	return u
+}
+
+// AddShipmentAt adds v to the "shipment_at" field.
+func (u *DeviceInfoUpsert) AddShipmentAt(v int32) *DeviceInfoUpsert {
+	u.Add(deviceinfo.FieldShipmentAt, v)
 	return u
 }
 
@@ -432,6 +456,12 @@ func (u *DeviceInfoUpsert) UpdateCreateAt() *DeviceInfoUpsert {
 	return u
 }
 
+// AddCreateAt adds v to the "create_at" field.
+func (u *DeviceInfoUpsert) AddCreateAt(v int64) *DeviceInfoUpsert {
+	u.Add(deviceinfo.FieldCreateAt, v)
+	return u
+}
+
 // SetUpdateAt sets the "update_at" field.
 func (u *DeviceInfoUpsert) SetUpdateAt(v int64) *DeviceInfoUpsert {
 	u.Set(deviceinfo.FieldUpdateAt, v)
@@ -441,6 +471,12 @@ func (u *DeviceInfoUpsert) SetUpdateAt(v int64) *DeviceInfoUpsert {
 // UpdateUpdateAt sets the "update_at" field to the value that was provided on create.
 func (u *DeviceInfoUpsert) UpdateUpdateAt() *DeviceInfoUpsert {
 	u.SetExcluded(deviceinfo.FieldUpdateAt)
+	return u
+}
+
+// AddUpdateAt adds v to the "update_at" field.
+func (u *DeviceInfoUpsert) AddUpdateAt(v int64) *DeviceInfoUpsert {
+	u.Add(deviceinfo.FieldUpdateAt, v)
 	return u
 }
 
@@ -456,7 +492,13 @@ func (u *DeviceInfoUpsert) UpdateDeleteAt() *DeviceInfoUpsert {
 	return u
 }
 
-// UpdateNewValues updates the fields using the new values that were set on create except the ID field.
+// AddDeleteAt adds v to the "delete_at" field.
+func (u *DeviceInfoUpsert) AddDeleteAt(v int64) *DeviceInfoUpsert {
+	u.Add(deviceinfo.FieldDeleteAt, v)
+	return u
+}
+
+// UpdateNewValues updates the mutable fields using the new values that were set on create except the ID field.
 // Using this option is equivalent to using:
 //
 //	client.DeviceInfo.Create().
@@ -541,6 +583,13 @@ func (u *DeviceInfoUpsertOne) SetPowerComsuption(v int32) *DeviceInfoUpsertOne {
 	})
 }
 
+// AddPowerComsuption adds v to the "power_comsuption" field.
+func (u *DeviceInfoUpsertOne) AddPowerComsuption(v int32) *DeviceInfoUpsertOne {
+	return u.Update(func(s *DeviceInfoUpsert) {
+		s.AddPowerComsuption(v)
+	})
+}
+
 // UpdatePowerComsuption sets the "power_comsuption" field to the value that was provided on create.
 func (u *DeviceInfoUpsertOne) UpdatePowerComsuption() *DeviceInfoUpsertOne {
 	return u.Update(func(s *DeviceInfoUpsert) {
@@ -552,6 +601,13 @@ func (u *DeviceInfoUpsertOne) UpdatePowerComsuption() *DeviceInfoUpsertOne {
 func (u *DeviceInfoUpsertOne) SetShipmentAt(v int32) *DeviceInfoUpsertOne {
 	return u.Update(func(s *DeviceInfoUpsert) {
 		s.SetShipmentAt(v)
+	})
+}
+
+// AddShipmentAt adds v to the "shipment_at" field.
+func (u *DeviceInfoUpsertOne) AddShipmentAt(v int32) *DeviceInfoUpsertOne {
+	return u.Update(func(s *DeviceInfoUpsert) {
+		s.AddShipmentAt(v)
 	})
 }
 
@@ -569,6 +625,13 @@ func (u *DeviceInfoUpsertOne) SetCreateAt(v int64) *DeviceInfoUpsertOne {
 	})
 }
 
+// AddCreateAt adds v to the "create_at" field.
+func (u *DeviceInfoUpsertOne) AddCreateAt(v int64) *DeviceInfoUpsertOne {
+	return u.Update(func(s *DeviceInfoUpsert) {
+		s.AddCreateAt(v)
+	})
+}
+
 // UpdateCreateAt sets the "create_at" field to the value that was provided on create.
 func (u *DeviceInfoUpsertOne) UpdateCreateAt() *DeviceInfoUpsertOne {
 	return u.Update(func(s *DeviceInfoUpsert) {
@@ -583,6 +646,13 @@ func (u *DeviceInfoUpsertOne) SetUpdateAt(v int64) *DeviceInfoUpsertOne {
 	})
 }
 
+// AddUpdateAt adds v to the "update_at" field.
+func (u *DeviceInfoUpsertOne) AddUpdateAt(v int64) *DeviceInfoUpsertOne {
+	return u.Update(func(s *DeviceInfoUpsert) {
+		s.AddUpdateAt(v)
+	})
+}
+
 // UpdateUpdateAt sets the "update_at" field to the value that was provided on create.
 func (u *DeviceInfoUpsertOne) UpdateUpdateAt() *DeviceInfoUpsertOne {
 	return u.Update(func(s *DeviceInfoUpsert) {
@@ -594,6 +664,13 @@ func (u *DeviceInfoUpsertOne) UpdateUpdateAt() *DeviceInfoUpsertOne {
 func (u *DeviceInfoUpsertOne) SetDeleteAt(v int64) *DeviceInfoUpsertOne {
 	return u.Update(func(s *DeviceInfoUpsert) {
 		s.SetDeleteAt(v)
+	})
+}
+
+// AddDeleteAt adds v to the "delete_at" field.
+func (u *DeviceInfoUpsertOne) AddDeleteAt(v int64) *DeviceInfoUpsertOne {
+	return u.Update(func(s *DeviceInfoUpsert) {
+		s.AddDeleteAt(v)
 	})
 }
 
@@ -767,7 +844,7 @@ type DeviceInfoUpsertBulk struct {
 	create *DeviceInfoCreateBulk
 }
 
-// UpdateNewValues updates the fields using the new values that
+// UpdateNewValues updates the mutable fields using the new values that
 // were set on create. Using this option is equivalent to using:
 //
 //	client.DeviceInfo.Create().
@@ -855,6 +932,13 @@ func (u *DeviceInfoUpsertBulk) SetPowerComsuption(v int32) *DeviceInfoUpsertBulk
 	})
 }
 
+// AddPowerComsuption adds v to the "power_comsuption" field.
+func (u *DeviceInfoUpsertBulk) AddPowerComsuption(v int32) *DeviceInfoUpsertBulk {
+	return u.Update(func(s *DeviceInfoUpsert) {
+		s.AddPowerComsuption(v)
+	})
+}
+
 // UpdatePowerComsuption sets the "power_comsuption" field to the value that was provided on create.
 func (u *DeviceInfoUpsertBulk) UpdatePowerComsuption() *DeviceInfoUpsertBulk {
 	return u.Update(func(s *DeviceInfoUpsert) {
@@ -866,6 +950,13 @@ func (u *DeviceInfoUpsertBulk) UpdatePowerComsuption() *DeviceInfoUpsertBulk {
 func (u *DeviceInfoUpsertBulk) SetShipmentAt(v int32) *DeviceInfoUpsertBulk {
 	return u.Update(func(s *DeviceInfoUpsert) {
 		s.SetShipmentAt(v)
+	})
+}
+
+// AddShipmentAt adds v to the "shipment_at" field.
+func (u *DeviceInfoUpsertBulk) AddShipmentAt(v int32) *DeviceInfoUpsertBulk {
+	return u.Update(func(s *DeviceInfoUpsert) {
+		s.AddShipmentAt(v)
 	})
 }
 
@@ -883,6 +974,13 @@ func (u *DeviceInfoUpsertBulk) SetCreateAt(v int64) *DeviceInfoUpsertBulk {
 	})
 }
 
+// AddCreateAt adds v to the "create_at" field.
+func (u *DeviceInfoUpsertBulk) AddCreateAt(v int64) *DeviceInfoUpsertBulk {
+	return u.Update(func(s *DeviceInfoUpsert) {
+		s.AddCreateAt(v)
+	})
+}
+
 // UpdateCreateAt sets the "create_at" field to the value that was provided on create.
 func (u *DeviceInfoUpsertBulk) UpdateCreateAt() *DeviceInfoUpsertBulk {
 	return u.Update(func(s *DeviceInfoUpsert) {
@@ -897,6 +995,13 @@ func (u *DeviceInfoUpsertBulk) SetUpdateAt(v int64) *DeviceInfoUpsertBulk {
 	})
 }
 
+// AddUpdateAt adds v to the "update_at" field.
+func (u *DeviceInfoUpsertBulk) AddUpdateAt(v int64) *DeviceInfoUpsertBulk {
+	return u.Update(func(s *DeviceInfoUpsert) {
+		s.AddUpdateAt(v)
+	})
+}
+
 // UpdateUpdateAt sets the "update_at" field to the value that was provided on create.
 func (u *DeviceInfoUpsertBulk) UpdateUpdateAt() *DeviceInfoUpsertBulk {
 	return u.Update(func(s *DeviceInfoUpsert) {
@@ -908,6 +1013,13 @@ func (u *DeviceInfoUpsertBulk) UpdateUpdateAt() *DeviceInfoUpsertBulk {
 func (u *DeviceInfoUpsertBulk) SetDeleteAt(v int64) *DeviceInfoUpsertBulk {
 	return u.Update(func(s *DeviceInfoUpsert) {
 		s.SetDeleteAt(v)
+	})
+}
+
+// AddDeleteAt adds v to the "delete_at" field.
+func (u *DeviceInfoUpsertBulk) AddDeleteAt(v int64) *DeviceInfoUpsertBulk {
+	return u.Update(func(s *DeviceInfoUpsert) {
+		s.AddDeleteAt(v)
 	})
 }
 

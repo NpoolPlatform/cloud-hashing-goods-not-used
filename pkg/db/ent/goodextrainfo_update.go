@@ -4,6 +4,7 @@ package ent
 
 import (
 	"context"
+	"errors"
 	"fmt"
 
 	"entgo.io/ent/dialect/sql"
@@ -65,7 +66,7 @@ func (geiu *GoodExtraInfoUpdate) SetVoteCount(u uint32) *GoodExtraInfoUpdate {
 }
 
 // AddVoteCount adds u to the "vote_count" field.
-func (geiu *GoodExtraInfoUpdate) AddVoteCount(u uint32) *GoodExtraInfoUpdate {
+func (geiu *GoodExtraInfoUpdate) AddVoteCount(u int32) *GoodExtraInfoUpdate {
 	geiu.mutation.AddVoteCount(u)
 	return geiu
 }
@@ -386,7 +387,7 @@ func (geiuo *GoodExtraInfoUpdateOne) SetVoteCount(u uint32) *GoodExtraInfoUpdate
 }
 
 // AddVoteCount adds u to the "vote_count" field.
-func (geiuo *GoodExtraInfoUpdateOne) AddVoteCount(u uint32) *GoodExtraInfoUpdateOne {
+func (geiuo *GoodExtraInfoUpdateOne) AddVoteCount(u int32) *GoodExtraInfoUpdateOne {
 	geiuo.mutation.AddVoteCount(u)
 	return geiuo
 }
@@ -547,7 +548,7 @@ func (geiuo *GoodExtraInfoUpdateOne) sqlSave(ctx context.Context) (_node *GoodEx
 	}
 	id, ok := geiuo.mutation.ID()
 	if !ok {
-		return nil, &ValidationError{Name: "ID", err: fmt.Errorf("missing GoodExtraInfo.ID for update")}
+		return nil, &ValidationError{Name: "id", err: errors.New(`ent: missing "GoodExtraInfo.id" for update`)}
 	}
 	_spec.Node.ID.Value = id
 	if fields := geiuo.fields; len(fields) > 0 {

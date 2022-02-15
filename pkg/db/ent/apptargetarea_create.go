@@ -83,6 +83,14 @@ func (atac *AppTargetAreaCreate) SetID(u uuid.UUID) *AppTargetAreaCreate {
 	return atac
 }
 
+// SetNillableID sets the "id" field if the given value is not nil.
+func (atac *AppTargetAreaCreate) SetNillableID(u *uuid.UUID) *AppTargetAreaCreate {
+	if u != nil {
+		atac.SetID(*u)
+	}
+	return atac
+}
+
 // Mutation returns the AppTargetAreaMutation object of the builder.
 func (atac *AppTargetAreaCreate) Mutation() *AppTargetAreaMutation {
 	return atac.mutation
@@ -175,19 +183,19 @@ func (atac *AppTargetAreaCreate) defaults() {
 // check runs all checks and user-defined validators on the builder.
 func (atac *AppTargetAreaCreate) check() error {
 	if _, ok := atac.mutation.TargetAreaID(); !ok {
-		return &ValidationError{Name: "target_area_id", err: errors.New(`ent: missing required field "target_area_id"`)}
+		return &ValidationError{Name: "target_area_id", err: errors.New(`ent: missing required field "AppTargetArea.target_area_id"`)}
 	}
 	if _, ok := atac.mutation.AppID(); !ok {
-		return &ValidationError{Name: "app_id", err: errors.New(`ent: missing required field "app_id"`)}
+		return &ValidationError{Name: "app_id", err: errors.New(`ent: missing required field "AppTargetArea.app_id"`)}
 	}
 	if _, ok := atac.mutation.CreateAt(); !ok {
-		return &ValidationError{Name: "create_at", err: errors.New(`ent: missing required field "create_at"`)}
+		return &ValidationError{Name: "create_at", err: errors.New(`ent: missing required field "AppTargetArea.create_at"`)}
 	}
 	if _, ok := atac.mutation.UpdateAt(); !ok {
-		return &ValidationError{Name: "update_at", err: errors.New(`ent: missing required field "update_at"`)}
+		return &ValidationError{Name: "update_at", err: errors.New(`ent: missing required field "AppTargetArea.update_at"`)}
 	}
 	if _, ok := atac.mutation.DeleteAt(); !ok {
-		return &ValidationError{Name: "delete_at", err: errors.New(`ent: missing required field "delete_at"`)}
+		return &ValidationError{Name: "delete_at", err: errors.New(`ent: missing required field "AppTargetArea.delete_at"`)}
 	}
 	return nil
 }
@@ -201,7 +209,11 @@ func (atac *AppTargetAreaCreate) sqlSave(ctx context.Context) (*AppTargetArea, e
 		return nil, err
 	}
 	if _spec.ID.Value != nil {
-		_node.ID = _spec.ID.Value.(uuid.UUID)
+		if id, ok := _spec.ID.Value.(*uuid.UUID); ok {
+			_node.ID = *id
+		} else if err := _node.ID.Scan(_spec.ID.Value); err != nil {
+			return nil, err
+		}
 	}
 	return _node, nil
 }
@@ -220,7 +232,7 @@ func (atac *AppTargetAreaCreate) createSpec() (*AppTargetArea, *sqlgraph.CreateS
 	_spec.OnConflict = atac.conflict
 	if id, ok := atac.mutation.ID(); ok {
 		_node.ID = id
-		_spec.ID.Value = id
+		_spec.ID.Value = &id
 	}
 	if value, ok := atac.mutation.TargetAreaID(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
@@ -352,6 +364,12 @@ func (u *AppTargetAreaUpsert) UpdateCreateAt() *AppTargetAreaUpsert {
 	return u
 }
 
+// AddCreateAt adds v to the "create_at" field.
+func (u *AppTargetAreaUpsert) AddCreateAt(v int64) *AppTargetAreaUpsert {
+	u.Add(apptargetarea.FieldCreateAt, v)
+	return u
+}
+
 // SetUpdateAt sets the "update_at" field.
 func (u *AppTargetAreaUpsert) SetUpdateAt(v int64) *AppTargetAreaUpsert {
 	u.Set(apptargetarea.FieldUpdateAt, v)
@@ -361,6 +379,12 @@ func (u *AppTargetAreaUpsert) SetUpdateAt(v int64) *AppTargetAreaUpsert {
 // UpdateUpdateAt sets the "update_at" field to the value that was provided on create.
 func (u *AppTargetAreaUpsert) UpdateUpdateAt() *AppTargetAreaUpsert {
 	u.SetExcluded(apptargetarea.FieldUpdateAt)
+	return u
+}
+
+// AddUpdateAt adds v to the "update_at" field.
+func (u *AppTargetAreaUpsert) AddUpdateAt(v int64) *AppTargetAreaUpsert {
+	u.Add(apptargetarea.FieldUpdateAt, v)
 	return u
 }
 
@@ -376,7 +400,13 @@ func (u *AppTargetAreaUpsert) UpdateDeleteAt() *AppTargetAreaUpsert {
 	return u
 }
 
-// UpdateNewValues updates the fields using the new values that were set on create except the ID field.
+// AddDeleteAt adds v to the "delete_at" field.
+func (u *AppTargetAreaUpsert) AddDeleteAt(v int64) *AppTargetAreaUpsert {
+	u.Add(apptargetarea.FieldDeleteAt, v)
+	return u
+}
+
+// UpdateNewValues updates the mutable fields using the new values that were set on create except the ID field.
 // Using this option is equivalent to using:
 //
 //	client.AppTargetArea.Create().
@@ -461,6 +491,13 @@ func (u *AppTargetAreaUpsertOne) SetCreateAt(v int64) *AppTargetAreaUpsertOne {
 	})
 }
 
+// AddCreateAt adds v to the "create_at" field.
+func (u *AppTargetAreaUpsertOne) AddCreateAt(v int64) *AppTargetAreaUpsertOne {
+	return u.Update(func(s *AppTargetAreaUpsert) {
+		s.AddCreateAt(v)
+	})
+}
+
 // UpdateCreateAt sets the "create_at" field to the value that was provided on create.
 func (u *AppTargetAreaUpsertOne) UpdateCreateAt() *AppTargetAreaUpsertOne {
 	return u.Update(func(s *AppTargetAreaUpsert) {
@@ -475,6 +512,13 @@ func (u *AppTargetAreaUpsertOne) SetUpdateAt(v int64) *AppTargetAreaUpsertOne {
 	})
 }
 
+// AddUpdateAt adds v to the "update_at" field.
+func (u *AppTargetAreaUpsertOne) AddUpdateAt(v int64) *AppTargetAreaUpsertOne {
+	return u.Update(func(s *AppTargetAreaUpsert) {
+		s.AddUpdateAt(v)
+	})
+}
+
 // UpdateUpdateAt sets the "update_at" field to the value that was provided on create.
 func (u *AppTargetAreaUpsertOne) UpdateUpdateAt() *AppTargetAreaUpsertOne {
 	return u.Update(func(s *AppTargetAreaUpsert) {
@@ -486,6 +530,13 @@ func (u *AppTargetAreaUpsertOne) UpdateUpdateAt() *AppTargetAreaUpsertOne {
 func (u *AppTargetAreaUpsertOne) SetDeleteAt(v int64) *AppTargetAreaUpsertOne {
 	return u.Update(func(s *AppTargetAreaUpsert) {
 		s.SetDeleteAt(v)
+	})
+}
+
+// AddDeleteAt adds v to the "delete_at" field.
+func (u *AppTargetAreaUpsertOne) AddDeleteAt(v int64) *AppTargetAreaUpsertOne {
+	return u.Update(func(s *AppTargetAreaUpsert) {
+		s.AddDeleteAt(v)
 	})
 }
 
@@ -659,7 +710,7 @@ type AppTargetAreaUpsertBulk struct {
 	create *AppTargetAreaCreateBulk
 }
 
-// UpdateNewValues updates the fields using the new values that
+// UpdateNewValues updates the mutable fields using the new values that
 // were set on create. Using this option is equivalent to using:
 //
 //	client.AppTargetArea.Create().
@@ -747,6 +798,13 @@ func (u *AppTargetAreaUpsertBulk) SetCreateAt(v int64) *AppTargetAreaUpsertBulk 
 	})
 }
 
+// AddCreateAt adds v to the "create_at" field.
+func (u *AppTargetAreaUpsertBulk) AddCreateAt(v int64) *AppTargetAreaUpsertBulk {
+	return u.Update(func(s *AppTargetAreaUpsert) {
+		s.AddCreateAt(v)
+	})
+}
+
 // UpdateCreateAt sets the "create_at" field to the value that was provided on create.
 func (u *AppTargetAreaUpsertBulk) UpdateCreateAt() *AppTargetAreaUpsertBulk {
 	return u.Update(func(s *AppTargetAreaUpsert) {
@@ -761,6 +819,13 @@ func (u *AppTargetAreaUpsertBulk) SetUpdateAt(v int64) *AppTargetAreaUpsertBulk 
 	})
 }
 
+// AddUpdateAt adds v to the "update_at" field.
+func (u *AppTargetAreaUpsertBulk) AddUpdateAt(v int64) *AppTargetAreaUpsertBulk {
+	return u.Update(func(s *AppTargetAreaUpsert) {
+		s.AddUpdateAt(v)
+	})
+}
+
 // UpdateUpdateAt sets the "update_at" field to the value that was provided on create.
 func (u *AppTargetAreaUpsertBulk) UpdateUpdateAt() *AppTargetAreaUpsertBulk {
 	return u.Update(func(s *AppTargetAreaUpsert) {
@@ -772,6 +837,13 @@ func (u *AppTargetAreaUpsertBulk) UpdateUpdateAt() *AppTargetAreaUpsertBulk {
 func (u *AppTargetAreaUpsertBulk) SetDeleteAt(v int64) *AppTargetAreaUpsertBulk {
 	return u.Update(func(s *AppTargetAreaUpsert) {
 		s.SetDeleteAt(v)
+	})
+}
+
+// AddDeleteAt adds v to the "delete_at" field.
+func (u *AppTargetAreaUpsertBulk) AddDeleteAt(v int64) *AppTargetAreaUpsertBulk {
+	return u.Update(func(s *AppTargetAreaUpsert) {
+		s.AddDeleteAt(v)
 	})
 }
 

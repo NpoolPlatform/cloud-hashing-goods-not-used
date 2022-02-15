@@ -43,6 +43,7 @@ func (GoodInfo) Fields() []ent.Field {
 		field.String("unit"),
 		field.JSON("support_coin_type_ids", []uuid.UUID{}),
 		field.JSON("fee_ids", []uuid.UUID{}),
+		field.Uint32("start_at"),
 		field.Int32("total").
 			Positive(),
 		field.Uint32("create_at").

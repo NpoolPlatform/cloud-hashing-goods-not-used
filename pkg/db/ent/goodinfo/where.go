@@ -189,6 +189,13 @@ func Unit(v string) predicate.GoodInfo {
 	})
 }
 
+// StartAt applies equality check predicate on the "start_at" field. It's identical to StartAtEQ.
+func StartAt(v uint32) predicate.GoodInfo {
+	return predicate.GoodInfo(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldStartAt), v))
+	})
+}
+
 // Total applies equality check predicate on the "total" field. It's identical to TotalEQ.
 func Total(v int32) predicate.GoodInfo {
 	return predicate.GoodInfo(func(s *sql.Selector) {
@@ -1210,6 +1217,82 @@ func UnitEqualFold(v string) predicate.GoodInfo {
 func UnitContainsFold(v string) predicate.GoodInfo {
 	return predicate.GoodInfo(func(s *sql.Selector) {
 		s.Where(sql.ContainsFold(s.C(FieldUnit), v))
+	})
+}
+
+// StartAtEQ applies the EQ predicate on the "start_at" field.
+func StartAtEQ(v uint32) predicate.GoodInfo {
+	return predicate.GoodInfo(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldStartAt), v))
+	})
+}
+
+// StartAtNEQ applies the NEQ predicate on the "start_at" field.
+func StartAtNEQ(v uint32) predicate.GoodInfo {
+	return predicate.GoodInfo(func(s *sql.Selector) {
+		s.Where(sql.NEQ(s.C(FieldStartAt), v))
+	})
+}
+
+// StartAtIn applies the In predicate on the "start_at" field.
+func StartAtIn(vs ...uint32) predicate.GoodInfo {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.GoodInfo(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.In(s.C(FieldStartAt), v...))
+	})
+}
+
+// StartAtNotIn applies the NotIn predicate on the "start_at" field.
+func StartAtNotIn(vs ...uint32) predicate.GoodInfo {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.GoodInfo(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.NotIn(s.C(FieldStartAt), v...))
+	})
+}
+
+// StartAtGT applies the GT predicate on the "start_at" field.
+func StartAtGT(v uint32) predicate.GoodInfo {
+	return predicate.GoodInfo(func(s *sql.Selector) {
+		s.Where(sql.GT(s.C(FieldStartAt), v))
+	})
+}
+
+// StartAtGTE applies the GTE predicate on the "start_at" field.
+func StartAtGTE(v uint32) predicate.GoodInfo {
+	return predicate.GoodInfo(func(s *sql.Selector) {
+		s.Where(sql.GTE(s.C(FieldStartAt), v))
+	})
+}
+
+// StartAtLT applies the LT predicate on the "start_at" field.
+func StartAtLT(v uint32) predicate.GoodInfo {
+	return predicate.GoodInfo(func(s *sql.Selector) {
+		s.Where(sql.LT(s.C(FieldStartAt), v))
+	})
+}
+
+// StartAtLTE applies the LTE predicate on the "start_at" field.
+func StartAtLTE(v uint32) predicate.GoodInfo {
+	return predicate.GoodInfo(func(s *sql.Selector) {
+		s.Where(sql.LTE(s.C(FieldStartAt), v))
 	})
 }
 

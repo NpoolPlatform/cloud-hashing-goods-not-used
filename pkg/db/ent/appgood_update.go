@@ -4,6 +4,7 @@ package ent
 
 import (
 	"context"
+	"errors"
 	"fmt"
 
 	"entgo.io/ent/dialect/sql"
@@ -81,7 +82,7 @@ func (agu *AppGoodUpdate) SetPrice(u uint64) *AppGoodUpdate {
 }
 
 // AddPrice adds u to the "price" field.
-func (agu *AppGoodUpdate) AddPrice(u uint64) *AppGoodUpdate {
+func (agu *AppGoodUpdate) AddPrice(u int64) *AppGoodUpdate {
 	agu.mutation.AddPrice(u)
 	return agu
 }
@@ -233,7 +234,7 @@ func (agu *AppGoodUpdate) defaults() {
 func (agu *AppGoodUpdate) check() error {
 	if v, ok := agu.mutation.InitAreaStrategy(); ok {
 		if err := appgood.InitAreaStrategyValidator(v); err != nil {
-			return &ValidationError{Name: "init_area_strategy", err: fmt.Errorf("ent: validator failed for field \"init_area_strategy\": %w", err)}
+			return &ValidationError{Name: "init_area_strategy", err: fmt.Errorf(`ent: validator failed for field "AppGood.init_area_strategy": %w`, err)}
 		}
 	}
 	return nil
@@ -428,7 +429,7 @@ func (aguo *AppGoodUpdateOne) SetPrice(u uint64) *AppGoodUpdateOne {
 }
 
 // AddPrice adds u to the "price" field.
-func (aguo *AppGoodUpdateOne) AddPrice(u uint64) *AppGoodUpdateOne {
+func (aguo *AppGoodUpdateOne) AddPrice(u int64) *AppGoodUpdateOne {
 	aguo.mutation.AddPrice(u)
 	return aguo
 }
@@ -587,7 +588,7 @@ func (aguo *AppGoodUpdateOne) defaults() {
 func (aguo *AppGoodUpdateOne) check() error {
 	if v, ok := aguo.mutation.InitAreaStrategy(); ok {
 		if err := appgood.InitAreaStrategyValidator(v); err != nil {
-			return &ValidationError{Name: "init_area_strategy", err: fmt.Errorf("ent: validator failed for field \"init_area_strategy\": %w", err)}
+			return &ValidationError{Name: "init_area_strategy", err: fmt.Errorf(`ent: validator failed for field "AppGood.init_area_strategy": %w`, err)}
 		}
 	}
 	return nil
@@ -606,7 +607,7 @@ func (aguo *AppGoodUpdateOne) sqlSave(ctx context.Context) (_node *AppGood, err 
 	}
 	id, ok := aguo.mutation.ID()
 	if !ok {
-		return nil, &ValidationError{Name: "ID", err: fmt.Errorf("missing AppGood.ID for update")}
+		return nil, &ValidationError{Name: "id", err: errors.New(`ent: missing "AppGood.id" for update`)}
 	}
 	_spec.Node.ID.Value = id
 	if fields := aguo.fields; len(fields) > 0 {

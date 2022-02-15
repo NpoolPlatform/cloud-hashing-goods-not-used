@@ -103,6 +103,14 @@ func (rc *RecommendCreate) SetID(u uuid.UUID) *RecommendCreate {
 	return rc
 }
 
+// SetNillableID sets the "id" field if the given value is not nil.
+func (rc *RecommendCreate) SetNillableID(u *uuid.UUID) *RecommendCreate {
+	if u != nil {
+		rc.SetID(*u)
+	}
+	return rc
+}
+
 // Mutation returns the RecommendMutation object of the builder.
 func (rc *RecommendCreate) Mutation() *RecommendMutation {
 	return rc.mutation
@@ -199,25 +207,25 @@ func (rc *RecommendCreate) defaults() {
 // check runs all checks and user-defined validators on the builder.
 func (rc *RecommendCreate) check() error {
 	if _, ok := rc.mutation.AppID(); !ok {
-		return &ValidationError{Name: "app_id", err: errors.New(`ent: missing required field "app_id"`)}
+		return &ValidationError{Name: "app_id", err: errors.New(`ent: missing required field "Recommend.app_id"`)}
 	}
 	if _, ok := rc.mutation.GoodID(); !ok {
-		return &ValidationError{Name: "good_id", err: errors.New(`ent: missing required field "good_id"`)}
+		return &ValidationError{Name: "good_id", err: errors.New(`ent: missing required field "Recommend.good_id"`)}
 	}
 	if _, ok := rc.mutation.RecommenderID(); !ok {
-		return &ValidationError{Name: "recommender_id", err: errors.New(`ent: missing required field "recommender_id"`)}
+		return &ValidationError{Name: "recommender_id", err: errors.New(`ent: missing required field "Recommend.recommender_id"`)}
 	}
 	if _, ok := rc.mutation.Message(); !ok {
-		return &ValidationError{Name: "message", err: errors.New(`ent: missing required field "message"`)}
+		return &ValidationError{Name: "message", err: errors.New(`ent: missing required field "Recommend.message"`)}
 	}
 	if _, ok := rc.mutation.CreateAt(); !ok {
-		return &ValidationError{Name: "create_at", err: errors.New(`ent: missing required field "create_at"`)}
+		return &ValidationError{Name: "create_at", err: errors.New(`ent: missing required field "Recommend.create_at"`)}
 	}
 	if _, ok := rc.mutation.UpdateAt(); !ok {
-		return &ValidationError{Name: "update_at", err: errors.New(`ent: missing required field "update_at"`)}
+		return &ValidationError{Name: "update_at", err: errors.New(`ent: missing required field "Recommend.update_at"`)}
 	}
 	if _, ok := rc.mutation.DeleteAt(); !ok {
-		return &ValidationError{Name: "delete_at", err: errors.New(`ent: missing required field "delete_at"`)}
+		return &ValidationError{Name: "delete_at", err: errors.New(`ent: missing required field "Recommend.delete_at"`)}
 	}
 	return nil
 }
@@ -231,7 +239,11 @@ func (rc *RecommendCreate) sqlSave(ctx context.Context) (*Recommend, error) {
 		return nil, err
 	}
 	if _spec.ID.Value != nil {
-		_node.ID = _spec.ID.Value.(uuid.UUID)
+		if id, ok := _spec.ID.Value.(*uuid.UUID); ok {
+			_node.ID = *id
+		} else if err := _node.ID.Scan(_spec.ID.Value); err != nil {
+			return nil, err
+		}
 	}
 	return _node, nil
 }
@@ -250,7 +262,7 @@ func (rc *RecommendCreate) createSpec() (*Recommend, *sqlgraph.CreateSpec) {
 	_spec.OnConflict = rc.conflict
 	if id, ok := rc.mutation.ID(); ok {
 		_node.ID = id
-		_spec.ID.Value = id
+		_spec.ID.Value = &id
 	}
 	if value, ok := rc.mutation.AppID(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
@@ -422,6 +434,12 @@ func (u *RecommendUpsert) UpdateCreateAt() *RecommendUpsert {
 	return u
 }
 
+// AddCreateAt adds v to the "create_at" field.
+func (u *RecommendUpsert) AddCreateAt(v uint32) *RecommendUpsert {
+	u.Add(recommend.FieldCreateAt, v)
+	return u
+}
+
 // SetUpdateAt sets the "update_at" field.
 func (u *RecommendUpsert) SetUpdateAt(v uint32) *RecommendUpsert {
 	u.Set(recommend.FieldUpdateAt, v)
@@ -431,6 +449,12 @@ func (u *RecommendUpsert) SetUpdateAt(v uint32) *RecommendUpsert {
 // UpdateUpdateAt sets the "update_at" field to the value that was provided on create.
 func (u *RecommendUpsert) UpdateUpdateAt() *RecommendUpsert {
 	u.SetExcluded(recommend.FieldUpdateAt)
+	return u
+}
+
+// AddUpdateAt adds v to the "update_at" field.
+func (u *RecommendUpsert) AddUpdateAt(v uint32) *RecommendUpsert {
+	u.Add(recommend.FieldUpdateAt, v)
 	return u
 }
 
@@ -446,7 +470,13 @@ func (u *RecommendUpsert) UpdateDeleteAt() *RecommendUpsert {
 	return u
 }
 
-// UpdateNewValues updates the fields using the new values that were set on create except the ID field.
+// AddDeleteAt adds v to the "delete_at" field.
+func (u *RecommendUpsert) AddDeleteAt(v uint32) *RecommendUpsert {
+	u.Add(recommend.FieldDeleteAt, v)
+	return u
+}
+
+// UpdateNewValues updates the mutable fields using the new values that were set on create except the ID field.
 // Using this option is equivalent to using:
 //
 //	client.Recommend.Create().
@@ -559,6 +589,13 @@ func (u *RecommendUpsertOne) SetCreateAt(v uint32) *RecommendUpsertOne {
 	})
 }
 
+// AddCreateAt adds v to the "create_at" field.
+func (u *RecommendUpsertOne) AddCreateAt(v uint32) *RecommendUpsertOne {
+	return u.Update(func(s *RecommendUpsert) {
+		s.AddCreateAt(v)
+	})
+}
+
 // UpdateCreateAt sets the "create_at" field to the value that was provided on create.
 func (u *RecommendUpsertOne) UpdateCreateAt() *RecommendUpsertOne {
 	return u.Update(func(s *RecommendUpsert) {
@@ -573,6 +610,13 @@ func (u *RecommendUpsertOne) SetUpdateAt(v uint32) *RecommendUpsertOne {
 	})
 }
 
+// AddUpdateAt adds v to the "update_at" field.
+func (u *RecommendUpsertOne) AddUpdateAt(v uint32) *RecommendUpsertOne {
+	return u.Update(func(s *RecommendUpsert) {
+		s.AddUpdateAt(v)
+	})
+}
+
 // UpdateUpdateAt sets the "update_at" field to the value that was provided on create.
 func (u *RecommendUpsertOne) UpdateUpdateAt() *RecommendUpsertOne {
 	return u.Update(func(s *RecommendUpsert) {
@@ -584,6 +628,13 @@ func (u *RecommendUpsertOne) UpdateUpdateAt() *RecommendUpsertOne {
 func (u *RecommendUpsertOne) SetDeleteAt(v uint32) *RecommendUpsertOne {
 	return u.Update(func(s *RecommendUpsert) {
 		s.SetDeleteAt(v)
+	})
+}
+
+// AddDeleteAt adds v to the "delete_at" field.
+func (u *RecommendUpsertOne) AddDeleteAt(v uint32) *RecommendUpsertOne {
+	return u.Update(func(s *RecommendUpsert) {
+		s.AddDeleteAt(v)
 	})
 }
 
@@ -757,7 +808,7 @@ type RecommendUpsertBulk struct {
 	create *RecommendCreateBulk
 }
 
-// UpdateNewValues updates the fields using the new values that
+// UpdateNewValues updates the mutable fields using the new values that
 // were set on create. Using this option is equivalent to using:
 //
 //	client.Recommend.Create().
@@ -873,6 +924,13 @@ func (u *RecommendUpsertBulk) SetCreateAt(v uint32) *RecommendUpsertBulk {
 	})
 }
 
+// AddCreateAt adds v to the "create_at" field.
+func (u *RecommendUpsertBulk) AddCreateAt(v uint32) *RecommendUpsertBulk {
+	return u.Update(func(s *RecommendUpsert) {
+		s.AddCreateAt(v)
+	})
+}
+
 // UpdateCreateAt sets the "create_at" field to the value that was provided on create.
 func (u *RecommendUpsertBulk) UpdateCreateAt() *RecommendUpsertBulk {
 	return u.Update(func(s *RecommendUpsert) {
@@ -887,6 +945,13 @@ func (u *RecommendUpsertBulk) SetUpdateAt(v uint32) *RecommendUpsertBulk {
 	})
 }
 
+// AddUpdateAt adds v to the "update_at" field.
+func (u *RecommendUpsertBulk) AddUpdateAt(v uint32) *RecommendUpsertBulk {
+	return u.Update(func(s *RecommendUpsert) {
+		s.AddUpdateAt(v)
+	})
+}
+
 // UpdateUpdateAt sets the "update_at" field to the value that was provided on create.
 func (u *RecommendUpsertBulk) UpdateUpdateAt() *RecommendUpsertBulk {
 	return u.Update(func(s *RecommendUpsert) {
@@ -898,6 +963,13 @@ func (u *RecommendUpsertBulk) UpdateUpdateAt() *RecommendUpsertBulk {
 func (u *RecommendUpsertBulk) SetDeleteAt(v uint32) *RecommendUpsertBulk {
 	return u.Update(func(s *RecommendUpsert) {
 		s.SetDeleteAt(v)
+	})
+}
+
+// AddDeleteAt adds v to the "delete_at" field.
+func (u *RecommendUpsertBulk) AddDeleteAt(v uint32) *RecommendUpsertBulk {
+	return u.Update(func(s *RecommendUpsert) {
+		s.AddDeleteAt(v)
 	})
 }
 

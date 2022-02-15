@@ -4,6 +4,7 @@ package ent
 
 import (
 	"context"
+	"errors"
 	"fmt"
 
 	"entgo.io/ent/dialect/sql"
@@ -429,7 +430,7 @@ func (agtauo *AppGoodTargetAreaUpdateOne) sqlSave(ctx context.Context) (_node *A
 	}
 	id, ok := agtauo.mutation.ID()
 	if !ok {
-		return nil, &ValidationError{Name: "ID", err: fmt.Errorf("missing AppGoodTargetArea.ID for update")}
+		return nil, &ValidationError{Name: "id", err: errors.New(`ent: missing "AppGoodTargetArea.id" for update`)}
 	}
 	_spec.Node.ID.Value = id
 	if fields := agtauo.fields; len(fields) > 0 {

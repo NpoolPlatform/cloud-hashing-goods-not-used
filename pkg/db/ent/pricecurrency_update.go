@@ -4,6 +4,7 @@ package ent
 
 import (
 	"context"
+	"errors"
 	"fmt"
 
 	"entgo.io/ent/dialect/sql"
@@ -60,7 +61,7 @@ func (pcu *PriceCurrencyUpdate) SetNillableCreateAt(u *uint32) *PriceCurrencyUpd
 }
 
 // AddCreateAt adds u to the "create_at" field.
-func (pcu *PriceCurrencyUpdate) AddCreateAt(u uint32) *PriceCurrencyUpdate {
+func (pcu *PriceCurrencyUpdate) AddCreateAt(u int32) *PriceCurrencyUpdate {
 	pcu.mutation.AddCreateAt(u)
 	return pcu
 }
@@ -73,7 +74,7 @@ func (pcu *PriceCurrencyUpdate) SetUpdateAt(u uint32) *PriceCurrencyUpdate {
 }
 
 // AddUpdateAt adds u to the "update_at" field.
-func (pcu *PriceCurrencyUpdate) AddUpdateAt(u uint32) *PriceCurrencyUpdate {
+func (pcu *PriceCurrencyUpdate) AddUpdateAt(u int32) *PriceCurrencyUpdate {
 	pcu.mutation.AddUpdateAt(u)
 	return pcu
 }
@@ -94,7 +95,7 @@ func (pcu *PriceCurrencyUpdate) SetNillableDeleteAt(u *uint32) *PriceCurrencyUpd
 }
 
 // AddDeleteAt adds u to the "delete_at" field.
-func (pcu *PriceCurrencyUpdate) AddDeleteAt(u uint32) *PriceCurrencyUpdate {
+func (pcu *PriceCurrencyUpdate) AddDeleteAt(u int32) *PriceCurrencyUpdate {
 	pcu.mutation.AddDeleteAt(u)
 	return pcu
 }
@@ -301,7 +302,7 @@ func (pcuo *PriceCurrencyUpdateOne) SetNillableCreateAt(u *uint32) *PriceCurrenc
 }
 
 // AddCreateAt adds u to the "create_at" field.
-func (pcuo *PriceCurrencyUpdateOne) AddCreateAt(u uint32) *PriceCurrencyUpdateOne {
+func (pcuo *PriceCurrencyUpdateOne) AddCreateAt(u int32) *PriceCurrencyUpdateOne {
 	pcuo.mutation.AddCreateAt(u)
 	return pcuo
 }
@@ -314,7 +315,7 @@ func (pcuo *PriceCurrencyUpdateOne) SetUpdateAt(u uint32) *PriceCurrencyUpdateOn
 }
 
 // AddUpdateAt adds u to the "update_at" field.
-func (pcuo *PriceCurrencyUpdateOne) AddUpdateAt(u uint32) *PriceCurrencyUpdateOne {
+func (pcuo *PriceCurrencyUpdateOne) AddUpdateAt(u int32) *PriceCurrencyUpdateOne {
 	pcuo.mutation.AddUpdateAt(u)
 	return pcuo
 }
@@ -335,7 +336,7 @@ func (pcuo *PriceCurrencyUpdateOne) SetNillableDeleteAt(u *uint32) *PriceCurrenc
 }
 
 // AddDeleteAt adds u to the "delete_at" field.
-func (pcuo *PriceCurrencyUpdateOne) AddDeleteAt(u uint32) *PriceCurrencyUpdateOne {
+func (pcuo *PriceCurrencyUpdateOne) AddDeleteAt(u int32) *PriceCurrencyUpdateOne {
 	pcuo.mutation.AddDeleteAt(u)
 	return pcuo
 }
@@ -428,7 +429,7 @@ func (pcuo *PriceCurrencyUpdateOne) sqlSave(ctx context.Context) (_node *PriceCu
 	}
 	id, ok := pcuo.mutation.ID()
 	if !ok {
-		return nil, &ValidationError{Name: "ID", err: fmt.Errorf("missing PriceCurrency.ID for update")}
+		return nil, &ValidationError{Name: "id", err: errors.New(`ent: missing "PriceCurrency.id" for update`)}
 	}
 	_spec.Node.ID.Value = id
 	if fields := pcuo.fields; len(fields) > 0 {

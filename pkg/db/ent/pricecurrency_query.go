@@ -337,6 +337,10 @@ func (pcq *PriceCurrencyQuery) sqlAll(ctx context.Context) ([]*PriceCurrency, er
 
 func (pcq *PriceCurrencyQuery) sqlCount(ctx context.Context) (int, error) {
 	_spec := pcq.querySpec()
+	_spec.Node.Columns = pcq.fields
+	if len(pcq.fields) > 0 {
+		_spec.Unique = pcq.unique != nil && *pcq.unique
+	}
 	return sqlgraph.CountNodes(ctx, pcq.driver, _spec)
 }
 
@@ -407,6 +411,9 @@ func (pcq *PriceCurrencyQuery) sqlQuery(ctx context.Context) *sql.Selector {
 	if pcq.sql != nil {
 		selector = pcq.sql
 		selector.Select(selector.Columns(columns...)...)
+	}
+	if pcq.unique != nil && *pcq.unique {
+		selector.Distinct()
 	}
 	for _, p := range pcq.predicates {
 		p(selector)
@@ -686,9 +693,7 @@ func (pcgb *PriceCurrencyGroupBy) sqlQuery() *sql.Selector {
 		for _, f := range pcgb.fields {
 			columns = append(columns, selector.C(f))
 		}
-		for _, c := range aggregation {
-			columns = append(columns, c)
-		}
+		columns = append(columns, aggregation...)
 		selector.Select(columns...)
 	}
 	return selector.GroupBy(selector.Columns(pcgb.fields...)...)

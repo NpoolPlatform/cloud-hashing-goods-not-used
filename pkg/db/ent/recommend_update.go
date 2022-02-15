@@ -4,6 +4,7 @@ package ent
 
 import (
 	"context"
+	"errors"
 	"fmt"
 
 	"entgo.io/ent/dialect/sql"
@@ -75,7 +76,7 @@ func (ru *RecommendUpdate) SetNillableCreateAt(u *uint32) *RecommendUpdate {
 }
 
 // AddCreateAt adds u to the "create_at" field.
-func (ru *RecommendUpdate) AddCreateAt(u uint32) *RecommendUpdate {
+func (ru *RecommendUpdate) AddCreateAt(u int32) *RecommendUpdate {
 	ru.mutation.AddCreateAt(u)
 	return ru
 }
@@ -88,7 +89,7 @@ func (ru *RecommendUpdate) SetUpdateAt(u uint32) *RecommendUpdate {
 }
 
 // AddUpdateAt adds u to the "update_at" field.
-func (ru *RecommendUpdate) AddUpdateAt(u uint32) *RecommendUpdate {
+func (ru *RecommendUpdate) AddUpdateAt(u int32) *RecommendUpdate {
 	ru.mutation.AddUpdateAt(u)
 	return ru
 }
@@ -109,7 +110,7 @@ func (ru *RecommendUpdate) SetNillableDeleteAt(u *uint32) *RecommendUpdate {
 }
 
 // AddDeleteAt adds u to the "delete_at" field.
-func (ru *RecommendUpdate) AddDeleteAt(u uint32) *RecommendUpdate {
+func (ru *RecommendUpdate) AddDeleteAt(u int32) *RecommendUpdate {
 	ru.mutation.AddDeleteAt(u)
 	return ru
 }
@@ -337,7 +338,7 @@ func (ruo *RecommendUpdateOne) SetNillableCreateAt(u *uint32) *RecommendUpdateOn
 }
 
 // AddCreateAt adds u to the "create_at" field.
-func (ruo *RecommendUpdateOne) AddCreateAt(u uint32) *RecommendUpdateOne {
+func (ruo *RecommendUpdateOne) AddCreateAt(u int32) *RecommendUpdateOne {
 	ruo.mutation.AddCreateAt(u)
 	return ruo
 }
@@ -350,7 +351,7 @@ func (ruo *RecommendUpdateOne) SetUpdateAt(u uint32) *RecommendUpdateOne {
 }
 
 // AddUpdateAt adds u to the "update_at" field.
-func (ruo *RecommendUpdateOne) AddUpdateAt(u uint32) *RecommendUpdateOne {
+func (ruo *RecommendUpdateOne) AddUpdateAt(u int32) *RecommendUpdateOne {
 	ruo.mutation.AddUpdateAt(u)
 	return ruo
 }
@@ -371,7 +372,7 @@ func (ruo *RecommendUpdateOne) SetNillableDeleteAt(u *uint32) *RecommendUpdateOn
 }
 
 // AddDeleteAt adds u to the "delete_at" field.
-func (ruo *RecommendUpdateOne) AddDeleteAt(u uint32) *RecommendUpdateOne {
+func (ruo *RecommendUpdateOne) AddDeleteAt(u int32) *RecommendUpdateOne {
 	ruo.mutation.AddDeleteAt(u)
 	return ruo
 }
@@ -464,7 +465,7 @@ func (ruo *RecommendUpdateOne) sqlSave(ctx context.Context) (_node *Recommend, e
 	}
 	id, ok := ruo.mutation.ID()
 	if !ok {
-		return nil, &ValidationError{Name: "ID", err: fmt.Errorf("missing Recommend.ID for update")}
+		return nil, &ValidationError{Name: "id", err: errors.New(`ent: missing "Recommend.id" for update`)}
 	}
 	_spec.Node.ID.Value = id
 	if fields := ruo.fields; len(fields) > 0 {

@@ -47,6 +47,8 @@ const (
 	FieldSupportCoinTypeIds = "support_coin_type_ids"
 	// FieldFeeIds holds the string denoting the fee_ids field in the database.
 	FieldFeeIds = "fee_ids"
+	// FieldStartAt holds the string denoting the start_at field in the database.
+	FieldStartAt = "start_at"
 	// FieldTotal holds the string denoting the total field in the database.
 	FieldTotal = "total"
 	// FieldCreateAt holds the string denoting the create_at field in the database.
@@ -79,6 +81,7 @@ var Columns = []string{
 	FieldUnit,
 	FieldSupportCoinTypeIds,
 	FieldFeeIds,
+	FieldStartAt,
 	FieldTotal,
 	FieldCreateAt,
 	FieldUpdateAt,
