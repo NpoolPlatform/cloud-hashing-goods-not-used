@@ -121,6 +121,7 @@ func Get(ctx context.Context, in *npool.GetGoodDetailRequest) (*npool.GetGoodDet
 			Unit:               goodInfo.Info.Unit,
 			Title:              goodInfo.Info.Title,
 			Fees:               fees,
+			StartAt:            goodInfo.Info.StartAt,
 		},
 	}, nil
 }
