@@ -34,6 +34,7 @@ func GetByApp(ctx context.Context, in *npool.GetRecommendGoodsByAppRequest) (*np
 		for _, info := range appGoods.Infos {
 			if info.GoodID == myRecommend.GoodID {
 				allowed = true
+				break
 			}
 		}
 
