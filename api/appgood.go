@@ -48,6 +48,22 @@ func (s *Server) SetAppGoodPrice(ctx context.Context, in *npool.SetAppGoodPriceR
 	return resp, nil
 }
 
+func (s *Server) SetAppGoodPriceForOtherApp(ctx context.Context, in *npool.SetAppGoodPriceForOtherAppRequest) (*npool.SetAppGoodPriceForOtherAppResponse, error) {
+	info := in.GetInfo()
+	info.AppID = in.GetTargetAppID()
+
+	resp, err := appgood.SetAppGoodPrice(ctx, &npool.SetAppGoodPriceRequest{
+		Info: info,
+	})
+	if err != nil {
+		logger.Sugar().Errorf("authorize app good error: %v", err)
+		return &npool.SetAppGoodPriceForOtherAppResponse{}, status.Error(codes.Internal, err.Error())
+	}
+	return &npool.SetAppGoodPriceForOtherAppResponse{
+		Info: resp.Info,
+	}, nil
+}
+
 func (s *Server) CheckAppGood(ctx context.Context, in *npool.CheckAppGoodRequest) (*npool.CheckAppGoodResponse, error) {
 	resp, err := appgood.Check(ctx, in)
 	if err != nil {
@@ -66,6 +82,22 @@ func (s *Server) OnsaleAppGood(ctx context.Context, in *npool.OnsaleAppGoodReque
 	return resp, nil
 }
 
+func (s *Server) OnsaleAppGoodForOtherApp(ctx context.Context, in *npool.OnsaleAppGoodForOtherAppRequest) (*npool.OnsaleAppGoodForOtherAppResponse, error) {
+	info := in.GetInfo()
+	info.AppID = in.GetTargetAppID()
+
+	resp, err := appgood.Onsale(ctx, &npool.OnsaleAppGoodRequest{
+		Info: info,
+	})
+	if err != nil {
+		logger.Sugar().Errorf("authorize app good error: %v", err)
+		return &npool.OnsaleAppGoodForOtherAppResponse{}, status.Error(codes.Internal, err.Error())
+	}
+	return &npool.OnsaleAppGoodForOtherAppResponse{
+		Info: resp.Info,
+	}, nil
+}
+
 func (s *Server) OffsaleAppGood(ctx context.Context, in *npool.OffsaleAppGoodRequest) (*npool.OffsaleAppGoodResponse, error) {
 	resp, err := appgood.Offsale(ctx, in)
 	if err != nil {
@@ -73,6 +105,22 @@ func (s *Server) OffsaleAppGood(ctx context.Context, in *npool.OffsaleAppGoodReq
 		return &npool.OffsaleAppGoodResponse{}, status.Error(codes.Internal, err.Error())
 	}
 	return resp, nil
+}
+
+func (s *Server) OffsaleAppGoodForOtherApp(ctx context.Context, in *npool.OffsaleAppGoodForOtherAppRequest) (*npool.OffsaleAppGoodForOtherAppResponse, error) {
+	info := in.GetInfo()
+	info.AppID = in.GetTargetAppID()
+
+	resp, err := appgood.Offsale(ctx, &npool.OffsaleAppGoodRequest{
+		Info: info,
+	})
+	if err != nil {
+		logger.Sugar().Errorf("authorize app good error: %v", err)
+		return &npool.OffsaleAppGoodForOtherAppResponse{}, status.Error(codes.Internal, err.Error())
+	}
+	return &npool.OffsaleAppGoodForOtherAppResponse{
+		Info: resp.Info,
+	}, nil
 }
 
 func (s *Server) UnauthorizeAppGood(ctx context.Context, in *npool.UnauthorizeAppGoodRequest) (*npool.UnauthorizeAppGoodResponse, error) {
