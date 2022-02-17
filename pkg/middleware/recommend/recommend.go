@@ -42,7 +42,7 @@ func GetByApp(ctx context.Context, in *npool.GetRecommendGoodsByAppRequest) (*np
 
 func GetByRecommender(ctx context.Context, in *npool.GetRecommendGoodsByRecommenderRequest) (*npool.GetRecommendGoodsByRecommenderResponse, error) {
 	myRecommends, err := crud.GetByRecommender(ctx, &npool.GetRecommendsByRecommenderRequest{
-		UserID: in.GetUserID(),
+		RecommenderID: in.GetRecommenderID(),
 	})
 	if err != nil {
 		return nil, xerrors.Errorf("fail get recommends by recommender: %v", err)
