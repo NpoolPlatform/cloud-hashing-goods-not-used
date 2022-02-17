@@ -154,8 +154,11 @@ func GetByApp(ctx context.Context, in *npool.GetGoodsDetailByAppRequest) (*npool
 	details := []*npool.GoodDetail{}
 	for _, info := range resp.Infos {
 		allowed := false
+		price := info.Price
+
 		for _, appGood := range appGoods.Infos {
 			if info.ID == appGood.GoodID && appGood.Online && appGood.Price > 0 {
+				price = appGood.Price
 				allowed = true
 				break
 			}
@@ -172,6 +175,9 @@ func GetByApp(ctx context.Context, in *npool.GetGoodsDetailByAppRequest) (*npool
 			logger.Sugar().Errorf("fail get good detail: %v", err)
 			continue
 		}
+
+		detail.Info.Good.Price = price
+
 		details = append(details, detail.Info)
 	}
 

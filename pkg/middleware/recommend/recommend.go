@@ -31,8 +31,11 @@ func GetByApp(ctx context.Context, in *npool.GetRecommendGoodsByAppRequest) (*np
 	recommendGoods := []*npool.RecommendGood{}
 	for _, myRecommend := range myRecommends.Infos {
 		allowed := false
+		price := 0.0
+
 		for _, info := range appGoods.Infos {
 			if myRecommend.GoodID == info.GoodID && info.Online && info.Price > 0 {
+				price = info.Price
 				allowed = true
 				break
 			}
@@ -48,6 +51,8 @@ func GetByApp(ctx context.Context, in *npool.GetRecommendGoodsByAppRequest) (*np
 		if err != nil {
 			logger.Sugar().Errorf("fail get good: %v", err)
 		}
+
+		myGood.Info.Good.Price = price
 
 		recommendGoods = append(recommendGoods, &npool.RecommendGood{
 			Recommend: myRecommend,
