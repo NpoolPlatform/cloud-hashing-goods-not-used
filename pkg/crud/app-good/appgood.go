@@ -109,12 +109,14 @@ func Check(ctx context.Context, in *npool.CheckAppGoodRequest) (*npool.CheckAppG
 	if err != nil {
 		return nil, xerrors.Errorf("fail query app good: %v", err)
 	}
-	if len(infos) == 0 {
-		return nil, xerrors.Errorf("empty app good")
+
+	var appGood *npool.AppGoodInfo
+	for _, info := range infos {
+		appGood = dbRowToAppGood(info)
 	}
 
 	return &npool.CheckAppGoodResponse{
-		Info: dbRowToAppGood(infos[0]),
+		Info: appGood,
 	}, nil
 }
 
@@ -246,7 +248,7 @@ func Unauthorize(ctx context.Context, in *npool.UnauthorizeAppGoodRequest) (*npo
 		AppGood.
 		UpdateOneID(id).
 		SetOnline(false).
-		SetDeleteAt(time.Now().UnixNano()).
+		SetDeleteAt(uint32(time.Now().Unix())).
 		Save(ctx)
 	if err != nil {
 		return nil, xerrors.Errorf("fail unauthorize app good: %v", err)
@@ -254,5 +256,40 @@ func Unauthorize(ctx context.Context, in *npool.UnauthorizeAppGoodRequest) (*npo
 
 	return &npool.UnauthorizeAppGoodResponse{
 		Info: dbRowToAppGood(info),
+	}, nil
+}
+
+func GetByApp(ctx context.Context, in *npool.GetAppGoodsRequest) (*npool.GetAppGoodsResponse, error) {
+	appID, err := uuid.Parse(in.GetAppID())
+	if err != nil {
+		return nil, xerrors.Errorf("invalid app id: %v", err)
+	}
+
+	cli, err := db.Client()
+	if err != nil {
+		return nil, xerrors.Errorf("fail get db client: %v", err)
+	}
+
+	infos, err := cli.
+		AppGood.
+		Query().
+		Where(
+			appgood.And(
+				appgood.AppID(appID),
+				appgood.DeleteAt(0),
+			),
+		).
+		All(ctx)
+	if err != nil {
+		return nil, xerrors.Errorf("fail query app good: %v", err)
+	}
+
+	appGoods := []*npool.AppGoodInfo{}
+	for _, info := range infos {
+		appGoods = append(appGoods, dbRowToAppGood(info))
+	}
+
+	return &npool.GetAppGoodsResponse{
+		Infos: appGoods,
 	}, nil
 }

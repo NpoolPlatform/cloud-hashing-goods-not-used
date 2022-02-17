@@ -67,12 +67,12 @@ type AppGoodMutation struct {
 	price              *uint64
 	addprice           *int64
 	invitation_only    *bool
-	create_at          *int64
-	addcreate_at       *int64
-	update_at          *int64
-	addupdate_at       *int64
-	delete_at          *int64
-	adddelete_at       *int64
+	create_at          *uint32
+	addcreate_at       *int32
+	update_at          *uint32
+	addupdate_at       *int32
+	delete_at          *uint32
+	adddelete_at       *int32
 	clearedFields      map[string]struct{}
 	done               bool
 	oldValue           func(context.Context) (*AppGood, error)
@@ -456,13 +456,13 @@ func (m *AppGoodMutation) ResetInvitationOnly() {
 }
 
 // SetCreateAt sets the "create_at" field.
-func (m *AppGoodMutation) SetCreateAt(i int64) {
-	m.create_at = &i
+func (m *AppGoodMutation) SetCreateAt(u uint32) {
+	m.create_at = &u
 	m.addcreate_at = nil
 }
 
 // CreateAt returns the value of the "create_at" field in the mutation.
-func (m *AppGoodMutation) CreateAt() (r int64, exists bool) {
+func (m *AppGoodMutation) CreateAt() (r uint32, exists bool) {
 	v := m.create_at
 	if v == nil {
 		return
@@ -473,7 +473,7 @@ func (m *AppGoodMutation) CreateAt() (r int64, exists bool) {
 // OldCreateAt returns the old "create_at" field's value of the AppGood entity.
 // If the AppGood object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *AppGoodMutation) OldCreateAt(ctx context.Context) (v int64, err error) {
+func (m *AppGoodMutation) OldCreateAt(ctx context.Context) (v uint32, err error) {
 	if !m.op.Is(OpUpdateOne) {
 		return v, errors.New("OldCreateAt is only allowed on UpdateOne operations")
 	}
@@ -487,17 +487,17 @@ func (m *AppGoodMutation) OldCreateAt(ctx context.Context) (v int64, err error) 
 	return oldValue.CreateAt, nil
 }
 
-// AddCreateAt adds i to the "create_at" field.
-func (m *AppGoodMutation) AddCreateAt(i int64) {
+// AddCreateAt adds u to the "create_at" field.
+func (m *AppGoodMutation) AddCreateAt(u int32) {
 	if m.addcreate_at != nil {
-		*m.addcreate_at += i
+		*m.addcreate_at += u
 	} else {
-		m.addcreate_at = &i
+		m.addcreate_at = &u
 	}
 }
 
 // AddedCreateAt returns the value that was added to the "create_at" field in this mutation.
-func (m *AppGoodMutation) AddedCreateAt() (r int64, exists bool) {
+func (m *AppGoodMutation) AddedCreateAt() (r int32, exists bool) {
 	v := m.addcreate_at
 	if v == nil {
 		return
@@ -512,13 +512,13 @@ func (m *AppGoodMutation) ResetCreateAt() {
 }
 
 // SetUpdateAt sets the "update_at" field.
-func (m *AppGoodMutation) SetUpdateAt(i int64) {
-	m.update_at = &i
+func (m *AppGoodMutation) SetUpdateAt(u uint32) {
+	m.update_at = &u
 	m.addupdate_at = nil
 }
 
 // UpdateAt returns the value of the "update_at" field in the mutation.
-func (m *AppGoodMutation) UpdateAt() (r int64, exists bool) {
+func (m *AppGoodMutation) UpdateAt() (r uint32, exists bool) {
 	v := m.update_at
 	if v == nil {
 		return
@@ -529,7 +529,7 @@ func (m *AppGoodMutation) UpdateAt() (r int64, exists bool) {
 // OldUpdateAt returns the old "update_at" field's value of the AppGood entity.
 // If the AppGood object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *AppGoodMutation) OldUpdateAt(ctx context.Context) (v int64, err error) {
+func (m *AppGoodMutation) OldUpdateAt(ctx context.Context) (v uint32, err error) {
 	if !m.op.Is(OpUpdateOne) {
 		return v, errors.New("OldUpdateAt is only allowed on UpdateOne operations")
 	}
@@ -543,17 +543,17 @@ func (m *AppGoodMutation) OldUpdateAt(ctx context.Context) (v int64, err error) 
 	return oldValue.UpdateAt, nil
 }
 
-// AddUpdateAt adds i to the "update_at" field.
-func (m *AppGoodMutation) AddUpdateAt(i int64) {
+// AddUpdateAt adds u to the "update_at" field.
+func (m *AppGoodMutation) AddUpdateAt(u int32) {
 	if m.addupdate_at != nil {
-		*m.addupdate_at += i
+		*m.addupdate_at += u
 	} else {
-		m.addupdate_at = &i
+		m.addupdate_at = &u
 	}
 }
 
 // AddedUpdateAt returns the value that was added to the "update_at" field in this mutation.
-func (m *AppGoodMutation) AddedUpdateAt() (r int64, exists bool) {
+func (m *AppGoodMutation) AddedUpdateAt() (r int32, exists bool) {
 	v := m.addupdate_at
 	if v == nil {
 		return
@@ -568,13 +568,13 @@ func (m *AppGoodMutation) ResetUpdateAt() {
 }
 
 // SetDeleteAt sets the "delete_at" field.
-func (m *AppGoodMutation) SetDeleteAt(i int64) {
-	m.delete_at = &i
+func (m *AppGoodMutation) SetDeleteAt(u uint32) {
+	m.delete_at = &u
 	m.adddelete_at = nil
 }
 
 // DeleteAt returns the value of the "delete_at" field in the mutation.
-func (m *AppGoodMutation) DeleteAt() (r int64, exists bool) {
+func (m *AppGoodMutation) DeleteAt() (r uint32, exists bool) {
 	v := m.delete_at
 	if v == nil {
 		return
@@ -585,7 +585,7 @@ func (m *AppGoodMutation) DeleteAt() (r int64, exists bool) {
 // OldDeleteAt returns the old "delete_at" field's value of the AppGood entity.
 // If the AppGood object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *AppGoodMutation) OldDeleteAt(ctx context.Context) (v int64, err error) {
+func (m *AppGoodMutation) OldDeleteAt(ctx context.Context) (v uint32, err error) {
 	if !m.op.Is(OpUpdateOne) {
 		return v, errors.New("OldDeleteAt is only allowed on UpdateOne operations")
 	}
@@ -599,17 +599,17 @@ func (m *AppGoodMutation) OldDeleteAt(ctx context.Context) (v int64, err error) 
 	return oldValue.DeleteAt, nil
 }
 
-// AddDeleteAt adds i to the "delete_at" field.
-func (m *AppGoodMutation) AddDeleteAt(i int64) {
+// AddDeleteAt adds u to the "delete_at" field.
+func (m *AppGoodMutation) AddDeleteAt(u int32) {
 	if m.adddelete_at != nil {
-		*m.adddelete_at += i
+		*m.adddelete_at += u
 	} else {
-		m.adddelete_at = &i
+		m.adddelete_at = &u
 	}
 }
 
 // AddedDeleteAt returns the value that was added to the "delete_at" field in this mutation.
-func (m *AppGoodMutation) AddedDeleteAt() (r int64, exists bool) {
+func (m *AppGoodMutation) AddedDeleteAt() (r int32, exists bool) {
 	v := m.adddelete_at
 	if v == nil {
 		return
@@ -789,21 +789,21 @@ func (m *AppGoodMutation) SetField(name string, value ent.Value) error {
 		m.SetInvitationOnly(v)
 		return nil
 	case appgood.FieldCreateAt:
-		v, ok := value.(int64)
+		v, ok := value.(uint32)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.SetCreateAt(v)
 		return nil
 	case appgood.FieldUpdateAt:
-		v, ok := value.(int64)
+		v, ok := value.(uint32)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.SetUpdateAt(v)
 		return nil
 	case appgood.FieldDeleteAt:
-		v, ok := value.(int64)
+		v, ok := value.(uint32)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
@@ -862,21 +862,21 @@ func (m *AppGoodMutation) AddField(name string, value ent.Value) error {
 		m.AddPrice(v)
 		return nil
 	case appgood.FieldCreateAt:
-		v, ok := value.(int64)
+		v, ok := value.(int32)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.AddCreateAt(v)
 		return nil
 	case appgood.FieldUpdateAt:
-		v, ok := value.(int64)
+		v, ok := value.(int32)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.AddUpdateAt(v)
 		return nil
 	case appgood.FieldDeleteAt:
-		v, ok := value.(int64)
+		v, ok := value.(int32)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}

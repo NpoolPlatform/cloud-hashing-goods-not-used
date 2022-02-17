@@ -18,9 +18,9 @@ var (
 		{Name: "init_area_strategy", Type: field.TypeEnum, Enums: []string{"all", "none"}},
 		{Name: "price", Type: field.TypeUint64},
 		{Name: "invitation_only", Type: field.TypeBool, Default: false},
-		{Name: "create_at", Type: field.TypeInt64},
-		{Name: "update_at", Type: field.TypeInt64},
-		{Name: "delete_at", Type: field.TypeInt64},
+		{Name: "create_at", Type: field.TypeUint32},
+		{Name: "update_at", Type: field.TypeUint32},
+		{Name: "delete_at", Type: field.TypeUint32},
 	}
 	// AppGoodsTable holds the schema information for the "app_goods" table.
 	AppGoodsTable = &schema.Table{

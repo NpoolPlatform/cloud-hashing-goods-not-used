@@ -27,7 +27,6 @@ func init() {
 func assertAppGood(t *testing.T, actual, expected *npool.AppGoodInfo) {
 	assert.Equal(t, actual.AppID, expected.AppID)
 	assert.Equal(t, actual.GoodID, expected.GoodID)
-	assert.Equal(t, actual.Authorized, expected.Authorized)
 	assert.Equal(t, actual.Online, expected.Online)
 	assert.Equal(t, actual.InitAreaStrategy, expected.InitAreaStrategy)
 	assert.Equal(t, actual.Price, expected.Price)
@@ -42,7 +41,6 @@ func TestAppGoodCRUD(t *testing.T) {
 		AppID:  uuid.New().String(),
 		GoodID: uuid.New().String(),
 		// For result assert
-		Authorized:       true,
 		Online:           false,
 		InitAreaStrategy: "none",
 		Price:            0,
@@ -64,7 +62,6 @@ func TestAppGoodCRUD(t *testing.T) {
 	}
 
 	appGoodInfo.ID = resp.Info.ID
-	appGoodInfo.Authorized = false
 
 	resp2, err := Unauthorize(context.Background(), &npool.UnauthorizeAppGoodRequest{
 		Info: &appGoodInfo,
@@ -74,12 +71,11 @@ func TestAppGoodCRUD(t *testing.T) {
 		assertAppGood(t, resp2.Info, &appGoodInfo)
 	}
 
-	_, err = Check(context.Background(), &npool.CheckAppGoodRequest{
+	resp3, err := Check(context.Background(), &npool.CheckAppGoodRequest{
 		Info: &appGoodInfo,
 	})
-	assert.NotNil(t, err)
-
-	appGoodInfo.Authorized = true
+	assert.Nil(t, err)
+	assert.Nil(t, resp3.Info)
 
 	resp4, err := Authorize(context.Background(), &npool.AuthorizeAppGoodRequest{
 		Info: &appGoodInfo,
@@ -126,8 +122,6 @@ func TestAppGoodCRUD(t *testing.T) {
 		assert.Equal(t, resp8.Info.ID, resp.Info.ID)
 		assertAppGood(t, resp8.Info, &appGoodInfo)
 	}
-
-	appGoodInfo.Authorized = false
 
 	resp9, err := Unauthorize(context.Background(), &npool.UnauthorizeAppGoodRequest{
 		Info: &appGoodInfo,

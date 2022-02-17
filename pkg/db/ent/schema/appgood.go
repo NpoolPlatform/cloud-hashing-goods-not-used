@@ -32,19 +32,19 @@ func (AppGood) Fields() []ent.Field {
 		field.Uint64("price"),
 		field.Bool("invitation_only").
 			Default(false),
-		field.Int64("create_at").
-			DefaultFunc(func() int64 {
-				return time.Now().UnixNano()
+		field.Uint32("create_at").
+			DefaultFunc(func() uint32 {
+				return uint32(time.Now().Unix())
 			}),
-		field.Int64("update_at").
-			DefaultFunc(func() int64 {
-				return time.Now().UnixNano()
+		field.Uint32("update_at").
+			DefaultFunc(func() uint32 {
+				return uint32(time.Now().Unix())
 			}).
-			UpdateDefault(func() int64 {
-				return time.Now().UnixNano()
+			DefaultFunc(func() uint32 {
+				return uint32(time.Now().Unix())
 			}),
-		field.Int64("delete_at").
-			DefaultFunc(func() int64 {
+		field.Uint32("delete_at").
+			DefaultFunc(func() uint32 {
 				return 0
 			}),
 	}

@@ -102,57 +102,65 @@ func (agu *AppGoodUpdate) SetNillableInvitationOnly(b *bool) *AppGoodUpdate {
 }
 
 // SetCreateAt sets the "create_at" field.
-func (agu *AppGoodUpdate) SetCreateAt(i int64) *AppGoodUpdate {
+func (agu *AppGoodUpdate) SetCreateAt(u uint32) *AppGoodUpdate {
 	agu.mutation.ResetCreateAt()
-	agu.mutation.SetCreateAt(i)
+	agu.mutation.SetCreateAt(u)
 	return agu
 }
 
 // SetNillableCreateAt sets the "create_at" field if the given value is not nil.
-func (agu *AppGoodUpdate) SetNillableCreateAt(i *int64) *AppGoodUpdate {
-	if i != nil {
-		agu.SetCreateAt(*i)
+func (agu *AppGoodUpdate) SetNillableCreateAt(u *uint32) *AppGoodUpdate {
+	if u != nil {
+		agu.SetCreateAt(*u)
 	}
 	return agu
 }
 
-// AddCreateAt adds i to the "create_at" field.
-func (agu *AppGoodUpdate) AddCreateAt(i int64) *AppGoodUpdate {
-	agu.mutation.AddCreateAt(i)
+// AddCreateAt adds u to the "create_at" field.
+func (agu *AppGoodUpdate) AddCreateAt(u int32) *AppGoodUpdate {
+	agu.mutation.AddCreateAt(u)
 	return agu
 }
 
 // SetUpdateAt sets the "update_at" field.
-func (agu *AppGoodUpdate) SetUpdateAt(i int64) *AppGoodUpdate {
+func (agu *AppGoodUpdate) SetUpdateAt(u uint32) *AppGoodUpdate {
 	agu.mutation.ResetUpdateAt()
-	agu.mutation.SetUpdateAt(i)
+	agu.mutation.SetUpdateAt(u)
 	return agu
 }
 
-// AddUpdateAt adds i to the "update_at" field.
-func (agu *AppGoodUpdate) AddUpdateAt(i int64) *AppGoodUpdate {
-	agu.mutation.AddUpdateAt(i)
-	return agu
-}
-
-// SetDeleteAt sets the "delete_at" field.
-func (agu *AppGoodUpdate) SetDeleteAt(i int64) *AppGoodUpdate {
-	agu.mutation.ResetDeleteAt()
-	agu.mutation.SetDeleteAt(i)
-	return agu
-}
-
-// SetNillableDeleteAt sets the "delete_at" field if the given value is not nil.
-func (agu *AppGoodUpdate) SetNillableDeleteAt(i *int64) *AppGoodUpdate {
-	if i != nil {
-		agu.SetDeleteAt(*i)
+// SetNillableUpdateAt sets the "update_at" field if the given value is not nil.
+func (agu *AppGoodUpdate) SetNillableUpdateAt(u *uint32) *AppGoodUpdate {
+	if u != nil {
+		agu.SetUpdateAt(*u)
 	}
 	return agu
 }
 
-// AddDeleteAt adds i to the "delete_at" field.
-func (agu *AppGoodUpdate) AddDeleteAt(i int64) *AppGoodUpdate {
-	agu.mutation.AddDeleteAt(i)
+// AddUpdateAt adds u to the "update_at" field.
+func (agu *AppGoodUpdate) AddUpdateAt(u int32) *AppGoodUpdate {
+	agu.mutation.AddUpdateAt(u)
+	return agu
+}
+
+// SetDeleteAt sets the "delete_at" field.
+func (agu *AppGoodUpdate) SetDeleteAt(u uint32) *AppGoodUpdate {
+	agu.mutation.ResetDeleteAt()
+	agu.mutation.SetDeleteAt(u)
+	return agu
+}
+
+// SetNillableDeleteAt sets the "delete_at" field if the given value is not nil.
+func (agu *AppGoodUpdate) SetNillableDeleteAt(u *uint32) *AppGoodUpdate {
+	if u != nil {
+		agu.SetDeleteAt(*u)
+	}
+	return agu
+}
+
+// AddDeleteAt adds u to the "delete_at" field.
+func (agu *AppGoodUpdate) AddDeleteAt(u int32) *AppGoodUpdate {
+	agu.mutation.AddDeleteAt(u)
 	return agu
 }
 
@@ -167,7 +175,6 @@ func (agu *AppGoodUpdate) Save(ctx context.Context) (int, error) {
 		err      error
 		affected int
 	)
-	agu.defaults()
 	if len(agu.hooks) == 0 {
 		if err = agu.check(); err != nil {
 			return 0, err
@@ -219,14 +226,6 @@ func (agu *AppGoodUpdate) Exec(ctx context.Context) error {
 func (agu *AppGoodUpdate) ExecX(ctx context.Context) {
 	if err := agu.Exec(ctx); err != nil {
 		panic(err)
-	}
-}
-
-// defaults sets the default values of the builder before save.
-func (agu *AppGoodUpdate) defaults() {
-	if _, ok := agu.mutation.UpdateAt(); !ok {
-		v := appgood.UpdateDefaultUpdateAt()
-		agu.mutation.SetUpdateAt(v)
 	}
 }
 
@@ -316,42 +315,42 @@ func (agu *AppGoodUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	}
 	if value, ok := agu.mutation.CreateAt(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
+			Type:   field.TypeUint32,
 			Value:  value,
 			Column: appgood.FieldCreateAt,
 		})
 	}
 	if value, ok := agu.mutation.AddedCreateAt(); ok {
 		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
+			Type:   field.TypeUint32,
 			Value:  value,
 			Column: appgood.FieldCreateAt,
 		})
 	}
 	if value, ok := agu.mutation.UpdateAt(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
+			Type:   field.TypeUint32,
 			Value:  value,
 			Column: appgood.FieldUpdateAt,
 		})
 	}
 	if value, ok := agu.mutation.AddedUpdateAt(); ok {
 		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
+			Type:   field.TypeUint32,
 			Value:  value,
 			Column: appgood.FieldUpdateAt,
 		})
 	}
 	if value, ok := agu.mutation.DeleteAt(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
+			Type:   field.TypeUint32,
 			Value:  value,
 			Column: appgood.FieldDeleteAt,
 		})
 	}
 	if value, ok := agu.mutation.AddedDeleteAt(); ok {
 		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
+			Type:   field.TypeUint32,
 			Value:  value,
 			Column: appgood.FieldDeleteAt,
 		})
@@ -449,57 +448,65 @@ func (aguo *AppGoodUpdateOne) SetNillableInvitationOnly(b *bool) *AppGoodUpdateO
 }
 
 // SetCreateAt sets the "create_at" field.
-func (aguo *AppGoodUpdateOne) SetCreateAt(i int64) *AppGoodUpdateOne {
+func (aguo *AppGoodUpdateOne) SetCreateAt(u uint32) *AppGoodUpdateOne {
 	aguo.mutation.ResetCreateAt()
-	aguo.mutation.SetCreateAt(i)
+	aguo.mutation.SetCreateAt(u)
 	return aguo
 }
 
 // SetNillableCreateAt sets the "create_at" field if the given value is not nil.
-func (aguo *AppGoodUpdateOne) SetNillableCreateAt(i *int64) *AppGoodUpdateOne {
-	if i != nil {
-		aguo.SetCreateAt(*i)
+func (aguo *AppGoodUpdateOne) SetNillableCreateAt(u *uint32) *AppGoodUpdateOne {
+	if u != nil {
+		aguo.SetCreateAt(*u)
 	}
 	return aguo
 }
 
-// AddCreateAt adds i to the "create_at" field.
-func (aguo *AppGoodUpdateOne) AddCreateAt(i int64) *AppGoodUpdateOne {
-	aguo.mutation.AddCreateAt(i)
+// AddCreateAt adds u to the "create_at" field.
+func (aguo *AppGoodUpdateOne) AddCreateAt(u int32) *AppGoodUpdateOne {
+	aguo.mutation.AddCreateAt(u)
 	return aguo
 }
 
 // SetUpdateAt sets the "update_at" field.
-func (aguo *AppGoodUpdateOne) SetUpdateAt(i int64) *AppGoodUpdateOne {
+func (aguo *AppGoodUpdateOne) SetUpdateAt(u uint32) *AppGoodUpdateOne {
 	aguo.mutation.ResetUpdateAt()
-	aguo.mutation.SetUpdateAt(i)
+	aguo.mutation.SetUpdateAt(u)
 	return aguo
 }
 
-// AddUpdateAt adds i to the "update_at" field.
-func (aguo *AppGoodUpdateOne) AddUpdateAt(i int64) *AppGoodUpdateOne {
-	aguo.mutation.AddUpdateAt(i)
-	return aguo
-}
-
-// SetDeleteAt sets the "delete_at" field.
-func (aguo *AppGoodUpdateOne) SetDeleteAt(i int64) *AppGoodUpdateOne {
-	aguo.mutation.ResetDeleteAt()
-	aguo.mutation.SetDeleteAt(i)
-	return aguo
-}
-
-// SetNillableDeleteAt sets the "delete_at" field if the given value is not nil.
-func (aguo *AppGoodUpdateOne) SetNillableDeleteAt(i *int64) *AppGoodUpdateOne {
-	if i != nil {
-		aguo.SetDeleteAt(*i)
+// SetNillableUpdateAt sets the "update_at" field if the given value is not nil.
+func (aguo *AppGoodUpdateOne) SetNillableUpdateAt(u *uint32) *AppGoodUpdateOne {
+	if u != nil {
+		aguo.SetUpdateAt(*u)
 	}
 	return aguo
 }
 
-// AddDeleteAt adds i to the "delete_at" field.
-func (aguo *AppGoodUpdateOne) AddDeleteAt(i int64) *AppGoodUpdateOne {
-	aguo.mutation.AddDeleteAt(i)
+// AddUpdateAt adds u to the "update_at" field.
+func (aguo *AppGoodUpdateOne) AddUpdateAt(u int32) *AppGoodUpdateOne {
+	aguo.mutation.AddUpdateAt(u)
+	return aguo
+}
+
+// SetDeleteAt sets the "delete_at" field.
+func (aguo *AppGoodUpdateOne) SetDeleteAt(u uint32) *AppGoodUpdateOne {
+	aguo.mutation.ResetDeleteAt()
+	aguo.mutation.SetDeleteAt(u)
+	return aguo
+}
+
+// SetNillableDeleteAt sets the "delete_at" field if the given value is not nil.
+func (aguo *AppGoodUpdateOne) SetNillableDeleteAt(u *uint32) *AppGoodUpdateOne {
+	if u != nil {
+		aguo.SetDeleteAt(*u)
+	}
+	return aguo
+}
+
+// AddDeleteAt adds u to the "delete_at" field.
+func (aguo *AppGoodUpdateOne) AddDeleteAt(u int32) *AppGoodUpdateOne {
+	aguo.mutation.AddDeleteAt(u)
 	return aguo
 }
 
@@ -521,7 +528,6 @@ func (aguo *AppGoodUpdateOne) Save(ctx context.Context) (*AppGood, error) {
 		err  error
 		node *AppGood
 	)
-	aguo.defaults()
 	if len(aguo.hooks) == 0 {
 		if err = aguo.check(); err != nil {
 			return nil, err
@@ -573,14 +579,6 @@ func (aguo *AppGoodUpdateOne) Exec(ctx context.Context) error {
 func (aguo *AppGoodUpdateOne) ExecX(ctx context.Context) {
 	if err := aguo.Exec(ctx); err != nil {
 		panic(err)
-	}
-}
-
-// defaults sets the default values of the builder before save.
-func (aguo *AppGoodUpdateOne) defaults() {
-	if _, ok := aguo.mutation.UpdateAt(); !ok {
-		v := appgood.UpdateDefaultUpdateAt()
-		aguo.mutation.SetUpdateAt(v)
 	}
 }
 
@@ -687,42 +685,42 @@ func (aguo *AppGoodUpdateOne) sqlSave(ctx context.Context) (_node *AppGood, err 
 	}
 	if value, ok := aguo.mutation.CreateAt(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
+			Type:   field.TypeUint32,
 			Value:  value,
 			Column: appgood.FieldCreateAt,
 		})
 	}
 	if value, ok := aguo.mutation.AddedCreateAt(); ok {
 		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
+			Type:   field.TypeUint32,
 			Value:  value,
 			Column: appgood.FieldCreateAt,
 		})
 	}
 	if value, ok := aguo.mutation.UpdateAt(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
+			Type:   field.TypeUint32,
 			Value:  value,
 			Column: appgood.FieldUpdateAt,
 		})
 	}
 	if value, ok := aguo.mutation.AddedUpdateAt(); ok {
 		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
+			Type:   field.TypeUint32,
 			Value:  value,
 			Column: appgood.FieldUpdateAt,
 		})
 	}
 	if value, ok := aguo.mutation.DeleteAt(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
+			Type:   field.TypeUint32,
 			Value:  value,
 			Column: appgood.FieldDeleteAt,
 		})
 	}
 	if value, ok := aguo.mutation.AddedDeleteAt(); ok {
 		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
+			Type:   field.TypeUint32,
 			Value:  value,
 			Column: appgood.FieldDeleteAt,
 		})

@@ -42,17 +42,15 @@ func init() {
 	// appgoodDescCreateAt is the schema descriptor for create_at field.
 	appgoodDescCreateAt := appgoodFields[8].Descriptor()
 	// appgood.DefaultCreateAt holds the default value on creation for the create_at field.
-	appgood.DefaultCreateAt = appgoodDescCreateAt.Default.(func() int64)
+	appgood.DefaultCreateAt = appgoodDescCreateAt.Default.(func() uint32)
 	// appgoodDescUpdateAt is the schema descriptor for update_at field.
 	appgoodDescUpdateAt := appgoodFields[9].Descriptor()
 	// appgood.DefaultUpdateAt holds the default value on creation for the update_at field.
-	appgood.DefaultUpdateAt = appgoodDescUpdateAt.Default.(func() int64)
-	// appgood.UpdateDefaultUpdateAt holds the default value on update for the update_at field.
-	appgood.UpdateDefaultUpdateAt = appgoodDescUpdateAt.UpdateDefault.(func() int64)
+	appgood.DefaultUpdateAt = appgoodDescUpdateAt.Default.(func() uint32)
 	// appgoodDescDeleteAt is the schema descriptor for delete_at field.
 	appgoodDescDeleteAt := appgoodFields[10].Descriptor()
 	// appgood.DefaultDeleteAt holds the default value on creation for the delete_at field.
-	appgood.DefaultDeleteAt = appgoodDescDeleteAt.Default.(func() int64)
+	appgood.DefaultDeleteAt = appgoodDescDeleteAt.Default.(func() uint32)
 	// appgoodDescID is the schema descriptor for id field.
 	appgoodDescID := appgoodFields[0].Descriptor()
 	// appgood.DefaultID holds the default value on creation for the id field.

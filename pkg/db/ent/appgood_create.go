@@ -90,43 +90,43 @@ func (agc *AppGoodCreate) SetNillableInvitationOnly(b *bool) *AppGoodCreate {
 }
 
 // SetCreateAt sets the "create_at" field.
-func (agc *AppGoodCreate) SetCreateAt(i int64) *AppGoodCreate {
-	agc.mutation.SetCreateAt(i)
+func (agc *AppGoodCreate) SetCreateAt(u uint32) *AppGoodCreate {
+	agc.mutation.SetCreateAt(u)
 	return agc
 }
 
 // SetNillableCreateAt sets the "create_at" field if the given value is not nil.
-func (agc *AppGoodCreate) SetNillableCreateAt(i *int64) *AppGoodCreate {
-	if i != nil {
-		agc.SetCreateAt(*i)
+func (agc *AppGoodCreate) SetNillableCreateAt(u *uint32) *AppGoodCreate {
+	if u != nil {
+		agc.SetCreateAt(*u)
 	}
 	return agc
 }
 
 // SetUpdateAt sets the "update_at" field.
-func (agc *AppGoodCreate) SetUpdateAt(i int64) *AppGoodCreate {
-	agc.mutation.SetUpdateAt(i)
+func (agc *AppGoodCreate) SetUpdateAt(u uint32) *AppGoodCreate {
+	agc.mutation.SetUpdateAt(u)
 	return agc
 }
 
 // SetNillableUpdateAt sets the "update_at" field if the given value is not nil.
-func (agc *AppGoodCreate) SetNillableUpdateAt(i *int64) *AppGoodCreate {
-	if i != nil {
-		agc.SetUpdateAt(*i)
+func (agc *AppGoodCreate) SetNillableUpdateAt(u *uint32) *AppGoodCreate {
+	if u != nil {
+		agc.SetUpdateAt(*u)
 	}
 	return agc
 }
 
 // SetDeleteAt sets the "delete_at" field.
-func (agc *AppGoodCreate) SetDeleteAt(i int64) *AppGoodCreate {
-	agc.mutation.SetDeleteAt(i)
+func (agc *AppGoodCreate) SetDeleteAt(u uint32) *AppGoodCreate {
+	agc.mutation.SetDeleteAt(u)
 	return agc
 }
 
 // SetNillableDeleteAt sets the "delete_at" field if the given value is not nil.
-func (agc *AppGoodCreate) SetNillableDeleteAt(i *int64) *AppGoodCreate {
-	if i != nil {
-		agc.SetDeleteAt(*i)
+func (agc *AppGoodCreate) SetNillableDeleteAt(u *uint32) *AppGoodCreate {
+	if u != nil {
+		agc.SetDeleteAt(*u)
 	}
 	return agc
 }
@@ -378,7 +378,7 @@ func (agc *AppGoodCreate) createSpec() (*AppGood, *sqlgraph.CreateSpec) {
 	}
 	if value, ok := agc.mutation.CreateAt(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
+			Type:   field.TypeUint32,
 			Value:  value,
 			Column: appgood.FieldCreateAt,
 		})
@@ -386,7 +386,7 @@ func (agc *AppGoodCreate) createSpec() (*AppGood, *sqlgraph.CreateSpec) {
 	}
 	if value, ok := agc.mutation.UpdateAt(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
+			Type:   field.TypeUint32,
 			Value:  value,
 			Column: appgood.FieldUpdateAt,
 		})
@@ -394,7 +394,7 @@ func (agc *AppGoodCreate) createSpec() (*AppGood, *sqlgraph.CreateSpec) {
 	}
 	if value, ok := agc.mutation.DeleteAt(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
+			Type:   field.TypeUint32,
 			Value:  value,
 			Column: appgood.FieldDeleteAt,
 		})
@@ -545,7 +545,7 @@ func (u *AppGoodUpsert) UpdateInvitationOnly() *AppGoodUpsert {
 }
 
 // SetCreateAt sets the "create_at" field.
-func (u *AppGoodUpsert) SetCreateAt(v int64) *AppGoodUpsert {
+func (u *AppGoodUpsert) SetCreateAt(v uint32) *AppGoodUpsert {
 	u.Set(appgood.FieldCreateAt, v)
 	return u
 }
@@ -557,13 +557,13 @@ func (u *AppGoodUpsert) UpdateCreateAt() *AppGoodUpsert {
 }
 
 // AddCreateAt adds v to the "create_at" field.
-func (u *AppGoodUpsert) AddCreateAt(v int64) *AppGoodUpsert {
+func (u *AppGoodUpsert) AddCreateAt(v uint32) *AppGoodUpsert {
 	u.Add(appgood.FieldCreateAt, v)
 	return u
 }
 
 // SetUpdateAt sets the "update_at" field.
-func (u *AppGoodUpsert) SetUpdateAt(v int64) *AppGoodUpsert {
+func (u *AppGoodUpsert) SetUpdateAt(v uint32) *AppGoodUpsert {
 	u.Set(appgood.FieldUpdateAt, v)
 	return u
 }
@@ -575,13 +575,13 @@ func (u *AppGoodUpsert) UpdateUpdateAt() *AppGoodUpsert {
 }
 
 // AddUpdateAt adds v to the "update_at" field.
-func (u *AppGoodUpsert) AddUpdateAt(v int64) *AppGoodUpsert {
+func (u *AppGoodUpsert) AddUpdateAt(v uint32) *AppGoodUpsert {
 	u.Add(appgood.FieldUpdateAt, v)
 	return u
 }
 
 // SetDeleteAt sets the "delete_at" field.
-func (u *AppGoodUpsert) SetDeleteAt(v int64) *AppGoodUpsert {
+func (u *AppGoodUpsert) SetDeleteAt(v uint32) *AppGoodUpsert {
 	u.Set(appgood.FieldDeleteAt, v)
 	return u
 }
@@ -593,7 +593,7 @@ func (u *AppGoodUpsert) UpdateDeleteAt() *AppGoodUpsert {
 }
 
 // AddDeleteAt adds v to the "delete_at" field.
-func (u *AppGoodUpsert) AddDeleteAt(v int64) *AppGoodUpsert {
+func (u *AppGoodUpsert) AddDeleteAt(v uint32) *AppGoodUpsert {
 	u.Add(appgood.FieldDeleteAt, v)
 	return u
 }
@@ -754,14 +754,14 @@ func (u *AppGoodUpsertOne) UpdateInvitationOnly() *AppGoodUpsertOne {
 }
 
 // SetCreateAt sets the "create_at" field.
-func (u *AppGoodUpsertOne) SetCreateAt(v int64) *AppGoodUpsertOne {
+func (u *AppGoodUpsertOne) SetCreateAt(v uint32) *AppGoodUpsertOne {
 	return u.Update(func(s *AppGoodUpsert) {
 		s.SetCreateAt(v)
 	})
 }
 
 // AddCreateAt adds v to the "create_at" field.
-func (u *AppGoodUpsertOne) AddCreateAt(v int64) *AppGoodUpsertOne {
+func (u *AppGoodUpsertOne) AddCreateAt(v uint32) *AppGoodUpsertOne {
 	return u.Update(func(s *AppGoodUpsert) {
 		s.AddCreateAt(v)
 	})
@@ -775,14 +775,14 @@ func (u *AppGoodUpsertOne) UpdateCreateAt() *AppGoodUpsertOne {
 }
 
 // SetUpdateAt sets the "update_at" field.
-func (u *AppGoodUpsertOne) SetUpdateAt(v int64) *AppGoodUpsertOne {
+func (u *AppGoodUpsertOne) SetUpdateAt(v uint32) *AppGoodUpsertOne {
 	return u.Update(func(s *AppGoodUpsert) {
 		s.SetUpdateAt(v)
 	})
 }
 
 // AddUpdateAt adds v to the "update_at" field.
-func (u *AppGoodUpsertOne) AddUpdateAt(v int64) *AppGoodUpsertOne {
+func (u *AppGoodUpsertOne) AddUpdateAt(v uint32) *AppGoodUpsertOne {
 	return u.Update(func(s *AppGoodUpsert) {
 		s.AddUpdateAt(v)
 	})
@@ -796,14 +796,14 @@ func (u *AppGoodUpsertOne) UpdateUpdateAt() *AppGoodUpsertOne {
 }
 
 // SetDeleteAt sets the "delete_at" field.
-func (u *AppGoodUpsertOne) SetDeleteAt(v int64) *AppGoodUpsertOne {
+func (u *AppGoodUpsertOne) SetDeleteAt(v uint32) *AppGoodUpsertOne {
 	return u.Update(func(s *AppGoodUpsert) {
 		s.SetDeleteAt(v)
 	})
 }
 
 // AddDeleteAt adds v to the "delete_at" field.
-func (u *AppGoodUpsertOne) AddDeleteAt(v int64) *AppGoodUpsertOne {
+func (u *AppGoodUpsertOne) AddDeleteAt(v uint32) *AppGoodUpsertOne {
 	return u.Update(func(s *AppGoodUpsert) {
 		s.AddDeleteAt(v)
 	})
@@ -1138,14 +1138,14 @@ func (u *AppGoodUpsertBulk) UpdateInvitationOnly() *AppGoodUpsertBulk {
 }
 
 // SetCreateAt sets the "create_at" field.
-func (u *AppGoodUpsertBulk) SetCreateAt(v int64) *AppGoodUpsertBulk {
+func (u *AppGoodUpsertBulk) SetCreateAt(v uint32) *AppGoodUpsertBulk {
 	return u.Update(func(s *AppGoodUpsert) {
 		s.SetCreateAt(v)
 	})
 }
 
 // AddCreateAt adds v to the "create_at" field.
-func (u *AppGoodUpsertBulk) AddCreateAt(v int64) *AppGoodUpsertBulk {
+func (u *AppGoodUpsertBulk) AddCreateAt(v uint32) *AppGoodUpsertBulk {
 	return u.Update(func(s *AppGoodUpsert) {
 		s.AddCreateAt(v)
 	})
@@ -1159,14 +1159,14 @@ func (u *AppGoodUpsertBulk) UpdateCreateAt() *AppGoodUpsertBulk {
 }
 
 // SetUpdateAt sets the "update_at" field.
-func (u *AppGoodUpsertBulk) SetUpdateAt(v int64) *AppGoodUpsertBulk {
+func (u *AppGoodUpsertBulk) SetUpdateAt(v uint32) *AppGoodUpsertBulk {
 	return u.Update(func(s *AppGoodUpsert) {
 		s.SetUpdateAt(v)
 	})
 }
 
 // AddUpdateAt adds v to the "update_at" field.
-func (u *AppGoodUpsertBulk) AddUpdateAt(v int64) *AppGoodUpsertBulk {
+func (u *AppGoodUpsertBulk) AddUpdateAt(v uint32) *AppGoodUpsertBulk {
 	return u.Update(func(s *AppGoodUpsert) {
 		s.AddUpdateAt(v)
 	})
@@ -1180,14 +1180,14 @@ func (u *AppGoodUpsertBulk) UpdateUpdateAt() *AppGoodUpsertBulk {
 }
 
 // SetDeleteAt sets the "delete_at" field.
-func (u *AppGoodUpsertBulk) SetDeleteAt(v int64) *AppGoodUpsertBulk {
+func (u *AppGoodUpsertBulk) SetDeleteAt(v uint32) *AppGoodUpsertBulk {
 	return u.Update(func(s *AppGoodUpsert) {
 		s.SetDeleteAt(v)
 	})
 }
 
 // AddDeleteAt adds v to the "delete_at" field.
-func (u *AppGoodUpsertBulk) AddDeleteAt(v int64) *AppGoodUpsertBulk {
+func (u *AppGoodUpsertBulk) AddDeleteAt(v uint32) *AppGoodUpsertBulk {
 	return u.Update(func(s *AppGoodUpsert) {
 		s.AddDeleteAt(v)
 	})

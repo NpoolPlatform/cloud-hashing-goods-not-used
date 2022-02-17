@@ -16,7 +16,6 @@ import (
 func assertAppGoodInfo(t *testing.T, actual, expected *npool.AppGoodInfo) {
 	assert.Equal(t, actual.AppID, expected.AppID)
 	assert.Equal(t, actual.GoodID, expected.GoodID)
-	assert.Equal(t, actual.Authorized, expected.Authorized)
 	assert.Equal(t, actual.Online, expected.Online)
 	assert.Equal(t, actual.InitAreaStrategy, expected.InitAreaStrategy)
 	assert.Equal(t, actual.Price, expected.Price)
@@ -31,7 +30,6 @@ func TestAppGoodCRUD(t *testing.T) { //nolint
 		AppID:  uuid.New().String(),
 		GoodID: uuid.New().String(),
 		// For result assert
-		Authorized:       true,
 		Online:           false,
 		InitAreaStrategy: "none",
 		Price:            0,
@@ -126,8 +124,6 @@ func TestAppGoodCRUD(t *testing.T) { //nolint
 			assertAppGoodInfo(t, info.Info, &appGood)
 		}
 	}
-
-	appGood.Authorized = false
 
 	resp6, err := cli.R().
 		SetHeader("Content-Type", "application/json").
