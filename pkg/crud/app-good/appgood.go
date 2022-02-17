@@ -36,7 +36,6 @@ func dbRowToAppGood(info *ent.AppGood) *npool.AppGoodInfo {
 		ID:               info.ID.String(),
 		AppID:            info.AppID.String(),
 		GoodID:           info.GoodID.String(),
-		Authorized:       info.Authorized,
 		Online:           info.Online,
 		InitAreaStrategy: string(info.InitAreaStrategy),
 		Price:            price.DBPriceToVisualPrice(info.Price),
@@ -58,7 +57,6 @@ func Authorize(ctx context.Context, in *npool.AuthorizeAppGoodRequest) (*npool.A
 		info, err := cli.
 			AppGood.
 			UpdateOneID(id).
-			SetAuthorized(true).
 			SetDeleteAt(0).
 			Save(ctx)
 		if err != nil {
@@ -74,7 +72,6 @@ func Authorize(ctx context.Context, in *npool.AuthorizeAppGoodRequest) (*npool.A
 		Create().
 		SetAppID(uuid.MustParse(in.GetInfo().GetAppID())).
 		SetGoodID(uuid.MustParse(in.GetInfo().GetGoodID())).
-		SetAuthorized(true).
 		SetOnline(false).
 		SetInitAreaStrategy(appgood.InitAreaStrategy(in.GetInfo().GetInitAreaStrategy())).
 		SetPrice(0).
@@ -138,9 +135,6 @@ func SetAppGoodPrice(ctx context.Context, in *npool.SetAppGoodPriceRequest) (*np
 		return nil, xerrors.Errorf("fail check app good: %v", err)
 	}
 
-	if !info1.Info.Authorized {
-		return nil, xerrors.Errorf("good not authorize to app")
-	}
 	if info1.Info.Online {
 		return nil, xerrors.Errorf("cannot set price to online good")
 	}
@@ -178,15 +172,11 @@ func Onsale(ctx context.Context, in *npool.OnsaleAppGoodRequest) (*npool.OnsaleA
 		return nil, xerrors.Errorf("invalid app good id: %v", err)
 	}
 
-	info1, err := Check(ctx, &npool.CheckAppGoodRequest{
+	_, err = Check(ctx, &npool.CheckAppGoodRequest{
 		Info: in.GetInfo(),
 	})
 	if err != nil {
 		return nil, xerrors.Errorf("fail onsale app good: %v", err)
-	}
-
-	if !info1.Info.Authorized {
-		return nil, xerrors.Errorf("good not authorized by app")
 	}
 
 	cli, err := db.Client()
@@ -255,7 +245,6 @@ func Unauthorize(ctx context.Context, in *npool.UnauthorizeAppGoodRequest) (*npo
 	info, err := cli.
 		AppGood.
 		UpdateOneID(id).
-		SetAuthorized(false).
 		SetOnline(false).
 		SetDeleteAt(time.Now().UnixNano()).
 		Save(ctx)
