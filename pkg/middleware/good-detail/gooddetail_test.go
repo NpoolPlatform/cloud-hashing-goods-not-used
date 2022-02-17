@@ -38,22 +38,22 @@ func assertGoodDetail(t *testing.T, actual *npool.GoodDetail, expectGoodInfo *np
 	assert.Equal(t, actual.DeviceInfo.Manufacturer, expectDevice.Manufacturer)
 	assert.Equal(t, actual.DeviceInfo.PowerComsuption, expectDevice.PowerComsuption)
 	assert.Equal(t, actual.DeviceInfo.ShipmentAt, expectDevice.ShipmentAt)
-	assert.Equal(t, actual.SeparateFee, expectGoodInfo.SeparateFee)
-	assert.Equal(t, actual.UnitPower, expectGoodInfo.UnitPower)
-	assert.Equal(t, actual.DurationDays, expectGoodInfo.DurationDays)
-	assert.Equal(t, actual.CoinInfoID, expectGoodInfo.CoinInfoID)
-	assert.Equal(t, actual.Actuals, expectGoodInfo.Actuals)
-	assert.Equal(t, actual.DeliveryAt, expectGoodInfo.DeliveryAt)
+	assert.Equal(t, actual.Good.SeparateFee, expectGoodInfo.SeparateFee)
+	assert.Equal(t, actual.Good.UnitPower, expectGoodInfo.UnitPower)
+	assert.Equal(t, actual.Good.DurationDays, expectGoodInfo.DurationDays)
+	assert.Equal(t, actual.Good.CoinInfoID, expectGoodInfo.CoinInfoID)
+	assert.Equal(t, actual.Good.Actuals, expectGoodInfo.Actuals)
+	assert.Equal(t, actual.Good.DeliveryAt, expectGoodInfo.DeliveryAt)
 	assert.Equal(t, actual.VendorLocation.ID, expectVendorLocation.ID)
 	assert.Equal(t, actual.VendorLocation.Country, expectVendorLocation.Country)
 	assert.Equal(t, actual.VendorLocation.Province, expectVendorLocation.Province)
 	assert.Equal(t, actual.VendorLocation.City, expectVendorLocation.City)
 	assert.Equal(t, actual.VendorLocation.Address, expectVendorLocation.Address)
-	assert.Equal(t, actual.Price, expectGoodInfo.Price)
-	assert.Equal(t, actual.BenefitType, expectGoodInfo.BenefitType)
-	assert.Equal(t, actual.Classic, expectGoodInfo.Classic)
-	assert.Equal(t, actual.SupportCoinTypeIDs, expectGoodInfo.SupportCoinTypeIDs)
-	assert.Equal(t, actual.Total, expectGoodInfo.Total)
+	assert.Equal(t, actual.Good.Price, expectGoodInfo.Price)
+	assert.Equal(t, actual.Good.BenefitType, expectGoodInfo.BenefitType)
+	assert.Equal(t, actual.Good.Classic, expectGoodInfo.Classic)
+	assert.Equal(t, actual.Good.SupportCoinTypeIDs, expectGoodInfo.SupportCoinTypeIDs)
+	assert.Equal(t, actual.Good.Total, expectGoodInfo.Total)
 }
 
 func TestGet(t *testing.T) {
@@ -164,9 +164,9 @@ func TestGet(t *testing.T) {
 		ID: goodInfoResp.Info.ID,
 	})
 	if assert.Nil(t, err) {
-		assert.Equal(t, resp.Detail.ID, goodInfoResp.Info.ID)
-		assert.Nil(t, resp.Detail.InheritFromGood)
-		assertGoodDetail(t, resp.Detail, goodInfoResp.Info, deviceResp.Info, vendorLocationResp.Info)
+		assert.Equal(t, resp.Info.Good.ID, goodInfoResp.Info.ID)
+		assert.Nil(t, resp.Info.InheritFromGood)
+		assertGoodDetail(t, resp.Info, goodInfoResp.Info, deviceResp.Info, vendorLocationResp.Info)
 	}
 
 	goodInfo.InheritFromGoodID = goodInfoResp.Info.ID
@@ -179,13 +179,13 @@ func TestGet(t *testing.T) {
 		ID: goodInfoResp1.Info.ID,
 	})
 	if assert.Nil(t, err) {
-		assert.Equal(t, resp1.Detail.ID, goodInfoResp1.Info.ID)
-		assert.Equal(t, resp1.Detail.InheritFromGood.ID, goodInfoResp.Info.ID)
-		assertGoodDetail(t, resp1.Detail, goodInfoResp.Info, deviceResp.Info, vendorLocationResp.Info)
+		assert.Equal(t, resp1.Info.Good.ID, goodInfoResp1.Info.ID)
+		assert.Equal(t, resp1.Info.InheritFromGood.ID, goodInfoResp.Info.ID)
+		assertGoodDetail(t, resp1.Info, goodInfoResp.Info, deviceResp.Info, vendorLocationResp.Info)
 	}
 
 	resp2, err := GetAll(context.Background(), &npool.GetGoodsDetailRequest{})
 	if assert.Nil(t, err) {
-		assert.NotNil(t, resp2.Details)
+		assert.NotNil(t, resp2.Infos)
 	}
 }

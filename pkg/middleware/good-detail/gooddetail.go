@@ -98,7 +98,7 @@ func Get(ctx context.Context, in *npool.GetGoodDetailRequest) (*npool.GetGoodDet
 	}
 
 	return &npool.GetGoodDetailResponse{
-		Detail: &npool.GoodDetail{
+		Info: &npool.GoodDetail{
 			Good:            goodInfo.Info,
 			DeviceInfo:      deviceInfo.Info,
 			InheritFromGood: inheritGoodInfo,
@@ -127,10 +127,10 @@ func GetAll(ctx context.Context, in *npool.GetGoodsDetailRequest) (*npool.GetGoo
 			logger.Sugar().Errorf("fail get good detail: %v", err)
 			continue
 		}
-		details = append(details, detail.Detail)
+		details = append(details, detail.Info)
 	}
 
 	return &npool.GetGoodsDetailResponse{
-		Details: details,
+		Infos: details,
 	}, nil
 }

@@ -31,7 +31,7 @@ func GetByApp(ctx context.Context, in *npool.GetRecommendGoodsByAppRequest) (*np
 
 		recommendGoods = append(recommendGoods, &npool.RecommendGood{
 			Recommend: myRecommend,
-			Good:      myGood.Detail,
+			Good:      myGood.Info,
 		})
 	}
 
@@ -59,7 +59,7 @@ func GetByRecommender(ctx context.Context, in *npool.GetRecommendGoodsByRecommen
 
 		recommendGoods = append(recommendGoods, &npool.RecommendGood{
 			Recommend: myRecommend,
-			Good:      myGood.Detail,
+			Good:      myGood.Info,
 		})
 	}
 
