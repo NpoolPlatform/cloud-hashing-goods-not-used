@@ -6,8 +6,9 @@ import (
 	"github.com/NpoolPlatform/go-service-framework/pkg/logger"
 	npool "github.com/NpoolPlatform/message/npool/cloud-hashing-goods"
 
-	crud "github.com/NpoolPlatform/cloud-hashing-goods/pkg/crud/recommend"         //nolint
-	good "github.com/NpoolPlatform/cloud-hashing-goods/pkg/middleware/good-detail" //nolint
+	appgoodcrud "github.com/NpoolPlatform/cloud-hashing-goods/pkg/crud/app-good"
+	crud "github.com/NpoolPlatform/cloud-hashing-goods/pkg/crud/recommend"
+	good "github.com/NpoolPlatform/cloud-hashing-goods/pkg/middleware/good-detail"
 
 	"golang.org/x/xerrors"
 )
@@ -20,8 +21,26 @@ func GetByApp(ctx context.Context, in *npool.GetRecommendGoodsByAppRequest) (*np
 		return nil, xerrors.Errorf("fail get recommends by app: %v", err)
 	}
 
+	appGoods, err := appgoodcrud.GetByApp(ctx, &npool.GetAppGoodsRequest{
+		AppID: in.GetAppID(),
+	})
+	if err != nil {
+		return nil, xerrors.Errorf("fail get app good: %v", err)
+	}
+
 	recommendGoods := []*npool.RecommendGood{}
 	for _, myRecommend := range myRecommends.Infos {
+		allowed := false
+		for _, info := range appGoods.Infos {
+			if info.GoodID == myRecommend.GoodID {
+				allowed = true
+			}
+		}
+
+		if !allowed {
+			continue
+		}
+
 		myGood, err := good.Get(ctx, &npool.GetGoodDetailRequest{
 			ID: myRecommend.GoodID,
 		})
