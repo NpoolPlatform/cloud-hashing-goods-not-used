@@ -27,8 +27,17 @@ func (s *Server) GetGoodDetail(ctx context.Context, in *npool.GetGoodDetailReque
 func (s *Server) GetGoodsDetail(ctx context.Context, in *npool.GetGoodsDetailRequest) (*npool.GetGoodsDetailResponse, error) {
 	resp, err := gooddetail.GetAll(ctx, in)
 	if err != nil {
-		logger.Sugar().Errorf("get good detail all error: %w", err)
+		logger.Sugar().Errorf("get goods detail all error: %w", err)
 		return &npool.GetGoodsDetailResponse{}, status.Error(codes.Internal, err.Error())
+	}
+	return resp, nil
+}
+
+func (s *Server) GetGoodsDetailByApp(ctx context.Context, in *npool.GetGoodsDetailByAppRequest) (*npool.GetGoodsDetailByAppResponse, error) {
+	resp, err := gooddetail.GetByApp(ctx, in)
+	if err != nil {
+		logger.Sugar().Errorf("get good detail by app error: %w", err)
+		return &npool.GetGoodsDetailByAppResponse{}, status.Error(codes.Internal, err.Error())
 	}
 	return resp, nil
 }

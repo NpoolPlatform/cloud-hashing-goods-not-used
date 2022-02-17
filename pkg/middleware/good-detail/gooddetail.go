@@ -6,6 +6,7 @@ import (
 
 	"github.com/NpoolPlatform/go-service-framework/pkg/logger"
 
+	appgoodcrud "github.com/NpoolPlatform/cloud-hashing-goods/pkg/crud/app-good"
 	npool "github.com/NpoolPlatform/message/npool/cloud-hashing-goods"
 
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/crud/device-info"      //nolint
@@ -131,6 +132,50 @@ func GetAll(ctx context.Context, in *npool.GetGoodsDetailRequest) (*npool.GetGoo
 	}
 
 	return &npool.GetGoodsDetailResponse{
+		Infos: details,
+	}, nil
+}
+
+func GetByApp(ctx context.Context, in *npool.GetGoodsDetailByAppRequest) (*npool.GetGoodsDetailByAppResponse, error) {
+	resp, err := goodinfo.GetAll(ctx, &npool.GetGoodsRequest{
+		PageInfo: in.GetPageInfo(),
+	})
+	if err != nil {
+		return nil, xerrors.Errorf("fail get goods info: %v", err)
+	}
+
+	appGoods, err := appgoodcrud.GetByApp(ctx, &npool.GetAppGoodsRequest{
+		AppID: in.GetAppID(),
+	})
+	if err != nil {
+		return nil, xerrors.Errorf("fail get app good: %v", err)
+	}
+
+	details := []*npool.GoodDetail{}
+	for _, info := range resp.Infos {
+		allowed := false
+		for _, appGood := range appGoods.Infos {
+			if info.ID == appGood.GoodID {
+				allowed = true
+				break
+			}
+		}
+
+		if !allowed {
+			continue
+		}
+
+		detail, err := Get(ctx, &npool.GetGoodDetailRequest{
+			ID: info.ID,
+		})
+		if err != nil {
+			logger.Sugar().Errorf("fail get good detail: %v", err)
+			continue
+		}
+		details = append(details, detail.Info)
+	}
+
+	return &npool.GetGoodsDetailByAppResponse{
 		Infos: details,
 	}, nil
 }
