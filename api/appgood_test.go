@@ -128,12 +128,12 @@ func TestAppGoodCRUD(t *testing.T) { //nolint
 	resp6, err := cli.R().
 		SetHeader("Content-Type", "application/json").
 		SetBody(npool.UnauthorizeAppGoodRequest{
-			Info: &appGood,
+			ID: appGood.ID,
 		}).
 		Post("http://localhost:50020/v1/unauthorize/app/good")
 	if assert.Nil(t, err) {
 		assert.Equal(t, 200, resp6.StatusCode())
-		info := npool.UnauthorizeAppGoodRequest{}
+		info := npool.UnauthorizeAppGoodResponse{}
 		err := json.Unmarshal(resp6.Body(), &info)
 		if assert.Nil(t, err) {
 			assert.NotEqual(t, info.Info.ID, uuid.UUID{})

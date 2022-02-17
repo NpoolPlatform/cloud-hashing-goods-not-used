@@ -64,7 +64,7 @@ func TestAppGoodCRUD(t *testing.T) {
 	appGoodInfo.ID = resp.Info.ID
 
 	resp2, err := Unauthorize(context.Background(), &npool.UnauthorizeAppGoodRequest{
-		Info: &appGoodInfo,
+		ID: resp1.Info.ID,
 	})
 	if assert.Nil(t, err) {
 		assert.Equal(t, resp2.Info.ID, resp.Info.ID)
@@ -124,7 +124,7 @@ func TestAppGoodCRUD(t *testing.T) {
 	}
 
 	resp9, err := Unauthorize(context.Background(), &npool.UnauthorizeAppGoodRequest{
-		Info: &appGoodInfo,
+		ID: resp8.Info.ID,
 	})
 	if assert.Nil(t, err) {
 		assert.Equal(t, resp9.Info.ID, resp.Info.ID)

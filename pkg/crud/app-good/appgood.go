@@ -235,11 +235,7 @@ func Offsale(ctx context.Context, in *npool.OffsaleAppGoodRequest) (*npool.Offsa
 }
 
 func Unauthorize(ctx context.Context, in *npool.UnauthorizeAppGoodRequest) (*npool.UnauthorizeAppGoodResponse, error) {
-	if err := validateAppGood(in.GetInfo()); err != nil {
-		return nil, xerrors.Errorf("invalid parameter: %v", err)
-	}
-
-	id, err := uuid.Parse(in.GetInfo().GetID())
+	id, err := uuid.Parse(in.GetID())
 	if err != nil {
 		return nil, xerrors.Errorf("invalid app good id: %v", err)
 	}
