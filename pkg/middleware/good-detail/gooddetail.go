@@ -92,36 +92,21 @@ func Get(ctx context.Context, in *npool.GetGoodDetailRequest) (*npool.GetGoodDet
 			return nil, xerrors.Errorf("fail get fee type: %v", err)
 		}
 		fees = append(fees, &npool.FeeDetail{
-			ID:    id,
-			AppID: myFee.Info.AppID,
-			Fee:   myFeeType.Info,
-			Value: myFee.Info.Value,
+			Fee:     myFee.Info,
+			FeeType: myFeeType.Info,
 		})
 	}
 
 	return &npool.GetGoodDetailResponse{
 		Detail: &npool.GoodDetail{
-			ID:                 id.String(),
+			Good:               goodInfo.Info,
 			DeviceInfo:         deviceInfo.Info,
-			SeparateFee:        goodInfo.Info.SeparateFee,
-			UnitPower:          goodInfo.Info.UnitPower,
-			DurationDays:       goodInfo.Info.DurationDays,
-			CoinInfoID:         goodInfo.Info.CoinInfoID,
-			Actuals:            goodInfo.Info.Actuals,
-			DeliveryAt:         goodInfo.Info.DeliveryAt,
 			InheritFromGood:    inheritGoodInfo,
 			VendorLocation:     vendorLocation.Info,
-			Price:              goodInfo.Info.Price,
 			PriceCurrency:      priceCurrency.Info,
-			BenefitType:        goodInfo.Info.BenefitType,
-			Classic:            goodInfo.Info.Classic,
 			SupportCoinTypeIDs: goodInfo.Info.SupportCoinTypeIDs,
-			Total:              goodInfo.Info.Total,
 			Extra:              extraInfo,
-			Unit:               goodInfo.Info.Unit,
-			Title:              goodInfo.Info.Title,
 			Fees:               fees,
-			StartAt:            goodInfo.Info.StartAt,
 		},
 	}, nil
 }
