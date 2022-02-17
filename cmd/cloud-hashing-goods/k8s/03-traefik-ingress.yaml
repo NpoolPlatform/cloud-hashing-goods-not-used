@@ -113,6 +113,9 @@ spec:
             backend:
               serviceName: cloud-hashing-goods
               servicePort: 50020
+          - path: /api/cloud-hashing-goods/v1/get/recommends
+            backend:
+              serviceName: cloud-hashing-goods
           - path: /api/cloud-hashing-goods/v1/authorize/app
             backend:
               serviceName: cloud-hashing-goods
