@@ -29,7 +29,7 @@ func GetByApp(ctx context.Context, in *npool.GetGoodsByAppRequest) (*npool.GetGo
 	for _, info := range resp.Infos {
 		allowed := false
 		for _, appGood := range appGoods.Infos {
-			if info.ID == appGood.GoodID {
+			if info.ID == appGood.GoodID && appGood.Online && appGood.Price > 0 {
 				allowed = true
 				break
 			}
