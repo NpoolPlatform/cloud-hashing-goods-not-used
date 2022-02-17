@@ -52,27 +52,12 @@ func Authorize(ctx context.Context, in *npool.AuthorizeAppGoodRequest) (*npool.A
 		return nil, xerrors.Errorf("fail get db client: %v", err)
 	}
 
-	id, err := uuid.Parse(in.GetInfo().GetID())
-	if err == nil {
-		info, err := cli.
-			AppGood.
-			UpdateOneID(id).
-			SetDeleteAt(0).
-			Save(ctx)
-		if err != nil {
-			return nil, xerrors.Errorf("fail authorize app good: %v", err)
-		}
-		return &npool.AuthorizeAppGoodResponse{
-			Info: dbRowToAppGood(info),
-		}, nil
-	}
-
 	initAreaStrategy := in.GetInfo().GetInitAreaStrategy()
 	if in.GetInfo().GetInitAreaStrategy() == "" {
 		initAreaStrategy = "all"
 	}
 
-	info, err := cli.
+	err = cli.
 		AppGood.
 		Create().
 		SetAppID(uuid.MustParse(in.GetInfo().GetAppID())).
@@ -80,19 +65,36 @@ func Authorize(ctx context.Context, in *npool.AuthorizeAppGoodRequest) (*npool.A
 		SetOnline(false).
 		SetInitAreaStrategy(appgood.InitAreaStrategy(initAreaStrategy)).
 		SetPrice(0).
-		Save(ctx)
+		SetDeleteAt(0).
+		OnConflict().
+		UpdateNewValues().
+		Exec(ctx)
 	if err != nil {
 		return nil, xerrors.Errorf("fail create app good: %v", err)
 	}
 
+	resp, err := Check(ctx, &npool.CheckAppGoodRequest{
+		AppID:  in.GetInfo().GetAppID(),
+		GoodID: in.GetInfo().GetGoodID(),
+	})
+	if err != nil {
+		return nil, xerrors.Errorf("fail check app good: %v", err)
+	}
+
 	return &npool.AuthorizeAppGoodResponse{
-		Info: dbRowToAppGood(info),
+		Info: resp.Info,
 	}, nil
 }
 
 func Check(ctx context.Context, in *npool.CheckAppGoodRequest) (*npool.CheckAppGoodResponse, error) {
-	if err := validateAppGood(in.GetInfo()); err != nil {
-		return nil, xerrors.Errorf("invalid parameter: %v", err)
+	appID, err := uuid.Parse(in.GetAppID())
+	if err != nil {
+		return nil, xerrors.Errorf("invalid app id: %v", err)
+	}
+
+	goodID, err := uuid.Parse(in.GetGoodID())
+	if err != nil {
+		return nil, xerrors.Errorf("invalid good id: %v", err)
 	}
 
 	cli, err := db.Client()
@@ -105,8 +107,8 @@ func Check(ctx context.Context, in *npool.CheckAppGoodRequest) (*npool.CheckAppG
 		Query().
 		Where(
 			appgood.And(
-				appgood.AppID(uuid.MustParse(in.GetInfo().GetAppID())),
-				appgood.GoodID(uuid.MustParse(in.GetInfo().GetGoodID())),
+				appgood.AppID(appID),
+				appgood.GoodID(goodID),
 				appgood.DeleteAt(0),
 			),
 		).
@@ -136,7 +138,8 @@ func SetAppGoodPrice(ctx context.Context, in *npool.SetAppGoodPriceRequest) (*np
 	}
 
 	info1, err := Check(ctx, &npool.CheckAppGoodRequest{
-		Info: in.GetInfo(),
+		AppID:  in.GetInfo().GetAppID(),
+		GoodID: in.GetInfo().GetGoodID(),
 	})
 	if err != nil {
 		return nil, xerrors.Errorf("fail check app good: %v", err)
@@ -180,7 +183,8 @@ func Onsale(ctx context.Context, in *npool.OnsaleAppGoodRequest) (*npool.OnsaleA
 	}
 
 	_, err = Check(ctx, &npool.CheckAppGoodRequest{
-		Info: in.GetInfo(),
+		AppID:  in.GetInfo().GetAppID(),
+		GoodID: in.GetInfo().GetGoodID(),
 	})
 	if err != nil {
 		return nil, xerrors.Errorf("fail onsale app good: %v", err)

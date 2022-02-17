@@ -58,12 +58,13 @@ func TestAppGoodCRUD(t *testing.T) { //nolint
 	resp1, err := cli.R().
 		SetHeader("Content-Type", "application/json").
 		SetBody(npool.CheckAppGoodRequest{
-			Info: &appGood,
+			AppID:  appGood.AppID,
+			GoodID: appGood.GoodID,
 		}).
 		Post("http://localhost:50020/v1/check/app/good")
 	if assert.Nil(t, err) {
 		assert.Equal(t, 200, resp1.StatusCode())
-		info := npool.CheckAppGoodRequest{}
+		info := npool.CheckAppGoodResponse{}
 		err := json.Unmarshal(resp.Body(), &info)
 		if assert.Nil(t, err) {
 			assert.Equal(t, info.Info.ID, firstCreateInfo.Info.ID)

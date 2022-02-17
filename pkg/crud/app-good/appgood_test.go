@@ -54,7 +54,8 @@ func TestAppGoodCRUD(t *testing.T) {
 	}
 
 	resp1, err := Check(context.Background(), &npool.CheckAppGoodRequest{
-		Info: &appGoodInfo,
+		AppID:  appGoodInfo.AppID,
+		GoodID: appGoodInfo.GoodID,
 	})
 	if assert.Nil(t, err) {
 		assert.Equal(t, resp1.Info.ID, resp.Info.ID)
@@ -72,7 +73,8 @@ func TestAppGoodCRUD(t *testing.T) {
 	}
 
 	resp3, err := Check(context.Background(), &npool.CheckAppGoodRequest{
-		Info: &appGoodInfo,
+		AppID:  appGoodInfo.AppID,
+		GoodID: appGoodInfo.GoodID,
 	})
 	assert.Nil(t, err)
 	assert.Nil(t, resp3.Info)
@@ -86,7 +88,8 @@ func TestAppGoodCRUD(t *testing.T) {
 	}
 
 	resp5, err := Check(context.Background(), &npool.CheckAppGoodRequest{
-		Info: &appGoodInfo,
+		AppID:  appGoodInfo.AppID,
+		GoodID: appGoodInfo.GoodID,
 	})
 	if assert.Nil(t, err) {
 		assert.Equal(t, resp5.Info.ID, resp.Info.ID)
