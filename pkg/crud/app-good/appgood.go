@@ -190,6 +190,10 @@ func Onsale(ctx context.Context, in *npool.OnsaleAppGoodRequest) (*npool.OnsaleA
 		return nil, xerrors.Errorf("fail onsale app good: %v", err)
 	}
 
+	if in.GetInfo().GetPrice() == 0 {
+		return nil, xerrors.Errorf("cannot onsale good with invalid price")
+	}
+
 	cli, err := db.Client()
 	if err != nil {
 		return nil, xerrors.Errorf("fail get db client: %v", err)
