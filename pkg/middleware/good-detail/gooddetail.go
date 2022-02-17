@@ -99,14 +99,13 @@ func Get(ctx context.Context, in *npool.GetGoodDetailRequest) (*npool.GetGoodDet
 
 	return &npool.GetGoodDetailResponse{
 		Detail: &npool.GoodDetail{
-			Good:               goodInfo.Info,
-			DeviceInfo:         deviceInfo.Info,
-			InheritFromGood:    inheritGoodInfo,
-			VendorLocation:     vendorLocation.Info,
-			PriceCurrency:      priceCurrency.Info,
-			SupportCoinTypeIDs: goodInfo.Info.SupportCoinTypeIDs,
-			Extra:              extraInfo,
-			Fees:               fees,
+			Good:            goodInfo.Info,
+			DeviceInfo:      deviceInfo.Info,
+			InheritFromGood: inheritGoodInfo,
+			VendorLocation:  vendorLocation.Info,
+			PriceCurrency:   priceCurrency.Info,
+			Extra:           extraInfo,
+			Fees:            fees,
 		},
 	}, nil
 }
