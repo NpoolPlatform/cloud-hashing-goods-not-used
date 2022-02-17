@@ -67,13 +67,18 @@ func Authorize(ctx context.Context, in *npool.AuthorizeAppGoodRequest) (*npool.A
 		}, nil
 	}
 
+	initAreaStrategy := in.GetInfo().GetInitAreaStrategy()
+	if in.GetInfo().GetInitAreaStrategy() == "" {
+		initAreaStrategy = "all"
+	}
+
 	info, err := cli.
 		AppGood.
 		Create().
 		SetAppID(uuid.MustParse(in.GetInfo().GetAppID())).
 		SetGoodID(uuid.MustParse(in.GetInfo().GetGoodID())).
 		SetOnline(false).
-		SetInitAreaStrategy(appgood.InitAreaStrategy(in.GetInfo().GetInitAreaStrategy())).
+		SetInitAreaStrategy(appgood.InitAreaStrategy(initAreaStrategy)).
 		SetPrice(0).
 		Save(ctx)
 	if err != nil {
