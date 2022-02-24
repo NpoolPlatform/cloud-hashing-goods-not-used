@@ -193,7 +193,7 @@ func GetByApp(ctx context.Context, in *npool.GetAppGoodPromotionsByAppRequest) (
 	}, nil
 }
 
-func GetByAppGoodStartEnd(ctx context.Context, in *npool.GetAppGoodPromotionByAppGoodStartEndRequest) (*npool.GetAppGoodPromotionByAppGoodStartEndResponse, error) {
+func GetByAppGoodStartEnd(ctx context.Context, in *npool.GetAppGoodPromotionByAppGoodStartEndRequest) (*npool.GetAppGoodPromotionByAppGoodStartEndResponse, error) { //nolint
 	appID, err := uuid.Parse(in.GetAppID())
 	if err != nil {
 		return nil, xerrors.Errorf("invalid app id: %v", err)
@@ -236,7 +236,7 @@ func GetByAppGoodStartEnd(ctx context.Context, in *npool.GetAppGoodPromotionByAp
 	}, nil
 }
 
-func GetByAppGoodTimestamp(ctx context.Context, in *npool.GetAppGoodPromotionByAppGoodTimestampRequest) (*npool.GetAppGoodPromotionByAppGoodTimestampResponse, error) {
+func GetByAppGoodTimestamp(ctx context.Context, in *npool.GetAppGoodPromotionByAppGoodTimestampRequest) (*npool.GetAppGoodPromotionByAppGoodTimestampResponse, error) { //nolint
 	appID, err := uuid.Parse(in.GetAppID())
 	if err != nil {
 		return nil, xerrors.Errorf("invalid app id: %v", err)
