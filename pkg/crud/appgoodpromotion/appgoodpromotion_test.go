@@ -91,4 +91,14 @@ func TestCRUD(t *testing.T) {
 		assert.Equal(t, resp4.Info.ID, resp.Info.ID)
 		assertAppGoodPromotion(t, resp4.Info, &promotion)
 	}
+
+	resp5, err := GetByAppGoodTimestamp(context.Background(), &npool.GetAppGoodPromotionByAppGoodTimestampRequest{
+		AppID:     resp.Info.AppID,
+		GoodID:    resp.Info.GoodID,
+		Timestamp: resp.Info.Start + 30,
+	})
+	if assert.Nil(t, err) {
+		assert.Equal(t, resp5.Info.ID, resp.Info.ID)
+		assertAppGoodPromotion(t, resp5.Info, &promotion)
+	}
 }

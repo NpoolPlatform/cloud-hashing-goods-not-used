@@ -236,6 +236,49 @@ func GetByAppGoodStartEnd(ctx context.Context, in *npool.GetAppGoodPromotionByAp
 	}, nil
 }
 
+func GetByAppGoodTimestamp(ctx context.Context, in *npool.GetAppGoodPromotionByAppGoodTimestampRequest) (*npool.GetAppGoodPromotionByAppGoodTimestampResponse, error) {
+	appID, err := uuid.Parse(in.GetAppID())
+	if err != nil {
+		return nil, xerrors.Errorf("invalid app id: %v", err)
+	}
+
+	goodID, err := uuid.Parse(in.GetGoodID())
+	if err != nil {
+		return nil, xerrors.Errorf("invalid good id: %v", err)
+	}
+
+	cli, err := db.Client()
+	if err != nil {
+		return nil, xerrors.Errorf("fail get db client: %v", err)
+	}
+
+	infos, err := cli.
+		AppGoodPromotion.
+		Query().
+		Where(
+			appgoodpromotion.And(
+				appgoodpromotion.AppID(appID),
+				appgoodpromotion.GoodID(goodID),
+				appgoodpromotion.StartLT(in.GetTimestamp()),
+				appgoodpromotion.EndGT(in.GetTimestamp()),
+			),
+		).
+		All(ctx)
+	if err != nil {
+		return nil, xerrors.Errorf("fail query event promotion: %v", err)
+	}
+
+	var promotion *npool.AppGoodPromotion
+	for _, info := range infos {
+		promotion = dbRowToAppGoodPromotion(info)
+		break
+	}
+
+	return &npool.GetAppGoodPromotionByAppGoodTimestampResponse{
+		Info: promotion,
+	}, nil
+}
+
 func GetAll(ctx context.Context, in *npool.GetAppGoodPromotionsRequest) (*npool.GetAppGoodPromotionsResponse, error) {
 	cli, err := db.Client()
 	if err != nil {

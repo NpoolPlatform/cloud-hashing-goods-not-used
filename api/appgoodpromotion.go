@@ -82,6 +82,15 @@ func (s *Server) GetAppGoodPromotionByAppGoodStartEnd(ctx context.Context, in *n
 	return resp, nil
 }
 
+func (s *Server) GetAppGoodPromotionByAppGoodTimestamp(ctx context.Context, in *npool.GetAppGoodPromotionByAppGoodTimestampRequest) (*npool.GetAppGoodPromotionByAppGoodTimestampResponse, error) {
+	resp, err := crud.GetByAppGoodTimestamp(ctx, in)
+	if err != nil {
+		logger.Sugar().Errorf("get app good promotions error: %v", err)
+		return &npool.GetAppGoodPromotionByAppGoodTimestampResponse{}, status.Error(codes.Internal, err.Error())
+	}
+	return resp, nil
+}
+
 func (s *Server) GetAppGoodPromotionsByAppGood(ctx context.Context, in *npool.GetAppGoodPromotionsByAppGoodRequest) (*npool.GetAppGoodPromotionsByAppGoodResponse, error) {
 	resp, err := crud.GetByAppGood(ctx, in)
 	if err != nil {
