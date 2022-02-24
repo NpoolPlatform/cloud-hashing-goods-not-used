@@ -302,3 +302,45 @@ func GetByApp(ctx context.Context, in *npool.GetAppGoodsRequest) (*npool.GetAppG
 		Infos: appGoods,
 	}, nil
 }
+
+func GetByAppGood(ctx context.Context, in *npool.GetAppGoodByAppGoodRequest) (*npool.GetAppGoodByAppGoodResponse, error) {
+	appID, err := uuid.Parse(in.GetAppID())
+	if err != nil {
+		return nil, xerrors.Errorf("invalid app id: %v", err)
+	}
+
+	goodID, err := uuid.Parse(in.GetGoodID())
+	if err != nil {
+		return nil, xerrors.Errorf("invalid good id: %v", err)
+	}
+
+	cli, err := db.Client()
+	if err != nil {
+		return nil, xerrors.Errorf("fail get db client: %v", err)
+	}
+
+	infos, err := cli.
+		AppGood.
+		Query().
+		Where(
+			appgood.And(
+				appgood.AppID(appID),
+				appgood.GoodID(goodID),
+				appgood.DeleteAt(0),
+			),
+		).
+		All(ctx)
+	if err != nil {
+		return nil, xerrors.Errorf("fail query app good: %v", err)
+	}
+
+	var appGood *npool.AppGoodInfo
+	for _, info := range infos {
+		appGood = dbRowToAppGood(info)
+		break
+	}
+
+	return &npool.GetAppGoodByAppGoodResponse{
+		Info: appGood,
+	}, nil
+}

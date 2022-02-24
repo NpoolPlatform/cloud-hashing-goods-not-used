@@ -153,3 +153,12 @@ func (s *Server) GetAppGoodsByOtherApp(ctx context.Context, in *npool.GetAppGood
 		Infos: resp.Infos,
 	}, nil
 }
+
+func (s *Server) GetAppGoodByAppGood(ctx context.Context, in *npool.GetAppGoodByAppGoodRequest) (*npool.GetAppGoodByAppGoodResponse, error) {
+	resp, err := appgood.GetByAppGood(ctx, in)
+	if err != nil {
+		logger.Sugar().Errorf("get app good error: %v", err)
+		return &npool.GetAppGoodByAppGoodResponse{}, status.Error(codes.Internal, err.Error())
+	}
+	return resp, nil
+}
