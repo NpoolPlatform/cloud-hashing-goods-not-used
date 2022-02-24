@@ -40,20 +40,6 @@ func (agu *AppGoodUpdate) SetGoodID(u uuid.UUID) *AppGoodUpdate {
 	return agu
 }
 
-// SetAuthorized sets the "authorized" field.
-func (agu *AppGoodUpdate) SetAuthorized(b bool) *AppGoodUpdate {
-	agu.mutation.SetAuthorized(b)
-	return agu
-}
-
-// SetNillableAuthorized sets the "authorized" field if the given value is not nil.
-func (agu *AppGoodUpdate) SetNillableAuthorized(b *bool) *AppGoodUpdate {
-	if b != nil {
-		agu.SetAuthorized(*b)
-	}
-	return agu
-}
-
 // SetOnline sets the "online" field.
 func (agu *AppGoodUpdate) SetOnline(b bool) *AppGoodUpdate {
 	agu.mutation.SetOnline(b)
@@ -84,20 +70,6 @@ func (agu *AppGoodUpdate) SetPrice(u uint64) *AppGoodUpdate {
 // AddPrice adds u to the "price" field.
 func (agu *AppGoodUpdate) AddPrice(u int64) *AppGoodUpdate {
 	agu.mutation.AddPrice(u)
-	return agu
-}
-
-// SetInvitationOnly sets the "invitation_only" field.
-func (agu *AppGoodUpdate) SetInvitationOnly(b bool) *AppGoodUpdate {
-	agu.mutation.SetInvitationOnly(b)
-	return agu
-}
-
-// SetNillableInvitationOnly sets the "invitation_only" field if the given value is not nil.
-func (agu *AppGoodUpdate) SetNillableInvitationOnly(b *bool) *AppGoodUpdate {
-	if b != nil {
-		agu.SetInvitationOnly(*b)
-	}
 	return agu
 }
 
@@ -271,13 +243,6 @@ func (agu *AppGoodUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			Column: appgood.FieldGoodID,
 		})
 	}
-	if value, ok := agu.mutation.Authorized(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeBool,
-			Value:  value,
-			Column: appgood.FieldAuthorized,
-		})
-	}
 	if value, ok := agu.mutation.Online(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeBool,
@@ -304,13 +269,6 @@ func (agu *AppGoodUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			Type:   field.TypeUint64,
 			Value:  value,
 			Column: appgood.FieldPrice,
-		})
-	}
-	if value, ok := agu.mutation.InvitationOnly(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeBool,
-			Value:  value,
-			Column: appgood.FieldInvitationOnly,
 		})
 	}
 	if value, ok := agu.mutation.CreateAt(); ok {
@@ -386,20 +344,6 @@ func (aguo *AppGoodUpdateOne) SetGoodID(u uuid.UUID) *AppGoodUpdateOne {
 	return aguo
 }
 
-// SetAuthorized sets the "authorized" field.
-func (aguo *AppGoodUpdateOne) SetAuthorized(b bool) *AppGoodUpdateOne {
-	aguo.mutation.SetAuthorized(b)
-	return aguo
-}
-
-// SetNillableAuthorized sets the "authorized" field if the given value is not nil.
-func (aguo *AppGoodUpdateOne) SetNillableAuthorized(b *bool) *AppGoodUpdateOne {
-	if b != nil {
-		aguo.SetAuthorized(*b)
-	}
-	return aguo
-}
-
 // SetOnline sets the "online" field.
 func (aguo *AppGoodUpdateOne) SetOnline(b bool) *AppGoodUpdateOne {
 	aguo.mutation.SetOnline(b)
@@ -430,20 +374,6 @@ func (aguo *AppGoodUpdateOne) SetPrice(u uint64) *AppGoodUpdateOne {
 // AddPrice adds u to the "price" field.
 func (aguo *AppGoodUpdateOne) AddPrice(u int64) *AppGoodUpdateOne {
 	aguo.mutation.AddPrice(u)
-	return aguo
-}
-
-// SetInvitationOnly sets the "invitation_only" field.
-func (aguo *AppGoodUpdateOne) SetInvitationOnly(b bool) *AppGoodUpdateOne {
-	aguo.mutation.SetInvitationOnly(b)
-	return aguo
-}
-
-// SetNillableInvitationOnly sets the "invitation_only" field if the given value is not nil.
-func (aguo *AppGoodUpdateOne) SetNillableInvitationOnly(b *bool) *AppGoodUpdateOne {
-	if b != nil {
-		aguo.SetInvitationOnly(*b)
-	}
 	return aguo
 }
 
@@ -641,13 +571,6 @@ func (aguo *AppGoodUpdateOne) sqlSave(ctx context.Context) (_node *AppGood, err 
 			Column: appgood.FieldGoodID,
 		})
 	}
-	if value, ok := aguo.mutation.Authorized(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeBool,
-			Value:  value,
-			Column: appgood.FieldAuthorized,
-		})
-	}
 	if value, ok := aguo.mutation.Online(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeBool,
@@ -674,13 +597,6 @@ func (aguo *AppGoodUpdateOne) sqlSave(ctx context.Context) (_node *AppGood, err 
 			Type:   field.TypeUint64,
 			Value:  value,
 			Column: appgood.FieldPrice,
-		})
-	}
-	if value, ok := aguo.mutation.InvitationOnly(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeBool,
-			Value:  value,
-			Column: appgood.FieldInvitationOnly,
 		})
 	}
 	if value, ok := aguo.mutation.CreateAt(); ok {

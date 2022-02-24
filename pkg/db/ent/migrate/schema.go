@@ -13,11 +13,9 @@ var (
 		{Name: "id", Type: field.TypeUUID, Unique: true},
 		{Name: "app_id", Type: field.TypeUUID},
 		{Name: "good_id", Type: field.TypeUUID},
-		{Name: "authorized", Type: field.TypeBool, Default: false},
 		{Name: "online", Type: field.TypeBool, Default: false},
 		{Name: "init_area_strategy", Type: field.TypeEnum, Enums: []string{"all", "none"}},
 		{Name: "price", Type: field.TypeUint64},
-		{Name: "invitation_only", Type: field.TypeBool, Default: false},
 		{Name: "create_at", Type: field.TypeUint32},
 		{Name: "update_at", Type: field.TypeUint32},
 		{Name: "delete_at", Type: field.TypeUint32},
@@ -32,6 +30,32 @@ var (
 				Name:    "appgood_good_id_app_id",
 				Unique:  true,
 				Columns: []*schema.Column{AppGoodsColumns[2], AppGoodsColumns[1]},
+			},
+		},
+	}
+	// AppGoodPromotionsColumns holds the columns for the "app_good_promotions" table.
+	AppGoodPromotionsColumns = []*schema.Column{
+		{Name: "id", Type: field.TypeUUID, Unique: true},
+		{Name: "app_id", Type: field.TypeUUID},
+		{Name: "good_id", Type: field.TypeUUID},
+		{Name: "message", Type: field.TypeString},
+		{Name: "start", Type: field.TypeUint32},
+		{Name: "end", Type: field.TypeUint32},
+		{Name: "price", Type: field.TypeUint64},
+		{Name: "create_at", Type: field.TypeUint32},
+		{Name: "update_at", Type: field.TypeUint32},
+		{Name: "delete_at", Type: field.TypeUint32},
+	}
+	// AppGoodPromotionsTable holds the schema information for the "app_good_promotions" table.
+	AppGoodPromotionsTable = &schema.Table{
+		Name:       "app_good_promotions",
+		Columns:    AppGoodPromotionsColumns,
+		PrimaryKey: []*schema.Column{AppGoodPromotionsColumns[0]},
+		Indexes: []*schema.Index{
+			{
+				Name:    "appgoodpromotion_good_id_app_id_start_end",
+				Unique:  true,
+				Columns: []*schema.Column{AppGoodPromotionsColumns[2], AppGoodPromotionsColumns[1], AppGoodPromotionsColumns[4], AppGoodPromotionsColumns[5]},
 			},
 		},
 	}
@@ -328,6 +352,7 @@ var (
 	// Tables holds all the tables in the schema.
 	Tables = []*schema.Table{
 		AppGoodsTable,
+		AppGoodPromotionsTable,
 		AppGoodTargetAreasTable,
 		AppTargetAreasTable,
 		DeviceInfosTable,

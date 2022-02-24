@@ -9,6 +9,9 @@ import (
 // AppGood is the predicate function for appgood builders.
 type AppGood func(*sql.Selector)
 
+// AppGoodPromotion is the predicate function for appgoodpromotion builders.
+type AppGoodPromotion func(*sql.Selector)
+
 // AppGoodTargetArea is the predicate function for appgoodtargetarea builders.
 type AppGoodTargetArea func(*sql.Selector)
 

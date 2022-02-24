@@ -4,6 +4,7 @@ package ent
 
 import (
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/appgood"
+	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/appgoodpromotion"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/appgoodtargetarea"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/apptargetarea"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/deviceinfo"
@@ -27,34 +28,44 @@ import (
 func init() {
 	appgoodFields := schema.AppGood{}.Fields()
 	_ = appgoodFields
-	// appgoodDescAuthorized is the schema descriptor for authorized field.
-	appgoodDescAuthorized := appgoodFields[3].Descriptor()
-	// appgood.DefaultAuthorized holds the default value on creation for the authorized field.
-	appgood.DefaultAuthorized = appgoodDescAuthorized.Default.(bool)
 	// appgoodDescOnline is the schema descriptor for online field.
-	appgoodDescOnline := appgoodFields[4].Descriptor()
+	appgoodDescOnline := appgoodFields[3].Descriptor()
 	// appgood.DefaultOnline holds the default value on creation for the online field.
 	appgood.DefaultOnline = appgoodDescOnline.Default.(bool)
-	// appgoodDescInvitationOnly is the schema descriptor for invitation_only field.
-	appgoodDescInvitationOnly := appgoodFields[7].Descriptor()
-	// appgood.DefaultInvitationOnly holds the default value on creation for the invitation_only field.
-	appgood.DefaultInvitationOnly = appgoodDescInvitationOnly.Default.(bool)
 	// appgoodDescCreateAt is the schema descriptor for create_at field.
-	appgoodDescCreateAt := appgoodFields[8].Descriptor()
+	appgoodDescCreateAt := appgoodFields[6].Descriptor()
 	// appgood.DefaultCreateAt holds the default value on creation for the create_at field.
 	appgood.DefaultCreateAt = appgoodDescCreateAt.Default.(func() uint32)
 	// appgoodDescUpdateAt is the schema descriptor for update_at field.
-	appgoodDescUpdateAt := appgoodFields[9].Descriptor()
+	appgoodDescUpdateAt := appgoodFields[7].Descriptor()
 	// appgood.DefaultUpdateAt holds the default value on creation for the update_at field.
 	appgood.DefaultUpdateAt = appgoodDescUpdateAt.Default.(func() uint32)
 	// appgoodDescDeleteAt is the schema descriptor for delete_at field.
-	appgoodDescDeleteAt := appgoodFields[10].Descriptor()
+	appgoodDescDeleteAt := appgoodFields[8].Descriptor()
 	// appgood.DefaultDeleteAt holds the default value on creation for the delete_at field.
 	appgood.DefaultDeleteAt = appgoodDescDeleteAt.Default.(func() uint32)
 	// appgoodDescID is the schema descriptor for id field.
 	appgoodDescID := appgoodFields[0].Descriptor()
 	// appgood.DefaultID holds the default value on creation for the id field.
 	appgood.DefaultID = appgoodDescID.Default.(func() uuid.UUID)
+	appgoodpromotionFields := schema.AppGoodPromotion{}.Fields()
+	_ = appgoodpromotionFields
+	// appgoodpromotionDescCreateAt is the schema descriptor for create_at field.
+	appgoodpromotionDescCreateAt := appgoodpromotionFields[7].Descriptor()
+	// appgoodpromotion.DefaultCreateAt holds the default value on creation for the create_at field.
+	appgoodpromotion.DefaultCreateAt = appgoodpromotionDescCreateAt.Default.(func() uint32)
+	// appgoodpromotionDescUpdateAt is the schema descriptor for update_at field.
+	appgoodpromotionDescUpdateAt := appgoodpromotionFields[8].Descriptor()
+	// appgoodpromotion.DefaultUpdateAt holds the default value on creation for the update_at field.
+	appgoodpromotion.DefaultUpdateAt = appgoodpromotionDescUpdateAt.Default.(func() uint32)
+	// appgoodpromotionDescDeleteAt is the schema descriptor for delete_at field.
+	appgoodpromotionDescDeleteAt := appgoodpromotionFields[9].Descriptor()
+	// appgoodpromotion.DefaultDeleteAt holds the default value on creation for the delete_at field.
+	appgoodpromotion.DefaultDeleteAt = appgoodpromotionDescDeleteAt.Default.(func() uint32)
+	// appgoodpromotionDescID is the schema descriptor for id field.
+	appgoodpromotionDescID := appgoodpromotionFields[0].Descriptor()
+	// appgoodpromotion.DefaultID holds the default value on creation for the id field.
+	appgoodpromotion.DefaultID = appgoodpromotionDescID.Default.(func() uuid.UUID)
 	appgoodtargetareaFields := schema.AppGoodTargetArea{}.Fields()
 	_ = appgoodtargetareaFields
 	// appgoodtargetareaDescCreateAt is the schema descriptor for create_at field.

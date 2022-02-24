@@ -11,6 +11,7 @@ import (
 	"github.com/google/uuid"
 
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/appgood"
+	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/appgoodpromotion"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/appgoodtargetarea"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/apptargetarea"
 	"github.com/NpoolPlatform/cloud-hashing-goods/pkg/db/ent/deviceinfo"
@@ -36,6 +37,8 @@ type Client struct {
 	Schema *migrate.Schema
 	// AppGood is the client for interacting with the AppGood builders.
 	AppGood *AppGoodClient
+	// AppGoodPromotion is the client for interacting with the AppGoodPromotion builders.
+	AppGoodPromotion *AppGoodPromotionClient
 	// AppGoodTargetArea is the client for interacting with the AppGoodTargetArea builders.
 	AppGoodTargetArea *AppGoodTargetAreaClient
 	// AppTargetArea is the client for interacting with the AppTargetArea builders.
@@ -76,6 +79,7 @@ func NewClient(opts ...Option) *Client {
 func (c *Client) init() {
 	c.Schema = migrate.NewSchema(c.driver)
 	c.AppGood = NewAppGoodClient(c.config)
+	c.AppGoodPromotion = NewAppGoodPromotionClient(c.config)
 	c.AppGoodTargetArea = NewAppGoodTargetAreaClient(c.config)
 	c.AppTargetArea = NewAppTargetAreaClient(c.config)
 	c.DeviceInfo = NewDeviceInfoClient(c.config)
@@ -123,6 +127,7 @@ func (c *Client) Tx(ctx context.Context) (*Tx, error) {
 		ctx:               ctx,
 		config:            cfg,
 		AppGood:           NewAppGoodClient(cfg),
+		AppGoodPromotion:  NewAppGoodPromotionClient(cfg),
 		AppGoodTargetArea: NewAppGoodTargetAreaClient(cfg),
 		AppTargetArea:     NewAppTargetAreaClient(cfg),
 		DeviceInfo:        NewDeviceInfoClient(cfg),
@@ -156,6 +161,7 @@ func (c *Client) BeginTx(ctx context.Context, opts *sql.TxOptions) (*Tx, error) 
 		ctx:               ctx,
 		config:            cfg,
 		AppGood:           NewAppGoodClient(cfg),
+		AppGoodPromotion:  NewAppGoodPromotionClient(cfg),
 		AppGoodTargetArea: NewAppGoodTargetAreaClient(cfg),
 		AppTargetArea:     NewAppTargetAreaClient(cfg),
 		DeviceInfo:        NewDeviceInfoClient(cfg),
@@ -199,6 +205,7 @@ func (c *Client) Close() error {
 // In order to add hooks to a specific client, call: `client.Node.Use(...)`.
 func (c *Client) Use(hooks ...Hook) {
 	c.AppGood.Use(hooks...)
+	c.AppGoodPromotion.Use(hooks...)
 	c.AppGoodTargetArea.Use(hooks...)
 	c.AppTargetArea.Use(hooks...)
 	c.DeviceInfo.Use(hooks...)
@@ -302,6 +309,96 @@ func (c *AppGoodClient) GetX(ctx context.Context, id uuid.UUID) *AppGood {
 // Hooks returns the client hooks.
 func (c *AppGoodClient) Hooks() []Hook {
 	return c.hooks.AppGood
+}
+
+// AppGoodPromotionClient is a client for the AppGoodPromotion schema.
+type AppGoodPromotionClient struct {
+	config
+}
+
+// NewAppGoodPromotionClient returns a client for the AppGoodPromotion from the given config.
+func NewAppGoodPromotionClient(c config) *AppGoodPromotionClient {
+	return &AppGoodPromotionClient{config: c}
+}
+
+// Use adds a list of mutation hooks to the hooks stack.
+// A call to `Use(f, g, h)` equals to `appgoodpromotion.Hooks(f(g(h())))`.
+func (c *AppGoodPromotionClient) Use(hooks ...Hook) {
+	c.hooks.AppGoodPromotion = append(c.hooks.AppGoodPromotion, hooks...)
+}
+
+// Create returns a create builder for AppGoodPromotion.
+func (c *AppGoodPromotionClient) Create() *AppGoodPromotionCreate {
+	mutation := newAppGoodPromotionMutation(c.config, OpCreate)
+	return &AppGoodPromotionCreate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// CreateBulk returns a builder for creating a bulk of AppGoodPromotion entities.
+func (c *AppGoodPromotionClient) CreateBulk(builders ...*AppGoodPromotionCreate) *AppGoodPromotionCreateBulk {
+	return &AppGoodPromotionCreateBulk{config: c.config, builders: builders}
+}
+
+// Update returns an update builder for AppGoodPromotion.
+func (c *AppGoodPromotionClient) Update() *AppGoodPromotionUpdate {
+	mutation := newAppGoodPromotionMutation(c.config, OpUpdate)
+	return &AppGoodPromotionUpdate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOne returns an update builder for the given entity.
+func (c *AppGoodPromotionClient) UpdateOne(agp *AppGoodPromotion) *AppGoodPromotionUpdateOne {
+	mutation := newAppGoodPromotionMutation(c.config, OpUpdateOne, withAppGoodPromotion(agp))
+	return &AppGoodPromotionUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOneID returns an update builder for the given id.
+func (c *AppGoodPromotionClient) UpdateOneID(id uuid.UUID) *AppGoodPromotionUpdateOne {
+	mutation := newAppGoodPromotionMutation(c.config, OpUpdateOne, withAppGoodPromotionID(id))
+	return &AppGoodPromotionUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// Delete returns a delete builder for AppGoodPromotion.
+func (c *AppGoodPromotionClient) Delete() *AppGoodPromotionDelete {
+	mutation := newAppGoodPromotionMutation(c.config, OpDelete)
+	return &AppGoodPromotionDelete{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// DeleteOne returns a delete builder for the given entity.
+func (c *AppGoodPromotionClient) DeleteOne(agp *AppGoodPromotion) *AppGoodPromotionDeleteOne {
+	return c.DeleteOneID(agp.ID)
+}
+
+// DeleteOneID returns a delete builder for the given id.
+func (c *AppGoodPromotionClient) DeleteOneID(id uuid.UUID) *AppGoodPromotionDeleteOne {
+	builder := c.Delete().Where(appgoodpromotion.ID(id))
+	builder.mutation.id = &id
+	builder.mutation.op = OpDeleteOne
+	return &AppGoodPromotionDeleteOne{builder}
+}
+
+// Query returns a query builder for AppGoodPromotion.
+func (c *AppGoodPromotionClient) Query() *AppGoodPromotionQuery {
+	return &AppGoodPromotionQuery{
+		config: c.config,
+	}
+}
+
+// Get returns a AppGoodPromotion entity by its id.
+func (c *AppGoodPromotionClient) Get(ctx context.Context, id uuid.UUID) (*AppGoodPromotion, error) {
+	return c.Query().Where(appgoodpromotion.ID(id)).Only(ctx)
+}
+
+// GetX is like Get, but panics if an error occurs.
+func (c *AppGoodPromotionClient) GetX(ctx context.Context, id uuid.UUID) *AppGoodPromotion {
+	obj, err := c.Get(ctx, id)
+	if err != nil {
+		panic(err)
+	}
+	return obj
+}
+
+// Hooks returns the client hooks.
+func (c *AppGoodPromotionClient) Hooks() []Hook {
+	return c.hooks.AppGoodPromotion
 }
 
 // AppGoodTargetAreaClient is a client for the AppGoodTargetArea schema.

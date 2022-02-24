@@ -22,6 +22,19 @@ func (f AppGoodFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, err
 	return f(ctx, mv)
 }
 
+// The AppGoodPromotionFunc type is an adapter to allow the use of ordinary
+// function as AppGoodPromotion mutator.
+type AppGoodPromotionFunc func(context.Context, *ent.AppGoodPromotionMutation) (ent.Value, error)
+
+// Mutate calls f(ctx, m).
+func (f AppGoodPromotionFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, error) {
+	mv, ok := m.(*ent.AppGoodPromotionMutation)
+	if !ok {
+		return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.AppGoodPromotionMutation", m)
+	}
+	return f(ctx, mv)
+}
+
 // The AppGoodTargetAreaFunc type is an adapter to allow the use of ordinary
 // function as AppGoodTargetArea mutator.
 type AppGoodTargetAreaFunc func(context.Context, *ent.AppGoodTargetAreaMutation) (ent.Value, error)

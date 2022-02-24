@@ -105,13 +105,6 @@ func GoodID(v uuid.UUID) predicate.AppGood {
 	})
 }
 
-// Authorized applies equality check predicate on the "authorized" field. It's identical to AuthorizedEQ.
-func Authorized(v bool) predicate.AppGood {
-	return predicate.AppGood(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldAuthorized), v))
-	})
-}
-
 // Online applies equality check predicate on the "online" field. It's identical to OnlineEQ.
 func Online(v bool) predicate.AppGood {
 	return predicate.AppGood(func(s *sql.Selector) {
@@ -123,13 +116,6 @@ func Online(v bool) predicate.AppGood {
 func Price(v uint64) predicate.AppGood {
 	return predicate.AppGood(func(s *sql.Selector) {
 		s.Where(sql.EQ(s.C(FieldPrice), v))
-	})
-}
-
-// InvitationOnly applies equality check predicate on the "invitation_only" field. It's identical to InvitationOnlyEQ.
-func InvitationOnly(v bool) predicate.AppGood {
-	return predicate.AppGood(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldInvitationOnly), v))
 	})
 }
 
@@ -306,20 +292,6 @@ func GoodIDLTE(v uuid.UUID) predicate.AppGood {
 	})
 }
 
-// AuthorizedEQ applies the EQ predicate on the "authorized" field.
-func AuthorizedEQ(v bool) predicate.AppGood {
-	return predicate.AppGood(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldAuthorized), v))
-	})
-}
-
-// AuthorizedNEQ applies the NEQ predicate on the "authorized" field.
-func AuthorizedNEQ(v bool) predicate.AppGood {
-	return predicate.AppGood(func(s *sql.Selector) {
-		s.Where(sql.NEQ(s.C(FieldAuthorized), v))
-	})
-}
-
 // OnlineEQ applies the EQ predicate on the "online" field.
 func OnlineEQ(v bool) predicate.AppGood {
 	return predicate.AppGood(func(s *sql.Selector) {
@@ -455,20 +427,6 @@ func PriceLT(v uint64) predicate.AppGood {
 func PriceLTE(v uint64) predicate.AppGood {
 	return predicate.AppGood(func(s *sql.Selector) {
 		s.Where(sql.LTE(s.C(FieldPrice), v))
-	})
-}
-
-// InvitationOnlyEQ applies the EQ predicate on the "invitation_only" field.
-func InvitationOnlyEQ(v bool) predicate.AppGood {
-	return predicate.AppGood(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldInvitationOnly), v))
-	})
-}
-
-// InvitationOnlyNEQ applies the NEQ predicate on the "invitation_only" field.
-func InvitationOnlyNEQ(v bool) predicate.AppGood {
-	return predicate.AppGood(func(s *sql.Selector) {
-		s.Where(sql.NEQ(s.C(FieldInvitationOnly), v))
 	})
 }
 

@@ -14,6 +14,8 @@ type Tx struct {
 	config
 	// AppGood is the client for interacting with the AppGood builders.
 	AppGood *AppGoodClient
+	// AppGoodPromotion is the client for interacting with the AppGoodPromotion builders.
+	AppGoodPromotion *AppGoodPromotionClient
 	// AppGoodTargetArea is the client for interacting with the AppGoodTargetArea builders.
 	AppGoodTargetArea *AppGoodTargetAreaClient
 	// AppTargetArea is the client for interacting with the AppTargetArea builders.
@@ -176,6 +178,7 @@ func (tx *Tx) Client() *Client {
 
 func (tx *Tx) init() {
 	tx.AppGood = NewAppGoodClient(tx.config)
+	tx.AppGoodPromotion = NewAppGoodPromotionClient(tx.config)
 	tx.AppGoodTargetArea = NewAppGoodTargetAreaClient(tx.config)
 	tx.AppTargetArea = NewAppTargetAreaClient(tx.config)
 	tx.DeviceInfo = NewDeviceInfoClient(tx.config)

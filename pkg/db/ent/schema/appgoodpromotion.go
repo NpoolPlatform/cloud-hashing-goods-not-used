@@ -10,23 +10,22 @@ import (
 	"github.com/google/uuid"
 )
 
-// AppGood holds the schema definition for the AppGood entity.
-type AppGood struct {
+// AppGoodPromotion holds the schema definition for the AppGoodPromotion entity.
+type AppGoodPromotion struct {
 	ent.Schema
 }
 
-// Fields of the AppGood.
-func (AppGood) Fields() []ent.Field {
+// Fields of the AppGoodPromotion.
+func (AppGoodPromotion) Fields() []ent.Field {
 	return []ent.Field{
 		field.UUID("id", uuid.UUID{}).
 			Default(uuid.New).
 			Unique(),
 		field.UUID("app_id", uuid.UUID{}),
 		field.UUID("good_id", uuid.UUID{}),
-		field.Bool("online").
-			Default(false),
-		field.Enum("init_area_strategy").
-			Values("all", "none"),
+		field.String("message"),
+		field.Uint32("start"),
+		field.Uint32("end"),
 		field.Uint64("price"),
 		field.Uint32("create_at").
 			DefaultFunc(func() uint32 {
@@ -46,14 +45,14 @@ func (AppGood) Fields() []ent.Field {
 	}
 }
 
-// Edges of the AppGood.
-func (AppGood) Edges() []ent.Edge {
+// Edges of the AppGoodPromotion.
+func (AppGoodPromotion) Edges() []ent.Edge {
 	return nil
 }
 
-func (AppGood) Indexes() []ent.Index {
+func (AppGoodPromotion) Indexes() []ent.Index {
 	return []ent.Index{
-		index.Fields("good_id", "app_id").
+		index.Fields("good_id", "app_id", "start", "end").
 			Unique(),
 	}
 }

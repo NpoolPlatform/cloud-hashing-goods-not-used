@@ -35,20 +35,6 @@ func (agc *AppGoodCreate) SetGoodID(u uuid.UUID) *AppGoodCreate {
 	return agc
 }
 
-// SetAuthorized sets the "authorized" field.
-func (agc *AppGoodCreate) SetAuthorized(b bool) *AppGoodCreate {
-	agc.mutation.SetAuthorized(b)
-	return agc
-}
-
-// SetNillableAuthorized sets the "authorized" field if the given value is not nil.
-func (agc *AppGoodCreate) SetNillableAuthorized(b *bool) *AppGoodCreate {
-	if b != nil {
-		agc.SetAuthorized(*b)
-	}
-	return agc
-}
-
 // SetOnline sets the "online" field.
 func (agc *AppGoodCreate) SetOnline(b bool) *AppGoodCreate {
 	agc.mutation.SetOnline(b)
@@ -72,20 +58,6 @@ func (agc *AppGoodCreate) SetInitAreaStrategy(aas appgood.InitAreaStrategy) *App
 // SetPrice sets the "price" field.
 func (agc *AppGoodCreate) SetPrice(u uint64) *AppGoodCreate {
 	agc.mutation.SetPrice(u)
-	return agc
-}
-
-// SetInvitationOnly sets the "invitation_only" field.
-func (agc *AppGoodCreate) SetInvitationOnly(b bool) *AppGoodCreate {
-	agc.mutation.SetInvitationOnly(b)
-	return agc
-}
-
-// SetNillableInvitationOnly sets the "invitation_only" field if the given value is not nil.
-func (agc *AppGoodCreate) SetNillableInvitationOnly(b *bool) *AppGoodCreate {
-	if b != nil {
-		agc.SetInvitationOnly(*b)
-	}
 	return agc
 }
 
@@ -216,17 +188,9 @@ func (agc *AppGoodCreate) ExecX(ctx context.Context) {
 
 // defaults sets the default values of the builder before save.
 func (agc *AppGoodCreate) defaults() {
-	if _, ok := agc.mutation.Authorized(); !ok {
-		v := appgood.DefaultAuthorized
-		agc.mutation.SetAuthorized(v)
-	}
 	if _, ok := agc.mutation.Online(); !ok {
 		v := appgood.DefaultOnline
 		agc.mutation.SetOnline(v)
-	}
-	if _, ok := agc.mutation.InvitationOnly(); !ok {
-		v := appgood.DefaultInvitationOnly
-		agc.mutation.SetInvitationOnly(v)
 	}
 	if _, ok := agc.mutation.CreateAt(); !ok {
 		v := appgood.DefaultCreateAt()
@@ -254,9 +218,6 @@ func (agc *AppGoodCreate) check() error {
 	if _, ok := agc.mutation.GoodID(); !ok {
 		return &ValidationError{Name: "good_id", err: errors.New(`ent: missing required field "AppGood.good_id"`)}
 	}
-	if _, ok := agc.mutation.Authorized(); !ok {
-		return &ValidationError{Name: "authorized", err: errors.New(`ent: missing required field "AppGood.authorized"`)}
-	}
 	if _, ok := agc.mutation.Online(); !ok {
 		return &ValidationError{Name: "online", err: errors.New(`ent: missing required field "AppGood.online"`)}
 	}
@@ -270,9 +231,6 @@ func (agc *AppGoodCreate) check() error {
 	}
 	if _, ok := agc.mutation.Price(); !ok {
 		return &ValidationError{Name: "price", err: errors.New(`ent: missing required field "AppGood.price"`)}
-	}
-	if _, ok := agc.mutation.InvitationOnly(); !ok {
-		return &ValidationError{Name: "invitation_only", err: errors.New(`ent: missing required field "AppGood.invitation_only"`)}
 	}
 	if _, ok := agc.mutation.CreateAt(); !ok {
 		return &ValidationError{Name: "create_at", err: errors.New(`ent: missing required field "AppGood.create_at"`)}
@@ -336,14 +294,6 @@ func (agc *AppGoodCreate) createSpec() (*AppGood, *sqlgraph.CreateSpec) {
 		})
 		_node.GoodID = value
 	}
-	if value, ok := agc.mutation.Authorized(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeBool,
-			Value:  value,
-			Column: appgood.FieldAuthorized,
-		})
-		_node.Authorized = value
-	}
 	if value, ok := agc.mutation.Online(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
 			Type:   field.TypeBool,
@@ -367,14 +317,6 @@ func (agc *AppGoodCreate) createSpec() (*AppGood, *sqlgraph.CreateSpec) {
 			Column: appgood.FieldPrice,
 		})
 		_node.Price = value
-	}
-	if value, ok := agc.mutation.InvitationOnly(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeBool,
-			Value:  value,
-			Column: appgood.FieldInvitationOnly,
-		})
-		_node.InvitationOnly = value
 	}
 	if value, ok := agc.mutation.CreateAt(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
@@ -478,18 +420,6 @@ func (u *AppGoodUpsert) UpdateGoodID() *AppGoodUpsert {
 	return u
 }
 
-// SetAuthorized sets the "authorized" field.
-func (u *AppGoodUpsert) SetAuthorized(v bool) *AppGoodUpsert {
-	u.Set(appgood.FieldAuthorized, v)
-	return u
-}
-
-// UpdateAuthorized sets the "authorized" field to the value that was provided on create.
-func (u *AppGoodUpsert) UpdateAuthorized() *AppGoodUpsert {
-	u.SetExcluded(appgood.FieldAuthorized)
-	return u
-}
-
 // SetOnline sets the "online" field.
 func (u *AppGoodUpsert) SetOnline(v bool) *AppGoodUpsert {
 	u.Set(appgood.FieldOnline, v)
@@ -529,18 +459,6 @@ func (u *AppGoodUpsert) UpdatePrice() *AppGoodUpsert {
 // AddPrice adds v to the "price" field.
 func (u *AppGoodUpsert) AddPrice(v uint64) *AppGoodUpsert {
 	u.Add(appgood.FieldPrice, v)
-	return u
-}
-
-// SetInvitationOnly sets the "invitation_only" field.
-func (u *AppGoodUpsert) SetInvitationOnly(v bool) *AppGoodUpsert {
-	u.Set(appgood.FieldInvitationOnly, v)
-	return u
-}
-
-// UpdateInvitationOnly sets the "invitation_only" field to the value that was provided on create.
-func (u *AppGoodUpsert) UpdateInvitationOnly() *AppGoodUpsert {
-	u.SetExcluded(appgood.FieldInvitationOnly)
 	return u
 }
 
@@ -676,20 +594,6 @@ func (u *AppGoodUpsertOne) UpdateGoodID() *AppGoodUpsertOne {
 	})
 }
 
-// SetAuthorized sets the "authorized" field.
-func (u *AppGoodUpsertOne) SetAuthorized(v bool) *AppGoodUpsertOne {
-	return u.Update(func(s *AppGoodUpsert) {
-		s.SetAuthorized(v)
-	})
-}
-
-// UpdateAuthorized sets the "authorized" field to the value that was provided on create.
-func (u *AppGoodUpsertOne) UpdateAuthorized() *AppGoodUpsertOne {
-	return u.Update(func(s *AppGoodUpsert) {
-		s.UpdateAuthorized()
-	})
-}
-
 // SetOnline sets the "online" field.
 func (u *AppGoodUpsertOne) SetOnline(v bool) *AppGoodUpsertOne {
 	return u.Update(func(s *AppGoodUpsert) {
@@ -736,20 +640,6 @@ func (u *AppGoodUpsertOne) AddPrice(v uint64) *AppGoodUpsertOne {
 func (u *AppGoodUpsertOne) UpdatePrice() *AppGoodUpsertOne {
 	return u.Update(func(s *AppGoodUpsert) {
 		s.UpdatePrice()
-	})
-}
-
-// SetInvitationOnly sets the "invitation_only" field.
-func (u *AppGoodUpsertOne) SetInvitationOnly(v bool) *AppGoodUpsertOne {
-	return u.Update(func(s *AppGoodUpsert) {
-		s.SetInvitationOnly(v)
-	})
-}
-
-// UpdateInvitationOnly sets the "invitation_only" field to the value that was provided on create.
-func (u *AppGoodUpsertOne) UpdateInvitationOnly() *AppGoodUpsertOne {
-	return u.Update(func(s *AppGoodUpsert) {
-		s.UpdateInvitationOnly()
 	})
 }
 
@@ -1060,20 +950,6 @@ func (u *AppGoodUpsertBulk) UpdateGoodID() *AppGoodUpsertBulk {
 	})
 }
 
-// SetAuthorized sets the "authorized" field.
-func (u *AppGoodUpsertBulk) SetAuthorized(v bool) *AppGoodUpsertBulk {
-	return u.Update(func(s *AppGoodUpsert) {
-		s.SetAuthorized(v)
-	})
-}
-
-// UpdateAuthorized sets the "authorized" field to the value that was provided on create.
-func (u *AppGoodUpsertBulk) UpdateAuthorized() *AppGoodUpsertBulk {
-	return u.Update(func(s *AppGoodUpsert) {
-		s.UpdateAuthorized()
-	})
-}
-
 // SetOnline sets the "online" field.
 func (u *AppGoodUpsertBulk) SetOnline(v bool) *AppGoodUpsertBulk {
 	return u.Update(func(s *AppGoodUpsert) {
@@ -1120,20 +996,6 @@ func (u *AppGoodUpsertBulk) AddPrice(v uint64) *AppGoodUpsertBulk {
 func (u *AppGoodUpsertBulk) UpdatePrice() *AppGoodUpsertBulk {
 	return u.Update(func(s *AppGoodUpsert) {
 		s.UpdatePrice()
-	})
-}
-
-// SetInvitationOnly sets the "invitation_only" field.
-func (u *AppGoodUpsertBulk) SetInvitationOnly(v bool) *AppGoodUpsertBulk {
-	return u.Update(func(s *AppGoodUpsert) {
-		s.SetInvitationOnly(v)
-	})
-}
-
-// UpdateInvitationOnly sets the "invitation_only" field to the value that was provided on create.
-func (u *AppGoodUpsertBulk) UpdateInvitationOnly() *AppGoodUpsertBulk {
-	return u.Update(func(s *AppGoodUpsert) {
-		s.UpdateInvitationOnly()
 	})
 }
 

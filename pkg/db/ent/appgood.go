@@ -20,16 +20,12 @@ type AppGood struct {
 	AppID uuid.UUID `json:"app_id,omitempty"`
 	// GoodID holds the value of the "good_id" field.
 	GoodID uuid.UUID `json:"good_id,omitempty"`
-	// Authorized holds the value of the "authorized" field.
-	Authorized bool `json:"authorized,omitempty"`
 	// Online holds the value of the "online" field.
 	Online bool `json:"online,omitempty"`
 	// InitAreaStrategy holds the value of the "init_area_strategy" field.
 	InitAreaStrategy appgood.InitAreaStrategy `json:"init_area_strategy,omitempty"`
 	// Price holds the value of the "price" field.
 	Price uint64 `json:"price,omitempty"`
-	// InvitationOnly holds the value of the "invitation_only" field.
-	InvitationOnly bool `json:"invitation_only,omitempty"`
 	// CreateAt holds the value of the "create_at" field.
 	CreateAt uint32 `json:"create_at,omitempty"`
 	// UpdateAt holds the value of the "update_at" field.
@@ -43,7 +39,7 @@ func (*AppGood) scanValues(columns []string) ([]interface{}, error) {
 	values := make([]interface{}, len(columns))
 	for i := range columns {
 		switch columns[i] {
-		case appgood.FieldAuthorized, appgood.FieldOnline, appgood.FieldInvitationOnly:
+		case appgood.FieldOnline:
 			values[i] = new(sql.NullBool)
 		case appgood.FieldPrice, appgood.FieldCreateAt, appgood.FieldUpdateAt, appgood.FieldDeleteAt:
 			values[i] = new(sql.NullInt64)
@@ -84,12 +80,6 @@ func (ag *AppGood) assignValues(columns []string, values []interface{}) error {
 			} else if value != nil {
 				ag.GoodID = *value
 			}
-		case appgood.FieldAuthorized:
-			if value, ok := values[i].(*sql.NullBool); !ok {
-				return fmt.Errorf("unexpected type %T for field authorized", values[i])
-			} else if value.Valid {
-				ag.Authorized = value.Bool
-			}
 		case appgood.FieldOnline:
 			if value, ok := values[i].(*sql.NullBool); !ok {
 				return fmt.Errorf("unexpected type %T for field online", values[i])
@@ -107,12 +97,6 @@ func (ag *AppGood) assignValues(columns []string, values []interface{}) error {
 				return fmt.Errorf("unexpected type %T for field price", values[i])
 			} else if value.Valid {
 				ag.Price = uint64(value.Int64)
-			}
-		case appgood.FieldInvitationOnly:
-			if value, ok := values[i].(*sql.NullBool); !ok {
-				return fmt.Errorf("unexpected type %T for field invitation_only", values[i])
-			} else if value.Valid {
-				ag.InvitationOnly = value.Bool
 			}
 		case appgood.FieldCreateAt:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
@@ -164,16 +148,12 @@ func (ag *AppGood) String() string {
 	builder.WriteString(fmt.Sprintf("%v", ag.AppID))
 	builder.WriteString(", good_id=")
 	builder.WriteString(fmt.Sprintf("%v", ag.GoodID))
-	builder.WriteString(", authorized=")
-	builder.WriteString(fmt.Sprintf("%v", ag.Authorized))
 	builder.WriteString(", online=")
 	builder.WriteString(fmt.Sprintf("%v", ag.Online))
 	builder.WriteString(", init_area_strategy=")
 	builder.WriteString(fmt.Sprintf("%v", ag.InitAreaStrategy))
 	builder.WriteString(", price=")
 	builder.WriteString(fmt.Sprintf("%v", ag.Price))
-	builder.WriteString(", invitation_only=")
-	builder.WriteString(fmt.Sprintf("%v", ag.InvitationOnly))
 	builder.WriteString(", create_at=")
 	builder.WriteString(fmt.Sprintf("%v", ag.CreateAt))
 	builder.WriteString(", update_at=")
