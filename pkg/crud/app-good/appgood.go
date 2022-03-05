@@ -67,6 +67,7 @@ func Authorize(ctx context.Context, in *npool.AuthorizeAppGoodRequest) (*npool.A
 		SetInitAreaStrategy(appgood.InitAreaStrategy(initAreaStrategy)).
 		SetPrice(0).
 		SetDeleteAt(0).
+		SetDisplayIndex(0).
 		OnConflict().
 		UpdateNewValues().
 		Exec(ctx)
