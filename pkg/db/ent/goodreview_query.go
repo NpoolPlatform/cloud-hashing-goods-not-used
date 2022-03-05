@@ -107,7 +107,7 @@ func (grq *GoodReviewQuery) FirstIDX(ctx context.Context) uuid.UUID {
 }
 
 // Only returns a single GoodReview entity found by the query, ensuring it only returns one.
-// Returns a *NotSingularError when exactly one GoodReview entity is not found.
+// Returns a *NotSingularError when more than one GoodReview entity is found.
 // Returns a *NotFoundError when no GoodReview entities are found.
 func (grq *GoodReviewQuery) Only(ctx context.Context) (*GoodReview, error) {
 	nodes, err := grq.Limit(2).All(ctx)
@@ -134,7 +134,7 @@ func (grq *GoodReviewQuery) OnlyX(ctx context.Context) *GoodReview {
 }
 
 // OnlyID is like Only, but returns the only GoodReview ID in the query.
-// Returns a *NotSingularError when exactly one GoodReview ID is not found.
+// Returns a *NotSingularError when more than one GoodReview ID is found.
 // Returns a *NotFoundError when no entities are found.
 func (grq *GoodReviewQuery) OnlyID(ctx context.Context) (id uuid.UUID, err error) {
 	var ids []uuid.UUID
@@ -243,8 +243,9 @@ func (grq *GoodReviewQuery) Clone() *GoodReviewQuery {
 		order:      append([]OrderFunc{}, grq.order...),
 		predicates: append([]predicate.GoodReview{}, grq.predicates...),
 		// clone intermediate query.
-		sql:  grq.sql.Clone(),
-		path: grq.path,
+		sql:    grq.sql.Clone(),
+		path:   grq.path,
+		unique: grq.unique,
 	}
 }
 

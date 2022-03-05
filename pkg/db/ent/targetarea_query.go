@@ -107,7 +107,7 @@ func (taq *TargetAreaQuery) FirstIDX(ctx context.Context) uuid.UUID {
 }
 
 // Only returns a single TargetArea entity found by the query, ensuring it only returns one.
-// Returns a *NotSingularError when exactly one TargetArea entity is not found.
+// Returns a *NotSingularError when more than one TargetArea entity is found.
 // Returns a *NotFoundError when no TargetArea entities are found.
 func (taq *TargetAreaQuery) Only(ctx context.Context) (*TargetArea, error) {
 	nodes, err := taq.Limit(2).All(ctx)
@@ -134,7 +134,7 @@ func (taq *TargetAreaQuery) OnlyX(ctx context.Context) *TargetArea {
 }
 
 // OnlyID is like Only, but returns the only TargetArea ID in the query.
-// Returns a *NotSingularError when exactly one TargetArea ID is not found.
+// Returns a *NotSingularError when more than one TargetArea ID is found.
 // Returns a *NotFoundError when no entities are found.
 func (taq *TargetAreaQuery) OnlyID(ctx context.Context) (id uuid.UUID, err error) {
 	var ids []uuid.UUID
@@ -243,8 +243,9 @@ func (taq *TargetAreaQuery) Clone() *TargetAreaQuery {
 		order:      append([]OrderFunc{}, taq.order...),
 		predicates: append([]predicate.TargetArea{}, taq.predicates...),
 		// clone intermediate query.
-		sql:  taq.sql.Clone(),
-		path: taq.path,
+		sql:    taq.sql.Clone(),
+		path:   taq.path,
+		unique: taq.unique,
 	}
 }
 

@@ -39,6 +39,7 @@ func dbRowToAppGood(info *ent.AppGood) *npool.AppGoodInfo {
 		Online:           info.Online,
 		InitAreaStrategy: string(info.InitAreaStrategy),
 		Price:            price.DBPriceToVisualPrice(info.Price),
+		DisplayIndex:     info.DisplayIndex,
 	}
 }
 
@@ -342,5 +343,34 @@ func GetByAppGood(ctx context.Context, in *npool.GetAppGoodByAppGoodRequest) (*n
 
 	return &npool.GetAppGoodByAppGoodResponse{
 		Info: appGood,
+	}, nil
+}
+
+func Update(ctx context.Context, in *npool.UpdateAppGoodRequest) (*npool.UpdateAppGoodResponse, error) {
+	if err := validateAppGood(in.GetInfo()); err != nil {
+		return nil, xerrors.Errorf("invalid parameter: %v", err)
+	}
+
+	id, err := uuid.Parse(in.GetInfo().GetID())
+	if err != nil {
+		return nil, xerrors.Errorf("invalid app good id: %v", err)
+	}
+
+	cli, err := db.Client()
+	if err != nil {
+		return nil, xerrors.Errorf("fail get db client: %v", err)
+	}
+
+	info, err := cli.
+		AppGood.
+		UpdateOneID(id).
+		SetDisplayIndex(in.GetInfo().GetDisplayIndex()).
+		Save(ctx)
+	if err != nil {
+		return nil, xerrors.Errorf("fail update app good: %v", err)
+	}
+
+	return &npool.UpdateAppGoodResponse{
+		Info: dbRowToAppGood(info),
 	}, nil
 }

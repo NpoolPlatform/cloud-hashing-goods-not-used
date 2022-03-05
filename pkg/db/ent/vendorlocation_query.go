@@ -107,7 +107,7 @@ func (vlq *VendorLocationQuery) FirstIDX(ctx context.Context) uuid.UUID {
 }
 
 // Only returns a single VendorLocation entity found by the query, ensuring it only returns one.
-// Returns a *NotSingularError when exactly one VendorLocation entity is not found.
+// Returns a *NotSingularError when more than one VendorLocation entity is found.
 // Returns a *NotFoundError when no VendorLocation entities are found.
 func (vlq *VendorLocationQuery) Only(ctx context.Context) (*VendorLocation, error) {
 	nodes, err := vlq.Limit(2).All(ctx)
@@ -134,7 +134,7 @@ func (vlq *VendorLocationQuery) OnlyX(ctx context.Context) *VendorLocation {
 }
 
 // OnlyID is like Only, but returns the only VendorLocation ID in the query.
-// Returns a *NotSingularError when exactly one VendorLocation ID is not found.
+// Returns a *NotSingularError when more than one VendorLocation ID is found.
 // Returns a *NotFoundError when no entities are found.
 func (vlq *VendorLocationQuery) OnlyID(ctx context.Context) (id uuid.UUID, err error) {
 	var ids []uuid.UUID
@@ -243,8 +243,9 @@ func (vlq *VendorLocationQuery) Clone() *VendorLocationQuery {
 		order:      append([]OrderFunc{}, vlq.order...),
 		predicates: append([]predicate.VendorLocation{}, vlq.predicates...),
 		// clone intermediate query.
-		sql:  vlq.sql.Clone(),
-		path: vlq.path,
+		sql:    vlq.sql.Clone(),
+		path:   vlq.path,
+		unique: vlq.unique,
 	}
 }
 

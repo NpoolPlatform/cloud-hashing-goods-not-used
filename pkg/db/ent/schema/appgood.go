@@ -28,6 +28,7 @@ func (AppGood) Fields() []ent.Field {
 		field.Enum("init_area_strategy").
 			Values("all", "none"),
 		field.Uint64("price"),
+		field.Uint32("display_index"),
 		field.Uint32("create_at").
 			DefaultFunc(func() uint32 {
 				return uint32(time.Now().Unix())

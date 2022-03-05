@@ -67,6 +67,8 @@ type AppGoodMutation struct {
 	init_area_strategy *appgood.InitAreaStrategy
 	price              *uint64
 	addprice           *int64
+	display_index      *uint32
+	adddisplay_index   *int32
 	create_at          *uint32
 	addcreate_at       *int32
 	update_at          *uint32
@@ -383,6 +385,62 @@ func (m *AppGoodMutation) ResetPrice() {
 	m.addprice = nil
 }
 
+// SetDisplayIndex sets the "display_index" field.
+func (m *AppGoodMutation) SetDisplayIndex(u uint32) {
+	m.display_index = &u
+	m.adddisplay_index = nil
+}
+
+// DisplayIndex returns the value of the "display_index" field in the mutation.
+func (m *AppGoodMutation) DisplayIndex() (r uint32, exists bool) {
+	v := m.display_index
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldDisplayIndex returns the old "display_index" field's value of the AppGood entity.
+// If the AppGood object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *AppGoodMutation) OldDisplayIndex(ctx context.Context) (v uint32, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldDisplayIndex is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldDisplayIndex requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldDisplayIndex: %w", err)
+	}
+	return oldValue.DisplayIndex, nil
+}
+
+// AddDisplayIndex adds u to the "display_index" field.
+func (m *AppGoodMutation) AddDisplayIndex(u int32) {
+	if m.adddisplay_index != nil {
+		*m.adddisplay_index += u
+	} else {
+		m.adddisplay_index = &u
+	}
+}
+
+// AddedDisplayIndex returns the value that was added to the "display_index" field in this mutation.
+func (m *AppGoodMutation) AddedDisplayIndex() (r int32, exists bool) {
+	v := m.adddisplay_index
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// ResetDisplayIndex resets all changes to the "display_index" field.
+func (m *AppGoodMutation) ResetDisplayIndex() {
+	m.display_index = nil
+	m.adddisplay_index = nil
+}
+
 // SetCreateAt sets the "create_at" field.
 func (m *AppGoodMutation) SetCreateAt(u uint32) {
 	m.create_at = &u
@@ -570,7 +628,7 @@ func (m *AppGoodMutation) Type() string {
 // order to get all numeric fields that were incremented/decremented, call
 // AddedFields().
 func (m *AppGoodMutation) Fields() []string {
-	fields := make([]string, 0, 8)
+	fields := make([]string, 0, 9)
 	if m.app_id != nil {
 		fields = append(fields, appgood.FieldAppID)
 	}
@@ -585,6 +643,9 @@ func (m *AppGoodMutation) Fields() []string {
 	}
 	if m.price != nil {
 		fields = append(fields, appgood.FieldPrice)
+	}
+	if m.display_index != nil {
+		fields = append(fields, appgood.FieldDisplayIndex)
 	}
 	if m.create_at != nil {
 		fields = append(fields, appgood.FieldCreateAt)
@@ -613,6 +674,8 @@ func (m *AppGoodMutation) Field(name string) (ent.Value, bool) {
 		return m.InitAreaStrategy()
 	case appgood.FieldPrice:
 		return m.Price()
+	case appgood.FieldDisplayIndex:
+		return m.DisplayIndex()
 	case appgood.FieldCreateAt:
 		return m.CreateAt()
 	case appgood.FieldUpdateAt:
@@ -638,6 +701,8 @@ func (m *AppGoodMutation) OldField(ctx context.Context, name string) (ent.Value,
 		return m.OldInitAreaStrategy(ctx)
 	case appgood.FieldPrice:
 		return m.OldPrice(ctx)
+	case appgood.FieldDisplayIndex:
+		return m.OldDisplayIndex(ctx)
 	case appgood.FieldCreateAt:
 		return m.OldCreateAt(ctx)
 	case appgood.FieldUpdateAt:
@@ -688,6 +753,13 @@ func (m *AppGoodMutation) SetField(name string, value ent.Value) error {
 		}
 		m.SetPrice(v)
 		return nil
+	case appgood.FieldDisplayIndex:
+		v, ok := value.(uint32)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetDisplayIndex(v)
+		return nil
 	case appgood.FieldCreateAt:
 		v, ok := value.(uint32)
 		if !ok {
@@ -720,6 +792,9 @@ func (m *AppGoodMutation) AddedFields() []string {
 	if m.addprice != nil {
 		fields = append(fields, appgood.FieldPrice)
 	}
+	if m.adddisplay_index != nil {
+		fields = append(fields, appgood.FieldDisplayIndex)
+	}
 	if m.addcreate_at != nil {
 		fields = append(fields, appgood.FieldCreateAt)
 	}
@@ -739,6 +814,8 @@ func (m *AppGoodMutation) AddedField(name string) (ent.Value, bool) {
 	switch name {
 	case appgood.FieldPrice:
 		return m.AddedPrice()
+	case appgood.FieldDisplayIndex:
+		return m.AddedDisplayIndex()
 	case appgood.FieldCreateAt:
 		return m.AddedCreateAt()
 	case appgood.FieldUpdateAt:
@@ -760,6 +837,13 @@ func (m *AppGoodMutation) AddField(name string, value ent.Value) error {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.AddPrice(v)
+		return nil
+	case appgood.FieldDisplayIndex:
+		v, ok := value.(int32)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.AddDisplayIndex(v)
 		return nil
 	case appgood.FieldCreateAt:
 		v, ok := value.(int32)
@@ -823,6 +907,9 @@ func (m *AppGoodMutation) ResetField(name string) error {
 		return nil
 	case appgood.FieldPrice:
 		m.ResetPrice()
+		return nil
+	case appgood.FieldDisplayIndex:
+		m.ResetDisplayIndex()
 		return nil
 	case appgood.FieldCreateAt:
 		m.ResetCreateAt()

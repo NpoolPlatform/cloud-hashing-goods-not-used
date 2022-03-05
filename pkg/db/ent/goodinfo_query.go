@@ -107,7 +107,7 @@ func (giq *GoodInfoQuery) FirstIDX(ctx context.Context) uuid.UUID {
 }
 
 // Only returns a single GoodInfo entity found by the query, ensuring it only returns one.
-// Returns a *NotSingularError when exactly one GoodInfo entity is not found.
+// Returns a *NotSingularError when more than one GoodInfo entity is found.
 // Returns a *NotFoundError when no GoodInfo entities are found.
 func (giq *GoodInfoQuery) Only(ctx context.Context) (*GoodInfo, error) {
 	nodes, err := giq.Limit(2).All(ctx)
@@ -134,7 +134,7 @@ func (giq *GoodInfoQuery) OnlyX(ctx context.Context) *GoodInfo {
 }
 
 // OnlyID is like Only, but returns the only GoodInfo ID in the query.
-// Returns a *NotSingularError when exactly one GoodInfo ID is not found.
+// Returns a *NotSingularError when more than one GoodInfo ID is found.
 // Returns a *NotFoundError when no entities are found.
 func (giq *GoodInfoQuery) OnlyID(ctx context.Context) (id uuid.UUID, err error) {
 	var ids []uuid.UUID
@@ -243,8 +243,9 @@ func (giq *GoodInfoQuery) Clone() *GoodInfoQuery {
 		order:      append([]OrderFunc{}, giq.order...),
 		predicates: append([]predicate.GoodInfo{}, giq.predicates...),
 		// clone intermediate query.
-		sql:  giq.sql.Clone(),
-		path: giq.path,
+		sql:    giq.sql.Clone(),
+		path:   giq.path,
+		unique: giq.unique,
 	}
 }
 

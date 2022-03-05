@@ -119,6 +119,13 @@ func Price(v uint64) predicate.AppGood {
 	})
 }
 
+// DisplayIndex applies equality check predicate on the "display_index" field. It's identical to DisplayIndexEQ.
+func DisplayIndex(v uint32) predicate.AppGood {
+	return predicate.AppGood(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldDisplayIndex), v))
+	})
+}
+
 // CreateAt applies equality check predicate on the "create_at" field. It's identical to CreateAtEQ.
 func CreateAt(v uint32) predicate.AppGood {
 	return predicate.AppGood(func(s *sql.Selector) {
@@ -427,6 +434,82 @@ func PriceLT(v uint64) predicate.AppGood {
 func PriceLTE(v uint64) predicate.AppGood {
 	return predicate.AppGood(func(s *sql.Selector) {
 		s.Where(sql.LTE(s.C(FieldPrice), v))
+	})
+}
+
+// DisplayIndexEQ applies the EQ predicate on the "display_index" field.
+func DisplayIndexEQ(v uint32) predicate.AppGood {
+	return predicate.AppGood(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldDisplayIndex), v))
+	})
+}
+
+// DisplayIndexNEQ applies the NEQ predicate on the "display_index" field.
+func DisplayIndexNEQ(v uint32) predicate.AppGood {
+	return predicate.AppGood(func(s *sql.Selector) {
+		s.Where(sql.NEQ(s.C(FieldDisplayIndex), v))
+	})
+}
+
+// DisplayIndexIn applies the In predicate on the "display_index" field.
+func DisplayIndexIn(vs ...uint32) predicate.AppGood {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.AppGood(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.In(s.C(FieldDisplayIndex), v...))
+	})
+}
+
+// DisplayIndexNotIn applies the NotIn predicate on the "display_index" field.
+func DisplayIndexNotIn(vs ...uint32) predicate.AppGood {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.AppGood(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.NotIn(s.C(FieldDisplayIndex), v...))
+	})
+}
+
+// DisplayIndexGT applies the GT predicate on the "display_index" field.
+func DisplayIndexGT(v uint32) predicate.AppGood {
+	return predicate.AppGood(func(s *sql.Selector) {
+		s.Where(sql.GT(s.C(FieldDisplayIndex), v))
+	})
+}
+
+// DisplayIndexGTE applies the GTE predicate on the "display_index" field.
+func DisplayIndexGTE(v uint32) predicate.AppGood {
+	return predicate.AppGood(func(s *sql.Selector) {
+		s.Where(sql.GTE(s.C(FieldDisplayIndex), v))
+	})
+}
+
+// DisplayIndexLT applies the LT predicate on the "display_index" field.
+func DisplayIndexLT(v uint32) predicate.AppGood {
+	return predicate.AppGood(func(s *sql.Selector) {
+		s.Where(sql.LT(s.C(FieldDisplayIndex), v))
+	})
+}
+
+// DisplayIndexLTE applies the LTE predicate on the "display_index" field.
+func DisplayIndexLTE(v uint32) predicate.AppGood {
+	return predicate.AppGood(func(s *sql.Selector) {
+		s.Where(sql.LTE(s.C(FieldDisplayIndex), v))
 	})
 }
 

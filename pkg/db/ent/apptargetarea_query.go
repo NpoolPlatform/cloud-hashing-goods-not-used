@@ -107,7 +107,7 @@ func (ataq *AppTargetAreaQuery) FirstIDX(ctx context.Context) uuid.UUID {
 }
 
 // Only returns a single AppTargetArea entity found by the query, ensuring it only returns one.
-// Returns a *NotSingularError when exactly one AppTargetArea entity is not found.
+// Returns a *NotSingularError when more than one AppTargetArea entity is found.
 // Returns a *NotFoundError when no AppTargetArea entities are found.
 func (ataq *AppTargetAreaQuery) Only(ctx context.Context) (*AppTargetArea, error) {
 	nodes, err := ataq.Limit(2).All(ctx)
@@ -134,7 +134,7 @@ func (ataq *AppTargetAreaQuery) OnlyX(ctx context.Context) *AppTargetArea {
 }
 
 // OnlyID is like Only, but returns the only AppTargetArea ID in the query.
-// Returns a *NotSingularError when exactly one AppTargetArea ID is not found.
+// Returns a *NotSingularError when more than one AppTargetArea ID is found.
 // Returns a *NotFoundError when no entities are found.
 func (ataq *AppTargetAreaQuery) OnlyID(ctx context.Context) (id uuid.UUID, err error) {
 	var ids []uuid.UUID
@@ -243,8 +243,9 @@ func (ataq *AppTargetAreaQuery) Clone() *AppTargetAreaQuery {
 		order:      append([]OrderFunc{}, ataq.order...),
 		predicates: append([]predicate.AppTargetArea{}, ataq.predicates...),
 		// clone intermediate query.
-		sql:  ataq.sql.Clone(),
-		path: ataq.path,
+		sql:    ataq.sql.Clone(),
+		path:   ataq.path,
+		unique: ataq.unique,
 	}
 }
 

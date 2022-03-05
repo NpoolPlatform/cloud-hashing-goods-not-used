@@ -39,6 +39,15 @@ func (s *Server) AuthorizeAppGoodForOtherApp(ctx context.Context, in *npool.Auth
 	}, nil
 }
 
+func (s *Server) UpdateAppGood(ctx context.Context, in *npool.UpdateAppGoodRequest) (*npool.UpdateAppGoodResponse, error) {
+	resp, err := appgood.Update(ctx, in)
+	if err != nil {
+		logger.Sugar().Errorf("update app good error: %v", err)
+		return &npool.UpdateAppGoodResponse{}, status.Error(codes.Internal, err.Error())
+	}
+	return resp, nil
+}
+
 func (s *Server) SetAppGoodPrice(ctx context.Context, in *npool.SetAppGoodPriceRequest) (*npool.SetAppGoodPriceResponse, error) {
 	resp, err := appgood.SetAppGoodPrice(ctx, in)
 	if err != nil {

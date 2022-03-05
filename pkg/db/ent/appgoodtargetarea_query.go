@@ -107,7 +107,7 @@ func (agtaq *AppGoodTargetAreaQuery) FirstIDX(ctx context.Context) uuid.UUID {
 }
 
 // Only returns a single AppGoodTargetArea entity found by the query, ensuring it only returns one.
-// Returns a *NotSingularError when exactly one AppGoodTargetArea entity is not found.
+// Returns a *NotSingularError when more than one AppGoodTargetArea entity is found.
 // Returns a *NotFoundError when no AppGoodTargetArea entities are found.
 func (agtaq *AppGoodTargetAreaQuery) Only(ctx context.Context) (*AppGoodTargetArea, error) {
 	nodes, err := agtaq.Limit(2).All(ctx)
@@ -134,7 +134,7 @@ func (agtaq *AppGoodTargetAreaQuery) OnlyX(ctx context.Context) *AppGoodTargetAr
 }
 
 // OnlyID is like Only, but returns the only AppGoodTargetArea ID in the query.
-// Returns a *NotSingularError when exactly one AppGoodTargetArea ID is not found.
+// Returns a *NotSingularError when more than one AppGoodTargetArea ID is found.
 // Returns a *NotFoundError when no entities are found.
 func (agtaq *AppGoodTargetAreaQuery) OnlyID(ctx context.Context) (id uuid.UUID, err error) {
 	var ids []uuid.UUID
@@ -243,8 +243,9 @@ func (agtaq *AppGoodTargetAreaQuery) Clone() *AppGoodTargetAreaQuery {
 		order:      append([]OrderFunc{}, agtaq.order...),
 		predicates: append([]predicate.AppGoodTargetArea{}, agtaq.predicates...),
 		// clone intermediate query.
-		sql:  agtaq.sql.Clone(),
-		path: agtaq.path,
+		sql:    agtaq.sql.Clone(),
+		path:   agtaq.path,
+		unique: agtaq.unique,
 	}
 }
 

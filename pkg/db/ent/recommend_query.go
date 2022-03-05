@@ -107,7 +107,7 @@ func (rq *RecommendQuery) FirstIDX(ctx context.Context) uuid.UUID {
 }
 
 // Only returns a single Recommend entity found by the query, ensuring it only returns one.
-// Returns a *NotSingularError when exactly one Recommend entity is not found.
+// Returns a *NotSingularError when more than one Recommend entity is found.
 // Returns a *NotFoundError when no Recommend entities are found.
 func (rq *RecommendQuery) Only(ctx context.Context) (*Recommend, error) {
 	nodes, err := rq.Limit(2).All(ctx)
@@ -134,7 +134,7 @@ func (rq *RecommendQuery) OnlyX(ctx context.Context) *Recommend {
 }
 
 // OnlyID is like Only, but returns the only Recommend ID in the query.
-// Returns a *NotSingularError when exactly one Recommend ID is not found.
+// Returns a *NotSingularError when more than one Recommend ID is found.
 // Returns a *NotFoundError when no entities are found.
 func (rq *RecommendQuery) OnlyID(ctx context.Context) (id uuid.UUID, err error) {
 	var ids []uuid.UUID
@@ -243,8 +243,9 @@ func (rq *RecommendQuery) Clone() *RecommendQuery {
 		order:      append([]OrderFunc{}, rq.order...),
 		predicates: append([]predicate.Recommend{}, rq.predicates...),
 		// clone intermediate query.
-		sql:  rq.sql.Clone(),
-		path: rq.path,
+		sql:    rq.sql.Clone(),
+		path:   rq.path,
+		unique: rq.unique,
 	}
 }
 

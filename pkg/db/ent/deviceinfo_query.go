@@ -107,7 +107,7 @@ func (diq *DeviceInfoQuery) FirstIDX(ctx context.Context) uuid.UUID {
 }
 
 // Only returns a single DeviceInfo entity found by the query, ensuring it only returns one.
-// Returns a *NotSingularError when exactly one DeviceInfo entity is not found.
+// Returns a *NotSingularError when more than one DeviceInfo entity is found.
 // Returns a *NotFoundError when no DeviceInfo entities are found.
 func (diq *DeviceInfoQuery) Only(ctx context.Context) (*DeviceInfo, error) {
 	nodes, err := diq.Limit(2).All(ctx)
@@ -134,7 +134,7 @@ func (diq *DeviceInfoQuery) OnlyX(ctx context.Context) *DeviceInfo {
 }
 
 // OnlyID is like Only, but returns the only DeviceInfo ID in the query.
-// Returns a *NotSingularError when exactly one DeviceInfo ID is not found.
+// Returns a *NotSingularError when more than one DeviceInfo ID is found.
 // Returns a *NotFoundError when no entities are found.
 func (diq *DeviceInfoQuery) OnlyID(ctx context.Context) (id uuid.UUID, err error) {
 	var ids []uuid.UUID
@@ -243,8 +243,9 @@ func (diq *DeviceInfoQuery) Clone() *DeviceInfoQuery {
 		order:      append([]OrderFunc{}, diq.order...),
 		predicates: append([]predicate.DeviceInfo{}, diq.predicates...),
 		// clone intermediate query.
-		sql:  diq.sql.Clone(),
-		path: diq.path,
+		sql:    diq.sql.Clone(),
+		path:   diq.path,
+		unique: diq.unique,
 	}
 }
 

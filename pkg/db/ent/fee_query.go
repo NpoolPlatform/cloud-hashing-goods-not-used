@@ -107,7 +107,7 @@ func (fq *FeeQuery) FirstIDX(ctx context.Context) uuid.UUID {
 }
 
 // Only returns a single Fee entity found by the query, ensuring it only returns one.
-// Returns a *NotSingularError when exactly one Fee entity is not found.
+// Returns a *NotSingularError when more than one Fee entity is found.
 // Returns a *NotFoundError when no Fee entities are found.
 func (fq *FeeQuery) Only(ctx context.Context) (*Fee, error) {
 	nodes, err := fq.Limit(2).All(ctx)
@@ -134,7 +134,7 @@ func (fq *FeeQuery) OnlyX(ctx context.Context) *Fee {
 }
 
 // OnlyID is like Only, but returns the only Fee ID in the query.
-// Returns a *NotSingularError when exactly one Fee ID is not found.
+// Returns a *NotSingularError when more than one Fee ID is found.
 // Returns a *NotFoundError when no entities are found.
 func (fq *FeeQuery) OnlyID(ctx context.Context) (id uuid.UUID, err error) {
 	var ids []uuid.UUID
@@ -243,8 +243,9 @@ func (fq *FeeQuery) Clone() *FeeQuery {
 		order:      append([]OrderFunc{}, fq.order...),
 		predicates: append([]predicate.Fee{}, fq.predicates...),
 		// clone intermediate query.
-		sql:  fq.sql.Clone(),
-		path: fq.path,
+		sql:    fq.sql.Clone(),
+		path:   fq.path,
+		unique: fq.unique,
 	}
 }
 

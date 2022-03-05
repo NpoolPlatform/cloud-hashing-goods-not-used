@@ -107,7 +107,7 @@ func (pcq *PriceCurrencyQuery) FirstIDX(ctx context.Context) uuid.UUID {
 }
 
 // Only returns a single PriceCurrency entity found by the query, ensuring it only returns one.
-// Returns a *NotSingularError when exactly one PriceCurrency entity is not found.
+// Returns a *NotSingularError when more than one PriceCurrency entity is found.
 // Returns a *NotFoundError when no PriceCurrency entities are found.
 func (pcq *PriceCurrencyQuery) Only(ctx context.Context) (*PriceCurrency, error) {
 	nodes, err := pcq.Limit(2).All(ctx)
@@ -134,7 +134,7 @@ func (pcq *PriceCurrencyQuery) OnlyX(ctx context.Context) *PriceCurrency {
 }
 
 // OnlyID is like Only, but returns the only PriceCurrency ID in the query.
-// Returns a *NotSingularError when exactly one PriceCurrency ID is not found.
+// Returns a *NotSingularError when more than one PriceCurrency ID is found.
 // Returns a *NotFoundError when no entities are found.
 func (pcq *PriceCurrencyQuery) OnlyID(ctx context.Context) (id uuid.UUID, err error) {
 	var ids []uuid.UUID
@@ -243,8 +243,9 @@ func (pcq *PriceCurrencyQuery) Clone() *PriceCurrencyQuery {
 		order:      append([]OrderFunc{}, pcq.order...),
 		predicates: append([]predicate.PriceCurrency{}, pcq.predicates...),
 		// clone intermediate query.
-		sql:  pcq.sql.Clone(),
-		path: pcq.path,
+		sql:    pcq.sql.Clone(),
+		path:   pcq.path,
+		unique: pcq.unique,
 	}
 }
 

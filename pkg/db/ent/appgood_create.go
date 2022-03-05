@@ -61,6 +61,12 @@ func (agc *AppGoodCreate) SetPrice(u uint64) *AppGoodCreate {
 	return agc
 }
 
+// SetDisplayIndex sets the "display_index" field.
+func (agc *AppGoodCreate) SetDisplayIndex(u uint32) *AppGoodCreate {
+	agc.mutation.SetDisplayIndex(u)
+	return agc
+}
+
 // SetCreateAt sets the "create_at" field.
 func (agc *AppGoodCreate) SetCreateAt(u uint32) *AppGoodCreate {
 	agc.mutation.SetCreateAt(u)
@@ -232,6 +238,9 @@ func (agc *AppGoodCreate) check() error {
 	if _, ok := agc.mutation.Price(); !ok {
 		return &ValidationError{Name: "price", err: errors.New(`ent: missing required field "AppGood.price"`)}
 	}
+	if _, ok := agc.mutation.DisplayIndex(); !ok {
+		return &ValidationError{Name: "display_index", err: errors.New(`ent: missing required field "AppGood.display_index"`)}
+	}
 	if _, ok := agc.mutation.CreateAt(); !ok {
 		return &ValidationError{Name: "create_at", err: errors.New(`ent: missing required field "AppGood.create_at"`)}
 	}
@@ -317,6 +326,14 @@ func (agc *AppGoodCreate) createSpec() (*AppGood, *sqlgraph.CreateSpec) {
 			Column: appgood.FieldPrice,
 		})
 		_node.Price = value
+	}
+	if value, ok := agc.mutation.DisplayIndex(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeUint32,
+			Value:  value,
+			Column: appgood.FieldDisplayIndex,
+		})
+		_node.DisplayIndex = value
 	}
 	if value, ok := agc.mutation.CreateAt(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
@@ -459,6 +476,24 @@ func (u *AppGoodUpsert) UpdatePrice() *AppGoodUpsert {
 // AddPrice adds v to the "price" field.
 func (u *AppGoodUpsert) AddPrice(v uint64) *AppGoodUpsert {
 	u.Add(appgood.FieldPrice, v)
+	return u
+}
+
+// SetDisplayIndex sets the "display_index" field.
+func (u *AppGoodUpsert) SetDisplayIndex(v uint32) *AppGoodUpsert {
+	u.Set(appgood.FieldDisplayIndex, v)
+	return u
+}
+
+// UpdateDisplayIndex sets the "display_index" field to the value that was provided on create.
+func (u *AppGoodUpsert) UpdateDisplayIndex() *AppGoodUpsert {
+	u.SetExcluded(appgood.FieldDisplayIndex)
+	return u
+}
+
+// AddDisplayIndex adds v to the "display_index" field.
+func (u *AppGoodUpsert) AddDisplayIndex(v uint32) *AppGoodUpsert {
+	u.Add(appgood.FieldDisplayIndex, v)
 	return u
 }
 
@@ -640,6 +675,27 @@ func (u *AppGoodUpsertOne) AddPrice(v uint64) *AppGoodUpsertOne {
 func (u *AppGoodUpsertOne) UpdatePrice() *AppGoodUpsertOne {
 	return u.Update(func(s *AppGoodUpsert) {
 		s.UpdatePrice()
+	})
+}
+
+// SetDisplayIndex sets the "display_index" field.
+func (u *AppGoodUpsertOne) SetDisplayIndex(v uint32) *AppGoodUpsertOne {
+	return u.Update(func(s *AppGoodUpsert) {
+		s.SetDisplayIndex(v)
+	})
+}
+
+// AddDisplayIndex adds v to the "display_index" field.
+func (u *AppGoodUpsertOne) AddDisplayIndex(v uint32) *AppGoodUpsertOne {
+	return u.Update(func(s *AppGoodUpsert) {
+		s.AddDisplayIndex(v)
+	})
+}
+
+// UpdateDisplayIndex sets the "display_index" field to the value that was provided on create.
+func (u *AppGoodUpsertOne) UpdateDisplayIndex() *AppGoodUpsertOne {
+	return u.Update(func(s *AppGoodUpsert) {
+		s.UpdateDisplayIndex()
 	})
 }
 
@@ -996,6 +1052,27 @@ func (u *AppGoodUpsertBulk) AddPrice(v uint64) *AppGoodUpsertBulk {
 func (u *AppGoodUpsertBulk) UpdatePrice() *AppGoodUpsertBulk {
 	return u.Update(func(s *AppGoodUpsert) {
 		s.UpdatePrice()
+	})
+}
+
+// SetDisplayIndex sets the "display_index" field.
+func (u *AppGoodUpsertBulk) SetDisplayIndex(v uint32) *AppGoodUpsertBulk {
+	return u.Update(func(s *AppGoodUpsert) {
+		s.SetDisplayIndex(v)
+	})
+}
+
+// AddDisplayIndex adds v to the "display_index" field.
+func (u *AppGoodUpsertBulk) AddDisplayIndex(v uint32) *AppGoodUpsertBulk {
+	return u.Update(func(s *AppGoodUpsert) {
+		s.AddDisplayIndex(v)
+	})
+}
+
+// UpdateDisplayIndex sets the "display_index" field to the value that was provided on create.
+func (u *AppGoodUpsertBulk) UpdateDisplayIndex() *AppGoodUpsertBulk {
+	return u.Update(func(s *AppGoodUpsert) {
+		s.UpdateDisplayIndex()
 	})
 }
 

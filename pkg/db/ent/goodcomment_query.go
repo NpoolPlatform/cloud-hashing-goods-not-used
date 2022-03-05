@@ -107,7 +107,7 @@ func (gcq *GoodCommentQuery) FirstIDX(ctx context.Context) uuid.UUID {
 }
 
 // Only returns a single GoodComment entity found by the query, ensuring it only returns one.
-// Returns a *NotSingularError when exactly one GoodComment entity is not found.
+// Returns a *NotSingularError when more than one GoodComment entity is found.
 // Returns a *NotFoundError when no GoodComment entities are found.
 func (gcq *GoodCommentQuery) Only(ctx context.Context) (*GoodComment, error) {
 	nodes, err := gcq.Limit(2).All(ctx)
@@ -134,7 +134,7 @@ func (gcq *GoodCommentQuery) OnlyX(ctx context.Context) *GoodComment {
 }
 
 // OnlyID is like Only, but returns the only GoodComment ID in the query.
-// Returns a *NotSingularError when exactly one GoodComment ID is not found.
+// Returns a *NotSingularError when more than one GoodComment ID is found.
 // Returns a *NotFoundError when no entities are found.
 func (gcq *GoodCommentQuery) OnlyID(ctx context.Context) (id uuid.UUID, err error) {
 	var ids []uuid.UUID
@@ -243,8 +243,9 @@ func (gcq *GoodCommentQuery) Clone() *GoodCommentQuery {
 		order:      append([]OrderFunc{}, gcq.order...),
 		predicates: append([]predicate.GoodComment{}, gcq.predicates...),
 		// clone intermediate query.
-		sql:  gcq.sql.Clone(),
-		path: gcq.path,
+		sql:    gcq.sql.Clone(),
+		path:   gcq.path,
+		unique: gcq.unique,
 	}
 }
 

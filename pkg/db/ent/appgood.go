@@ -26,6 +26,8 @@ type AppGood struct {
 	InitAreaStrategy appgood.InitAreaStrategy `json:"init_area_strategy,omitempty"`
 	// Price holds the value of the "price" field.
 	Price uint64 `json:"price,omitempty"`
+	// DisplayIndex holds the value of the "display_index" field.
+	DisplayIndex uint32 `json:"display_index,omitempty"`
 	// CreateAt holds the value of the "create_at" field.
 	CreateAt uint32 `json:"create_at,omitempty"`
 	// UpdateAt holds the value of the "update_at" field.
@@ -41,7 +43,7 @@ func (*AppGood) scanValues(columns []string) ([]interface{}, error) {
 		switch columns[i] {
 		case appgood.FieldOnline:
 			values[i] = new(sql.NullBool)
-		case appgood.FieldPrice, appgood.FieldCreateAt, appgood.FieldUpdateAt, appgood.FieldDeleteAt:
+		case appgood.FieldPrice, appgood.FieldDisplayIndex, appgood.FieldCreateAt, appgood.FieldUpdateAt, appgood.FieldDeleteAt:
 			values[i] = new(sql.NullInt64)
 		case appgood.FieldInitAreaStrategy:
 			values[i] = new(sql.NullString)
@@ -97,6 +99,12 @@ func (ag *AppGood) assignValues(columns []string, values []interface{}) error {
 				return fmt.Errorf("unexpected type %T for field price", values[i])
 			} else if value.Valid {
 				ag.Price = uint64(value.Int64)
+			}
+		case appgood.FieldDisplayIndex:
+			if value, ok := values[i].(*sql.NullInt64); !ok {
+				return fmt.Errorf("unexpected type %T for field display_index", values[i])
+			} else if value.Valid {
+				ag.DisplayIndex = uint32(value.Int64)
 			}
 		case appgood.FieldCreateAt:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
@@ -154,6 +162,8 @@ func (ag *AppGood) String() string {
 	builder.WriteString(fmt.Sprintf("%v", ag.InitAreaStrategy))
 	builder.WriteString(", price=")
 	builder.WriteString(fmt.Sprintf("%v", ag.Price))
+	builder.WriteString(", display_index=")
+	builder.WriteString(fmt.Sprintf("%v", ag.DisplayIndex))
 	builder.WriteString(", create_at=")
 	builder.WriteString(fmt.Sprintf("%v", ag.CreateAt))
 	builder.WriteString(", update_at=")

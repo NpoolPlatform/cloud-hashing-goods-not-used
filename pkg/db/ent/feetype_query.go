@@ -107,7 +107,7 @@ func (ftq *FeeTypeQuery) FirstIDX(ctx context.Context) uuid.UUID {
 }
 
 // Only returns a single FeeType entity found by the query, ensuring it only returns one.
-// Returns a *NotSingularError when exactly one FeeType entity is not found.
+// Returns a *NotSingularError when more than one FeeType entity is found.
 // Returns a *NotFoundError when no FeeType entities are found.
 func (ftq *FeeTypeQuery) Only(ctx context.Context) (*FeeType, error) {
 	nodes, err := ftq.Limit(2).All(ctx)
@@ -134,7 +134,7 @@ func (ftq *FeeTypeQuery) OnlyX(ctx context.Context) *FeeType {
 }
 
 // OnlyID is like Only, but returns the only FeeType ID in the query.
-// Returns a *NotSingularError when exactly one FeeType ID is not found.
+// Returns a *NotSingularError when more than one FeeType ID is found.
 // Returns a *NotFoundError when no entities are found.
 func (ftq *FeeTypeQuery) OnlyID(ctx context.Context) (id uuid.UUID, err error) {
 	var ids []uuid.UUID
@@ -243,8 +243,9 @@ func (ftq *FeeTypeQuery) Clone() *FeeTypeQuery {
 		order:      append([]OrderFunc{}, ftq.order...),
 		predicates: append([]predicate.FeeType{}, ftq.predicates...),
 		// clone intermediate query.
-		sql:  ftq.sql.Clone(),
-		path: ftq.path,
+		sql:    ftq.sql.Clone(),
+		path:   ftq.path,
+		unique: ftq.unique,
 	}
 }
 

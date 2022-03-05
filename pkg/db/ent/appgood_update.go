@@ -73,6 +73,19 @@ func (agu *AppGoodUpdate) AddPrice(u int64) *AppGoodUpdate {
 	return agu
 }
 
+// SetDisplayIndex sets the "display_index" field.
+func (agu *AppGoodUpdate) SetDisplayIndex(u uint32) *AppGoodUpdate {
+	agu.mutation.ResetDisplayIndex()
+	agu.mutation.SetDisplayIndex(u)
+	return agu
+}
+
+// AddDisplayIndex adds u to the "display_index" field.
+func (agu *AppGoodUpdate) AddDisplayIndex(u int32) *AppGoodUpdate {
+	agu.mutation.AddDisplayIndex(u)
+	return agu
+}
+
 // SetCreateAt sets the "create_at" field.
 func (agu *AppGoodUpdate) SetCreateAt(u uint32) *AppGoodUpdate {
 	agu.mutation.ResetCreateAt()
@@ -271,6 +284,20 @@ func (agu *AppGoodUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			Column: appgood.FieldPrice,
 		})
 	}
+	if value, ok := agu.mutation.DisplayIndex(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeUint32,
+			Value:  value,
+			Column: appgood.FieldDisplayIndex,
+		})
+	}
+	if value, ok := agu.mutation.AddedDisplayIndex(); ok {
+		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
+			Type:   field.TypeUint32,
+			Value:  value,
+			Column: appgood.FieldDisplayIndex,
+		})
+	}
 	if value, ok := agu.mutation.CreateAt(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeUint32,
@@ -374,6 +401,19 @@ func (aguo *AppGoodUpdateOne) SetPrice(u uint64) *AppGoodUpdateOne {
 // AddPrice adds u to the "price" field.
 func (aguo *AppGoodUpdateOne) AddPrice(u int64) *AppGoodUpdateOne {
 	aguo.mutation.AddPrice(u)
+	return aguo
+}
+
+// SetDisplayIndex sets the "display_index" field.
+func (aguo *AppGoodUpdateOne) SetDisplayIndex(u uint32) *AppGoodUpdateOne {
+	aguo.mutation.ResetDisplayIndex()
+	aguo.mutation.SetDisplayIndex(u)
+	return aguo
+}
+
+// AddDisplayIndex adds u to the "display_index" field.
+func (aguo *AppGoodUpdateOne) AddDisplayIndex(u int32) *AppGoodUpdateOne {
+	aguo.mutation.AddDisplayIndex(u)
 	return aguo
 }
 
@@ -597,6 +637,20 @@ func (aguo *AppGoodUpdateOne) sqlSave(ctx context.Context) (_node *AppGood, err 
 			Type:   field.TypeUint64,
 			Value:  value,
 			Column: appgood.FieldPrice,
+		})
+	}
+	if value, ok := aguo.mutation.DisplayIndex(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeUint32,
+			Value:  value,
+			Column: appgood.FieldDisplayIndex,
+		})
+	}
+	if value, ok := aguo.mutation.AddedDisplayIndex(); ok {
+		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
+			Type:   field.TypeUint32,
+			Value:  value,
+			Column: appgood.FieldDisplayIndex,
 		})
 	}
 	if value, ok := aguo.mutation.CreateAt(); ok {

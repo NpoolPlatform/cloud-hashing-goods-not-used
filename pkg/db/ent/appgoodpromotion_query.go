@@ -107,7 +107,7 @@ func (agpq *AppGoodPromotionQuery) FirstIDX(ctx context.Context) uuid.UUID {
 }
 
 // Only returns a single AppGoodPromotion entity found by the query, ensuring it only returns one.
-// Returns a *NotSingularError when exactly one AppGoodPromotion entity is not found.
+// Returns a *NotSingularError when more than one AppGoodPromotion entity is found.
 // Returns a *NotFoundError when no AppGoodPromotion entities are found.
 func (agpq *AppGoodPromotionQuery) Only(ctx context.Context) (*AppGoodPromotion, error) {
 	nodes, err := agpq.Limit(2).All(ctx)
@@ -134,7 +134,7 @@ func (agpq *AppGoodPromotionQuery) OnlyX(ctx context.Context) *AppGoodPromotion 
 }
 
 // OnlyID is like Only, but returns the only AppGoodPromotion ID in the query.
-// Returns a *NotSingularError when exactly one AppGoodPromotion ID is not found.
+// Returns a *NotSingularError when more than one AppGoodPromotion ID is found.
 // Returns a *NotFoundError when no entities are found.
 func (agpq *AppGoodPromotionQuery) OnlyID(ctx context.Context) (id uuid.UUID, err error) {
 	var ids []uuid.UUID
@@ -243,8 +243,9 @@ func (agpq *AppGoodPromotionQuery) Clone() *AppGoodPromotionQuery {
 		order:      append([]OrderFunc{}, agpq.order...),
 		predicates: append([]predicate.AppGoodPromotion{}, agpq.predicates...),
 		// clone intermediate query.
-		sql:  agpq.sql.Clone(),
-		path: agpq.path,
+		sql:    agpq.sql.Clone(),
+		path:   agpq.path,
+		unique: agpq.unique,
 	}
 }
 

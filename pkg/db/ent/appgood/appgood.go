@@ -23,6 +23,8 @@ const (
 	FieldInitAreaStrategy = "init_area_strategy"
 	// FieldPrice holds the string denoting the price field in the database.
 	FieldPrice = "price"
+	// FieldDisplayIndex holds the string denoting the display_index field in the database.
+	FieldDisplayIndex = "display_index"
 	// FieldCreateAt holds the string denoting the create_at field in the database.
 	FieldCreateAt = "create_at"
 	// FieldUpdateAt holds the string denoting the update_at field in the database.
@@ -41,6 +43,7 @@ var Columns = []string{
 	FieldOnline,
 	FieldInitAreaStrategy,
 	FieldPrice,
+	FieldDisplayIndex,
 	FieldCreateAt,
 	FieldUpdateAt,
 	FieldDeleteAt,

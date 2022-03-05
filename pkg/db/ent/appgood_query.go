@@ -107,7 +107,7 @@ func (agq *AppGoodQuery) FirstIDX(ctx context.Context) uuid.UUID {
 }
 
 // Only returns a single AppGood entity found by the query, ensuring it only returns one.
-// Returns a *NotSingularError when exactly one AppGood entity is not found.
+// Returns a *NotSingularError when more than one AppGood entity is found.
 // Returns a *NotFoundError when no AppGood entities are found.
 func (agq *AppGoodQuery) Only(ctx context.Context) (*AppGood, error) {
 	nodes, err := agq.Limit(2).All(ctx)
@@ -134,7 +134,7 @@ func (agq *AppGoodQuery) OnlyX(ctx context.Context) *AppGood {
 }
 
 // OnlyID is like Only, but returns the only AppGood ID in the query.
-// Returns a *NotSingularError when exactly one AppGood ID is not found.
+// Returns a *NotSingularError when more than one AppGood ID is found.
 // Returns a *NotFoundError when no entities are found.
 func (agq *AppGoodQuery) OnlyID(ctx context.Context) (id uuid.UUID, err error) {
 	var ids []uuid.UUID
@@ -243,8 +243,9 @@ func (agq *AppGoodQuery) Clone() *AppGoodQuery {
 		order:      append([]OrderFunc{}, agq.order...),
 		predicates: append([]predicate.AppGood{}, agq.predicates...),
 		// clone intermediate query.
-		sql:  agq.sql.Clone(),
-		path: agq.path,
+		sql:    agq.sql.Clone(),
+		path:   agq.path,
+		unique: agq.unique,
 	}
 }
 

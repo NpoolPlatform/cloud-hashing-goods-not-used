@@ -107,7 +107,7 @@ func (geiq *GoodExtraInfoQuery) FirstIDX(ctx context.Context) uuid.UUID {
 }
 
 // Only returns a single GoodExtraInfo entity found by the query, ensuring it only returns one.
-// Returns a *NotSingularError when exactly one GoodExtraInfo entity is not found.
+// Returns a *NotSingularError when more than one GoodExtraInfo entity is found.
 // Returns a *NotFoundError when no GoodExtraInfo entities are found.
 func (geiq *GoodExtraInfoQuery) Only(ctx context.Context) (*GoodExtraInfo, error) {
 	nodes, err := geiq.Limit(2).All(ctx)
@@ -134,7 +134,7 @@ func (geiq *GoodExtraInfoQuery) OnlyX(ctx context.Context) *GoodExtraInfo {
 }
 
 // OnlyID is like Only, but returns the only GoodExtraInfo ID in the query.
-// Returns a *NotSingularError when exactly one GoodExtraInfo ID is not found.
+// Returns a *NotSingularError when more than one GoodExtraInfo ID is found.
 // Returns a *NotFoundError when no entities are found.
 func (geiq *GoodExtraInfoQuery) OnlyID(ctx context.Context) (id uuid.UUID, err error) {
 	var ids []uuid.UUID
@@ -243,8 +243,9 @@ func (geiq *GoodExtraInfoQuery) Clone() *GoodExtraInfoQuery {
 		order:      append([]OrderFunc{}, geiq.order...),
 		predicates: append([]predicate.GoodExtraInfo{}, geiq.predicates...),
 		// clone intermediate query.
-		sql:  geiq.sql.Clone(),
-		path: geiq.path,
+		sql:    geiq.sql.Clone(),
+		path:   geiq.path,
+		unique: geiq.unique,
 	}
 }
 
