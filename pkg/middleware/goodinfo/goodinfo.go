@@ -2,6 +2,7 @@ package goodinfo
 
 import (
 	"context"
+	"sort"
 
 	appgoodcrud "github.com/NpoolPlatform/cloud-hashing-goods/pkg/crud/app-good"
 	crud "github.com/NpoolPlatform/cloud-hashing-goods/pkg/crud/good-info"
@@ -26,6 +27,8 @@ func GetByApp(ctx context.Context, in *npool.GetGoodsByAppRequest) (*npool.GetGo
 	}
 
 	infos := []*npool.GoodInfo{}
+	goodIndexes := map[string]uint32{}
+
 	for _, info := range resp.Infos {
 		allowed := false
 		price := info.Price
@@ -34,6 +37,7 @@ func GetByApp(ctx context.Context, in *npool.GetGoodsByAppRequest) (*npool.GetGo
 			if info.ID == appGood.GoodID && appGood.Online && appGood.Price > 0 {
 				price = appGood.Price
 				allowed = true
+				goodIndexes[info.ID] = appGood.DisplayIndex
 				break
 			}
 		}
@@ -45,6 +49,10 @@ func GetByApp(ctx context.Context, in *npool.GetGoodsByAppRequest) (*npool.GetGo
 		info.Price = price
 		infos = append(infos, info)
 	}
+
+	sort.Slice(infos, func(i, j int) bool {
+		return goodIndexes[infos[i].ID] <= goodIndexes[infos[j].ID]
+	})
 
 	return &npool.GetGoodsByAppResponse{
 		Infos: infos,
