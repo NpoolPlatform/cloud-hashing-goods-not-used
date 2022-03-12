@@ -28,6 +28,10 @@ spec:
             backend:
               serviceName: cloud-hashing-goods
               servicePort: 50020
+          - path: /api/cloud-hashing-goods/v1/get/app/goods
+            backend:
+              serviceName: cloud-hashing-goods
+              servicePort: 50020
     - host: api.procyon.vip
       http: *http_rules
     - host: api.xpool.top
