@@ -2,7 +2,7 @@ package appgood
 
 import (
 	"context"
-	"time"
+	"math"
 
 	npool "github.com/NpoolPlatform/message/npool/cloud-hashing-goods"
 
@@ -205,6 +205,7 @@ func Onsale(ctx context.Context, in *npool.OnsaleAppGoodRequest) (*npool.OnsaleA
 		AppGood.
 		UpdateOneID(id).
 		SetOnline(true).
+		SetDisplayIndex(0).
 		Save(ctx)
 	if err != nil {
 		return nil, xerrors.Errorf("fail onsale app good: %v", err)
@@ -234,6 +235,7 @@ func Offsale(ctx context.Context, in *npool.OffsaleAppGoodRequest) (*npool.Offsa
 		AppGood.
 		UpdateOneID(id).
 		SetOnline(false).
+		SetDisplayIndex(math.MaxUint32).
 		Save(ctx)
 	if err != nil {
 		return nil, xerrors.Errorf("fail offsale app good: %v", err)
@@ -255,11 +257,11 @@ func Unauthorize(ctx context.Context, in *npool.UnauthorizeAppGoodRequest) (*npo
 		return nil, xerrors.Errorf("fail get db client: %v", err)
 	}
 
+	// Actually we do not allow unauthorize
 	info, err := cli.
 		AppGood.
 		UpdateOneID(id).
 		SetOnline(false).
-		SetDeleteAt(uint32(time.Now().Unix())).
 		Save(ctx)
 	if err != nil {
 		return nil, xerrors.Errorf("fail unauthorize app good: %v", err)

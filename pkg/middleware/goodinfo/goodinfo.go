@@ -34,7 +34,7 @@ func GetByApp(ctx context.Context, in *npool.GetGoodsByAppRequest) (*npool.GetGo
 		price := info.Price
 
 		for _, appGood := range appGoods.Infos {
-			if info.ID == appGood.GoodID && appGood.Online && appGood.Price > 0 {
+			if info.ID == appGood.GoodID && appGood.Price > 0 {
 				price = appGood.Price
 				allowed = true
 				goodIndexes[info.ID] = appGood.DisplayIndex

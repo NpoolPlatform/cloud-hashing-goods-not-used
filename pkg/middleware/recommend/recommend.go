@@ -34,7 +34,7 @@ func GetByApp(ctx context.Context, in *npool.GetRecommendGoodsByAppRequest) (*np
 		price := 0.0
 
 		for _, info := range appGoods.Infos {
-			if myRecommend.GoodID == info.GoodID && info.Online && info.Price > 0 {
+			if myRecommend.GoodID == info.GoodID && info.Price > 0 {
 				price = info.Price
 				allowed = true
 				break
