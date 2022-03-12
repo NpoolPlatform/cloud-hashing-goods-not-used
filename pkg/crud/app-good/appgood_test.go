@@ -77,7 +77,7 @@ func TestAppGoodCRUD(t *testing.T) {
 		GoodID: appGoodInfo.GoodID,
 	})
 	assert.Nil(t, err)
-	assert.Nil(t, resp3.Info)
+	assert.Equal(t, resp3.Info.Online, false)
 
 	resp4, err := Authorize(context.Background(), &npool.AuthorizeAppGoodRequest{
 		Info: &appGoodInfo,
