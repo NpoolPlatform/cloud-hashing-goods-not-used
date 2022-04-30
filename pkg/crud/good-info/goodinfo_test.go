@@ -45,7 +45,6 @@ func TestGoodInfoCRUD(t *testing.T) { //nolint
 	benefitType := "pool"
 	classic := true
 	supportCoinTypeIDs := []string{uuid.New().String(), uuid.New().String()}
-	total := int32(1700)
 
 	goodInfo := npool.GoodInfo{
 		DeviceInfoID:       deviceInfoID,

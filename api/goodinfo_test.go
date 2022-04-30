@@ -30,7 +30,6 @@ func assertGoodInfo(t *testing.T, actual, expected *npool.GoodInfo) {
 	assert.Equal(t, actual.BenefitType, expected.BenefitType)
 	assert.Equal(t, actual.Classic, expected.Classic)
 	assert.Equal(t, actual.SupportCoinTypeIDs, expected.SupportCoinTypeIDs)
-	assert.Equal(t, actual.Total, expected.Total)
 }
 
 func TestGoodCRUD(t *testing.T) { //nolint
@@ -51,7 +50,6 @@ func TestGoodCRUD(t *testing.T) { //nolint
 	benefitType := "pool"
 	classic := true
 	supportCoinTypeIDs := []string{uuid.New().String(), uuid.New().String()}
-	total := int32(1700)
 
 	goodInfo := npool.GoodInfo{
 		DeviceInfoID:       deviceInfoID,
@@ -68,7 +66,6 @@ func TestGoodCRUD(t *testing.T) { //nolint
 		BenefitType:        benefitType,
 		Classic:            classic,
 		SupportCoinTypeIDs: supportCoinTypeIDs,
-		Total:              total,
 		Title:              "Ant Miner S19 Pro",
 		Unit:               "TH/s",
 	}

@@ -53,7 +53,6 @@ func assertGoodDetail(t *testing.T, actual *npool.GoodDetail, expectGoodInfo *np
 	assert.Equal(t, actual.Good.BenefitType, expectGoodInfo.BenefitType)
 	assert.Equal(t, actual.Good.Classic, expectGoodInfo.Classic)
 	assert.Equal(t, actual.Good.SupportCoinTypeIDs, expectGoodInfo.SupportCoinTypeIDs)
-	assert.Equal(t, actual.Good.Total, expectGoodInfo.Total)
 }
 
 func TestGet(t *testing.T) {
@@ -152,7 +151,6 @@ func TestGet(t *testing.T) {
 		BenefitType:        "platform",
 		Classic:            true,
 		SupportCoinTypeIDs: []string{uuid.New().String(), uuid.New().String()},
-		Total:              100,
 		FeeIDs:             []string{feeResp1.Info.ID, feeResp2.Info.ID},
 	}
 	goodInfoResp, err := goodinfo.Create(context.Background(), &npool.CreateGoodRequest{
