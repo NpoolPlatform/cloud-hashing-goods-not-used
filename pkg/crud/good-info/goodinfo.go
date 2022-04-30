@@ -45,7 +45,6 @@ func dbRowToInfo(row *ent.GoodInfo) *npool.GoodInfo {
 		BenefitType:        string(row.BenefitType),
 		Classic:            row.Classic,
 		SupportCoinTypeIDs: ids,
-		Total:              row.Total,
 		Unit:               row.Unit,
 		FeeIDs:             feeIDs,
 		StartAt:            row.StartAt,
@@ -124,7 +123,6 @@ func Create(ctx context.Context, in *npool.CreateGoodRequest) (*npool.CreateGood
 		SetBenefitType(goodinfo.BenefitType(in.GetInfo().GetBenefitType())).
 		SetClassic(in.GetInfo().GetClassic()).
 		SetSupportCoinTypeIds(ids).
-		SetTotal(in.GetInfo().GetTotal()).
 		SetUnit(in.GetInfo().GetUnit()).
 		SetFeeIds(feeIDs).
 		SetStartAt(startAt).
@@ -175,7 +173,6 @@ func Update(ctx context.Context, in *npool.UpdateGoodRequest) (*npool.UpdateGood
 		SetBenefitType(goodinfo.BenefitType(in.GetInfo().GetBenefitType())).
 		SetClassic(in.GetInfo().GetClassic()).
 		SetSupportCoinTypeIds(ids).
-		SetTotal(in.GetInfo().GetTotal()).
 		Save(ctx)
 	if err != nil {
 		return nil, xerrors.Errorf("fail to update good info: %v", err)

@@ -62,7 +62,6 @@ func TestGoodInfoCRUD(t *testing.T) { //nolint
 		BenefitType:        benefitType,
 		Classic:            classic,
 		SupportCoinTypeIDs: supportCoinTypeIDs,
-		Total:              total,
 		Title:              "Ant Miner S19 Pro",
 		Unit:               "TH/s",
 	}
@@ -84,7 +83,6 @@ func TestGoodInfoCRUD(t *testing.T) { //nolint
 		assert.Equal(t, resp.Info.BenefitType, benefitType)
 		assert.Equal(t, resp.Info.Classic, classic)
 		assert.Equal(t, resp.Info.SupportCoinTypeIDs, supportCoinTypeIDs)
-		assert.Equal(t, resp.Info.Total, total)
 		assert.Equal(t, resp.Info.PriceCurrency, goodInfo.PriceCurrency)
 		assert.Equal(t, resp.Info.Title, goodInfo.Title)
 		assert.Equal(t, resp.Info.Unit, goodInfo.Unit)
@@ -110,7 +108,6 @@ func TestGoodInfoCRUD(t *testing.T) { //nolint
 		assert.Equal(t, resp1.Info.BenefitType, goodInfo.BenefitType)
 		assert.Equal(t, resp1.Info.Classic, classic)
 		assert.Equal(t, resp1.Info.SupportCoinTypeIDs, supportCoinTypeIDs)
-		assert.Equal(t, resp1.Info.Total, total)
 	}
 
 	resp2, err := Get(context.Background(), &npool.GetGoodRequest{
@@ -130,7 +127,6 @@ func TestGoodInfoCRUD(t *testing.T) { //nolint
 		assert.Equal(t, resp2.Info.BenefitType, goodInfo.BenefitType)
 		assert.Equal(t, resp2.Info.Classic, classic)
 		assert.Equal(t, resp2.Info.SupportCoinTypeIDs, supportCoinTypeIDs)
-		assert.Equal(t, resp2.Info.Total, total)
 	}
 
 	resp3, err := Delete(context.Background(), &npool.DeleteGoodRequest{
@@ -150,7 +146,6 @@ func TestGoodInfoCRUD(t *testing.T) { //nolint
 		assert.Equal(t, resp3.Info.BenefitType, goodInfo.BenefitType)
 		assert.Equal(t, resp3.Info.Classic, classic)
 		assert.Equal(t, resp3.Info.SupportCoinTypeIDs, supportCoinTypeIDs)
-		assert.Equal(t, resp3.Info.Total, total)
 	}
 }
 
