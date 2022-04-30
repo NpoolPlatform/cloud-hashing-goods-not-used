@@ -131,12 +131,6 @@ func (gic *GoodInfoCreate) SetStartAt(u uint32) *GoodInfoCreate {
 	return gic
 }
 
-// SetTotal sets the "total" field.
-func (gic *GoodInfoCreate) SetTotal(i int32) *GoodInfoCreate {
-	gic.mutation.SetTotal(i)
-	return gic
-}
-
 // SetCreateAt sets the "create_at" field.
 func (gic *GoodInfoCreate) SetCreateAt(u uint32) *GoodInfoCreate {
 	gic.mutation.SetCreateAt(u)
@@ -358,14 +352,6 @@ func (gic *GoodInfoCreate) check() error {
 	if _, ok := gic.mutation.StartAt(); !ok {
 		return &ValidationError{Name: "start_at", err: errors.New(`ent: missing required field "GoodInfo.start_at"`)}
 	}
-	if _, ok := gic.mutation.Total(); !ok {
-		return &ValidationError{Name: "total", err: errors.New(`ent: missing required field "GoodInfo.total"`)}
-	}
-	if v, ok := gic.mutation.Total(); ok {
-		if err := goodinfo.TotalValidator(v); err != nil {
-			return &ValidationError{Name: "total", err: fmt.Errorf(`ent: validator failed for field "GoodInfo.total": %w`, err)}
-		}
-	}
 	if _, ok := gic.mutation.CreateAt(); !ok {
 		return &ValidationError{Name: "create_at", err: errors.New(`ent: missing required field "GoodInfo.create_at"`)}
 	}
@@ -555,14 +541,6 @@ func (gic *GoodInfoCreate) createSpec() (*GoodInfo, *sqlgraph.CreateSpec) {
 			Column: goodinfo.FieldStartAt,
 		})
 		_node.StartAt = value
-	}
-	if value, ok := gic.mutation.Total(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Value:  value,
-			Column: goodinfo.FieldTotal,
-		})
-		_node.Total = value
 	}
 	if value, ok := gic.mutation.CreateAt(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
@@ -885,24 +863,6 @@ func (u *GoodInfoUpsert) UpdateStartAt() *GoodInfoUpsert {
 // AddStartAt adds v to the "start_at" field.
 func (u *GoodInfoUpsert) AddStartAt(v uint32) *GoodInfoUpsert {
 	u.Add(goodinfo.FieldStartAt, v)
-	return u
-}
-
-// SetTotal sets the "total" field.
-func (u *GoodInfoUpsert) SetTotal(v int32) *GoodInfoUpsert {
-	u.Set(goodinfo.FieldTotal, v)
-	return u
-}
-
-// UpdateTotal sets the "total" field to the value that was provided on create.
-func (u *GoodInfoUpsert) UpdateTotal() *GoodInfoUpsert {
-	u.SetExcluded(goodinfo.FieldTotal)
-	return u
-}
-
-// AddTotal adds v to the "total" field.
-func (u *GoodInfoUpsert) AddTotal(v int32) *GoodInfoUpsert {
-	u.Add(goodinfo.FieldTotal, v)
 	return u
 }
 
@@ -1294,27 +1254,6 @@ func (u *GoodInfoUpsertOne) AddStartAt(v uint32) *GoodInfoUpsertOne {
 func (u *GoodInfoUpsertOne) UpdateStartAt() *GoodInfoUpsertOne {
 	return u.Update(func(s *GoodInfoUpsert) {
 		s.UpdateStartAt()
-	})
-}
-
-// SetTotal sets the "total" field.
-func (u *GoodInfoUpsertOne) SetTotal(v int32) *GoodInfoUpsertOne {
-	return u.Update(func(s *GoodInfoUpsert) {
-		s.SetTotal(v)
-	})
-}
-
-// AddTotal adds v to the "total" field.
-func (u *GoodInfoUpsertOne) AddTotal(v int32) *GoodInfoUpsertOne {
-	return u.Update(func(s *GoodInfoUpsert) {
-		s.AddTotal(v)
-	})
-}
-
-// UpdateTotal sets the "total" field to the value that was provided on create.
-func (u *GoodInfoUpsertOne) UpdateTotal() *GoodInfoUpsertOne {
-	return u.Update(func(s *GoodInfoUpsert) {
-		s.UpdateTotal()
 	})
 }
 
@@ -1881,27 +1820,6 @@ func (u *GoodInfoUpsertBulk) AddStartAt(v uint32) *GoodInfoUpsertBulk {
 func (u *GoodInfoUpsertBulk) UpdateStartAt() *GoodInfoUpsertBulk {
 	return u.Update(func(s *GoodInfoUpsert) {
 		s.UpdateStartAt()
-	})
-}
-
-// SetTotal sets the "total" field.
-func (u *GoodInfoUpsertBulk) SetTotal(v int32) *GoodInfoUpsertBulk {
-	return u.Update(func(s *GoodInfoUpsert) {
-		s.SetTotal(v)
-	})
-}
-
-// AddTotal adds v to the "total" field.
-func (u *GoodInfoUpsertBulk) AddTotal(v int32) *GoodInfoUpsertBulk {
-	return u.Update(func(s *GoodInfoUpsert) {
-		s.AddTotal(v)
-	})
-}
-
-// UpdateTotal sets the "total" field to the value that was provided on create.
-func (u *GoodInfoUpsertBulk) UpdateTotal() *GoodInfoUpsertBulk {
-	return u.Update(func(s *GoodInfoUpsert) {
-		s.UpdateTotal()
 	})
 }
 

@@ -196,13 +196,6 @@ func StartAt(v uint32) predicate.GoodInfo {
 	})
 }
 
-// Total applies equality check predicate on the "total" field. It's identical to TotalEQ.
-func Total(v int32) predicate.GoodInfo {
-	return predicate.GoodInfo(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldTotal), v))
-	})
-}
-
 // CreateAt applies equality check predicate on the "create_at" field. It's identical to CreateAtEQ.
 func CreateAt(v uint32) predicate.GoodInfo {
 	return predicate.GoodInfo(func(s *sql.Selector) {
@@ -1293,82 +1286,6 @@ func StartAtLT(v uint32) predicate.GoodInfo {
 func StartAtLTE(v uint32) predicate.GoodInfo {
 	return predicate.GoodInfo(func(s *sql.Selector) {
 		s.Where(sql.LTE(s.C(FieldStartAt), v))
-	})
-}
-
-// TotalEQ applies the EQ predicate on the "total" field.
-func TotalEQ(v int32) predicate.GoodInfo {
-	return predicate.GoodInfo(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldTotal), v))
-	})
-}
-
-// TotalNEQ applies the NEQ predicate on the "total" field.
-func TotalNEQ(v int32) predicate.GoodInfo {
-	return predicate.GoodInfo(func(s *sql.Selector) {
-		s.Where(sql.NEQ(s.C(FieldTotal), v))
-	})
-}
-
-// TotalIn applies the In predicate on the "total" field.
-func TotalIn(vs ...int32) predicate.GoodInfo {
-	v := make([]interface{}, len(vs))
-	for i := range v {
-		v[i] = vs[i]
-	}
-	return predicate.GoodInfo(func(s *sql.Selector) {
-		// if not arguments were provided, append the FALSE constants,
-		// since we can't apply "IN ()". This will make this predicate falsy.
-		if len(v) == 0 {
-			s.Where(sql.False())
-			return
-		}
-		s.Where(sql.In(s.C(FieldTotal), v...))
-	})
-}
-
-// TotalNotIn applies the NotIn predicate on the "total" field.
-func TotalNotIn(vs ...int32) predicate.GoodInfo {
-	v := make([]interface{}, len(vs))
-	for i := range v {
-		v[i] = vs[i]
-	}
-	return predicate.GoodInfo(func(s *sql.Selector) {
-		// if not arguments were provided, append the FALSE constants,
-		// since we can't apply "IN ()". This will make this predicate falsy.
-		if len(v) == 0 {
-			s.Where(sql.False())
-			return
-		}
-		s.Where(sql.NotIn(s.C(FieldTotal), v...))
-	})
-}
-
-// TotalGT applies the GT predicate on the "total" field.
-func TotalGT(v int32) predicate.GoodInfo {
-	return predicate.GoodInfo(func(s *sql.Selector) {
-		s.Where(sql.GT(s.C(FieldTotal), v))
-	})
-}
-
-// TotalGTE applies the GTE predicate on the "total" field.
-func TotalGTE(v int32) predicate.GoodInfo {
-	return predicate.GoodInfo(func(s *sql.Selector) {
-		s.Where(sql.GTE(s.C(FieldTotal), v))
-	})
-}
-
-// TotalLT applies the LT predicate on the "total" field.
-func TotalLT(v int32) predicate.GoodInfo {
-	return predicate.GoodInfo(func(s *sql.Selector) {
-		s.Where(sql.LT(s.C(FieldTotal), v))
-	})
-}
-
-// TotalLTE applies the LTE predicate on the "total" field.
-func TotalLTE(v int32) predicate.GoodInfo {
-	return predicate.GoodInfo(func(s *sql.Selector) {
-		s.Where(sql.LTE(s.C(FieldTotal), v))
 	})
 }
 

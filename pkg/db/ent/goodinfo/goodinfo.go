@@ -49,8 +49,6 @@ const (
 	FieldFeeIds = "fee_ids"
 	// FieldStartAt holds the string denoting the start_at field in the database.
 	FieldStartAt = "start_at"
-	// FieldTotal holds the string denoting the total field in the database.
-	FieldTotal = "total"
 	// FieldCreateAt holds the string denoting the create_at field in the database.
 	FieldCreateAt = "create_at"
 	// FieldUpdateAt holds the string denoting the update_at field in the database.
@@ -82,7 +80,6 @@ var Columns = []string{
 	FieldSupportCoinTypeIds,
 	FieldFeeIds,
 	FieldStartAt,
-	FieldTotal,
 	FieldCreateAt,
 	FieldUpdateAt,
 	FieldDeleteAt,
@@ -105,8 +102,6 @@ var (
 	DurationDaysValidator func(int32) error
 	// PriceValidator is a validator for the "price" field. It is called by the builders before save.
 	PriceValidator func(uint64) error
-	// TotalValidator is a validator for the "total" field. It is called by the builders before save.
-	TotalValidator func(int32) error
 	// DefaultCreateAt holds the default value on creation for the "create_at" field.
 	DefaultCreateAt func() uint32
 	// DefaultUpdateAt holds the default value on creation for the "update_at" field.

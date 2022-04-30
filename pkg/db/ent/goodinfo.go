@@ -53,8 +53,6 @@ type GoodInfo struct {
 	FeeIds []uuid.UUID `json:"fee_ids,omitempty"`
 	// StartAt holds the value of the "start_at" field.
 	StartAt uint32 `json:"start_at,omitempty"`
-	// Total holds the value of the "total" field.
-	Total int32 `json:"total,omitempty"`
 	// CreateAt holds the value of the "create_at" field.
 	CreateAt uint32 `json:"create_at,omitempty"`
 	// UpdateAt holds the value of the "update_at" field.
@@ -72,7 +70,7 @@ func (*GoodInfo) scanValues(columns []string) ([]interface{}, error) {
 			values[i] = new([]byte)
 		case goodinfo.FieldSeparateFee, goodinfo.FieldActuals, goodinfo.FieldClassic:
 			values[i] = new(sql.NullBool)
-		case goodinfo.FieldUnitPower, goodinfo.FieldDurationDays, goodinfo.FieldDeliveryAt, goodinfo.FieldPrice, goodinfo.FieldStartAt, goodinfo.FieldTotal, goodinfo.FieldCreateAt, goodinfo.FieldUpdateAt, goodinfo.FieldDeleteAt:
+		case goodinfo.FieldUnitPower, goodinfo.FieldDurationDays, goodinfo.FieldDeliveryAt, goodinfo.FieldPrice, goodinfo.FieldStartAt, goodinfo.FieldCreateAt, goodinfo.FieldUpdateAt, goodinfo.FieldDeleteAt:
 			values[i] = new(sql.NullInt64)
 		case goodinfo.FieldBenefitType, goodinfo.FieldTitle, goodinfo.FieldUnit:
 			values[i] = new(sql.NullString)
@@ -211,12 +209,6 @@ func (gi *GoodInfo) assignValues(columns []string, values []interface{}) error {
 			} else if value.Valid {
 				gi.StartAt = uint32(value.Int64)
 			}
-		case goodinfo.FieldTotal:
-			if value, ok := values[i].(*sql.NullInt64); !ok {
-				return fmt.Errorf("unexpected type %T for field total", values[i])
-			} else if value.Valid {
-				gi.Total = int32(value.Int64)
-			}
 		case goodinfo.FieldCreateAt:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field create_at", values[i])
@@ -299,8 +291,6 @@ func (gi *GoodInfo) String() string {
 	builder.WriteString(fmt.Sprintf("%v", gi.FeeIds))
 	builder.WriteString(", start_at=")
 	builder.WriteString(fmt.Sprintf("%v", gi.StartAt))
-	builder.WriteString(", total=")
-	builder.WriteString(fmt.Sprintf("%v", gi.Total))
 	builder.WriteString(", create_at=")
 	builder.WriteString(fmt.Sprintf("%v", gi.CreateAt))
 	builder.WriteString(", update_at=")

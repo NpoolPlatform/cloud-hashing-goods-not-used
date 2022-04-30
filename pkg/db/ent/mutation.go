@@ -7339,8 +7339,6 @@ type GoodInfoMutation struct {
 	fee_ids               *[]uuid.UUID
 	start_at              *uint32
 	addstart_at           *int32
-	total                 *int32
-	addtotal              *int32
 	create_at             *uint32
 	addcreate_at          *int32
 	update_at             *uint32
@@ -8205,62 +8203,6 @@ func (m *GoodInfoMutation) ResetStartAt() {
 	m.addstart_at = nil
 }
 
-// SetTotal sets the "total" field.
-func (m *GoodInfoMutation) SetTotal(i int32) {
-	m.total = &i
-	m.addtotal = nil
-}
-
-// Total returns the value of the "total" field in the mutation.
-func (m *GoodInfoMutation) Total() (r int32, exists bool) {
-	v := m.total
-	if v == nil {
-		return
-	}
-	return *v, true
-}
-
-// OldTotal returns the old "total" field's value of the GoodInfo entity.
-// If the GoodInfo object wasn't provided to the builder, the object is fetched from the database.
-// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *GoodInfoMutation) OldTotal(ctx context.Context) (v int32, err error) {
-	if !m.op.Is(OpUpdateOne) {
-		return v, errors.New("OldTotal is only allowed on UpdateOne operations")
-	}
-	if m.id == nil || m.oldValue == nil {
-		return v, errors.New("OldTotal requires an ID field in the mutation")
-	}
-	oldValue, err := m.oldValue(ctx)
-	if err != nil {
-		return v, fmt.Errorf("querying old value for OldTotal: %w", err)
-	}
-	return oldValue.Total, nil
-}
-
-// AddTotal adds i to the "total" field.
-func (m *GoodInfoMutation) AddTotal(i int32) {
-	if m.addtotal != nil {
-		*m.addtotal += i
-	} else {
-		m.addtotal = &i
-	}
-}
-
-// AddedTotal returns the value that was added to the "total" field in this mutation.
-func (m *GoodInfoMutation) AddedTotal() (r int32, exists bool) {
-	v := m.addtotal
-	if v == nil {
-		return
-	}
-	return *v, true
-}
-
-// ResetTotal resets all changes to the "total" field.
-func (m *GoodInfoMutation) ResetTotal() {
-	m.total = nil
-	m.addtotal = nil
-}
-
 // SetCreateAt sets the "create_at" field.
 func (m *GoodInfoMutation) SetCreateAt(u uint32) {
 	m.create_at = &u
@@ -8448,7 +8390,7 @@ func (m *GoodInfoMutation) Type() string {
 // order to get all numeric fields that were incremented/decremented, call
 // AddedFields().
 func (m *GoodInfoMutation) Fields() []string {
-	fields := make([]string, 0, 22)
+	fields := make([]string, 0, 21)
 	if m.device_info_id != nil {
 		fields = append(fields, goodinfo.FieldDeviceInfoID)
 	}
@@ -8503,9 +8445,6 @@ func (m *GoodInfoMutation) Fields() []string {
 	if m.start_at != nil {
 		fields = append(fields, goodinfo.FieldStartAt)
 	}
-	if m.total != nil {
-		fields = append(fields, goodinfo.FieldTotal)
-	}
 	if m.create_at != nil {
 		fields = append(fields, goodinfo.FieldCreateAt)
 	}
@@ -8559,8 +8498,6 @@ func (m *GoodInfoMutation) Field(name string) (ent.Value, bool) {
 		return m.FeeIds()
 	case goodinfo.FieldStartAt:
 		return m.StartAt()
-	case goodinfo.FieldTotal:
-		return m.Total()
 	case goodinfo.FieldCreateAt:
 		return m.CreateAt()
 	case goodinfo.FieldUpdateAt:
@@ -8612,8 +8549,6 @@ func (m *GoodInfoMutation) OldField(ctx context.Context, name string) (ent.Value
 		return m.OldFeeIds(ctx)
 	case goodinfo.FieldStartAt:
 		return m.OldStartAt(ctx)
-	case goodinfo.FieldTotal:
-		return m.OldTotal(ctx)
 	case goodinfo.FieldCreateAt:
 		return m.OldCreateAt(ctx)
 	case goodinfo.FieldUpdateAt:
@@ -8755,13 +8690,6 @@ func (m *GoodInfoMutation) SetField(name string, value ent.Value) error {
 		}
 		m.SetStartAt(v)
 		return nil
-	case goodinfo.FieldTotal:
-		v, ok := value.(int32)
-		if !ok {
-			return fmt.Errorf("unexpected type %T for field %s", value, name)
-		}
-		m.SetTotal(v)
-		return nil
 	case goodinfo.FieldCreateAt:
 		v, ok := value.(uint32)
 		if !ok {
@@ -8806,9 +8734,6 @@ func (m *GoodInfoMutation) AddedFields() []string {
 	if m.addstart_at != nil {
 		fields = append(fields, goodinfo.FieldStartAt)
 	}
-	if m.addtotal != nil {
-		fields = append(fields, goodinfo.FieldTotal)
-	}
 	if m.addcreate_at != nil {
 		fields = append(fields, goodinfo.FieldCreateAt)
 	}
@@ -8836,8 +8761,6 @@ func (m *GoodInfoMutation) AddedField(name string) (ent.Value, bool) {
 		return m.AddedPrice()
 	case goodinfo.FieldStartAt:
 		return m.AddedStartAt()
-	case goodinfo.FieldTotal:
-		return m.AddedTotal()
 	case goodinfo.FieldCreateAt:
 		return m.AddedCreateAt()
 	case goodinfo.FieldUpdateAt:
@@ -8887,13 +8810,6 @@ func (m *GoodInfoMutation) AddField(name string, value ent.Value) error {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.AddStartAt(v)
-		return nil
-	case goodinfo.FieldTotal:
-		v, ok := value.(int32)
-		if !ok {
-			return fmt.Errorf("unexpected type %T for field %s", value, name)
-		}
-		m.AddTotal(v)
 		return nil
 	case goodinfo.FieldCreateAt:
 		v, ok := value.(int32)
@@ -8996,9 +8912,6 @@ func (m *GoodInfoMutation) ResetField(name string) error {
 		return nil
 	case goodinfo.FieldStartAt:
 		m.ResetStartAt()
-		return nil
-	case goodinfo.FieldTotal:
-		m.ResetTotal()
 		return nil
 	case goodinfo.FieldCreateAt:
 		m.ResetCreateAt()

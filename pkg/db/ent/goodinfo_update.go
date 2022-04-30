@@ -171,19 +171,6 @@ func (giu *GoodInfoUpdate) AddStartAt(u int32) *GoodInfoUpdate {
 	return giu
 }
 
-// SetTotal sets the "total" field.
-func (giu *GoodInfoUpdate) SetTotal(i int32) *GoodInfoUpdate {
-	giu.mutation.ResetTotal()
-	giu.mutation.SetTotal(i)
-	return giu
-}
-
-// AddTotal adds i to the "total" field.
-func (giu *GoodInfoUpdate) AddTotal(i int32) *GoodInfoUpdate {
-	giu.mutation.AddTotal(i)
-	return giu
-}
-
 // SetCreateAt sets the "create_at" field.
 func (giu *GoodInfoUpdate) SetCreateAt(u uint32) *GoodInfoUpdate {
 	giu.mutation.ResetCreateAt()
@@ -333,11 +320,6 @@ func (giu *GoodInfoUpdate) check() error {
 	if v, ok := giu.mutation.BenefitType(); ok {
 		if err := goodinfo.BenefitTypeValidator(v); err != nil {
 			return &ValidationError{Name: "benefit_type", err: fmt.Errorf(`ent: validator failed for field "GoodInfo.benefit_type": %w`, err)}
-		}
-	}
-	if v, ok := giu.mutation.Total(); ok {
-		if err := goodinfo.TotalValidator(v); err != nil {
-			return &ValidationError{Name: "total", err: fmt.Errorf(`ent: validator failed for field "GoodInfo.total": %w`, err)}
 		}
 	}
 	return nil
@@ -520,20 +502,6 @@ func (giu *GoodInfoUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			Type:   field.TypeUint32,
 			Value:  value,
 			Column: goodinfo.FieldStartAt,
-		})
-	}
-	if value, ok := giu.mutation.Total(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Value:  value,
-			Column: goodinfo.FieldTotal,
-		})
-	}
-	if value, ok := giu.mutation.AddedTotal(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Value:  value,
-			Column: goodinfo.FieldTotal,
 		})
 	}
 	if value, ok := giu.mutation.CreateAt(); ok {
@@ -740,19 +708,6 @@ func (giuo *GoodInfoUpdateOne) AddStartAt(u int32) *GoodInfoUpdateOne {
 	return giuo
 }
 
-// SetTotal sets the "total" field.
-func (giuo *GoodInfoUpdateOne) SetTotal(i int32) *GoodInfoUpdateOne {
-	giuo.mutation.ResetTotal()
-	giuo.mutation.SetTotal(i)
-	return giuo
-}
-
-// AddTotal adds i to the "total" field.
-func (giuo *GoodInfoUpdateOne) AddTotal(i int32) *GoodInfoUpdateOne {
-	giuo.mutation.AddTotal(i)
-	return giuo
-}
-
 // SetCreateAt sets the "create_at" field.
 func (giuo *GoodInfoUpdateOne) SetCreateAt(u uint32) *GoodInfoUpdateOne {
 	giuo.mutation.ResetCreateAt()
@@ -909,11 +864,6 @@ func (giuo *GoodInfoUpdateOne) check() error {
 	if v, ok := giuo.mutation.BenefitType(); ok {
 		if err := goodinfo.BenefitTypeValidator(v); err != nil {
 			return &ValidationError{Name: "benefit_type", err: fmt.Errorf(`ent: validator failed for field "GoodInfo.benefit_type": %w`, err)}
-		}
-	}
-	if v, ok := giuo.mutation.Total(); ok {
-		if err := goodinfo.TotalValidator(v); err != nil {
-			return &ValidationError{Name: "total", err: fmt.Errorf(`ent: validator failed for field "GoodInfo.total": %w`, err)}
 		}
 	}
 	return nil
@@ -1113,20 +1063,6 @@ func (giuo *GoodInfoUpdateOne) sqlSave(ctx context.Context) (_node *GoodInfo, er
 			Type:   field.TypeUint32,
 			Value:  value,
 			Column: goodinfo.FieldStartAt,
-		})
-	}
-	if value, ok := giuo.mutation.Total(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Value:  value,
-			Column: goodinfo.FieldTotal,
-		})
-	}
-	if value, ok := giuo.mutation.AddedTotal(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Value:  value,
-			Column: goodinfo.FieldTotal,
 		})
 	}
 	if value, ok := giuo.mutation.CreateAt(); ok {
