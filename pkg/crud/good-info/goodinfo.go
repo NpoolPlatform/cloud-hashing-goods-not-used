@@ -163,6 +163,7 @@ func Update(ctx context.Context, in *npool.UpdateGoodRequest) (*npool.UpdateGood
 		SetDeviceInfoID(uuid.MustParse(in.GetInfo().GetDeviceInfoID())).
 		SetSeparateFee(in.GetInfo().GetSeparateFee()).
 		SetUnitPower(in.GetInfo().GetUnitPower()).
+		SetUnit(in.GetInfo().GetUnit()).
 		SetDurationDays(in.GetInfo().GetDurationDays()).
 		SetCoinInfoID(uuid.MustParse(in.GetInfo().GetCoinInfoID())).
 		SetActuals(in.GetInfo().GetActuals()).
