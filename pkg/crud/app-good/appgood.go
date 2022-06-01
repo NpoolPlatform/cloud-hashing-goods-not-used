@@ -166,7 +166,6 @@ func SetAppGoodPrice(ctx context.Context, in *npool.SetAppGoodPriceRequest) (*np
 		AppGood.
 		UpdateOneID(id).
 		SetPrice(price.VisualPriceToDBPrice(in.GetInfo().GetPrice())).
-		SetVisible(in.GetInfo().GetVisible()).
 		Save(ctx)
 	if err != nil {
 		return nil, xerrors.Errorf("fail set price app good: %v", err)
@@ -371,6 +370,7 @@ func Update(ctx context.Context, in *npool.UpdateAppGoodRequest) (*npool.UpdateA
 		AppGood.
 		UpdateOneID(id).
 		SetDisplayIndex(in.GetInfo().GetDisplayIndex()).
+		SetVisible(in.GetInfo().GetVisible()).
 		Save(ctx)
 	if err != nil {
 		return nil, xerrors.Errorf("fail update app good: %v", err)
