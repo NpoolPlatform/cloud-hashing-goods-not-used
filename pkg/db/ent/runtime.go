@@ -32,6 +32,10 @@ func init() {
 	appgoodDescOnline := appgoodFields[3].Descriptor()
 	// appgood.DefaultOnline holds the default value on creation for the online field.
 	appgood.DefaultOnline = appgoodDescOnline.Default.(bool)
+	// appgoodDescVisible is the schema descriptor for visible field.
+	appgoodDescVisible := appgoodFields[7].Descriptor()
+	// appgood.DefaultVisible holds the default value on creation for the visible field.
+	appgood.DefaultVisible = appgoodDescVisible.Default.(bool)
 	// appgoodDescCreateAt is the schema descriptor for create_at field.
 	appgoodDescCreateAt := appgoodFields[8].Descriptor()
 	// appgood.DefaultCreateAt holds the default value on creation for the create_at field.

@@ -65,6 +65,8 @@ func ValidColumn(column string) bool {
 var (
 	// DefaultOnline holds the default value on creation for the "online" field.
 	DefaultOnline bool
+	// DefaultVisible holds the default value on creation for the "visible" field.
+	DefaultVisible bool
 	// DefaultCreateAt holds the default value on creation for the "create_at" field.
 	DefaultCreateAt func() uint32
 	// DefaultUpdateAt holds the default value on creation for the "update_at" field.

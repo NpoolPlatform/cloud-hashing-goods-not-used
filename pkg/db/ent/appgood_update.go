@@ -92,6 +92,14 @@ func (agu *AppGoodUpdate) SetVisible(b bool) *AppGoodUpdate {
 	return agu
 }
 
+// SetNillableVisible sets the "visible" field if the given value is not nil.
+func (agu *AppGoodUpdate) SetNillableVisible(b *bool) *AppGoodUpdate {
+	if b != nil {
+		agu.SetVisible(*b)
+	}
+	return agu
+}
+
 // SetCreateAt sets the "create_at" field.
 func (agu *AppGoodUpdate) SetCreateAt(u uint32) *AppGoodUpdate {
 	agu.mutation.ResetCreateAt()
@@ -433,6 +441,14 @@ func (aguo *AppGoodUpdateOne) AddDisplayIndex(u int32) *AppGoodUpdateOne {
 // SetVisible sets the "visible" field.
 func (aguo *AppGoodUpdateOne) SetVisible(b bool) *AppGoodUpdateOne {
 	aguo.mutation.SetVisible(b)
+	return aguo
+}
+
+// SetNillableVisible sets the "visible" field if the given value is not nil.
+func (aguo *AppGoodUpdateOne) SetNillableVisible(b *bool) *AppGoodUpdateOne {
+	if b != nil {
+		aguo.SetVisible(*b)
+	}
 	return aguo
 }
 

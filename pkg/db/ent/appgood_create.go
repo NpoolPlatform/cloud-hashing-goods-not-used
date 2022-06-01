@@ -73,6 +73,14 @@ func (agc *AppGoodCreate) SetVisible(b bool) *AppGoodCreate {
 	return agc
 }
 
+// SetNillableVisible sets the "visible" field if the given value is not nil.
+func (agc *AppGoodCreate) SetNillableVisible(b *bool) *AppGoodCreate {
+	if b != nil {
+		agc.SetVisible(*b)
+	}
+	return agc
+}
+
 // SetCreateAt sets the "create_at" field.
 func (agc *AppGoodCreate) SetCreateAt(u uint32) *AppGoodCreate {
 	agc.mutation.SetCreateAt(u)
@@ -203,6 +211,10 @@ func (agc *AppGoodCreate) defaults() {
 	if _, ok := agc.mutation.Online(); !ok {
 		v := appgood.DefaultOnline
 		agc.mutation.SetOnline(v)
+	}
+	if _, ok := agc.mutation.Visible(); !ok {
+		v := appgood.DefaultVisible
+		agc.mutation.SetVisible(v)
 	}
 	if _, ok := agc.mutation.CreateAt(); !ok {
 		v := appgood.DefaultCreateAt()
