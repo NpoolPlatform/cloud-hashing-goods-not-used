@@ -67,6 +67,12 @@ func (agc *AppGoodCreate) SetDisplayIndex(u uint32) *AppGoodCreate {
 	return agc
 }
 
+// SetVisible sets the "visible" field.
+func (agc *AppGoodCreate) SetVisible(b bool) *AppGoodCreate {
+	agc.mutation.SetVisible(b)
+	return agc
+}
+
 // SetCreateAt sets the "create_at" field.
 func (agc *AppGoodCreate) SetCreateAt(u uint32) *AppGoodCreate {
 	agc.mutation.SetCreateAt(u)
@@ -241,6 +247,9 @@ func (agc *AppGoodCreate) check() error {
 	if _, ok := agc.mutation.DisplayIndex(); !ok {
 		return &ValidationError{Name: "display_index", err: errors.New(`ent: missing required field "AppGood.display_index"`)}
 	}
+	if _, ok := agc.mutation.Visible(); !ok {
+		return &ValidationError{Name: "visible", err: errors.New(`ent: missing required field "AppGood.visible"`)}
+	}
 	if _, ok := agc.mutation.CreateAt(); !ok {
 		return &ValidationError{Name: "create_at", err: errors.New(`ent: missing required field "AppGood.create_at"`)}
 	}
@@ -334,6 +343,14 @@ func (agc *AppGoodCreate) createSpec() (*AppGood, *sqlgraph.CreateSpec) {
 			Column: appgood.FieldDisplayIndex,
 		})
 		_node.DisplayIndex = value
+	}
+	if value, ok := agc.mutation.Visible(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeBool,
+			Value:  value,
+			Column: appgood.FieldVisible,
+		})
+		_node.Visible = value
 	}
 	if value, ok := agc.mutation.CreateAt(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
@@ -494,6 +511,18 @@ func (u *AppGoodUpsert) UpdateDisplayIndex() *AppGoodUpsert {
 // AddDisplayIndex adds v to the "display_index" field.
 func (u *AppGoodUpsert) AddDisplayIndex(v uint32) *AppGoodUpsert {
 	u.Add(appgood.FieldDisplayIndex, v)
+	return u
+}
+
+// SetVisible sets the "visible" field.
+func (u *AppGoodUpsert) SetVisible(v bool) *AppGoodUpsert {
+	u.Set(appgood.FieldVisible, v)
+	return u
+}
+
+// UpdateVisible sets the "visible" field to the value that was provided on create.
+func (u *AppGoodUpsert) UpdateVisible() *AppGoodUpsert {
+	u.SetExcluded(appgood.FieldVisible)
 	return u
 }
 
@@ -696,6 +725,20 @@ func (u *AppGoodUpsertOne) AddDisplayIndex(v uint32) *AppGoodUpsertOne {
 func (u *AppGoodUpsertOne) UpdateDisplayIndex() *AppGoodUpsertOne {
 	return u.Update(func(s *AppGoodUpsert) {
 		s.UpdateDisplayIndex()
+	})
+}
+
+// SetVisible sets the "visible" field.
+func (u *AppGoodUpsertOne) SetVisible(v bool) *AppGoodUpsertOne {
+	return u.Update(func(s *AppGoodUpsert) {
+		s.SetVisible(v)
+	})
+}
+
+// UpdateVisible sets the "visible" field to the value that was provided on create.
+func (u *AppGoodUpsertOne) UpdateVisible() *AppGoodUpsertOne {
+	return u.Update(func(s *AppGoodUpsert) {
+		s.UpdateVisible()
 	})
 }
 
@@ -1073,6 +1116,20 @@ func (u *AppGoodUpsertBulk) AddDisplayIndex(v uint32) *AppGoodUpsertBulk {
 func (u *AppGoodUpsertBulk) UpdateDisplayIndex() *AppGoodUpsertBulk {
 	return u.Update(func(s *AppGoodUpsert) {
 		s.UpdateDisplayIndex()
+	})
+}
+
+// SetVisible sets the "visible" field.
+func (u *AppGoodUpsertBulk) SetVisible(v bool) *AppGoodUpsertBulk {
+	return u.Update(func(s *AppGoodUpsert) {
+		s.SetVisible(v)
+	})
+}
+
+// UpdateVisible sets the "visible" field to the value that was provided on create.
+func (u *AppGoodUpsertBulk) UpdateVisible() *AppGoodUpsertBulk {
+	return u.Update(func(s *AppGoodUpsert) {
+		s.UpdateVisible()
 	})
 }
 

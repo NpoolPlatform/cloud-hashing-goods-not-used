@@ -25,6 +25,8 @@ const (
 	FieldPrice = "price"
 	// FieldDisplayIndex holds the string denoting the display_index field in the database.
 	FieldDisplayIndex = "display_index"
+	// FieldVisible holds the string denoting the visible field in the database.
+	FieldVisible = "visible"
 	// FieldCreateAt holds the string denoting the create_at field in the database.
 	FieldCreateAt = "create_at"
 	// FieldUpdateAt holds the string denoting the update_at field in the database.
@@ -44,6 +46,7 @@ var Columns = []string{
 	FieldInitAreaStrategy,
 	FieldPrice,
 	FieldDisplayIndex,
+	FieldVisible,
 	FieldCreateAt,
 	FieldUpdateAt,
 	FieldDeleteAt,

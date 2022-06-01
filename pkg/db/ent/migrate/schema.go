@@ -17,6 +17,7 @@ var (
 		{Name: "init_area_strategy", Type: field.TypeEnum, Enums: []string{"all", "none"}},
 		{Name: "price", Type: field.TypeUint64},
 		{Name: "display_index", Type: field.TypeUint32},
+		{Name: "visible", Type: field.TypeBool},
 		{Name: "create_at", Type: field.TypeUint32},
 		{Name: "update_at", Type: field.TypeUint32},
 		{Name: "delete_at", Type: field.TypeUint32},

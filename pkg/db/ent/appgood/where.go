@@ -126,6 +126,13 @@ func DisplayIndex(v uint32) predicate.AppGood {
 	})
 }
 
+// Visible applies equality check predicate on the "visible" field. It's identical to VisibleEQ.
+func Visible(v bool) predicate.AppGood {
+	return predicate.AppGood(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldVisible), v))
+	})
+}
+
 // CreateAt applies equality check predicate on the "create_at" field. It's identical to CreateAtEQ.
 func CreateAt(v uint32) predicate.AppGood {
 	return predicate.AppGood(func(s *sql.Selector) {
@@ -510,6 +517,20 @@ func DisplayIndexLT(v uint32) predicate.AppGood {
 func DisplayIndexLTE(v uint32) predicate.AppGood {
 	return predicate.AppGood(func(s *sql.Selector) {
 		s.Where(sql.LTE(s.C(FieldDisplayIndex), v))
+	})
+}
+
+// VisibleEQ applies the EQ predicate on the "visible" field.
+func VisibleEQ(v bool) predicate.AppGood {
+	return predicate.AppGood(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldVisible), v))
+	})
+}
+
+// VisibleNEQ applies the NEQ predicate on the "visible" field.
+func VisibleNEQ(v bool) predicate.AppGood {
+	return predicate.AppGood(func(s *sql.Selector) {
+		s.Where(sql.NEQ(s.C(FieldVisible), v))
 	})
 }
 

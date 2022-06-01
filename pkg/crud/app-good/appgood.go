@@ -40,6 +40,7 @@ func dbRowToAppGood(info *ent.AppGood) *npool.AppGoodInfo {
 		InitAreaStrategy: string(info.InitAreaStrategy),
 		Price:            price.DBPriceToVisualPrice(info.Price),
 		DisplayIndex:     info.DisplayIndex,
+		Visible:          info.Visible,
 	}
 }
 
@@ -68,6 +69,7 @@ func Authorize(ctx context.Context, in *npool.AuthorizeAppGoodRequest) (*npool.A
 		SetPrice(0).
 		SetDeleteAt(0).
 		SetDisplayIndex(0).
+		SetVisible(true).
 		OnConflict().
 		UpdateNewValues().
 		Exec(ctx)
@@ -164,6 +166,7 @@ func SetAppGoodPrice(ctx context.Context, in *npool.SetAppGoodPriceRequest) (*np
 		AppGood.
 		UpdateOneID(id).
 		SetPrice(price.VisualPriceToDBPrice(in.GetInfo().GetPrice())).
+		SetVisible(in.GetInfo().GetVisible()).
 		Save(ctx)
 	if err != nil {
 		return nil, xerrors.Errorf("fail set price app good: %v", err)

@@ -69,6 +69,7 @@ type AppGoodMutation struct {
 	addprice           *int64
 	display_index      *uint32
 	adddisplay_index   *int32
+	visible            *bool
 	create_at          *uint32
 	addcreate_at       *int32
 	update_at          *uint32
@@ -441,6 +442,42 @@ func (m *AppGoodMutation) ResetDisplayIndex() {
 	m.adddisplay_index = nil
 }
 
+// SetVisible sets the "visible" field.
+func (m *AppGoodMutation) SetVisible(b bool) {
+	m.visible = &b
+}
+
+// Visible returns the value of the "visible" field in the mutation.
+func (m *AppGoodMutation) Visible() (r bool, exists bool) {
+	v := m.visible
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldVisible returns the old "visible" field's value of the AppGood entity.
+// If the AppGood object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *AppGoodMutation) OldVisible(ctx context.Context) (v bool, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldVisible is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldVisible requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldVisible: %w", err)
+	}
+	return oldValue.Visible, nil
+}
+
+// ResetVisible resets all changes to the "visible" field.
+func (m *AppGoodMutation) ResetVisible() {
+	m.visible = nil
+}
+
 // SetCreateAt sets the "create_at" field.
 func (m *AppGoodMutation) SetCreateAt(u uint32) {
 	m.create_at = &u
@@ -628,7 +665,7 @@ func (m *AppGoodMutation) Type() string {
 // order to get all numeric fields that were incremented/decremented, call
 // AddedFields().
 func (m *AppGoodMutation) Fields() []string {
-	fields := make([]string, 0, 9)
+	fields := make([]string, 0, 10)
 	if m.app_id != nil {
 		fields = append(fields, appgood.FieldAppID)
 	}
@@ -646,6 +683,9 @@ func (m *AppGoodMutation) Fields() []string {
 	}
 	if m.display_index != nil {
 		fields = append(fields, appgood.FieldDisplayIndex)
+	}
+	if m.visible != nil {
+		fields = append(fields, appgood.FieldVisible)
 	}
 	if m.create_at != nil {
 		fields = append(fields, appgood.FieldCreateAt)
@@ -676,6 +716,8 @@ func (m *AppGoodMutation) Field(name string) (ent.Value, bool) {
 		return m.Price()
 	case appgood.FieldDisplayIndex:
 		return m.DisplayIndex()
+	case appgood.FieldVisible:
+		return m.Visible()
 	case appgood.FieldCreateAt:
 		return m.CreateAt()
 	case appgood.FieldUpdateAt:
@@ -703,6 +745,8 @@ func (m *AppGoodMutation) OldField(ctx context.Context, name string) (ent.Value,
 		return m.OldPrice(ctx)
 	case appgood.FieldDisplayIndex:
 		return m.OldDisplayIndex(ctx)
+	case appgood.FieldVisible:
+		return m.OldVisible(ctx)
 	case appgood.FieldCreateAt:
 		return m.OldCreateAt(ctx)
 	case appgood.FieldUpdateAt:
@@ -759,6 +803,13 @@ func (m *AppGoodMutation) SetField(name string, value ent.Value) error {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.SetDisplayIndex(v)
+		return nil
+	case appgood.FieldVisible:
+		v, ok := value.(bool)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetVisible(v)
 		return nil
 	case appgood.FieldCreateAt:
 		v, ok := value.(uint32)
@@ -910,6 +961,9 @@ func (m *AppGoodMutation) ResetField(name string) error {
 		return nil
 	case appgood.FieldDisplayIndex:
 		m.ResetDisplayIndex()
+		return nil
+	case appgood.FieldVisible:
+		m.ResetVisible()
 		return nil
 	case appgood.FieldCreateAt:
 		m.ResetCreateAt()

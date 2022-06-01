@@ -29,6 +29,7 @@ func (AppGood) Fields() []ent.Field {
 			Values("all", "none"),
 		field.Uint64("price"),
 		field.Uint32("display_index"),
+		field.Bool("visible"),
 		field.Uint32("create_at").
 			DefaultFunc(func() uint32 {
 				return uint32(time.Now().Unix())
