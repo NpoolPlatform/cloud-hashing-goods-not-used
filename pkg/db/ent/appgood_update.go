@@ -100,6 +100,27 @@ func (agu *AppGoodUpdate) SetNillableVisible(b *bool) *AppGoodUpdate {
 	return agu
 }
 
+// SetPurchaseLimit sets the "purchase_limit" field.
+func (agu *AppGoodUpdate) SetPurchaseLimit(i int32) *AppGoodUpdate {
+	agu.mutation.ResetPurchaseLimit()
+	agu.mutation.SetPurchaseLimit(i)
+	return agu
+}
+
+// SetNillablePurchaseLimit sets the "purchase_limit" field if the given value is not nil.
+func (agu *AppGoodUpdate) SetNillablePurchaseLimit(i *int32) *AppGoodUpdate {
+	if i != nil {
+		agu.SetPurchaseLimit(*i)
+	}
+	return agu
+}
+
+// AddPurchaseLimit adds i to the "purchase_limit" field.
+func (agu *AppGoodUpdate) AddPurchaseLimit(i int32) *AppGoodUpdate {
+	agu.mutation.AddPurchaseLimit(i)
+	return agu
+}
+
 // SetCreateAt sets the "create_at" field.
 func (agu *AppGoodUpdate) SetCreateAt(u uint32) *AppGoodUpdate {
 	agu.mutation.ResetCreateAt()
@@ -319,6 +340,20 @@ func (agu *AppGoodUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			Column: appgood.FieldVisible,
 		})
 	}
+	if value, ok := agu.mutation.PurchaseLimit(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeInt32,
+			Value:  value,
+			Column: appgood.FieldPurchaseLimit,
+		})
+	}
+	if value, ok := agu.mutation.AddedPurchaseLimit(); ok {
+		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
+			Type:   field.TypeInt32,
+			Value:  value,
+			Column: appgood.FieldPurchaseLimit,
+		})
+	}
 	if value, ok := agu.mutation.CreateAt(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeUint32,
@@ -449,6 +484,27 @@ func (aguo *AppGoodUpdateOne) SetNillableVisible(b *bool) *AppGoodUpdateOne {
 	if b != nil {
 		aguo.SetVisible(*b)
 	}
+	return aguo
+}
+
+// SetPurchaseLimit sets the "purchase_limit" field.
+func (aguo *AppGoodUpdateOne) SetPurchaseLimit(i int32) *AppGoodUpdateOne {
+	aguo.mutation.ResetPurchaseLimit()
+	aguo.mutation.SetPurchaseLimit(i)
+	return aguo
+}
+
+// SetNillablePurchaseLimit sets the "purchase_limit" field if the given value is not nil.
+func (aguo *AppGoodUpdateOne) SetNillablePurchaseLimit(i *int32) *AppGoodUpdateOne {
+	if i != nil {
+		aguo.SetPurchaseLimit(*i)
+	}
+	return aguo
+}
+
+// AddPurchaseLimit adds i to the "purchase_limit" field.
+func (aguo *AppGoodUpdateOne) AddPurchaseLimit(i int32) *AppGoodUpdateOne {
+	aguo.mutation.AddPurchaseLimit(i)
 	return aguo
 }
 
@@ -693,6 +749,20 @@ func (aguo *AppGoodUpdateOne) sqlSave(ctx context.Context) (_node *AppGood, err 
 			Type:   field.TypeBool,
 			Value:  value,
 			Column: appgood.FieldVisible,
+		})
+	}
+	if value, ok := aguo.mutation.PurchaseLimit(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeInt32,
+			Value:  value,
+			Column: appgood.FieldPurchaseLimit,
+		})
+	}
+	if value, ok := aguo.mutation.AddedPurchaseLimit(); ok {
+		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
+			Type:   field.TypeInt32,
+			Value:  value,
+			Column: appgood.FieldPurchaseLimit,
 		})
 	}
 	if value, ok := aguo.mutation.CreateAt(); ok {

@@ -70,6 +70,8 @@ type AppGoodMutation struct {
 	display_index      *uint32
 	adddisplay_index   *int32
 	visible            *bool
+	purchase_limit     *int32
+	addpurchase_limit  *int32
 	create_at          *uint32
 	addcreate_at       *int32
 	update_at          *uint32
@@ -478,6 +480,62 @@ func (m *AppGoodMutation) ResetVisible() {
 	m.visible = nil
 }
 
+// SetPurchaseLimit sets the "purchase_limit" field.
+func (m *AppGoodMutation) SetPurchaseLimit(i int32) {
+	m.purchase_limit = &i
+	m.addpurchase_limit = nil
+}
+
+// PurchaseLimit returns the value of the "purchase_limit" field in the mutation.
+func (m *AppGoodMutation) PurchaseLimit() (r int32, exists bool) {
+	v := m.purchase_limit
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldPurchaseLimit returns the old "purchase_limit" field's value of the AppGood entity.
+// If the AppGood object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *AppGoodMutation) OldPurchaseLimit(ctx context.Context) (v int32, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldPurchaseLimit is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldPurchaseLimit requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldPurchaseLimit: %w", err)
+	}
+	return oldValue.PurchaseLimit, nil
+}
+
+// AddPurchaseLimit adds i to the "purchase_limit" field.
+func (m *AppGoodMutation) AddPurchaseLimit(i int32) {
+	if m.addpurchase_limit != nil {
+		*m.addpurchase_limit += i
+	} else {
+		m.addpurchase_limit = &i
+	}
+}
+
+// AddedPurchaseLimit returns the value that was added to the "purchase_limit" field in this mutation.
+func (m *AppGoodMutation) AddedPurchaseLimit() (r int32, exists bool) {
+	v := m.addpurchase_limit
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// ResetPurchaseLimit resets all changes to the "purchase_limit" field.
+func (m *AppGoodMutation) ResetPurchaseLimit() {
+	m.purchase_limit = nil
+	m.addpurchase_limit = nil
+}
+
 // SetCreateAt sets the "create_at" field.
 func (m *AppGoodMutation) SetCreateAt(u uint32) {
 	m.create_at = &u
@@ -665,7 +723,7 @@ func (m *AppGoodMutation) Type() string {
 // order to get all numeric fields that were incremented/decremented, call
 // AddedFields().
 func (m *AppGoodMutation) Fields() []string {
-	fields := make([]string, 0, 10)
+	fields := make([]string, 0, 11)
 	if m.app_id != nil {
 		fields = append(fields, appgood.FieldAppID)
 	}
@@ -686,6 +744,9 @@ func (m *AppGoodMutation) Fields() []string {
 	}
 	if m.visible != nil {
 		fields = append(fields, appgood.FieldVisible)
+	}
+	if m.purchase_limit != nil {
+		fields = append(fields, appgood.FieldPurchaseLimit)
 	}
 	if m.create_at != nil {
 		fields = append(fields, appgood.FieldCreateAt)
@@ -718,6 +779,8 @@ func (m *AppGoodMutation) Field(name string) (ent.Value, bool) {
 		return m.DisplayIndex()
 	case appgood.FieldVisible:
 		return m.Visible()
+	case appgood.FieldPurchaseLimit:
+		return m.PurchaseLimit()
 	case appgood.FieldCreateAt:
 		return m.CreateAt()
 	case appgood.FieldUpdateAt:
@@ -747,6 +810,8 @@ func (m *AppGoodMutation) OldField(ctx context.Context, name string) (ent.Value,
 		return m.OldDisplayIndex(ctx)
 	case appgood.FieldVisible:
 		return m.OldVisible(ctx)
+	case appgood.FieldPurchaseLimit:
+		return m.OldPurchaseLimit(ctx)
 	case appgood.FieldCreateAt:
 		return m.OldCreateAt(ctx)
 	case appgood.FieldUpdateAt:
@@ -811,6 +876,13 @@ func (m *AppGoodMutation) SetField(name string, value ent.Value) error {
 		}
 		m.SetVisible(v)
 		return nil
+	case appgood.FieldPurchaseLimit:
+		v, ok := value.(int32)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetPurchaseLimit(v)
+		return nil
 	case appgood.FieldCreateAt:
 		v, ok := value.(uint32)
 		if !ok {
@@ -846,6 +918,9 @@ func (m *AppGoodMutation) AddedFields() []string {
 	if m.adddisplay_index != nil {
 		fields = append(fields, appgood.FieldDisplayIndex)
 	}
+	if m.addpurchase_limit != nil {
+		fields = append(fields, appgood.FieldPurchaseLimit)
+	}
 	if m.addcreate_at != nil {
 		fields = append(fields, appgood.FieldCreateAt)
 	}
@@ -867,6 +942,8 @@ func (m *AppGoodMutation) AddedField(name string) (ent.Value, bool) {
 		return m.AddedPrice()
 	case appgood.FieldDisplayIndex:
 		return m.AddedDisplayIndex()
+	case appgood.FieldPurchaseLimit:
+		return m.AddedPurchaseLimit()
 	case appgood.FieldCreateAt:
 		return m.AddedCreateAt()
 	case appgood.FieldUpdateAt:
@@ -895,6 +972,13 @@ func (m *AppGoodMutation) AddField(name string, value ent.Value) error {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.AddDisplayIndex(v)
+		return nil
+	case appgood.FieldPurchaseLimit:
+		v, ok := value.(int32)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.AddPurchaseLimit(v)
 		return nil
 	case appgood.FieldCreateAt:
 		v, ok := value.(int32)
@@ -964,6 +1048,9 @@ func (m *AppGoodMutation) ResetField(name string) error {
 		return nil
 	case appgood.FieldVisible:
 		m.ResetVisible()
+		return nil
+	case appgood.FieldPurchaseLimit:
+		m.ResetPurchaseLimit()
 		return nil
 	case appgood.FieldCreateAt:
 		m.ResetCreateAt()

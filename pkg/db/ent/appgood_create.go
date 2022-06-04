@@ -81,6 +81,20 @@ func (agc *AppGoodCreate) SetNillableVisible(b *bool) *AppGoodCreate {
 	return agc
 }
 
+// SetPurchaseLimit sets the "purchase_limit" field.
+func (agc *AppGoodCreate) SetPurchaseLimit(i int32) *AppGoodCreate {
+	agc.mutation.SetPurchaseLimit(i)
+	return agc
+}
+
+// SetNillablePurchaseLimit sets the "purchase_limit" field if the given value is not nil.
+func (agc *AppGoodCreate) SetNillablePurchaseLimit(i *int32) *AppGoodCreate {
+	if i != nil {
+		agc.SetPurchaseLimit(*i)
+	}
+	return agc
+}
+
 // SetCreateAt sets the "create_at" field.
 func (agc *AppGoodCreate) SetCreateAt(u uint32) *AppGoodCreate {
 	agc.mutation.SetCreateAt(u)
@@ -216,6 +230,10 @@ func (agc *AppGoodCreate) defaults() {
 		v := appgood.DefaultVisible
 		agc.mutation.SetVisible(v)
 	}
+	if _, ok := agc.mutation.PurchaseLimit(); !ok {
+		v := appgood.DefaultPurchaseLimit
+		agc.mutation.SetPurchaseLimit(v)
+	}
 	if _, ok := agc.mutation.CreateAt(); !ok {
 		v := appgood.DefaultCreateAt()
 		agc.mutation.SetCreateAt(v)
@@ -261,6 +279,9 @@ func (agc *AppGoodCreate) check() error {
 	}
 	if _, ok := agc.mutation.Visible(); !ok {
 		return &ValidationError{Name: "visible", err: errors.New(`ent: missing required field "AppGood.visible"`)}
+	}
+	if _, ok := agc.mutation.PurchaseLimit(); !ok {
+		return &ValidationError{Name: "purchase_limit", err: errors.New(`ent: missing required field "AppGood.purchase_limit"`)}
 	}
 	if _, ok := agc.mutation.CreateAt(); !ok {
 		return &ValidationError{Name: "create_at", err: errors.New(`ent: missing required field "AppGood.create_at"`)}
@@ -363,6 +384,14 @@ func (agc *AppGoodCreate) createSpec() (*AppGood, *sqlgraph.CreateSpec) {
 			Column: appgood.FieldVisible,
 		})
 		_node.Visible = value
+	}
+	if value, ok := agc.mutation.PurchaseLimit(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeInt32,
+			Value:  value,
+			Column: appgood.FieldPurchaseLimit,
+		})
+		_node.PurchaseLimit = value
 	}
 	if value, ok := agc.mutation.CreateAt(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
@@ -535,6 +564,24 @@ func (u *AppGoodUpsert) SetVisible(v bool) *AppGoodUpsert {
 // UpdateVisible sets the "visible" field to the value that was provided on create.
 func (u *AppGoodUpsert) UpdateVisible() *AppGoodUpsert {
 	u.SetExcluded(appgood.FieldVisible)
+	return u
+}
+
+// SetPurchaseLimit sets the "purchase_limit" field.
+func (u *AppGoodUpsert) SetPurchaseLimit(v int32) *AppGoodUpsert {
+	u.Set(appgood.FieldPurchaseLimit, v)
+	return u
+}
+
+// UpdatePurchaseLimit sets the "purchase_limit" field to the value that was provided on create.
+func (u *AppGoodUpsert) UpdatePurchaseLimit() *AppGoodUpsert {
+	u.SetExcluded(appgood.FieldPurchaseLimit)
+	return u
+}
+
+// AddPurchaseLimit adds v to the "purchase_limit" field.
+func (u *AppGoodUpsert) AddPurchaseLimit(v int32) *AppGoodUpsert {
+	u.Add(appgood.FieldPurchaseLimit, v)
 	return u
 }
 
@@ -751,6 +798,27 @@ func (u *AppGoodUpsertOne) SetVisible(v bool) *AppGoodUpsertOne {
 func (u *AppGoodUpsertOne) UpdateVisible() *AppGoodUpsertOne {
 	return u.Update(func(s *AppGoodUpsert) {
 		s.UpdateVisible()
+	})
+}
+
+// SetPurchaseLimit sets the "purchase_limit" field.
+func (u *AppGoodUpsertOne) SetPurchaseLimit(v int32) *AppGoodUpsertOne {
+	return u.Update(func(s *AppGoodUpsert) {
+		s.SetPurchaseLimit(v)
+	})
+}
+
+// AddPurchaseLimit adds v to the "purchase_limit" field.
+func (u *AppGoodUpsertOne) AddPurchaseLimit(v int32) *AppGoodUpsertOne {
+	return u.Update(func(s *AppGoodUpsert) {
+		s.AddPurchaseLimit(v)
+	})
+}
+
+// UpdatePurchaseLimit sets the "purchase_limit" field to the value that was provided on create.
+func (u *AppGoodUpsertOne) UpdatePurchaseLimit() *AppGoodUpsertOne {
+	return u.Update(func(s *AppGoodUpsert) {
+		s.UpdatePurchaseLimit()
 	})
 }
 
@@ -1142,6 +1210,27 @@ func (u *AppGoodUpsertBulk) SetVisible(v bool) *AppGoodUpsertBulk {
 func (u *AppGoodUpsertBulk) UpdateVisible() *AppGoodUpsertBulk {
 	return u.Update(func(s *AppGoodUpsert) {
 		s.UpdateVisible()
+	})
+}
+
+// SetPurchaseLimit sets the "purchase_limit" field.
+func (u *AppGoodUpsertBulk) SetPurchaseLimit(v int32) *AppGoodUpsertBulk {
+	return u.Update(func(s *AppGoodUpsert) {
+		s.SetPurchaseLimit(v)
+	})
+}
+
+// AddPurchaseLimit adds v to the "purchase_limit" field.
+func (u *AppGoodUpsertBulk) AddPurchaseLimit(v int32) *AppGoodUpsertBulk {
+	return u.Update(func(s *AppGoodUpsert) {
+		s.AddPurchaseLimit(v)
+	})
+}
+
+// UpdatePurchaseLimit sets the "purchase_limit" field to the value that was provided on create.
+func (u *AppGoodUpsertBulk) UpdatePurchaseLimit() *AppGoodUpsertBulk {
+	return u.Update(func(s *AppGoodUpsert) {
+		s.UpdatePurchaseLimit()
 	})
 }
 

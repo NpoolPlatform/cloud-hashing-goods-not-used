@@ -41,6 +41,7 @@ func dbRowToAppGood(info *ent.AppGood) *npool.AppGoodInfo {
 		Price:            price.DBPriceToVisualPrice(info.Price),
 		DisplayIndex:     info.DisplayIndex,
 		Visible:          info.Visible,
+		PurchaseLimit:    info.PurchaseLimit,
 	}
 }
 
@@ -70,6 +71,7 @@ func Authorize(ctx context.Context, in *npool.AuthorizeAppGoodRequest) (*npool.A
 		SetDeleteAt(0).
 		SetDisplayIndex(0).
 		SetVisible(true).
+		SetPurchaseLimit(0).
 		OnConflict().
 		UpdateNewValues().
 		Exec(ctx)
@@ -371,6 +373,7 @@ func Update(ctx context.Context, in *npool.UpdateAppGoodRequest) (*npool.UpdateA
 		UpdateOneID(id).
 		SetDisplayIndex(in.GetInfo().GetDisplayIndex()).
 		SetVisible(in.GetInfo().GetVisible()).
+		SetPurchaseLimit(in.GetInfo().GetPurchaseLimit()).
 		Save(ctx)
 	if err != nil {
 		return nil, xerrors.Errorf("fail update app good: %v", err)

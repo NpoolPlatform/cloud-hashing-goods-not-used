@@ -133,6 +133,13 @@ func Visible(v bool) predicate.AppGood {
 	})
 }
 
+// PurchaseLimit applies equality check predicate on the "purchase_limit" field. It's identical to PurchaseLimitEQ.
+func PurchaseLimit(v int32) predicate.AppGood {
+	return predicate.AppGood(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldPurchaseLimit), v))
+	})
+}
+
 // CreateAt applies equality check predicate on the "create_at" field. It's identical to CreateAtEQ.
 func CreateAt(v uint32) predicate.AppGood {
 	return predicate.AppGood(func(s *sql.Selector) {
@@ -531,6 +538,82 @@ func VisibleEQ(v bool) predicate.AppGood {
 func VisibleNEQ(v bool) predicate.AppGood {
 	return predicate.AppGood(func(s *sql.Selector) {
 		s.Where(sql.NEQ(s.C(FieldVisible), v))
+	})
+}
+
+// PurchaseLimitEQ applies the EQ predicate on the "purchase_limit" field.
+func PurchaseLimitEQ(v int32) predicate.AppGood {
+	return predicate.AppGood(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldPurchaseLimit), v))
+	})
+}
+
+// PurchaseLimitNEQ applies the NEQ predicate on the "purchase_limit" field.
+func PurchaseLimitNEQ(v int32) predicate.AppGood {
+	return predicate.AppGood(func(s *sql.Selector) {
+		s.Where(sql.NEQ(s.C(FieldPurchaseLimit), v))
+	})
+}
+
+// PurchaseLimitIn applies the In predicate on the "purchase_limit" field.
+func PurchaseLimitIn(vs ...int32) predicate.AppGood {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.AppGood(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.In(s.C(FieldPurchaseLimit), v...))
+	})
+}
+
+// PurchaseLimitNotIn applies the NotIn predicate on the "purchase_limit" field.
+func PurchaseLimitNotIn(vs ...int32) predicate.AppGood {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.AppGood(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.NotIn(s.C(FieldPurchaseLimit), v...))
+	})
+}
+
+// PurchaseLimitGT applies the GT predicate on the "purchase_limit" field.
+func PurchaseLimitGT(v int32) predicate.AppGood {
+	return predicate.AppGood(func(s *sql.Selector) {
+		s.Where(sql.GT(s.C(FieldPurchaseLimit), v))
+	})
+}
+
+// PurchaseLimitGTE applies the GTE predicate on the "purchase_limit" field.
+func PurchaseLimitGTE(v int32) predicate.AppGood {
+	return predicate.AppGood(func(s *sql.Selector) {
+		s.Where(sql.GTE(s.C(FieldPurchaseLimit), v))
+	})
+}
+
+// PurchaseLimitLT applies the LT predicate on the "purchase_limit" field.
+func PurchaseLimitLT(v int32) predicate.AppGood {
+	return predicate.AppGood(func(s *sql.Selector) {
+		s.Where(sql.LT(s.C(FieldPurchaseLimit), v))
+	})
+}
+
+// PurchaseLimitLTE applies the LTE predicate on the "purchase_limit" field.
+func PurchaseLimitLTE(v int32) predicate.AppGood {
+	return predicate.AppGood(func(s *sql.Selector) {
+		s.Where(sql.LTE(s.C(FieldPurchaseLimit), v))
 	})
 }
 

@@ -27,6 +27,8 @@ const (
 	FieldDisplayIndex = "display_index"
 	// FieldVisible holds the string denoting the visible field in the database.
 	FieldVisible = "visible"
+	// FieldPurchaseLimit holds the string denoting the purchase_limit field in the database.
+	FieldPurchaseLimit = "purchase_limit"
 	// FieldCreateAt holds the string denoting the create_at field in the database.
 	FieldCreateAt = "create_at"
 	// FieldUpdateAt holds the string denoting the update_at field in the database.
@@ -47,6 +49,7 @@ var Columns = []string{
 	FieldPrice,
 	FieldDisplayIndex,
 	FieldVisible,
+	FieldPurchaseLimit,
 	FieldCreateAt,
 	FieldUpdateAt,
 	FieldDeleteAt,
@@ -67,6 +70,8 @@ var (
 	DefaultOnline bool
 	// DefaultVisible holds the default value on creation for the "visible" field.
 	DefaultVisible bool
+	// DefaultPurchaseLimit holds the default value on creation for the "purchase_limit" field.
+	DefaultPurchaseLimit int32
 	// DefaultCreateAt holds the default value on creation for the "create_at" field.
 	DefaultCreateAt func() uint32
 	// DefaultUpdateAt holds the default value on creation for the "update_at" field.
