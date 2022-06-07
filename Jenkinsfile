@@ -99,7 +99,7 @@ pipeline {
       }
       steps {
         sh (returnStdout: false, script: '''
-          devboxpod=`kubectl get pods -A | grep development-box | awk '{print $2}'`
+          devboxpod=`kubectl get pods -A | grep development-box | awk '{print $2}' | head -n1`
           servicename="cloud-hashing-goods"
 
           kubectl exec --namespace kube-system $devboxpod -- rm -rf /tmp/$servicename || true
