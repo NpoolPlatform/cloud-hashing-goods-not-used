@@ -32,6 +32,8 @@ type AppGood struct {
 	Visible bool `json:"visible,omitempty"`
 	// PurchaseLimit holds the value of the "purchase_limit" field.
 	PurchaseLimit int32 `json:"purchase_limit,omitempty"`
+	// CommissionPercent holds the value of the "commission_percent" field.
+	CommissionPercent uint32 `json:"commission_percent,omitempty"`
 	// CreateAt holds the value of the "create_at" field.
 	CreateAt uint32 `json:"create_at,omitempty"`
 	// UpdateAt holds the value of the "update_at" field.
@@ -47,7 +49,7 @@ func (*AppGood) scanValues(columns []string) ([]interface{}, error) {
 		switch columns[i] {
 		case appgood.FieldOnline, appgood.FieldVisible:
 			values[i] = new(sql.NullBool)
-		case appgood.FieldPrice, appgood.FieldDisplayIndex, appgood.FieldPurchaseLimit, appgood.FieldCreateAt, appgood.FieldUpdateAt, appgood.FieldDeleteAt:
+		case appgood.FieldPrice, appgood.FieldDisplayIndex, appgood.FieldPurchaseLimit, appgood.FieldCommissionPercent, appgood.FieldCreateAt, appgood.FieldUpdateAt, appgood.FieldDeleteAt:
 			values[i] = new(sql.NullInt64)
 		case appgood.FieldInitAreaStrategy:
 			values[i] = new(sql.NullString)
@@ -122,6 +124,12 @@ func (ag *AppGood) assignValues(columns []string, values []interface{}) error {
 			} else if value.Valid {
 				ag.PurchaseLimit = int32(value.Int64)
 			}
+		case appgood.FieldCommissionPercent:
+			if value, ok := values[i].(*sql.NullInt64); !ok {
+				return fmt.Errorf("unexpected type %T for field commission_percent", values[i])
+			} else if value.Valid {
+				ag.CommissionPercent = uint32(value.Int64)
+			}
 		case appgood.FieldCreateAt:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field create_at", values[i])
@@ -184,6 +192,8 @@ func (ag *AppGood) String() string {
 	builder.WriteString(fmt.Sprintf("%v", ag.Visible))
 	builder.WriteString(", purchase_limit=")
 	builder.WriteString(fmt.Sprintf("%v", ag.PurchaseLimit))
+	builder.WriteString(", commission_percent=")
+	builder.WriteString(fmt.Sprintf("%v", ag.CommissionPercent))
 	builder.WriteString(", create_at=")
 	builder.WriteString(fmt.Sprintf("%v", ag.CreateAt))
 	builder.WriteString(", update_at=")

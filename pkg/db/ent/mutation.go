@@ -58,30 +58,32 @@ const (
 // AppGoodMutation represents an operation that mutates the AppGood nodes in the graph.
 type AppGoodMutation struct {
 	config
-	op                 Op
-	typ                string
-	id                 *uuid.UUID
-	app_id             *uuid.UUID
-	good_id            *uuid.UUID
-	online             *bool
-	init_area_strategy *appgood.InitAreaStrategy
-	price              *uint64
-	addprice           *int64
-	display_index      *uint32
-	adddisplay_index   *int32
-	visible            *bool
-	purchase_limit     *int32
-	addpurchase_limit  *int32
-	create_at          *uint32
-	addcreate_at       *int32
-	update_at          *uint32
-	addupdate_at       *int32
-	delete_at          *uint32
-	adddelete_at       *int32
-	clearedFields      map[string]struct{}
-	done               bool
-	oldValue           func(context.Context) (*AppGood, error)
-	predicates         []predicate.AppGood
+	op                    Op
+	typ                   string
+	id                    *uuid.UUID
+	app_id                *uuid.UUID
+	good_id               *uuid.UUID
+	online                *bool
+	init_area_strategy    *appgood.InitAreaStrategy
+	price                 *uint64
+	addprice              *int64
+	display_index         *uint32
+	adddisplay_index      *int32
+	visible               *bool
+	purchase_limit        *int32
+	addpurchase_limit     *int32
+	commission_percent    *uint32
+	addcommission_percent *int32
+	create_at             *uint32
+	addcreate_at          *int32
+	update_at             *uint32
+	addupdate_at          *int32
+	delete_at             *uint32
+	adddelete_at          *int32
+	clearedFields         map[string]struct{}
+	done                  bool
+	oldValue              func(context.Context) (*AppGood, error)
+	predicates            []predicate.AppGood
 }
 
 var _ ent.Mutation = (*AppGoodMutation)(nil)
@@ -536,6 +538,62 @@ func (m *AppGoodMutation) ResetPurchaseLimit() {
 	m.addpurchase_limit = nil
 }
 
+// SetCommissionPercent sets the "commission_percent" field.
+func (m *AppGoodMutation) SetCommissionPercent(u uint32) {
+	m.commission_percent = &u
+	m.addcommission_percent = nil
+}
+
+// CommissionPercent returns the value of the "commission_percent" field in the mutation.
+func (m *AppGoodMutation) CommissionPercent() (r uint32, exists bool) {
+	v := m.commission_percent
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldCommissionPercent returns the old "commission_percent" field's value of the AppGood entity.
+// If the AppGood object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *AppGoodMutation) OldCommissionPercent(ctx context.Context) (v uint32, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldCommissionPercent is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldCommissionPercent requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldCommissionPercent: %w", err)
+	}
+	return oldValue.CommissionPercent, nil
+}
+
+// AddCommissionPercent adds u to the "commission_percent" field.
+func (m *AppGoodMutation) AddCommissionPercent(u int32) {
+	if m.addcommission_percent != nil {
+		*m.addcommission_percent += u
+	} else {
+		m.addcommission_percent = &u
+	}
+}
+
+// AddedCommissionPercent returns the value that was added to the "commission_percent" field in this mutation.
+func (m *AppGoodMutation) AddedCommissionPercent() (r int32, exists bool) {
+	v := m.addcommission_percent
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// ResetCommissionPercent resets all changes to the "commission_percent" field.
+func (m *AppGoodMutation) ResetCommissionPercent() {
+	m.commission_percent = nil
+	m.addcommission_percent = nil
+}
+
 // SetCreateAt sets the "create_at" field.
 func (m *AppGoodMutation) SetCreateAt(u uint32) {
 	m.create_at = &u
@@ -723,7 +781,7 @@ func (m *AppGoodMutation) Type() string {
 // order to get all numeric fields that were incremented/decremented, call
 // AddedFields().
 func (m *AppGoodMutation) Fields() []string {
-	fields := make([]string, 0, 11)
+	fields := make([]string, 0, 12)
 	if m.app_id != nil {
 		fields = append(fields, appgood.FieldAppID)
 	}
@@ -747,6 +805,9 @@ func (m *AppGoodMutation) Fields() []string {
 	}
 	if m.purchase_limit != nil {
 		fields = append(fields, appgood.FieldPurchaseLimit)
+	}
+	if m.commission_percent != nil {
+		fields = append(fields, appgood.FieldCommissionPercent)
 	}
 	if m.create_at != nil {
 		fields = append(fields, appgood.FieldCreateAt)
@@ -781,6 +842,8 @@ func (m *AppGoodMutation) Field(name string) (ent.Value, bool) {
 		return m.Visible()
 	case appgood.FieldPurchaseLimit:
 		return m.PurchaseLimit()
+	case appgood.FieldCommissionPercent:
+		return m.CommissionPercent()
 	case appgood.FieldCreateAt:
 		return m.CreateAt()
 	case appgood.FieldUpdateAt:
@@ -812,6 +875,8 @@ func (m *AppGoodMutation) OldField(ctx context.Context, name string) (ent.Value,
 		return m.OldVisible(ctx)
 	case appgood.FieldPurchaseLimit:
 		return m.OldPurchaseLimit(ctx)
+	case appgood.FieldCommissionPercent:
+		return m.OldCommissionPercent(ctx)
 	case appgood.FieldCreateAt:
 		return m.OldCreateAt(ctx)
 	case appgood.FieldUpdateAt:
@@ -883,6 +948,13 @@ func (m *AppGoodMutation) SetField(name string, value ent.Value) error {
 		}
 		m.SetPurchaseLimit(v)
 		return nil
+	case appgood.FieldCommissionPercent:
+		v, ok := value.(uint32)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetCommissionPercent(v)
+		return nil
 	case appgood.FieldCreateAt:
 		v, ok := value.(uint32)
 		if !ok {
@@ -921,6 +993,9 @@ func (m *AppGoodMutation) AddedFields() []string {
 	if m.addpurchase_limit != nil {
 		fields = append(fields, appgood.FieldPurchaseLimit)
 	}
+	if m.addcommission_percent != nil {
+		fields = append(fields, appgood.FieldCommissionPercent)
+	}
 	if m.addcreate_at != nil {
 		fields = append(fields, appgood.FieldCreateAt)
 	}
@@ -944,6 +1019,8 @@ func (m *AppGoodMutation) AddedField(name string) (ent.Value, bool) {
 		return m.AddedDisplayIndex()
 	case appgood.FieldPurchaseLimit:
 		return m.AddedPurchaseLimit()
+	case appgood.FieldCommissionPercent:
+		return m.AddedCommissionPercent()
 	case appgood.FieldCreateAt:
 		return m.AddedCreateAt()
 	case appgood.FieldUpdateAt:
@@ -979,6 +1056,13 @@ func (m *AppGoodMutation) AddField(name string, value ent.Value) error {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.AddPurchaseLimit(v)
+		return nil
+	case appgood.FieldCommissionPercent:
+		v, ok := value.(int32)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.AddCommissionPercent(v)
 		return nil
 	case appgood.FieldCreateAt:
 		v, ok := value.(int32)
@@ -1051,6 +1135,9 @@ func (m *AppGoodMutation) ResetField(name string) error {
 		return nil
 	case appgood.FieldPurchaseLimit:
 		m.ResetPurchaseLimit()
+		return nil
+	case appgood.FieldCommissionPercent:
+		m.ResetCommissionPercent()
 		return nil
 	case appgood.FieldCreateAt:
 		m.ResetCreateAt()

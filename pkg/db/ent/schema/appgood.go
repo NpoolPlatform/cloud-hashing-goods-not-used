@@ -31,6 +31,7 @@ func (AppGood) Fields() []ent.Field {
 		field.Uint32("display_index"),
 		field.Bool("visible").Default(true),
 		field.Int32("purchase_limit").Default(0),
+		field.Uint32("commission_percent").Default(0),
 		field.Uint32("create_at").
 			DefaultFunc(func() uint32 {
 				return uint32(time.Now().Unix())

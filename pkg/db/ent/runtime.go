@@ -40,16 +40,20 @@ func init() {
 	appgoodDescPurchaseLimit := appgoodFields[8].Descriptor()
 	// appgood.DefaultPurchaseLimit holds the default value on creation for the purchase_limit field.
 	appgood.DefaultPurchaseLimit = appgoodDescPurchaseLimit.Default.(int32)
+	// appgoodDescCommissionPercent is the schema descriptor for commission_percent field.
+	appgoodDescCommissionPercent := appgoodFields[9].Descriptor()
+	// appgood.DefaultCommissionPercent holds the default value on creation for the commission_percent field.
+	appgood.DefaultCommissionPercent = appgoodDescCommissionPercent.Default.(uint32)
 	// appgoodDescCreateAt is the schema descriptor for create_at field.
-	appgoodDescCreateAt := appgoodFields[9].Descriptor()
+	appgoodDescCreateAt := appgoodFields[10].Descriptor()
 	// appgood.DefaultCreateAt holds the default value on creation for the create_at field.
 	appgood.DefaultCreateAt = appgoodDescCreateAt.Default.(func() uint32)
 	// appgoodDescUpdateAt is the schema descriptor for update_at field.
-	appgoodDescUpdateAt := appgoodFields[10].Descriptor()
+	appgoodDescUpdateAt := appgoodFields[11].Descriptor()
 	// appgood.DefaultUpdateAt holds the default value on creation for the update_at field.
 	appgood.DefaultUpdateAt = appgoodDescUpdateAt.Default.(func() uint32)
 	// appgoodDescDeleteAt is the schema descriptor for delete_at field.
-	appgoodDescDeleteAt := appgoodFields[11].Descriptor()
+	appgoodDescDeleteAt := appgoodFields[12].Descriptor()
 	// appgood.DefaultDeleteAt holds the default value on creation for the delete_at field.
 	appgood.DefaultDeleteAt = appgoodDescDeleteAt.Default.(func() uint32)
 	// appgoodDescID is the schema descriptor for id field.

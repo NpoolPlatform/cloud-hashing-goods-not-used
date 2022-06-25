@@ -121,6 +121,27 @@ func (agu *AppGoodUpdate) AddPurchaseLimit(i int32) *AppGoodUpdate {
 	return agu
 }
 
+// SetCommissionPercent sets the "commission_percent" field.
+func (agu *AppGoodUpdate) SetCommissionPercent(u uint32) *AppGoodUpdate {
+	agu.mutation.ResetCommissionPercent()
+	agu.mutation.SetCommissionPercent(u)
+	return agu
+}
+
+// SetNillableCommissionPercent sets the "commission_percent" field if the given value is not nil.
+func (agu *AppGoodUpdate) SetNillableCommissionPercent(u *uint32) *AppGoodUpdate {
+	if u != nil {
+		agu.SetCommissionPercent(*u)
+	}
+	return agu
+}
+
+// AddCommissionPercent adds u to the "commission_percent" field.
+func (agu *AppGoodUpdate) AddCommissionPercent(u int32) *AppGoodUpdate {
+	agu.mutation.AddCommissionPercent(u)
+	return agu
+}
+
 // SetCreateAt sets the "create_at" field.
 func (agu *AppGoodUpdate) SetCreateAt(u uint32) *AppGoodUpdate {
 	agu.mutation.ResetCreateAt()
@@ -354,6 +375,20 @@ func (agu *AppGoodUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			Column: appgood.FieldPurchaseLimit,
 		})
 	}
+	if value, ok := agu.mutation.CommissionPercent(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeUint32,
+			Value:  value,
+			Column: appgood.FieldCommissionPercent,
+		})
+	}
+	if value, ok := agu.mutation.AddedCommissionPercent(); ok {
+		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
+			Type:   field.TypeUint32,
+			Value:  value,
+			Column: appgood.FieldCommissionPercent,
+		})
+	}
 	if value, ok := agu.mutation.CreateAt(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeUint32,
@@ -505,6 +540,27 @@ func (aguo *AppGoodUpdateOne) SetNillablePurchaseLimit(i *int32) *AppGoodUpdateO
 // AddPurchaseLimit adds i to the "purchase_limit" field.
 func (aguo *AppGoodUpdateOne) AddPurchaseLimit(i int32) *AppGoodUpdateOne {
 	aguo.mutation.AddPurchaseLimit(i)
+	return aguo
+}
+
+// SetCommissionPercent sets the "commission_percent" field.
+func (aguo *AppGoodUpdateOne) SetCommissionPercent(u uint32) *AppGoodUpdateOne {
+	aguo.mutation.ResetCommissionPercent()
+	aguo.mutation.SetCommissionPercent(u)
+	return aguo
+}
+
+// SetNillableCommissionPercent sets the "commission_percent" field if the given value is not nil.
+func (aguo *AppGoodUpdateOne) SetNillableCommissionPercent(u *uint32) *AppGoodUpdateOne {
+	if u != nil {
+		aguo.SetCommissionPercent(*u)
+	}
+	return aguo
+}
+
+// AddCommissionPercent adds u to the "commission_percent" field.
+func (aguo *AppGoodUpdateOne) AddCommissionPercent(u int32) *AppGoodUpdateOne {
+	aguo.mutation.AddCommissionPercent(u)
 	return aguo
 }
 
@@ -763,6 +819,20 @@ func (aguo *AppGoodUpdateOne) sqlSave(ctx context.Context) (_node *AppGood, err 
 			Type:   field.TypeInt32,
 			Value:  value,
 			Column: appgood.FieldPurchaseLimit,
+		})
+	}
+	if value, ok := aguo.mutation.CommissionPercent(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeUint32,
+			Value:  value,
+			Column: appgood.FieldCommissionPercent,
+		})
+	}
+	if value, ok := aguo.mutation.AddedCommissionPercent(); ok {
+		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
+			Type:   field.TypeUint32,
+			Value:  value,
+			Column: appgood.FieldCommissionPercent,
 		})
 	}
 	if value, ok := aguo.mutation.CreateAt(); ok {

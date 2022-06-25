@@ -29,6 +29,8 @@ const (
 	FieldVisible = "visible"
 	// FieldPurchaseLimit holds the string denoting the purchase_limit field in the database.
 	FieldPurchaseLimit = "purchase_limit"
+	// FieldCommissionPercent holds the string denoting the commission_percent field in the database.
+	FieldCommissionPercent = "commission_percent"
 	// FieldCreateAt holds the string denoting the create_at field in the database.
 	FieldCreateAt = "create_at"
 	// FieldUpdateAt holds the string denoting the update_at field in the database.
@@ -50,6 +52,7 @@ var Columns = []string{
 	FieldDisplayIndex,
 	FieldVisible,
 	FieldPurchaseLimit,
+	FieldCommissionPercent,
 	FieldCreateAt,
 	FieldUpdateAt,
 	FieldDeleteAt,
@@ -72,6 +75,8 @@ var (
 	DefaultVisible bool
 	// DefaultPurchaseLimit holds the default value on creation for the "purchase_limit" field.
 	DefaultPurchaseLimit int32
+	// DefaultCommissionPercent holds the default value on creation for the "commission_percent" field.
+	DefaultCommissionPercent uint32
 	// DefaultCreateAt holds the default value on creation for the "create_at" field.
 	DefaultCreateAt func() uint32
 	// DefaultUpdateAt holds the default value on creation for the "update_at" field.

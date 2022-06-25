@@ -140,6 +140,13 @@ func PurchaseLimit(v int32) predicate.AppGood {
 	})
 }
 
+// CommissionPercent applies equality check predicate on the "commission_percent" field. It's identical to CommissionPercentEQ.
+func CommissionPercent(v uint32) predicate.AppGood {
+	return predicate.AppGood(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldCommissionPercent), v))
+	})
+}
+
 // CreateAt applies equality check predicate on the "create_at" field. It's identical to CreateAtEQ.
 func CreateAt(v uint32) predicate.AppGood {
 	return predicate.AppGood(func(s *sql.Selector) {
@@ -614,6 +621,82 @@ func PurchaseLimitLT(v int32) predicate.AppGood {
 func PurchaseLimitLTE(v int32) predicate.AppGood {
 	return predicate.AppGood(func(s *sql.Selector) {
 		s.Where(sql.LTE(s.C(FieldPurchaseLimit), v))
+	})
+}
+
+// CommissionPercentEQ applies the EQ predicate on the "commission_percent" field.
+func CommissionPercentEQ(v uint32) predicate.AppGood {
+	return predicate.AppGood(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldCommissionPercent), v))
+	})
+}
+
+// CommissionPercentNEQ applies the NEQ predicate on the "commission_percent" field.
+func CommissionPercentNEQ(v uint32) predicate.AppGood {
+	return predicate.AppGood(func(s *sql.Selector) {
+		s.Where(sql.NEQ(s.C(FieldCommissionPercent), v))
+	})
+}
+
+// CommissionPercentIn applies the In predicate on the "commission_percent" field.
+func CommissionPercentIn(vs ...uint32) predicate.AppGood {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.AppGood(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.In(s.C(FieldCommissionPercent), v...))
+	})
+}
+
+// CommissionPercentNotIn applies the NotIn predicate on the "commission_percent" field.
+func CommissionPercentNotIn(vs ...uint32) predicate.AppGood {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.AppGood(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.NotIn(s.C(FieldCommissionPercent), v...))
+	})
+}
+
+// CommissionPercentGT applies the GT predicate on the "commission_percent" field.
+func CommissionPercentGT(v uint32) predicate.AppGood {
+	return predicate.AppGood(func(s *sql.Selector) {
+		s.Where(sql.GT(s.C(FieldCommissionPercent), v))
+	})
+}
+
+// CommissionPercentGTE applies the GTE predicate on the "commission_percent" field.
+func CommissionPercentGTE(v uint32) predicate.AppGood {
+	return predicate.AppGood(func(s *sql.Selector) {
+		s.Where(sql.GTE(s.C(FieldCommissionPercent), v))
+	})
+}
+
+// CommissionPercentLT applies the LT predicate on the "commission_percent" field.
+func CommissionPercentLT(v uint32) predicate.AppGood {
+	return predicate.AppGood(func(s *sql.Selector) {
+		s.Where(sql.LT(s.C(FieldCommissionPercent), v))
+	})
+}
+
+// CommissionPercentLTE applies the LTE predicate on the "commission_percent" field.
+func CommissionPercentLTE(v uint32) predicate.AppGood {
+	return predicate.AppGood(func(s *sql.Selector) {
+		s.Where(sql.LTE(s.C(FieldCommissionPercent), v))
 	})
 }
 

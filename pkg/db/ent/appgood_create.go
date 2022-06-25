@@ -95,6 +95,20 @@ func (agc *AppGoodCreate) SetNillablePurchaseLimit(i *int32) *AppGoodCreate {
 	return agc
 }
 
+// SetCommissionPercent sets the "commission_percent" field.
+func (agc *AppGoodCreate) SetCommissionPercent(u uint32) *AppGoodCreate {
+	agc.mutation.SetCommissionPercent(u)
+	return agc
+}
+
+// SetNillableCommissionPercent sets the "commission_percent" field if the given value is not nil.
+func (agc *AppGoodCreate) SetNillableCommissionPercent(u *uint32) *AppGoodCreate {
+	if u != nil {
+		agc.SetCommissionPercent(*u)
+	}
+	return agc
+}
+
 // SetCreateAt sets the "create_at" field.
 func (agc *AppGoodCreate) SetCreateAt(u uint32) *AppGoodCreate {
 	agc.mutation.SetCreateAt(u)
@@ -234,6 +248,10 @@ func (agc *AppGoodCreate) defaults() {
 		v := appgood.DefaultPurchaseLimit
 		agc.mutation.SetPurchaseLimit(v)
 	}
+	if _, ok := agc.mutation.CommissionPercent(); !ok {
+		v := appgood.DefaultCommissionPercent
+		agc.mutation.SetCommissionPercent(v)
+	}
 	if _, ok := agc.mutation.CreateAt(); !ok {
 		v := appgood.DefaultCreateAt()
 		agc.mutation.SetCreateAt(v)
@@ -282,6 +300,9 @@ func (agc *AppGoodCreate) check() error {
 	}
 	if _, ok := agc.mutation.PurchaseLimit(); !ok {
 		return &ValidationError{Name: "purchase_limit", err: errors.New(`ent: missing required field "AppGood.purchase_limit"`)}
+	}
+	if _, ok := agc.mutation.CommissionPercent(); !ok {
+		return &ValidationError{Name: "commission_percent", err: errors.New(`ent: missing required field "AppGood.commission_percent"`)}
 	}
 	if _, ok := agc.mutation.CreateAt(); !ok {
 		return &ValidationError{Name: "create_at", err: errors.New(`ent: missing required field "AppGood.create_at"`)}
@@ -392,6 +413,14 @@ func (agc *AppGoodCreate) createSpec() (*AppGood, *sqlgraph.CreateSpec) {
 			Column: appgood.FieldPurchaseLimit,
 		})
 		_node.PurchaseLimit = value
+	}
+	if value, ok := agc.mutation.CommissionPercent(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeUint32,
+			Value:  value,
+			Column: appgood.FieldCommissionPercent,
+		})
+		_node.CommissionPercent = value
 	}
 	if value, ok := agc.mutation.CreateAt(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
@@ -582,6 +611,24 @@ func (u *AppGoodUpsert) UpdatePurchaseLimit() *AppGoodUpsert {
 // AddPurchaseLimit adds v to the "purchase_limit" field.
 func (u *AppGoodUpsert) AddPurchaseLimit(v int32) *AppGoodUpsert {
 	u.Add(appgood.FieldPurchaseLimit, v)
+	return u
+}
+
+// SetCommissionPercent sets the "commission_percent" field.
+func (u *AppGoodUpsert) SetCommissionPercent(v uint32) *AppGoodUpsert {
+	u.Set(appgood.FieldCommissionPercent, v)
+	return u
+}
+
+// UpdateCommissionPercent sets the "commission_percent" field to the value that was provided on create.
+func (u *AppGoodUpsert) UpdateCommissionPercent() *AppGoodUpsert {
+	u.SetExcluded(appgood.FieldCommissionPercent)
+	return u
+}
+
+// AddCommissionPercent adds v to the "commission_percent" field.
+func (u *AppGoodUpsert) AddCommissionPercent(v uint32) *AppGoodUpsert {
+	u.Add(appgood.FieldCommissionPercent, v)
 	return u
 }
 
@@ -819,6 +866,27 @@ func (u *AppGoodUpsertOne) AddPurchaseLimit(v int32) *AppGoodUpsertOne {
 func (u *AppGoodUpsertOne) UpdatePurchaseLimit() *AppGoodUpsertOne {
 	return u.Update(func(s *AppGoodUpsert) {
 		s.UpdatePurchaseLimit()
+	})
+}
+
+// SetCommissionPercent sets the "commission_percent" field.
+func (u *AppGoodUpsertOne) SetCommissionPercent(v uint32) *AppGoodUpsertOne {
+	return u.Update(func(s *AppGoodUpsert) {
+		s.SetCommissionPercent(v)
+	})
+}
+
+// AddCommissionPercent adds v to the "commission_percent" field.
+func (u *AppGoodUpsertOne) AddCommissionPercent(v uint32) *AppGoodUpsertOne {
+	return u.Update(func(s *AppGoodUpsert) {
+		s.AddCommissionPercent(v)
+	})
+}
+
+// UpdateCommissionPercent sets the "commission_percent" field to the value that was provided on create.
+func (u *AppGoodUpsertOne) UpdateCommissionPercent() *AppGoodUpsertOne {
+	return u.Update(func(s *AppGoodUpsert) {
+		s.UpdateCommissionPercent()
 	})
 }
 
@@ -1231,6 +1299,27 @@ func (u *AppGoodUpsertBulk) AddPurchaseLimit(v int32) *AppGoodUpsertBulk {
 func (u *AppGoodUpsertBulk) UpdatePurchaseLimit() *AppGoodUpsertBulk {
 	return u.Update(func(s *AppGoodUpsert) {
 		s.UpdatePurchaseLimit()
+	})
+}
+
+// SetCommissionPercent sets the "commission_percent" field.
+func (u *AppGoodUpsertBulk) SetCommissionPercent(v uint32) *AppGoodUpsertBulk {
+	return u.Update(func(s *AppGoodUpsert) {
+		s.SetCommissionPercent(v)
+	})
+}
+
+// AddCommissionPercent adds v to the "commission_percent" field.
+func (u *AppGoodUpsertBulk) AddCommissionPercent(v uint32) *AppGoodUpsertBulk {
+	return u.Update(func(s *AppGoodUpsert) {
+		s.AddCommissionPercent(v)
+	})
+}
+
+// UpdateCommissionPercent sets the "commission_percent" field to the value that was provided on create.
+func (u *AppGoodUpsertBulk) UpdateCommissionPercent() *AppGoodUpsertBulk {
+	return u.Update(func(s *AppGoodUpsert) {
+		s.UpdateCommissionPercent()
 	})
 }
 

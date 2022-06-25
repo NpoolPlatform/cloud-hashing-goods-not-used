@@ -19,6 +19,7 @@ var (
 		{Name: "display_index", Type: field.TypeUint32},
 		{Name: "visible", Type: field.TypeBool, Default: true},
 		{Name: "purchase_limit", Type: field.TypeInt32, Default: 0},
+		{Name: "commission_percent", Type: field.TypeUint32, Default: 0},
 		{Name: "create_at", Type: field.TypeUint32},
 		{Name: "update_at", Type: field.TypeUint32},
 		{Name: "delete_at", Type: field.TypeUint32},
