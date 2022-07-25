@@ -42,3 +42,18 @@ func GetGood(ctx context.Context, id string) (*npool.GoodInfo, error) {
 	}
 	return info.(*npool.GoodInfo), nil
 }
+
+func GetGoods(ctx context.Context) ([]*npool.GoodInfo, error) {
+	// conds: NOT USED NOW, will be used after refactor code
+	infos, err := do(ctx, func(_ctx context.Context, cli npool.CloudHashingGoodsClient) (cruder.Any, error) {
+		resp, err := cli.GetGoods(ctx, &npool.GetGoodsRequest{})
+		if err != nil {
+			return nil, fmt.Errorf("fail get goods: %v", err)
+		}
+		return resp.Infos, nil
+	})
+	if err != nil {
+		return nil, fmt.Errorf("fail get goods: %v", err)
+	}
+	return infos.([]*npool.GoodInfo), nil
+}
