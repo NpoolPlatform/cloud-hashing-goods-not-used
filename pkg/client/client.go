@@ -57,3 +57,20 @@ func GetGoods(ctx context.Context) ([]*npool.GoodInfo, error) {
 	}
 	return infos.([]*npool.GoodInfo), nil
 }
+
+func GetAppGood(ctx context.Context, appID, goodID string) (*npool.AppGoodInfo, error) {
+	info, err := do(ctx, func(_ctx context.Context, cli npool.CloudHashingGoodsClient) (cruder.Any, error) {
+		resp, err := cli.GetAppGoodByAppGood(ctx, &npool.GetAppGoodByAppGoodRequest{
+			AppID:  appID,
+			GoodID: goodID,
+		})
+		if err != nil {
+			return nil, fmt.Errorf("fail get app good: %v", err)
+		}
+		return resp.Info, nil
+	})
+	if err != nil {
+		return nil, fmt.Errorf("fail get app good: %v", err)
+	}
+	return info.(*npool.AppGoodInfo), nil
+}
