@@ -74,3 +74,21 @@ func GetAppGood(ctx context.Context, appID, goodID string) (*npool.AppGoodInfo, 
 	}
 	return info.(*npool.AppGoodInfo), nil
 }
+
+func GetCurrentPromotion(ctx context.Context, appID, goodID string, timestamp uint32) (*npool.AppGoodPromotion, error) {
+	info, err := do(ctx, func(_ctx context.Context, cli npool.CloudHashingGoodsClient) (cruder.Any, error) {
+		resp, err := cli.GetAppGoodPromotionByAppGoodTimestamp(ctx, &npool.GetAppGoodPromotionByAppGoodTimestampRequest{
+			AppID:     appID,
+			GoodID:    goodID,
+			Timestamp: timestamp,
+		})
+		if err != nil {
+			return nil, fmt.Errorf("fail get app good promotion: %v", err)
+		}
+		return resp.Info, nil
+	})
+	if err != nil {
+		return nil, fmt.Errorf("fail get app good promotion: %v", err)
+	}
+	return info.(*npool.AppGoodPromotion), nil
+}
